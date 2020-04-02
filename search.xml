@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Hello World</title>
+    <url>/2020/04/02/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>Algorithm</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>test</title>
+    <url>/2020/04/02/test/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>sort</title>
+    <url>/2020/04/02/sort/</url>
+    <content><![CDATA[<pre><code class="cpp"><span class="function"><span class="keyword">void</span> <span class="title">heapify</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;tree, <span class="keyword">int</span> len, <span class="keyword">int</span> i)</span></span>{
+    <span class="keyword">int</span> cl = <span class="number">2</span> * i + <span class="number">1</span>; <span class="comment">//左节点</span>
+    <span class="keyword">int</span> cr = <span class="number">2</span> * i + <span class="number">2</span>; <span class="comment">//右节点</span>
+    <span class="keyword">int</span> max = i; <span class="comment">//假设当前节点是最大值节点</span>
+    <span class="keyword">if</span> (cl &lt; len &amp;&amp; tree[cl] &gt; tree[max]){
+        max = cl; <span class="comment">//最大值设为左节点</span>
+    }
+    <span class="keyword">if</span> (cr &lt; len &amp;&amp; tree[cr] &gt; tree[max]){
+        max = cr; <span class="comment">//最大值设为右节点</span>
+    }
+    <span class="keyword">if</span> (max != i){
+        swap(tree[i], tree[max]); <span class="comment">//交换元素</span>
+        heapify(tree, len, max); <span class="comment">//对交换后的节点再进行堆化</span>
+    }
+
+}<span class="comment">//把当前第i个节点堆化</span>
+
+<span class="function"><span class="keyword">void</span> <span class="title">build_heap</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;tree)</span></span>{
+    <span class="keyword">int</span> len = tree.size();
+    <span class="keyword">int</span> parent = (len - <span class="number">1</span>) / <span class="number">2</span>;<span class="comment">//最后一个叶节点的父节点</span>
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = parent; i &gt;= <span class="number">0</span>; i--){
+        heapify(tree, len, i);
+    }
+}<span class="comment">//自下而上把树堆化</span>
+
+<span class="function"><span class="keyword">void</span> <span class="title">heap_sort</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;tree)</span></span>{
+    <span class="keyword">int</span> len = tree.size();
+    build_heap(tree);
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = len - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--){
+        swap(tree[i], tree[<span class="number">0</span>]); <span class="comment">//交换堆顶和最后一个节点的位置</span>
+        heapify(tree, i, <span class="number">0</span>); <span class="comment">//重新堆化</span>
+    }
+}</code></pre>
+]]></content>
+      <categories>
+        <category>Algorithm</category>
+      </categories>
+      <tags>
+        <tag>c++</tag>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+</search>
