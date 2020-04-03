@@ -1,63 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hello World</title>
-    <url>/2020/04/02/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">"My New Post"</span><br></code></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+    <title>[LeetCode]8.字符串转换整数(atoi)</title>
+    <url>/2020/04/03/LeetCode-8-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%8D%A2%E6%95%B4%E6%95%B0-atoi/</url>
+    <content><![CDATA[<h1 id="题目链接"><a href="#题目链接" class="headerlink" title="题目链接"></a>题目链接</h1><p><br> <a href="https://leetcode-cn.com/problems/string-to-integer-atoi/" target="_blank" rel="noopener">原题链接</a></p>
+<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/8/descirbe.png" alt=""></p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p><br>题目中有说到，该函数会根据需要丢弃无用的开头空格字符，直到寻找到第一个非空格的字符为止。所以我们先处理空白字符，直到遇到第一个非空字符。第一个非空字符如果是“-”就记录一下，最后结果乘以 -1 ，如果是别的乱七八糟的符号，直接跳过开始处理后面的数字</p>
+<h2 id="数字处理的过程"><a href="#数字处理的过程" class="headerlink" title="数字处理的过程"></a>数字处理的过程</h2><p><br><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/8/solve1.gif" alt=""><br><br>另外一个很关键的问题，数据溢出问题，有符号整型的数据范围在[$$-2^31$$,$2^31$-1]，在C语言中导入<climits>头文件用 INT_MAX 或者 INT_MIN 即可。在做每次result之前先拿INT_MAX$\color{red}{减去}$当前箭头所指的数字再除以十去和当前result做比较，这相当于一个逆运算判读是否会溢出，对result的式子做一个变换就能看出这个原理。 </p>
+<h1 id="时间与内存"><a href="#时间与内存" class="headerlink" title="时间与内存"></a>时间与内存</h1><p><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/8/pass.png" alt=""></p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code class="cpp">int myAtoi(string str) {
+    int result = 0;
+    int len = str.size();
+    int i, sign = 1;
+    for(i = 0; isspace(str[i]); ++i); //跳过开头空白字符
+    sign = (str[i] == &#39;-&#39;) ? -1 : 1; // 记录负号
+    if(!isdigit(str[i]) &amp;&amp; str[i] != &#39;-&#39; &amp;&amp; str[i] != &#39;+&#39;)
+        return 0; //第一个非空字符不是数字或正负号
+    if(str[i] == &#39;-&#39; || str[i] == &#39;+&#39;)
+        ++i; //跳过正负号
+    for(result = 0; isdigit(str[i]); ++i){
+        int digit = str[i] - &#39;0&#39;;
+        if(result &gt; (INT_MAX - digit) / 10){
+            return sign == -1 ? INT_MIN : INT_MAX; 
+        }
+        result = result * 10 + digit;
+    }
+    return result * sign;
+}</code></pre>
+<p><br>若有问题或者疑问，欢迎加Q探讨</p>
 ]]></content>
       <categories>
-        <category>Algorithm</category>
+        <category>LeetCode</category>
       </categories>
       <tags>
-        <tag>算法</tag>
+        <tag>c++</tag>
+        <tag>字符串</tag>
       </tags>
   </entry>
   <entry>
     <title>sort</title>
     <url>/2020/04/02/sort/</url>
-    <content><![CDATA[<pre><code class="cpp"><span class="function"><span class="keyword">void</span> <span class="title">heapify</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;tree, <span class="keyword">int</span> len, <span class="keyword">int</span> i)</span></span>{
-    <span class="keyword">int</span> cl = <span class="number">2</span> * i + <span class="number">1</span>; <span class="comment">//左节点</span>
-    <span class="keyword">int</span> cr = <span class="number">2</span> * i + <span class="number">2</span>; <span class="comment">//右节点</span>
-    <span class="keyword">int</span> max = i; <span class="comment">//假设当前节点是最大值节点</span>
-    <span class="keyword">if</span> (cl &lt; len &amp;&amp; tree[cl] &gt; tree[max]){
-        max = cl; <span class="comment">//最大值设为左节点</span>
+    <content><![CDATA[<pre><code class="cpp">void heapify(vector&lt;int&gt; &amp;tree, int len, int i){
+    int cl = 2 * i + 1; //左节点
+    int cr = 2 * i + 2; //右节点
+    int max = i; //假设当前节点是最大值节点
+    if (cl &lt; len &amp;&amp; tree[cl] &gt; tree[max]){
+        max = cl; //最大值设为左节点
     }
-    <span class="keyword">if</span> (cr &lt; len &amp;&amp; tree[cr] &gt; tree[max]){
-        max = cr; <span class="comment">//最大值设为右节点</span>
+    if (cr &lt; len &amp;&amp; tree[cr] &gt; tree[max]){
+        max = cr; //最大值设为右节点
     }
-    <span class="keyword">if</span> (max != i){
-        swap(tree[i], tree[max]); <span class="comment">//交换元素</span>
-        heapify(tree, len, max); <span class="comment">//对交换后的节点再进行堆化</span>
+    if (max != i){
+        swap(tree[i], tree[max]); //交换元素
+        heapify(tree, len, max); //对交换后的节点再进行堆化
     }
 
-}<span class="comment">//把当前第i个节点堆化</span>
+}//把当前第i个节点堆化
 
-<span class="function"><span class="keyword">void</span> <span class="title">build_heap</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;tree)</span></span>{
-    <span class="keyword">int</span> len = tree.size();
-    <span class="keyword">int</span> parent = (len - <span class="number">1</span>) / <span class="number">2</span>;<span class="comment">//最后一个叶节点的父节点</span>
-    <span class="keyword">for</span>(<span class="keyword">int</span> i = parent; i &gt;= <span class="number">0</span>; i--){
+void build_heap(vector&lt;int&gt; &amp;tree){
+    int len = tree.size();
+    int parent = (len - 1) / 2;//最后一个叶节点的父节点
+    for(int i = parent; i &gt;= 0; i--){
         heapify(tree, len, i);
     }
-}<span class="comment">//自下而上把树堆化</span>
+}//自下而上把树堆化
 
-<span class="function"><span class="keyword">void</span> <span class="title">heap_sort</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;tree)</span></span>{
-    <span class="keyword">int</span> len = tree.size();
+void heap_sort(vector&lt;int&gt; &amp;tree){
+    int len = tree.size();
     build_heap(tree);
-    <span class="keyword">for</span>(<span class="keyword">int</span> i = len - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--){
-        swap(tree[i], tree[<span class="number">0</span>]); <span class="comment">//交换堆顶和最后一个节点的位置</span>
-        heapify(tree, i, <span class="number">0</span>); <span class="comment">//重新堆化</span>
+    for(int i = len - 1; i &gt;= 0; i--){
+        swap(tree[i], tree[0]); //交换堆顶和最后一个节点的位置
+        heapify(tree, i, 0); //重新堆化
     }
 }</code></pre>
 ]]></content>
@@ -65,8 +78,37 @@
         <category>Algorithm</category>
       </categories>
       <tags>
-        <tag>算法</tag>
         <tag>c++</tag>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>阶乘</title>
+    <url>/2020/04/02/%E9%98%B6%E4%B9%98/</url>
+    <content><![CDATA[<p>程序要求：用递归实现阶乘（不考虑数据溢出问题）</p>
+<h1 id="方法一：递归"><a href="#方法一：递归" class="headerlink" title="方法一：递归"></a>方法一：递归</h1><pre><code class="cpp">int fac(int num){
+    if(num == 0){
+        return 1;
+    }
+    else{
+        return num * fac(num - 1);
+    }
+}</code></pre>
+<p>在递归法中，由于使用的是尾递归，尾递归可以和循环进行转换，</p>
+<h1 id="方法二：循环"><a href="#方法二：循环" class="headerlink" title="方法二：循环"></a>方法二：循环</h1><pre><code class="cpp">int fac(int num){
+    if(num == 0){
+        return 1;
+    }
+    int result = 1;
+    for(int i = num; i &gt; 0; i--){
+        result *= i;
+    }
+    return result;
+}</code></pre>
+<p>两个程序都只扫描了一遍，时间复杂度On</p>
+]]></content>
+      <tags>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -75,22 +117,23 @@
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title>阶乘</title>
-    <url>/2020/04/02/%E9%98%B6%E4%B9%98/</url>
-    <content><![CDATA[<p>程序要求：用递归实现阶乘（不考虑数据溢出问题）</p>
-<h1 id="方法一：递归"><a href="#方法一：递归" class="headerlink" title="方法一：递归"></a>方法一：递归</h1><figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">fac</span><span class="hljs-params">(<span class="hljs-keyword">int</span> num)</span></span>&#123;<br>    <span class="hljs-keyword">if</span>(num == <span class="hljs-number">0</span>)&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>    &#125;<br>    <span class="hljs-keyword">else</span>&#123;<br>        <span class="hljs-keyword">return</span> num * fac(num - <span class="hljs-number">1</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>在递归法中，由于使用的是尾递归，尾递归可以和循环进行转换，</p>
-<h1 id="方法二：循环"><a href="#方法二：循环" class="headerlink" title="方法二：循环"></a>方法二：循环</h1><figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">fac</span><span class="hljs-params">(<span class="hljs-keyword">int</span> num)</span></span>&#123;<br>    <span class="hljs-keyword">if</span>(num == <span class="hljs-number">0</span>)&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>    &#125;<br>    <span class="hljs-keyword">int</span> result = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = num; i &gt; <span class="hljs-number">0</span>; i--)&#123;<br>        result *= i;<br>    &#125;<br>    <span class="hljs-keyword">return</span> result;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>两个程序都只扫描了一遍，时间复杂度On</p>
+    <title>Hello World</title>
+    <url>/2020/04/02/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;</code></pre>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server</code></pre>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate</code></pre>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy</code></pre>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 ]]></content>
+      <categories>
+        <category>Algorithm</category>
+      </categories>
       <tags>
         <tag>算法</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>LeetCode-8-字符串转换整数-atoi</title>
-    <url>/2020/04/03/LeetCode-8-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%8D%A2%E6%95%B4%E6%95%B0-atoi/</url>
-    <content><![CDATA[]]></content>
   </entry>
 </search>

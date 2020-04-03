@@ -68,37 +68,37 @@
 
         </div>
         <div class="content markdown">
-            <pre><code class="cpp"><span class="function"><span class="keyword">void</span> <span class="title">heapify</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;tree, <span class="keyword">int</span> len, <span class="keyword">int</span> i)</span></span>{
-    <span class="keyword">int</span> cl = <span class="number">2</span> * i + <span class="number">1</span>; <span class="comment">//左节点</span>
-    <span class="keyword">int</span> cr = <span class="number">2</span> * i + <span class="number">2</span>; <span class="comment">//右节点</span>
-    <span class="keyword">int</span> max = i; <span class="comment">//假设当前节点是最大值节点</span>
-    <span class="keyword">if</span> (cl &lt; len &amp;&amp; tree[cl] &gt; tree[max]){
-        max = cl; <span class="comment">//最大值设为左节点</span>
+            <pre><code class="cpp">void heapify(vector&lt;int&gt; &amp;tree, int len, int i){
+    int cl = 2 * i + 1; //左节点
+    int cr = 2 * i + 2; //右节点
+    int max = i; //假设当前节点是最大值节点
+    if (cl &lt; len &amp;&amp; tree[cl] &gt; tree[max]){
+        max = cl; //最大值设为左节点
     }
-    <span class="keyword">if</span> (cr &lt; len &amp;&amp; tree[cr] &gt; tree[max]){
-        max = cr; <span class="comment">//最大值设为右节点</span>
+    if (cr &lt; len &amp;&amp; tree[cr] &gt; tree[max]){
+        max = cr; //最大值设为右节点
     }
-    <span class="keyword">if</span> (max != i){
-        swap(tree[i], tree[max]); <span class="comment">//交换元素</span>
-        heapify(tree, len, max); <span class="comment">//对交换后的节点再进行堆化</span>
+    if (max != i){
+        swap(tree[i], tree[max]); //交换元素
+        heapify(tree, len, max); //对交换后的节点再进行堆化
     }
 
-}<span class="comment">//把当前第i个节点堆化</span>
+}//把当前第i个节点堆化
 
-<span class="function"><span class="keyword">void</span> <span class="title">build_heap</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;tree)</span></span>{
-    <span class="keyword">int</span> len = tree.size();
-    <span class="keyword">int</span> parent = (len - <span class="number">1</span>) / <span class="number">2</span>;<span class="comment">//最后一个叶节点的父节点</span>
-    <span class="keyword">for</span>(<span class="keyword">int</span> i = parent; i &gt;= <span class="number">0</span>; i--){
+void build_heap(vector&lt;int&gt; &amp;tree){
+    int len = tree.size();
+    int parent = (len - 1) / 2;//最后一个叶节点的父节点
+    for(int i = parent; i &gt;= 0; i--){
         heapify(tree, len, i);
     }
-}<span class="comment">//自下而上把树堆化</span>
+}//自下而上把树堆化
 
-<span class="function"><span class="keyword">void</span> <span class="title">heap_sort</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;tree)</span></span>{
-    <span class="keyword">int</span> len = tree.size();
+void heap_sort(vector&lt;int&gt; &amp;tree){
+    int len = tree.size();
     build_heap(tree);
-    <span class="keyword">for</span>(<span class="keyword">int</span> i = len - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--){
-        swap(tree[i], tree[<span class="number">0</span>]); <span class="comment">//交换堆顶和最后一个节点的位置</span>
-        heapify(tree, i, <span class="number">0</span>); <span class="comment">//重新堆化</span>
+    for(int i = len - 1; i &gt;= 0; i--){
+        swap(tree[i], tree[0]); //交换堆顶和最后一个节点的位置
+        heapify(tree, i, 0); //重新堆化
     }
 }</code></pre>
 
