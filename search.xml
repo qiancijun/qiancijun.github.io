@@ -1,6 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>快速排序</title>
+    <url>/2020/04/04/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>排序作为数据结构与算法基础算法之一，形式多样，复杂度不同，在不同情况下选用适当的排序算法能够使效率最大化。本文主要介绍排序算法中的&amp;\color{red}{快速排序}$。一般所说的数组排序规模都在一万个数据以上，在这种数据规模下，快速排序的效率远大于冒泡、选择、插入排序。</p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><h2 id="一个简单例子"><a href="#一个简单例子" class="headerlink" title="一个简单例子"></a>一个简单例子</h2><p>我们先来看一个数组[2, 1, 4, 3, 6, 9, 8, 7, 10]<br><br>该例子有一个明显的特点，也不难发现，整个数组的中间数6，在6的左边所有元素都是小于6的，在6的右边所有元素都是大于6的。我们的目的很简单，就是把这个特殊数组排序，使它成为一个有序的数组<br><img src="https://github.com/qiancijun/Image/raw/master/Algorithm/QuickSort/quicksort_simple.jpg" alt=""><br><br>很明显，我们只要把6左边的集合变成有序序列，把6右边的集合变成有序序列，最后合并，即可使整个序列有序。而在整个过程中把6称为主元(pivot)，算法核心思想利用递归、分治，把排序分成多个子集合的排序，最后使整个序列有序</p>
+<h1 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h1><h2 id="主元选取"><a href="#主元选取" class="headerlink" title="主元选取"></a>主元选取</h2><p>一般来说，待排序数组都是无规律的，不会是我们简单例子所看到的这么一个特殊序列，而对于无规律数组，一个主元合理的选取方式，可以提升算法效率。<br><br>选取主元有多种方式，如果单纯选数组第一个元素或者最后一个元素作为主元显然是不合理的。若对于一个部分有序的数组，形如[1, 2, 3, 4, 8, 5, 9]每次把第一个元素作为主元，显然子集划分后左子集是空集，这种情况不是我们所预期的。对于主元的选取方式一般有两种</p>
+<ol>
+<li>随机选取</li>
+<li>中位数选取</li>
+</ol>
+<h2 id="主元选取（中位数）"><a href="#主元选取（中位数）" class="headerlink" title="主元选取（中位数）"></a>主元选取（中位数）</h2><p>首先比较整个数列中三个元素，头、尾、中，把三个数中最大的元素放在左右边，把最小的元素放在最左边。比较完之后，我们把主元放到数组末尾，以便进行子集划分的操作</p>
+<h2 id="主元选取（随机数）"><a href="#主元选取（随机数）" class="headerlink" title="主元选取（随机数）"></a>主元选取（随机数）</h2><p>待更</p>
+<h2 id="子集划分"><a href="#子集划分" class="headerlink" title="子集划分"></a>子集划分</h2><p>首先我们已经进行过了主元选取的操作，整个数组变成了[待划分元素，主元]的形式，这个操作主要运用了双指针来完成，一个指针去遍历剩下n-1个元素，一个指针指向数组第一个元素（在选取主元时，已经把数组第一个换成了比主元小的数）每当遇到比主元小的数就向前挪。<br><img src="https://github.com/qiancijun/Image/raw/master/Algorithm/QuickSort/part.gif" alt=""><br>每次划分之后交换主元和左集合指针的位置，交换后的主元为最后排序完的最终位置。</p>
+<h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><p>快速排序效率高，时间复杂度O(nlogn)，但在特殊情况下，快速排序显得不那么快，理由很简单。快速排序实现的主要想法是递归，对于递归程序，计算机内存栈需要不断的执行入栈和出栈的工作，如果待排的序列是一个规模极其小的序列，它的效率还可能不如冒泡排序。对于这一点我们可以加入一个优化部分，如果待排的个数小到一定的数量，可以直接执行一次插入排序，提升效率。<br><br>快速排序的程序在书写上有很多细节，如果某些细节没有注意到那就完全实现不了</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code class="cpp">int partition(vector&lt;int&gt; &amp;nums, int left, int right){
+    int pivot = nums[right];
+    int i = left - 1;
+    for (int j = left; j &lt;= right - 1; ++j){
+        if(nums[j] &lt; pivot){
+            i += 1;
+            swap(nums[i], nums[j]);
+        }
+    }
+    swap(nums[i + 1], nums[right]);
+    return i + 1;
+}
+
+int median(vector&lt;int&gt; &amp;nums, int left, int right){
+    int mid = (left + right) / 2;
+    if (nums[left] &gt; nums[mid]){
+        swap(nums[left], nums[mid]);
+    } //左和中的比较
+    if (nums[mid] &gt; nums[right]){
+        swap(nums[mid], nums[right]);
+    } //右和中的比较
+    if (nums[left] &gt; nums[right]){
+        swap(nums[left], nums[right]);
+    } //左和右的比较
+    swap(nums[mid], nums[right]); //把中位数放到最后一个
+    return partition(nums, left, right);
+} //寻找中位数
+
+
+void quick_sort(vector&lt;int&gt; &amp;nums, int left, int right){
+    if (left &lt; right){
+        int pos = median(nums, left, right);
+        quick_sort(nums, left, pos - 1);
+        quick_sort(nums, pos + 1, right);
+    }
+}</code></pre>
+<h1 id="题外"><a href="#题外" class="headerlink" title="题外"></a>题外</h1><p>c++STL库中封装好了一个sort函数，它的主要方法是快速排序，但在这基础上又对它优化了许多，数量小的情况会调用堆排序，是几种排序的一个集合方法<br><br> <a href="xlich.top">归并排序</a><br><br> <a href="xlich.top">堆排序</a><br><br> <a href="xlich.top">冒泡、选择、插入排序</a><br><br> <a href="xlich.top">希尔排序</a><br><br>若有写的不对或者疑惑的地方，欢迎+Q探讨</p>
+]]></content>
+      <categories>
+        <category>Algorithm</category>
+      </categories>
+      <tags>
+        <tag>排序</tag>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>[LeetCode]8.字符串转换整数(atoi)</title>
     <url>/2020/04/03/LeetCode-8-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%8D%A2%E6%95%B4%E6%95%B0-atoi/</url>
     <content><![CDATA[<h1 id="题目链接"><a href="#题目链接" class="headerlink" title="题目链接"></a>题目链接</h1><p><br> <a href="https://leetcode-cn.com/problems/string-to-integer-atoi/" target="_blank" rel="noopener">原题链接</a></p>
@@ -8,7 +68,25 @@
 <h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p><br>题目中有说到，该函数会根据需要丢弃无用的开头空格字符，直到寻找到第一个非空格的字符为止。所以我们先处理空白字符，直到遇到第一个非空字符。第一个非空字符如果是“-”就记录一下，最后结果乘以 -1 ，如果是别的乱七八糟的符号，直接跳过开始处理后面的数字</p>
 <h2 id="数字处理的过程"><a href="#数字处理的过程" class="headerlink" title="数字处理的过程"></a>数字处理的过程</h2><p><br><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/8/solve1.gif" alt=""><br><br>另外一个很关键的问题，数据溢出问题，有符号整型的数据范围在[$$-2^31$$,$$2^31$$-1]，在C语言中导入<climits>头文件用 INT_MAX 或者 INT_MIN 即可。在做每次result之前先拿INT_MAX$\color{red}{减去}$当前箭头所指的数字再除以十去和当前result做比较，这相当于一个逆运算判读是否会溢出，对result的式子做一个变换就能看出这个原理。 </p>
 <h1 id="时间与内存"><a href="#时间与内存" class="headerlink" title="时间与内存"></a>时间与内存</h1><p><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/8/pass.png" alt=""></p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">myAtoi</span><span class="hljs-params">(<span class="hljs-built_in">string</span> str)</span> </span>&#123;<br>    <span class="hljs-keyword">int</span> result = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">int</span> len = str.size();<br>    <span class="hljs-keyword">int</span> i, sign = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; <span class="hljs-built_in">isspace</span>(str[i]); ++i); <span class="hljs-comment">//跳过开头空白字符</span><br>    sign = (str[i] == <span class="hljs-string">'-'</span>) ? <span class="hljs-number">-1</span> : <span class="hljs-number">1</span>; <span class="hljs-comment">// 记录负号</span><br>    <span class="hljs-keyword">if</span>(!<span class="hljs-built_in">isdigit</span>(str[i]) &amp;&amp; str[i] != <span class="hljs-string">'-'</span> &amp;&amp; str[i] != <span class="hljs-string">'+'</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>; <span class="hljs-comment">//第一个非空字符不是数字或正负号</span><br>    <span class="hljs-keyword">if</span>(str[i] == <span class="hljs-string">'-'</span> || str[i] == <span class="hljs-string">'+'</span>)<br>        ++i; <span class="hljs-comment">//跳过正负号</span><br>    <span class="hljs-keyword">for</span>(result = <span class="hljs-number">0</span>; <span class="hljs-built_in">isdigit</span>(str[i]); ++i)&#123;<br>        <span class="hljs-keyword">int</span> digit = str[i] - <span class="hljs-string">'0'</span>;<br>        <span class="hljs-keyword">if</span>(result &gt; (INT_MAX - digit) / <span class="hljs-number">10</span>)&#123;<br>            <span class="hljs-keyword">return</span> sign == <span class="hljs-number">-1</span> ? INT_MIN : INT_MAX; <br>        &#125;<br>        result = result * <span class="hljs-number">10</span> + digit;<br>    &#125;<br>    <span class="hljs-keyword">return</span> result * sign;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code class="cpp">int myAtoi(string str) {
+    int result = 0;
+    int len = str.size();
+    int i, sign = 1;
+    for(i = 0; isspace(str[i]); ++i); //跳过开头空白字符
+    sign = (str[i] == &#39;-&#39;) ? -1 : 1; // 记录负号
+    if(!isdigit(str[i]) &amp;&amp; str[i] != &#39;-&#39; &amp;&amp; str[i] != &#39;+&#39;)
+        return 0; //第一个非空字符不是数字或正负号
+    if(str[i] == &#39;-&#39; || str[i] == &#39;+&#39;)
+        ++i; //跳过正负号
+    for(result = 0; isdigit(str[i]); ++i){
+        int digit = str[i] - &#39;0&#39;;
+        if(result &gt; (INT_MAX - digit) / 10){
+            return sign == -1 ? INT_MIN : INT_MAX; 
+        }
+        result = result * 10 + digit;
+    }
+    return result * sign;
+}</code></pre>
 <p><br>若有问题或者疑问，欢迎加Q探讨</p>
 ]]></content>
       <categories>
@@ -17,6 +95,37 @@
       <tags>
         <tag>c++</tag>
         <tag>字符串</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>哀悼抗击新冠肺炎疫情牺牲烈士</title>
+    <url>/2020/04/04/%E5%93%80%E6%82%BC%E6%8A%97%E5%87%BB%E6%96%B0%E5%86%A0%E8%82%BA%E7%82%8E%E7%96%AB%E6%83%85%E7%89%BA%E7%89%B2%E7%83%88%E5%A3%AB/</url>
+    <content><![CDATA[<h2 id="默哀-为在抗击新型冠状病毒中牺牲烈士和逝世同胞"><a href="#默哀-为在抗击新型冠状病毒中牺牲烈士和逝世同胞" class="headerlink" title="默哀 为在抗击新型冠状病毒中牺牲烈士和逝世同胞"></a>默哀 为在抗击新型冠状病毒中牺牲烈士和逝世同胞</h2><p><img src="https://github.com/qiancijun/Image/raw/master/Life/2020.4.4.jpeg" alt=""></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>test</title>
+    <url>/2020/04/02/test/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2020/04/02/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;</code></pre>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server</code></pre>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate</code></pre>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy</code></pre>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>Algorithm</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -60,8 +169,8 @@ void heap_sort(vector&lt;int&gt; &amp;tree){
         <category>Algorithm</category>
       </categories>
       <tags>
-        <tag>c++</tag>
         <tag>算法</tag>
+        <tag>c++</tag>
       </tags>
   </entry>
   <entry>
@@ -92,62 +201,5 @@ void heap_sort(vector&lt;int&gt; &amp;tree){
       <tags>
         <tag>算法</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>test</title>
-    <url>/2020/04/02/test/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2020/04/02/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;</code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy</code></pre>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-]]></content>
-      <categories>
-        <category>Algorithm</category>
-      </categories>
-      <tags>
-        <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>快速排序</title>
-    <url>/2020/04/04/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>排序作为数据结构与算法基础算法之一，形式多样，复杂度不同，在不同情况下选用适当的排序算法能够使效率最大化。本文主要介绍排序算法中的&amp;\color{red}{快速排序}$。一般所说的数组排序规模都在一万个数据以上，在这种数据规模下，快速排序的效率远大于冒泡、选择、插入排序。</p>
-<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><h2 id="一个简单例子"><a href="#一个简单例子" class="headerlink" title="一个简单例子"></a>一个简单例子</h2><p>我们先来看一个数组[2, 1, 4, 3, 6, 9, 8, 7, 10]<br><br>该例子有一个明显的特点，也不难发现，整个数组的中间数6，在6的左边所有元素都是小于6的，在6的右边所有元素都是大于6的。我们的目的很简单，就是把这个特殊数组排序，使它成为一个有序的数组<br><img src="https://github.com/qiancijun/Image/raw/master/Algorithm/QuickSort/quicksort_simple.jpg" alt=""><br><br>很明显，我们只要把6左边的集合变成有序序列，把6右边的集合变成有序序列，最后合并，即可使整个序列有序。而在整个过程中把6称为主元(pivot)，算法核心思想利用递归、分治，把排序分成多个子集合的排序，最后使整个序列有序</p>
-<h1 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h1><h2 id="主元选取"><a href="#主元选取" class="headerlink" title="主元选取"></a>主元选取</h2><p>一般来说，待排序数组都是无规律的，不会是我们简单例子所看到的这么一个特殊序列，而对于无规律数组，一个主元合理的选取方式，可以提升算法效率。<br><br>选取主元有多种方式，如果单纯选数组第一个元素或者最后一个元素作为主元显然是不合理的。若对于一个部分有序的数组，形如[1, 2, 3, 4, 8, 5, 9]每次把第一个元素作为主元，显然子集划分后左子集是空集，这种情况不是我们所预期的。对于主元的选取方式一般有两种</p>
-<ol>
-<li>随机选取</li>
-<li>中位数选取</li>
-</ol>
-<h2 id="主元选取（中位数）"><a href="#主元选取（中位数）" class="headerlink" title="主元选取（中位数）"></a>主元选取（中位数）</h2><p>首先比较整个数列中三个元素，头、尾、中，把三个数中最大的元素放在左右边，把最小的元素放在最左边。比较完之后，我们把主元放到数组末尾，以便进行子集划分的操作</p>
-<h2 id="主元选取（随机数）"><a href="#主元选取（随机数）" class="headerlink" title="主元选取（随机数）"></a>主元选取（随机数）</h2><p>待更</p>
-<h2 id="子集划分"><a href="#子集划分" class="headerlink" title="子集划分"></a>子集划分</h2><p>首先我们已经进行过了主元选取的操作，整个数组变成了[待划分元素，主元]的形式，这个操作主要运用了双指针来完成，一个指针去遍历剩下n-1个元素，一个指针指向数组第一个元素（在选取主元时，已经把数组第一个换成了比主元小的数）每当遇到比主元小的数就向前挪。<br><img src="https://github.com/qiancijun/Image/raw/master/Algorithm/QuickSort/part.gif" alt=""><br>每次划分之后交换主元和左集合指针的位置，交换后的主元为最后排序完的最终位置。</p>
-<h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><p>快速排序效率高，时间复杂度O(nlogn)，但在特殊情况下，快速排序显得不那么快，理由很简单。快速排序实现的主要想法是递归，对于递归程序，计算机内存栈需要不断的执行入栈和出栈的工作，如果待排的序列是一个规模极其小的序列，它的效率还可能不如冒泡排序。对于这一点我们可以加入一个优化部分，如果待排的个数小到一定的数量，可以直接执行一次插入排序，提升效率。<br><br>快速排序的程序在书写上有很多细节，如果某些细节没有注意到那就完全实现不了</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">partition</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; &amp;nums, <span class="hljs-keyword">int</span> left, <span class="hljs-keyword">int</span> right)</span></span>&#123;<br>    <span class="hljs-keyword">int</span> pivot = nums[right];<br>    <span class="hljs-keyword">int</span> i = left - <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = left; j &lt;= right - <span class="hljs-number">1</span>; ++j)&#123;<br>        <span class="hljs-keyword">if</span>(nums[j] &lt; pivot)&#123;<br>            i += <span class="hljs-number">1</span>;<br>            swap(nums[i], nums[j]);<br>        &#125;<br>    &#125;<br>    swap(nums[i + <span class="hljs-number">1</span>], nums[right]);<br>    <span class="hljs-keyword">return</span> i + <span class="hljs-number">1</span>;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">median</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; &amp;nums, <span class="hljs-keyword">int</span> left, <span class="hljs-keyword">int</span> right)</span></span>&#123;<br>    <span class="hljs-keyword">int</span> mid = (left + right) / <span class="hljs-number">2</span>;<br>    <span class="hljs-keyword">if</span> (nums[left] &gt; nums[mid])&#123;<br>        swap(nums[left], nums[mid]);<br>    &#125; <span class="hljs-comment">//左和中的比较</span><br>    <span class="hljs-keyword">if</span> (nums[mid] &gt; nums[right])&#123;<br>        swap(nums[mid], nums[right]);<br>    &#125; <span class="hljs-comment">//右和中的比较</span><br>    <span class="hljs-keyword">if</span> (nums[left] &gt; nums[right])&#123;<br>        swap(nums[left], nums[right]);<br>    &#125; <span class="hljs-comment">//左和右的比较</span><br>    swap(nums[mid], nums[right]); <span class="hljs-comment">//把中位数放到最后一个</span><br>    <span class="hljs-keyword">return</span> partition(nums, left, right);<br>&#125; <span class="hljs-comment">//寻找中位数</span><br><br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">quick_sort</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; &amp;nums, <span class="hljs-keyword">int</span> left, <span class="hljs-keyword">int</span> right)</span></span>&#123;<br>    <span class="hljs-keyword">if</span> (left &lt; right)&#123;<br>        <span class="hljs-keyword">int</span> pos = median(nums, left, right);<br>        quick_sort(nums, left, pos - <span class="hljs-number">1</span>);<br>        quick_sort(nums, pos + <span class="hljs-number">1</span>, right);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h1 id="题外"><a href="#题外" class="headerlink" title="题外"></a>题外</h1><p>c++STL库中封装好了一个sort函数，它的主要方法是快速排序，但在这基础上又对它优化了许多，数量小的情况会调用堆排序，是几种排序的一个集合方法<br><br> <a href="xlich.top">归并排序</a><br><br> <a href="xlich.top">堆排序</a><br><br> <a href="xlich.top">冒泡、选择、插入排序</a><br><br> <a href="xlich.top">希尔排序</a><br><br>若有写的不对或者疑惑的地方，欢迎+Q探讨</p>
-]]></content>
-      <categories>
-        <category>Algorithm</category>
-      </categories>
-      <tags>
-        <tag>算法</tag>
-        <tag>排序</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>哀悼抗击新冠肺炎疫情牺牲烈士</title>
-    <url>/2020/04/04/%E5%93%80%E6%82%BC%E6%8A%97%E5%87%BB%E6%96%B0%E5%86%A0%E8%82%BA%E7%82%8E%E7%96%AB%E6%83%85%E7%89%BA%E7%89%B2%E7%83%88%E5%A3%AB/</url>
-    <content><![CDATA[<h2 id="默哀-为在抗击新型冠状病毒中牺牲烈士和逝世同胞"><a href="#默哀-为在抗击新型冠状病毒中牺牲烈士和逝世同胞" class="headerlink" title="默哀 为在抗击新型冠状病毒中牺牲烈士和逝世同胞"></a>默哀 为在抗击新型冠状病毒中牺牲烈士和逝世同胞</h2><p><img src="https://github.com/qiancijun/Image/raw/master/Life/2020.4.4.jpeg" alt=""></p>
-]]></content>
   </entry>
 </search>

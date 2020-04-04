@@ -73,7 +73,25 @@
 <h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p><br>题目中有说到，该函数会根据需要丢弃无用的开头空格字符，直到寻找到第一个非空格的字符为止。所以我们先处理空白字符，直到遇到第一个非空字符。第一个非空字符如果是“-”就记录一下，最后结果乘以 -1 ，如果是别的乱七八糟的符号，直接跳过开始处理后面的数字</p>
 <h2 id="数字处理的过程"><a href="#数字处理的过程" class="headerlink" title="数字处理的过程"></a>数字处理的过程</h2><p><br><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/8/solve1.gif" alt=""><br><br>另外一个很关键的问题，数据溢出问题，有符号整型的数据范围在[$$-2^31$$,$$2^31$$-1]，在C语言中导入<climits>头文件用 INT_MAX 或者 INT_MIN 即可。在做每次result之前先拿INT_MAX$\color{red}{减去}$当前箭头所指的数字再除以十去和当前result做比较，这相当于一个逆运算判读是否会溢出，对result的式子做一个变换就能看出这个原理。 </p>
 <h1 id="时间与内存"><a href="#时间与内存" class="headerlink" title="时间与内存"></a>时间与内存</h1><p><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/8/pass.png" alt=""></p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">myAtoi</span><span class="hljs-params">(<span class="hljs-built_in">string</span> str)</span> </span>&#123;<br>    <span class="hljs-keyword">int</span> result = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">int</span> len = str.size();<br>    <span class="hljs-keyword">int</span> i, sign = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; <span class="hljs-built_in">isspace</span>(str[i]); ++i); <span class="hljs-comment">//跳过开头空白字符</span><br>    sign = (str[i] == <span class="hljs-string">'-'</span>) ? <span class="hljs-number">-1</span> : <span class="hljs-number">1</span>; <span class="hljs-comment">// 记录负号</span><br>    <span class="hljs-keyword">if</span>(!<span class="hljs-built_in">isdigit</span>(str[i]) &amp;&amp; str[i] != <span class="hljs-string">'-'</span> &amp;&amp; str[i] != <span class="hljs-string">'+'</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>; <span class="hljs-comment">//第一个非空字符不是数字或正负号</span><br>    <span class="hljs-keyword">if</span>(str[i] == <span class="hljs-string">'-'</span> || str[i] == <span class="hljs-string">'+'</span>)<br>        ++i; <span class="hljs-comment">//跳过正负号</span><br>    <span class="hljs-keyword">for</span>(result = <span class="hljs-number">0</span>; <span class="hljs-built_in">isdigit</span>(str[i]); ++i)&#123;<br>        <span class="hljs-keyword">int</span> digit = str[i] - <span class="hljs-string">'0'</span>;<br>        <span class="hljs-keyword">if</span>(result &gt; (INT_MAX - digit) / <span class="hljs-number">10</span>)&#123;<br>            <span class="hljs-keyword">return</span> sign == <span class="hljs-number">-1</span> ? INT_MIN : INT_MAX; <br>        &#125;<br>        result = result * <span class="hljs-number">10</span> + digit;<br>    &#125;<br>    <span class="hljs-keyword">return</span> result * sign;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code class="cpp">int myAtoi(string str) {
+    int result = 0;
+    int len = str.size();
+    int i, sign = 1;
+    for(i = 0; isspace(str[i]); ++i); //跳过开头空白字符
+    sign = (str[i] == &#39;-&#39;) ? -1 : 1; // 记录负号
+    if(!isdigit(str[i]) &amp;&amp; str[i] != &#39;-&#39; &amp;&amp; str[i] != &#39;+&#39;)
+        return 0; //第一个非空字符不是数字或正负号
+    if(str[i] == &#39;-&#39; || str[i] == &#39;+&#39;)
+        ++i; //跳过正负号
+    for(result = 0; isdigit(str[i]); ++i){
+        int digit = str[i] - &#39;0&#39;;
+        if(result &gt; (INT_MAX - digit) / 10){
+            return sign == -1 ? INT_MIN : INT_MAX; 
+        }
+        result = result * 10 + digit;
+    }
+    return result * sign;
+}</code></pre>
 <p><br>若有问题或者疑问，欢迎加Q探讨</p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
