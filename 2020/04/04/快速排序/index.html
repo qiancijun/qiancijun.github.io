@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html lang="zh_CH" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>快速排序 - 神奇口袋</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="qiancijun,"> 
+    <meta name="description" content="前言排序作为数据结构与算法基础算法之一，形式多样，复杂度不同，在不同情况下选用适当的排序算法能够使效率最大化。本文主要介绍排序算法中的&amp;amp;\color{red}{快速排序}$。一般所说的数组排,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">神奇口袋</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://qiancijun.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">快速排序</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    
+    <div class="layer" data-depth="0.4">
+        <img src="/img/b.jpg" id="cover" crossorigin="anonymous" width="1920" height="1080">
+    </div>
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">快速排序</h1>
+        <div class="stuff">
+            <span>四月 04, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E6%8E%92%E5%BA%8F/" rel="tag">排序</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>排序作为数据结构与算法基础算法之一，形式多样，复杂度不同，在不同情况下选用适当的排序算法能够使效率最大化。本文主要介绍排序算法中的&amp;\color{red}{快速排序}$。一般所说的数组排序规模都在一万个数据以上，在这种数据规模下，快速排序的效率远大于冒泡、选择、插入排序。</p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><h2 id="一个简单例子"><a href="#一个简单例子" class="headerlink" title="一个简单例子"></a>一个简单例子</h2><p>我们先来看一个数组[2, 1, 4, 3, 6, 9, 8, 7, 10]<br><br>该例子有一个明显的特点，也不难发现，整个数组的中间数6，在6的左边所有元素都是小于6的，在6的右边所有元素都是大于6的。我们的目的很简单，就是把这个特殊数组排序，使它成为一个有序的数组<br><img src="https://github.com/qiancijun/Image/raw/master/Algorithm/QuickSort/quicksort_simple.jpg" alt=""><br><br>很明显，我们只要把6左边的集合变成有序序列，把6右边的集合变成有序序列，最后合并，即可使整个序列有序。而在整个过程中把6称为主元(pivot)，算法核心思想利用递归、分治，把排序分成多个子集合的排序，最后使整个序列有序</p>
+<h1 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h1><h2 id="主元选取"><a href="#主元选取" class="headerlink" title="主元选取"></a>主元选取</h2><p>一般来说，待排序数组都是无规律的，不会是我们简单例子所看到的这么一个特殊序列，而对于无规律数组，一个主元合理的选取方式，可以提升算法效率。<br><br>选取主元有多种方式，如果单纯选数组第一个元素或者最后一个元素作为主元显然是不合理的。若对于一个部分有序的数组，形如[1, 2, 3, 4, 8, 5, 9]每次把第一个元素作为主元，显然子集划分后左子集是空集，这种情况不是我们所预期的。对于主元的选取方式一般有两种</p>
+<ol>
+<li>随机选取</li>
+<li>中位数选取</li>
+</ol>
+<h2 id="主元选取（中位数）"><a href="#主元选取（中位数）" class="headerlink" title="主元选取（中位数）"></a>主元选取（中位数）</h2><p>首先比较整个数列中三个元素，头、尾、中，把三个数中最大的元素放在左右边，把最小的元素放在最左边。比较完之后，我们把主元放到数组末尾，以便进行子集划分的操作</p>
+<h2 id="主元选取（随机数）"><a href="#主元选取（随机数）" class="headerlink" title="主元选取（随机数）"></a>主元选取（随机数）</h2><p>待更</p>
+<h2 id="子集划分"><a href="#子集划分" class="headerlink" title="子集划分"></a>子集划分</h2><p>首先我们已经进行过了主元选取的操作，整个数组变成了[待划分元素，主元]的形式，这个操作主要运用了双指针来完成，一个指针去遍历剩下n-1个元素，一个指针指向数组第一个元素（在选取主元时，已经把数组第一个换成了比主元小的数）每当遇到比主元小的数就向前挪。<br><img src="https://github.com/qiancijun/Image/raw/master/Algorithm/QuickSort/part.gif" alt=""><br>每次划分之后交换主元和左集合指针的位置，交换后的主元为最后排序完的最终位置。</p>
+<h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><p>快速排序效率高，时间复杂度O(nlogn)，但在特殊情况下，快速排序显得不那么快，理由很简单。快速排序实现的主要想法是递归，对于递归程序，计算机内存栈需要不断的执行入栈和出栈的工作，如果待排的序列是一个规模极其小的序列，它的效率还可能不如冒泡排序。对于这一点我们可以加入一个优化部分，如果待排的个数小到一定的数量，可以直接执行一次插入排序，提升效率。<br><br>快速排序的程序在书写上有很多细节，如果某些细节没有注意到那就完全实现不了</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">partition</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; &amp;nums, <span class="hljs-keyword">int</span> left, <span class="hljs-keyword">int</span> right)</span></span>&#123;<br>    <span class="hljs-keyword">int</span> pivot = nums[right];<br>    <span class="hljs-keyword">int</span> i = left - <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = left; j &lt;= right - <span class="hljs-number">1</span>; ++j)&#123;<br>        <span class="hljs-keyword">if</span>(nums[j] &lt; pivot)&#123;<br>            i += <span class="hljs-number">1</span>;<br>            swap(nums[i], nums[j]);<br>        &#125;<br>    &#125;<br>    swap(nums[i + <span class="hljs-number">1</span>], nums[right]);<br>    <span class="hljs-keyword">return</span> i + <span class="hljs-number">1</span>;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">median</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; &amp;nums, <span class="hljs-keyword">int</span> left, <span class="hljs-keyword">int</span> right)</span></span>&#123;<br>    <span class="hljs-keyword">int</span> mid = (left + right) / <span class="hljs-number">2</span>;<br>    <span class="hljs-keyword">if</span> (nums[left] &gt; nums[mid])&#123;<br>        swap(nums[left], nums[mid]);<br>    &#125; <span class="hljs-comment">//左和中的比较</span><br>    <span class="hljs-keyword">if</span> (nums[mid] &gt; nums[right])&#123;<br>        swap(nums[mid], nums[right]);<br>    &#125; <span class="hljs-comment">//右和中的比较</span><br>    <span class="hljs-keyword">if</span> (nums[left] &gt; nums[right])&#123;<br>        swap(nums[left], nums[right]);<br>    &#125; <span class="hljs-comment">//左和右的比较</span><br>    swap(nums[mid], nums[right]); <span class="hljs-comment">//把中位数放到最后一个</span><br>    <span class="hljs-keyword">return</span> partition(nums, left, right);<br>&#125; <span class="hljs-comment">//寻找中位数</span><br><br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">quick_sort</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; &amp;nums, <span class="hljs-keyword">int</span> left, <span class="hljs-keyword">int</span> right)</span></span>&#123;<br>    <span class="hljs-keyword">if</span> (left &lt; right)&#123;<br>        <span class="hljs-keyword">int</span> pos = median(nums, left, right);<br>        quick_sort(nums, left, pos - <span class="hljs-number">1</span>);<br>        quick_sort(nums, pos + <span class="hljs-number">1</span>, right);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h1 id="题外"><a href="#题外" class="headerlink" title="题外"></a>题外</h1><p>c++STL库中封装好了一个sort函数，它的主要方法是快速排序，但在这基础上又对它优化了许多，数量小的情况会调用堆排序，是几种排序的一个集合方法<br><br> <a href="xlich.top">归并排序</a><br><br> <a href="xlich.top">堆排序</a><br><br> <a href="xlich.top">冒泡、选择、插入排序</a><br><br> <a href="xlich.top">希尔排序</a><br><br>若有写的不对或者疑惑的地方，欢迎+Q探讨</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='https://link.hhtjim.com/163/155827.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='https://link.hhtjim.com/163/1491163.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='true'
+        data-ci='Iv1.06e5c405a7731b45'
+        data-cs='2fcfe85902a7d5812fa4b299b56a6f194c98e08a'
+        data-r='qiancijun.github.io'
+        data-o='qiancijun'
+        data-a='qiancijun'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#思路"><span class="toc-number">2.</span> <span class="toc-text">思路</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一个简单例子"><span class="toc-number">2.1.</span> <span class="toc-text">一个简单例子</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#算法实现"><span class="toc-number">3.</span> <span class="toc-text">算法实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#主元选取"><span class="toc-number">3.1.</span> <span class="toc-text">主元选取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主元选取（中位数）"><span class="toc-number">3.2.</span> <span class="toc-text">主元选取（中位数）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主元选取（随机数）"><span class="toc-number">3.3.</span> <span class="toc-text">主元选取（随机数）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#子集划分"><span class="toc-number">3.4.</span> <span class="toc-text">子集划分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#缺点"><span class="toc-number">3.5.</span> <span class="toc-text">缺点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#代码"><span class="toc-number">4.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#题外"><span class="toc-number">5.</span> <span class="toc-text">题外</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":250,"height":400},"mobile":{"show":false},"log":false});</script></body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+
+<script type="text/javascript" src="/js/love.js"></script>
+</html>
