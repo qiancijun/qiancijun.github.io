@@ -1,6 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>[LeetCode]8.字符串转换整数(atoi)</title>
+    <url>/2020/04/03/LeetCode-8-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%8D%A2%E6%95%B4%E6%95%B0-atoi/</url>
+    <content><![CDATA[<h1 id="题目链接"><a href="#题目链接" class="headerlink" title="题目链接"></a>题目链接</h1><p><br> <a href="https://leetcode-cn.com/problems/string-to-integer-atoi/" target="_blank" rel="noopener">原题链接</a></p>
+<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/8/descirbe.png" alt=""></p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p><br>题目中有说到，该函数会根据需要丢弃无用的开头空格字符，直到寻找到第一个非空格的字符为止。所以我们先处理空白字符，直到遇到第一个非空字符。第一个非空字符如果是“-”就记录一下，最后结果乘以 -1 ，如果是别的乱七八糟的符号，直接跳过开始处理后面的数字</p>
+<h2 id="数字处理的过程"><a href="#数字处理的过程" class="headerlink" title="数字处理的过程"></a>数字处理的过程</h2><p><br><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/8/solve1.gif" alt=""><br><br>另外一个很关键的问题，数据溢出问题，有符号整型的数据范围在[$$-2^31$$,$$2^31$$-1]，在C语言中导入<climits>头文件用 INT_MAX 或者 INT_MIN 即可。在做每次result之前先拿INT_MAX$\color{red}{减去}$当前箭头所指的数字再除以十去和当前result做比较，这相当于一个逆运算判读是否会溢出，对result的式子做一个变换就能看出这个原理。 </p>
+<h1 id="时间与内存"><a href="#时间与内存" class="headerlink" title="时间与内存"></a>时间与内存</h1><p><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/8/pass.png" alt=""></p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p class="code-caption" data-lang="cpp" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
+
+<pre><code class="cpp">int myAtoi(string str) {
+    int result = 0;
+    int len = str.size();
+    int i, sign = 1;
+    for(i = 0; isspace(str[i]); ++i); //跳过开头空白字符
+    sign = (str[i] == &#39;-&#39;) ? -1 : 1; // 记录负号
+    if(!isdigit(str[i]) &amp;&amp; str[i] != &#39;-&#39; &amp;&amp; str[i] != &#39;+&#39;)
+        return 0; //第一个非空字符不是数字或正负号
+    if(str[i] == &#39;-&#39; || str[i] == &#39;+&#39;)
+        ++i; //跳过正负号
+    for(result = 0; isdigit(str[i]); ++i){
+        int digit = str[i] - &#39;0&#39;;
+        if(result &gt; (INT_MAX - digit) / 10){
+            return sign == -1 ? INT_MIN : INT_MAX; 
+        }
+        result = result * 10 + digit;
+    }
+    return result * sign;
+}</code></pre>
+<p><br>若有问题或者疑问，欢迎加Q探讨</p>
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>c++</tag>
+        <tag>字符串</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>归并排序</title>
+    <url>/2020/04/05/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本文介绍的是排序算法中较常用的方法，归并排序，该方法的核心想法为分治法。分而治之，将原问题划分成多个子问题，子问题解决后原问题也随之解决。该算法不难实现，效率高，较稳定。学习归并算法之前最好了解递归。</p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>归并排序主要由两部分组成，第一部分是实现“并”，第二部分是实现“归”。实现“并”的过程中运用了双指针的方法，“归”的想法比较简单，不断的把数组对半分，直到数组里只有一个元素，一个元素的数组我们认为他默认有序。这是归并排序大致上的一个框架。</p>
+<h1 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h1><h2 id="合并数组"><a href="#合并数组" class="headerlink" title="合并数组"></a>合并数组</h2><p>归并比较核心的部分就在这里，我们该这么把两段已经各自有序的数组重新归在一个数组内。这个方法也并不难想到。利用双指针遍历两个数组，每一次把两个指针指向的小的那个元素添加到数组里，然后指针向后移动，重复此操作，直到遍历完其中一个数组。最后把没遍历完的数组抄在新数组后。切记要检查原来被分割后的数组中是否还有剩余元素，不要遗漏。<br><img src="https://github.com/qiancijun/Image/raw/master/Algorithm/MergeSort/merge.gif" alt=""></p>
+<h2 id="分割数组"><a href="#分割数组" class="headerlink" title="分割数组"></a>分割数组</h2><p>分割数组没有什么技巧，每次分割把数组划分为等长的两个，无限下去，直到数组内的元素只剩下一个。<br><img src="https://github.com/qiancijun/Image/raw/master/Algorithm/MergeSort/gui.jpg" alt=""></p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p class="code-caption" data-lang="cpp" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
+
+<pre><code class="cpp">void merge(vector&lt;int&gt; &amp;nums, int L, int M, int R){
+    int left_size = M - L + 1;
+    int right_size = R - M;
+    int i = 0, j = 0, k = L; //双指针
+    vector&lt;int&gt; left(left_size, 0);
+    vector&lt;int&gt; right(right_size, 0); //分割两数组
+    for(int n = L; n &lt;= M; n++)
+        left[n - L] = nums[n];
+    for(int n = M + 1; n &lt;= R; n++)
+        right[n - M - 1] = nums[n];
+    //填充数组
+    while (i &lt; left_size &amp;&amp; j &lt; right_size){
+        if (left[i] &lt; right[j]){
+            nums[k++] = left[i++];
+        }
+        else {
+            nums[k++] = right[j++];
+        }
+    }//归并
+    while (i &lt; left_size){
+        nums[k++] = left[i++];
+    }
+    while (j &lt; right_size){
+        nums[k++] = right[j++];
+    }//检查是否有遗漏
+}
+
+void merge_sort(vector&lt;int&gt; &amp;nums, int L, int R){
+    if (R == L){
+        return;
+    } //退出条件，R == L 意味数组最左的下标等于数组最右边的下标，此时我们认为数组里只有一个元素
+    else {
+        int mid = (L + R) / 2;
+        merge_sort(nums, L, mid); //对左边进行归并排序
+        merge_sort(nums, mid + 1, R); //对右边进行归并排序
+        merge(nums, L, mid, R); //把进行完归并排序的左右数组并一下
+    }
+}</code></pre>
+<h1 id="题外"><a href="#题外" class="headerlink" title="题外"></a>题外</h1><p><br> <a href="https://xlich.top/2020/04/04/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/" target="_blank" rel="noopener">快速排序</a><br><br> <a href="xlich.top">堆排序</a><br><br> <a href="xlich.top">冒泡、选择、插入排序</a><br><br> <a href="xlich.top">希尔排序</a><br><br>若有写的不对或者疑惑的地方，欢迎+Q探讨</p>
+]]></content>
+      <categories>
+        <category>Algorithm</category>
+      </categories>
+      <tags>
+        <tag>排序</tag>
+        <tag>数组</tag>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>sort</title>
+    <url>/2020/04/02/sort/</url>
+    <content><![CDATA[<pre><code class="cpp">void heapify(vector&lt;int&gt; &amp;tree, int len, int i){
+    int cl = 2 * i + 1; //左节点
+    int cr = 2 * i + 2; //右节点
+    int max = i; //假设当前节点是最大值节点
+    if (cl &lt; len &amp;&amp; tree[cl] &gt; tree[max]){
+        max = cl; //最大值设为左节点
+    }
+    if (cr &lt; len &amp;&amp; tree[cr] &gt; tree[max]){
+        max = cr; //最大值设为右节点
+    }
+    if (max != i){
+        swap(tree[i], tree[max]); //交换元素
+        heapify(tree, len, max); //对交换后的节点再进行堆化
+    }
+
+}//把当前第i个节点堆化
+
+void build_heap(vector&lt;int&gt; &amp;tree){
+    int len = tree.size();
+    int parent = (len - 1) / 2;//最后一个叶节点的父节点
+    for(int i = parent; i &gt;= 0; i--){
+        heapify(tree, len, i);
+    }
+}//自下而上把树堆化
+
+void heap_sort(vector&lt;int&gt; &amp;tree){
+    int len = tree.size();
+    build_heap(tree);
+    for(int i = len - 1; i &gt;= 0; i--){
+        swap(tree[i], tree[0]); //交换堆顶和最后一个节点的位置
+        heapify(tree, i, 0); //重新堆化
+    }
+}</code></pre>
+]]></content>
+      <categories>
+        <category>Algorithm</category>
+      </categories>
+      <tags>
+        <tag>c++</tag>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2020/04/02/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
+
+<pre><code class="bash">$ hexo new &quot;My New Post&quot;</code></pre>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
+
+<pre><code class="bash">$ hexo server</code></pre>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
+
+<pre><code class="bash">$ hexo generate</code></pre>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
+
+<pre><code class="bash">$ hexo deploy</code></pre>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>Algorithm</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>test</title>
+    <url>/2020/04/02/test/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>快速排序</title>
     <url>/2020/04/04/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>排序作为数据结构与算法基础算法之一，形式多样，复杂度不同，在不同情况下选用适当的排序算法能够使效率最大化。本文主要介绍排序算法中的&amp;\color{red}{快速排序}$。一般所说的数组排序规模都在一万个数据以上，在这种数据规模下，快速排序的效率远大于冒泡、选择、插入排序。</p>
@@ -14,7 +189,9 @@
 <h2 id="主元选取（随机数）"><a href="#主元选取（随机数）" class="headerlink" title="主元选取（随机数）"></a>主元选取（随机数）</h2><p>待更</p>
 <h2 id="子集划分"><a href="#子集划分" class="headerlink" title="子集划分"></a>子集划分</h2><p>首先我们已经进行过了主元选取的操作，整个数组变成了[待划分元素，主元]的形式，这个操作主要运用了双指针来完成，一个指针去遍历剩下n-1个元素，一个指针指向数组第一个元素（在选取主元时，已经把数组第一个换成了比主元小的数）每当遇到比主元小的数就向前挪。<br><img src="https://github.com/qiancijun/Image/raw/master/Algorithm/QuickSort/part.gif" alt=""><br>每次划分之后交换主元和左集合指针的位置，交换后的主元为最后排序完的最终位置。</p>
 <h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><p>快速排序效率高，时间复杂度O(nlogn)，但在特殊情况下，快速排序显得不那么快，理由很简单。快速排序实现的主要想法是递归，对于递归程序，计算机内存栈需要不断的执行入栈和出栈的工作，如果待排的序列是一个规模极其小的序列，它的效率还可能不如冒泡排序。对于这一点我们可以加入一个优化部分，如果待排的个数小到一定的数量，可以直接执行一次插入排序，提升效率。<br><br>快速排序的程序在书写上有很多细节，如果某些细节没有注意到那就完全实现不了</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code class="cpp">int partition(vector&lt;int&gt; &amp;nums, int left, int right){
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p class="code-caption" data-lang="cpp" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
+
+<pre><code class="cpp">int partition(vector&lt;int&gt; &amp;nums, int left, int right){
     int pivot = nums[right];
     int i = left - 1;
     for (int j = left; j &lt;= right - 1; ++j){
@@ -61,123 +238,18 @@ void quick_sort(vector&lt;int&gt; &amp;nums, int left, int right){
       </tags>
   </entry>
   <entry>
-    <title>[LeetCode]8.字符串转换整数(atoi)</title>
-    <url>/2020/04/03/LeetCode-8-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%8D%A2%E6%95%B4%E6%95%B0-atoi/</url>
-    <content><![CDATA[<h1 id="题目链接"><a href="#题目链接" class="headerlink" title="题目链接"></a>题目链接</h1><p><br> <a href="https://leetcode-cn.com/problems/string-to-integer-atoi/" target="_blank" rel="noopener">原题链接</a></p>
-<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/8/descirbe.png" alt=""></p>
-<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p><br>题目中有说到，该函数会根据需要丢弃无用的开头空格字符，直到寻找到第一个非空格的字符为止。所以我们先处理空白字符，直到遇到第一个非空字符。第一个非空字符如果是“-”就记录一下，最后结果乘以 -1 ，如果是别的乱七八糟的符号，直接跳过开始处理后面的数字</p>
-<h2 id="数字处理的过程"><a href="#数字处理的过程" class="headerlink" title="数字处理的过程"></a>数字处理的过程</h2><p><br><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/8/solve1.gif" alt=""><br><br>另外一个很关键的问题，数据溢出问题，有符号整型的数据范围在[$$-2^31$$,$$2^31$$-1]，在C语言中导入<climits>头文件用 INT_MAX 或者 INT_MIN 即可。在做每次result之前先拿INT_MAX$\color{red}{减去}$当前箭头所指的数字再除以十去和当前result做比较，这相当于一个逆运算判读是否会溢出，对result的式子做一个变换就能看出这个原理。 </p>
-<h1 id="时间与内存"><a href="#时间与内存" class="headerlink" title="时间与内存"></a>时间与内存</h1><p><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/8/pass.png" alt=""></p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code class="cpp">int myAtoi(string str) {
-    int result = 0;
-    int len = str.size();
-    int i, sign = 1;
-    for(i = 0; isspace(str[i]); ++i); //跳过开头空白字符
-    sign = (str[i] == &#39;-&#39;) ? -1 : 1; // 记录负号
-    if(!isdigit(str[i]) &amp;&amp; str[i] != &#39;-&#39; &amp;&amp; str[i] != &#39;+&#39;)
-        return 0; //第一个非空字符不是数字或正负号
-    if(str[i] == &#39;-&#39; || str[i] == &#39;+&#39;)
-        ++i; //跳过正负号
-    for(result = 0; isdigit(str[i]); ++i){
-        int digit = str[i] - &#39;0&#39;;
-        if(result &gt; (INT_MAX - digit) / 10){
-            return sign == -1 ? INT_MIN : INT_MAX; 
-        }
-        result = result * 10 + digit;
-    }
-    return result * sign;
-}</code></pre>
-<p><br>若有问题或者疑问，欢迎加Q探讨</p>
-]]></content>
-      <categories>
-        <category>LeetCode</category>
-      </categories>
-      <tags>
-        <tag>c++</tag>
-        <tag>字符串</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>哀悼抗击新冠肺炎疫情牺牲烈士</title>
     <url>/2020/04/04/%E5%93%80%E6%82%BC%E6%8A%97%E5%87%BB%E6%96%B0%E5%86%A0%E8%82%BA%E7%82%8E%E7%96%AB%E6%83%85%E7%89%BA%E7%89%B2%E7%83%88%E5%A3%AB/</url>
     <content><![CDATA[<h2 id="默哀-为在抗击新型冠状病毒中牺牲烈士和逝世同胞"><a href="#默哀-为在抗击新型冠状病毒中牺牲烈士和逝世同胞" class="headerlink" title="默哀 为在抗击新型冠状病毒中牺牲烈士和逝世同胞"></a>默哀 为在抗击新型冠状病毒中牺牲烈士和逝世同胞</h2><p><img src="https://github.com/qiancijun/Image/raw/master/Life/2020.4.4.jpeg" alt=""></p>
 ]]></content>
   </entry>
   <entry>
-    <title>test</title>
-    <url>/2020/04/02/test/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2020/04/02/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;</code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy</code></pre>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-]]></content>
-      <categories>
-        <category>Algorithm</category>
-      </categories>
-      <tags>
-        <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>sort</title>
-    <url>/2020/04/02/sort/</url>
-    <content><![CDATA[<pre><code class="cpp">void heapify(vector&lt;int&gt; &amp;tree, int len, int i){
-    int cl = 2 * i + 1; //左节点
-    int cr = 2 * i + 2; //右节点
-    int max = i; //假设当前节点是最大值节点
-    if (cl &lt; len &amp;&amp; tree[cl] &gt; tree[max]){
-        max = cl; //最大值设为左节点
-    }
-    if (cr &lt; len &amp;&amp; tree[cr] &gt; tree[max]){
-        max = cr; //最大值设为右节点
-    }
-    if (max != i){
-        swap(tree[i], tree[max]); //交换元素
-        heapify(tree, len, max); //对交换后的节点再进行堆化
-    }
-
-}//把当前第i个节点堆化
-
-void build_heap(vector&lt;int&gt; &amp;tree){
-    int len = tree.size();
-    int parent = (len - 1) / 2;//最后一个叶节点的父节点
-    for(int i = parent; i &gt;= 0; i--){
-        heapify(tree, len, i);
-    }
-}//自下而上把树堆化
-
-void heap_sort(vector&lt;int&gt; &amp;tree){
-    int len = tree.size();
-    build_heap(tree);
-    for(int i = len - 1; i &gt;= 0; i--){
-        swap(tree[i], tree[0]); //交换堆顶和最后一个节点的位置
-        heapify(tree, i, 0); //重新堆化
-    }
-}</code></pre>
-]]></content>
-      <categories>
-        <category>Algorithm</category>
-      </categories>
-      <tags>
-        <tag>算法</tag>
-        <tag>c++</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>阶乘</title>
     <url>/2020/04/02/%E9%98%B6%E4%B9%98/</url>
     <content><![CDATA[<p>程序要求：用递归实现阶乘（不考虑数据溢出问题）</p>
-<h1 id="方法一：递归"><a href="#方法一：递归" class="headerlink" title="方法一：递归"></a>方法一：递归</h1><pre><code class="cpp">int fac(int num){
+<h1 id="方法一：递归"><a href="#方法一：递归" class="headerlink" title="方法一：递归"></a>方法一：递归</h1><p class="code-caption" data-lang="cpp" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
+
+<pre><code class="cpp">int fac(int num){
     if(num == 0){
         return 1;
     }
@@ -186,7 +258,9 @@ void heap_sort(vector&lt;int&gt; &amp;tree){
     }
 }</code></pre>
 <p>在递归法中，由于使用的是尾递归，尾递归可以和循环进行转换，</p>
-<h1 id="方法二：循环"><a href="#方法二：循环" class="headerlink" title="方法二：循环"></a>方法二：循环</h1><pre><code class="cpp">int fac(int num){
+<h1 id="方法二：循环"><a href="#方法二：循环" class="headerlink" title="方法二：循环"></a>方法二：循环</h1><p class="code-caption" data-lang="cpp" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
+
+<pre><code class="cpp">int fac(int num){
     if(num == 0){
         return 1;
     }

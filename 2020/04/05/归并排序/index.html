@@ -5,12 +5,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Hello World - 神奇口袋</title>
+    <title>归并排序 - 神奇口袋</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any pr,"> 
+    <meta name="description" content="前言本文介绍的是排序算法中较常用的方法，归并排序，该方法的核心想法为分治法。分而治之，将原问题划分成多个子问题，子问题解决后原问题也随之解决。该算法不难实现，效率高，较稳定。学习归并算法之前最好了解,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -38,7 +38,7 @@
     <div class="bar" style="width: 0;"></div>
     <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://qiancijun.github.io"></a>
     <div title="播放/暂停" class="iconfont icon-play"></div>
-    <h3 class="subtitle">Hello World</h3>
+    <h3 class="subtitle">归并排序</h3>
     <div class="social">
         <div>
             <div class="share">
@@ -54,32 +54,60 @@
     <div class="section">
         <div class="article">
     <div class='main'>
-        <h1 class="title">Hello World</h1>
+        <h1 class="title">归并排序</h1>
         <div class="stuff">
-            <span>四月 02, 2020</span>
+            <span>四月 05, 2020</span>
             
-  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E6%8E%92%E5%BA%8F/" rel="tag">排序</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E6%95%B0%E7%BB%84/" rel="tag">数组</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
 
 
         </div>
         <div class="content markdown">
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本文介绍的是排序算法中较常用的方法，归并排序，该方法的核心想法为分治法。分而治之，将原问题划分成多个子问题，子问题解决后原问题也随之解决。该算法不难实现，效率高，较稳定。学习归并算法之前最好了解递归。</p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>归并排序主要由两部分组成，第一部分是实现“并”，第二部分是实现“归”。实现“并”的过程中运用了双指针的方法，“归”的想法比较简单，不断的把数组对半分，直到数组里只有一个元素，一个元素的数组我们认为他默认有序。这是归并排序大致上的一个框架。</p>
+<h1 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h1><h2 id="合并数组"><a href="#合并数组" class="headerlink" title="合并数组"></a>合并数组</h2><p>归并比较核心的部分就在这里，我们该这么把两段已经各自有序的数组重新归在一个数组内。这个方法也并不难想到。利用双指针遍历两个数组，每一次把两个指针指向的小的那个元素添加到数组里，然后指针向后移动，重复此操作，直到遍历完其中一个数组。最后把没遍历完的数组抄在新数组后。切记要检查原来被分割后的数组中是否还有剩余元素，不要遗漏。<br><img src="https://github.com/qiancijun/Image/raw/master/Algorithm/MergeSort/merge.gif" alt=""></p>
+<h2 id="分割数组"><a href="#分割数组" class="headerlink" title="分割数组"></a>分割数组</h2><p>分割数组没有什么技巧，每次分割把数组划分为等长的两个，无限下去，直到数组内的元素只剩下一个。<br><img src="https://github.com/qiancijun/Image/raw/master/Algorithm/MergeSort/gui.jpg" alt=""></p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p class="code-caption" data-lang="cpp" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
 
-<pre><code class="bash">$ hexo new &quot;My New Post&quot;</code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
+<pre><code class="cpp">void merge(vector&lt;int&gt; &amp;nums, int L, int M, int R){
+    int left_size = M - L + 1;
+    int right_size = R - M;
+    int i = 0, j = 0, k = L; //双指针
+    vector&lt;int&gt; left(left_size, 0);
+    vector&lt;int&gt; right(right_size, 0); //分割两数组
+    for(int n = L; n &lt;= M; n++)
+        left[n - L] = nums[n];
+    for(int n = M + 1; n &lt;= R; n++)
+        right[n - M - 1] = nums[n];
+    //填充数组
+    while (i &lt; left_size &amp;&amp; j &lt; right_size){
+        if (left[i] &lt; right[j]){
+            nums[k++] = left[i++];
+        }
+        else {
+            nums[k++] = right[j++];
+        }
+    }//归并
+    while (i &lt; left_size){
+        nums[k++] = left[i++];
+    }
+    while (j &lt; right_size){
+        nums[k++] = right[j++];
+    }//检查是否有遗漏
+}
 
-<pre><code class="bash">$ hexo server</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
-
-<pre><code class="bash">$ hexo generate</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><p class="code-caption" data-lang="bash" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
-
-<pre><code class="bash">$ hexo deploy</code></pre>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+void merge_sort(vector&lt;int&gt; &amp;nums, int L, int R){
+    if (R == L){
+        return;
+    } //退出条件，R == L 意味数组最左的下标等于数组最右边的下标，此时我们认为数组里只有一个元素
+    else {
+        int mid = (L + R) / 2;
+        merge_sort(nums, L, mid); //对左边进行归并排序
+        merge_sort(nums, mid + 1, R); //对右边进行归并排序
+        merge(nums, L, mid, R); //把进行完归并排序的左右数组并一下
+    }
+}</code></pre>
+<h1 id="题外"><a href="#题外" class="headerlink" title="题外"></a>题外</h1><p><br> <a href="https://xlich.top/2020/04/04/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/" target="_blank" rel="noopener">快速排序</a><br><br> <a href="xlich.top">堆排序</a><br><br> <a href="xlich.top">冒泡、选择、插入排序</a><br><br> <a href="xlich.top">希尔排序</a><br><br>若有写的不对或者疑惑的地方，欢迎+Q探讨</p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
@@ -123,7 +151,7 @@
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#思路"><span class="toc-number">2.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#算法实现"><span class="toc-number">3.</span> <span class="toc-text">算法实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#合并数组"><span class="toc-number">3.1.</span> <span class="toc-text">合并数组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分割数组"><span class="toc-number">3.2.</span> <span class="toc-text">分割数组</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#代码"><span class="toc-number">4.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#题外"><span class="toc-number">5.</span> <span class="toc-text">题外</span></a></li></ol>	
         </div>
     
 </div>

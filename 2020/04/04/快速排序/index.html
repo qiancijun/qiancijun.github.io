@@ -50,10 +50,7 @@
     <div class="scrollbar"></div>
 </div>
 
-    
-    <div class="layer" data-depth="0.4">
-        <img src="/img/b.jpg" id="cover" crossorigin="anonymous" width="1920" height="1080">
-    </div>
+   
     <div class="section">
         <div class="article">
     <div class='main'>
@@ -77,7 +74,9 @@
 <h2 id="主元选取（随机数）"><a href="#主元选取（随机数）" class="headerlink" title="主元选取（随机数）"></a>主元选取（随机数）</h2><p>待更</p>
 <h2 id="子集划分"><a href="#子集划分" class="headerlink" title="子集划分"></a>子集划分</h2><p>首先我们已经进行过了主元选取的操作，整个数组变成了[待划分元素，主元]的形式，这个操作主要运用了双指针来完成，一个指针去遍历剩下n-1个元素，一个指针指向数组第一个元素（在选取主元时，已经把数组第一个换成了比主元小的数）每当遇到比主元小的数就向前挪。<br><img src="https://github.com/qiancijun/Image/raw/master/Algorithm/QuickSort/part.gif" alt=""><br>每次划分之后交换主元和左集合指针的位置，交换后的主元为最后排序完的最终位置。</p>
 <h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><p>快速排序效率高，时间复杂度O(nlogn)，但在特殊情况下，快速排序显得不那么快，理由很简单。快速排序实现的主要想法是递归，对于递归程序，计算机内存栈需要不断的执行入栈和出栈的工作，如果待排的序列是一个规模极其小的序列，它的效率还可能不如冒泡排序。对于这一点我们可以加入一个优化部分，如果待排的个数小到一定的数量，可以直接执行一次插入排序，提升效率。<br><br>快速排序的程序在书写上有很多细节，如果某些细节没有注意到那就完全实现不了</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code class="cpp">int partition(vector&lt;int&gt; &amp;nums, int left, int right){
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p class="code-caption" data-lang="cpp" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
+
+<pre><code class="cpp">int partition(vector&lt;int&gt; &amp;nums, int left, int right){
     int pivot = nums[right];
     int i = left - 1;
     for (int j = left; j &lt;= right - 1; ++j){
@@ -256,4 +255,11 @@ void quick_sort(vector&lt;int&gt; &amp;nums, int left, int right){
 
 
 <script type="text/javascript" src="/js/love.js"></script>
+<script type="text/javascript">
+    var hljs_labels = {
+        left: "{{__('hljs.left')}}",
+        right: "{{__('hljs.right')}}",
+        copy: "{{__('hljs.copy')}}"
+    }
+    </script>
 </html>

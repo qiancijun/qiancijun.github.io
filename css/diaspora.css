@@ -245,7 +245,21 @@ pre .string,pre .value,pre .inheritance,pre .header,pre .ruby .symbol,pre .xml .
 pre .css .hexcolor {color:#66cccc;}
 pre .function,pre .python .decorator,pre .python .title,pre .ruby .function .title,pre .ruby .title .keyword,pre .perl .sub,pre .javascript .title,pre .coffeescript .title {color:#6699cc;}
 pre .keyword,pre .javascript .function {color:#cc99cc;}
+.code-caption {
+  clear: both;
+  position: relative;
+  top: 0; /*empty p height*/
+}
 
+.code-caption .code-caption-label {
+  font-style: italic;
+  font-weight: bold;
+ }
+
+.code-caption .code-caption-copy {
+  float: right;
+  @include user-select-none();
+}
 /* Responsive style */
 @media screen and (max-width:1200px) {
   #header > div {width:900px;margin:0 auto;}
