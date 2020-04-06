@@ -5,12 +5,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>快速排序 - 神奇口袋</title>
+    <title>堆排序 - 神奇口袋</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
-    <meta name="description" content="前言排序作为数据结构与算法基础算法之一，形式多样，复杂度不同，在不同情况下选用适当的排序算法能够使效率最大化。本文主要介绍排序算法中的$\color{red}{快速排序}$。一般所说的数组排序规模都,"> 
+    <meta name="description" content="前言在选择排序中，找到数组中的最大值，并和数组末尾交换值，每完成一次选择，就能使一个元素确定它的位置。在数组这种顺序结构中，要查找数组中的最大值，采取顺序查找的方式效率肯定不是我们想要的，如果待排数,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -38,7 +38,7 @@
     <div class="bar" style="width: 0;"></div>
     <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://qiancijun.github.io"></a>
     <div title="播放/暂停" class="iconfont icon-play"></div>
-    <h3 class="subtitle">快速排序</h3>
+    <h3 class="subtitle">堆排序</h3>
     <div class="social">
         <div>
             <div class="share">
@@ -54,65 +54,57 @@
     <div class="section">
         <div class="article">
     <div class='main'>
-        <h1 class="title">快速排序</h1>
+        <h1 class="title">堆排序</h1>
         <div class="stuff">
-            <span>四月 04, 2020</span>
+            <span>四月 06, 2020</span>
             
   <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E6%8E%92%E5%BA%8F/" rel="tag">排序</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
 
 
         </div>
         <div class="content markdown">
-            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>排序作为数据结构与算法基础算法之一，形式多样，复杂度不同，在不同情况下选用适当的排序算法能够使效率最大化。本文主要介绍排序算法中的$\color{red}{快速排序}$。一般所说的数组排序规模都在一万个数据以上，在这种数据规模下，快速排序的效率远大于冒泡、选择、插入排序。</p>
-<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><h2 id="一个简单例子"><a href="#一个简单例子" class="headerlink" title="一个简单例子"></a>一个简单例子</h2><p>我们先来看一个数组[2, 1, 4, 3, 6, 9, 8, 7, 10]<br><br>该例子有一个明显的特点，也不难发现，整个数组的中间数6，在6的左边所有元素都是小于6的，在6的右边所有元素都是大于6的。我们的目的很简单，就是把这个特殊数组排序，使它成为一个有序的数组<br><img src="https://github.com/qiancijun/Image/raw/master/Algorithm/QuickSort/quicksort_simple.jpg" alt=""><br><br>很明显，我们只要把6左边的集合变成有序序列，把6右边的集合变成有序序列，最后合并，即可使整个序列有序。而在整个过程中把6称为主元(pivot)，算法核心思想利用递归、分治，把排序分成多个子集合的排序，最后使整个序列有序</p>
-<h1 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h1><h2 id="主元选取"><a href="#主元选取" class="headerlink" title="主元选取"></a>主元选取</h2><p>一般来说，待排序数组都是无规律的，不会是我们简单例子所看到的这么一个特殊序列，而对于无规律数组，一个主元合理的选取方式，可以提升算法效率。<br><br>选取主元有多种方式，如果单纯选数组第一个元素或者最后一个元素作为主元显然是不合理的。若对于一个部分有序的数组，形如[1, 2, 3, 4, 8, 5, 9]每次把第一个元素作为主元，显然子集划分后左子集是空集，这种情况不是我们所预期的。对于主元的选取方式一般有两种</p>
-<ol>
-<li>随机选取</li>
-<li>中位数选取</li>
-</ol>
-<h2 id="主元选取（中位数）"><a href="#主元选取（中位数）" class="headerlink" title="主元选取（中位数）"></a>主元选取（中位数）</h2><p>首先比较整个数列中三个元素，头、尾、中，把三个数中最大的元素放在左右边，把最小的元素放在最左边。比较完之后，我们把主元放到数组末尾，以便进行子集划分的操作</p>
-<h2 id="主元选取（随机数）"><a href="#主元选取（随机数）" class="headerlink" title="主元选取（随机数）"></a>主元选取（随机数）</h2><p>待更</p>
-<h2 id="子集划分"><a href="#子集划分" class="headerlink" title="子集划分"></a>子集划分</h2><p>首先我们已经进行过了主元选取的操作，整个数组变成了[待划分元素，主元]的形式，这个操作主要运用了双指针来完成，一个指针去遍历剩下n-1个元素，一个指针指向数组第一个元素（在选取主元时，已经把数组第一个换成了比主元小的数）每当遇到比主元小的数就向前挪。<br><img src="https://github.com/qiancijun/Image/raw/master/Algorithm/QuickSort/part.gif" alt=""><br>每次划分之后交换主元和左集合指针的位置，交换后的主元为最后排序完的最终位置。</p>
-<h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><p>快速排序效率高，时间复杂度O(nlogn)，但在特殊情况下，快速排序显得不那么快，理由很简单。快速排序实现的主要想法是递归，对于递归程序，计算机内存栈需要不断的执行入栈和出栈的工作，如果待排的序列是一个规模极其小的序列，它的效率还可能不如冒泡排序。对于这一点我们可以加入一个优化部分，如果待排的个数小到一定的数量，可以直接执行一次插入排序，提升效率。<br><br>快速排序的程序在书写上有很多细节，如果某些细节没有注意到那就完全实现不了</p>
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在选择排序中，找到数组中的最大值，并和数组末尾交换值，每完成一次选择，就能使一个元素确定它的位置。在数组这种顺序结构中，要查找数组中的最大值，采取顺序查找的方式效率肯定不是我们想要的，如果待排数据大于一万个，那么选择排序的工作效率太低且不稳定。为了优化它就引发出一个思考问题，我们应该找一个更快去搜索数组中最大值的方法，既然顺序查找不适合在这里使用，二分查找也不可能，或许我们可以利用一下“树”这个数据结构。</p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>我们可以把一个数组模拟成一棵二叉树，而在平衡二叉树上做搜索工作，效率取决于树的高度，但是在这里，我们不需要把数组转换位二叉搜索树，因为我们的目的是找到数组中的最大值，并且把最大值移到数组末尾。对于这个要求，我们可以利用一个更好的数据结构去处理这个问题，这个数据结构就是“最大堆”。而堆顶就是我们想要的最大值，树的最后一个叶节点就是数组末尾，那么交换堆顶和最后一个叶节点就完成了一次选择，然后移除最后一个叶节点处理剩下的元素。这样看起来和选择排序差别不大，但是在寻找最大值这个问题上优化了许多。</p>
+<h1 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h1><h2 id="将数组表示为二叉树"><a href="#将数组表示为二叉树" class="headerlink" title="将数组表示为二叉树"></a>将数组表示为二叉树</h2><p>其实不用什么算法就能实现，这棵树完全存在于我们脑子里，我们直接操作就可以了。<br><img src="https://github.com/qiancijun/Image/raw/master/Algorithm/HeapSort/1.png" alt=""><br>红色对应数组下标。个人认为没有必要在数组前加一个哨兵。<br><br>这样有什么好处？当我们要去寻找某个节点的根节点时，完全可以利用数组下标来寻找，或者想要知道一个节点的左右节点，也可以利用下标。如果你懂树这个数据结构，应该不难理解。这里也不多赘述</p>
+<h2 id="堆化"><a href="#堆化" class="headerlink" title="堆化"></a>堆化</h2><p>以根节点为例，我们要对根节点做一次堆化，是他成为最大堆，我们可以先认为根节点已经是最大值，然后去和它的左右节点比较，把更大的转移上来，这样就保证了根节点是最大值。<br><img src="https://github.com/qiancijun/Image/raw/master/Algorithm/HeapSort/2.png" alt=""></p>
+<h2 id="构建堆"><a href="#构建堆" class="headerlink" title="构建堆"></a>构建堆</h2><p>只对一个根节点堆化是不行的，那么要怎么做才能使这个堆成为最大堆呢？你可以先想一下，运用一点分治的思想。如果这棵树每一个节点都满足最大堆，那么这棵树整体也是一个最大堆。那么解决方法就很简单了，我们先根据下标寻找到最后一个度为2的父节点，一直做堆化，直到做到根节点，当根节点的堆化完成后，整棵树就成为了最大堆。<br><img src="https://github.com/qiancijun/Image/raw/master/Algorithm/HeapSort/3.png" alt=""></p>
+<h2 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h2><p>思考一个问题，我构建完了最大堆，并且交换完了值，我需不需要对交换后的树做整体堆化？<br><br>答案是必然的，原因很简单，可以自己画下图就能明白了<br><img src="https://github.com/qiancijun/Image/raw/master/Algorithm/HeapSort/4.png" alt=""></p>
 <h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p class="code-caption" data-lang="cpp" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
 
-<pre><code class="cpp">int partition(vector&lt;int&gt; &amp;nums, int left, int right){
-    int pivot = nums[right];
-    int i = left - 1;
-    for (int j = left; j &lt;= right - 1; ++j){
-        if(nums[j] &lt; pivot){
-            i += 1;
-            swap(nums[i], nums[j]);
-        }
+<pre><code class="cpp">void heapify(vector&lt;int&gt; &amp;tree, int len, int i){
+    int cl = 2 * i + 1; //左节点
+    int cr = 2 * i + 2; //右节点
+    int max = i; //假设当前节点是最大值节点
+    if (cl &lt; len &amp;&amp; tree[cl] &gt; tree[max]){
+        max = cl; //最大值设为左节点
     }
-    swap(nums[i + 1], nums[right]);
-    return i + 1;
-}
+    if (cr &lt; len &amp;&amp; tree[cr] &gt; tree[max]){
+        max = cr; //最大值设为右节点
+    }
+    if (max != i){
+        swap(tree[i], tree[max]); //交换元素
+        heapify(tree, len, max); //对交换后的节点再进行堆化，向下渗透
+    }
 
-int median(vector&lt;int&gt; &amp;nums, int left, int right){
-    int mid = (left + right) / 2;
-    if (nums[left] &gt; nums[mid]){
-        swap(nums[left], nums[mid]);
-    } //左和中的比较
-    if (nums[mid] &gt; nums[right]){
-        swap(nums[mid], nums[right]);
-    } //右和中的比较
-    if (nums[left] &gt; nums[right]){
-        swap(nums[left], nums[right]);
-    } //左和右的比较
-    swap(nums[mid], nums[right]); //把中位数放到最后一个
-    return partition(nums, left, right);
-} //寻找中位数
+}//把当前第i个节点堆化
 
+void build_heap(vector&lt;int&gt; &amp;tree){
+    int len = tree.size();
+    int parent = (len - 1) / 2;//最后一个叶节点的父节点
+    for(int i = parent; i &gt;= 0; i--){
+        heapify(tree, len, i);
+    }
+}//自下而上把树堆化
 
-void quick_sort(vector&lt;int&gt; &amp;nums, int left, int right){
-    if (left &lt; right){
-        int pos = median(nums, left, right);
-        quick_sort(nums, left, pos - 1);
-        quick_sort(nums, pos + 1, right);
+void heap_sort(vector&lt;int&gt; &amp;tree){
+    int len = tree.size();
+    build_heap(tree);
+    for(int i = len - 1; i &gt;= 0; i--){
+        swap(tree[i], tree[0]); //交换堆顶和最后一个节点的位置
+        heapify(tree, i, 0); //重新堆化
     }
 }</code></pre>
-<h1 id="题外"><a href="#题外" class="headerlink" title="题外"></a>题外</h1><p>c++STL库中封装好了一个sort函数，它的主要方法是快速排序，但在这基础上又对它优化了许多，数量小的情况会调用堆排序，是几种排序的一个集合方法<br><br> <a href="https://xlich.top/2020/04/05/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/" target="_blank" rel="noopener">归并排序</a><br><br> <a href="xlich.top">堆排序</a><br><br> <a href="xlich.top">冒泡、选择、插入排序</a><br><br> <a href="xlich.top">希尔排序</a><br><br>若有写的不对或者疑惑的地方，欢迎+Q探讨</p>
+<h1 id="题外"><a href="#题外" class="headerlink" title="题外"></a>题外</h1><p>堆排序的时间复杂度为O(nlogn)可以说时间复杂度已经达标了，而且也只用了O(1)的空间，但缺点是不稳定（对于相同值的处理上）</p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
@@ -152,7 +144,7 @@ void quick_sort(vector&lt;int&gt; &amp;nums, int left, int right){
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#思路"><span class="toc-number">2.</span> <span class="toc-text">思路</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一个简单例子"><span class="toc-number">2.1.</span> <span class="toc-text">一个简单例子</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#算法实现"><span class="toc-number">3.</span> <span class="toc-text">算法实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#主元选取"><span class="toc-number">3.1.</span> <span class="toc-text">主元选取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主元选取（中位数）"><span class="toc-number">3.2.</span> <span class="toc-text">主元选取（中位数）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主元选取（随机数）"><span class="toc-number">3.3.</span> <span class="toc-text">主元选取（随机数）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#子集划分"><span class="toc-number">3.4.</span> <span class="toc-text">子集划分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#缺点"><span class="toc-number">3.5.</span> <span class="toc-text">缺点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#代码"><span class="toc-number">4.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#题外"><span class="toc-number">5.</span> <span class="toc-text">题外</span></a></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#思路"><span class="toc-number">2.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#算法实现"><span class="toc-number">3.</span> <span class="toc-text">算法实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#将数组表示为二叉树"><span class="toc-number">3.1.</span> <span class="toc-text">将数组表示为二叉树</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#堆化"><span class="toc-number">3.2.</span> <span class="toc-text">堆化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#构建堆"><span class="toc-number">3.3.</span> <span class="toc-text">构建堆</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#堆排序"><span class="toc-number">3.4.</span> <span class="toc-text">堆排序</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#代码"><span class="toc-number">4.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#题外"><span class="toc-number">5.</span> <span class="toc-text">题外</span></a></li></ol>	
         </div>
     
 </div>

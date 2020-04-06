@@ -1,6 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>[LeetCode]8.字符串转换整数(atoi)</title>
+    <url>/2020/04/03/LeetCode-8-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%8D%A2%E6%95%B4%E6%95%B0-atoi/</url>
+    <content><![CDATA[<h1 id="题目链接"><a href="#题目链接" class="headerlink" title="题目链接"></a>题目链接</h1><p><br> <a href="https://leetcode-cn.com/problems/string-to-integer-atoi/" target="_blank" rel="noopener">原题链接</a></p>
+<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/8/descirbe.png" alt=""></p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p><br>题目中有说到，该函数会根据需要丢弃无用的开头空格字符，直到寻找到第一个非空格的字符为止。所以我们先处理空白字符，直到遇到第一个非空字符。第一个非空字符如果是“-”就记录一下，最后结果乘以 -1 ，如果是别的乱七八糟的符号，直接跳过开始处理后面的数字</p>
+<h2 id="数字处理的过程"><a href="#数字处理的过程" class="headerlink" title="数字处理的过程"></a>数字处理的过程</h2><p><br><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/8/solve1.gif" alt=""><br><br>另外一个很关键的问题，数据溢出问题，有符号整型的数据范围在[$$-2^31$$,$$2^31$$-1]，在C语言中导入<climits>头文件用 INT_MAX 或者 INT_MIN 即可。在做每次result之前先拿INT_MAX$\color{red}{减去}$当前箭头所指的数字再除以十去和当前result做比较，这相当于一个逆运算判读是否会溢出，对result的式子做一个变换就能看出这个原理。 </p>
+<h1 id="时间与内存"><a href="#时间与内存" class="headerlink" title="时间与内存"></a>时间与内存</h1><p><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/8/pass.png" alt=""></p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p class="code-caption" data-lang="cpp" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
+
+<pre><code class="cpp">int myAtoi(string str) {
+    int result = 0;
+    int len = str.size();
+    int i, sign = 1;
+    for(i = 0; isspace(str[i]); ++i); //跳过开头空白字符
+    sign = (str[i] == &#39;-&#39;) ? -1 : 1; // 记录负号
+    if(!isdigit(str[i]) &amp;&amp; str[i] != &#39;-&#39; &amp;&amp; str[i] != &#39;+&#39;)
+        return 0; //第一个非空字符不是数字或正负号
+    if(str[i] == &#39;-&#39; || str[i] == &#39;+&#39;)
+        ++i; //跳过正负号
+    for(result = 0; isdigit(str[i]); ++i){
+        int digit = str[i] - &#39;0&#39;;
+        if(result &gt; (INT_MAX - digit) / 10){
+            return sign == -1 ? INT_MIN : INT_MAX; 
+        }
+        result = result * 10 + digit;
+    }
+    return result * sign;
+}</code></pre>
+<p><br>若有问题或者疑问，欢迎加Q探讨</p>
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+        <tag>字符串</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LeetCode-27-移除元素</title>
+    <url>/2020/04/06/LeetCode-27-%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0/</url>
+    <content><![CDATA[<h1 id="题目链接"><a href="#题目链接" class="headerlink" title="题目链接"></a>题目链接</h1><p><a href="https://leetcode-cn.com/problems/remove-element/" target="_blank" rel="noopener">原题链接</a></p>
+<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/27/dercribe.png" alt=""></p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>算是一道双指针比较容易的题，第一个指针指向数组第一个元素，第二个指针指向数组最后一个元素，如果第一个指针在遍历的过程中，遇见了和val一样的元素，就和第二个指针交换值，并且第二个指针向前挪，但是此时第一个指针不能移动，如果交换后的值依旧和val相同，那么还要再做一次判断</p>
+<h1 id="时间与内存"><a href="#时间与内存" class="headerlink" title="时间与内存"></a>时间与内存</h1><p>时间复杂度O(n)<br>空间复杂度O(1)<br><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/27/pass.png" alt=""></p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p class="code-caption" data-lang="cpp" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
+
+<pre><code class="cpp">int removeElement(vector&lt;int&gt;&amp; nums, int val) {
+    int len = nums.size();
+    int i = 0;
+    while (i &lt; len){
+        if (nums[i] == val){
+            swap(nums[i], nums[len - 1]);
+            len--;
+        }
+        else{
+            i++;
+        }
+    }
+    return len;
+}</code></pre>
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>双指针</tag>
+        <tag>数组</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>sort</title>
     <url>/2020/04/02/sort/</url>
     <content><![CDATA[<pre><code class="cpp">void heapify(vector&lt;int&gt; &amp;tree, int len, int i){
@@ -41,52 +112,8 @@ void heap_sort(vector&lt;int&gt; &amp;tree){
         <category>Algorithm</category>
       </categories>
       <tags>
-        <tag>c++</tag>
+        <tag>C/C++</tag>
         <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>test</title>
-    <url>/2020/04/02/test/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>[LeetCode]8.字符串转换整数(atoi)</title>
-    <url>/2020/04/03/LeetCode-8-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%8D%A2%E6%95%B4%E6%95%B0-atoi/</url>
-    <content><![CDATA[<h1 id="题目链接"><a href="#题目链接" class="headerlink" title="题目链接"></a>题目链接</h1><p><br> <a href="https://leetcode-cn.com/problems/string-to-integer-atoi/" target="_blank" rel="noopener">原题链接</a></p>
-<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/8/descirbe.png" alt=""></p>
-<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p><br>题目中有说到，该函数会根据需要丢弃无用的开头空格字符，直到寻找到第一个非空格的字符为止。所以我们先处理空白字符，直到遇到第一个非空字符。第一个非空字符如果是“-”就记录一下，最后结果乘以 -1 ，如果是别的乱七八糟的符号，直接跳过开始处理后面的数字</p>
-<h2 id="数字处理的过程"><a href="#数字处理的过程" class="headerlink" title="数字处理的过程"></a>数字处理的过程</h2><p><br><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/8/solve1.gif" alt=""><br><br>另外一个很关键的问题，数据溢出问题，有符号整型的数据范围在[$$-2^31$$,$$2^31$$-1]，在C语言中导入<climits>头文件用 INT_MAX 或者 INT_MIN 即可。在做每次result之前先拿INT_MAX$\color{red}{减去}$当前箭头所指的数字再除以十去和当前result做比较，这相当于一个逆运算判读是否会溢出，对result的式子做一个变换就能看出这个原理。 </p>
-<h1 id="时间与内存"><a href="#时间与内存" class="headerlink" title="时间与内存"></a>时间与内存</h1><p><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/8/pass.png" alt=""></p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p class="code-caption" data-lang="cpp" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
-
-<pre><code class="cpp">int myAtoi(string str) {
-    int result = 0;
-    int len = str.size();
-    int i, sign = 1;
-    for(i = 0; isspace(str[i]); ++i); //跳过开头空白字符
-    sign = (str[i] == &#39;-&#39;) ? -1 : 1; // 记录负号
-    if(!isdigit(str[i]) &amp;&amp; str[i] != &#39;-&#39; &amp;&amp; str[i] != &#39;+&#39;)
-        return 0; //第一个非空字符不是数字或正负号
-    if(str[i] == &#39;-&#39; || str[i] == &#39;+&#39;)
-        ++i; //跳过正负号
-    for(result = 0; isdigit(str[i]); ++i){
-        int digit = str[i] - &#39;0&#39;;
-        if(result &gt; (INT_MAX - digit) / 10){
-            return sign == -1 ? INT_MIN : INT_MAX; 
-        }
-        result = result * 10 + digit;
-    }
-    return result * sign;
-}</code></pre>
-<p><br>若有问题或者疑问，欢迎加Q探讨</p>
-]]></content>
-      <categories>
-        <category>LeetCode</category>
-      </categories>
-      <tags>
-        <tag>c++</tag>
-        <tag>字符串</tag>
       </tags>
   </entry>
   <entry>
@@ -212,15 +239,68 @@ a &lt;&lt; 1; -&gt; 4</code></pre>
         <category>C/C++</category>
       </categories>
       <tags>
-        <tag>位运算</tag>
         <tag>C/C++</tag>
+        <tag>位运算</tag>
       </tags>
   </entry>
   <entry>
-    <title>哀悼抗击新冠肺炎疫情牺牲烈士</title>
-    <url>/2020/04/04/%E5%93%80%E6%82%BC%E6%8A%97%E5%87%BB%E6%96%B0%E5%86%A0%E8%82%BA%E7%82%8E%E7%96%AB%E6%83%85%E7%89%BA%E7%89%B2%E7%83%88%E5%A3%AB/</url>
-    <content><![CDATA[<h2 id="默哀-为在抗击新型冠状病毒中牺牲烈士和逝世同胞"><a href="#默哀-为在抗击新型冠状病毒中牺牲烈士和逝世同胞" class="headerlink" title="默哀 为在抗击新型冠状病毒中牺牲烈士和逝世同胞"></a>默哀 为在抗击新型冠状病毒中牺牲烈士和逝世同胞</h2><p><img src="https://github.com/qiancijun/Image/raw/master/Life/2020.4.4.jpeg" alt=""></p>
+    <title>test</title>
+    <url>/2020/04/02/test/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>堆排序</title>
+    <url>/2020/04/06/%E5%A0%86%E6%8E%92%E5%BA%8F/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在选择排序中，找到数组中的最大值，并和数组末尾交换值，每完成一次选择，就能使一个元素确定它的位置。在数组这种顺序结构中，要查找数组中的最大值，采取顺序查找的方式效率肯定不是我们想要的，如果待排数据大于一万个，那么选择排序的工作效率太低且不稳定。为了优化它就引发出一个思考问题，我们应该找一个更快去搜索数组中最大值的方法，既然顺序查找不适合在这里使用，二分查找也不可能，或许我们可以利用一下“树”这个数据结构。</p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>我们可以把一个数组模拟成一棵二叉树，而在平衡二叉树上做搜索工作，效率取决于树的高度，但是在这里，我们不需要把数组转换位二叉搜索树，因为我们的目的是找到数组中的最大值，并且把最大值移到数组末尾。对于这个要求，我们可以利用一个更好的数据结构去处理这个问题，这个数据结构就是“最大堆”。而堆顶就是我们想要的最大值，树的最后一个叶节点就是数组末尾，那么交换堆顶和最后一个叶节点就完成了一次选择，然后移除最后一个叶节点处理剩下的元素。这样看起来和选择排序差别不大，但是在寻找最大值这个问题上优化了许多。</p>
+<h1 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h1><h2 id="将数组表示为二叉树"><a href="#将数组表示为二叉树" class="headerlink" title="将数组表示为二叉树"></a>将数组表示为二叉树</h2><p>其实不用什么算法就能实现，这棵树完全存在于我们脑子里，我们直接操作就可以了。<br><img src="https://github.com/qiancijun/Image/raw/master/Algorithm/HeapSort/1.png" alt=""><br>红色对应数组下标。个人认为没有必要在数组前加一个哨兵。<br><br>这样有什么好处？当我们要去寻找某个节点的根节点时，完全可以利用数组下标来寻找，或者想要知道一个节点的左右节点，也可以利用下标。如果你懂树这个数据结构，应该不难理解。这里也不多赘述</p>
+<h2 id="堆化"><a href="#堆化" class="headerlink" title="堆化"></a>堆化</h2><p>以根节点为例，我们要对根节点做一次堆化，是他成为最大堆，我们可以先认为根节点已经是最大值，然后去和它的左右节点比较，把更大的转移上来，这样就保证了根节点是最大值。<br><img src="https://github.com/qiancijun/Image/raw/master/Algorithm/HeapSort/2.png" alt=""></p>
+<h2 id="构建堆"><a href="#构建堆" class="headerlink" title="构建堆"></a>构建堆</h2><p>只对一个根节点堆化是不行的，那么要怎么做才能使这个堆成为最大堆呢？你可以先想一下，运用一点分治的思想。如果这棵树每一个节点都满足最大堆，那么这棵树整体也是一个最大堆。那么解决方法就很简单了，我们先根据下标寻找到最后一个度为2的父节点，一直做堆化，直到做到根节点，当根节点的堆化完成后，整棵树就成为了最大堆。<br><img src="https://github.com/qiancijun/Image/raw/master/Algorithm/HeapSort/3.png" alt=""></p>
+<h2 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h2><p>思考一个问题，我构建完了最大堆，并且交换完了值，我需不需要对交换后的树做整体堆化？<br><br>答案是必然的，原因很简单，可以自己画下图就能明白了<br><img src="https://github.com/qiancijun/Image/raw/master/Algorithm/HeapSort/4.png" alt=""></p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p class="code-caption" data-lang="cpp" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
+
+<pre><code class="cpp">void heapify(vector&lt;int&gt; &amp;tree, int len, int i){
+    int cl = 2 * i + 1; //左节点
+    int cr = 2 * i + 2; //右节点
+    int max = i; //假设当前节点是最大值节点
+    if (cl &lt; len &amp;&amp; tree[cl] &gt; tree[max]){
+        max = cl; //最大值设为左节点
+    }
+    if (cr &lt; len &amp;&amp; tree[cr] &gt; tree[max]){
+        max = cr; //最大值设为右节点
+    }
+    if (max != i){
+        swap(tree[i], tree[max]); //交换元素
+        heapify(tree, len, max); //对交换后的节点再进行堆化，向下渗透
+    }
+
+}//把当前第i个节点堆化
+
+void build_heap(vector&lt;int&gt; &amp;tree){
+    int len = tree.size();
+    int parent = (len - 1) / 2;//最后一个叶节点的父节点
+    for(int i = parent; i &gt;= 0; i--){
+        heapify(tree, len, i);
+    }
+}//自下而上把树堆化
+
+void heap_sort(vector&lt;int&gt; &amp;tree){
+    int len = tree.size();
+    build_heap(tree);
+    for(int i = len - 1; i &gt;= 0; i--){
+        swap(tree[i], tree[0]); //交换堆顶和最后一个节点的位置
+        heapify(tree, i, 0); //重新堆化
+    }
+}</code></pre>
+<h1 id="题外"><a href="#题外" class="headerlink" title="题外"></a>题外</h1><p>堆排序的时间复杂度为O(nlogn)可以说时间复杂度已经达标了，而且也只用了O(1)的空间，但缺点是不稳定（对于相同值的处理上）</p>
 ]]></content>
+      <categories>
+        <category>Algorithm</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>排序</tag>
+      </tags>
   </entry>
   <entry>
     <title>Hello World</title>
@@ -246,6 +326,45 @@ a &lt;&lt; 1; -&gt; 4</code></pre>
       <categories>
         <category>Algorithm</category>
       </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>哀悼抗击新冠肺炎疫情牺牲烈士</title>
+    <url>/2020/04/04/%E5%93%80%E6%82%BC%E6%8A%97%E5%87%BB%E6%96%B0%E5%86%A0%E8%82%BA%E7%82%8E%E7%96%AB%E6%83%85%E7%89%BA%E7%89%B2%E7%83%88%E5%A3%AB/</url>
+    <content><![CDATA[<h2 id="默哀-为在抗击新型冠状病毒中牺牲烈士和逝世同胞"><a href="#默哀-为在抗击新型冠状病毒中牺牲烈士和逝世同胞" class="headerlink" title="默哀 为在抗击新型冠状病毒中牺牲烈士和逝世同胞"></a>默哀 为在抗击新型冠状病毒中牺牲烈士和逝世同胞</h2><p><img src="https://github.com/qiancijun/Image/raw/master/Life/2020.4.4.jpeg" alt=""></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>阶乘</title>
+    <url>/2020/04/02/%E9%98%B6%E4%B9%98/</url>
+    <content><![CDATA[<p>程序要求：用递归实现阶乘（不考虑数据溢出问题）</p>
+<h1 id="方法一：递归"><a href="#方法一：递归" class="headerlink" title="方法一：递归"></a>方法一：递归</h1><p class="code-caption" data-lang="cpp" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
+
+<pre><code class="cpp">int fac(int num){
+    if(num == 0){
+        return 1;
+    }
+    else{
+        return num * fac(num - 1);
+    }
+}</code></pre>
+<p>在递归法中，由于使用的是尾递归，尾递归可以和循环进行转换，</p>
+<h1 id="方法二：循环"><a href="#方法二：循环" class="headerlink" title="方法二：循环"></a>方法二：循环</h1><p class="code-caption" data-lang="cpp" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
+
+<pre><code class="cpp">int fac(int num){
+    if(num == 0){
+        return 1;
+    }
+    int result = 1;
+    for(int i = num; i &gt; 0; i--){
+        result *= i;
+    }
+    return result;
+}</code></pre>
+<p>两个程序都只扫描了一遍，时间复杂度On</p>
+]]></content>
       <tags>
         <tag>算法</tag>
       </tags>
@@ -303,9 +422,9 @@ void merge_sort(vector&lt;int&gt; &amp;nums, int L, int R){
         <category>Algorithm</category>
       </categories>
       <tags>
+        <tag>数组</tag>
         <tag>算法</tag>
         <tag>排序</tag>
-        <tag>数组</tag>
       </tags>
   </entry>
   <entry>
@@ -368,71 +487,6 @@ void quick_sort(vector&lt;int&gt; &amp;nums, int left, int right){
       <tags>
         <tag>算法</tag>
         <tag>排序</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>阶乘</title>
-    <url>/2020/04/02/%E9%98%B6%E4%B9%98/</url>
-    <content><![CDATA[<p>程序要求：用递归实现阶乘（不考虑数据溢出问题）</p>
-<h1 id="方法一：递归"><a href="#方法一：递归" class="headerlink" title="方法一：递归"></a>方法一：递归</h1><p class="code-caption" data-lang="cpp" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
-
-<pre><code class="cpp">int fac(int num){
-    if(num == 0){
-        return 1;
-    }
-    else{
-        return num * fac(num - 1);
-    }
-}</code></pre>
-<p>在递归法中，由于使用的是尾递归，尾递归可以和循环进行转换，</p>
-<h1 id="方法二：循环"><a href="#方法二：循环" class="headerlink" title="方法二：循环"></a>方法二：循环</h1><p class="code-caption" data-lang="cpp" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
-
-<pre><code class="cpp">int fac(int num){
-    if(num == 0){
-        return 1;
-    }
-    int result = 1;
-    for(int i = num; i &gt; 0; i--){
-        result *= i;
-    }
-    return result;
-}</code></pre>
-<p>两个程序都只扫描了一遍，时间复杂度On</p>
-]]></content>
-      <tags>
-        <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>LeetCode-27-移除元素</title>
-    <url>/2020/04/06/LeetCode-27-%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0/</url>
-    <content><![CDATA[<h1 id="题目链接"><a href="#题目链接" class="headerlink" title="题目链接"></a>题目链接</h1><p><a href="https://leetcode-cn.com/problems/remove-element/" target="_blank" rel="noopener">原题链接</a></p>
-<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/27/dercribe.png" alt=""></p>
-<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>算是一道双指针比较容易的题，第一个指针指向数组第一个元素，第二个指针指向数组最后一个元素，如果第一个指针在遍历的过程中，遇见了和val一样的元素，就和第二个指针交换值，并且第二个指针向前挪，但是此时第一个指针不能移动，如果交换后的值依旧和val相同，那么还要再做一次判断</p>
-<h1 id="时间与内存"><a href="#时间与内存" class="headerlink" title="时间与内存"></a>时间与内存</h1><p>时间复杂度O(n)<br>空间复杂度O(1)<br><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/27/pass.png" alt=""></p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p class="code-caption" data-lang="cpp" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
-
-<pre><code class="cpp">int removeElement(vector&lt;int&gt;&amp; nums, int val) {
-    int len = nums.size();
-    int i = 0;
-    while (i &lt; len){
-        if (nums[i] == val){
-            swap(nums[i], nums[len - 1]);
-            len--;
-        }
-        else{
-            i++;
-        }
-    }
-    return len;
-}</code></pre>
-]]></content>
-      <categories>
-        <category>LeetCode</category>
-      </categories>
-      <tags>
-        <tag>数组</tag>
-        <tag>双指针</tag>
       </tags>
   </entry>
 </search>
