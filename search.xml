@@ -403,4 +403,36 @@ void quick_sort(vector&lt;int&gt; &amp;nums, int left, int right){
         <tag>算法</tag>
       </tags>
   </entry>
+  <entry>
+    <title>LeetCode-27-移除元素</title>
+    <url>/2020/04/06/LeetCode-27-%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0/</url>
+    <content><![CDATA[<h1 id="题目链接"><a href="#题目链接" class="headerlink" title="题目链接"></a>题目链接</h1><p><a href="https://leetcode-cn.com/problems/remove-element/" target="_blank" rel="noopener">原题链接</a></p>
+<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/27/dercribe.png" alt=""></p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>算是一道双指针比较容易的题，第一个指针指向数组第一个元素，第二个指针指向数组最后一个元素，如果第一个指针在遍历的过程中，遇见了和val一样的元素，就和第二个指针交换值，并且第二个指针向前挪，但是此时第一个指针不能移动，如果交换后的值依旧和val相同，那么还要再做一次判断</p>
+<h1 id="时间与内存"><a href="#时间与内存" class="headerlink" title="时间与内存"></a>时间与内存</h1><p>时间复杂度O(n)<br>空间复杂度O(1)<br><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/27/pass.png" alt=""></p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p class="code-caption" data-lang="cpp" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
+
+<pre><code class="cpp">int removeElement(vector&lt;int&gt;&amp; nums, int val) {
+    int len = nums.size();
+    int i = 0;
+    while (i &lt; len){
+        if (nums[i] == val){
+            swap(nums[i], nums[len - 1]);
+            len--;
+        }
+        else{
+            i++;
+        }
+    }
+    return len;
+}</code></pre>
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>数组</tag>
+        <tag>双指针</tag>
+      </tags>
+  </entry>
 </search>
