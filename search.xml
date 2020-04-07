@@ -430,7 +430,7 @@ void merge_sort(vector&lt;int&gt; &amp;nums, int L, int R){
   <entry>
     <title>快速排序</title>
     <url>/2020/04/04/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>排序作为数据结构与算法基础算法之一，形式多样，复杂度不同，在不同情况下选用适当的排序算法能够使效率最大化。本文主要介绍排序算法中的$\color{red}{快速排序}$。一般所说的数组排序规模都在一万个数据以上，在这种数据规模下，快速排序的效率远大于冒泡、选择、插入排序。</p>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>排序作为数据结构与算法基础算法之一，形式多样，复杂度不同，在不同情况下选用适当的排序算法能够使效率最大化。本文主要介绍排序算法中的 $\color{red}{快速排序}$。一般所说的数组排序规模都在一万个数据以上，在这种数据规模下，快速排序的效率远大于冒泡、选择、插入排序。</p>
 <h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><h2 id="一个简单例子"><a href="#一个简单例子" class="headerlink" title="一个简单例子"></a>一个简单例子</h2><p>我们先来看一个数组[2, 1, 4, 3, 6, 9, 8, 7, 10]<br><br>该例子有一个明显的特点，也不难发现，整个数组的中间数6，在6的左边所有元素都是小于6的，在6的右边所有元素都是大于6的。我们的目的很简单，就是把这个特殊数组排序，使它成为一个有序的数组<br><img src="https://github.com/qiancijun/Image/raw/master/Algorithm/QuickSort/quicksort_simple.jpg" alt=""><br><br>很明显，我们只要把6左边的集合变成有序序列，把6右边的集合变成有序序列，最后合并，即可使整个序列有序。而在整个过程中把6称为主元(pivot)，算法核心思想利用递归、分治，把排序分成多个子集合的排序，最后使整个序列有序</p>
 <h1 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h1><h2 id="主元选取"><a href="#主元选取" class="headerlink" title="主元选取"></a>主元选取</h2><p>一般来说，待排序数组都是无规律的，不会是我们简单例子所看到的这么一个特殊序列，而对于无规律数组，一个主元合理的选取方式，可以提升算法效率。<br><br>选取主元有多种方式，如果单纯选数组第一个元素或者最后一个元素作为主元显然是不合理的。若对于一个部分有序的数组，形如[1, 2, 3, 4, 8, 5, 9]每次把第一个元素作为主元，显然子集划分后左子集是空集，这种情况不是我们所预期的。对于主元的选取方式一般有两种</p>
 <ol>
@@ -487,6 +487,111 @@ void quick_sort(vector&lt;int&gt; &amp;nums, int left, int right){
       <tags>
         <tag>算法</tag>
         <tag>排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>单源最短路径 -dijkstra算法</title>
+    <url>/2020/04/07/%E5%8D%95%E6%BA%90%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84dijkstra/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在做无权值图的单源最短路径问题中，我们能使用DFS或者BFS算法就能解决问题。而在有权值的图中，就需要一点特殊手段处理了，本文主要介绍dijkstra算法。在这里我们所讨论的图都是有向图，没有负值圈。</p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>Dijkstra算法是典型的 $\color{red}{单源最短路径算法}$， 用于计算一个节点到其他所有节点的最短路径。主要特点是 $\color{red}{以起始点为中心向外层扩展，直到终点为止}$</p>
+<h1 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h1><p>假设所给图是带权有向图<br><img src="https://github.com/qiancijun/Image/raw/master/Algorithm/dijkstra/graph.png" alt=""><br>假设一个集合S，S中只有一个源点，每次求得一条最短路径后，就把该顶点加入到S集合中，直到所有顶点都加入该集合。思想有点类似于贪心算法。对于每次取最小路径这个问题，我们可以使用一个特殊的数据结构，优先队列(priority_queue)。优先队列会把权值小的插队到权值大的前面，这样一来，我们能够保证每一步走的都是最短的，但同时我们需要记录该节点是否被走过，以免被覆盖。</p>
+<h2 id="图的描述"><a href="#图的描述" class="headerlink" title="图的描述"></a>图的描述</h2><p>这里我选择的是用散列表来表示一个图,key是源节点,value是指向的节点，形式为 源节点： [指向的节点， 权值]</p>
+<h2 id="广度优先搜索"><a href="#广度优先搜索" class="headerlink" title="广度优先搜索"></a>广度优先搜索</h2><p>这是一个标准的BFS模板，一个队列，节点不断入队，稍作修改。CPP的优先队列默认是大顶堆，这里还需要重写一下比较方式，直接利用了一个lambda(c++11)或者传入一个compare函数。用一个visited数组标记是否被访问过，-1代表没被访问，如果访问后，把值改为最短路径和。用一个path数组记录该节点是怎么走过来的，下标对于节点编号，值对应了从哪个节点过来，直到一直追溯到0，说明就已经找到了源节点。再用一个堆栈逆序打印出顺序。</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p class="code-caption" data-lang="cpp" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
+
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;unordered_map&gt;
+#include &lt;functional&gt;
+#include &lt;queue&gt;
+#include &lt;stack&gt;
+
+using namespace std;
+
+void dijkstra(vector&lt;vector&lt;int&gt;&gt; nums, int K, vector&lt;int&gt; &amp;vis, vector&lt;int&gt; &amp;path){
+    unordered_map&lt;int, vector&lt;vector&lt;int&gt;&gt;&gt; graph; //图
+    for(auto point: nums){
+        graph[point[0]].push_back({point[1], point[2]}); //源点，{节点， 权值}
+    }
+
+    //优先队列，重载&gt;运算符
+    priority_queue&lt;vector&lt;int&gt;, vector&lt;vector&lt;int&gt;&gt;, function&lt;bool(vector&lt;int&gt; &amp;v1, vector&lt;int&gt; &amp;v2)&gt;&gt; pq([](vector&lt;int&gt; &amp;v1, vector&lt;int&gt; &amp;v2)-&gt;bool{
+        return v1[1] &gt; v2[1];
+    });
+
+    pq.push({K, 0});
+
+    while (!pq.empty()){
+        vector&lt;int&gt; cur = pq.top();
+        pq.pop();
+
+        //节点已经被访问过
+        if (vis[cur[0]] != -1)
+            continue;
+        vis[cur[0]] = cur[1];
+        for (auto next: graph[cur[0]]){
+            if (vis[next[0]] != -1){
+                continue;
+            }
+            path[next[0]] = cur[0];
+            pq.push({next[0], cur[1] + next[1]});
+        } //刷新一下图
+    }
+    return;
+}
+ //打印出路径，即 是什么走到该节点的
+void find_origin(vector&lt;int&gt; path, int K){
+    stack&lt;int&gt; s;
+    int i = K;
+    s.push(K);
+    while (path[i] != 0)
+    {
+        s.push(path[i]);
+        i = path[i];
+    }
+    cout &lt;&lt; K &lt;&lt; &quot;&#39;s origin:&quot;;
+    while (!s.empty())
+    {
+        cout &lt;&lt; s.top() &lt;&lt; &quot; &quot;;
+        s.pop();
+    }
+    cout &lt;&lt; endl;
+}
+
+int main(void){
+    const int SIZE = 6;
+    vector&lt;vector&lt;int&gt;&gt; nums = {
+        {1, 2, 1},
+        {1, 4, 2},
+        {2, 3, 5},
+        {2, 4, 1},
+        {4, 3, 2},
+        {3, 6, 1},
+        {4, 5, 1},
+        {5, 6, 4}
+    };
+    vector&lt;int&gt; vis(SIZE + 1, -1);
+    vector&lt;int&gt; path(SIZE + 1, 0);
+    dijkstra(nums, 1, vis, path);
+    for (int i = 1; i &lt; vis.size(); i++){
+        cout &lt;&lt; vis[i] &lt;&lt; &quot; &quot;;
+    }
+    cout &lt;&lt; endl;
+    for(int i = 1; i &lt; path.size();i++){
+        find_origin(path, i);
+    }
+    getchar();
+    return 0;
+}</code></pre>
+]]></content>
+      <categories>
+        <category>Algorithm</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+        <tag>算法</tag>
+        <tag>广度优先搜索</tag>
+        <tag>图</tag>
       </tags>
   </entry>
 </search>

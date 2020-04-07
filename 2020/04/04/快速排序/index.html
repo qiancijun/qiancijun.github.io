@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
-    <meta name="description" content="前言排序作为数据结构与算法基础算法之一，形式多样，复杂度不同，在不同情况下选用适当的排序算法能够使效率最大化。本文主要介绍排序算法中的$\color{red}{快速排序}$。一般所说的数组排序规模都,"> 
+    <meta name="description" content="前言排序作为数据结构与算法基础算法之一，形式多样，复杂度不同，在不同情况下选用适当的排序算法能够使效率最大化。本文主要介绍排序算法中的 $\color{red}{快速排序}$。一般所说的数组排序规模,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -63,7 +63,7 @@
 
         </div>
         <div class="content markdown">
-            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>排序作为数据结构与算法基础算法之一，形式多样，复杂度不同，在不同情况下选用适当的排序算法能够使效率最大化。本文主要介绍排序算法中的$\color{red}{快速排序}$。一般所说的数组排序规模都在一万个数据以上，在这种数据规模下，快速排序的效率远大于冒泡、选择、插入排序。</p>
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>排序作为数据结构与算法基础算法之一，形式多样，复杂度不同，在不同情况下选用适当的排序算法能够使效率最大化。本文主要介绍排序算法中的 $\color{red}{快速排序}$。一般所说的数组排序规模都在一万个数据以上，在这种数据规模下，快速排序的效率远大于冒泡、选择、插入排序。</p>
 <h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><h2 id="一个简单例子"><a href="#一个简单例子" class="headerlink" title="一个简单例子"></a>一个简单例子</h2><p>我们先来看一个数组[2, 1, 4, 3, 6, 9, 8, 7, 10]<br><br>该例子有一个明显的特点，也不难发现，整个数组的中间数6，在6的左边所有元素都是小于6的，在6的右边所有元素都是大于6的。我们的目的很简单，就是把这个特殊数组排序，使它成为一个有序的数组<br><img src="https://github.com/qiancijun/Image/raw/master/Algorithm/QuickSort/quicksort_simple.jpg" alt=""><br><br>很明显，我们只要把6左边的集合变成有序序列，把6右边的集合变成有序序列，最后合并，即可使整个序列有序。而在整个过程中把6称为主元(pivot)，算法核心思想利用递归、分治，把排序分成多个子集合的排序，最后使整个序列有序</p>
 <h1 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h1><h2 id="主元选取"><a href="#主元选取" class="headerlink" title="主元选取"></a>主元选取</h2><p>一般来说，待排序数组都是无规律的，不会是我们简单例子所看到的这么一个特殊序列，而对于无规律数组，一个主元合理的选取方式，可以提升算法效率。<br><br>选取主元有多种方式，如果单纯选数组第一个元素或者最后一个元素作为主元显然是不合理的。若对于一个部分有序的数组，形如[1, 2, 3, 4, 8, 5, 9]每次把第一个元素作为主元，显然子集划分后左子集是空集，这种情况不是我们所预期的。对于主元的选取方式一般有两种</p>
 <ol>
