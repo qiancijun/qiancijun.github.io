@@ -66,10 +66,10 @@
         </div>
         <div class="content markdown">
             <h1 id="题目链接"><a href="#题目链接" class="headerlink" title="题目链接"></a>题目链接</h1><p><br> <a href="https://leetcode-cn.com/problems/string-to-integer-atoi/" target="_blank" rel="noopener">原题链接</a></p>
-<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/8/descirbe.png" alt=""></p>
+<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/8/descirbe.png" alt=""></p>
 <h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p><br>题目中有说到，该函数会根据需要丢弃无用的开头空格字符，直到寻找到第一个非空格的字符为止。所以我们先处理空白字符，直到遇到第一个非空字符。第一个非空字符如果是“-”就记录一下，最后结果乘以 -1 ，如果是别的乱七八糟的符号，直接跳过开始处理后面的数字</p>
-<h2 id="数字处理的过程"><a href="#数字处理的过程" class="headerlink" title="数字处理的过程"></a>数字处理的过程</h2><p><br><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/8/solve1.gif" alt=""><br><br>另外一个很关键的问题，数据溢出问题，有符号整型的数据范围在[$$-2^31$$,$$2^31$$-1]，在C语言中导入<climits>头文件用 INT_MAX 或者 INT_MIN 即可。在做每次result之前先拿INT_MAX$\color{red}{减去}$当前箭头所指的数字再除以十去和当前result做比较，这相当于一个逆运算判读是否会溢出，对result的式子做一个变换就能看出这个原理。 </p>
-<h1 id="时间与内存"><a href="#时间与内存" class="headerlink" title="时间与内存"></a>时间与内存</h1><p><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/8/pass.png" alt=""></p>
+<h2 id="数字处理的过程"><a href="#数字处理的过程" class="headerlink" title="数字处理的过程"></a>数字处理的过程</h2><p><br><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/8/solve1.gif" alt=""><br><br>另外一个很关键的问题，数据溢出问题，有符号整型的数据范围在[$$-2^31$$,$$2^31$$-1]，在C语言中导入<climits>头文件用 INT_MAX 或者 INT_MIN 即可。在做每次result之前先拿INT_MAX$\color{red}{减去}$当前箭头所指的数字再除以十去和当前result做比较，这相当于一个逆运算判读是否会溢出，对result的式子做一个变换就能看出这个原理。 </p>
+<h1 id="时间与内存"><a href="#时间与内存" class="headerlink" title="时间与内存"></a>时间与内存</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/8/pass.png" alt=""></p>
 <h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p class="code-caption" data-lang="cpp" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
 
 <pre><code class="cpp">int myAtoi(string str) {
