@@ -1,0 +1,315 @@
+
+<!DOCTYPE html>
+<html lang="zh_CH" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LeetCode-183周周赛 - 神奇口袋</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="qiancijun,"> 
+    <meta name="description" content="1403. 非递增顺序的最小子序列
+思路排序之后每次都往子序列里放一个最大的，直到子序列和大于原数组。
+标签贪心算法 排序
+代码Copy Code
+
+vector&amp;lt;int&amp;gt; minSub,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">神奇口袋</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://qiancijun.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">LeetCode-183周周赛</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+   
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">LeetCode-183周周赛</h1>
+        <div class="stuff">
+            <span>四月 08, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E8%AF%95%E9%A2%98/" rel="tag">试题</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h1 id="1403-非递增顺序的最小子序列"><a href="#1403-非递增顺序的最小子序列" class="headerlink" title="1403. 非递增顺序的最小子序列"></a>1403. 非递增顺序的最小子序列</h1><p><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/1403/describe.png" alt="题目描述"></p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>排序之后每次都往子序列里放一个最大的，直到子序列和大于原数组。</p>
+<h2 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h2><p>贪心算法 排序</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p class="code-caption" data-lang="cpp" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
+
+<pre><code class="cpp">vector&lt;int&gt; minSubsequence(vector&lt;int&gt;&amp; nums) {
+    vector&lt;int&gt; result;
+    if (nums.size() &lt; 2)
+        return nums;
+    sort(nums.rbegin(), nums.rend());//排序
+    int sum1 = 0, sum2 = 0;
+    for (int a: nums){
+        sum1 += a;
+    }
+    for (int i = 0; i &lt; nums.size(); i++){
+        if (sum1 &gt;= sum2){
+            sum1 -= nums[i];
+            sum2 += nums[i];
+            result.push_back(nums[i]);
+        }
+        else {
+            break;
+        }
+    }
+    return result;
+}</code></pre>
+<h2 id="时间和内存"><a href="#时间和内存" class="headerlink" title="时间和内存"></a>时间和内存</h2><p><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/1403/pass.png" alt=""></p>
+<h1 id="1404-将二进制表示减到-1-的步骤数"><a href="#1404-将二进制表示减到-1-的步骤数" class="headerlink" title="1404. 将二进制表示减到 1 的步骤数"></a>1404. 将二进制表示减到 1 的步骤数</h1><p><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/1404/describe.png" alt="题目描述"></p>
+<h2 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h2><p>如果把二进制转换为十进制在操作，按理可以完成，不过给的二进制可能远远超过64位。我们需要直接在二进制字符串上操作。要解决的问题就是奇数情况下加一的进位问题，用一个bool记录一下是否要进位。<br><br>如果要进位，1进位变成0，0只需要一步那就是除以2。0进位变成1，1要加1再除以二就是两步，并且往前进位<br><br>如果不要进位，1加一除以2就是两步，往前进一位，0直接除以2就是一步，不需要进位。<br><br>最后处理到第一位判断一下之前是不是要进位。</p>
+<h2 id="标签-1"><a href="#标签-1" class="headerlink" title="标签"></a>标签</h2><p>位运算 字符串</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p class="code-caption" data-lang="cpp" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
+
+<pre><code class="cpp">int numSteps(string s) {
+    int step = 0;
+    int attach = 0;
+    for (int i = s.size() - 1; i &gt; 0; i--){
+        if (attach == 1){
+            if (s[i] == &#39;0&#39;){
+                step += 2;
+                attach = 1;
+            }
+            else {
+                step++;
+                attach = 1;
+            }
+        } //有进位
+        else {
+            if (s[i] == &#39;0&#39;){
+                step++;
+                attach = 0;
+            }
+            else {
+                step += 2;
+                attach = 1;
+            }
+        } //没有进位
+    }
+    if (attach == 1){
+        step++;
+    }
+    return step;
+}</code></pre>
+<h2 id="时间和内存-1"><a href="#时间和内存-1" class="headerlink" title="时间和内存"></a>时间和内存</h2><p><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/1404/pass.png" alt=""></p>
+<h1 id="1405-最长快乐字符串"><a href="#1405-最长快乐字符串" class="headerlink" title="1405. 最长快乐字符串"></a>1405. 最长快乐字符串</h1><p><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/1405/describe.png" alt="题目描述"></p>
+<h2 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h2><p>直接贪心做，每次都取最多的那个，如果已经取了两次就取第二多的，在写的过程中注意个数就行了</p>
+<h2 id="标签-2"><a href="#标签-2" class="headerlink" title="标签"></a>标签</h2><p>贪心算法 动态规划</p>
+<h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><p class="code-caption" data-lang="cpp" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
+
+<pre><code class="cpp">string longestDiverseString(int a, int b, int c) {
+    vector&lt;pair&lt;int, char&gt;&gt; nums;
+    nums.push_back(make_pair(a, &#39;a&#39;));
+    nums.push_back(make_pair(b, &#39;b&#39;));
+    nums.push_back(make_pair(c, &#39;c&#39;));
+    sort(nums.begin(), nums.end());
+    string result = &quot;&quot;;
+    while (true){
+        sort(nums.rbegin(), nums.rend());
+        int len = result.size();
+        if (len &gt;= a + b + c)
+            break;
+        if (len &lt; 2){
+            result += nums[0].second;
+            nums[0].first--;
+        }
+        if (len &gt;= 2 &amp;&amp; result[len - 1] == result[len - 2]){
+            if (nums[0].second != result[len - 1] &amp;&amp; nums[0].first &gt; 0){
+                result += nums[0].second;
+                nums[0].first--;
+            }
+            else if (nums[0].second == result[len - 1] &amp;&amp; nums[1].first &gt; 0){
+                result += nums[1].second;
+                nums[1].first--;
+            }
+            else {
+                break;
+            }
+        }
+        else if (len &gt;= 2 &amp;&amp; result[len - 1] != result[len - 2] &amp;&amp; nums[0].first &gt; 0){
+            result += nums[0].second;
+            nums[0].first--;
+        }
+    }
+    return result;
+}</code></pre>
+<h2 id="时间和内存-2"><a href="#时间和内存-2" class="headerlink" title="时间和内存"></a>时间和内存</h2><p><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/1405/pass.png" alt=""></p>
+<h1 id="1406-石子游戏-III"><a href="#1406-石子游戏-III" class="headerlink" title="1406. 石子游戏 III"></a>1406. 石子游戏 III</h1><p>我不会，下次再补</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='https://link.hhtjim.com/163/155827.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='https://link.hhtjim.com/163/1491163.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='https://link.hhtjim.com/163/1992707.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='true'
+        data-ci='Iv1.06e5c405a7731b45'
+        data-cs='2fcfe85902a7d5812fa4b299b56a6f194c98e08a'
+        data-r='qiancijun.github.io'
+        data-o='qiancijun'
+        data-a='qiancijun'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1403-非递增顺序的最小子序列"><span class="toc-number">1.</span> <span class="toc-text">1403. 非递增顺序的最小子序列</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#思路"><span class="toc-number">1.1.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#标签"><span class="toc-number">1.2.</span> <span class="toc-text">标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码"><span class="toc-number">1.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#时间和内存"><span class="toc-number">1.4.</span> <span class="toc-text">时间和内存</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1404-将二进制表示减到-1-的步骤数"><span class="toc-number">2.</span> <span class="toc-text">1404. 将二进制表示减到 1 的步骤数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#思路-1"><span class="toc-number">2.1.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#标签-1"><span class="toc-number">2.2.</span> <span class="toc-text">标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码-1"><span class="toc-number">2.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#时间和内存-1"><span class="toc-number">2.4.</span> <span class="toc-text">时间和内存</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1405-最长快乐字符串"><span class="toc-number">3.</span> <span class="toc-text">1405. 最长快乐字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#思路-2"><span class="toc-number">3.1.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#标签-2"><span class="toc-number">3.2.</span> <span class="toc-text">标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码-2"><span class="toc-number">3.3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#时间和内存-2"><span class="toc-number">3.4.</span> <span class="toc-text">时间和内存</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1406-石子游戏-III"><span class="toc-number">4.</span> <span class="toc-text">1406. 石子游戏 III</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":250,"height":400},"mobile":{"show":false},"log":false});</script></body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+
+<script type="text/javascript" src="/js/love.js"></script>
+</html>

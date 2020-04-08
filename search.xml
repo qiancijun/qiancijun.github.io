@@ -594,4 +594,121 @@ int main(void){
         <tag>图</tag>
       </tags>
   </entry>
+  <entry>
+    <title>LeetCode-183周周赛</title>
+    <url>/2020/04/08/LeetCode-183%E5%91%A8%E5%91%A8%E8%B5%9B/</url>
+    <content><![CDATA[<h1 id="1403-非递增顺序的最小子序列"><a href="#1403-非递增顺序的最小子序列" class="headerlink" title="1403. 非递增顺序的最小子序列"></a>1403. 非递增顺序的最小子序列</h1><p><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/1403/describe.png" alt="题目描述"></p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>排序之后每次都往子序列里放一个最大的，直到子序列和大于原数组。</p>
+<h2 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h2><p>贪心算法 排序</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p class="code-caption" data-lang="cpp" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
+
+<pre><code class="cpp">vector&lt;int&gt; minSubsequence(vector&lt;int&gt;&amp; nums) {
+    vector&lt;int&gt; result;
+    if (nums.size() &lt; 2)
+        return nums;
+    sort(nums.rbegin(), nums.rend());//排序
+    int sum1 = 0, sum2 = 0;
+    for (int a: nums){
+        sum1 += a;
+    }
+    for (int i = 0; i &lt; nums.size(); i++){
+        if (sum1 &gt;= sum2){
+            sum1 -= nums[i];
+            sum2 += nums[i];
+            result.push_back(nums[i]);
+        }
+        else {
+            break;
+        }
+    }
+    return result;
+}</code></pre>
+<h2 id="时间和内存"><a href="#时间和内存" class="headerlink" title="时间和内存"></a>时间和内存</h2><p><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/1403/pass.png" alt=""></p>
+<h1 id="1404-将二进制表示减到-1-的步骤数"><a href="#1404-将二进制表示减到-1-的步骤数" class="headerlink" title="1404. 将二进制表示减到 1 的步骤数"></a>1404. 将二进制表示减到 1 的步骤数</h1><p><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/1404/describe.png" alt="题目描述"></p>
+<h2 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h2><p>如果把二进制转换为十进制在操作，按理可以完成，不过给的二进制可能远远超过64位。我们需要直接在二进制字符串上操作。要解决的问题就是奇数情况下加一的进位问题，用一个bool记录一下是否要进位。<br><br>如果要进位，1进位变成0，0只需要一步那就是除以2。0进位变成1，1要加1再除以二就是两步，并且往前进位<br><br>如果不要进位，1加一除以2就是两步，往前进一位，0直接除以2就是一步，不需要进位。<br><br>最后处理到第一位判断一下之前是不是要进位。</p>
+<h2 id="标签-1"><a href="#标签-1" class="headerlink" title="标签"></a>标签</h2><p>位运算 字符串</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><p class="code-caption" data-lang="cpp" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
+
+<pre><code class="cpp">int numSteps(string s) {
+    int step = 0;
+    int attach = 0;
+    for (int i = s.size() - 1; i &gt; 0; i--){
+        if (attach == 1){
+            if (s[i] == &#39;0&#39;){
+                step += 2;
+                attach = 1;
+            }
+            else {
+                step++;
+                attach = 1;
+            }
+        } //有进位
+        else {
+            if (s[i] == &#39;0&#39;){
+                step++;
+                attach = 0;
+            }
+            else {
+                step += 2;
+                attach = 1;
+            }
+        } //没有进位
+    }
+    if (attach == 1){
+        step++;
+    }
+    return step;
+}</code></pre>
+<h2 id="时间和内存-1"><a href="#时间和内存-1" class="headerlink" title="时间和内存"></a>时间和内存</h2><p><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/1404/pass.png" alt=""></p>
+<h1 id="1405-最长快乐字符串"><a href="#1405-最长快乐字符串" class="headerlink" title="1405. 最长快乐字符串"></a>1405. 最长快乐字符串</h1><p><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/1405/describe.png" alt="题目描述"></p>
+<h2 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h2><p>直接贪心做，每次都取最多的那个，如果已经取了两次就取第二多的，在写的过程中注意个数就行了</p>
+<h2 id="标签-2"><a href="#标签-2" class="headerlink" title="标签"></a>标签</h2><p>贪心算法 动态规划</p>
+<h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><p class="code-caption" data-lang="cpp" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
+
+<pre><code class="cpp">string longestDiverseString(int a, int b, int c) {
+    vector&lt;pair&lt;int, char&gt;&gt; nums;
+    nums.push_back(make_pair(a, &#39;a&#39;));
+    nums.push_back(make_pair(b, &#39;b&#39;));
+    nums.push_back(make_pair(c, &#39;c&#39;));
+    sort(nums.begin(), nums.end());
+    string result = &quot;&quot;;
+    while (true){
+        sort(nums.rbegin(), nums.rend());
+        int len = result.size();
+        if (len &gt;= a + b + c)
+            break;
+        if (len &lt; 2){
+            result += nums[0].second;
+            nums[0].first--;
+        }
+        if (len &gt;= 2 &amp;&amp; result[len - 1] == result[len - 2]){
+            if (nums[0].second != result[len - 1] &amp;&amp; nums[0].first &gt; 0){
+                result += nums[0].second;
+                nums[0].first--;
+            }
+            else if (nums[0].second == result[len - 1] &amp;&amp; nums[1].first &gt; 0){
+                result += nums[1].second;
+                nums[1].first--;
+            }
+            else {
+                break;
+            }
+        }
+        else if (len &gt;= 2 &amp;&amp; result[len - 1] != result[len - 2] &amp;&amp; nums[0].first &gt; 0){
+            result += nums[0].second;
+            nums[0].first--;
+        }
+    }
+    return result;
+}</code></pre>
+<h2 id="时间和内存-2"><a href="#时间和内存-2" class="headerlink" title="时间和内存"></a>时间和内存</h2><p><img src="https://github.com/qiancijun/Image/raw/master/LeetCode/1405/pass.png" alt=""></p>
+<h1 id="1406-石子游戏-III"><a href="#1406-石子游戏-III" class="headerlink" title="1406. 石子游戏 III"></a>1406. 石子游戏 III</h1><p>我不会，下次再补</p>
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>试题</tag>
+      </tags>
+  </entry>
 </search>
