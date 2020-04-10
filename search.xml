@@ -762,4 +762,58 @@ void dfs(vector&lt;string&gt; &amp;result, string list, int left, int right, int
         <tag>深度优先搜索</tag>
       </tags>
   </entry>
+  <entry>
+    <title>LeetCode-151-翻转字符串里的单词</title>
+    <url>/2020/04/10/LeetCode-151-%E7%BF%BB%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%87%8C%E7%9A%84%E5%8D%95%E8%AF%8D/</url>
+    <content><![CDATA[<h1 id="原题链接"><a href="#原题链接" class="headerlink" title="原题链接"></a>原题链接</h1><p><a href="https://leetcode-cn.com/problems/reverse-words-in-a-string/submissions/" target="_blank" rel="noopener">链接</a></p>
+<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/151/describe.png" alt="题目描述"></p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>根据示例3，我们先用重新确定字符串的范围大小，把字符串头和尾的空格全部去除。从尾开始遍历，把字符压入堆栈，遇见空格把堆栈里的字符都一个一个抛出，然后开始遍历下一个单词，根据2，我们需要对空格做一个去重处理，如果有多个空格，那么我们只看一个，多余的不管。在最后记得要把堆栈中剩余的字符抛出来。</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code class="cpp">string reverseWords(string s) {
+    int len = s.size();
+    stack&lt;char&gt; mystack;
+    string result = &quot;&quot;;
+    int i = len - 1;
+    int j = 0;
+    while (i &gt;= 0){
+        if (s[i] == &#39; &#39;){
+            i--;
+        } else {
+            break;
+        }
+    }
+    while (j &lt; len){
+        if (s[j] == &#39; &#39;){
+            j++;
+        } else {
+            break;
+        }
+    }//头尾空格处理
+    for (; i &gt;= j; i--){
+        if (s[i] == &#39; &#39;){
+            while (!mystack.empty()){
+                result += mystack.top();
+                mystack.pop();
+            }
+            if (i &lt; len - 1 &amp;&amp; s[i] != s[i + 1])//去重
+                result += &#39; &#39;;
+        } else {
+            mystack.push(s[i]);
+        }
+    }
+    while (!mystack.empty()){
+        result += mystack.top();
+        mystack.pop();
+    }
+    return result;
+}</code></pre>
+<h1 id="时间和内存"><a href="#时间和内存" class="headerlink" title="时间和内存"></a>时间和内存</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/151/pass.png" alt="时间"></p>
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>字符串</tag>
+        <tag>栈</tag>
+      </tags>
+  </entry>
 </search>
