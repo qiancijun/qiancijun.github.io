@@ -816,4 +816,117 @@ void dfs(vector&lt;string&gt; &amp;result, string list, int left, int right, int
         <tag>栈</tag>
       </tags>
   </entry>
+  <entry>
+    <title>LeetCode-184周周赛</title>
+    <url>/2020/04/12/LeetCode-184%E5%91%A8%E5%91%A8%E8%B5%9B/</url>
+    <content><![CDATA[<h1 id="5380-数组中的字符串匹配"><a href="#5380-数组中的字符串匹配" class="headerlink" title="5380. 数组中的字符串匹配"></a>5380. 数组中的字符串匹配</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week184/5380_describe.png" alt=""></p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>双重循环硬解，利用好语言特性</p>
+<h2 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h2><p>字符串</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><pre><code class="cpp">vector&lt;string&gt; stringMatching(vector&lt;string&gt;&amp; words) {
+    vector&lt;string&gt; result;
+    for (int i = 0; i &lt; words.size(); i++){
+        for (int j = 0; j &lt; words.size(); j++){
+            if (i == j || words[i].size() &gt; words[j].size())
+                continue;
+            if (words[j].find(words[i]) != std::string::npos){
+                result.push_back(words[i]);
+                break;
+            }
+        }
+    }
+    return result;
+}</code></pre>
+<h2 id="时间和内存"><a href="#时间和内存" class="headerlink" title="时间和内存"></a>时间和内存</h2><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week184/5380_pass.png" alt=""></p>
+<h1 id="5381-查询带键的排列"><a href="#5381-查询带键的排列" class="headerlink" title="5381. 查询带键的排列"></a>5381. 查询带键的排列</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week184/5381_describe.png" alt=""></p>
+<h2 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h2><p>暴力法。</p>
+<h2 id="标签-1"><a href="#标签-1" class="headerlink" title="标签"></a>标签</h2><p>数组</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><pre><code class="cpp">vector&lt;int&gt; processQueries(vector&lt;int&gt;&amp; queries, int m) {
+    vector&lt;int&gt; result;
+    vector&lt;int&gt; p(m, 0);
+    for (int i = 0; i &lt; m; i++){
+        p[i] = i + 1;
+    }
+    for (int i = 0; i &lt; queries.size(); i++){
+        for (int j = 0; j &lt; m; j++){
+            if (queries[i] == p[j]){
+                for (int k = j; k &gt; 0; k--)
+                    swap(p[k], p[k - 1]);
+                result.push_back(j);
+                break;
+            }
+        }
+    }
+    return result;
+}</code></pre>
+<h2 id="时间和内存-1"><a href="#时间和内存-1" class="headerlink" title="时间和内存"></a>时间和内存</h2><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week184/5381_pass.png" alt=""></p>
+<h1 id="1410-HTML-实体解析器"><a href="#1410-HTML-实体解析器" class="headerlink" title="1410. HTML 实体解析器"></a>1410. HTML 实体解析器</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week184/1410_describe.png" alt=""></p>
+<h2 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h2><p>用一个map就能解决</p>
+<h2 id="标签-2"><a href="#标签-2" class="headerlink" title="标签"></a>标签</h2><p>栈 字符串</p>
+<h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><pre><code class="cpp">string entityParser(string text) {
+    map&lt;string, string&gt; m = {
+        {&quot;&amp;quot;&quot;, &quot;\&quot;&quot;},
+        {&quot;&amp;apos;&quot;, &quot;&#39;&quot;},
+        {&quot;&amp;amp;&quot;, &quot;&amp;&quot;},
+        {&quot;&amp;gt;&quot;, &quot;&gt;&quot;},
+        {&quot;&amp;lt;&quot;, &quot;&lt;&quot;},
+        {&quot;&amp;frasl;&quot;, &quot;/&quot;}
+    };
+
+    int len = text.size();
+    for (int i = 0; i &lt; len; i++){
+        if (text[i] == &#39;&amp;&#39;){
+            int j; 
+            string key = &quot;&quot;;
+            for (j = i; j &lt; len; j++){
+                if (text[j] == &#39;;&#39;){
+                    key += &#39;;&#39;;
+                    break;
+                } else {
+                    key += text[j];
+                }
+            }
+            if (m.count(key)){
+                text.replace(i, key.size(), m[key]);
+            }
+        }
+        len = text.size();
+    }
+    return text;
+}</code></pre>
+<h2 id="时间和内存-2"><a href="#时间和内存-2" class="headerlink" title="时间和内存"></a>时间和内存</h2><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week184/1410_pass.png" alt=""></p>
+<h1 id="5383-给-N-x-3-网格图涂色的方案数"><a href="#5383-给-N-x-3-网格图涂色的方案数" class="headerlink" title="5383. 给 N x 3 网格图涂色的方案数"></a>5383. 给 N x 3 网格图涂色的方案数</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week184/5383_describe.png" alt=""></p>
+<h2 id="思路-3"><a href="#思路-3" class="headerlink" title="思路"></a>思路</h2><p>去考虑ABA和ABC色块的关系</p>
+<h2 id="标签-3"><a href="#标签-3" class="headerlink" title="标签"></a>标签</h2><p>动态规划</p>
+<h2 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h2><pre><code class="cpp">const int mod = 1000000007;
+int numOfWays(int n) {
+    int result = 0;
+    vector&lt;vector&lt;long&gt;&gt; dp(n, vector&lt;long&gt;(2, 0));
+    dp[0][0] = 6;
+    dp[0][1] = 6;//状态初始化
+    /*
+    动态转移方程dp[ABA] = 3 * dp[i-1][j] + 2 * dp[i - 1][j + 1]
+    dp[ABC] = 2 * dp[i-1][j] + 2 * dp[i - 1][j - 1]
+    */
+    for (int i = 1; i &lt; n; i++){
+        for (int j = 0; j &lt; 2; j++){
+            if (j == 0){
+                dp[i][0] = (3 * dp[i - 1][0] + 2 * dp[i - 1][1]) % mod;
+            }
+            else{
+                dp[i][1] = (2 * dp[i - 1][0] + 2 * dp[i - 1][1]) % mod;
+            }
+        }
+    }
+    result = (dp[n-1][0] + dp[n-1][1]) % mod;
+    return result;
+}</code></pre>
+<h2 id="时间和内存-3"><a href="#时间和内存-3" class="headerlink" title="时间和内存"></a>时间和内存</h2><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week184/5383_pass.png" alt=""></p>
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>试题</tag>
+      </tags>
+  </entry>
 </search>
