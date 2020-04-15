@@ -929,4 +929,19 @@ int numOfWays(int n) {
         <tag>试题</tag>
       </tags>
   </entry>
+  <entry>
+    <title>LeetCode-542-01矩阵</title>
+    <url>/2020/04/15/LeetCode-542-01%E7%9F%A9%E9%98%B5/</url>
+    <content><![CDATA[<h1 id="原题链接"><a href="#原题链接" class="headerlink" title="原题链接"></a>原题链接</h1><p><a href="https://leetcode-cn.com/problems/01-matrix/" target="_blank" rel="noopener"></a></p>
+<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/542/dercribe.png" alt=""></p>
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>广度优先搜索</tag>
+        <tag>深度优先搜索</tag>
+        <tag>动态规划</tag>
+      </tags>
+  </entry>
 </search>
