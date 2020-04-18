@@ -1070,4 +1070,38 @@ int numOfWays(int n) {
         <tag>排序</tag>
       </tags>
   </entry>
+  <entry>
+    <title>LeetCode-11-盛最多水的容器</title>
+    <url>/2020/04/18/LeetCode-11-%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8/</url>
+    <content><![CDATA[<h1 id="原题链接"><a href="#原题链接" class="headerlink" title="原题链接"></a>原题链接</h1><p><a href="https://leetcode-cn.com/problems/container-with-most-water/" target="_blank" rel="noopener">原题链接</a></p>
+<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/11/describe.png" alt="题目描述"></p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>一道很经典的双指针题目，答案为两指针所指最小的数 × 间距，不断向中心收缩，找出最大值。</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code class="cpp">int maxArea(vector&lt;int&gt;&amp; height) {
+    int i = 0;
+    int j = height.size() - 1;
+    int result = 0;
+    while (i &lt; j){
+        int inter = j - i;
+        int Min = 0;
+        if (height[i] &lt; height[j]){
+            result = max(result, inter * height[i]);
+            i++;
+        }
+        else {
+            result = max(result, inter * height[j]);
+            j--;
+        }
+    }
+    return result;
+}</code></pre>
+<h1 id="时间和内存"><a href="#时间和内存" class="headerlink" title="时间和内存"></a>时间和内存</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/11/pass.png" alt=""></p>
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>双指针</tag>
+        <tag>数组</tag>
+      </tags>
+  </entry>
 </search>
