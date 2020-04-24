@@ -1160,7 +1160,8 @@ int MergeAndCount(vector&lt;int&gt; &amp;nums, int Left, int Mid, int Right, vec
   <entry>
     <title>MySQL基础</title>
     <url>/2020/04/24/MySQL%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[<h1 id="数据库简介"><a href="#数据库简介" class="headerlink" title="数据库简介"></a>数据库简介</h1><h2 id="DB与DBMS"><a href="#DB与DBMS" class="headerlink" title="DB与DBMS"></a>DB与DBMS</h2><blockquote>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>个人在学习MySQL时所记录的笔记，欢迎指出错误或者提供不足。</p>
+<h1 id="数据库简介"><a href="#数据库简介" class="headerlink" title="数据库简介"></a>数据库简介</h1><h2 id="DB与DBMS"><a href="#DB与DBMS" class="headerlink" title="DB与DBMS"></a>DB与DBMS</h2><blockquote>
 <p>数据库(Database)：保存有组织的数据的容器<br><br>数据库软件(Database Management System)：数据库管理系统</p>
 </blockquote>
 <h2 id="数据库结构"><a href="#数据库结构" class="headerlink" title="数据库结构"></a>数据库结构</h2><h3 id="表"><a href="#表" class="headerlink" title="表"></a>表</h3><blockquote>
