@@ -1157,4 +1157,73 @@ int MergeAndCount(vector&lt;int&gt; &amp;nums, int Left, int Mid, int Right, vec
         <tag>排序</tag>
       </tags>
   </entry>
+  <entry>
+    <title>MySQL基础</title>
+    <url>/2020/04/24/MySQL%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<h1 id="数据库简介"><a href="#数据库简介" class="headerlink" title="数据库简介"></a>数据库简介</h1><h2 id="DB与DBMS"><a href="#DB与DBMS" class="headerlink" title="DB与DBMS"></a>DB与DBMS</h2><blockquote>
+<p>数据库(Database)：保存有组织的数据的容器<br><br>数据库软件(Database Management System)：数据库管理系统</p>
+</blockquote>
+<h2 id="数据库结构"><a href="#数据库结构" class="headerlink" title="数据库结构"></a>数据库结构</h2><h3 id="表"><a href="#表" class="headerlink" title="表"></a>表</h3><blockquote>
+<p>表是一种$\color{red}{结构化}$的文件，可用来存储某种特定类型的数据。数据库中的每个表都有一个名字，用来标识自己。此名字是$\color{red}{唯一}$的。</p>
+</blockquote>
+<h3 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h3><blockquote>
+<p>关于数据库和表的布局及特性的信息</p>
+</blockquote>
+<h3 id="列"><a href="#列" class="headerlink" title="列"></a>列</h3><blockquote>
+<p>表中的一个字段，所有表都是由一个或多个列组成的。</p>
+</blockquote>
+<h3 id="行"><a href="#行" class="headerlink" title="行"></a>行</h3><blockquote>
+<p>表中的数据是按行存储的，所保存的每个记录存储在自己的行内。</p>
+</blockquote>
+<h3 id="主键"><a href="#主键" class="headerlink" title="主键"></a>主键</h3><blockquote>
+<p>一列(或一组列)，其值能唯一区分表中每个行。</p>
+</blockquote>
+<h1 id="Mysql命令"><a href="#Mysql命令" class="headerlink" title="Mysql命令"></a>Mysql命令</h1><h2 id="命令格式"><a href="#命令格式" class="headerlink" title="命令格式"></a>命令格式</h2><p>1.命令输入在mysql&gt;之后；<br>2.命令用;或\g结束，仅按Enter不执行命令；<br>3.输入help获得帮助<br>4.输入quit或exit退出命令行程序</p>
+<h2 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h2><h3 id="连接本地数据库"><a href="#连接本地数据库" class="headerlink" title="连接本地数据库"></a>连接本地数据库</h3><blockquote>
+<p>mysql -u root -p<br>-h 主机名， 表示要连接的数据库的主机或者IP<br>-u 用户名，表示连接数据库的用户名<br>-P 端口，表示要连接数据库的端口，默认是3306，可以不写。<br>-p 表示要连接数据库的密码</p>
+</blockquote>
+<h3 id="连接远程数据库"><a href="#连接远程数据库" class="headerlink" title="连接远程数据库"></a>连接远程数据库</h3><blockquote>
+<p>mysql -h ip地址 -u 用户名 -p<br>例如 mysql -h  10.10.25.159  -u   root   -p</p>
+</blockquote>
+<h3 id="退出数据库"><a href="#退出数据库" class="headerlink" title="退出数据库"></a>退出数据库</h3><blockquote>
+<p>quit; 或 exit;</p>
+</blockquote>
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><blockquote>
+<p>#注释文字</p>
+</blockquote>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><h3 id="数据库和表"><a href="#数据库和表" class="headerlink" title="数据库和表"></a>数据库和表</h3><blockquote>
+<p>数据库、表、列、用户等信息被存储在数据库和表中。但是内部表一般不直接访问。可用show命令来显示这些信息。<br>mysql&gt; SHOW DATABASES;<br>作用：查看当前所有的数据库<br>分析：返回可用数据库的一个列表。包含在这个列表中的可能是Mysql内部使用的数据库。</p>
+</blockquote>
+<p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Mysql/SHOW_DATABASES.png" alt="检索数据库"></p>
+<blockquote>
+<p>mysql&gt; SHOW TABLES;<br>作用：查看当前库的所有表<br>分析：返回当前选择的数据库内可用表的列表</p>
+</blockquote>
+<p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Mysql/SHOW_TABLES.png" alt="检索表"></p>
+<blockquote>
+<p>mysql&gt; USE 库名<br>作用：打开指定的库</p>
+</blockquote>
+<h3 id="其它命令"><a href="#其它命令" class="headerlink" title="其它命令"></a>其它命令</h3><blockquote>
+<p>mysql&gt; creat table 表名(<br>    列名 列类型,<br>    列名 列类型,<br>    ……..<br>);<br>作用：创建表</p>
+</blockquote>
+<blockquote>
+<p>mysql&gt; desc 表名;<br>作用：查看表结构</p>
+</blockquote>
+<h1 id="检索数据"><a href="#检索数据" class="headerlink" title="检索数据"></a>检索数据</h1><blockquote>
+<p>语法：<br>mysql&gt; select 查询列表 from 表名</p>
+</blockquote>
+<h2 id="检索单个列"><a href="#检索单个列" class="headerlink" title="检索单个列"></a>检索单个列</h2><blockquote>
+<p>mysql&gt; SELECT prodname FROM praducts;<br>查询列表可以是：表中的字段，常量值、表达式、函数。<br>查询结果是一个虚拟的表格</p>
+</blockquote>
+<h2 id="检索多个列"><a href="#检索多个列" class="headerlink" title="检索多个列"></a>检索多个列</h2><blockquote>
+<p>mysql&gt; SELECT prod_id, prod_name, prod_price products;<br>中间用$\color{red}{逗号}$隔开</p>
+</blockquote>
+<h2 id="检索所有列"><a href="#检索所有列" class="headerlink" title="检索所有列"></a>检索所有列</h2><blockquote>
+<p>mysql&gt; SELECT * FROM products;<br>如果给定一个通配符(*)，则返回表中的所有列。</p>
+</blockquote>
+<h2 id="使用通配符"><a href="#使用通配符" class="headerlink" title="使用通配符"></a>使用通配符</h2><p>一般，除非确实需要表中的每个列，否则最好别使用*通配符。虽然使用通配符可能会减少操作，不用明确列出所有列，但检索不需要的列通常会降低检索和应用程序的性能。</p>
+]]></content>
+      <categories>
+        <category>Mysql</category>
+      </categories>
+  </entry>
 </search>

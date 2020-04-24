@@ -1,0 +1,280 @@
+
+<!DOCTYPE html>
+<html lang="zh_CH" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MySQL基础 - 神奇口袋</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="qiancijun,"> 
+    <meta name="description" content="数据库简介DB与DBMS
+数据库(Database)：保存有组织的数据的容器数据库软件(Database Management System)：数据库管理系统
+
+数据库结构表
+表是一种$\color,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">神奇口袋</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://qiancijun.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">MySQL基础</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+   
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">MySQL基础</h1>
+        <div class="stuff">
+            <span>四月 24, 2020</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h1 id="数据库简介"><a href="#数据库简介" class="headerlink" title="数据库简介"></a>数据库简介</h1><h2 id="DB与DBMS"><a href="#DB与DBMS" class="headerlink" title="DB与DBMS"></a>DB与DBMS</h2><blockquote>
+<p>数据库(Database)：保存有组织的数据的容器<br><br>数据库软件(Database Management System)：数据库管理系统</p>
+</blockquote>
+<h2 id="数据库结构"><a href="#数据库结构" class="headerlink" title="数据库结构"></a>数据库结构</h2><h3 id="表"><a href="#表" class="headerlink" title="表"></a>表</h3><blockquote>
+<p>表是一种$\color{red}{结构化}$的文件，可用来存储某种特定类型的数据。数据库中的每个表都有一个名字，用来标识自己。此名字是$\color{red}{唯一}$的。</p>
+</blockquote>
+<h3 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h3><blockquote>
+<p>关于数据库和表的布局及特性的信息</p>
+</blockquote>
+<h3 id="列"><a href="#列" class="headerlink" title="列"></a>列</h3><blockquote>
+<p>表中的一个字段，所有表都是由一个或多个列组成的。</p>
+</blockquote>
+<h3 id="行"><a href="#行" class="headerlink" title="行"></a>行</h3><blockquote>
+<p>表中的数据是按行存储的，所保存的每个记录存储在自己的行内。</p>
+</blockquote>
+<h3 id="主键"><a href="#主键" class="headerlink" title="主键"></a>主键</h3><blockquote>
+<p>一列(或一组列)，其值能唯一区分表中每个行。</p>
+</blockquote>
+<h1 id="Mysql命令"><a href="#Mysql命令" class="headerlink" title="Mysql命令"></a>Mysql命令</h1><h2 id="命令格式"><a href="#命令格式" class="headerlink" title="命令格式"></a>命令格式</h2><p>1.命令输入在mysql&gt;之后；<br>2.命令用;或\g结束，仅按Enter不执行命令；<br>3.输入help获得帮助<br>4.输入quit或exit退出命令行程序</p>
+<h2 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h2><h3 id="连接本地数据库"><a href="#连接本地数据库" class="headerlink" title="连接本地数据库"></a>连接本地数据库</h3><blockquote>
+<p>mysql -u root -p<br>-h 主机名， 表示要连接的数据库的主机或者IP<br>-u 用户名，表示连接数据库的用户名<br>-P 端口，表示要连接数据库的端口，默认是3306，可以不写。<br>-p 表示要连接数据库的密码</p>
+</blockquote>
+<h3 id="连接远程数据库"><a href="#连接远程数据库" class="headerlink" title="连接远程数据库"></a>连接远程数据库</h3><blockquote>
+<p>mysql -h ip地址 -u 用户名 -p<br>例如 mysql -h  10.10.25.159  -u   root   -p</p>
+</blockquote>
+<h3 id="退出数据库"><a href="#退出数据库" class="headerlink" title="退出数据库"></a>退出数据库</h3><blockquote>
+<p>quit; 或 exit;</p>
+</blockquote>
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><blockquote>
+<p>#注释文字</p>
+</blockquote>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><h3 id="数据库和表"><a href="#数据库和表" class="headerlink" title="数据库和表"></a>数据库和表</h3><blockquote>
+<p>数据库、表、列、用户等信息被存储在数据库和表中。但是内部表一般不直接访问。可用show命令来显示这些信息。<br>mysql&gt; SHOW DATABASES;<br>作用：查看当前所有的数据库<br>分析：返回可用数据库的一个列表。包含在这个列表中的可能是Mysql内部使用的数据库。</p>
+</blockquote>
+<p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Mysql/SHOW_DATABASES.png" alt="检索数据库"></p>
+<blockquote>
+<p>mysql&gt; SHOW TABLES;<br>作用：查看当前库的所有表<br>分析：返回当前选择的数据库内可用表的列表</p>
+</blockquote>
+<p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Mysql/SHOW_TABLES.png" alt="检索表"></p>
+<blockquote>
+<p>mysql&gt; USE 库名<br>作用：打开指定的库</p>
+</blockquote>
+<h3 id="其它命令"><a href="#其它命令" class="headerlink" title="其它命令"></a>其它命令</h3><blockquote>
+<p>mysql&gt; creat table 表名(<br>    列名 列类型,<br>    列名 列类型,<br>    ……..<br>);<br>作用：创建表</p>
+</blockquote>
+<blockquote>
+<p>mysql&gt; desc 表名;<br>作用：查看表结构</p>
+</blockquote>
+<h1 id="检索数据"><a href="#检索数据" class="headerlink" title="检索数据"></a>检索数据</h1><blockquote>
+<p>语法：<br>mysql&gt; select 查询列表 from 表名</p>
+</blockquote>
+<h2 id="检索单个列"><a href="#检索单个列" class="headerlink" title="检索单个列"></a>检索单个列</h2><blockquote>
+<p>mysql&gt; SELECT prodname FROM praducts;<br>查询列表可以是：表中的字段，常量值、表达式、函数。<br>查询结果是一个虚拟的表格</p>
+</blockquote>
+<h2 id="检索多个列"><a href="#检索多个列" class="headerlink" title="检索多个列"></a>检索多个列</h2><blockquote>
+<p>mysql&gt; SELECT prod_id, prod_name, prod_price products;<br>中间用$\color{red}{逗号}$隔开</p>
+</blockquote>
+<h2 id="检索所有列"><a href="#检索所有列" class="headerlink" title="检索所有列"></a>检索所有列</h2><blockquote>
+<p>mysql&gt; SELECT * FROM products;<br>如果给定一个通配符(*)，则返回表中的所有列。</p>
+</blockquote>
+<h2 id="使用通配符"><a href="#使用通配符" class="headerlink" title="使用通配符"></a>使用通配符</h2><p>一般，除非确实需要表中的每个列，否则最好别使用*通配符。虽然使用通配符可能会减少操作，不用明确列出所有列，但检索不需要的列通常会降低检索和应用程序的性能。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='https://link.hhtjim.com/163/155827.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='https://link.hhtjim.com/163/1491163.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='https://link.hhtjim.com/163/1992707.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='true'
+        data-ci='Iv1.06e5c405a7731b45'
+        data-cs='2fcfe85902a7d5812fa4b299b56a6f194c98e08a'
+        data-r='qiancijun.github.io'
+        data-o='qiancijun'
+        data-a='qiancijun'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#数据库简介"><span class="toc-number">1.</span> <span class="toc-text">数据库简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DB与DBMS"><span class="toc-number">1.1.</span> <span class="toc-text">DB与DBMS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库结构"><span class="toc-number">1.2.</span> <span class="toc-text">数据库结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#表"><span class="toc-number">1.2.1.</span> <span class="toc-text">表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模式"><span class="toc-number">1.2.2.</span> <span class="toc-text">模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列"><span class="toc-number">1.2.3.</span> <span class="toc-text">列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#行"><span class="toc-number">1.2.4.</span> <span class="toc-text">行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主键"><span class="toc-number">1.2.5.</span> <span class="toc-text">主键</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Mysql命令"><span class="toc-number">2.</span> <span class="toc-text">Mysql命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#命令格式"><span class="toc-number">2.1.</span> <span class="toc-text">命令格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#连接"><span class="toc-number">2.2.</span> <span class="toc-text">连接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#连接本地数据库"><span class="toc-number">2.2.1.</span> <span class="toc-text">连接本地数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#连接远程数据库"><span class="toc-number">2.2.2.</span> <span class="toc-text">连接远程数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#退出数据库"><span class="toc-number">2.2.3.</span> <span class="toc-text">退出数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注释"><span class="toc-number">2.2.4.</span> <span class="toc-text">注释</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用命令"><span class="toc-number">2.3.</span> <span class="toc-text">常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库和表"><span class="toc-number">2.3.1.</span> <span class="toc-text">数据库和表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其它命令"><span class="toc-number">2.3.2.</span> <span class="toc-text">其它命令</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#检索数据"><span class="toc-number">3.</span> <span class="toc-text">检索数据</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#检索单个列"><span class="toc-number">3.1.</span> <span class="toc-text">检索单个列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#检索多个列"><span class="toc-number">3.2.</span> <span class="toc-text">检索多个列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#检索所有列"><span class="toc-number">3.3.</span> <span class="toc-text">检索所有列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用通配符"><span class="toc-number">3.4.</span> <span class="toc-text">使用通配符</span></a></li></ol></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":250,"height":400},"mobile":{"show":false},"log":false});</script></body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-163098031-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+<script type="text/javascript" src="/js/love.js"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</html>
