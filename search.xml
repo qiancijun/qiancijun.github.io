@@ -1282,6 +1282,7 @@ int MergeAndCount(vector&lt;int&gt; &amp;nums, int Left, int Mid, int Right, vec
 </blockquote>
 </li>
 </ol>
+<p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Mysql/select.png" alt=""></p>
 <h2 id="条件查询"><a href="#条件查询" class="headerlink" title="条件查询"></a>条件查询</h2><blockquote>
 <p>语法：SELECT 查询列表 FROM 表名 $\color{red}{where}$ 筛选条件;<br>解释：当where后的筛选条件成立为True，则表名可以筛选出来。若不成立为False，则该说明该数据不需要。</p>
 </blockquote>
@@ -1393,5 +1394,56 @@ WHERE
       <categories>
         <category>Mysql</category>
       </categories>
+  </entry>
+  <entry>
+    <title>LeetCode-46-全排列</title>
+    <url>/2020/04/25/LeetCode-46-%E5%85%A8%E6%8E%92%E5%88%97/</url>
+    <content><![CDATA[<h1 id="题目链接"><a href="#题目链接" class="headerlink" title="题目链接"></a>题目链接</h1><p><a href="https://leetcode-cn.com/problems/permutations/" target="_blank" rel="noopener">原题链接</a></p>
+<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/46/descrobe.png" alt=""></p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>一道用回溯算法的经典题。</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code class="cpp"> vector&lt;vector&lt;int&gt;&gt; permute(vector&lt;int&gt;&amp; nums) {
+    int len = nums.size();
+    vector&lt;vector&lt;int&gt;&gt; result;
+    vector&lt;int&gt; list;
+    vector&lt;int&gt; visited(len, 0);
+    //dfs(nums, list, result, visited, 0, len);
+    perm(nums, result, 0, len - 1);
+    return result;
+}
+void dfs(vector&lt;int&gt; &amp;nums, vector&lt;int&gt; &amp;list, vector&lt;vector&lt;int&gt;&gt; &amp;result, vector&lt;int&gt; &amp;visited, int pos, int len){
+    if (pos == len){
+        result.push_back(list);
+        return;
+    }
+    for (int i = 0; i &lt; len; i++){
+        if (!visited[i]){
+            visited[i] = 1;
+            list.push_back(nums[i]);
+            dfs(nums, list, result, visited, pos + 1, len);
+            list.pop_back();
+            visited[i] = 0;
+        }
+    }
+    return;
+}
+void perm(vector&lt;int&gt; &amp;nums, vector&lt;vector&lt;int&gt;&gt; &amp;result, int begin, int len){
+    if (begin == len){
+        result.push_back(nums);
+    } else {
+        for (int i = begin; i &lt;= len; i++){
+            swap(nums[i], nums[begin]);
+            perm(nums, result, begin + 1, len);
+            swap(nums[i], nums[begin]);
+        }
+    }
+}</code></pre>
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>回溯算法</tag>
+        <tag>深度优先搜索</tag>
+      </tags>
   </entry>
 </search>
