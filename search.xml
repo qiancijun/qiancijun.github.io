@@ -2992,11 +2992,11 @@ func listFiles(dirname string, level int) {
   <entry>
     <title>LeetCode-186周周赛</title>
     <url>/2020/04/26/LeetCode-186%E5%91%A8%E5%91%A8%E8%B5%9B/</url>
-    <content><![CDATA[<h1 id="5392"><a href="#5392" class="headerlink" title="5392. ??????????"></a>5392. ??????????</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week186/5392_describe.png" alt=""></p>
-<h2 id=""><a href="#" class="headerlink" title="??"></a>??</h2><blockquote>
-<p>?1?n-1????????</p>
+    <content><![CDATA[<h1 id="5392-分割字符串的最大得分"><a href="#5392-分割字符串的最大得分" class="headerlink" title="5392. 分割字符串的最大得分"></a>5392. 分割字符串的最大得分</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week186/5392_describe.png" alt=""></p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><blockquote>
+<p>从1到n-1不断进行分割。</p>
 </blockquote>
-<h2 id="-1"><a href="#-1" class="headerlink" title="??"></a>??</h2><pre><code class="cpp">int maxScore(string s) {
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><pre><code class="cpp">int maxScore(string s) {
     int result = 0;
     for (int p = 1; p &lt;= s.size() - 1; p++){
         int left = 0;
@@ -3013,11 +3013,11 @@ func listFiles(dirname string, level int) {
     }
     return result;
 }</code></pre>
-<h1 id="5393"><a href="#5393" class="headerlink" title="5393. ????????"></a>5393. ????????</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week186/5393_describe.png" alt=""></p>
-<h2 id="-2"><a href="#-2" class="headerlink" title="??"></a>??</h2><blockquote>
-<p>???k???????????????????</p>
+<h1 id="5393-可获得的最大点数"><a href="#5393-可获得的最大点数" class="headerlink" title="5393. 可获得的最大点数"></a>5393. 可获得的最大点数</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week186/5393_describe.png" alt=""></p>
+<h2 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h2><blockquote>
+<p>先从左边求k个和。左边减少一个，右边增加一个。</p>
 </blockquote>
-<h2 id="-3"><a href="#-3" class="headerlink" title="??"></a>??</h2><pre><code class="cpp">int maxScore(vector&lt;int&gt;&amp; cardPoints, int k) {
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><pre><code class="cpp">int maxScore(vector&lt;int&gt;&amp; cardPoints, int k) {
     int len = cardPoints.size();
     int result = 0;
     int sum = 0;
@@ -3033,11 +3033,11 @@ func listFiles(dirname string, level int) {
     }
     return result;
 }</code></pre>
-<h1 id="5394-II"><a href="#5394-II" class="headerlink" title="5394. ????? II"></a>5394. ????? II</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week186/5394_describe.png" alt=""></p>
-<h2 id="-4"><a href="#-4" class="headerlink" title="??"></a>??</h2><blockquote>
-<p>???????????????????????????On^2????????</p>
+<h1 id="5394-对角线遍历-II"><a href="#5394-对角线遍历-II" class="headerlink" title="5394. 对角线遍历 II"></a>5394. 对角线遍历 II</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week186/5394_describe.png" alt=""></p>
+<h2 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h2><blockquote>
+<p>利用对角线下标和不变的性质。暴力法会超时，用字典。</p>
 </blockquote>
-<h2 id="-5"><a href="#-5" class="headerlink" title="??"></a>??</h2><pre><code class="cpp">vector&lt;int&gt; findDiagonalOrder(vector&lt;vector&lt;int&gt;&gt;&amp; nums) {
+<h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><pre><code class="cpp">vector&lt;int&gt; findDiagonalOrder(vector&lt;vector&lt;int&gt;&gt;&amp; nums) {
     // vector&lt;int&gt; result;
     // int col = 0;
     // int row = nums.size() - 1;
@@ -3074,13 +3074,13 @@ func listFiles(dirname string, level int) {
         for(auto&amp; c : m.second) ans.push_back(c);
     return ans;
 }</code></pre>
-<h1 id="5180"><a href="#5180" class="headerlink" title="5180. ????????"></a>5180. ????????</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week186/5180_describe.png" alt=""></p>
+<h1 id="5180-带限制的子序列和"><a href="#5180-带限制的子序列和" class="headerlink" title="5180. 带限制的子序列和"></a>5180. 带限制的子序列和</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week186/5180_describe.png" alt=""></p>
 ]]></content>
       <categories>
         <category>LeetCode</category>
       </categories>
       <tags>
-        <tag>??</tag>
+        <tag>试题</tag>
       </tags>
   </entry>
 </search>

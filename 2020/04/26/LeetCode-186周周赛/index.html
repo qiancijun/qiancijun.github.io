@@ -10,13 +10,13 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
-    <meta name="description" content="5392. ??????????
-??
-?1?n-1????????
+    <meta name="description" content="5392. 分割字符串的最大得分
+思路
+从1到n-1不断进行分割。
 
-??int maxScore(string s) {
+代码int maxScore(string s) {
     int result = 0;
-    for (int p =,"> 
+    for (int p = ,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -64,16 +64,16 @@
         <div class="stuff">
             <span>四月 26, 2020</span>
             
-  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/" rel="tag">??</a></li></ul>
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E8%AF%95%E9%A2%98/" rel="tag">试题</a></li></ul>
 
 
         </div>
         <div class="content markdown">
-            <h1 id="5392"><a href="#5392" class="headerlink" title="5392. ??????????"></a>5392. ??????????</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week186/5392_describe.png" alt=""></p>
-<h2 id=""><a href="#" class="headerlink" title="??"></a>??</h2><blockquote>
-<p>?1?n-1????????</p>
+            <h1 id="5392-分割字符串的最大得分"><a href="#5392-分割字符串的最大得分" class="headerlink" title="5392. 分割字符串的最大得分"></a>5392. 分割字符串的最大得分</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week186/5392_describe.png" alt=""></p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><blockquote>
+<p>从1到n-1不断进行分割。</p>
 </blockquote>
-<h2 id="-1"><a href="#-1" class="headerlink" title="??"></a>??</h2><pre><code class="cpp">int maxScore(string s) {
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><pre><code class="cpp">int maxScore(string s) {
     int result = 0;
     for (int p = 1; p &lt;= s.size() - 1; p++){
         int left = 0;
@@ -90,11 +90,11 @@
     }
     return result;
 }</code></pre>
-<h1 id="5393"><a href="#5393" class="headerlink" title="5393. ????????"></a>5393. ????????</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week186/5393_describe.png" alt=""></p>
-<h2 id="-2"><a href="#-2" class="headerlink" title="??"></a>??</h2><blockquote>
-<p>???k???????????????????</p>
+<h1 id="5393-可获得的最大点数"><a href="#5393-可获得的最大点数" class="headerlink" title="5393. 可获得的最大点数"></a>5393. 可获得的最大点数</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week186/5393_describe.png" alt=""></p>
+<h2 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h2><blockquote>
+<p>先从左边求k个和。左边减少一个，右边增加一个。</p>
 </blockquote>
-<h2 id="-3"><a href="#-3" class="headerlink" title="??"></a>??</h2><pre><code class="cpp">int maxScore(vector&lt;int&gt;&amp; cardPoints, int k) {
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><pre><code class="cpp">int maxScore(vector&lt;int&gt;&amp; cardPoints, int k) {
     int len = cardPoints.size();
     int result = 0;
     int sum = 0;
@@ -110,11 +110,11 @@
     }
     return result;
 }</code></pre>
-<h1 id="5394-II"><a href="#5394-II" class="headerlink" title="5394. ????? II"></a>5394. ????? II</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week186/5394_describe.png" alt=""></p>
-<h2 id="-4"><a href="#-4" class="headerlink" title="??"></a>??</h2><blockquote>
-<p>???????????????????????????On^2????????</p>
+<h1 id="5394-对角线遍历-II"><a href="#5394-对角线遍历-II" class="headerlink" title="5394. 对角线遍历 II"></a>5394. 对角线遍历 II</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week186/5394_describe.png" alt=""></p>
+<h2 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h2><blockquote>
+<p>利用对角线下标和不变的性质。暴力法会超时，用字典。</p>
 </blockquote>
-<h2 id="-5"><a href="#-5" class="headerlink" title="??"></a>??</h2><pre><code class="cpp">vector&lt;int&gt; findDiagonalOrder(vector&lt;vector&lt;int&gt;&gt;&amp; nums) {
+<h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><pre><code class="cpp">vector&lt;int&gt; findDiagonalOrder(vector&lt;vector&lt;int&gt;&gt;&amp; nums) {
     // vector&lt;int&gt; result;
     // int col = 0;
     // int row = nums.size() - 1;
@@ -151,7 +151,7 @@
         for(auto&amp; c : m.second) ans.push_back(c);
     return ans;
 }</code></pre>
-<h1 id="5180"><a href="#5180" class="headerlink" title="5180. ????????"></a>5180. ????????</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week186/5180_describe.png" alt=""></p>
+<h1 id="5180-带限制的子序列和"><a href="#5180-带限制的子序列和" class="headerlink" title="5180. 带限制的子序列和"></a>5180. 带限制的子序列和</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week186/5180_describe.png" alt=""></p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
@@ -191,7 +191,7 @@
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#5392"><span class="toc-number">1.</span> <span class="toc-text">5392. ??????????</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#"><span class="toc-number">1.1.</span> <span class="toc-text">??</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#-1"><span class="toc-number">1.2.</span> <span class="toc-text">??</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5393"><span class="toc-number">2.</span> <span class="toc-text">5393. ????????</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#-2"><span class="toc-number">2.1.</span> <span class="toc-text">??</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#-3"><span class="toc-number">2.2.</span> <span class="toc-text">??</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5394-II"><span class="toc-number">3.</span> <span class="toc-text">5394. ????? II</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#-4"><span class="toc-number">3.1.</span> <span class="toc-text">??</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#-5"><span class="toc-number">3.2.</span> <span class="toc-text">??</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5180"><span class="toc-number">4.</span> <span class="toc-text">5180. ????????</span></a></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#5392-分割字符串的最大得分"><span class="toc-number">1.</span> <span class="toc-text">5392. 分割字符串的最大得分</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#思路"><span class="toc-number">1.1.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码"><span class="toc-number">1.2.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5393-可获得的最大点数"><span class="toc-number">2.</span> <span class="toc-text">5393. 可获得的最大点数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#思路-1"><span class="toc-number">2.1.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码-1"><span class="toc-number">2.2.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5394-对角线遍历-II"><span class="toc-number">3.</span> <span class="toc-text">5394. 对角线遍历 II</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#思路-2"><span class="toc-number">3.1.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码-2"><span class="toc-number">3.2.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5180-带限制的子序列和"><span class="toc-number">4.</span> <span class="toc-text">5180. 带限制的子序列和</span></a></li></ol>	
         </div>
     
 </div>
