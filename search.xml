@@ -1595,6 +1595,44 @@ FROM
 <h3 id="其余"><a href="#其余" class="headerlink" title="其余"></a>其余</h3><blockquote>
 <p>下面再列举一些常见的数学函数：<br>Abs():返回一个数的绝对值。<br>Cos():返回一个角度的余弦。<br>Exp():返回一个数的指数。<br>Pi():返回圆周率。<br>Rand():返回一个随机数。<br>Sin():返回一个角度的平方根。<br>Tan():返回一个角度的正切。</p>
 </blockquote>
+<h2 id="流程控制函数"><a href="#流程控制函数" class="headerlink" title="流程控制函数"></a>流程控制函数</h2><ol>
+<li><p>$\color{blue}{if}$</p>
+<blockquote>
+<p>if(exp1, exp2, exp3);<br>作用：如果表达式1的值为true，则返回表达式2，否则返回表达式3.类似三目运算符。</p>
+</blockquote>
+</li>
+<li><p>$\color{blue}{第一类case}$</p>
+<blockquote>
+<p>语法：</p>
+</blockquote>
+<pre><code class="MYSQL">case 字段或变量或表达式 
+when 常量1 then 输出 
+else 语句 
+end;
+类似switch case语句。</code></pre>
+<p>比如：</p>
+<pre><code class="mysql">SELECT
+     salary, department_id,
+CASE
+     department_id
+WHEN 30 THEN salary * 1.1
+WHEN 40 THEN salary * 1.2
+WHEN 50 THEN salary * 1.3
+ELSE salary
+END</code></pre>
+</li>
+<li><p>$\color{blue}{第二类case}$</p>
+<blockquote>
+<p>语法：</p>
+</blockquote>
+<pre><code class="mysql">case
+when 条件1 then 输出1
+when 条件2 then 输出2
+else 输出3
+end
+类似多重if</code></pre>
+</li>
+</ol>
 <h1 id="MySQL-Workbench常用快捷键"><a href="#MySQL-Workbench常用快捷键" class="headerlink" title="MySQL Workbench常用快捷键"></a>MySQL Workbench常用快捷键</h1><ol>
 <li>执行整篇sql脚本：ctrl + shift + enter</li>
 <li>执行当前行： ctrl + enter</li>
@@ -3082,5 +3120,37 @@ func listFiles(dirname string, level int) {
       <tags>
         <tag>试题</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>单调栈和单调队列</title>
+    <url>/2020/04/26/%E5%8D%95%E8%B0%83%E6%A0%88%E5%92%8C%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近在做题的时候频繁出现单调栈和单调队列，由此记录一下这个数据结构。</p>
+<h1 id="单调栈"><a href="#单调栈" class="headerlink" title="单调栈"></a>单调栈</h1><p>从字面意思来看，首先这个数据结构以栈为基础，栈是一种先进后出，后进先出的数据结构。单调栈与普通栈不同，顾名思义它是单调的。单调这个词并不陌生。</p>
+<blockquote>
+<p>单调递增栈：数据出栈的序列为单调递增序列。<br>单调递减栈：数据出栈的序列为单调递减序列。</p>
+</blockquote>
+<p>从栈底元素到栈顶元素呈单调递增或单调递减，栈内序列满足单调性的栈；</p>
+<h2 id="伪代码"><a href="#伪代码" class="headerlink" title="伪代码"></a>伪代码</h2><pre><code class="cpp">stack&lt;int&gt; s; //栈的定义
+for (int i = 0; i &lt; nums.size(); i++){ //遍历数组
+    if (栈空 or 栈顶元素大于等于当前数组元素){
+        入栈
+    } else {
+        while (栈不为空 and 栈顶元素小于当前数组元素){
+            栈顶元素出栈;
+            其余数据处理;
+        }
+        数组元素入栈;
+    }
+}</code></pre>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><ol>
+<li>求最长单调区间；</li>
+<li>左右配对；</li>
+<li>某个区间中的最值；</li>
+</ol>
+<h1 id="单调队列-deque"><a href="#单调队列-deque" class="headerlink" title="单调队列(deque)"></a>单调队列(deque)</h1><p>和单调栈一样，首先队列内元素保持单调。并且从队尾入队，从队头或队尾出队。</p>
+]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
   </entry>
 </search>

@@ -5,12 +5,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Category: Algorithm - 神奇口袋</title>
+    <title>单调栈和单调队列 - 神奇口袋</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
-    
+    <meta name="description" content="前言最近在做题的时候频繁出现单调栈和单调队列，由此记录一下这个数据结构。
+单调栈从字面意思来看，首先这个数据结构以栈为基础，栈是一种先进后出，后进先出的数据结构。单调栈与普通栈不同，顾名思义它是单调,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -33,164 +34,105 @@
 <body class="loading">
     <span id="config-title" style="display:none">神奇口袋</span>
     <div id="loader"></div>
-    <div class="nav">
-    <ul id="menu-menu" class="menu">
-        
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="//" title="首页" target="_blank" rel="noopener">首页</a>
-        </li>
-        
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/categories/" title="分类" target="_blank" rel="noopener">分类</a>
-        </li>
-        
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/tags/" title="标签" target="_blank" rel="noopener">标签</a>
-        </li>
-        
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/archives/" title="归档" target="_blank" rel="noopener">归档</a>
-        </li>
-        
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/about/" title="关于" target="_blank" rel="noopener">关于</a>
-        </li>
-        
-    </ul>
-	<span class="target"></span>
-	<center>
-	<div class="hitokoto">
-		<span class="typed" id="hitokoto" data-st="true"></span>
-	</div>
-	</center>
-	
-	<p class="footerlinks">
-		<a href="#" class="iconfont icon-null"></a>
-		
-            <a href="/" title="facebook" class="iconfont icon-facebook" target="_blank" rel="noopener"> </a>
-        
-            <a href="/" title="twitter" class="iconfont icon-twitter" target="_blank" rel="noopener"> </a>
-        
-            <a href="/" title="github" class="iconfont icon-github" target="_blank" rel="noopener"> </a>
-        
-            <a href="/img/logo.png" title="wechat" class="iconfont icon-wechat" target="_blank" rel="noopener"> </a>
-        
-            <a href="/769303522@qq.com" title="email" class="iconfont icon-email" target="_blank" rel="noopener"> </a>
-        
-		<a href="#" class="iconfont icon-null"></a>
-	</p>
-	
-    <p id="copyright">
-        &copy; 2020 John Doe.
-        <span> | </span>Powered by <a href="https://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
-        <span> | </span>Theme <a href="https://github.com/Fechin/hexo-theme-diaspora" title="Diaspora" target="_blank" rel="noopener">Diaspora</a> by Fechin
-		
-    </p>
-</div>
-
-<div id="container">
-    
-<div id="screen">
-    <div id="mark">
-        <div class="layer" data-depth="0.4">
-            <img src="/img/welcome-cover.jpg" id="cover" crossorigin="anonymous" width="1920" height="1080">
-        </div>
-    </div>
-    <div id="vibrant">
-        <svg viewBox="0 0 2880 1620" height="100%" preserveAspectRatio="xMaxYMax slice">
-            <polygon opacity="0.7" points="2000,1620 0,1620 0,0 600,0 "/>
-        </svg>
-        <div></div>
-    </div>
-    <div id="header">
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://qiancijun.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">单调栈和单调队列</h3>
+    <div class="social">
         <div>
-            <a class="image-logo" href="/"></a>
-			
-			<div class="iconfont icon-search switchsearch" href="/search/" title="搜索"></div>
-			
-            <div class="iconfont icon-menu switchmenu"></div>
+            <div class="share">
+                
+            </div>
+            <div id="qr"></div>
         </div>
     </div>
-    
-    <div id="post0">
-        <p>四月 07, 2020</p>
-        <h2><a href="/2020/04/07/%E5%8D%95%E6%BA%90%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84dijkstra/" title="单源最短路径 -dijkstra算法" class="posttitle">单源最短路径 -dijkstra算法</a></h2>
-        <p class="summary">前言在做无权值图的单源最短路径问题中，我们能使用DFS或者BFS算法就能解决问题。而在有权值的图中，就需要一点特殊...</p>
-    </div>
-    
+    <div class="scrollbar"></div>
 </div>
 
-    <div id="primary">
+   
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">单调栈和单调队列</h1>
+        <div class="stuff">
+            <span>四月 26, 2020</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近在做题的时候频繁出现单调栈和单调队列，由此记录一下这个数据结构。</p>
+<h1 id="单调栈"><a href="#单调栈" class="headerlink" title="单调栈"></a>单调栈</h1><p>从字面意思来看，首先这个数据结构以栈为基础，栈是一种先进后出，后进先出的数据结构。单调栈与普通栈不同，顾名思义它是单调的。单调这个词并不陌生。</p>
+<blockquote>
+<p>单调递增栈：数据出栈的序列为单调递增序列。<br>单调递减栈：数据出栈的序列为单调递减序列。</p>
+</blockquote>
+<p>从栈底元素到栈顶元素呈单调递增或单调递减，栈内序列满足单调性的栈；</p>
+<h2 id="伪代码"><a href="#伪代码" class="headerlink" title="伪代码"></a>伪代码</h2><pre><code class="cpp">stack&lt;int&gt; s; //栈的定义
+for (int i = 0; i &lt; nums.size(); i++){ //遍历数组
+    if (栈空 or 栈顶元素大于等于当前数组元素){
+        入栈
+    } else {
+        while (栈不为空 and 栈顶元素小于当前数组元素){
+            栈顶元素出栈;
+            其余数据处理;
+        }
+        数组元素入栈;
+    }
+}</code></pre>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><ol>
+<li>求最长单调区间；</li>
+<li>左右配对；</li>
+<li>某个区间中的最值；</li>
+</ol>
+<h1 id="单调队列-deque"><a href="#单调队列-deque" class="headerlink" title="单调队列(deque)"></a>单调队列(deque)</h1><p>和单调栈一样，首先队列内元素保持单调。并且从队尾入队，从队头或队尾出队。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='https://link.hhtjim.com/163/155827.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='https://link.hhtjim.com/163/1491163.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='https://link.hhtjim.com/163/1992707.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
         
-<div class="post">
-    <a href="/2020/04/06/%E5%A0%86%E6%8E%92%E5%BA%8F/" title="堆排序">
-        <img src="/img/cover.jpg" class="cover" width="680" height="440">
-    </a>
-    <div class="else">
-        <p>四月 06, 2020</p>
-        <h3><a href="/2020/04/06/%E5%A0%86%E6%8E%92%E5%BA%8F/" title="堆排序" class="posttitle">堆排序</a></h3>
-        <p>前言在选择排序中，找到数组中的最大值，并和数组末尾交换值，每完成一次选择，就能使一个元素确定它的位置。在数组这种顺序结构中，要查找数组中的最大值，采取顺序...</p>
-    </div>
-</div>
-
-
-<div class="post">
-    <a href="/2020/04/05/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/" title="归并排序">
-        <img src="/img/3.jpg" class="cover" width="680" height="440">
-    </a>
-    <div class="else">
-        <p>四月 05, 2020</p>
-        <h3><a href="/2020/04/05/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/" title="归并排序" class="posttitle">归并排序</a></h3>
-        <p>前言本文介绍的是排序算法中较常用的方法，$\color{red}{归并排序}$，该方法的核心想法为分治法。分而治之，将原问题划分成多个子问题，子问题解决后...</p>
-    </div>
-</div>
-
-
-<div class="post">
-    <a href="/2020/04/04/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/" title="快速排序">
-        <img src="/img/8.png" class="cover" width="680" height="440">
-    </a>
-    <div class="else">
-        <p>四月 04, 2020</p>
-        <h3><a href="/2020/04/04/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/" title="快速排序" class="posttitle">快速排序</a></h3>
-        <p>前言排序作为数据结构与算法基础算法之一，形式多样，复杂度不同，在不同情况下选用适当的排序算法能够使效率最大化。本文主要介绍排序算法中的 $\color{r...</p>
-    </div>
-</div>
-
-
-<div class="post">
-    <a href="/2020/04/02/sort/" title="sort">
-        <img src="/img/2.jpg" class="cover" width="680" height="440">
-    </a>
-    <div class="else">
-        <p>四月 02, 2020</p>
-        <h3><a href="/2020/04/02/sort/" title="sort" class="posttitle">sort</a></h3>
-        <p>void heapify(vector&lt;int&gt; &amp;tree, int len, int i){
-    int cl = 2 * i...</p>
-    </div>
-</div>
-
-
-<div class="post">
-    <a href="/2020/04/02/hello-world/" title="Hello World">
-        <img src="/img/5.jpg" class="cover" width="680" height="440">
-    </a>
-    <div class="else">
-        <p>四月 02, 2020</p>
-        <h3><a href="/2020/04/02/hello-world/" title="Hello World" class="posttitle">Hello World</a></h3>
-        <p>Welcome to Hexo! This is your very first post. Check documentation for more i...</p>
-    </div>
-</div>
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='true'
+        data-ci='Iv1.06e5c405a7731b45'
+        data-cs='2fcfe85902a7d5812fa4b299b56a6f194c98e08a'
+        data-r='qiancijun.github.io'
+        data-o='qiancijun'
+        data-a='qiancijun'
+        data-d='false'
+    >查看评论</div>
 
 
     </div>
     
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#单调栈"><span class="toc-number">2.</span> <span class="toc-text">单调栈</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#伪代码"><span class="toc-number">2.1.</span> <span class="toc-text">伪代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#应用"><span class="toc-number">2.2.</span> <span class="toc-text">应用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#单调队列-deque"><span class="toc-number">3.</span> <span class="toc-text">单调队列(deque)</span></a></li></ol>	
+        </div>
+    
 </div>
-<div id="preview"></div>
 
 
-
-
+    </div>
+</div>
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":250,"height":400},"mobile":{"show":false},"log":false});</script></body>
 
 
