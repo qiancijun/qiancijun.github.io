@@ -1,0 +1,306 @@
+
+<!DOCTYPE html>
+<html lang="zh_CH" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LeetCode-186周周赛 - 神奇口袋</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="qiancijun,"> 
+    <meta name="description" content="5392. ??????????
+??
+?1?n-1????????
+
+??int maxScore(string s) {
+    int result = 0;
+    for (int p =,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">神奇口袋</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://qiancijun.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">LeetCode-186周周赛</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+   
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">LeetCode-186周周赛</h1>
+        <div class="stuff">
+            <span>四月 26, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/" rel="tag">??</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h1 id="5392"><a href="#5392" class="headerlink" title="5392. ??????????"></a>5392. ??????????</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week186/5392_describe.png" alt=""></p>
+<h2 id=""><a href="#" class="headerlink" title="??"></a>??</h2><blockquote>
+<p>?1?n-1????????</p>
+</blockquote>
+<h2 id="-1"><a href="#-1" class="headerlink" title="??"></a>??</h2><pre><code class="cpp">int maxScore(string s) {
+    int result = 0;
+    for (int p = 1; p &lt;= s.size() - 1; p++){
+        int left = 0;
+        int right = 0;
+        for (int i = 0; i &lt; p; i++){
+            if (s[i] == &#39;0&#39;)
+                left++;
+        }
+        for (int j = p; j &lt; s.size(); j++){
+            if (s[j] == &#39;1&#39;)
+                right++;
+        }
+        result = max(result, left + right);
+    }
+    return result;
+}</code></pre>
+<h1 id="5393"><a href="#5393" class="headerlink" title="5393. ????????"></a>5393. ????????</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week186/5393_describe.png" alt=""></p>
+<h2 id="-2"><a href="#-2" class="headerlink" title="??"></a>??</h2><blockquote>
+<p>???k???????????????????</p>
+</blockquote>
+<h2 id="-3"><a href="#-3" class="headerlink" title="??"></a>??</h2><pre><code class="cpp">int maxScore(vector&lt;int&gt;&amp; cardPoints, int k) {
+    int len = cardPoints.size();
+    int result = 0;
+    int sum = 0;
+    int i, j = len - 1;
+    for (i = 0; i &lt; k; i++){
+        sum += cardPoints[i];
+    }
+    i--;
+    result = sum;
+    while (i &gt;= 0 &amp;&amp; j &gt;= 0){
+        sum = sum - cardPoints[i--] + cardPoints[j--];
+        result = max(result, sum);
+    }
+    return result;
+}</code></pre>
+<h1 id="5394-II"><a href="#5394-II" class="headerlink" title="5394. ????? II"></a>5394. ????? II</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week186/5394_describe.png" alt=""></p>
+<h2 id="-4"><a href="#-4" class="headerlink" title="??"></a>??</h2><blockquote>
+<p>???????????????????????????On^2????????</p>
+</blockquote>
+<h2 id="-5"><a href="#-5" class="headerlink" title="??"></a>??</h2><pre><code class="cpp">vector&lt;int&gt; findDiagonalOrder(vector&lt;vector&lt;int&gt;&gt;&amp; nums) {
+    // vector&lt;int&gt; result;
+    // int col = 0;
+    // int row = nums.size() - 1;
+    // for (int k = 0; k &lt; nums.size(); k++){
+    //     col = col &gt; nums[k].size() ? col : nums[k].size();
+    //     int i = k, j = 0;
+    //     while (i &gt;= 0 &amp;&amp; i + j == k){
+    //         if (j &lt; nums[i].size()){
+    //             result.push_back(nums[i][j]);
+    //         }
+    //         i--;
+    //         j++;
+    //     }
+    // }
+    // for (int k = 1; k &lt; col; k++){
+    //     int i = row, j = k;
+    //     while (i &gt;= 0 &amp;&amp; i + j == k + row){
+    //         if (j &lt; nums[i].size()){
+    //             result.push_back(nums[i][j]);
+    //         }
+    //         i--;
+    //         j++;
+    //     }
+    // }
+    // return result;
+    map&lt;int, vector&lt;int&gt;&gt; mp;
+    for(int i=nums.size()-1; i&gt;=0; i--) {
+        for(int j=0; j&lt;nums[i].size(); j++) {
+            mp[i+j].push_back(nums[i][j]);
+        }
+    }
+    vector&lt;int&gt; ans;
+    for(auto&amp; m : mp) 
+        for(auto&amp; c : m.second) ans.push_back(c);
+    return ans;
+}</code></pre>
+<h1 id="5180"><a href="#5180" class="headerlink" title="5180. ????????"></a>5180. ????????</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week186/5180_describe.png" alt=""></p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='https://link.hhtjim.com/163/155827.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='https://link.hhtjim.com/163/1491163.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='https://link.hhtjim.com/163/1992707.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='true'
+        data-ci='Iv1.06e5c405a7731b45'
+        data-cs='2fcfe85902a7d5812fa4b299b56a6f194c98e08a'
+        data-r='qiancijun.github.io'
+        data-o='qiancijun'
+        data-a='qiancijun'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#5392"><span class="toc-number">1.</span> <span class="toc-text">5392. ??????????</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#"><span class="toc-number">1.1.</span> <span class="toc-text">??</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#-1"><span class="toc-number">1.2.</span> <span class="toc-text">??</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5393"><span class="toc-number">2.</span> <span class="toc-text">5393. ????????</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#-2"><span class="toc-number">2.1.</span> <span class="toc-text">??</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#-3"><span class="toc-number">2.2.</span> <span class="toc-text">??</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5394-II"><span class="toc-number">3.</span> <span class="toc-text">5394. ????? II</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#-4"><span class="toc-number">3.1.</span> <span class="toc-text">??</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#-5"><span class="toc-number">3.2.</span> <span class="toc-text">??</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5180"><span class="toc-number">4.</span> <span class="toc-text">5180. ????????</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":250,"height":400},"mobile":{"show":false},"log":false});</script></body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-163098031-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+<script type="text/javascript" src="/js/love.js"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</html>

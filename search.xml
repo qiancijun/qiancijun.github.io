@@ -1491,7 +1491,69 @@ FROM
 <h3 id="replace"><a href="#replace" class="headerlink" title="replace"></a>replace</h3><blockquote>
 <p>replace(str, from_str, to_str)：把str中的from_str换成to_str。<br>mysql&gt; SELECT REPLACE(‘HELLO’, ‘LLO’, ‘llo’);</p>
 </blockquote>
-<h2 id="日期和时间处理函数"><a href="#日期和时间处理函数" class="headerlink" title="日期和时间处理函数"></a>日期和时间处理函数</h2><h2 id="数值处理函数"><a href="#数值处理函数" class="headerlink" title="数值处理函数"></a>数值处理函数</h2><blockquote>
+<h2 id="日期和时间处理函数"><a href="#日期和时间处理函数" class="headerlink" title="日期和时间处理函数"></a>日期和时间处理函数</h2><blockquote>
+<p>日期和时间采用相应的数据类型和特殊的格式存储，以便能快速和有效的排序或过滤，别且节省物理空间。</p>
+</blockquote>
+<h3 id="now"><a href="#now" class="headerlink" title="now"></a>now</h3><ol>
+<li>$\color{blue}{now()}$<blockquote>
+<p>作用：返回当前系统日期+时间。<br>mysql&gt; SELECT NOW();</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="curdate"><a href="#curdate" class="headerlink" title="curdate"></a>curdate</h3><ol>
+<li>$\color{blue}{curdate()}$<blockquote>
+<p>作用：返回当前系统日期（不包含时间）。<br>mysql&gt; SELECT CURDATE();</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="curtime"><a href="#curtime" class="headerlink" title="curtime"></a>curtime</h3><ol>
+<li>$\color{blue}{curtime()}$<blockquote>
+<p>作用：返回当前系统时间（不包含日期）。<br>mysql&gt; SELECT CURTIME();</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="year"><a href="#year" class="headerlink" title="year"></a>year</h3><ol>
+<li>$\color{blue}{year(Date)}$<blockquote>
+<p>作用：获取指定日期的年份。<br>mysql&gt; SELECT YEAR(NOW());<br>相同的还有Month, Day, Hour, Minute, Second, Time </p>
+</blockquote>
+</li>
+</ol>
+<h3 id="str-to-date"><a href="#str-to-date" class="headerlink" title="str_to_date"></a>str_to_date</h3><ol>
+<li>$\color{blue}{str_to_date()}$<blockquote>
+<p>作用：将日期格式的字符转换成指定格式的日期<br>mysql&gt; SELECT STR_TO_DATE(‘1-1-2000’, ‘%m-%d-%y);</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="date-format"><a href="#date-format" class="headerlink" title="date_format"></a>date_format</h3><ol>
+<li>$\color{blue}{date_format()}$<blockquote>
+<p>作用：将日期转换成字符<br>mysql&gt; SELECT DATE_FORMAT(‘2000/1/1, ‘%Y年%m月%d日’);</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="时间戳操作"><a href="#时间戳操作" class="headerlink" title="时间戳操作"></a>时间戳操作</h3><ol>
+<li><p>秒级别的时间戳 unix_timestamp(Date)</p>
+<blockquote>
+<p>作用：从1970-01-01 00：00：00到date按秒算。<br>mysql&gt; SELECT UNIX_TIMESTAMP(NOW());</p>
+</blockquote>
+</li>
+<li><p>当前时间 current_timestamp()</p>
+<blockquote>
+<p>作用：显示当前时间<br>mysql&gt; SELECT CURRENT_TIMESTAMP();</p>
+</blockquote>
+</li>
+<li><p>FROM_UNIXTIME格式化时间戳函数 FROM_UNIXTIME()</p>
+<blockquote>
+<p>作用：将MySQL中以INT(11)存储的时间以”YYYY-MM-DD”格式来显示。<br>语法：FROM_UNIXTIME(unix_timestamp,format);</p>
+</blockquote>
+</li>
+</ol>
+<p>附：format格式化字符<br><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Mysql/time_format.png" alt=""></p>
+<h3 id="color-red-注意事项"><a href="#color-red-注意事项" class="headerlink" title="$\color{red}{注意事项}$"></a>$\color{red}{注意事项}$</h3><ol>
+<li>应该总是使用4位数字的年份。</li>
+<li>如果要的是日期，请使用Date()</li>
+<li>MySQL 4.1.1中增加了许多日期函数，如果想要知道哪些函数可用，请自行查询。</li>
+</ol>
+<h2 id="数值处理函数"><a href="#数值处理函数" class="headerlink" title="数值处理函数"></a>数值处理函数</h2><blockquote>
 <p>数值处理函数仅处理数值数据。这些函数主要运用于代数、三角或几何运算。</p>
 </blockquote>
 <h3 id="round"><a href="#round" class="headerlink" title="round"></a>round</h3><ol>
@@ -2925,6 +2987,100 @@ func listFiles(dirname string, level int) {
       </categories>
       <tags>
         <tag>Go</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LeetCode-186周周赛</title>
+    <url>/2020/04/26/LeetCode-186%E5%91%A8%E5%91%A8%E8%B5%9B/</url>
+    <content><![CDATA[<h1 id="5392"><a href="#5392" class="headerlink" title="5392. ??????????"></a>5392. ??????????</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week186/5392_describe.png" alt=""></p>
+<h2 id=""><a href="#" class="headerlink" title="??"></a>??</h2><blockquote>
+<p>?1?n-1????????</p>
+</blockquote>
+<h2 id="-1"><a href="#-1" class="headerlink" title="??"></a>??</h2><pre><code class="cpp">int maxScore(string s) {
+    int result = 0;
+    for (int p = 1; p &lt;= s.size() - 1; p++){
+        int left = 0;
+        int right = 0;
+        for (int i = 0; i &lt; p; i++){
+            if (s[i] == &#39;0&#39;)
+                left++;
+        }
+        for (int j = p; j &lt; s.size(); j++){
+            if (s[j] == &#39;1&#39;)
+                right++;
+        }
+        result = max(result, left + right);
+    }
+    return result;
+}</code></pre>
+<h1 id="5393"><a href="#5393" class="headerlink" title="5393. ????????"></a>5393. ????????</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week186/5393_describe.png" alt=""></p>
+<h2 id="-2"><a href="#-2" class="headerlink" title="??"></a>??</h2><blockquote>
+<p>???k???????????????????</p>
+</blockquote>
+<h2 id="-3"><a href="#-3" class="headerlink" title="??"></a>??</h2><pre><code class="cpp">int maxScore(vector&lt;int&gt;&amp; cardPoints, int k) {
+    int len = cardPoints.size();
+    int result = 0;
+    int sum = 0;
+    int i, j = len - 1;
+    for (i = 0; i &lt; k; i++){
+        sum += cardPoints[i];
+    }
+    i--;
+    result = sum;
+    while (i &gt;= 0 &amp;&amp; j &gt;= 0){
+        sum = sum - cardPoints[i--] + cardPoints[j--];
+        result = max(result, sum);
+    }
+    return result;
+}</code></pre>
+<h1 id="5394-II"><a href="#5394-II" class="headerlink" title="5394. ????? II"></a>5394. ????? II</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week186/5394_describe.png" alt=""></p>
+<h2 id="-4"><a href="#-4" class="headerlink" title="??"></a>??</h2><blockquote>
+<p>???????????????????????????On^2????????</p>
+</blockquote>
+<h2 id="-5"><a href="#-5" class="headerlink" title="??"></a>??</h2><pre><code class="cpp">vector&lt;int&gt; findDiagonalOrder(vector&lt;vector&lt;int&gt;&gt;&amp; nums) {
+    // vector&lt;int&gt; result;
+    // int col = 0;
+    // int row = nums.size() - 1;
+    // for (int k = 0; k &lt; nums.size(); k++){
+    //     col = col &gt; nums[k].size() ? col : nums[k].size();
+    //     int i = k, j = 0;
+    //     while (i &gt;= 0 &amp;&amp; i + j == k){
+    //         if (j &lt; nums[i].size()){
+    //             result.push_back(nums[i][j]);
+    //         }
+    //         i--;
+    //         j++;
+    //     }
+    // }
+    // for (int k = 1; k &lt; col; k++){
+    //     int i = row, j = k;
+    //     while (i &gt;= 0 &amp;&amp; i + j == k + row){
+    //         if (j &lt; nums[i].size()){
+    //             result.push_back(nums[i][j]);
+    //         }
+    //         i--;
+    //         j++;
+    //     }
+    // }
+    // return result;
+    map&lt;int, vector&lt;int&gt;&gt; mp;
+    for(int i=nums.size()-1; i&gt;=0; i--) {
+        for(int j=0; j&lt;nums[i].size(); j++) {
+            mp[i+j].push_back(nums[i][j]);
+        }
+    }
+    vector&lt;int&gt; ans;
+    for(auto&amp; m : mp) 
+        for(auto&amp; c : m.second) ans.push_back(c);
+    return ans;
+}</code></pre>
+<h1 id="5180"><a href="#5180" class="headerlink" title="5180. ????????"></a>5180. ????????</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week186/5180_describe.png" alt=""></p>
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>??</tag>
       </tags>
   </entry>
 </search>
