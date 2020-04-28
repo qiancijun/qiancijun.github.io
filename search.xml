@@ -1285,6 +1285,21 @@ int MergeAndCount(vector&lt;int&gt; &amp;nums, int Left, int Mid, int Right, vec
 </li>
 </ol>
 <p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Mysql/select.png" alt=""></p>
+<h2 id="限制结果"><a href="#限制结果" class="headerlink" title="限制结果"></a>限制结果</h2><p>SELECT语句返回所有匹配的行，它们可能是指定表中的每个行。为了返回第一行或前几行，可以使用LIMIT子句。</p>
+<pre><code class="mysql">SELECT
+        prod_name
+FROM
+        products
+LIMIT
+        5;</code></pre>
+<p>分析：此语句使用SELECT语句检索单个列。LIMIT 5指示MySQL返回不多于5行。</p>
+<ul>
+<li>$\color{red}{注:}$<ul>
+<li>行0：检索出来的第一行为行0而不是行1.因此，LIMIT 1，1将检索出第二行而不是第一行。</li>
+<li>在行数不够时：LIMIT中指定要检索的行数为检索的最大行数。如果没有足够的行，MySQL将只返回它能返回的那么多行。</li>
+</ul>
+</li>
+</ul>
 <h2 id="条件查询"><a href="#条件查询" class="headerlink" title="条件查询"></a>条件查询</h2><blockquote>
 <p>语法：SELECT 查询列表 FROM 表名 $\color{red}{where}$ 筛选条件;<br>解释：当where后的筛选条件成立为True，则表名可以筛选出来。若不成立为False，则该说明该数据不需要。</p>
 </blockquote>
@@ -3245,6 +3260,26 @@ WHERE
         email LIKE &#39;%a%&#39;
 GROUP BY
         department_id;</code></pre>
+<ol>
+<li><p>$\color{bule}{按表达式或函数分组}$<br>例：按员工姓名的长度进行分组，查询每一组的员工个数，筛选员工个数大于5的组</p>
+<pre><code class="mysql">SELECT 
+     COUNT(*), LENGTH(last_name) AS len_name
+FROM
+     employees
+GRUOP BY
+     LENGTH(lase_name);
+HAVING
+     COUNT(*) &gt; 5;</code></pre>
+</li>
+<li><p>$\color{blue}{按多个字段进行分组}$<br>例:查询每个部门每个工种的员工的平均工资：</p>
+<pre><code class="mysql">SELECT
+     AVG(salary), department_id, job_id
+FROM
+     employees
+GROUP BY
+     department_id, job_id;</code></pre>
+</li>
+</ol>
 <p>$\color{red}{GROUP}$  $\color{red}{BY子句的规定:}$</p>
 <blockquote>
 <ol>
@@ -3256,6 +3291,83 @@ GROUP BY
 <li>GROUP BY子句必须出现在WHERE子句后，ORDER BY子句之前。</li>
 </ol>
 </blockquote>
+<h2 id="分组和排序"><a href="#分组和排序" class="headerlink" title="分组和排序"></a>分组和排序</h2><p>例：查询每个部门的每个工种的员工的平均工资，并且按平均工资的高低显示：</p>
+<pre><code class="mysql">SELECT
+        AVG(salary), department_id, job_id
+FROM
+        employees
+WHERE
+        department_id IS NOT NULL
+GROUP BY
+        department_id, job_id;
+ORDER BY
+        AVG(salary) DESC;</code></pre>
+<p>虽然GROUP BY和ORDER BY经常完成相同的工作，但它们是非常不同的。一般在使用GROUP BY子句时，应该也给出ORDER BY子句。这是保证数据正确排序的唯一方法。千万不要仅依赖GROUP BY排序数据。</p>
+<table>
+<thead>
+<tr>
+<th align="center">ORDER BY</th>
+<th align="center">GROUP BY</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">排列产生的输出</td>
+<td align="center">分组行。但输出可能不是分组的顺序</td>
+</tr>
+<tr>
+<td align="center">任意列都可以使用（甚至非选择的列也可以使用）</td>
+<td align="center">只可能使用选择列或表达式列，而且必须使用每个选择列表达式</td>
+</tr>
+<tr>
+<td align="center">不一定需要</td>
+<td align="center">如果于聚集函数一起使用列（或表达式），则必须使用</td>
+</tr>
+</tbody></table>
+<h2 id="SELECT子句顺序"><a href="#SELECT子句顺序" class="headerlink" title="SELECT子句顺序"></a>SELECT子句顺序</h2><p>总结一下到目前为止所有的语句。</p>
+<table>
+<thead>
+<tr>
+<th align="center">子句</th>
+<th align="center">说明</th>
+<th align="center">是否必须使用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">SELECT</td>
+<td align="center">要返回的列或表达式</td>
+<td align="center">是</td>
+</tr>
+<tr>
+<td align="center">FROM</td>
+<td align="center">从中检索数据的表</td>
+<td align="center">仅在从表中选择数据时使用</td>
+</tr>
+<tr>
+<td align="center">WHERE</td>
+<td align="center">行级过滤</td>
+<td align="center">否</td>
+</tr>
+<tr>
+<td align="center">GROUP BY</td>
+<td align="center">分组说明</td>
+<td align="center">仅在按组计算聚集时使用</td>
+</tr>
+<tr>
+<td align="center">HAVING</td>
+<td align="center">组级过滤</td>
+<td align="center">否</td>
+</tr>
+<tr>
+<td align="center">ORDER BY</td>
+<td align="center">输出排序顺序</td>
+<td align="center">否</td>
+</tr>
+<tr>
+<td align="center">LIMIT</td>
+<td align="center">要检索的行数</td>
+<td align="center">否</td>
+</tr>
+</tbody></table>
 <h2 id="HAVING"><a href="#HAVING" class="headerlink" title="HAVING"></a>HAVING</h2><blockquote>
 <p>过滤行数据我们使用WHERE子句，但是如果我们想过滤分组的数据就不能使用WHERE子句了。MySQL允许过滤分组，利用HAVING子句。HAVING非常类似于WHERE。目前所有类型的WHERE子句都可以用HAVING来替代。唯一差别是WHERE过滤$\color{red}{行}$，而HAVING过滤$\color{red}{分组}$。</p>
 </blockquote>
