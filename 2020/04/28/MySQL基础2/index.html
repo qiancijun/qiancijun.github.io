@@ -5,12 +5,14 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Tag: 排序 - 神奇口袋</title>
+    <title>MySQL基础2 - 神奇口袋</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
-    
+    <meta name="description" content="MySQL基础
+分组查询
+将数据进行分组，以便能汇总表内容的子集。这涉及两个新SELECT子句，分别是$\color{blue}{GROUP BY}$子句和$\color{blue}{HAVING},"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -33,154 +35,131 @@
 <body class="loading">
     <span id="config-title" style="display:none">神奇口袋</span>
     <div id="loader"></div>
-    <div class="nav">
-    <ul id="menu-menu" class="menu">
-        
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="//" title="首页" target="_blank" rel="noopener">首页</a>
-        </li>
-        
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/categories/" title="分类" target="_blank" rel="noopener">分类</a>
-        </li>
-        
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/tags/" title="标签" target="_blank" rel="noopener">标签</a>
-        </li>
-        
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/archives/" title="归档" target="_blank" rel="noopener">归档</a>
-        </li>
-        
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/about/" title="关于" target="_blank" rel="noopener">关于</a>
-        </li>
-        
-    </ul>
-	<span class="target"></span>
-	<center>
-	<div class="hitokoto">
-		<span class="typed" id="hitokoto" data-st="true"></span>
-	</div>
-	</center>
-	
-	<p class="footerlinks">
-		<a href="#" class="iconfont icon-null"></a>
-		
-            <a href="/" title="facebook" class="iconfont icon-facebook" target="_blank" rel="noopener"> </a>
-        
-            <a href="/" title="twitter" class="iconfont icon-twitter" target="_blank" rel="noopener"> </a>
-        
-            <a href="/" title="github" class="iconfont icon-github" target="_blank" rel="noopener"> </a>
-        
-            <a href="/img/logo.png" title="wechat" class="iconfont icon-wechat" target="_blank" rel="noopener"> </a>
-        
-            <a href="/769303522@qq.com" title="email" class="iconfont icon-email" target="_blank" rel="noopener"> </a>
-        
-		<a href="#" class="iconfont icon-null"></a>
-	</p>
-	
-    <p id="copyright">
-        &copy; 2020 John Doe.
-        <span> | </span>Powered by <a href="https://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
-        <span> | </span>Theme <a href="https://github.com/Fechin/hexo-theme-diaspora" title="Diaspora" target="_blank" rel="noopener">Diaspora</a> by Fechin
-		
-    </p>
-</div>
-
-<div id="container">
-    
-<div id="screen">
-    <div id="mark">
-        <div class="layer" data-depth="0.4">
-            <img src="/img/welcome-cover.jpg" id="cover" crossorigin="anonymous" width="1920" height="1080">
-        </div>
-    </div>
-    <div id="vibrant">
-        <svg viewBox="0 0 2880 1620" height="100%" preserveAspectRatio="xMaxYMax slice">
-            <polygon opacity="0.7" points="2000,1620 0,1620 0,0 600,0 "/>
-        </svg>
-        <div></div>
-    </div>
-    <div id="header">
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://qiancijun.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">MySQL基础2</h3>
+    <div class="social">
         <div>
-            <a class="image-logo" href="/"></a>
-			
-			<div class="iconfont icon-search switchsearch" href="/search/" title="搜索"></div>
-			
-            <div class="iconfont icon-menu switchmenu"></div>
+            <div class="share">
+                
+            </div>
+            <div id="qr"></div>
         </div>
     </div>
-    
-    <div id="post0">
-        <p>四月 24, 2020</p>
-        <h2><a href="/2020/04/24/LeetCode-%E9%9D%A2%E8%AF%95%E9%A2%9851-%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E9%80%86%E5%BA%8F%E5%AF%B9/" title="LeetCode-面试题51-数组中的逆序对" class="posttitle">LeetCode-面试题51-数组中的逆序对</a></h2>
-        <p class="summary">原题链接原题链接
-题目描述
-思路由于题目给了限制，第一时间想到的双重循环暴力解法一定会超时。这道题典型运用了分治思...</p>
-    </div>
-    
+    <div class="scrollbar"></div>
 </div>
 
-    <div id="primary">
+   
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">MySQL基础2</h1>
+        <div class="stuff">
+            <span>四月 28, 2020</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <p><a href="https://xlich.top/2020/04/24/MySQL%E5%9F%BA%E7%A1%80/" target="_blank" rel="noopener">MySQL基础</a></p>
+<h1 id="分组查询"><a href="#分组查询" class="headerlink" title="分组查询"></a>分组查询</h1><blockquote>
+<p>将数据进行分组，以便能汇总表内容的子集。这涉及两个新SELECT子句，分别是$\color{blue}{GROUP BY}$子句和$\color{blue}{HAVING}$子句。</p>
+</blockquote>
+<h2 id="GROUP-BY"><a href="#GROUP-BY" class="headerlink" title="GROUP BY"></a>GROUP BY</h2><blockquote>
+<p>分组数据：GROUP BY 子句语法：<br>SELECT column, group_function(column)<br>FROM table<br>[WHERE] condition<br>[GROUP BY] group_by_expression<br>[ORDER BY] column;</p>
+</blockquote>
+<p>$\color{red}{注:}$</p>
+<blockquote>
+<p>查询列表必须特殊，要求是分组函数和group by后面出现的字段。</p>
+</blockquote>
+<p>例：查询每个工种的最高工资：</p>
+<pre><code class="mysql">SELECT 
+        MAX(salary), job_id
+FROM
+        employees
+GROUP BY
+        job_id;</code></pre>
+<p>例：查询邮箱中包含a字符的，每个部门的平均工资：</p>
+<pre><code class="mysql">SELECT 
+        AVG(salary), department_id
+FROM 
+        employees
+WHERE
+        email LIKE &#39;%a%&#39;
+GROUP BY
+        department_id;</code></pre>
+<p>$\color{red}{GROUP}$  $\color{red}{BY子句的规定:}$</p>
+<blockquote>
+<ol>
+<li>GROUP BY子句可以包含任意数目的列。这使得能对分组进行嵌套为数据分组提供更细致的控制。</li>
+<li>如果在GROUP BY子句中嵌套了分组，数据将在最后规定的分组上进行汇总。换句话说，在建立分组时，指定的所有列都一起计算，所以不能从个别列取回数据。</li>
+<li>GROUP BY子句中列出的每个列都必须是检索列或有效的表达式。</li>
+<li>除聚集计算语句外，SELECT语句中的每个列都必须在GROUP BY子句中给出。</li>
+<li>如果分组列中具有NULL值，则NULL将作为一个分组返回。如果列中有多行NULL值，它们将分为一组。</li>
+<li>GROUP BY子句必须出现在WHERE子句后，ORDER BY子句之前。</li>
+</ol>
+</blockquote>
+<h2 id="HAVING"><a href="#HAVING" class="headerlink" title="HAVING"></a>HAVING</h2><blockquote>
+<p>过滤行数据我们使用WHERE子句，但是如果我们想过滤分组的数据就不能使用WHERE子句了。MySQL允许过滤分组，利用HAVING子句。HAVING非常类似于WHERE。目前所有类型的WHERE子句都可以用HAVING来替代。唯一差别是WHERE过滤$\color{red}{行}$，而HAVING过滤$\color{red}{分组}$。</p>
+</blockquote>
+<p>例：查询哪个部门的员工人数大于2：</p>
+<pre><code class="mysql">SELECT 
+        COUNT(*), department_id
+FROM
+        employees
+GROUP BY
+        department_id
+HAVING
+        COUNT(*) &gt; 2;</code></pre>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='https://link.hhtjim.com/163/155827.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='https://link.hhtjim.com/163/1491163.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='https://link.hhtjim.com/163/1992707.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
         
-<div class="post">
-    <a href="/2020/04/16/LeetCode-56-%E5%90%88%E5%B9%B6%E5%8C%BA%E9%97%B4/" title="LeetCode-56-合并区间">
-        <img src="/img/6.jpg" class="cover" width="680" height="440">
-    </a>
-    <div class="else">
-        <p>四月 16, 2020</p>
-        <h3><a href="/2020/04/16/LeetCode-56-%E5%90%88%E5%B9%B6%E5%8C%BA%E9%97%B4/" title="LeetCode-56-合并区间" class="posttitle">LeetCode-56-合并区间</a></h3>
-        <p>原题链接原题链接
-题目描述
-思路很常规的思路。在给的数组最后加一个最大值方便操作数组。先对原数组进行排序，把区间第一个数组从小到大排序。再判断第一个区间和...</p>
-    </div>
-</div>
-
-
-<div class="post">
-    <a href="/2020/04/06/%E5%A0%86%E6%8E%92%E5%BA%8F/" title="堆排序">
-        <img src="/img/6.jpg" class="cover" width="680" height="440">
-    </a>
-    <div class="else">
-        <p>四月 06, 2020</p>
-        <h3><a href="/2020/04/06/%E5%A0%86%E6%8E%92%E5%BA%8F/" title="堆排序" class="posttitle">堆排序</a></h3>
-        <p>前言在选择排序中，找到数组中的最大值，并和数组末尾交换值，每完成一次选择，就能使一个元素确定它的位置。在数组这种顺序结构中，要查找数组中的最大值，采取顺序...</p>
-    </div>
-</div>
-
-
-<div class="post">
-    <a href="/2020/04/05/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/" title="归并排序">
-        <img src="/img/3.jpg" class="cover" width="680" height="440">
-    </a>
-    <div class="else">
-        <p>四月 05, 2020</p>
-        <h3><a href="/2020/04/05/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/" title="归并排序" class="posttitle">归并排序</a></h3>
-        <p>前言本文介绍的是排序算法中较常用的方法，$\color{red}{归并排序}$，该方法的核心想法为分治法。分而治之，将原问题划分成多个子问题，子问题解决后...</p>
-    </div>
-</div>
-
-
-<div class="post">
-    <a href="/2020/04/04/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/" title="快速排序">
-        <img src="/img/5.jpg" class="cover" width="680" height="440">
-    </a>
-    <div class="else">
-        <p>四月 04, 2020</p>
-        <h3><a href="/2020/04/04/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/" title="快速排序" class="posttitle">快速排序</a></h3>
-        <p>前言排序作为数据结构与算法基础算法之一，形式多样，复杂度不同，在不同情况下选用适当的排序算法能够使效率最大化。本文主要介绍排序算法中的 $\color{r...</p>
-    </div>
-</div>
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='true'
+        data-ci='Iv1.06e5c405a7731b45'
+        data-cs='2fcfe85902a7d5812fa4b299b56a6f194c98e08a'
+        data-r='qiancijun.github.io'
+        data-o='qiancijun'
+        data-a='qiancijun'
+        data-d='false'
+    >查看评论</div>
 
 
     </div>
     
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#分组查询"><span class="toc-number">1.</span> <span class="toc-text">分组查询</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#GROUP-BY"><span class="toc-number">1.1.</span> <span class="toc-text">GROUP BY</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HAVING"><span class="toc-number">1.2.</span> <span class="toc-text">HAVING</span></a></li></ol></li></ol>	
+        </div>
+    
 </div>
-<div id="preview"></div>
 
 
-
+    </div>
+</div>
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":250,"height":400},"mobile":{"show":false},"log":false});</script></body>
 
 

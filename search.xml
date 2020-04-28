@@ -1161,7 +1161,7 @@ int MergeAndCount(vector&lt;int&gt; &amp;nums, int Left, int Mid, int Right, vec
     <title>MySQL基础</title>
     <url>/2020/04/24/MySQL%E5%9F%BA%E7%A1%80/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
-<p>个人在学习MySQL时所记录的笔记，欢迎指出错误或者提供不足。文章支持md语句，如果没有显示出来请刷新一下。<br>参考文献：《MySQL必知必会》</p>
+<p>个人在学习MySQL时所记录的笔记，欢迎指出错误或者提供不足。文章支持md语句，如果没有显示出来请刷新一下。<br>参考文献：《MySQL必知必会》<br><a href="https://xlich.top/2020/04/24/MySQL%E5%9F%BA%E7%A1%802/" target="_blank" rel="noopener">MySQL基础2</a></p>
 </blockquote>
 <h1 id="MySQL数据库基础"><a href="#MySQL数据库基础" class="headerlink" title="MySQL数据库基础"></a>MySQL数据库基础</h1><h2 id="DB与DBMS"><a href="#DB与DBMS" class="headerlink" title="DB与DBMS"></a>DB与DBMS</h2><blockquote>
 <p>数据库(Database)：保存有组织的数据的容器<br><br>数据库软件(Database Management System)：数据库管理系统</p>
@@ -1631,6 +1631,68 @@ when 条件2 then 输出2
 else 输出3
 end
 类似多重if</code></pre>
+</li>
+</ol>
+<h1 id="分组函数"><a href="#分组函数" class="headerlink" title="分组函数"></a>分组函数</h1><blockquote>
+<p>简介:用作统计使用，又称聚合函数、统计函数或组函数。</p>
+</blockquote>
+<h2 id="聚集函数"><a href="#聚集函数" class="headerlink" title="聚集函数"></a>聚集函数</h2><blockquote>
+<p>运行在行组上，计算和返回单个值的函数。</p>
+</blockquote>
+<ol>
+<li><p>$\color{blue}{AVG}$</p>
+<blockquote>
+<p>返回某列的平均值。<br>$\color{red}{注}$：AVG()只能用来确定特定数值列的平均值，而且列名必须作为函数参数给出，为了获得多个列的平均值，必须使用多个AVG()函数。<br>$\color{red}{NULL值}$：AVG()函数忽略列值为NULL的行</p>
+</blockquote>
+</li>
+<li><p>$\color{blue}{COUNT}$</p>
+<blockquote>
+<p>返回某列的行数。<br>$\color{red}{NULL值}$：如果指定列名，则指定列的值为空的行被COUNT()函数忽略，但如果COUNT()函数中用的是*号，则不忽略。</p>
+</blockquote>
+</li>
+<li><p>$\color{blue}{MAX}$</p>
+<blockquote>
+<p>返回某列的最大值。<br>$\color{red}{对非数值数据使用MAX()}$：虽然MAX()一般用来找出最大的数值或日期值，但MySQL允许将它用来返回任意列中的最大值，包括返回文本列中的最大值。在用于文本数据时，如果数据按相应的列排序，则MAX()返回最后一行。</p>
+</blockquote>
+</li>
+<li><p>$\color{blue}{MIN}$</p>
+<blockquote>
+<p>返回某列的最小值。</p>
+</blockquote>
+</li>
+<li><p>$\color{blue}{SUM}$</p>
+<blockquote>
+<p>返回某列值之和。</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><blockquote>
+<p>比如：想要去查询员工工资的总和：</p>
+</blockquote>
+<pre><code class="mysql">SELECT SUM(salary) FROM employees;
+#其余类似不做举例</code></pre>
+<h2 id="聚集不同值"><a href="#聚集不同值" class="headerlink" title="聚集不同值"></a>聚集不同值</h2><p>上述5个聚集函数都可以如下进行使用：</p>
+<blockquote>
+<p>对所有的行执行计算，指定ALL参数或不给参数（因为ALL是默认行为）。<br>只包含不同的值，指定DISTINCT参数。</p>
+</blockquote>
+<h3 id="DISTINCT"><a href="#DISTINCT" class="headerlink" title="DISTINCT"></a>DISTINCT</h3><blockquote>
+<p>利用DISTINCT可以做到去重效果。</p>
+</blockquote>
+<pre><code class="mysql">SELECT SUM(DISTINCT salary) FROM employees;</code></pre>
+<p>$\color{red}{注：}$</p>
+<blockquote>
+<p>如果指定列名，则DISTINCT只能用于COUNT()、不能用于COUNT(*)，因此不能使用COUNT(DISTINCT)。DISTINCT必须使用列名，不能用于计算或者表达式。</p>
+</blockquote>
+<h2 id="COUNT函数"><a href="#COUNT函数" class="headerlink" title="COUNT函数"></a>COUNT函数</h2><ol>
+<li><p>$\color{blue}{count(x)}$</p>
+<blockquote>
+<p>作用：返回某列的行数。<br>count(*)统计所有字段。<br>count(1)统计1的个数，加一列全是1的列。（并不是只能是1）</p>
+</blockquote>
+</li>
+<li><p>$\color{blue}{效率}$</p>
+<blockquote>
+<p>MYISAM存储引擎下，count(*)的效率最高。<br>原因：在引擎内部有一个计数器，直接返回个数。<br>INNODB存储引擎下，count(*)和count(1)效率近似快，但是比count(x)快。<br>原因：count(x)需要做判断，进行筛选。</p>
+</blockquote>
 </li>
 </ol>
 <h1 id="MySQL-Workbench常用快捷键"><a href="#MySQL-Workbench常用快捷键" class="headerlink" title="MySQL Workbench常用快捷键"></a>MySQL Workbench常用快捷键</h1><ol>
@@ -3151,6 +3213,64 @@ for (int i = 0; i &lt; nums.size(); i++){ //遍历数组
 ]]></content>
       <categories>
         <category>数据结构</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>MySQL基础2</title>
+    <url>/2020/04/28/MySQL%E5%9F%BA%E7%A1%802/</url>
+    <content><![CDATA[<p><a href="https://xlich.top/2020/04/24/MySQL%E5%9F%BA%E7%A1%80/" target="_blank" rel="noopener">MySQL基础</a></p>
+<h1 id="分组查询"><a href="#分组查询" class="headerlink" title="分组查询"></a>分组查询</h1><blockquote>
+<p>将数据进行分组，以便能汇总表内容的子集。这涉及两个新SELECT子句，分别是$\color{blue}{GROUP BY}$子句和$\color{blue}{HAVING}$子句。</p>
+</blockquote>
+<h2 id="GROUP-BY"><a href="#GROUP-BY" class="headerlink" title="GROUP BY"></a>GROUP BY</h2><blockquote>
+<p>分组数据：GROUP BY 子句语法：<br>SELECT column, group_function(column)<br>FROM table<br>[WHERE] condition<br>[GROUP BY] group_by_expression<br>[ORDER BY] column;</p>
+</blockquote>
+<p>$\color{red}{注:}$</p>
+<blockquote>
+<p>查询列表必须特殊，要求是分组函数和group by后面出现的字段。</p>
+</blockquote>
+<p>例：查询每个工种的最高工资：</p>
+<pre><code class="mysql">SELECT 
+        MAX(salary), job_id
+FROM
+        employees
+GROUP BY
+        job_id;</code></pre>
+<p>例：查询邮箱中包含a字符的，每个部门的平均工资：</p>
+<pre><code class="mysql">SELECT 
+        AVG(salary), department_id
+FROM 
+        employees
+WHERE
+        email LIKE &#39;%a%&#39;
+GROUP BY
+        department_id;</code></pre>
+<p>$\color{red}{GROUP}$  $\color{red}{BY子句的规定:}$</p>
+<blockquote>
+<ol>
+<li>GROUP BY子句可以包含任意数目的列。这使得能对分组进行嵌套为数据分组提供更细致的控制。</li>
+<li>如果在GROUP BY子句中嵌套了分组，数据将在最后规定的分组上进行汇总。换句话说，在建立分组时，指定的所有列都一起计算，所以不能从个别列取回数据。</li>
+<li>GROUP BY子句中列出的每个列都必须是检索列或有效的表达式。</li>
+<li>除聚集计算语句外，SELECT语句中的每个列都必须在GROUP BY子句中给出。</li>
+<li>如果分组列中具有NULL值，则NULL将作为一个分组返回。如果列中有多行NULL值，它们将分为一组。</li>
+<li>GROUP BY子句必须出现在WHERE子句后，ORDER BY子句之前。</li>
+</ol>
+</blockquote>
+<h2 id="HAVING"><a href="#HAVING" class="headerlink" title="HAVING"></a>HAVING</h2><blockquote>
+<p>过滤行数据我们使用WHERE子句，但是如果我们想过滤分组的数据就不能使用WHERE子句了。MySQL允许过滤分组，利用HAVING子句。HAVING非常类似于WHERE。目前所有类型的WHERE子句都可以用HAVING来替代。唯一差别是WHERE过滤$\color{red}{行}$，而HAVING过滤$\color{red}{分组}$。</p>
+</blockquote>
+<p>例：查询哪个部门的员工人数大于2：</p>
+<pre><code class="mysql">SELECT 
+        COUNT(*), department_id
+FROM
+        employees
+GROUP BY
+        department_id
+HAVING
+        COUNT(*) &gt; 2;</code></pre>
+]]></content>
+      <categories>
+        <category>Mysql</category>
       </categories>
   </entry>
 </search>
