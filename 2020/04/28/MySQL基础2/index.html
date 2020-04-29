@@ -210,6 +210,74 @@ GROUP BY
         department_id
 HAVING
         COUNT(*) &gt; 2;</code></pre>
+<h1 id="连续查询"><a href="#连续查询" class="headerlink" title="连续查询"></a>连续查询</h1><blockquote>
+<p>SQL最强大的功能之一就是能在数据检索查询的执行中联结表。<br>连续查询又称多表查询。当查询的字段来自多个表就会用到连续查询</p>
+</blockquote>
+<ol>
+<li><p>$\color{blue}{外键}$</p>
+<blockquote>
+<p>外键为某个表中的一列，它包含另一个表的主键值，定义了两个表的关系。</p>
+</blockquote>
+</li>
+<li><p>$\color{blue}{可伸缩性}$</p>
+<blockquote>
+<p>能够适应不断增加的工作量而不失败。设计良好的数据库或应用程序称之为可伸缩性好。</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="创建联结"><a href="#创建联结" class="headerlink" title="创建联结"></a>创建联结</h2><p>例：</p>
+<pre><code class="mysql">SELECT vend_name, prod_name, prod_price
+FROM vendors, products
+WHERE vendors.vend_id = products.vend_id
+ORDER BY vend_name, prod_name;</code></pre>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><ol>
+<li>$\color{blue}{按年代分类：}$</li>
+</ol>
+<ul>
+<li>sql92标准：仅仅支持内连接。</li>
+<li>sql99标准：支持所有内连接和外连接和交叉连接，在外连接中不支持全外连接。</li>
+</ul>
+<ol start="2">
+<li>$\color{blue}{按功能分类}$</li>
+</ol>
+<ul>
+<li>内连接<ul>
+<li>等值连接</li>
+<li>非等值连接</li>
+<li>自连接</li>
+</ul>
+</li>
+<li>外连接<ul>
+<li>左外连接</li>
+<li>右外连接</li>
+<li>全外连接</li>
+</ul>
+</li>
+<li>交叉连接</li>
+</ul>
+<h2 id="sql92标准"><a href="#sql92标准" class="headerlink" title="sql92标准"></a>sql92标准</h2><h3 id="等值连接"><a href="#等值连接" class="headerlink" title="等值连接"></a>等值连接</h3><p>例1：</p>
+<pre><code class="mysql">SELECT vend_name, prod_name, prod_price
+FROM vendors, products
+WHERE vendors.vend_id = products.vend_id
+ORDER BY vend_name, prod_name;</code></pre>
+<p>例2：想要查询员工名和对应的部门名</p>
+<pre><code class="mysql">SLEECT
+        last_name, department_name
+FROM 
+        employees, departments
+WHERE
+        emplyees.department_id = departments.department_id;</code></pre>
+<p>$\color{red}{注:}$</p>
+<blockquote>
+<p>如果两个表中有相同的字段名除，那么要在SELECT语句中添加表名经行限定。</p>
+</blockquote>
+<h3 id="表别名"><a href="#表别名" class="headerlink" title="表别名"></a>表别名</h3><p>如果在反复使用表名使，表名太长显得代码冗长，此时可以用表别名。用别名替换表名后，不可以再用原表名去限定。</p>
+<pre><code class="mysql">SELECT 
+        last_name, e.job_id, job_title
+FROM
+        employees AS e, jobs AS j #AS可以省略
+WHERE
+        e.job_id = j.job_id;</code></pre>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
@@ -249,7 +317,7 @@ HAVING
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#分组查询"><span class="toc-number">1.</span> <span class="toc-text">分组查询</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#GROUP-BY"><span class="toc-number">1.1.</span> <span class="toc-text">GROUP BY</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分组和排序"><span class="toc-number">1.2.</span> <span class="toc-text">分组和排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SELECT子句顺序"><span class="toc-number">1.3.</span> <span class="toc-text">SELECT子句顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HAVING"><span class="toc-number">1.4.</span> <span class="toc-text">HAVING</span></a></li></ol></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#分组查询"><span class="toc-number">1.</span> <span class="toc-text">分组查询</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#GROUP-BY"><span class="toc-number">1.1.</span> <span class="toc-text">GROUP BY</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分组和排序"><span class="toc-number">1.2.</span> <span class="toc-text">分组和排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SELECT子句顺序"><span class="toc-number">1.3.</span> <span class="toc-text">SELECT子句顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HAVING"><span class="toc-number">1.4.</span> <span class="toc-text">HAVING</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#连续查询"><span class="toc-number">2.</span> <span class="toc-text">连续查询</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建联结"><span class="toc-number">2.1.</span> <span class="toc-text">创建联结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分类"><span class="toc-number">2.2.</span> <span class="toc-text">分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sql92标准"><span class="toc-number">2.3.</span> <span class="toc-text">sql92标准</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#等值连接"><span class="toc-number">2.3.1.</span> <span class="toc-text">等值连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#表别名"><span class="toc-number">2.3.2.</span> <span class="toc-text">表别名</span></a></li></ol></li></ol></li></ol>	
         </div>
     
 </div>
