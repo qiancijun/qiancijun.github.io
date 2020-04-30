@@ -39,7 +39,7 @@ MySQL数据库基础DB与DBM,">
     <div id="single">
     <div id="top" style="display: block;">
     <div class="bar" style="width: 0;"></div>
-    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://qiancijun.github.io"></a>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://xlich.top"></a>
     <div title="播放/暂停" class="iconfont icon-play"></div>
     <h3 class="subtitle">MySQL基础</h3>
     <div class="social">
@@ -65,7 +65,7 @@ MySQL数据库基础DB与DBM,">
         </div>
         <div class="content markdown">
             <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
-<p>个人在学习MySQL时所记录的笔记，欢迎指出错误或者提供不足。文章支持md语句，如果没有显示出来请刷新一下。<br>参考文献：《MySQL必知必会》<br><a href="https://xlich.top/2020/04/28/MySQL%E5%9F%BA%E7%A1%802/" target="_blank" rel="noopener">MySQL基础2</a></p>
+<p>个人在学习MySQL时所记录的笔记，欢迎指出错误或者提供不足。文章支持md语句，如果没有显示出来请刷新一下。<br>参考文献：《MySQL必知必会》<br><a href="https://xlich.top/2020/04/28/MySQL%E5%9F%BA%E7%A1%802/">MySQL基础2</a></p>
 </blockquote>
 <h1 id="MySQL数据库基础"><a href="#MySQL数据库基础" class="headerlink" title="MySQL数据库基础"></a>MySQL数据库基础</h1><h2 id="DB与DBMS"><a href="#DB与DBMS" class="headerlink" title="DB与DBMS"></a>DB与DBMS</h2><blockquote>
 <p>数据库(Database)：保存有组织的数据的容器<br><br>数据库软件(Database Management System)：数据库管理系统</p>
@@ -190,12 +190,7 @@ MySQL数据库基础DB与DBM,">
 </ol>
 <p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Mysql/select.png" alt=""></p>
 <h2 id="限制结果"><a href="#限制结果" class="headerlink" title="限制结果"></a>限制结果</h2><p>SELECT语句返回所有匹配的行，它们可能是指定表中的每个行。为了返回第一行或前几行，可以使用LIMIT子句。</p>
-<pre><code class="mysql">SELECT
-        prod_name
-FROM
-        products
-LIMIT
-        5;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        prod_name</span><br><span class="line">FROM</span><br><span class="line">        products</span><br><span class="line">LIMIT</span><br><span class="line">        5;</span><br></pre></td></tr></table></figure>
 <p>分析：此语句使用SELECT语句检索单个列。LIMIT 5指示MySQL返回不多于5行。</p>
 <ul>
 <li>$\color{red}{注:}$<ul>
@@ -228,35 +223,18 @@ LIMIT
 <blockquote>
 <p>比如：想查询年龄大于10的person信息；</p>
 </blockquote>
-<pre><code class="mysql">SELECT 
-     *
-FROM
-     people
-WHERE
-     age &gt; 10;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT </span><br><span class="line">        *</span><br><span class="line">FROM</span><br><span class="line">        people</span><br><span class="line">WHERE</span><br><span class="line">        age &gt; 10;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>比如：想查询部门编号不等于90的员工名和部门编号</p>
 </blockquote>
-<pre><code class="mysql">SELECT
-     name,
-     department_id
-FROM
-     employees
-WHERE
-     department_id &lt;&gt; 90; #或 != 90</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        name,</span><br><span class="line">        department_id</span><br><span class="line">FROM</span><br><span class="line">        employees</span><br><span class="line">WHERE</span><br><span class="line">        department_id &lt;&gt; 90; #或 !&#x3D; 90</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>$\color{blue}{按逻辑表达式筛选}$</p>
 <blockquote>
 <p>比如：想去查询年龄在10到20之间的人的姓名；</p>
 </blockquote>
-<pre><code class="mysql">SELECT
-     name
-FROM
-     people
-WHERE
-     age &gt;= 10
-AND
-     age &lt;= 20;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        name</span><br><span class="line">FROM</span><br><span class="line">        people</span><br><span class="line">WHERE</span><br><span class="line">        age &gt;&#x3D; 10</span><br><span class="line">AND</span><br><span class="line">        age &lt;&#x3D; 20;</span><br></pre></td></tr></table></figure>
+
 </li>
 </ol>
 <h2 id="用通配符进行过滤"><a href="#用通配符进行过滤" class="headerlink" title="用通配符进行过滤"></a>用通配符进行过滤</h2><ol>
@@ -276,30 +254,15 @@ AND
 <h3 id="百分号（-）通配符"><a href="#百分号（-）通配符" class="headerlink" title="百分号（%）通配符"></a>百分号（%）通配符</h3><blockquote>
 <p>最常使用的通配符是百分号（%）。在搜索串中，%表示任何字符出现任意次数。比如想找出所有以词John起头的人。</p>
 </blockquote>
-<pre><code class="mysql">SELECT
-        name
-FROM
-        person
-WHERE
-        name LIKE &#39;John%&#39;;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        name</span><br><span class="line">FROM</span><br><span class="line">        person</span><br><span class="line">WHERE</span><br><span class="line">        name LIKE &#39;John%&#39;;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>通配符可在搜索模式中任意位置使用，并且可以使用多个通配符</p>
 </blockquote>
-<pre><code class="mysql">SELECT 
-        prod_id, prod_name
-FROM
-        products
-WHERE
-        prod_name LIKE &#39;%anvil%&#39;;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT </span><br><span class="line">        prod_id, prod_name</span><br><span class="line">FROM</span><br><span class="line">        products</span><br><span class="line">WHERE</span><br><span class="line">        prod_name LIKE &#39;%anvil%&#39;;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>搜索模式’%anvil’表示匹配任何位置包含文本anvil的值，不论它之前或之后出现什么字符；<br>通配符也可以出现在搜索模式的中间，比如：找出所有$\color{red}{以s起头e结尾}$的产品。</p>
 </blockquote>
-<pre><code class="mysql">SELECT
-        prod_name
-FROM
-        products
-WHERE
-        prod_name LIKE &#39;s%e&#39;;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        prod_name</span><br><span class="line">FROM</span><br><span class="line">        products</span><br><span class="line">WHERE</span><br><span class="line">        prod_name LIKE &#39;s%e&#39;;</span><br></pre></td></tr></table></figure>
 <p><strong>注：</strong></p>
 <blockquote>
 <p>尾空格可能会干扰通配符匹配！！！</p>
@@ -310,36 +273,21 @@ WHERE
 <blockquote>
 <p>比如：查询员工信息，要求工资从高到低排序；</p>
 </blockquote>
-<pre><code class="mysql">SELECT
-        *
-FROM
-        employees
-ORDER BY
-        salary DESC;#desc降序 esd升序(可省略)</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        *</span><br><span class="line">FROM</span><br><span class="line">        employees</span><br><span class="line">ORDER BY</span><br><span class="line">        salary DESC;#desc降序 esd升序(可省略)</span><br></pre></td></tr></table></figure>
+
 <ol>
 <li><p>$\color{blue}{排序中加入筛选}$</p>
 <blockquote>
 <p>比如：想要查询部门编号大于等于90的员工信息，按入职时间先后排序；</p>
 </blockquote>
-<pre><code class="mysql">SELECT
-     *
-FROM
-     employees
-WHERE
-     department_id &gt;= 90
-ORDER BY
-     hiredate ASC;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        *</span><br><span class="line">FROM</span><br><span class="line">        employees</span><br><span class="line">WHERE</span><br><span class="line">        department_id &gt;&#x3D; 90</span><br><span class="line">ORDER BY</span><br><span class="line">        hiredate ASC;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>$\color{blue}{按多个列排序}$</p>
 <blockquote>
 <p>比如：想去检索产品id，产品价格和产品名字，并且按产品价格和产品名字排序；</p>
 </blockquote>
-<pre><code class="mysql">SELECT
-     prod_id, prod_price, prod_name
-FROM
-     products
-ORDER BY
-     prod_price, prod_name;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        prod_id, prod_price, prod_name</span><br><span class="line">FROM</span><br><span class="line">        products</span><br><span class="line">ORDER BY</span><br><span class="line">        prod_price, prod_name;</span><br></pre></td></tr></table></figure>
+
 </li>
 </ol>
 <p>$\color{purple}{注：}$</p>
@@ -355,12 +303,8 @@ ORDER BY
 <h3 id="Concat函数"><a href="#Concat函数" class="headerlink" title="Concat函数"></a>Concat函数</h3><blockquote>
 <p>作用：拼接串，把多个串连接起来形成一个较长的串。<br>比如：想要查询人民和国家，并且按 人名（国家）形式输出；</p>
 </blockquote>
-<pre><code class="mysql">SELECT
-        Concat(name, &#39;(&#39;, country, &#39;)&#39;)
-FROM
-        people
-ORDER BY 
-        name;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        Concat(name, &#39;(&#39;, country, &#39;)&#39;)</span><br><span class="line">FROM</span><br><span class="line">        people</span><br><span class="line">ORDER BY </span><br><span class="line">        name;</span><br></pre></td></tr></table></figure>
+
 <h1 id="常见函数"><a href="#常见函数" class="headerlink" title="常见函数"></a>常见函数</h1><blockquote>
 <p>调用函数方法：SELECT 函数名(实参列表) [FROM 表];</p>
 </blockquote>
@@ -376,10 +320,8 @@ ORDER BY
 <blockquote>
 <p>比如：把姓变大写，名小写，然后拼接</p>
 </blockquote>
-<pre><code class="mysql">SELECT
-        CONCAT(UPPER(last_name), LOWER(first_name)) AS 姓名
-FROM 
-        employees;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        CONCAT(UPPER(last_name), LOWER(first_name)) AS 姓名</span><br><span class="line">FROM </span><br><span class="line">        employees;</span><br></pre></td></tr></table></figure>
+
 <h3 id="substr"><a href="#substr" class="headerlink" title="substr"></a>substr</h3><blockquote>
 <p>作用：获取子串(substring)</p>
 </blockquote>
@@ -524,32 +466,16 @@ FROM
 <blockquote>
 <p>语法：</p>
 </blockquote>
-<pre><code class="MYSQL">case 字段或变量或表达式 
-when 常量1 then 输出 
-else 语句 
-end;
-类似switch case语句。</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">case 字段或变量或表达式 </span><br><span class="line">when 常量1 then 输出 </span><br><span class="line">else 语句 </span><br><span class="line">end;</span><br><span class="line">类似switch case语句。</span><br></pre></td></tr></table></figure>
 <p>比如：</p>
-<pre><code class="mysql">SELECT
-     salary, department_id,
-CASE
-     department_id
-WHEN 30 THEN salary * 1.1
-WHEN 40 THEN salary * 1.2
-WHEN 50 THEN salary * 1.3
-ELSE salary
-END</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        salary, department_id,</span><br><span class="line">CASE</span><br><span class="line">        department_id</span><br><span class="line">WHEN 30 THEN salary * 1.1</span><br><span class="line">WHEN 40 THEN salary * 1.2</span><br><span class="line">WHEN 50 THEN salary * 1.3</span><br><span class="line">ELSE salary</span><br><span class="line">END</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>$\color{blue}{第二类case}$</p>
 <blockquote>
 <p>语法：</p>
 </blockquote>
-<pre><code class="mysql">case
-when 条件1 then 输出1
-when 条件2 then 输出2
-else 输出3
-end
-类似多重if</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">case</span><br><span class="line">when 条件1 then 输出1</span><br><span class="line">when 条件2 then 输出2</span><br><span class="line">else 输出3</span><br><span class="line">end</span><br><span class="line">类似多重if</span><br></pre></td></tr></table></figure>
+
 </li>
 </ol>
 <h1 id="分组函数"><a href="#分组函数" class="headerlink" title="分组函数"></a>分组函数</h1><blockquote>
@@ -588,8 +514,8 @@ end
 <h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><blockquote>
 <p>比如：想要去查询员工工资的总和：</p>
 </blockquote>
-<pre><code class="mysql">SELECT SUM(salary) FROM employees;
-#其余类似不做举例</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT SUM(salary) FROM employees;</span><br><span class="line">#其余类似不做举例</span><br></pre></td></tr></table></figure>
+
 <h2 id="聚集不同值"><a href="#聚集不同值" class="headerlink" title="聚集不同值"></a>聚集不同值</h2><p>上述5个聚集函数都可以如下进行使用：</p>
 <blockquote>
 <p>对所有的行执行计算，指定ALL参数或不给参数（因为ALL是默认行为）。<br>只包含不同的值，指定DISTINCT参数。</p>
@@ -597,7 +523,8 @@ end
 <h3 id="DISTINCT"><a href="#DISTINCT" class="headerlink" title="DISTINCT"></a>DISTINCT</h3><blockquote>
 <p>利用DISTINCT可以做到去重效果。</p>
 </blockquote>
-<pre><code class="mysql">SELECT SUM(DISTINCT salary) FROM employees;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT SUM(DISTINCT salary) FROM employees;</span><br></pre></td></tr></table></figure>
+
 <p>$\color{red}{注：}$</p>
 <blockquote>
 <p>如果指定列名，则DISTINCT只能用于COUNT()、不能用于COUNT(*)，因此不能使用COUNT(DISTINCT)。DISTINCT必须使用列名，不能用于计算或者表达式。</p>

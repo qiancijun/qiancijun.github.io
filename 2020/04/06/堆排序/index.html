@@ -36,7 +36,7 @@
     <div id="single">
     <div id="top" style="display: block;">
     <div class="bar" style="width: 0;"></div>
-    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://qiancijun.github.io"></a>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://xlich.top"></a>
     <div title="播放/暂停" class="iconfont icon-play"></div>
     <h3 class="subtitle">堆排序</h3>
     <div class="social">
@@ -69,41 +69,8 @@
 <h2 id="堆化"><a href="#堆化" class="headerlink" title="堆化"></a>堆化</h2><p>以根节点为例，我们要对根节点做一次堆化，是他成为最大堆，我们可以先认为根节点已经是最大值，然后去和它的左右节点比较，把更大的转移上来，这样就保证了根节点是最大值。<br><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Algorithm/HeapSort/2.png" alt=""></p>
 <h2 id="构建堆"><a href="#构建堆" class="headerlink" title="构建堆"></a>构建堆</h2><p>只对一个根节点堆化是不行的，那么要怎么做才能使这个堆成为最大堆呢？你可以先想一下，运用一点分治的思想。如果这棵树每一个节点都满足最大堆，那么这棵树整体也是一个最大堆。那么解决方法就很简单了，我们先根据下标寻找到最后一个度为2的父节点，一直做堆化，直到做到根节点，当根节点的堆化完成后，整棵树就成为了最大堆。<br><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Algorithm/HeapSort/3.png" alt=""></p>
 <h2 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h2><p>思考一个问题，我构建完了最大堆，并且交换完了值，我需不需要对交换后的树做整体堆化？<br><br>答案是必然的，原因很简单，可以自己画下图就能明白了<br><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Algorithm/HeapSort/4.png" alt=""></p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p class="code-caption" data-lang="cpp" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">heapify</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;tree, <span class="keyword">int</span> len, <span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> cl = <span class="number">2</span> * i + <span class="number">1</span>; <span class="comment">//左节点</span></span><br><span class="line">    <span class="keyword">int</span> cr = <span class="number">2</span> * i + <span class="number">2</span>; <span class="comment">//右节点</span></span><br><span class="line">    <span class="keyword">int</span> max = i; <span class="comment">//假设当前节点是最大值节点</span></span><br><span class="line">    <span class="keyword">if</span> (cl &lt; len &amp;&amp; tree[cl] &gt; tree[max])&#123;</span><br><span class="line">        max = cl; <span class="comment">//最大值设为左节点</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (cr &lt; len &amp;&amp; tree[cr] &gt; tree[max])&#123;</span><br><span class="line">        max = cr; <span class="comment">//最大值设为右节点</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (max != i)&#123;</span><br><span class="line">        swap(tree[i], tree[max]); <span class="comment">//交换元素</span></span><br><span class="line">        heapify(tree, len, max); <span class="comment">//对交换后的节点再进行堆化，向下渗透</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;<span class="comment">//把当前第i个节点堆化</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">build_heap</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;tree)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len = tree.size();</span><br><span class="line">    <span class="keyword">int</span> parent = (len - <span class="number">1</span>) / <span class="number">2</span>;<span class="comment">//最后一个叶节点的父节点</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = parent; i &gt;= <span class="number">0</span>; i--)&#123;</span><br><span class="line">        heapify(tree, len, i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="comment">//自下而上把树堆化</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">heap_sort</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;tree)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len = tree.size();</span><br><span class="line">    build_heap(tree);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = len - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--)&#123;</span><br><span class="line">        swap(tree[i], tree[<span class="number">0</span>]); <span class="comment">//交换堆顶和最后一个节点的位置</span></span><br><span class="line">        heapify(tree, i, <span class="number">0</span>); <span class="comment">//重新堆化</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<pre><code class="cpp">void heapify(vector&lt;int&gt; &amp;tree, int len, int i){
-    int cl = 2 * i + 1; //左节点
-    int cr = 2 * i + 2; //右节点
-    int max = i; //假设当前节点是最大值节点
-    if (cl &lt; len &amp;&amp; tree[cl] &gt; tree[max]){
-        max = cl; //最大值设为左节点
-    }
-    if (cr &lt; len &amp;&amp; tree[cr] &gt; tree[max]){
-        max = cr; //最大值设为右节点
-    }
-    if (max != i){
-        swap(tree[i], tree[max]); //交换元素
-        heapify(tree, len, max); //对交换后的节点再进行堆化，向下渗透
-    }
-
-}//把当前第i个节点堆化
-
-void build_heap(vector&lt;int&gt; &amp;tree){
-    int len = tree.size();
-    int parent = (len - 1) / 2;//最后一个叶节点的父节点
-    for(int i = parent; i &gt;= 0; i--){
-        heapify(tree, len, i);
-    }
-}//自下而上把树堆化
-
-void heap_sort(vector&lt;int&gt; &amp;tree){
-    int len = tree.size();
-    build_heap(tree);
-    for(int i = len - 1; i &gt;= 0; i--){
-        swap(tree[i], tree[0]); //交换堆顶和最后一个节点的位置
-        heapify(tree, i, 0); //重新堆化
-    }
-}</code></pre>
 <h1 id="题外"><a href="#题外" class="headerlink" title="题外"></a>题外</h1><p>堆排序的时间复杂度为O(nlogn)可以说时间复杂度已经达标了，而且也只用了O(1)的空间，但缺点是不稳定（对于相同值的处理上）</p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
