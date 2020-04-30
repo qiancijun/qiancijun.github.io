@@ -1,272 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>JAVA-反射</title>
-    <url>/2020/04/30/JAVA-%E5%8F%8D%E5%B0%84/</url>
-    <content><![CDATA[<h1 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h1><p>反射(Reflection)是被视为动态语言的关键，反射机制允许程序在执行期间借助于Reflection API取得任何类的内部信息，并且能够直接操作任意对象的内部属性及方法。这种动态获取信息以及动态调用对象方法的功能称为java语言的反射机制。</p>
-<h2 id="反射机制功能"><a href="#反射机制功能" class="headerlink" title="反射机制功能"></a>反射机制功能</h2><ol>
-<li>在运行时判断任意一个对象所属的类</li>
-<li>在运行时构造任意一个类的对象</li>
-<li>在运行时判断任意一个类所具有的成员变量和方法</li>
-<li>在运行时调用任意一个对象的成员变量和方法</li>
-<li>$\color{red}{生成动态代理}$</li>
-</ol>
-<h2 id="Class类"><a href="#Class类" class="headerlink" title="Class类"></a>Class类</h2><p>在Object类中定义了以下的方法，此方法将被所有子类继承。</p>
-<blockquote>
-<p>public final Class getClass()<br>方法的返回值是一个Class类，此类是Java反射的源头。</p>
-</blockquote>
-<p>反射可以得到的信息：某个类的属性、方法、实现了哪些接口。对于每个类而言，JRE都为其保留一个不变的Class类型的对象。Class本身也是一个类，Class对象只能由系统建立。一个类在JVM中只会有一个Class实例，一个Class对象对应的是一个加载到JVM中的一个.class文件。通过Class可以得到一个类完整的结构。</p>
-<h3 id="实例化Class对象"><a href="#实例化Class对象" class="headerlink" title="实例化Class对象"></a>实例化Class对象</h3><ol>
-<li><p>$\color{blue}{若已知具体的类，通过类的class属性获取，该方法最为安全可靠，程序性能最高。}$ </p>
-<blockquote>
-<p>Class c = String.class;</p>
-</blockquote>
-</li>
-<li><p>$\color{blue}{已知某个类的实例，调用该实例的getClass()方法获取Class对象}$</p>
-<blockquote>
-<p>Class c =  p.getClass(); //p是一个对象</p>
-</blockquote>
-</li>
-<li><p>$\color{blue}{已知一个类的全类名，且该类在类路径下，可通过Class类的静态方法forName()获取，可能抛出ClassNotFoundException}$</p>
-<blockquote>
-<p>Class c = Class.forName(“java.lang.String”);</p>
-</blockquote>
-</li>
-</ol>
-<p>获取类的全名，实现的接口等方法全部通过调用方法实现，本文不做具体举例。</p>
-<h3 id="使用反射的构造方法来创造对象"><a href="#使用反射的构造方法来创造对象" class="headerlink" title="使用反射的构造方法来创造对象"></a>使用反射的构造方法来创造对象</h3><blockquote>
-<p>getDeclaredConstructor()获取类的全部构造方法<br>1.$\color{blue}{直接通过Class对象来创建}$<br>Objext o = c.newInstance(); //相当于调用类的无参构造<br>Person p = (Person)o;</p>
-</blockquote>
-<p>在jdk9之后可以写成：</p>
-<blockquote>
-<p>c.getDeclaredConstructor().newInstance();</p>
-</blockquote>
-<p>反射机制可以强制的调用私有的构造方法：</p>
-<blockquote>
-<p>Constructor cst = c.getDeclaredConstructor(参数列表.class);<br>cst.setAccessible(true); //解除私有的封装，对私有方法强制调用<br>Person p = (Peron)cst.newInstance(实参);</p>
-</blockquote>
-<h3 id="使用反射获取类的方法"><a href="#使用反射获取类的方法" class="headerlink" title="使用反射获取类的方法"></a>使用反射获取类的方法</h3><blockquote>
-<p>public Method[] getDeclaredMethods();<br>返回此对象所表示的类或接口的所有方法；<br>public Method[] getMethods();<br>返回此对象所表示的类或接口的所有公共方法；</p>
-</blockquote>
-<pre><code class="java">Method[] ms = c.getMethods();
-Method[] ms = c.getDeclaredMethods(); //获取类的所有方法，包括共有和私有
-for (Method m: ms){
-    System.out.println(&quot;方法名&quot; + m.getName());
-    System.out.println(&quot;返回值类型&quot; + m.getReturnType());
-    System.out.println(&quot;修饰符&quot; + m.getModifiers());
-    Class[] pms = m.getParmeterTypes();//获取方法的参数类型
-    if (pms != null &amp;&amp; pms.length &gt; 0){
-        for (Class cs: pms){
-            System.out.println(&quot;参数类型&quot; + cs.getName());
-        }
-    }
-}</code></pre>
-<h3 id="使用反射获取类的属性"><a href="#使用反射获取类的属性" class="headerlink" title="使用反射获取类的属性"></a>使用反射获取类的属性</h3><table>
-<thead>
-<tr>
-<th align="center">方法名称</th>
-<th align="center">作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">(Class) Field[] getFields()</td>
-<td align="center">返回此Class对象所表示的类或接口的public的Field</td>
-</tr>
-<tr>
-<td align="center">(Class) Field[] getDeclaredFields();</td>
-<td align="center">返回此Class对象所表示的类或接口的全部Field</td>
-</tr>
-<tr>
-<td align="center">(Field) int getModifiers()</td>
-<td align="center">以整数形式返回此Field的修饰符</td>
-</tr>
-<tr>
-<td align="center">(Field) Class&lt;?&gt; getType()</td>
-<td align="center">得到Field的属性类型</td>
-</tr>
-<tr>
-<td align="center">(Field) String getName()</td>
-<td align="center">返回Field的名除</td>
-</tr>
-</tbody></table>
-<pre><code class="java">Fileds[] fs = c.getFileds(); //获取类的共有属性，包括父类的属性
-Fileds[] fs = c.getDeclaredFileds(); //获取所有（不包括父类）的属性（包括私有）
-for (Field f: fs){
-    System.out.println(&quot;属性的修饰符&quot; + f.getModifiers());
-    System.out.println(&quot;属性的类型&quot; + f.getType());
-    System.out.println(&quot;属性的名除&quot; + f.getName());
-}</code></pre>
-<h3 id="使用反射获取类所在的包"><a href="#使用反射获取类所在的包" class="headerlink" title="使用反射获取类所在的包"></a>使用反射获取类所在的包</h3><blockquote>
-<p>Package p = c.getPackage();</p>
-</blockquote>
-<h2 id="通过反射调用类中的指定方法和属性"><a href="#通过反射调用类中的指定方法和属性" class="headerlink" title="通过反射调用类中的指定方法和属性"></a>通过反射调用类中的指定方法和属性</h2><h3 id="调用指定方法"><a href="#调用指定方法" class="headerlink" title="调用指定方法"></a>调用指定方法</h3><p>通过Method类完成：</p>
-<ol>
-<li><p>$\color{blue}{通过Class类的getMethod方法取得一个Method对象，并设置参数}$</p>
-<pre><code class="java">Class c = Person.class;
-Method m = c.getMethod(&quot;showInfo&quot;, String.class);
-Method m1 = c.getDeclaredMethod(&quot;showName&quot;); //访问私有方法
-m1.setAccessible(true);//解除私有封装</code></pre>
-</li>
-<li><p>$\color{blue}{使用invoke进行调用}$</p>
-<pre><code class="java">Person p = (Person)c.getDeclaredConstucted(int.class, Sting.class).newInstance(10, &quot;Q&quot;);
-//可以直接设为Object不强制转换
-m.invoke(p, &quot;hello&quot;); //参数一：需要实例化的对象，参数二(可变参数)：调用当前的方法的实参
-m1.invoke(p);</code></pre>
-</li>
-<li><p>$\color{blue}{如果调用的函数有返回值}$<br>假设showInfo方法返回一个int型的数据：</p>
-<blockquote>
-<p>int result = m.invoke(p, “hello”);</p>
-</blockquote>
-</li>
-</ol>
-<h3 id="调用指定属性"><a href="#调用指定属性" class="headerlink" title="调用指定属性"></a>调用指定属性</h3><p>可以通过Field类操作类中的属性，通过Field类提供的set()和get()方法就可以完成设置和取得属性内容的操作。</p>
-<table>
-<thead>
-<tr>
-<th align="center">方法名称</th>
-<th align="center">作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">Field getField(String name)</td>
-<td align="center">返回此Class对象表示的类或接口指定的public的Field</td>
-</tr>
-<tr>
-<td align="center">void set(Object obj, Object value)</td>
-<td align="center">设定指定对象obj上此Field的属性内容</td>
-</tr>
-</tbody></table>
-<pre><code class="java">Class c = Person.class;
-Person p = (Person)c.getConstructor().newInstance();
-Field f1 = c.getDeclaredField(&quot;val&quot;);
-Field f2 = c.getDeclaredField(&quot;name&quot;);
-f1.set(p, 10); //对对象p的val属性设置称10；
-int result = (int)f1.get(p); //获取p对象的val属性的值</code></pre>
-<ul>
-<li>$\color{red}{注：}$<ul>
-<li>如果访问私有属性，调用setAccessible解除私有封装。</li>
-<li>在示例类中val和name没有设置访问权限，那么这两个属性的访问权限为默认。如果出现java.lang.NoSuchFieldException错误，请手动把类中的属性声明为Public，否则请调用getDeclaredField方法。</li>
-</ul>
-</li>
-</ul>
-<h1 id="动态代理"><a href="#动态代理" class="headerlink" title="动态代理"></a>动态代理</h1><h1 id="示例类"><a href="#示例类" class="headerlink" title="示例类"></a>示例类</h1><pre><code class="java">class Person {
-    int val;
-    String name;
-    public Person(){ }
-
-    public Person(int val){
-        this.val = val;
-    }
-
-    public Person(String name){
-        this.name = name;
-    }
-
-    public  Person(int val, String name){
-        this.val = val;
-        this.name = name;
-    }
-    public void showInfo(String n){
-        System.out.println(this.name + this.val + n);
-    }
-
-    private void showName(){
-        System.out.println(&quot;这是一个私有方法&quot; + this.name);
-    }
-}</code></pre>
-]]></content>
-      <categories>
-        <category>JAVA</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>JAVA-接口与回调</title>
-    <url>/2020/04/30/JAVA-%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%9B%9E%E8%B0%83/</url>
-    <content><![CDATA[<h1 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h1><h2 id="接口概念"><a href="#接口概念" class="headerlink" title="接口概念"></a>接口概念</h2><p>在Java程序设计语言中，$\color{red}{接口不是类}$，而是对类的一组特殊需求，这些类要遵从接口描述的统一格式进行定义。比如Arrays类中的sort方法可以对对象数组进行排序，但前提是该类必须实现了Comparable接口。</p>
-<pre><code class="java">public interface Comparable{
-    int compareTo(Object o);
-}</code></pre>
-<p>在实现Comparable&lt;Employee&gt;接口的类中，必须提供compareTo方法。<br><br>接口中的所有方法自动地属于public。因此在接口中声明方法时，不必提供关键字public。</p>
-<h2 id="实现接口"><a href="#实现接口" class="headerlink" title="实现接口"></a>实现接口</h2><p>为了让一个类实现一个接口，通常需要下面两个步骤：</p>
-<ul>
-<li>将类声明为实现给定的接口。</li>
-<li>对接口中$\color{red}{所有}$方法进行定义。</li>
-<li>要将类声明为实现某个接口，需要使用关键字：implements:<blockquote>
-<p>class Employee implements Comparable</p>
-</blockquote>
-</li>
-</ul>
-<h2 id="接口的特性"><a href="#接口的特性" class="headerlink" title="接口的特性"></a>接口的特性</h2><p>接口不是类，尤其不能使用一个new运算符实例化一个接口：</p>
-<blockquote>
-<p>x = new Comparable(); //错误</p>
-</blockquote>
-<p>但是可以声明接口的变量：</p>
-<blockquote>
-<p>Comparable x; //正确</p>
-</blockquote>
-<p>接口变量必须引用实现了接口类的对象：</p>
-<blockquote>
-<p>x = new Employee();</p>
-</blockquote>
-<p>可以使用instanceof检查一个对象是否属于某个特定类，也可以使用instance检查一个对象是否实现了某个特定的接口：</p>
-<blockquote>
-<p>if (anObject instanceof Comparable){}</p>
-</blockquote>
-<p>尽管每个类只能够拥有一个超类（在java中只有单继承，在c++中有多继承），但却可以实现多个接口，实现多个接口时接口名除用逗号隔开：</p>
-<blockquote>
-<p>class Employee implements Cloneable, Comparable</p>
-</blockquote>
-<h2 id="接口与抽象类"><a href="#接口与抽象类" class="headerlink" title="接口与抽象类"></a>接口与抽象类</h2><p>既然已经有了抽象类，为什么还要接口？原因就在于Java不同于C++能实现多继承，在Java中每个类只能扩展一个类。而接口可以实现在C++中的多重继承，同时能够避免多重继承的复杂性和低效性。</p>
-<h1 id="回调"><a href="#回调" class="headerlink" title="回调"></a>回调</h1><p>回调是一种常见的设计模式。（书上的回调示例以及解释个人觉得讲的不是很清楚，以下都是我的理解）。加入现在我有两个类，一个叫A，一个叫B。其中A叫上级，B叫下级。回调机制一般都出现在分级类的方法中。在上级类A中有一个方法叫a()，在下级类B中有一个方法b()，而b()里又调用了方法a()，那么a()就被称为回调函数。这个例子可能还是很难懂，以领导和员工为例，领导要求员工干活，员工干完了回馈给领导信息“我做完了”。在这种模式中，可以指出某个特定事件发生时应该采取的动作。</p>
-<p>下面举一个例子：</p>
-<ol>
-<li>创建一个回调接口<pre><code class="java">public interface CallBack
-{
- public void doEvent();
-}</code></pre>
-</li>
-<li>创建回调接口的实现类<pre><code class="java">public class Boss implements CallBack
-{
- public void doEvent()
- {
-     System.out.println(&quot;打电话给老板，告知已经完成工作了&quot;);
- }
-}</code></pre>
-</li>
-<li>创建控制类（回调接口）<pre><code class="java">public class Employee
-{
- CallBack callBack;
- //有参构造，参数为一个接口变量，传入一个实现该接口的类。
- public Employee(CallBack callBack)
- {
-     this.callBack=callBack;
- }
- //类方法
- public void doWork()
- {
-     System.out.println(&quot;工作中&quot;);
-     callBack.doEvent();//回调
- }
-}</code></pre>
-</li>
-<li>测试类<pre><code class="java">public class TestMain
-{
- public static void main(String[] args)
- {
-     //创建控制器对象，将提供给他的回调对象传入
-     Employee employee=new Employee(new Boss());
-     //启动控制器对象运行
-     employee.doWork();
- }
-}</code></pre>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>JAVA</category>
-      </categories>
-  </entry>
-  <entry>
     <title>Golang基础进阶-file操作</title>
     <url>/2020/04/25/Golang%E5%9F%BA%E7%A1%80%E8%BF%9B%E9%98%B6-file%E6%93%8D%E4%BD%9C/</url>
     <content><![CDATA[<h1 id="一、File文件操作"><a href="#一、File文件操作" class="headerlink" title="一、File文件操作"></a>一、File文件操作</h1><blockquote>
@@ -1598,38 +1332,270 @@ func listFiles(dirname string, level int) {
       </tags>
   </entry>
   <entry>
-    <title>LeetCode-11-盛最多水的容器</title>
-    <url>/2020/04/18/LeetCode-11-%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8/</url>
-    <content><![CDATA[<h1 id="原题链接"><a href="#原题链接" class="headerlink" title="原题链接"></a>原题链接</h1><p><a href="https://leetcode-cn.com/problems/container-with-most-water/" target="_blank" rel="noopener">原题链接</a></p>
-<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/11/describe.png" alt="题目描述"></p>
-<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>一道很经典的双指针题目，答案为两指针所指最小的数 × 间距，不断向中心收缩，找出最大值。</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code class="cpp">int maxArea(vector&lt;int&gt;&amp; height) {
-    int i = 0;
-    int j = height.size() - 1;
-    int result = 0;
-    while (i &lt; j){
-        int inter = j - i;
-        int Min = 0;
-        if (height[i] &lt; height[j]){
-            result = max(result, inter * height[i]);
-            i++;
-        }
-        else {
-            result = max(result, inter * height[j]);
-            j--;
+    <title>JAVA-反射</title>
+    <url>/2020/04/30/JAVA-%E5%8F%8D%E5%B0%84/</url>
+    <content><![CDATA[<h1 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h1><p>反射(Reflection)是被视为动态语言的关键，反射机制允许程序在执行期间借助于Reflection API取得任何类的内部信息，并且能够直接操作任意对象的内部属性及方法。这种动态获取信息以及动态调用对象方法的功能称为java语言的反射机制。</p>
+<h2 id="反射机制功能"><a href="#反射机制功能" class="headerlink" title="反射机制功能"></a>反射机制功能</h2><ol>
+<li>在运行时判断任意一个对象所属的类</li>
+<li>在运行时构造任意一个类的对象</li>
+<li>在运行时判断任意一个类所具有的成员变量和方法</li>
+<li>在运行时调用任意一个对象的成员变量和方法</li>
+<li>$\color{red}{生成动态代理}$</li>
+</ol>
+<h2 id="Class类"><a href="#Class类" class="headerlink" title="Class类"></a>Class类</h2><p>在Object类中定义了以下的方法，此方法将被所有子类继承。</p>
+<blockquote>
+<p>public final Class getClass()<br>方法的返回值是一个Class类，此类是Java反射的源头。</p>
+</blockquote>
+<p>反射可以得到的信息：某个类的属性、方法、实现了哪些接口。对于每个类而言，JRE都为其保留一个不变的Class类型的对象。Class本身也是一个类，Class对象只能由系统建立。一个类在JVM中只会有一个Class实例，一个Class对象对应的是一个加载到JVM中的一个.class文件。通过Class可以得到一个类完整的结构。</p>
+<h3 id="实例化Class对象"><a href="#实例化Class对象" class="headerlink" title="实例化Class对象"></a>实例化Class对象</h3><ol>
+<li><p>$\color{blue}{若已知具体的类，通过类的class属性获取，该方法最为安全可靠，程序性能最高。}$ </p>
+<blockquote>
+<p>Class c = String.class;</p>
+</blockquote>
+</li>
+<li><p>$\color{blue}{已知某个类的实例，调用该实例的getClass()方法获取Class对象}$</p>
+<blockquote>
+<p>Class c =  p.getClass(); //p是一个对象</p>
+</blockquote>
+</li>
+<li><p>$\color{blue}{已知一个类的全类名，且该类在类路径下，可通过Class类的静态方法forName()获取，可能抛出ClassNotFoundException}$</p>
+<blockquote>
+<p>Class c = Class.forName(“java.lang.String”);</p>
+</blockquote>
+</li>
+</ol>
+<p>获取类的全名，实现的接口等方法全部通过调用方法实现，本文不做具体举例。</p>
+<h3 id="使用反射的构造方法来创造对象"><a href="#使用反射的构造方法来创造对象" class="headerlink" title="使用反射的构造方法来创造对象"></a>使用反射的构造方法来创造对象</h3><blockquote>
+<p>getDeclaredConstructor()获取类的全部构造方法<br>1.$\color{blue}{直接通过Class对象来创建}$<br>Objext o = c.newInstance(); //相当于调用类的无参构造<br>Person p = (Person)o;</p>
+</blockquote>
+<p>在jdk9之后可以写成：</p>
+<blockquote>
+<p>c.getDeclaredConstructor().newInstance();</p>
+</blockquote>
+<p>反射机制可以强制的调用私有的构造方法：</p>
+<blockquote>
+<p>Constructor cst = c.getDeclaredConstructor(参数列表.class);<br>cst.setAccessible(true); //解除私有的封装，对私有方法强制调用<br>Person p = (Peron)cst.newInstance(实参);</p>
+</blockquote>
+<h3 id="使用反射获取类的方法"><a href="#使用反射获取类的方法" class="headerlink" title="使用反射获取类的方法"></a>使用反射获取类的方法</h3><blockquote>
+<p>public Method[] getDeclaredMethods();<br>返回此对象所表示的类或接口的所有方法；<br>public Method[] getMethods();<br>返回此对象所表示的类或接口的所有公共方法；</p>
+</blockquote>
+<pre><code class="java">Method[] ms = c.getMethods();
+Method[] ms = c.getDeclaredMethods(); //获取类的所有方法，包括共有和私有
+for (Method m: ms){
+    System.out.println(&quot;方法名&quot; + m.getName());
+    System.out.println(&quot;返回值类型&quot; + m.getReturnType());
+    System.out.println(&quot;修饰符&quot; + m.getModifiers());
+    Class[] pms = m.getParmeterTypes();//获取方法的参数类型
+    if (pms != null &amp;&amp; pms.length &gt; 0){
+        for (Class cs: pms){
+            System.out.println(&quot;参数类型&quot; + cs.getName());
         }
     }
-    return result;
 }</code></pre>
-<h1 id="时间和内存"><a href="#时间和内存" class="headerlink" title="时间和内存"></a>时间和内存</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/11/pass.png" alt=""></p>
+<h3 id="使用反射获取类的属性"><a href="#使用反射获取类的属性" class="headerlink" title="使用反射获取类的属性"></a>使用反射获取类的属性</h3><table>
+<thead>
+<tr>
+<th align="center">方法名称</th>
+<th align="center">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">(Class) Field[] getFields()</td>
+<td align="center">返回此Class对象所表示的类或接口的public的Field</td>
+</tr>
+<tr>
+<td align="center">(Class) Field[] getDeclaredFields();</td>
+<td align="center">返回此Class对象所表示的类或接口的全部Field</td>
+</tr>
+<tr>
+<td align="center">(Field) int getModifiers()</td>
+<td align="center">以整数形式返回此Field的修饰符</td>
+</tr>
+<tr>
+<td align="center">(Field) Class&lt;?&gt; getType()</td>
+<td align="center">得到Field的属性类型</td>
+</tr>
+<tr>
+<td align="center">(Field) String getName()</td>
+<td align="center">返回Field的名除</td>
+</tr>
+</tbody></table>
+<pre><code class="java">Fileds[] fs = c.getFileds(); //获取类的共有属性，包括父类的属性
+Fileds[] fs = c.getDeclaredFileds(); //获取所有（不包括父类）的属性（包括私有）
+for (Field f: fs){
+    System.out.println(&quot;属性的修饰符&quot; + f.getModifiers());
+    System.out.println(&quot;属性的类型&quot; + f.getType());
+    System.out.println(&quot;属性的名除&quot; + f.getName());
+}</code></pre>
+<h3 id="使用反射获取类所在的包"><a href="#使用反射获取类所在的包" class="headerlink" title="使用反射获取类所在的包"></a>使用反射获取类所在的包</h3><blockquote>
+<p>Package p = c.getPackage();</p>
+</blockquote>
+<h2 id="通过反射调用类中的指定方法和属性"><a href="#通过反射调用类中的指定方法和属性" class="headerlink" title="通过反射调用类中的指定方法和属性"></a>通过反射调用类中的指定方法和属性</h2><h3 id="调用指定方法"><a href="#调用指定方法" class="headerlink" title="调用指定方法"></a>调用指定方法</h3><p>通过Method类完成：</p>
+<ol>
+<li><p>$\color{blue}{通过Class类的getMethod方法取得一个Method对象，并设置参数}$</p>
+<pre><code class="java">Class c = Person.class;
+Method m = c.getMethod(&quot;showInfo&quot;, String.class);
+Method m1 = c.getDeclaredMethod(&quot;showName&quot;); //访问私有方法
+m1.setAccessible(true);//解除私有封装</code></pre>
+</li>
+<li><p>$\color{blue}{使用invoke进行调用}$</p>
+<pre><code class="java">Person p = (Person)c.getDeclaredConstucted(int.class, Sting.class).newInstance(10, &quot;Q&quot;);
+//可以直接设为Object不强制转换
+m.invoke(p, &quot;hello&quot;); //参数一：需要实例化的对象，参数二(可变参数)：调用当前的方法的实参
+m1.invoke(p);</code></pre>
+</li>
+<li><p>$\color{blue}{如果调用的函数有返回值}$<br>假设showInfo方法返回一个int型的数据：</p>
+<blockquote>
+<p>int result = m.invoke(p, “hello”);</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="调用指定属性"><a href="#调用指定属性" class="headerlink" title="调用指定属性"></a>调用指定属性</h3><p>可以通过Field类操作类中的属性，通过Field类提供的set()和get()方法就可以完成设置和取得属性内容的操作。</p>
+<table>
+<thead>
+<tr>
+<th align="center">方法名称</th>
+<th align="center">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Field getField(String name)</td>
+<td align="center">返回此Class对象表示的类或接口指定的public的Field</td>
+</tr>
+<tr>
+<td align="center">void set(Object obj, Object value)</td>
+<td align="center">设定指定对象obj上此Field的属性内容</td>
+</tr>
+</tbody></table>
+<pre><code class="java">Class c = Person.class;
+Person p = (Person)c.getConstructor().newInstance();
+Field f1 = c.getDeclaredField(&quot;val&quot;);
+Field f2 = c.getDeclaredField(&quot;name&quot;);
+f1.set(p, 10); //对对象p的val属性设置称10；
+int result = (int)f1.get(p); //获取p对象的val属性的值</code></pre>
+<ul>
+<li>$\color{red}{注：}$<ul>
+<li>如果访问私有属性，调用setAccessible解除私有封装。</li>
+<li>在示例类中val和name没有设置访问权限，那么这两个属性的访问权限为默认。如果出现java.lang.NoSuchFieldException错误，请手动把类中的属性声明为Public，否则请调用getDeclaredField方法。</li>
+</ul>
+</li>
+</ul>
+<h1 id="动态代理"><a href="#动态代理" class="headerlink" title="动态代理"></a>动态代理</h1><h1 id="示例类"><a href="#示例类" class="headerlink" title="示例类"></a>示例类</h1><pre><code class="java">class Person {
+    int val;
+    String name;
+    public Person(){ }
+
+    public Person(int val){
+        this.val = val;
+    }
+
+    public Person(String name){
+        this.name = name;
+    }
+
+    public  Person(int val, String name){
+        this.val = val;
+        this.name = name;
+    }
+    public void showInfo(String n){
+        System.out.println(this.name + this.val + n);
+    }
+
+    private void showName(){
+        System.out.println(&quot;这是一个私有方法&quot; + this.name);
+    }
+}</code></pre>
 ]]></content>
       <categories>
-        <category>LeetCode</category>
+        <category>JAVA</category>
       </categories>
-      <tags>
-        <tag>数组</tag>
-        <tag>双指针</tag>
-      </tags>
+  </entry>
+  <entry>
+    <title>JAVA-接口与回调</title>
+    <url>/2020/04/30/JAVA-%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%9B%9E%E8%B0%83/</url>
+    <content><![CDATA[<h1 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h1><h2 id="接口概念"><a href="#接口概念" class="headerlink" title="接口概念"></a>接口概念</h2><p>在Java程序设计语言中，$\color{red}{接口不是类}$，而是对类的一组特殊需求，这些类要遵从接口描述的统一格式进行定义。比如Arrays类中的sort方法可以对对象数组进行排序，但前提是该类必须实现了Comparable接口。</p>
+<pre><code class="java">public interface Comparable{
+    int compareTo(Object o);
+}</code></pre>
+<p>在实现Comparable&lt;Employee&gt;接口的类中，必须提供compareTo方法。<br><br>接口中的所有方法自动地属于public。因此在接口中声明方法时，不必提供关键字public。</p>
+<h2 id="实现接口"><a href="#实现接口" class="headerlink" title="实现接口"></a>实现接口</h2><p>为了让一个类实现一个接口，通常需要下面两个步骤：</p>
+<ul>
+<li>将类声明为实现给定的接口。</li>
+<li>对接口中$\color{red}{所有}$方法进行定义。</li>
+<li>要将类声明为实现某个接口，需要使用关键字：implements:<blockquote>
+<p>class Employee implements Comparable</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="接口的特性"><a href="#接口的特性" class="headerlink" title="接口的特性"></a>接口的特性</h2><p>接口不是类，尤其不能使用一个new运算符实例化一个接口：</p>
+<blockquote>
+<p>x = new Comparable(); //错误</p>
+</blockquote>
+<p>但是可以声明接口的变量：</p>
+<blockquote>
+<p>Comparable x; //正确</p>
+</blockquote>
+<p>接口变量必须引用实现了接口类的对象：</p>
+<blockquote>
+<p>x = new Employee();</p>
+</blockquote>
+<p>可以使用instanceof检查一个对象是否属于某个特定类，也可以使用instance检查一个对象是否实现了某个特定的接口：</p>
+<blockquote>
+<p>if (anObject instanceof Comparable){}</p>
+</blockquote>
+<p>尽管每个类只能够拥有一个超类（在java中只有单继承，在c++中有多继承），但却可以实现多个接口，实现多个接口时接口名除用逗号隔开：</p>
+<blockquote>
+<p>class Employee implements Cloneable, Comparable</p>
+</blockquote>
+<h2 id="接口与抽象类"><a href="#接口与抽象类" class="headerlink" title="接口与抽象类"></a>接口与抽象类</h2><p>既然已经有了抽象类，为什么还要接口？原因就在于Java不同于C++能实现多继承，在Java中每个类只能扩展一个类。而接口可以实现在C++中的多重继承，同时能够避免多重继承的复杂性和低效性。</p>
+<h1 id="回调"><a href="#回调" class="headerlink" title="回调"></a>回调</h1><p>回调是一种常见的设计模式。（书上的回调示例以及解释个人觉得讲的不是很清楚，以下都是我的理解）。加入现在我有两个类，一个叫A，一个叫B。其中A叫上级，B叫下级。回调机制一般都出现在分级类的方法中。在上级类A中有一个方法叫a()，在下级类B中有一个方法b()，而b()里又调用了方法a()，那么a()就被称为回调函数。这个例子可能还是很难懂，以领导和员工为例，领导要求员工干活，员工干完了回馈给领导信息“我做完了”。在这种模式中，可以指出某个特定事件发生时应该采取的动作。</p>
+<p>下面举一个例子：</p>
+<ol>
+<li>创建一个回调接口<pre><code class="java">public interface CallBack
+{
+ public void doEvent();
+}</code></pre>
+</li>
+<li>创建回调接口的实现类<pre><code class="java">public class Boss implements CallBack
+{
+ public void doEvent()
+ {
+     System.out.println(&quot;打电话给老板，告知已经完成工作了&quot;);
+ }
+}</code></pre>
+</li>
+<li>创建控制类（回调接口）<pre><code class="java">public class Employee
+{
+ CallBack callBack;
+ //有参构造，参数为一个接口变量，传入一个实现该接口的类。
+ public Employee(CallBack callBack)
+ {
+     this.callBack=callBack;
+ }
+ //类方法
+ public void doWork()
+ {
+     System.out.println(&quot;工作中&quot;);
+     callBack.doEvent();//回调
+ }
+}</code></pre>
+</li>
+<li>测试类<pre><code class="java">public class TestMain
+{
+ public static void main(String[] args)
+ {
+     //创建控制器对象，将提供给他的回调对象传入
+     Employee employee=new Employee(new Boss());
+     //启动控制器对象运行
+     employee.doWork();
+ }
+}</code></pre>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
   </entry>
   <entry>
     <title>LeerCode-5-最长回文子串</title>
@@ -1909,6 +1875,153 @@ class ArrayAlg{
       </tags>
   </entry>
   <entry>
+    <title>LeetCode-11-盛最多水的容器</title>
+    <url>/2020/04/18/LeetCode-11-%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8/</url>
+    <content><![CDATA[<h1 id="原题链接"><a href="#原题链接" class="headerlink" title="原题链接"></a>原题链接</h1><p><a href="https://leetcode-cn.com/problems/container-with-most-water/" target="_blank" rel="noopener">原题链接</a></p>
+<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/11/describe.png" alt="题目描述"></p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>一道很经典的双指针题目，答案为两指针所指最小的数 × 间距，不断向中心收缩，找出最大值。</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code class="cpp">int maxArea(vector&lt;int&gt;&amp; height) {
+    int i = 0;
+    int j = height.size() - 1;
+    int result = 0;
+    while (i &lt; j){
+        int inter = j - i;
+        int Min = 0;
+        if (height[i] &lt; height[j]){
+            result = max(result, inter * height[i]);
+            i++;
+        }
+        else {
+            result = max(result, inter * height[j]);
+            j--;
+        }
+    }
+    return result;
+}</code></pre>
+<h1 id="时间和内存"><a href="#时间和内存" class="headerlink" title="时间和内存"></a>时间和内存</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/11/pass.png" alt=""></p>
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>数组</tag>
+        <tag>双指针</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LeetCode-184周周赛</title>
+    <url>/2020/04/12/LeetCode-184%E5%91%A8%E5%91%A8%E8%B5%9B/</url>
+    <content><![CDATA[<h1 id="5380-数组中的字符串匹配"><a href="#5380-数组中的字符串匹配" class="headerlink" title="5380. 数组中的字符串匹配"></a>5380. 数组中的字符串匹配</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week184/5380_describe.png" alt=""></p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>双重循环硬解，利用好语言特性</p>
+<h2 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h2><p>字符串</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><pre><code class="cpp">vector&lt;string&gt; stringMatching(vector&lt;string&gt;&amp; words) {
+    vector&lt;string&gt; result;
+    for (int i = 0; i &lt; words.size(); i++){
+        for (int j = 0; j &lt; words.size(); j++){
+            if (i == j || words[i].size() &gt; words[j].size())
+                continue;
+            if (words[j].find(words[i]) != std::string::npos){
+                result.push_back(words[i]);
+                break;
+            }
+        }
+    }
+    return result;
+}</code></pre>
+<h2 id="时间和内存"><a href="#时间和内存" class="headerlink" title="时间和内存"></a>时间和内存</h2><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week184/5380_pass.png" alt=""></p>
+<h1 id="5381-查询带键的排列"><a href="#5381-查询带键的排列" class="headerlink" title="5381. 查询带键的排列"></a>5381. 查询带键的排列</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week184/5381_describe.png" alt=""></p>
+<h2 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h2><p>暴力法。</p>
+<h2 id="标签-1"><a href="#标签-1" class="headerlink" title="标签"></a>标签</h2><p>数组</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><pre><code class="cpp">vector&lt;int&gt; processQueries(vector&lt;int&gt;&amp; queries, int m) {
+    vector&lt;int&gt; result;
+    vector&lt;int&gt; p(m, 0);
+    for (int i = 0; i &lt; m; i++){
+        p[i] = i + 1;
+    }
+    for (int i = 0; i &lt; queries.size(); i++){
+        for (int j = 0; j &lt; m; j++){
+            if (queries[i] == p[j]){
+                for (int k = j; k &gt; 0; k--)
+                    swap(p[k], p[k - 1]);
+                result.push_back(j);
+                break;
+            }
+        }
+    }
+    return result;
+}</code></pre>
+<h2 id="时间和内存-1"><a href="#时间和内存-1" class="headerlink" title="时间和内存"></a>时间和内存</h2><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week184/5381_pass.png" alt=""></p>
+<h1 id="1410-HTML-实体解析器"><a href="#1410-HTML-实体解析器" class="headerlink" title="1410. HTML 实体解析器"></a>1410. HTML 实体解析器</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week184/1410_describe.png" alt=""></p>
+<h2 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h2><p>用一个map就能解决</p>
+<h2 id="标签-2"><a href="#标签-2" class="headerlink" title="标签"></a>标签</h2><p>栈 字符串</p>
+<h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><pre><code class="cpp">string entityParser(string text) {
+    map&lt;string, string&gt; m = {
+        {&quot;&amp;quot;&quot;, &quot;\&quot;&quot;},
+        {&quot;&amp;apos;&quot;, &quot;&#39;&quot;},
+        {&quot;&amp;amp;&quot;, &quot;&amp;&quot;},
+        {&quot;&amp;gt;&quot;, &quot;&gt;&quot;},
+        {&quot;&amp;lt;&quot;, &quot;&lt;&quot;},
+        {&quot;&amp;frasl;&quot;, &quot;/&quot;}
+    };
+
+    int len = text.size();
+    for (int i = 0; i &lt; len; i++){
+        if (text[i] == &#39;&amp;&#39;){
+            int j; 
+            string key = &quot;&quot;;
+            for (j = i; j &lt; len; j++){
+                if (text[j] == &#39;;&#39;){
+                    key += &#39;;&#39;;
+                    break;
+                } else {
+                    key += text[j];
+                }
+            }
+            if (m.count(key)){
+                text.replace(i, key.size(), m[key]);
+            }
+        }
+        len = text.size();
+    }
+    return text;
+}</code></pre>
+<h2 id="时间和内存-2"><a href="#时间和内存-2" class="headerlink" title="时间和内存"></a>时间和内存</h2><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week184/1410_pass.png" alt=""></p>
+<h1 id="5383-给-N-x-3-网格图涂色的方案数"><a href="#5383-给-N-x-3-网格图涂色的方案数" class="headerlink" title="5383. 给 N x 3 网格图涂色的方案数"></a>5383. 给 N x 3 网格图涂色的方案数</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week184/5383_describe.png" alt=""></p>
+<h2 id="思路-3"><a href="#思路-3" class="headerlink" title="思路"></a>思路</h2><p>去考虑ABA和ABC色块的关系</p>
+<h2 id="标签-3"><a href="#标签-3" class="headerlink" title="标签"></a>标签</h2><p>动态规划</p>
+<h2 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h2><pre><code class="cpp">const int mod = 1000000007;
+int numOfWays(int n) {
+    int result = 0;
+    vector&lt;vector&lt;long&gt;&gt; dp(n, vector&lt;long&gt;(2, 0));
+    dp[0][0] = 6;
+    dp[0][1] = 6;//状态初始化
+    /*
+    动态转移方程dp[ABA] = 3 * dp[i-1][j] + 2 * dp[i - 1][j + 1]
+    dp[ABC] = 2 * dp[i-1][j] + 2 * dp[i - 1][j - 1]
+    */
+    for (int i = 1; i &lt; n; i++){
+        for (int j = 0; j &lt; 2; j++){
+            if (j == 0){
+                dp[i][0] = (3 * dp[i - 1][0] + 2 * dp[i - 1][1]) % mod;
+            }
+            else{
+                dp[i][1] = (2 * dp[i - 1][0] + 2 * dp[i - 1][1]) % mod;
+            }
+        }
+    }
+    result = (dp[n-1][0] + dp[n-1][1]) % mod;
+    return result;
+}</code></pre>
+<h2 id="时间和内存-3"><a href="#时间和内存-3" class="headerlink" title="时间和内存"></a>时间和内存</h2><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week184/5383_pass.png" alt=""></p>
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>试题</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>LeetCode-183周周赛</title>
     <url>/2020/04/08/LeetCode-183%E5%91%A8%E5%91%A8%E8%B5%9B/</url>
     <content><![CDATA[<h1 id="1403-非递增顺序的最小子序列"><a href="#1403-非递增顺序的最小子序列" class="headerlink" title="1403. 非递增顺序的最小子序列"></a>1403. 非递增顺序的最小子序列</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/1403/describe.png" alt="题目描述"></p>
@@ -2060,6 +2173,44 @@ class ArrayAlg{
       </tags>
   </entry>
   <entry>
+    <title>LeetCode-22-括号生成</title>
+    <url>/2020/04/09/LeetCode-22-%E6%8B%AC%E5%8F%B7%E7%94%9F%E6%88%90/</url>
+    <content><![CDATA[<h1 id="原题链接"><a href="#原题链接" class="headerlink" title="原题链接"></a>原题链接</h1><p><a href="https://leetcode-cn.com/problems/generate-parentheses/" target="_blank" rel="noopener">原题链接</a></p>
+<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/22/describe.png" alt="题目描述"></p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>由于这里要求出所有解的情况，而一般使用DFS就能求所有解，思路也很简单，先放左括号再放右括号。</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code class="cpp">vector&lt;string&gt; generateParenthesis(int n) {
+    vector&lt;string&gt; result;
+    if(n == 0){
+        return result;
+    }
+    dfs(result, &quot;&quot;, n, n, n);
+    return result;
+}
+void dfs(vector&lt;string&gt; &amp;result, string list, int left, int right, int n){
+    if(left == 0 &amp;&amp; right == 0){
+        result.push_back(list);
+        return;
+    }
+    if(left &gt; 0){
+        dfs(result, list + &#39;(&#39;, left - 1, right, n);
+    }
+    if(right &gt; left){
+        dfs(result, list + &#39;)&#39;, left, right - 1, n);
+    }
+    return;
+}</code></pre>
+<h1 id="时间和内存"><a href="#时间和内存" class="headerlink" title="时间和内存"></a>时间和内存</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/22/pass.png" alt=""></p>
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>回溯算法</tag>
+        <tag>深度优先搜索</tag>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>LeetCode-186周周赛</title>
     <url>/2020/04/26/LeetCode-186%E5%91%A8%E5%91%A8%E8%B5%9B/</url>
     <content><![CDATA[<h1 id="5392-分割字符串的最大得分"><a href="#5392-分割字符串的最大得分" class="headerlink" title="5392. 分割字符串的最大得分"></a>5392. 分割字符串的最大得分</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week186/5392_describe.png" alt=""></p>
@@ -2154,157 +2305,6 @@ class ArrayAlg{
       </tags>
   </entry>
   <entry>
-    <title>LeetCode-184周周赛</title>
-    <url>/2020/04/12/LeetCode-184%E5%91%A8%E5%91%A8%E8%B5%9B/</url>
-    <content><![CDATA[<h1 id="5380-数组中的字符串匹配"><a href="#5380-数组中的字符串匹配" class="headerlink" title="5380. 数组中的字符串匹配"></a>5380. 数组中的字符串匹配</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week184/5380_describe.png" alt=""></p>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>双重循环硬解，利用好语言特性</p>
-<h2 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h2><p>字符串</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><pre><code class="cpp">vector&lt;string&gt; stringMatching(vector&lt;string&gt;&amp; words) {
-    vector&lt;string&gt; result;
-    for (int i = 0; i &lt; words.size(); i++){
-        for (int j = 0; j &lt; words.size(); j++){
-            if (i == j || words[i].size() &gt; words[j].size())
-                continue;
-            if (words[j].find(words[i]) != std::string::npos){
-                result.push_back(words[i]);
-                break;
-            }
-        }
-    }
-    return result;
-}</code></pre>
-<h2 id="时间和内存"><a href="#时间和内存" class="headerlink" title="时间和内存"></a>时间和内存</h2><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week184/5380_pass.png" alt=""></p>
-<h1 id="5381-查询带键的排列"><a href="#5381-查询带键的排列" class="headerlink" title="5381. 查询带键的排列"></a>5381. 查询带键的排列</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week184/5381_describe.png" alt=""></p>
-<h2 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h2><p>暴力法。</p>
-<h2 id="标签-1"><a href="#标签-1" class="headerlink" title="标签"></a>标签</h2><p>数组</p>
-<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><pre><code class="cpp">vector&lt;int&gt; processQueries(vector&lt;int&gt;&amp; queries, int m) {
-    vector&lt;int&gt; result;
-    vector&lt;int&gt; p(m, 0);
-    for (int i = 0; i &lt; m; i++){
-        p[i] = i + 1;
-    }
-    for (int i = 0; i &lt; queries.size(); i++){
-        for (int j = 0; j &lt; m; j++){
-            if (queries[i] == p[j]){
-                for (int k = j; k &gt; 0; k--)
-                    swap(p[k], p[k - 1]);
-                result.push_back(j);
-                break;
-            }
-        }
-    }
-    return result;
-}</code></pre>
-<h2 id="时间和内存-1"><a href="#时间和内存-1" class="headerlink" title="时间和内存"></a>时间和内存</h2><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week184/5381_pass.png" alt=""></p>
-<h1 id="1410-HTML-实体解析器"><a href="#1410-HTML-实体解析器" class="headerlink" title="1410. HTML 实体解析器"></a>1410. HTML 实体解析器</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week184/1410_describe.png" alt=""></p>
-<h2 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h2><p>用一个map就能解决</p>
-<h2 id="标签-2"><a href="#标签-2" class="headerlink" title="标签"></a>标签</h2><p>栈 字符串</p>
-<h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><pre><code class="cpp">string entityParser(string text) {
-    map&lt;string, string&gt; m = {
-        {&quot;&amp;quot;&quot;, &quot;\&quot;&quot;},
-        {&quot;&amp;apos;&quot;, &quot;&#39;&quot;},
-        {&quot;&amp;amp;&quot;, &quot;&amp;&quot;},
-        {&quot;&amp;gt;&quot;, &quot;&gt;&quot;},
-        {&quot;&amp;lt;&quot;, &quot;&lt;&quot;},
-        {&quot;&amp;frasl;&quot;, &quot;/&quot;}
-    };
-
-    int len = text.size();
-    for (int i = 0; i &lt; len; i++){
-        if (text[i] == &#39;&amp;&#39;){
-            int j; 
-            string key = &quot;&quot;;
-            for (j = i; j &lt; len; j++){
-                if (text[j] == &#39;;&#39;){
-                    key += &#39;;&#39;;
-                    break;
-                } else {
-                    key += text[j];
-                }
-            }
-            if (m.count(key)){
-                text.replace(i, key.size(), m[key]);
-            }
-        }
-        len = text.size();
-    }
-    return text;
-}</code></pre>
-<h2 id="时间和内存-2"><a href="#时间和内存-2" class="headerlink" title="时间和内存"></a>时间和内存</h2><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week184/1410_pass.png" alt=""></p>
-<h1 id="5383-给-N-x-3-网格图涂色的方案数"><a href="#5383-给-N-x-3-网格图涂色的方案数" class="headerlink" title="5383. 给 N x 3 网格图涂色的方案数"></a>5383. 给 N x 3 网格图涂色的方案数</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week184/5383_describe.png" alt=""></p>
-<h2 id="思路-3"><a href="#思路-3" class="headerlink" title="思路"></a>思路</h2><p>去考虑ABA和ABC色块的关系</p>
-<h2 id="标签-3"><a href="#标签-3" class="headerlink" title="标签"></a>标签</h2><p>动态规划</p>
-<h2 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h2><pre><code class="cpp">const int mod = 1000000007;
-int numOfWays(int n) {
-    int result = 0;
-    vector&lt;vector&lt;long&gt;&gt; dp(n, vector&lt;long&gt;(2, 0));
-    dp[0][0] = 6;
-    dp[0][1] = 6;//状态初始化
-    /*
-    动态转移方程dp[ABA] = 3 * dp[i-1][j] + 2 * dp[i - 1][j + 1]
-    dp[ABC] = 2 * dp[i-1][j] + 2 * dp[i - 1][j - 1]
-    */
-    for (int i = 1; i &lt; n; i++){
-        for (int j = 0; j &lt; 2; j++){
-            if (j == 0){
-                dp[i][0] = (3 * dp[i - 1][0] + 2 * dp[i - 1][1]) % mod;
-            }
-            else{
-                dp[i][1] = (2 * dp[i - 1][0] + 2 * dp[i - 1][1]) % mod;
-            }
-        }
-    }
-    result = (dp[n-1][0] + dp[n-1][1]) % mod;
-    return result;
-}</code></pre>
-<h2 id="时间和内存-3"><a href="#时间和内存-3" class="headerlink" title="时间和内存"></a>时间和内存</h2><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week184/5383_pass.png" alt=""></p>
-]]></content>
-      <categories>
-        <category>LeetCode</category>
-      </categories>
-      <tags>
-        <tag>试题</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>LeetCode-22-括号生成</title>
-    <url>/2020/04/09/LeetCode-22-%E6%8B%AC%E5%8F%B7%E7%94%9F%E6%88%90/</url>
-    <content><![CDATA[<h1 id="原题链接"><a href="#原题链接" class="headerlink" title="原题链接"></a>原题链接</h1><p><a href="https://leetcode-cn.com/problems/generate-parentheses/" target="_blank" rel="noopener">原题链接</a></p>
-<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/22/describe.png" alt="题目描述"></p>
-<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>由于这里要求出所有解的情况，而一般使用DFS就能求所有解，思路也很简单，先放左括号再放右括号。</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code class="cpp">vector&lt;string&gt; generateParenthesis(int n) {
-    vector&lt;string&gt; result;
-    if(n == 0){
-        return result;
-    }
-    dfs(result, &quot;&quot;, n, n, n);
-    return result;
-}
-void dfs(vector&lt;string&gt; &amp;result, string list, int left, int right, int n){
-    if(left == 0 &amp;&amp; right == 0){
-        result.push_back(list);
-        return;
-    }
-    if(left &gt; 0){
-        dfs(result, list + &#39;(&#39;, left - 1, right, n);
-    }
-    if(right &gt; left){
-        dfs(result, list + &#39;)&#39;, left, right - 1, n);
-    }
-    return;
-}</code></pre>
-<h1 id="时间和内存"><a href="#时间和内存" class="headerlink" title="时间和内存"></a>时间和内存</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/22/pass.png" alt=""></p>
-]]></content>
-      <categories>
-        <category>LeetCode</category>
-      </categories>
-      <tags>
-        <tag>回溯算法</tag>
-        <tag>深度优先搜索</tag>
-        <tag>C/C++</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>LeetCode-27-移除元素</title>
     <url>/2020/04/06/LeetCode-27-%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0/</url>
     <content><![CDATA[<h1 id="题目链接"><a href="#题目链接" class="headerlink" title="题目链接"></a>题目链接</h1><p><a href="https://leetcode-cn.com/problems/remove-element/" target="_blank" rel="noopener">原题链接</a></p>
@@ -2332,6 +2332,56 @@ void dfs(vector&lt;string&gt; &amp;result, string list, int left, int right, int
       <tags>
         <tag>数组</tag>
         <tag>双指针</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LeetCode-542-01矩阵</title>
+    <url>/2020/04/15/LeetCode-542-01%E7%9F%A9%E9%98%B5/</url>
+    <content><![CDATA[<h1 id="原题链接"><a href="#原题链接" class="headerlink" title="原题链接"></a>原题链接</h1><p><a href="https://leetcode-cn.com/problems/01-matrix/" target="_blank" rel="noopener">原题链接</a></p>
+<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/542/describe.png" alt=""></p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>先遍历一遍矩阵，把0全部找出来，然后BFS模板一套，完事</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code class="cpp">vector&lt;vector&lt;int&gt;&gt; updateMatrix(vector&lt;vector&lt;int&gt;&gt;&amp; matrix) {
+    int m = matrix.size(); //row
+    int n = matrix[0].size(); //col
+    vector&lt;int&gt; di = {-1, 0, 1, 0};
+    vector&lt;int&gt; dj = {0, -1, 0, 1}; //方向数组
+    vector&lt;vector&lt;int&gt;&gt; result(m, vector&lt;int&gt;(n, -1));
+    queue&lt;vector&lt;int&gt;&gt; q;
+    for (int i = 0; i &lt; m; i++){
+        for (int j = 0; j &lt; n; j++){
+            if (matrix[i][j] == 0){
+                result[i][j] = 0;
+                q.push({i, j});
+            }
+        }
+    }
+    while (!q.empty()){
+        int time = q.size();
+        while (time--){
+            vector&lt;int&gt; curr = q.front();
+            q.pop();
+            int x = curr[0];
+            int y = curr[1];
+            for (int d = 0; d &lt;= 3; d++){
+                int px = x + di[d];
+                int py = y + dj[d];
+                if (px &gt;= 0 &amp;&amp; px &lt; m &amp;&amp; py &gt;= 0 &amp;&amp; py &lt; n &amp;&amp; result[px][py] == -1){
+                    result[px][py] = result[x][y] + 1;
+                    q.push({px, py});
+                }
+            }
+        }
+    }
+    return result;
+}</code></pre>
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>动态规划</tag>
+        <tag>深度优先搜索</tag>
+        <tag>广度优先搜索</tag>
       </tags>
   </entry>
   <entry>
@@ -2386,56 +2436,6 @@ void perm(vector&lt;int&gt; &amp;nums, vector&lt;vector&lt;int&gt;&gt; &amp;resu
       </tags>
   </entry>
   <entry>
-    <title>LeetCode-542-01矩阵</title>
-    <url>/2020/04/15/LeetCode-542-01%E7%9F%A9%E9%98%B5/</url>
-    <content><![CDATA[<h1 id="原题链接"><a href="#原题链接" class="headerlink" title="原题链接"></a>原题链接</h1><p><a href="https://leetcode-cn.com/problems/01-matrix/" target="_blank" rel="noopener">原题链接</a></p>
-<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/542/describe.png" alt=""></p>
-<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>先遍历一遍矩阵，把0全部找出来，然后BFS模板一套，完事</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code class="cpp">vector&lt;vector&lt;int&gt;&gt; updateMatrix(vector&lt;vector&lt;int&gt;&gt;&amp; matrix) {
-    int m = matrix.size(); //row
-    int n = matrix[0].size(); //col
-    vector&lt;int&gt; di = {-1, 0, 1, 0};
-    vector&lt;int&gt; dj = {0, -1, 0, 1}; //方向数组
-    vector&lt;vector&lt;int&gt;&gt; result(m, vector&lt;int&gt;(n, -1));
-    queue&lt;vector&lt;int&gt;&gt; q;
-    for (int i = 0; i &lt; m; i++){
-        for (int j = 0; j &lt; n; j++){
-            if (matrix[i][j] == 0){
-                result[i][j] = 0;
-                q.push({i, j});
-            }
-        }
-    }
-    while (!q.empty()){
-        int time = q.size();
-        while (time--){
-            vector&lt;int&gt; curr = q.front();
-            q.pop();
-            int x = curr[0];
-            int y = curr[1];
-            for (int d = 0; d &lt;= 3; d++){
-                int px = x + di[d];
-                int py = y + dj[d];
-                if (px &gt;= 0 &amp;&amp; px &lt; m &amp;&amp; py &gt;= 0 &amp;&amp; py &lt; n &amp;&amp; result[px][py] == -1){
-                    result[px][py] = result[x][y] + 1;
-                    q.push({px, py});
-                }
-            }
-        }
-    }
-    return result;
-}</code></pre>
-]]></content>
-      <categories>
-        <category>LeetCode</category>
-      </categories>
-      <tags>
-        <tag>动态规划</tag>
-        <tag>深度优先搜索</tag>
-        <tag>广度优先搜索</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>LeetCode-56-合并区间</title>
     <url>/2020/04/16/LeetCode-56-%E5%90%88%E5%B9%B6%E5%8C%BA%E9%97%B4/</url>
     <content><![CDATA[<h1 id="原题链接"><a href="#原题链接" class="headerlink" title="原题链接"></a>原题链接</h1><p><a href="https://leetcode-cn.com/problems/merge-intervals/submissions/" target="_blank" rel="noopener">原题链接</a></p>
@@ -2472,43 +2472,6 @@ void perm(vector&lt;int&gt; &amp;nums, vector&lt;vector&lt;int&gt;&gt; &amp;resu
       <tags>
         <tag>数组</tag>
         <tag>排序</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>[LeetCode]8.字符串转换整数(atoi)</title>
-    <url>/2020/04/03/LeetCode-8-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%8D%A2%E6%95%B4%E6%95%B0-atoi/</url>
-    <content><![CDATA[<h1 id="题目链接"><a href="#题目链接" class="headerlink" title="题目链接"></a>题目链接</h1><p><br> <a href="https://leetcode-cn.com/problems/string-to-integer-atoi/" target="_blank" rel="noopener">原题链接</a></p>
-<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/8/descirbe.png" alt=""></p>
-<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p><br>题目中有说到，该函数会根据需要丢弃无用的开头空格字符，直到寻找到第一个非空格的字符为止。所以我们先处理空白字符，直到遇到第一个非空字符。第一个非空字符如果是“-”就记录一下，最后结果乘以 -1 ，如果是别的乱七八糟的符号，直接跳过开始处理后面的数字</p>
-<h2 id="数字处理的过程"><a href="#数字处理的过程" class="headerlink" title="数字处理的过程"></a>数字处理的过程</h2><p><br><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/8/solve1.gif" alt=""><br><br>另外一个很关键的问题，数据溢出问题，有符号整型的数据范围在[$$-2^31$$,$$2^31$$-1]，在C语言中导入<climits>头文件用 INT_MAX 或者 INT_MIN 即可。在做每次result之前先拿INT_MAX$\color{red}{减去}$当前箭头所指的数字再除以十去和当前result做比较，这相当于一个逆运算判读是否会溢出，对result的式子做一个变换就能看出这个原理。 </p>
-<h1 id="时间与内存"><a href="#时间与内存" class="headerlink" title="时间与内存"></a>时间与内存</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/8/pass.png" alt=""></p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code class="cpp">int myAtoi(string str) {
-    int result = 0;
-    int len = str.size();
-    int i, sign = 1;
-    for(i = 0; isspace(str[i]); ++i); //跳过开头空白字符
-    sign = (str[i] == &#39;-&#39;) ? -1 : 1; // 记录负号
-    if(!isdigit(str[i]) &amp;&amp; str[i] != &#39;-&#39; &amp;&amp; str[i] != &#39;+&#39;)
-        return 0; //第一个非空字符不是数字或正负号
-    if(str[i] == &#39;-&#39; || str[i] == &#39;+&#39;)
-        ++i; //跳过正负号
-    for(result = 0; isdigit(str[i]); ++i){
-        int digit = str[i] - &#39;0&#39;;
-        if(result &gt; (INT_MAX - digit) / 10){
-            return sign == -1 ? INT_MIN : INT_MAX; 
-        }
-        result = result * 10 + digit;
-    }
-    return result * sign;
-}</code></pre>
-<p><br>若有问题或者疑问，欢迎加Q探讨</p>
-]]></content>
-      <categories>
-        <category>LeetCode</category>
-      </categories>
-      <tags>
-        <tag>字符串</tag>
-        <tag>C/C++</tag>
       </tags>
   </entry>
   <entry>
@@ -2565,6 +2528,328 @@ int MergeAndCount(vector&lt;int&gt; &amp;nums, int Left, int Mid, int Right, vec
       </tags>
   </entry>
   <entry>
+    <title>[LeetCode]8.字符串转换整数(atoi)</title>
+    <url>/2020/04/03/LeetCode-8-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%8D%A2%E6%95%B4%E6%95%B0-atoi/</url>
+    <content><![CDATA[<h1 id="题目链接"><a href="#题目链接" class="headerlink" title="题目链接"></a>题目链接</h1><p><br> <a href="https://leetcode-cn.com/problems/string-to-integer-atoi/" target="_blank" rel="noopener">原题链接</a></p>
+<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/8/descirbe.png" alt=""></p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p><br>题目中有说到，该函数会根据需要丢弃无用的开头空格字符，直到寻找到第一个非空格的字符为止。所以我们先处理空白字符，直到遇到第一个非空字符。第一个非空字符如果是“-”就记录一下，最后结果乘以 -1 ，如果是别的乱七八糟的符号，直接跳过开始处理后面的数字</p>
+<h2 id="数字处理的过程"><a href="#数字处理的过程" class="headerlink" title="数字处理的过程"></a>数字处理的过程</h2><p><br><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/8/solve1.gif" alt=""><br><br>另外一个很关键的问题，数据溢出问题，有符号整型的数据范围在[$$-2^31$$,$$2^31$$-1]，在C语言中导入<climits>头文件用 INT_MAX 或者 INT_MIN 即可。在做每次result之前先拿INT_MAX$\color{red}{减去}$当前箭头所指的数字再除以十去和当前result做比较，这相当于一个逆运算判读是否会溢出，对result的式子做一个变换就能看出这个原理。 </p>
+<h1 id="时间与内存"><a href="#时间与内存" class="headerlink" title="时间与内存"></a>时间与内存</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/8/pass.png" alt=""></p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code class="cpp">int myAtoi(string str) {
+    int result = 0;
+    int len = str.size();
+    int i, sign = 1;
+    for(i = 0; isspace(str[i]); ++i); //跳过开头空白字符
+    sign = (str[i] == &#39;-&#39;) ? -1 : 1; // 记录负号
+    if(!isdigit(str[i]) &amp;&amp; str[i] != &#39;-&#39; &amp;&amp; str[i] != &#39;+&#39;)
+        return 0; //第一个非空字符不是数字或正负号
+    if(str[i] == &#39;-&#39; || str[i] == &#39;+&#39;)
+        ++i; //跳过正负号
+    for(result = 0; isdigit(str[i]); ++i){
+        int digit = str[i] - &#39;0&#39;;
+        if(result &gt; (INT_MAX - digit) / 10){
+            return sign == -1 ? INT_MIN : INT_MAX; 
+        }
+        result = result * 10 + digit;
+    }
+    return result * sign;
+}</code></pre>
+<p><br>若有问题或者疑问，欢迎加Q探讨</p>
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>字符串</tag>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL基础2</title>
+    <url>/2020/04/28/MySQL%E5%9F%BA%E7%A1%802/</url>
+    <content><![CDATA[<p><a href="https://xlich.top/2020/04/24/MySQL%E5%9F%BA%E7%A1%80/">MySQL基础</a></p>
+<h1 id="分组查询"><a href="#分组查询" class="headerlink" title="分组查询"></a>分组查询</h1><blockquote>
+<p>将数据进行分组，以便能汇总表内容的子集。这涉及两个新SELECT子句，分别是$\color{blue}{GROUP BY}$子句和$\color{blue}{HAVING}$子句。</p>
+</blockquote>
+<h2 id="GROUP-BY"><a href="#GROUP-BY" class="headerlink" title="GROUP BY"></a>GROUP BY</h2><blockquote>
+<p>分组数据：GROUP BY 子句语法：<br>SELECT column, group_function(column)<br>FROM table<br>[WHERE] condition<br>[GROUP BY] group_by_expression<br>[ORDER BY] column;</p>
+</blockquote>
+<p>$\color{red}{注:}$</p>
+<blockquote>
+<p>查询列表必须特殊，要求是分组函数和group by后面出现的字段。</p>
+</blockquote>
+<p>例：查询每个工种的最高工资：</p>
+<pre><code class="mysql">SELECT 
+        MAX(salary), job_id
+FROM
+        employees
+GROUP BY
+        job_id;</code></pre>
+<p>例：查询邮箱中包含a字符的，每个部门的平均工资：</p>
+<pre><code class="mysql">SELECT 
+        AVG(salary), department_id
+FROM 
+        employees
+WHERE
+        email LIKE &#39;%a%&#39;
+GROUP BY
+        department_id;</code></pre>
+<ol>
+<li><p>$\color{bule}{按表达式或函数分组}$<br>例：按员工姓名的长度进行分组，查询每一组的员工个数，筛选员工个数大于5的组</p>
+<pre><code class="mysql">SELECT 
+     COUNT(*), LENGTH(last_name) AS len_name
+FROM
+     employees
+GRUOP BY
+     LENGTH(lase_name);
+HAVING
+     COUNT(*) &gt; 5;</code></pre>
+</li>
+<li><p>$\color{blue}{按多个字段进行分组}$<br>例:查询每个部门每个工种的员工的平均工资：</p>
+<pre><code class="mysql">SELECT
+     AVG(salary), department_id, job_id
+FROM
+     employees
+GROUP BY
+     department_id, job_id;</code></pre>
+</li>
+</ol>
+<p>$\color{red}{GROUP}$  $\color{red}{BY子句的规定:}$</p>
+<blockquote>
+<ol>
+<li>GROUP BY子句可以包含任意数目的列。这使得能对分组进行嵌套为数据分组提供更细致的控制。</li>
+<li>如果在GROUP BY子句中嵌套了分组，数据将在最后规定的分组上进行汇总。换句话说，在建立分组时，指定的所有列都一起计算，所以不能从个别列取回数据。</li>
+<li>GROUP BY子句中列出的每个列都必须是检索列或有效的表达式。</li>
+<li>除聚集计算语句外，SELECT语句中的每个列都必须在GROUP BY子句中给出。</li>
+<li>如果分组列中具有NULL值，则NULL将作为一个分组返回。如果列中有多行NULL值，它们将分为一组。</li>
+<li>GROUP BY子句必须出现在WHERE子句后，ORDER BY子句之前。</li>
+</ol>
+</blockquote>
+<h2 id="分组和排序"><a href="#分组和排序" class="headerlink" title="分组和排序"></a>分组和排序</h2><p>例：查询每个部门的每个工种的员工的平均工资，并且按平均工资的高低显示：</p>
+<pre><code class="mysql">SELECT
+        AVG(salary), department_id, job_id
+FROM
+        employees
+WHERE
+        department_id IS NOT NULL
+GROUP BY
+        department_id, job_id;
+ORDER BY
+        AVG(salary) DESC;</code></pre>
+<p>虽然GROUP BY和ORDER BY经常完成相同的工作，但它们是非常不同的。一般在使用GROUP BY子句时，应该也给出ORDER BY子句。这是保证数据正确排序的唯一方法。千万不要仅依赖GROUP BY排序数据。</p>
+<table>
+<thead>
+<tr>
+<th align="center">ORDER BY</th>
+<th align="center">GROUP BY</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">排列产生的输出</td>
+<td align="center">分组行。但输出可能不是分组的顺序</td>
+</tr>
+<tr>
+<td align="center">任意列都可以使用（甚至非选择的列也可以使用）</td>
+<td align="center">只可能使用选择列或表达式列，而且必须使用每个选择列表达式</td>
+</tr>
+<tr>
+<td align="center">不一定需要</td>
+<td align="center">如果于聚集函数一起使用列（或表达式），则必须使用</td>
+</tr>
+</tbody></table>
+<h2 id="SELECT子句顺序"><a href="#SELECT子句顺序" class="headerlink" title="SELECT子句顺序"></a>SELECT子句顺序</h2><p>总结一下到目前为止所有的语句。</p>
+<table>
+<thead>
+<tr>
+<th align="center">子句</th>
+<th align="center">说明</th>
+<th align="center">是否必须使用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">SELECT</td>
+<td align="center">要返回的列或表达式</td>
+<td align="center">是</td>
+</tr>
+<tr>
+<td align="center">FROM</td>
+<td align="center">从中检索数据的表</td>
+<td align="center">仅在从表中选择数据时使用</td>
+</tr>
+<tr>
+<td align="center">WHERE</td>
+<td align="center">行级过滤</td>
+<td align="center">否</td>
+</tr>
+<tr>
+<td align="center">GROUP BY</td>
+<td align="center">分组说明</td>
+<td align="center">仅在按组计算聚集时使用</td>
+</tr>
+<tr>
+<td align="center">HAVING</td>
+<td align="center">组级过滤</td>
+<td align="center">否</td>
+</tr>
+<tr>
+<td align="center">ORDER BY</td>
+<td align="center">输出排序顺序</td>
+<td align="center">否</td>
+</tr>
+<tr>
+<td align="center">LIMIT</td>
+<td align="center">要检索的行数</td>
+<td align="center">否</td>
+</tr>
+</tbody></table>
+<h2 id="HAVING"><a href="#HAVING" class="headerlink" title="HAVING"></a>HAVING</h2><blockquote>
+<p>过滤行数据我们使用WHERE子句，但是如果我们想过滤分组的数据就不能使用WHERE子句了。MySQL允许过滤分组，利用HAVING子句。HAVING非常类似于WHERE。目前所有类型的WHERE子句都可以用HAVING来替代。唯一差别是WHERE过滤$\color{red}{行}$，而HAVING过滤$\color{red}{分组}$。</p>
+</blockquote>
+<p>例：查询哪个部门的员工人数大于2：</p>
+<pre><code class="mysql">SELECT 
+        COUNT(*), department_id
+FROM
+        employees
+GROUP BY
+        department_id
+HAVING
+        COUNT(*) &gt; 2;</code></pre>
+<h1 id="连续查询"><a href="#连续查询" class="headerlink" title="连续查询"></a>连续查询</h1><blockquote>
+<p>SQL最强大的功能之一就是能在数据检索查询的执行中联结表。<br>连续查询又称多表查询。当查询的字段来自多个表就会用到连续查询</p>
+</blockquote>
+<ol>
+<li><p>$\color{blue}{外键}$</p>
+<blockquote>
+<p>外键为某个表中的一列，它包含另一个表的主键值，定义了两个表的关系。</p>
+</blockquote>
+</li>
+<li><p>$\color{blue}{可伸缩性}$</p>
+<blockquote>
+<p>能够适应不断增加的工作量而不失败。设计良好的数据库或应用程序称之为可伸缩性好。</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="创建联结"><a href="#创建联结" class="headerlink" title="创建联结"></a>创建联结</h2><p>例：</p>
+<pre><code class="mysql">SELECT vend_name, prod_name, prod_price
+FROM vendors, products
+WHERE vendors.vend_id = products.vend_id
+ORDER BY vend_name, prod_name;</code></pre>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><ol>
+<li>$\color{blue}{按年代分类：}$</li>
+</ol>
+<ul>
+<li>sql92标准：仅仅支持内连接。</li>
+<li>sql99标准：支持所有内连接和外连接和交叉连接，在外连接中不支持全外连接。</li>
+</ul>
+<ol start="2">
+<li>$\color{blue}{按功能分类}$</li>
+</ol>
+<ul>
+<li>内连接<ul>
+<li>等值连接</li>
+<li>非等值连接</li>
+<li>自连接</li>
+</ul>
+</li>
+<li>外连接<ul>
+<li>左外连接</li>
+<li>右外连接</li>
+<li>全外连接</li>
+</ul>
+</li>
+<li>交叉连接</li>
+</ul>
+<h2 id="sql92标准"><a href="#sql92标准" class="headerlink" title="sql92标准"></a>sql92标准</h2><h3 id="等值连接"><a href="#等值连接" class="headerlink" title="等值连接"></a>等值连接</h3><ul>
+<li>总结:<ul>
+<li>多表等值连接的结果为多表的交集部分。</li>
+<li>n表连接，至少需要n-1个连接条件。</li>
+<li>多表的顺序没有要求。</li>
+<li>一般需要为表起别名。</li>
+<li>可以搭配所有查询子句使用。</li>
+</ul>
+</li>
+</ul>
+<p>例1：</p>
+<pre><code class="mysql">SELECT vend_name, prod_name, prod_price
+FROM vendors, products
+WHERE vendors.vend_id = products.vend_id
+ORDER BY vend_name, prod_name;</code></pre>
+<p>例2：想要查询员工名和对应的部门名</p>
+<pre><code class="mysql">SLEECT
+        last_name, department_name
+FROM 
+        employees, departments
+WHERE
+        emplyees.department_id = departments.department_id;</code></pre>
+<h3 id="非等值连接"><a href="#非等值连接" class="headerlink" title="非等值连接"></a>非等值连接</h3><p>例：查询员工的工资和工资级别：</p>
+<pre><code class="mysql">SELECT
+        salary, grade_level
+FROM
+        employees e, job_grades
+WHERE
+        salary BETWEEN lowest_salary and highest_sa;ary;</code></pre>
+<h3 id="自连接"><a href="#自连接" class="headerlink" title="自连接"></a>自连接</h3><p>例：查询员工名和上级的信息：</p>
+<pre><code class="mysql">SELECT
+        e.employee_id, e.last_name, m.employee_id, m.last_name
+FROM
+        employees e, empl0yees m;
+WHERE
+        e.manager_id = m.employee_id;</code></pre>
+<h2 id="sql99标准"><a href="#sql99标准" class="headerlink" title="sql99标准"></a>sql99标准</h2><p>语法：</p>
+<pre><code class="mysql">SELECT      查询列表
+FROM        表1 别名 [连接类型]
+JOIN        表2 别名 
+ON          [连接条件]
+WHERE       筛选条件
+GROUP BY    分组
+HAVING      筛选条件
+ORDER BY    排序列表</code></pre>
+<ul>
+<li>连接类型：<ul>
+<li>内连接 （inner）</li>
+<li>外连接：（outer可省略）<ul>
+<li>左外连接（left outer）</li>
+<li>右外连接（right outer）</li>
+<li>全外连接（full outer）</li>
+</ul>
+</li>
+<li>交叉连接（cross）</li>
+</ul>
+</li>
+</ul>
+<h3 id="内连接"><a href="#内连接" class="headerlink" title="内连接"></a>内连接</h3><p>语法:</p>
+<pre><code class="mysql">SELECT     查询列表
+FROM       表1 别名
+INNER JOIN 表2 别名
+ON         连接条件
+#INNER 可以省略</code></pre>
+<ol>
+<li>$\color{blue}{等值连接}$<blockquote>
+<p>例：查询员工名、部门名：</p>
+</blockquote>
+<pre><code class="mysql">SELECT     last_name, department_name
+FROM       employees e
+INNER JOIN departments d
+ON         e.department_id = d.department_id;</code></pre>
+</li>
+</ol>
+<h2 id="表别名"><a href="#表别名" class="headerlink" title="表别名"></a>表别名</h2><p>如果在反复使用表名使，表名太长显得代码冗长，此时可以用表别名。用别名替换表名后，不可以再用原表名去限定。</p>
+<pre><code class="mysql">SELECT 
+        last_name, e.job_id, job_title
+FROM
+        employees AS e, jobs AS j #AS可以省略
+WHERE
+        e.job_id = j.job_id;</code></pre>
+<p>$\color{red}{注:}$</p>
+<blockquote>
+<p>如果两个表中有相同的字段名除，那么要在SELECT语句中添加表名经行限定。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Mysql</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/2020/04/02/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
@@ -2581,6 +2866,56 @@ int MergeAndCount(vector&lt;int&gt; &amp;nums, int Left, int Mid, int Right, vec
         <category>Algorithm</category>
       </categories>
       <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>test</title>
+    <url>/2020/04/02/test/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>sort</title>
+    <url>/2020/04/02/sort/</url>
+    <content><![CDATA[<pre><code class="cpp">void heapify(vector&lt;int&gt; &amp;tree, int len, int i){
+    int cl = 2 * i + 1; //左节点
+    int cr = 2 * i + 2; //右节点
+    int max = i; //假设当前节点是最大值节点
+    if (cl &lt; len &amp;&amp; tree[cl] &gt; tree[max]){
+        max = cl; //最大值设为左节点
+    }
+    if (cr &lt; len &amp;&amp; tree[cr] &gt; tree[max]){
+        max = cr; //最大值设为右节点
+    }
+    if (max != i){
+        swap(tree[i], tree[max]); //交换元素
+        heapify(tree, len, max); //对交换后的节点再进行堆化
+    }
+
+}//把当前第i个节点堆化
+
+void build_heap(vector&lt;int&gt; &amp;tree){
+    int len = tree.size();
+    int parent = (len - 1) / 2;//最后一个叶节点的父节点
+    for(int i = parent; i &gt;= 0; i--){
+        heapify(tree, len, i);
+    }
+}//自下而上把树堆化
+
+void heap_sort(vector&lt;int&gt; &amp;tree){
+    int len = tree.size();
+    build_heap(tree);
+    for(int i = len - 1; i &gt;= 0; i--){
+        swap(tree[i], tree[0]); //交换堆顶和最后一个节点的位置
+        heapify(tree, i, 0); //重新堆化
+    }
+}</code></pre>
+]]></content>
+      <categories>
+        <category>Algorithm</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
         <tag>算法</tag>
       </tags>
   </entry>
@@ -3150,341 +3485,6 @@ end
       </categories>
   </entry>
   <entry>
-    <title>MySQL基础2</title>
-    <url>/2020/04/28/MySQL%E5%9F%BA%E7%A1%802/</url>
-    <content><![CDATA[<p><a href="https://xlich.top/2020/04/24/MySQL%E5%9F%BA%E7%A1%80/">MySQL基础</a></p>
-<h1 id="分组查询"><a href="#分组查询" class="headerlink" title="分组查询"></a>分组查询</h1><blockquote>
-<p>将数据进行分组，以便能汇总表内容的子集。这涉及两个新SELECT子句，分别是$\color{blue}{GROUP BY}$子句和$\color{blue}{HAVING}$子句。</p>
-</blockquote>
-<h2 id="GROUP-BY"><a href="#GROUP-BY" class="headerlink" title="GROUP BY"></a>GROUP BY</h2><blockquote>
-<p>分组数据：GROUP BY 子句语法：<br>SELECT column, group_function(column)<br>FROM table<br>[WHERE] condition<br>[GROUP BY] group_by_expression<br>[ORDER BY] column;</p>
-</blockquote>
-<p>$\color{red}{注:}$</p>
-<blockquote>
-<p>查询列表必须特殊，要求是分组函数和group by后面出现的字段。</p>
-</blockquote>
-<p>例：查询每个工种的最高工资：</p>
-<pre><code class="mysql">SELECT 
-        MAX(salary), job_id
-FROM
-        employees
-GROUP BY
-        job_id;</code></pre>
-<p>例：查询邮箱中包含a字符的，每个部门的平均工资：</p>
-<pre><code class="mysql">SELECT 
-        AVG(salary), department_id
-FROM 
-        employees
-WHERE
-        email LIKE &#39;%a%&#39;
-GROUP BY
-        department_id;</code></pre>
-<ol>
-<li><p>$\color{bule}{按表达式或函数分组}$<br>例：按员工姓名的长度进行分组，查询每一组的员工个数，筛选员工个数大于5的组</p>
-<pre><code class="mysql">SELECT 
-     COUNT(*), LENGTH(last_name) AS len_name
-FROM
-     employees
-GRUOP BY
-     LENGTH(lase_name);
-HAVING
-     COUNT(*) &gt; 5;</code></pre>
-</li>
-<li><p>$\color{blue}{按多个字段进行分组}$<br>例:查询每个部门每个工种的员工的平均工资：</p>
-<pre><code class="mysql">SELECT
-     AVG(salary), department_id, job_id
-FROM
-     employees
-GROUP BY
-     department_id, job_id;</code></pre>
-</li>
-</ol>
-<p>$\color{red}{GROUP}$  $\color{red}{BY子句的规定:}$</p>
-<blockquote>
-<ol>
-<li>GROUP BY子句可以包含任意数目的列。这使得能对分组进行嵌套为数据分组提供更细致的控制。</li>
-<li>如果在GROUP BY子句中嵌套了分组，数据将在最后规定的分组上进行汇总。换句话说，在建立分组时，指定的所有列都一起计算，所以不能从个别列取回数据。</li>
-<li>GROUP BY子句中列出的每个列都必须是检索列或有效的表达式。</li>
-<li>除聚集计算语句外，SELECT语句中的每个列都必须在GROUP BY子句中给出。</li>
-<li>如果分组列中具有NULL值，则NULL将作为一个分组返回。如果列中有多行NULL值，它们将分为一组。</li>
-<li>GROUP BY子句必须出现在WHERE子句后，ORDER BY子句之前。</li>
-</ol>
-</blockquote>
-<h2 id="分组和排序"><a href="#分组和排序" class="headerlink" title="分组和排序"></a>分组和排序</h2><p>例：查询每个部门的每个工种的员工的平均工资，并且按平均工资的高低显示：</p>
-<pre><code class="mysql">SELECT
-        AVG(salary), department_id, job_id
-FROM
-        employees
-WHERE
-        department_id IS NOT NULL
-GROUP BY
-        department_id, job_id;
-ORDER BY
-        AVG(salary) DESC;</code></pre>
-<p>虽然GROUP BY和ORDER BY经常完成相同的工作，但它们是非常不同的。一般在使用GROUP BY子句时，应该也给出ORDER BY子句。这是保证数据正确排序的唯一方法。千万不要仅依赖GROUP BY排序数据。</p>
-<table>
-<thead>
-<tr>
-<th align="center">ORDER BY</th>
-<th align="center">GROUP BY</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">排列产生的输出</td>
-<td align="center">分组行。但输出可能不是分组的顺序</td>
-</tr>
-<tr>
-<td align="center">任意列都可以使用（甚至非选择的列也可以使用）</td>
-<td align="center">只可能使用选择列或表达式列，而且必须使用每个选择列表达式</td>
-</tr>
-<tr>
-<td align="center">不一定需要</td>
-<td align="center">如果于聚集函数一起使用列（或表达式），则必须使用</td>
-</tr>
-</tbody></table>
-<h2 id="SELECT子句顺序"><a href="#SELECT子句顺序" class="headerlink" title="SELECT子句顺序"></a>SELECT子句顺序</h2><p>总结一下到目前为止所有的语句。</p>
-<table>
-<thead>
-<tr>
-<th align="center">子句</th>
-<th align="center">说明</th>
-<th align="center">是否必须使用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">SELECT</td>
-<td align="center">要返回的列或表达式</td>
-<td align="center">是</td>
-</tr>
-<tr>
-<td align="center">FROM</td>
-<td align="center">从中检索数据的表</td>
-<td align="center">仅在从表中选择数据时使用</td>
-</tr>
-<tr>
-<td align="center">WHERE</td>
-<td align="center">行级过滤</td>
-<td align="center">否</td>
-</tr>
-<tr>
-<td align="center">GROUP BY</td>
-<td align="center">分组说明</td>
-<td align="center">仅在按组计算聚集时使用</td>
-</tr>
-<tr>
-<td align="center">HAVING</td>
-<td align="center">组级过滤</td>
-<td align="center">否</td>
-</tr>
-<tr>
-<td align="center">ORDER BY</td>
-<td align="center">输出排序顺序</td>
-<td align="center">否</td>
-</tr>
-<tr>
-<td align="center">LIMIT</td>
-<td align="center">要检索的行数</td>
-<td align="center">否</td>
-</tr>
-</tbody></table>
-<h2 id="HAVING"><a href="#HAVING" class="headerlink" title="HAVING"></a>HAVING</h2><blockquote>
-<p>过滤行数据我们使用WHERE子句，但是如果我们想过滤分组的数据就不能使用WHERE子句了。MySQL允许过滤分组，利用HAVING子句。HAVING非常类似于WHERE。目前所有类型的WHERE子句都可以用HAVING来替代。唯一差别是WHERE过滤$\color{red}{行}$，而HAVING过滤$\color{red}{分组}$。</p>
-</blockquote>
-<p>例：查询哪个部门的员工人数大于2：</p>
-<pre><code class="mysql">SELECT 
-        COUNT(*), department_id
-FROM
-        employees
-GROUP BY
-        department_id
-HAVING
-        COUNT(*) &gt; 2;</code></pre>
-<h1 id="连续查询"><a href="#连续查询" class="headerlink" title="连续查询"></a>连续查询</h1><blockquote>
-<p>SQL最强大的功能之一就是能在数据检索查询的执行中联结表。<br>连续查询又称多表查询。当查询的字段来自多个表就会用到连续查询</p>
-</blockquote>
-<ol>
-<li><p>$\color{blue}{外键}$</p>
-<blockquote>
-<p>外键为某个表中的一列，它包含另一个表的主键值，定义了两个表的关系。</p>
-</blockquote>
-</li>
-<li><p>$\color{blue}{可伸缩性}$</p>
-<blockquote>
-<p>能够适应不断增加的工作量而不失败。设计良好的数据库或应用程序称之为可伸缩性好。</p>
-</blockquote>
-</li>
-</ol>
-<h2 id="创建联结"><a href="#创建联结" class="headerlink" title="创建联结"></a>创建联结</h2><p>例：</p>
-<pre><code class="mysql">SELECT vend_name, prod_name, prod_price
-FROM vendors, products
-WHERE vendors.vend_id = products.vend_id
-ORDER BY vend_name, prod_name;</code></pre>
-<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><ol>
-<li>$\color{blue}{按年代分类：}$</li>
-</ol>
-<ul>
-<li>sql92标准：仅仅支持内连接。</li>
-<li>sql99标准：支持所有内连接和外连接和交叉连接，在外连接中不支持全外连接。</li>
-</ul>
-<ol start="2">
-<li>$\color{blue}{按功能分类}$</li>
-</ol>
-<ul>
-<li>内连接<ul>
-<li>等值连接</li>
-<li>非等值连接</li>
-<li>自连接</li>
-</ul>
-</li>
-<li>外连接<ul>
-<li>左外连接</li>
-<li>右外连接</li>
-<li>全外连接</li>
-</ul>
-</li>
-<li>交叉连接</li>
-</ul>
-<h2 id="sql92标准"><a href="#sql92标准" class="headerlink" title="sql92标准"></a>sql92标准</h2><h3 id="等值连接"><a href="#等值连接" class="headerlink" title="等值连接"></a>等值连接</h3><ul>
-<li>总结:<ul>
-<li>多表等值连接的结果为多表的交集部分。</li>
-<li>n表连接，至少需要n-1个连接条件。</li>
-<li>多表的顺序没有要求。</li>
-<li>一般需要为表起别名。</li>
-<li>可以搭配所有查询子句使用。</li>
-</ul>
-</li>
-</ul>
-<p>例1：</p>
-<pre><code class="mysql">SELECT vend_name, prod_name, prod_price
-FROM vendors, products
-WHERE vendors.vend_id = products.vend_id
-ORDER BY vend_name, prod_name;</code></pre>
-<p>例2：想要查询员工名和对应的部门名</p>
-<pre><code class="mysql">SLEECT
-        last_name, department_name
-FROM 
-        employees, departments
-WHERE
-        emplyees.department_id = departments.department_id;</code></pre>
-<h3 id="非等值连接"><a href="#非等值连接" class="headerlink" title="非等值连接"></a>非等值连接</h3><p>例：查询员工的工资和工资级别：</p>
-<pre><code class="mysql">SELECT
-        salary, grade_level
-FROM
-        employees e, job_grades
-WHERE
-        salary BETWEEN lowest_salary and highest_sa;ary;</code></pre>
-<h3 id="自连接"><a href="#自连接" class="headerlink" title="自连接"></a>自连接</h3><p>例：查询员工名和上级的信息：</p>
-<pre><code class="mysql">SELECT
-        e.employee_id, e.last_name, m.employee_id, m.last_name
-FROM
-        employees e, empl0yees m;
-WHERE
-        e.manager_id = m.employee_id;</code></pre>
-<h2 id="sql99标准"><a href="#sql99标准" class="headerlink" title="sql99标准"></a>sql99标准</h2><p>语法：</p>
-<pre><code class="mysql">SELECT      查询列表
-FROM        表1 别名 [连接类型]
-JOIN        表2 别名 
-ON          [连接条件]
-WHERE       筛选条件
-GROUP BY    分组
-HAVING      筛选条件
-ORDER BY    排序列表</code></pre>
-<ul>
-<li>连接类型：<ul>
-<li>内连接 （inner）</li>
-<li>外连接：（outer可省略）<ul>
-<li>左外连接（left outer）</li>
-<li>右外连接（right outer）</li>
-<li>全外连接（full outer）</li>
-</ul>
-</li>
-<li>交叉连接（cross）</li>
-</ul>
-</li>
-</ul>
-<h3 id="内连接"><a href="#内连接" class="headerlink" title="内连接"></a>内连接</h3><p>语法:</p>
-<pre><code class="mysql">SELECT     查询列表
-FROM       表1 别名
-INNER JOIN 表2 别名
-ON         连接条件
-#INNER 可以省略</code></pre>
-<ol>
-<li>$\color{blue}{等值连接}$<blockquote>
-<p>例：查询员工名、部门名：</p>
-</blockquote>
-<pre><code class="mysql">SELECT     last_name, department_name
-FROM       employees e
-INNER JOIN departments d
-ON         e.department_id = d.department_id;</code></pre>
-</li>
-</ol>
-<h2 id="表别名"><a href="#表别名" class="headerlink" title="表别名"></a>表别名</h2><p>如果在反复使用表名使，表名太长显得代码冗长，此时可以用表别名。用别名替换表名后，不可以再用原表名去限定。</p>
-<pre><code class="mysql">SELECT 
-        last_name, e.job_id, job_title
-FROM
-        employees AS e, jobs AS j #AS可以省略
-WHERE
-        e.job_id = j.job_id;</code></pre>
-<p>$\color{red}{注:}$</p>
-<blockquote>
-<p>如果两个表中有相同的字段名除，那么要在SELECT语句中添加表名经行限定。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Mysql</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>sort</title>
-    <url>/2020/04/02/sort/</url>
-    <content><![CDATA[<pre><code class="cpp">void heapify(vector&lt;int&gt; &amp;tree, int len, int i){
-    int cl = 2 * i + 1; //左节点
-    int cr = 2 * i + 2; //右节点
-    int max = i; //假设当前节点是最大值节点
-    if (cl &lt; len &amp;&amp; tree[cl] &gt; tree[max]){
-        max = cl; //最大值设为左节点
-    }
-    if (cr &lt; len &amp;&amp; tree[cr] &gt; tree[max]){
-        max = cr; //最大值设为右节点
-    }
-    if (max != i){
-        swap(tree[i], tree[max]); //交换元素
-        heapify(tree, len, max); //对交换后的节点再进行堆化
-    }
-
-}//把当前第i个节点堆化
-
-void build_heap(vector&lt;int&gt; &amp;tree){
-    int len = tree.size();
-    int parent = (len - 1) / 2;//最后一个叶节点的父节点
-    for(int i = parent; i &gt;= 0; i--){
-        heapify(tree, len, i);
-    }
-}//自下而上把树堆化
-
-void heap_sort(vector&lt;int&gt; &amp;tree){
-    int len = tree.size();
-    build_heap(tree);
-    for(int i = len - 1; i &gt;= 0; i--){
-        swap(tree[i], tree[0]); //交换堆顶和最后一个节点的位置
-        heapify(tree, i, 0); //重新堆化
-    }
-}</code></pre>
-]]></content>
-      <categories>
-        <category>Algorithm</category>
-      </categories>
-      <tags>
-        <tag>C/C++</tag>
-        <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>test</title>
-    <url>/2020/04/02/test/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>位运算</title>
     <url>/2020/04/05/%E4%BD%8D%E8%BF%90%E7%AE%97/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>计算机中的数在内存中都是以二进制形式进行存储的，用位运算直接对整数在内存中的二进制位进行操作，提升了效率，提升了程序性能。</p>
@@ -3591,6 +3591,58 @@ a &lt;&lt; 1; -&gt; 4</code></pre>
       </tags>
   </entry>
   <entry>
+    <title>堆排序</title>
+    <url>/2020/04/06/%E5%A0%86%E6%8E%92%E5%BA%8F/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在选择排序中，找到数组中的最大值，并和数组末尾交换值，每完成一次选择，就能使一个元素确定它的位置。在数组这种顺序结构中，要查找数组中的最大值，采取顺序查找的方式效率肯定不是我们想要的，如果待排数据大于一万个，那么选择排序的工作效率太低且不稳定。为了优化它就引发出一个思考问题，我们应该找一个更快去搜索数组中最大值的方法，既然顺序查找不适合在这里使用，二分查找也不可能，或许我们可以利用一下“树”这个数据结构。</p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>我们可以把一个数组模拟成一棵二叉树，而在平衡二叉树上做搜索工作，效率取决于树的高度，但是在这里，我们不需要把数组转换位二叉搜索树，因为我们的目的是找到数组中的最大值，并且把最大值移到数组末尾。对于这个要求，我们可以利用一个更好的数据结构去处理这个问题，这个数据结构就是“最大堆”。而堆顶就是我们想要的最大值，树的最后一个叶节点就是数组末尾，那么交换堆顶和最后一个叶节点就完成了一次选择，然后移除最后一个叶节点处理剩下的元素。这样看起来和选择排序差别不大，但是在寻找最大值这个问题上优化了许多。</p>
+<h1 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h1><h2 id="将数组表示为二叉树"><a href="#将数组表示为二叉树" class="headerlink" title="将数组表示为二叉树"></a>将数组表示为二叉树</h2><p>其实不用什么算法就能实现，这棵树完全存在于我们脑子里，我们直接操作就可以了。<br><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Algorithm/HeapSort/1.png" alt=""><br>红色对应数组下标。个人认为没有必要在数组前加一个哨兵。<br><br>这样有什么好处？当我们要去寻找某个节点的根节点时，完全可以利用数组下标来寻找，或者想要知道一个节点的左右节点，也可以利用下标。如果你懂树这个数据结构，应该不难理解。这里也不多赘述</p>
+<h2 id="堆化"><a href="#堆化" class="headerlink" title="堆化"></a>堆化</h2><p>以根节点为例，我们要对根节点做一次堆化，是他成为最大堆，我们可以先认为根节点已经是最大值，然后去和它的左右节点比较，把更大的转移上来，这样就保证了根节点是最大值。<br><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Algorithm/HeapSort/2.png" alt=""></p>
+<h2 id="构建堆"><a href="#构建堆" class="headerlink" title="构建堆"></a>构建堆</h2><p>只对一个根节点堆化是不行的，那么要怎么做才能使这个堆成为最大堆呢？你可以先想一下，运用一点分治的思想。如果这棵树每一个节点都满足最大堆，那么这棵树整体也是一个最大堆。那么解决方法就很简单了，我们先根据下标寻找到最后一个度为2的父节点，一直做堆化，直到做到根节点，当根节点的堆化完成后，整棵树就成为了最大堆。<br><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Algorithm/HeapSort/3.png" alt=""></p>
+<h2 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h2><p>思考一个问题，我构建完了最大堆，并且交换完了值，我需不需要对交换后的树做整体堆化？<br><br>答案是必然的，原因很简单，可以自己画下图就能明白了<br><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Algorithm/HeapSort/4.png" alt=""></p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code class="cpp">void heapify(vector&lt;int&gt; &amp;tree, int len, int i){
+    int cl = 2 * i + 1; //左节点
+    int cr = 2 * i + 2; //右节点
+    int max = i; //假设当前节点是最大值节点
+    if (cl &lt; len &amp;&amp; tree[cl] &gt; tree[max]){
+        max = cl; //最大值设为左节点
+    }
+    if (cr &lt; len &amp;&amp; tree[cr] &gt; tree[max]){
+        max = cr; //最大值设为右节点
+    }
+    if (max != i){
+        swap(tree[i], tree[max]); //交换元素
+        heapify(tree, len, max); //对交换后的节点再进行堆化，向下渗透
+    }
+
+}//把当前第i个节点堆化
+
+void build_heap(vector&lt;int&gt; &amp;tree){
+    int len = tree.size();
+    int parent = (len - 1) / 2;//最后一个叶节点的父节点
+    for(int i = parent; i &gt;= 0; i--){
+        heapify(tree, len, i);
+    }
+}//自下而上把树堆化
+
+void heap_sort(vector&lt;int&gt; &amp;tree){
+    int len = tree.size();
+    build_heap(tree);
+    for(int i = len - 1; i &gt;= 0; i--){
+        swap(tree[i], tree[0]); //交换堆顶和最后一个节点的位置
+        heapify(tree, i, 0); //重新堆化
+    }
+}</code></pre>
+<h1 id="题外"><a href="#题外" class="headerlink" title="题外"></a>题外</h1><p>堆排序的时间复杂度为O(nlogn)可以说时间复杂度已经达标了，而且也只用了O(1)的空间，但缺点是不稳定（对于相同值的处理上）</p>
+]]></content>
+      <categories>
+        <category>Algorithm</category>
+      </categories>
+      <tags>
+        <tag>排序</tag>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>单源最短路径 -dijkstra算法</title>
     <url>/2020/04/07/%E5%8D%95%E6%BA%90%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84dijkstra/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在做无权值图的单源最短路径问题中，我们能使用DFS或者BFS算法就能解决问题。而在有权值的图中，就需要一点特殊手段处理了，本文主要介绍dijkstra算法。在这里我们所讨论的图都是有向图，没有负值圈。</p>
@@ -3694,94 +3746,10 @@ int main(void){
       </tags>
   </entry>
   <entry>
-    <title>单调栈和单调队列</title>
-    <url>/2020/04/26/%E5%8D%95%E8%B0%83%E6%A0%88%E5%92%8C%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近在做题的时候频繁出现单调栈和单调队列，由此记录一下这个数据结构。</p>
-<h1 id="单调栈"><a href="#单调栈" class="headerlink" title="单调栈"></a>单调栈</h1><p>从字面意思来看，首先这个数据结构以栈为基础，栈是一种先进后出，后进先出的数据结构。单调栈与普通栈不同，顾名思义它是单调的。单调这个词并不陌生。</p>
-<blockquote>
-<p>单调递增栈：数据出栈的序列为单调递增序列。<br>单调递减栈：数据出栈的序列为单调递减序列。</p>
-</blockquote>
-<p>从栈底元素到栈顶元素呈单调递增或单调递减，栈内序列满足单调性的栈；</p>
-<h2 id="伪代码"><a href="#伪代码" class="headerlink" title="伪代码"></a>伪代码</h2><pre><code class="cpp">stack&lt;int&gt; s; //栈的定义
-for (int i = 0; i &lt; nums.size(); i++){ //遍历数组
-    if (栈空 or 栈顶元素大于等于当前数组元素){
-        入栈
-    } else {
-        while (栈不为空 and 栈顶元素小于当前数组元素){
-            栈顶元素出栈;
-            其余数据处理;
-        }
-        数组元素入栈;
-    }
-}</code></pre>
-<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><ol>
-<li>求最长单调区间；</li>
-<li>左右配对；</li>
-<li>某个区间中的最值；</li>
-</ol>
-<h1 id="单调队列-deque"><a href="#单调队列-deque" class="headerlink" title="单调队列(deque)"></a>单调队列(deque)</h1><p>和单调栈一样，首先队列内元素保持单调。并且从队尾入队，从队头或队尾出队。</p>
-]]></content>
-      <categories>
-        <category>数据结构</category>
-      </categories>
-  </entry>
-  <entry>
     <title>哀悼抗击新冠肺炎疫情牺牲烈士</title>
     <url>/2020/04/04/%E5%93%80%E6%82%BC%E6%8A%97%E5%87%BB%E6%96%B0%E5%86%A0%E8%82%BA%E7%82%8E%E7%96%AB%E6%83%85%E7%89%BA%E7%89%B2%E7%83%88%E5%A3%AB/</url>
     <content><![CDATA[<h2 id="默哀-为在抗击新型冠状病毒中牺牲烈士和逝世同胞"><a href="#默哀-为在抗击新型冠状病毒中牺牲烈士和逝世同胞" class="headerlink" title="默哀 为在抗击新型冠状病毒中牺牲烈士和逝世同胞"></a>默哀 为在抗击新型冠状病毒中牺牲烈士和逝世同胞</h2><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Life/2020.4.4.jpeg" alt=""></p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>堆排序</title>
-    <url>/2020/04/06/%E5%A0%86%E6%8E%92%E5%BA%8F/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在选择排序中，找到数组中的最大值，并和数组末尾交换值，每完成一次选择，就能使一个元素确定它的位置。在数组这种顺序结构中，要查找数组中的最大值，采取顺序查找的方式效率肯定不是我们想要的，如果待排数据大于一万个，那么选择排序的工作效率太低且不稳定。为了优化它就引发出一个思考问题，我们应该找一个更快去搜索数组中最大值的方法，既然顺序查找不适合在这里使用，二分查找也不可能，或许我们可以利用一下“树”这个数据结构。</p>
-<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>我们可以把一个数组模拟成一棵二叉树，而在平衡二叉树上做搜索工作，效率取决于树的高度，但是在这里，我们不需要把数组转换位二叉搜索树，因为我们的目的是找到数组中的最大值，并且把最大值移到数组末尾。对于这个要求，我们可以利用一个更好的数据结构去处理这个问题，这个数据结构就是“最大堆”。而堆顶就是我们想要的最大值，树的最后一个叶节点就是数组末尾，那么交换堆顶和最后一个叶节点就完成了一次选择，然后移除最后一个叶节点处理剩下的元素。这样看起来和选择排序差别不大，但是在寻找最大值这个问题上优化了许多。</p>
-<h1 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h1><h2 id="将数组表示为二叉树"><a href="#将数组表示为二叉树" class="headerlink" title="将数组表示为二叉树"></a>将数组表示为二叉树</h2><p>其实不用什么算法就能实现，这棵树完全存在于我们脑子里，我们直接操作就可以了。<br><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Algorithm/HeapSort/1.png" alt=""><br>红色对应数组下标。个人认为没有必要在数组前加一个哨兵。<br><br>这样有什么好处？当我们要去寻找某个节点的根节点时，完全可以利用数组下标来寻找，或者想要知道一个节点的左右节点，也可以利用下标。如果你懂树这个数据结构，应该不难理解。这里也不多赘述</p>
-<h2 id="堆化"><a href="#堆化" class="headerlink" title="堆化"></a>堆化</h2><p>以根节点为例，我们要对根节点做一次堆化，是他成为最大堆，我们可以先认为根节点已经是最大值，然后去和它的左右节点比较，把更大的转移上来，这样就保证了根节点是最大值。<br><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Algorithm/HeapSort/2.png" alt=""></p>
-<h2 id="构建堆"><a href="#构建堆" class="headerlink" title="构建堆"></a>构建堆</h2><p>只对一个根节点堆化是不行的，那么要怎么做才能使这个堆成为最大堆呢？你可以先想一下，运用一点分治的思想。如果这棵树每一个节点都满足最大堆，那么这棵树整体也是一个最大堆。那么解决方法就很简单了，我们先根据下标寻找到最后一个度为2的父节点，一直做堆化，直到做到根节点，当根节点的堆化完成后，整棵树就成为了最大堆。<br><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Algorithm/HeapSort/3.png" alt=""></p>
-<h2 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h2><p>思考一个问题，我构建完了最大堆，并且交换完了值，我需不需要对交换后的树做整体堆化？<br><br>答案是必然的，原因很简单，可以自己画下图就能明白了<br><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Algorithm/HeapSort/4.png" alt=""></p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code class="cpp">void heapify(vector&lt;int&gt; &amp;tree, int len, int i){
-    int cl = 2 * i + 1; //左节点
-    int cr = 2 * i + 2; //右节点
-    int max = i; //假设当前节点是最大值节点
-    if (cl &lt; len &amp;&amp; tree[cl] &gt; tree[max]){
-        max = cl; //最大值设为左节点
-    }
-    if (cr &lt; len &amp;&amp; tree[cr] &gt; tree[max]){
-        max = cr; //最大值设为右节点
-    }
-    if (max != i){
-        swap(tree[i], tree[max]); //交换元素
-        heapify(tree, len, max); //对交换后的节点再进行堆化，向下渗透
-    }
-
-}//把当前第i个节点堆化
-
-void build_heap(vector&lt;int&gt; &amp;tree){
-    int len = tree.size();
-    int parent = (len - 1) / 2;//最后一个叶节点的父节点
-    for(int i = parent; i &gt;= 0; i--){
-        heapify(tree, len, i);
-    }
-}//自下而上把树堆化
-
-void heap_sort(vector&lt;int&gt; &amp;tree){
-    int len = tree.size();
-    build_heap(tree);
-    for(int i = len - 1; i &gt;= 0; i--){
-        swap(tree[i], tree[0]); //交换堆顶和最后一个节点的位置
-        heapify(tree, i, 0); //重新堆化
-    }
-}</code></pre>
-<h1 id="题外"><a href="#题外" class="headerlink" title="题外"></a>题外</h1><p>堆排序的时间复杂度为O(nlogn)可以说时间复杂度已经达标了，而且也只用了O(1)的空间，但缺点是不稳定（对于相同值的处理上）</p>
-]]></content>
-      <categories>
-        <category>Algorithm</category>
-      </categories>
-      <tags>
-        <tag>排序</tag>
-        <tag>算法</tag>
-      </tags>
   </entry>
   <entry>
     <title>归并排序</title>
@@ -3898,6 +3866,38 @@ void quick_sort(vector&lt;int&gt; &amp;nums, int left, int right){
         <tag>排序</tag>
         <tag>算法</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>单调栈和单调队列</title>
+    <url>/2020/04/26/%E5%8D%95%E8%B0%83%E6%A0%88%E5%92%8C%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近在做题的时候频繁出现单调栈和单调队列，由此记录一下这个数据结构。</p>
+<h1 id="单调栈"><a href="#单调栈" class="headerlink" title="单调栈"></a>单调栈</h1><p>从字面意思来看，首先这个数据结构以栈为基础，栈是一种先进后出，后进先出的数据结构。单调栈与普通栈不同，顾名思义它是单调的。单调这个词并不陌生。</p>
+<blockquote>
+<p>单调递增栈：数据出栈的序列为单调递增序列。<br>单调递减栈：数据出栈的序列为单调递减序列。</p>
+</blockquote>
+<p>从栈底元素到栈顶元素呈单调递增或单调递减，栈内序列满足单调性的栈；</p>
+<h2 id="伪代码"><a href="#伪代码" class="headerlink" title="伪代码"></a>伪代码</h2><pre><code class="cpp">stack&lt;int&gt; s; //栈的定义
+for (int i = 0; i &lt; nums.size(); i++){ //遍历数组
+    if (栈空 or 栈顶元素大于等于当前数组元素){
+        入栈
+    } else {
+        while (栈不为空 and 栈顶元素小于当前数组元素){
+            栈顶元素出栈;
+            其余数据处理;
+        }
+        数组元素入栈;
+    }
+}</code></pre>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><ol>
+<li>求最长单调区间；</li>
+<li>左右配对；</li>
+<li>某个区间中的最值；</li>
+</ol>
+<h1 id="单调队列-deque"><a href="#单调队列-deque" class="headerlink" title="单调队列(deque)"></a>单调队列(deque)</h1><p>和单调栈一样，首先队列内元素保持单调。并且从队尾入队，从队头或队尾出队。</p>
+]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
   </entry>
   <entry>
     <title>阶乘</title>
