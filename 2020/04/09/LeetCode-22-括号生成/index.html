@@ -13,7 +13,7 @@
     <meta name="description" content="原题链接原题链接
 题目描述
 思路由于这里要求出所有解的情况，而一般使用DFS就能求所有解，思路也很简单，先放左括号再放右括号。
-代码123456789101112131415161718192021,"> 
+代码vector&amp;lt;string&amp;gt; generatePare,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -69,8 +69,27 @@
             <h1 id="原题链接"><a href="#原题链接" class="headerlink" title="原题链接"></a>原题链接</h1><p><a href="https://leetcode-cn.com/problems/generate-parentheses/" target="_blank" rel="noopener">原题链接</a></p>
 <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/22/describe.png" alt="题目描述"></p>
 <h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>由于这里要求出所有解的情况，而一般使用DFS就能求所有解，思路也很简单，先放左括号再放右括号。</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; <span class="title">generateParenthesis</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; result;</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">    dfs(result, <span class="string">""</span>, n, n, n);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; &amp;result, <span class="built_in">string</span> <span class="built_in">list</span>, <span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(left == <span class="number">0</span> &amp;&amp; right == <span class="number">0</span>)&#123;</span><br><span class="line">        result.push_back(<span class="built_in">list</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(left &gt; <span class="number">0</span>)&#123;</span><br><span class="line">        dfs(result, <span class="built_in">list</span> + <span class="string">'('</span>, left - <span class="number">1</span>, right, n);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(right &gt; left)&#123;</span><br><span class="line">        dfs(result, <span class="built_in">list</span> + <span class="string">')'</span>, left, right - <span class="number">1</span>, n);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code class="cpp">vector&lt;string&gt; generateParenthesis(int n) {
+    vector&lt;string&gt; result;
+    if(n == 0){
+        return result;
+    }
+    dfs(result, &quot;&quot;, n, n, n);
+    return result;
+}
+void dfs(vector&lt;string&gt; &amp;result, string list, int left, int right, int n){
+    if(left == 0 &amp;&amp; right == 0){
+        result.push_back(list);
+        return;
+    }
+    if(left &gt; 0){
+        dfs(result, list + &#39;(&#39;, left - 1, right, n);
+    }
+    if(right &gt; left){
+        dfs(result, list + &#39;)&#39;, left, right - 1, n);
+    }
+    return;
+}</code></pre>
 <h1 id="时间和内存"><a href="#时间和内存" class="headerlink" title="时间和内存"></a>时间和内存</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/22/pass.png" alt=""></p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->

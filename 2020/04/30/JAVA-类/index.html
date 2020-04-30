@@ -72,23 +72,117 @@
 <li>当想要定义一个回调函数但不想编写大量代码时，使用$\color{blue}{匿名}$内部类比较便捷。</li>
 </ul>
 <h2 id="内部类-1"><a href="#内部类-1" class="headerlink" title="内部类"></a>内部类</h2><p>用一个例子来说明如何定义内部类，以及内部类的特点：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">temp</span></span>&#123;</span><br><span class="line">    <span class="comment">//外部类的成员字段</span></span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> k;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> j;</span><br><span class="line">    <span class="comment">//内部类</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">A</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i; <span class="comment">//正确，不和外部类冲突</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTemp</span><span class="params">()</span></span>&#123;</span><br><span class="line">            <span class="comment">//内部类能够访问该类的数据包括私有数据，在访问外部类字段时，不能够直接写this</span></span><br><span class="line">            temp.<span class="keyword">this</span>.i = <span class="number">1</span>;</span><br><span class="line">            temp.<span class="keyword">this</span>.k = <span class="number">2</span>;</span><br><span class="line">            temp.<span class="keyword">this</span>.j = <span class="number">3</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">()</span></span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.i = <span class="number">4</span>; <span class="comment">//访问内部类自己的字段  </span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//外部类去调用内部类的方法，要先去实例化一个内部类对象</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setInfo</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">new</span> A().setTemp();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="java">public class temp{
+    //外部类的成员字段
+    int i;
+    public int k;
+    private int j;
+    //内部类
+    class A{
+        int i; //正确，不和外部类冲突
+        public void setTemp(){
+            //内部类能够访问该类的数据包括私有数据，在访问外部类字段时，不能够直接写this
+            temp.this.i = 1;
+            temp.this.k = 2;
+            temp.this.j = 3;
+        }
+        public void set(){
+            this.i = 4; //访问内部类自己的字段  
+        }
+    }
+
+    //外部类去调用内部类的方法，要先去实例化一个内部类对象
+    public void setInfo(){
+        new A().setTemp();
+    }
+
+}</code></pre>
 <ul>
 <li>可以定义多个内部类</li>
 <li>可以声明为final、private、protected、static</li>
 <li>一旦内部类声明为static，此时就不能使用外层类非static的成员变量。</li>
 </ul>
 <h2 id="局部内部类"><a href="#局部内部类" class="headerlink" title="局部内部类"></a>局部内部类</h2><p>在上面这个例子中，仅在setInfo的方法中调用了内部类。那么我们可以在setInfo中定义内部类，在方法中定义类被称为局部内部类。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">work</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="class"><span class="keyword">class</span> <span class="title">B</span></span>&#123;</span><br><span class="line">            <span class="keyword">int</span> val;</span><br><span class="line"></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setVal</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">this</span>.val = val;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getVal</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> val;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        B b = <span class="keyword">new</span> B();</span><br><span class="line">        b.setVal(<span class="number">10</span>);</span><br><span class="line">        System.out.println(b.getVal());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="java">class A{
+    public void work(){
+        class B{
+            int val;
 
+            public void setVal(int val) {
+                this.val = val;
+            }
+
+            public int getVal() {
+                return val;
+            }
+        }
+        B b = new B();
+        b.setVal(10);
+        System.out.println(b.getVal());
+    }
+}</code></pre>
 <h2 id="匿名内部类"><a href="#匿名内部类" class="headerlink" title="匿名内部类"></a>匿名内部类</h2><p>假如只创建这个类的一个对象，就不必命名了。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">HelloWorld</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span>  <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">work</span><span class="params">()</span></span>&#123;</span><br><span class="line">        HelloWorld h = <span class="keyword">new</span> HelloWorld() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                System.out.println(<span class="string">"Hello"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        h.show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="java">interface HelloWorld {
+    public  void show();
+}
 
+class A{
+    public void work(){
+        HelloWorld h = new HelloWorld() {
+            @Override
+            public void show() {
+                System.out.println(&quot;Hello&quot;);
+            }
+        };
+        h.show();
+    }
+}</code></pre>
 <h2 id="静态内部类"><a href="#静态内部类" class="headerlink" title="静态内部类"></a>静态内部类</h2><p>有时候，使用内部类只是为了把一个类隐藏在另外一个类的内部，并不需要内部类引用外围类对象。为此可以将内部类声明为static，以便取消产生的引用。</p>
 <blockquote>
 <p>下面是一个使用静态内部类的典型例子。计算一个数组中最小值和最大值的问题。编写两个方法，一个方法用于计算最小值，另一个方法用于计算最大值。在调用这两个方法的时候，数组被遍历两次。如果只遍历数组一次，并能够同时计算出最小值和最大值，这样就可以提高效率了。</p>
 </blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InnerClass</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">double</span>[] d = <span class="keyword">new</span> <span class="keyword">double</span>[<span class="number">20</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; d.length; i++)&#123;</span><br><span class="line">            d[i] = <span class="number">100</span> * Math.random();</span><br><span class="line">        &#125;</span><br><span class="line">        ArrayAlg.Pair p = ArrayAlg.minmax(d);</span><br><span class="line">        System.out.println(<span class="string">"Min: "</span> + p.getFirst());</span><br><span class="line">        System.out.println(<span class="string">"Max: "</span> + p.getSecond());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ArrayAlg</span></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Pair</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">double</span> first;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">double</span> second;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Pair</span><span class="params">(<span class="keyword">double</span> f, <span class="keyword">double</span> s)</span></span>&#123;</span><br><span class="line">            first = f;</span><br><span class="line">            second = s;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getFirst</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> first;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getSecond</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> second;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Pair <span class="title">minmax</span><span class="params">(<span class="keyword">double</span>[] values)</span></span>&#123;</span><br><span class="line">        <span class="keyword">double</span> min = Double.POSITIVE_INFINITY;</span><br><span class="line">        <span class="keyword">double</span> max = Double.NEGATIVE_INFINITY;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">double</span> v: values)&#123;</span><br><span class="line">            <span class="keyword">if</span> (min &gt; v) min = v;</span><br><span class="line">            <span class="keyword">if</span> (max &lt; v) max = v;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Pair(min, max);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="java">public class InnerClass {
+    public static void main(String[] args) {
+        double[] d = new double[20];
+        for (int i = 0; i &lt; d.length; i++){
+            d[i] = 100 * Math.random();
+        }
+        ArrayAlg.Pair p = ArrayAlg.minmax(d);
+        System.out.println(&quot;Min: &quot; + p.getFirst());
+        System.out.println(&quot;Max: &quot; + p.getSecond());
+    }
+}
+
+class ArrayAlg{
+    static class Pair {
+        private double first;
+        private double second;
+
+        public Pair(double f, double s){
+            first = f;
+            second = s;
+        }
+        public double getFirst() {
+            return first;
+        }
+        public double getSecond() {
+            return second;
+        }
+
+    }
+
+    public static Pair minmax(double[] values){
+        double min = Double.POSITIVE_INFINITY;
+        double max = Double.NEGATIVE_INFINITY;
+        for (double v: values){
+            if (min &gt; v) min = v;
+            if (max &lt; v) max = v;
+        }
+        return new Pair(min, max);
+    }
+
+}
+</code></pre>
 <ul>
 <li>注：<ul>
 <li>只有内部类可以声明为static。静态内部类的对象除了没有对生成它的外围类对象的引用特权外，与其他所有内部类完全一样。</li>

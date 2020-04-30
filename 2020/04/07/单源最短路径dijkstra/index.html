@@ -68,7 +68,90 @@
 <h1 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h1><p>假设所给图是带权有向图<br><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Algorithm/dijkstra/graph.png" alt=""><br>假设一个集合S，S中只有一个源点，每次求得一条最短路径后，就把该顶点加入到S集合中，直到所有顶点都加入该集合。思想有点类似于贪心算法。对于每次取最小路径这个问题，我们可以使用一个特殊的数据结构，优先队列(priority_queue)。优先队列会把权值小的插队到权值大的前面，这样一来，我们能够保证每一步走的都是最短的，但同时我们需要记录该节点是否被走过，以免被覆盖。</p>
 <h2 id="图的描述"><a href="#图的描述" class="headerlink" title="图的描述"></a>图的描述</h2><p>这里我选择的是用散列表来表示一个图,key是源节点,value是指向的节点，形式为 源节点： [指向的节点， 权值]</p>
 <h2 id="广度优先搜索"><a href="#广度优先搜索" class="headerlink" title="广度优先搜索"></a>广度优先搜索</h2><p>这是一个标准的BFS模板，一个队列，节点不断入队，稍作修改。CPP的优先队列默认是大顶堆，这里还需要重写一下比较方式，直接利用了一个lambda(c++11)或者传入一个compare函数。用一个visited数组标记是否被访问过，-1代表没被访问，如果访问后，把值改为最短路径和。用一个path数组记录该节点是怎么走过来的，下标对于节点编号，值对应了从哪个节点过来，直到一直追溯到0，说明就已经找到了源节点。再用一个堆栈逆序打印出顺序。</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unordered_map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;functional&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stack&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dijkstra</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; nums, <span class="keyword">int</span> K, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;vis, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;path)</span></span>&#123;</span><br><span class="line">    <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&gt; graph; <span class="comment">//图</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> point: nums)&#123;</span><br><span class="line">        graph[point[<span class="number">0</span>]].push_back(&#123;point[<span class="number">1</span>], point[<span class="number">2</span>]&#125;); <span class="comment">//源点，&#123;节点， 权值&#125;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//优先队列，重载&gt;运算符</span></span><br><span class="line">    priority_queue&lt;vector&lt;int&gt;, vector&lt;vector&lt;int&gt;&gt;, function&lt;bool(vector&lt;int&gt; &amp;v1, vector&lt;int&gt; &amp;v2)&gt;&gt; pq([](vector&lt;int&gt; &amp;v1, vector&lt;int&gt; &amp;v2)-&gt;bool&#123;</span><br><span class="line">        <span class="keyword">return</span> v1[<span class="number">1</span>] &gt; v2[<span class="number">1</span>];</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    pq.push(&#123;K, <span class="number">0</span>&#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (!pq.empty())&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; cur = pq.top();</span><br><span class="line">        pq.pop();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//节点已经被访问过</span></span><br><span class="line">        <span class="keyword">if</span> (vis[cur[<span class="number">0</span>]] != <span class="number">-1</span>)</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        vis[cur[<span class="number">0</span>]] = cur[<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> next: graph[cur[<span class="number">0</span>]])&#123;</span><br><span class="line">            <span class="keyword">if</span> (vis[next[<span class="number">0</span>]] != <span class="number">-1</span>)&#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            path[next[<span class="number">0</span>]] = cur[<span class="number">0</span>];</span><br><span class="line">            pq.push(&#123;next[<span class="number">0</span>], cur[<span class="number">1</span>] + next[<span class="number">1</span>]&#125;);</span><br><span class="line">        &#125; <span class="comment">//刷新一下图</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"> <span class="comment">//打印出路径，即 是什么走到该节点的</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">find_origin</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; path, <span class="keyword">int</span> K)</span></span>&#123;</span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line">    <span class="keyword">int</span> i = K;</span><br><span class="line">    s.push(K);</span><br><span class="line">    <span class="keyword">while</span> (path[i] != <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        s.push(path[i]);</span><br><span class="line">        i = path[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; K &lt;&lt; <span class="string">"'s origin:"</span>;</span><br><span class="line">    <span class="keyword">while</span> (!s.empty())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; s.top() &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">        s.pop();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> SIZE = <span class="number">6</span>;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; nums = &#123;</span><br><span class="line">        &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>&#125;,</span><br><span class="line">        &#123;<span class="number">1</span>, <span class="number">4</span>, <span class="number">2</span>&#125;,</span><br><span class="line">        &#123;<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>&#125;,</span><br><span class="line">        &#123;<span class="number">2</span>, <span class="number">4</span>, <span class="number">1</span>&#125;,</span><br><span class="line">        &#123;<span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>&#125;,</span><br><span class="line">        &#123;<span class="number">3</span>, <span class="number">6</span>, <span class="number">1</span>&#125;,</span><br><span class="line">        &#123;<span class="number">4</span>, <span class="number">5</span>, <span class="number">1</span>&#125;,</span><br><span class="line">        &#123;<span class="number">5</span>, <span class="number">6</span>, <span class="number">4</span>&#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">vis</span><span class="params">(SIZE + <span class="number">1</span>, <span class="number">-1</span>)</span></span>;</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">path</span><span class="params">(SIZE + <span class="number">1</span>, <span class="number">0</span>)</span></span>;</span><br><span class="line">    dijkstra(nums, <span class="number">1</span>, vis, path);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; vis.size(); i++)&#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; vis[i] &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; path.size();i++)&#123;</span><br><span class="line">        find_origin(path, i);</span><br><span class="line">    &#125;</span><br><span class="line">    getchar();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;unordered_map&gt;
+#include &lt;functional&gt;
+#include &lt;queue&gt;
+#include &lt;stack&gt;
+
+using namespace std;
+
+void dijkstra(vector&lt;vector&lt;int&gt;&gt; nums, int K, vector&lt;int&gt; &amp;vis, vector&lt;int&gt; &amp;path){
+    unordered_map&lt;int, vector&lt;vector&lt;int&gt;&gt;&gt; graph; //图
+    for(auto point: nums){
+        graph[point[0]].push_back({point[1], point[2]}); //源点，{节点， 权值}
+    }
+
+    //优先队列，重载&gt;运算符
+    priority_queue&lt;vector&lt;int&gt;, vector&lt;vector&lt;int&gt;&gt;, function&lt;bool(vector&lt;int&gt; &amp;v1, vector&lt;int&gt; &amp;v2)&gt;&gt; pq([](vector&lt;int&gt; &amp;v1, vector&lt;int&gt; &amp;v2)-&gt;bool{
+        return v1[1] &gt; v2[1];
+    });
+
+    pq.push({K, 0});
+
+    while (!pq.empty()){
+        vector&lt;int&gt; cur = pq.top();
+        pq.pop();
+
+        //节点已经被访问过
+        if (vis[cur[0]] != -1)
+            continue;
+        vis[cur[0]] = cur[1];
+        for (auto next: graph[cur[0]]){
+            if (vis[next[0]] != -1){
+                continue;
+            }
+            path[next[0]] = cur[0];
+            pq.push({next[0], cur[1] + next[1]});
+        } //刷新一下图
+    }
+    return;
+}
+ //打印出路径，即 是什么走到该节点的
+void find_origin(vector&lt;int&gt; path, int K){
+    stack&lt;int&gt; s;
+    int i = K;
+    s.push(K);
+    while (path[i] != 0)
+    {
+        s.push(path[i]);
+        i = path[i];
+    }
+    cout &lt;&lt; K &lt;&lt; &quot;&#39;s origin:&quot;;
+    while (!s.empty())
+    {
+        cout &lt;&lt; s.top() &lt;&lt; &quot; &quot;;
+        s.pop();
+    }
+    cout &lt;&lt; endl;
+}
+
+int main(void){
+    const int SIZE = 6;
+    vector&lt;vector&lt;int&gt;&gt; nums = {
+        {1, 2, 1},
+        {1, 4, 2},
+        {2, 3, 5},
+        {2, 4, 1},
+        {4, 3, 2},
+        {3, 6, 1},
+        {4, 5, 1},
+        {5, 6, 4}
+    };
+    vector&lt;int&gt; vis(SIZE + 1, -1);
+    vector&lt;int&gt; path(SIZE + 1, 0);
+    dijkstra(nums, 1, vis, path);
+    for (int i = 1; i &lt; vis.size(); i++){
+        cout &lt;&lt; vis[i] &lt;&lt; &quot; &quot;;
+    }
+    cout &lt;&lt; endl;
+    for(int i = 1; i &lt; path.size();i++){
+        find_origin(path, i);
+    }
+    getchar();
+    return 0;
+}</code></pre>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
