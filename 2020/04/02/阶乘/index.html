@@ -11,11 +11,7 @@
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
     <meta name="description" content="程序要求：用递归实现阶乘（不考虑数据溢出问题）
-方法一：递归int fac(int num){
-    if(num == 0){
-        return 1;
-    }
-    else{,"> 
+方法一：递归12345678int fac(int num)&amp;#123;    if(num == 0)&amp;#123;        return 1;,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -69,25 +65,10 @@
         </div>
         <div class="content markdown">
             <p>程序要求：用递归实现阶乘（不考虑数据溢出问题）</p>
-<h1 id="方法一：递归"><a href="#方法一：递归" class="headerlink" title="方法一：递归"></a>方法一：递归</h1><pre><code class="cpp">int fac(int num){
-    if(num == 0){
-        return 1;
-    }
-    else{
-        return num * fac(num - 1);
-    }
-}</code></pre>
+<h1 id="方法一：递归"><a href="#方法一：递归" class="headerlink" title="方法一：递归"></a>方法一：递归</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fac</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(num == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> num * fac(num - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>在递归法中，由于使用的是尾递归，尾递归可以和循环进行转换，</p>
-<h1 id="方法二：循环"><a href="#方法二：循环" class="headerlink" title="方法二：循环"></a>方法二：循环</h1><pre><code class="cpp">int fac(int num){
-    if(num == 0){
-        return 1;
-    }
-    int result = 1;
-    for(int i = num; i &gt; 0; i--){
-        result *= i;
-    }
-    return result;
-}</code></pre>
+<h1 id="方法二：循环"><a href="#方法二：循环" class="headerlink" title="方法二：循环"></a>方法二：循环</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fac</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(num == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> result = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = num; i &gt; <span class="number">0</span>; i--)&#123;</span><br><span class="line">        result *= i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>两个程序都只扫描了一遍，时间复杂度On</p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->

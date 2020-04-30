@@ -13,7 +13,7 @@
     <meta name="description" content="原题链接原题链接
 题目描述
 思路一道很经典的双指针题目，答案为两指针所指最小的数 × 间距，不断向中心收缩，找出最大值。
-代码int maxArea(vector&amp;lt;int&amp;gt;&amp;amp; h,"> 
+代码123456789101112131415161718int maxAr,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -69,24 +69,7 @@
             <h1 id="原题链接"><a href="#原题链接" class="headerlink" title="原题链接"></a>原题链接</h1><p><a href="https://leetcode-cn.com/problems/container-with-most-water/" target="_blank" rel="noopener">原题链接</a></p>
 <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/11/describe.png" alt="题目描述"></p>
 <h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>一道很经典的双指针题目，答案为两指针所指最小的数 × 间距，不断向中心收缩，找出最大值。</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code class="cpp">int maxArea(vector&lt;int&gt;&amp; height) {
-    int i = 0;
-    int j = height.size() - 1;
-    int result = 0;
-    while (i &lt; j){
-        int inter = j - i;
-        int Min = 0;
-        if (height[i] &lt; height[j]){
-            result = max(result, inter * height[i]);
-            i++;
-        }
-        else {
-            result = max(result, inter * height[j]);
-            j--;
-        }
-    }
-    return result;
-}</code></pre>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">maxArea</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; height)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> j = height.size() - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (i &lt; j)&#123;</span><br><span class="line">        <span class="keyword">int</span> inter = j - i;</span><br><span class="line">        <span class="keyword">int</span> Min = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (height[i] &lt; height[j])&#123;</span><br><span class="line">            result = max(result, inter * height[i]);</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            result = max(result, inter * height[j]);</span><br><span class="line">            j--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h1 id="时间和内存"><a href="#时间和内存" class="headerlink" title="时间和内存"></a>时间和内存</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/11/pass.png" alt=""></p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->

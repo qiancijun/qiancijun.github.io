@@ -75,39 +75,20 @@
 <p>查询列表必须特殊，要求是分组函数和group by后面出现的字段。</p>
 </blockquote>
 <p>例：查询每个工种的最高工资：</p>
-<pre><code class="mysql">SELECT 
-        MAX(salary), job_id
-FROM
-        employees
-GROUP BY
-        job_id;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT </span><br><span class="line">        MAX(salary), job_id</span><br><span class="line">FROM</span><br><span class="line">        employees</span><br><span class="line">GROUP BY</span><br><span class="line">        job_id;</span><br></pre></td></tr></table></figure>
+
 <p>例：查询邮箱中包含a字符的，每个部门的平均工资：</p>
-<pre><code class="mysql">SELECT 
-        AVG(salary), department_id
-FROM 
-        employees
-WHERE
-        email LIKE &#39;%a%&#39;
-GROUP BY
-        department_id;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SELECT </span><br><span class="line">        AVG(salary), department_id</span><br><span class="line">FROM </span><br><span class="line">        employees</span><br><span class="line">WHERE</span><br><span class="line">        email LIKE &#39;%a%&#39;</span><br><span class="line">GROUP BY</span><br><span class="line">        department_id;</span><br></pre></td></tr></table></figure>
+
 <ol>
 <li><p>$\color{bule}{按表达式或函数分组}$<br>例：按员工姓名的长度进行分组，查询每一组的员工个数，筛选员工个数大于5的组</p>
-<pre><code class="mysql">SELECT 
-     COUNT(*), LENGTH(last_name) AS len_name
-FROM
-     employees
-GRUOP BY
-     LENGTH(lase_name);
-HAVING
-     COUNT(*) &gt; 5;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SELECT </span><br><span class="line">        COUNT(*), LENGTH(last_name) AS len_name</span><br><span class="line">FROM</span><br><span class="line">        employees</span><br><span class="line">GRUOP BY</span><br><span class="line">        LENGTH(lase_name);</span><br><span class="line">HAVING</span><br><span class="line">        COUNT(*) &gt; 5;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>$\color{blue}{按多个字段进行分组}$<br>例:查询每个部门每个工种的员工的平均工资：</p>
-<pre><code class="mysql">SELECT
-     AVG(salary), department_id, job_id
-FROM
-     employees
-GROUP BY
-     department_id, job_id;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        AVG(salary), department_id, job_id</span><br><span class="line">FROM</span><br><span class="line">        employees</span><br><span class="line">GROUP BY</span><br><span class="line">        department_id, job_id;</span><br></pre></td></tr></table></figure>
+
+
+
 </li>
 </ol>
 <p>$\color{red}{GROUP}$  $\color{red}{BY子句的规定:}$</p>
@@ -122,16 +103,7 @@ GROUP BY
 </ol>
 </blockquote>
 <h2 id="分组和排序"><a href="#分组和排序" class="headerlink" title="分组和排序"></a>分组和排序</h2><p>例：查询每个部门的每个工种的员工的平均工资，并且按平均工资的高低显示：</p>
-<pre><code class="mysql">SELECT
-        AVG(salary), department_id, job_id
-FROM
-        employees
-WHERE
-        department_id IS NOT NULL
-GROUP BY
-        department_id, job_id;
-ORDER BY
-        AVG(salary) DESC;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        AVG(salary), department_id, job_id</span><br><span class="line">FROM</span><br><span class="line">        employees</span><br><span class="line">WHERE</span><br><span class="line">        department_id IS NOT NULL</span><br><span class="line">GROUP BY</span><br><span class="line">        department_id, job_id;</span><br><span class="line">ORDER BY</span><br><span class="line">        AVG(salary) DESC;</span><br></pre></td></tr></table></figure>
 <p>虽然GROUP BY和ORDER BY经常完成相同的工作，但它们是非常不同的。一般在使用GROUP BY子句时，应该也给出ORDER BY子句。这是保证数据正确排序的唯一方法。千万不要仅依赖GROUP BY排序数据。</p>
 <table>
 <thead>
@@ -202,14 +174,8 @@ ORDER BY
 <p>过滤行数据我们使用WHERE子句，但是如果我们想过滤分组的数据就不能使用WHERE子句了。MySQL允许过滤分组，利用HAVING子句。HAVING非常类似于WHERE。目前所有类型的WHERE子句都可以用HAVING来替代。唯一差别是WHERE过滤$\color{red}{行}$，而HAVING过滤$\color{red}{分组}$。</p>
 </blockquote>
 <p>例：查询哪个部门的员工人数大于2：</p>
-<pre><code class="mysql">SELECT 
-        COUNT(*), department_id
-FROM
-        employees
-GROUP BY
-        department_id
-HAVING
-        COUNT(*) &gt; 2;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SELECT </span><br><span class="line">        COUNT(*), department_id</span><br><span class="line">FROM</span><br><span class="line">        employees</span><br><span class="line">GROUP BY</span><br><span class="line">        department_id</span><br><span class="line">HAVING</span><br><span class="line">        COUNT(*) &gt; 2;</span><br></pre></td></tr></table></figure>
+
 <h1 id="连续查询"><a href="#连续查询" class="headerlink" title="连续查询"></a>连续查询</h1><blockquote>
 <p>SQL最强大的功能之一就是能在数据检索查询的执行中联结表。<br>连续查询又称多表查询。当查询的字段来自多个表就会用到连续查询</p>
 </blockquote>
@@ -226,10 +192,8 @@ HAVING
 </li>
 </ol>
 <h2 id="创建联结"><a href="#创建联结" class="headerlink" title="创建联结"></a>创建联结</h2><p>例：</p>
-<pre><code class="mysql">SELECT vend_name, prod_name, prod_price
-FROM vendors, products
-WHERE vendors.vend_id = products.vend_id
-ORDER BY vend_name, prod_name;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT vend_name, prod_name, prod_price</span><br><span class="line">FROM vendors, products</span><br><span class="line">WHERE vendors.vend_id &#x3D; products.vend_id</span><br><span class="line">ORDER BY vend_name, prod_name;</span><br></pre></td></tr></table></figure>
+
 <h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><ol>
 <li>$\color{blue}{按年代分类：}$</li>
 </ol>
@@ -266,40 +230,20 @@ ORDER BY vend_name, prod_name;</code></pre>
 </li>
 </ul>
 <p>例1：</p>
-<pre><code class="mysql">SELECT vend_name, prod_name, prod_price
-FROM vendors, products
-WHERE vendors.vend_id = products.vend_id
-ORDER BY vend_name, prod_name;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT vend_name, prod_name, prod_price</span><br><span class="line">FROM vendors, products</span><br><span class="line">WHERE vendors.vend_id &#x3D; products.vend_id</span><br><span class="line">ORDER BY vend_name, prod_name;</span><br></pre></td></tr></table></figure>
+
 <p>例2：想要查询员工名和对应的部门名</p>
-<pre><code class="mysql">SLEECT
-        last_name, department_name
-FROM 
-        employees, departments
-WHERE
-        emplyees.department_id = departments.department_id;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SLEECT</span><br><span class="line">        last_name, department_name</span><br><span class="line">FROM </span><br><span class="line">        employees, departments</span><br><span class="line">WHERE</span><br><span class="line">        emplyees.department_id &#x3D; departments.department_id;</span><br></pre></td></tr></table></figure>
+
 <h3 id="非等值连接"><a href="#非等值连接" class="headerlink" title="非等值连接"></a>非等值连接</h3><p>例：查询员工的工资和工资级别：</p>
-<pre><code class="mysql">SELECT
-        salary, grade_level
-FROM
-        employees e, job_grades
-WHERE
-        salary BETWEEN lowest_salary and highest_sa;ary;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        salary, grade_level</span><br><span class="line">FROM</span><br><span class="line">        employees e, job_grades</span><br><span class="line">WHERE</span><br><span class="line">        salary BETWEEN lowest_salary and highest_sa;ary;</span><br></pre></td></tr></table></figure>
+
 <h3 id="自连接"><a href="#自连接" class="headerlink" title="自连接"></a>自连接</h3><p>例：查询员工名和上级的信息：</p>
-<pre><code class="mysql">SELECT
-        e.employee_id, e.last_name, m.employee_id, m.last_name
-FROM
-        employees e, empl0yees m;
-WHERE
-        e.manager_id = m.employee_id;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        e.employee_id, e.last_name, m.employee_id, m.last_name</span><br><span class="line">FROM</span><br><span class="line">        employees e, empl0yees m;</span><br><span class="line">WHERE</span><br><span class="line">        e.manager_id &#x3D; m.employee_id;</span><br></pre></td></tr></table></figure>
+
 <h2 id="sql99标准"><a href="#sql99标准" class="headerlink" title="sql99标准"></a>sql99标准</h2><p>语法：</p>
-<pre><code class="mysql">SELECT      查询列表
-FROM        表1 别名 [连接类型]
-JOIN        表2 别名 
-ON          [连接条件]
-WHERE       筛选条件
-GROUP BY    分组
-HAVING      筛选条件
-ORDER BY    排序列表</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SELECT      查询列表</span><br><span class="line">FROM        表1 别名 [连接类型]</span><br><span class="line">JOIN        表2 别名 </span><br><span class="line">ON          [连接条件]</span><br><span class="line">WHERE       筛选条件</span><br><span class="line">GROUP BY    分组</span><br><span class="line">HAVING      筛选条件</span><br><span class="line">ORDER BY    排序列表</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>连接类型：<ul>
 <li>内连接 （inner）</li>
@@ -314,28 +258,20 @@ ORDER BY    排序列表</code></pre>
 </li>
 </ul>
 <h3 id="内连接"><a href="#内连接" class="headerlink" title="内连接"></a>内连接</h3><p>语法:</p>
-<pre><code class="mysql">SELECT     查询列表
-FROM       表1 别名
-INNER JOIN 表2 别名
-ON         连接条件
-#INNER 可以省略</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT     查询列表</span><br><span class="line">FROM       表1 别名</span><br><span class="line">INNER JOIN 表2 别名</span><br><span class="line">ON         连接条件</span><br><span class="line">#INNER 可以省略</span><br></pre></td></tr></table></figure>
+
 <ol>
 <li>$\color{blue}{等值连接}$<blockquote>
 <p>例：查询员工名、部门名：</p>
 </blockquote>
-<pre><code class="mysql">SELECT     last_name, department_name
-FROM       employees e
-INNER JOIN departments d
-ON         e.department_id = d.department_id;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT     last_name, department_name</span><br><span class="line">FROM       employees e</span><br><span class="line">INNER JOIN departments d</span><br><span class="line">ON         e.department_id &#x3D; d.department_id;</span><br></pre></td></tr></table></figure>
+
+
 </li>
 </ol>
 <h2 id="表别名"><a href="#表别名" class="headerlink" title="表别名"></a>表别名</h2><p>如果在反复使用表名使，表名太长显得代码冗长，此时可以用表别名。用别名替换表名后，不可以再用原表名去限定。</p>
-<pre><code class="mysql">SELECT 
-        last_name, e.job_id, job_title
-FROM
-        employees AS e, jobs AS j #AS可以省略
-WHERE
-        e.job_id = j.job_id;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT </span><br><span class="line">        last_name, e.job_id, job_title</span><br><span class="line">FROM</span><br><span class="line">        employees AS e, jobs AS j #AS可以省略</span><br><span class="line">WHERE</span><br><span class="line">        e.job_id &#x3D; j.job_id;</span><br></pre></td></tr></table></figure>
+
 <p>$\color{red}{注:}$</p>
 <blockquote>
 <p>如果两个表中有相同的字段名除，那么要在SELECT语句中添加表名经行限定。</p>

@@ -68,18 +68,8 @@
 <p>单调递增栈：数据出栈的序列为单调递增序列。<br>单调递减栈：数据出栈的序列为单调递减序列。</p>
 </blockquote>
 <p>从栈底元素到栈顶元素呈单调递增或单调递减，栈内序列满足单调性的栈；</p>
-<h2 id="伪代码"><a href="#伪代码" class="headerlink" title="伪代码"></a>伪代码</h2><pre><code class="cpp">stack&lt;int&gt; s; //栈的定义
-for (int i = 0; i &lt; nums.size(); i++){ //遍历数组
-    if (栈空 or 栈顶元素大于等于当前数组元素){
-        入栈
-    } else {
-        while (栈不为空 and 栈顶元素小于当前数组元素){
-            栈顶元素出栈;
-            其余数据处理;
-        }
-        数组元素入栈;
-    }
-}</code></pre>
+<h2 id="伪代码"><a href="#伪代码" class="headerlink" title="伪代码"></a>伪代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s; <span class="comment">//栈的定义</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.size(); i++)&#123; <span class="comment">//遍历数组</span></span><br><span class="line">    <span class="keyword">if</span> (栈空 <span class="keyword">or</span> 栈顶元素大于等于当前数组元素)&#123;</span><br><span class="line">        入栈</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">while</span> (栈不为空 <span class="keyword">and</span> 栈顶元素小于当前数组元素)&#123;</span><br><span class="line">            栈顶元素出栈;</span><br><span class="line">            其余数据处理;</span><br><span class="line">        &#125;</span><br><span class="line">        数组元素入栈;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><ol>
 <li>求最长单调区间；</li>
 <li>左右配对；</li>

@@ -14,9 +14,7 @@
 思路
 从1到n-1不断进行分割。
 
-代码int maxScore(string s) {
-    int result = 0;
-    for (int p = ,"> 
+代码1234567891011121314151617int maxScore(string s) &amp;#123;    int ,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -73,84 +71,20 @@
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><blockquote>
 <p>从1到n-1不断进行分割。</p>
 </blockquote>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><pre><code class="cpp">int maxScore(string s) {
-    int result = 0;
-    for (int p = 1; p &lt;= s.size() - 1; p++){
-        int left = 0;
-        int right = 0;
-        for (int i = 0; i &lt; p; i++){
-            if (s[i] == &#39;0&#39;)
-                left++;
-        }
-        for (int j = p; j &lt; s.size(); j++){
-            if (s[j] == &#39;1&#39;)
-                right++;
-        }
-        result = max(result, left + right);
-    }
-    return result;
-}</code></pre>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">maxScore</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> p = <span class="number">1</span>; p &lt;= s.size() - <span class="number">1</span>; p++)&#123;</span><br><span class="line">        <span class="keyword">int</span> left = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> right = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; p; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span> (s[i] == <span class="string">'0'</span>)</span><br><span class="line">                left++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = p; j &lt; s.size(); j++)&#123;</span><br><span class="line">            <span class="keyword">if</span> (s[j] == <span class="string">'1'</span>)</span><br><span class="line">                right++;</span><br><span class="line">        &#125;</span><br><span class="line">        result = max(result, left + right);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h1 id="5393-可获得的最大点数"><a href="#5393-可获得的最大点数" class="headerlink" title="5393. 可获得的最大点数"></a>5393. 可获得的最大点数</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week186/5393_describe.png" alt=""></p>
 <h2 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h2><blockquote>
 <p>先从左边求k个和。左边减少一个，右边增加一个。</p>
 </blockquote>
-<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><pre><code class="cpp">int maxScore(vector&lt;int&gt;&amp; cardPoints, int k) {
-    int len = cardPoints.size();
-    int result = 0;
-    int sum = 0;
-    int i, j = len - 1;
-    for (i = 0; i &lt; k; i++){
-        sum += cardPoints[i];
-    }
-    i--;
-    result = sum;
-    while (i &gt;= 0 &amp;&amp; j &gt;= 0){
-        sum = sum - cardPoints[i--] + cardPoints[j--];
-        result = max(result, sum);
-    }
-    return result;
-}</code></pre>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">maxScore</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; cardPoints, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len = cardPoints.size();</span><br><span class="line">    <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> i, j = len - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; k; i++)&#123;</span><br><span class="line">        sum += cardPoints[i];</span><br><span class="line">    &#125;</span><br><span class="line">    i--;</span><br><span class="line">    result = sum;</span><br><span class="line">    <span class="keyword">while</span> (i &gt;= <span class="number">0</span> &amp;&amp; j &gt;= <span class="number">0</span>)&#123;</span><br><span class="line">        sum = sum - cardPoints[i--] + cardPoints[j--];</span><br><span class="line">        result = max(result, sum);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h1 id="5394-对角线遍历-II"><a href="#5394-对角线遍历-II" class="headerlink" title="5394. 对角线遍历 II"></a>5394. 对角线遍历 II</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week186/5394_describe.png" alt=""></p>
 <h2 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h2><blockquote>
 <p>利用对角线下标和不变的性质。暴力法会超时，用字典。</p>
 </blockquote>
-<h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><pre><code class="cpp">vector&lt;int&gt; findDiagonalOrder(vector&lt;vector&lt;int&gt;&gt;&amp; nums) {
-    // vector&lt;int&gt; result;
-    // int col = 0;
-    // int row = nums.size() - 1;
-    // for (int k = 0; k &lt; nums.size(); k++){
-    //     col = col &gt; nums[k].size() ? col : nums[k].size();
-    //     int i = k, j = 0;
-    //     while (i &gt;= 0 &amp;&amp; i + j == k){
-    //         if (j &lt; nums[i].size()){
-    //             result.push_back(nums[i][j]);
-    //         }
-    //         i--;
-    //         j++;
-    //     }
-    // }
-    // for (int k = 1; k &lt; col; k++){
-    //     int i = row, j = k;
-    //     while (i &gt;= 0 &amp;&amp; i + j == k + row){
-    //         if (j &lt; nums[i].size()){
-    //             result.push_back(nums[i][j]);
-    //         }
-    //         i--;
-    //         j++;
-    //     }
-    // }
-    // return result;
-    map&lt;int, vector&lt;int&gt;&gt; mp;
-    for(int i=nums.size()-1; i&gt;=0; i--) {
-        for(int j=0; j&lt;nums[i].size(); j++) {
-            mp[i+j].push_back(nums[i][j]);
-        }
-    }
-    vector&lt;int&gt; ans;
-    for(auto&amp; m : mp) 
-        for(auto&amp; c : m.second) ans.push_back(c);
-    return ans;
-}</code></pre>
+<h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">findDiagonalOrder</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// vector&lt;int&gt; result;</span></span><br><span class="line">    <span class="comment">// int col = 0;</span></span><br><span class="line">    <span class="comment">// int row = nums.size() - 1;</span></span><br><span class="line">    <span class="comment">// for (int k = 0; k &lt; nums.size(); k++)&#123;</span></span><br><span class="line">    <span class="comment">//     col = col &gt; nums[k].size() ? col : nums[k].size();</span></span><br><span class="line">    <span class="comment">//     int i = k, j = 0;</span></span><br><span class="line">    <span class="comment">//     while (i &gt;= 0 &amp;&amp; i + j == k)&#123;</span></span><br><span class="line">    <span class="comment">//         if (j &lt; nums[i].size())&#123;</span></span><br><span class="line">    <span class="comment">//             result.push_back(nums[i][j]);</span></span><br><span class="line">    <span class="comment">//         &#125;</span></span><br><span class="line">    <span class="comment">//         i--;</span></span><br><span class="line">    <span class="comment">//         j++;</span></span><br><span class="line">    <span class="comment">//     &#125;</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line">    <span class="comment">// for (int k = 1; k &lt; col; k++)&#123;</span></span><br><span class="line">    <span class="comment">//     int i = row, j = k;</span></span><br><span class="line">    <span class="comment">//     while (i &gt;= 0 &amp;&amp; i + j == k + row)&#123;</span></span><br><span class="line">    <span class="comment">//         if (j &lt; nums[i].size())&#123;</span></span><br><span class="line">    <span class="comment">//             result.push_back(nums[i][j]);</span></span><br><span class="line">    <span class="comment">//         &#125;</span></span><br><span class="line">    <span class="comment">//         i--;</span></span><br><span class="line">    <span class="comment">//         j++;</span></span><br><span class="line">    <span class="comment">//     &#125;</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line">    <span class="comment">// return result;</span></span><br><span class="line">    <span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; mp;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=nums.size()<span class="number">-1</span>; i&gt;=<span class="number">0</span>; i--) &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;nums[i].size(); j++) &#123;</span><br><span class="line">            mp[i+j].push_back(nums[i][j]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ans;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span>&amp; m : mp) </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span>&amp; c : m.second) ans.push_back(c);</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h1 id="5180-带限制的子序列和"><a href="#5180-带限制的子序列和" class="headerlink" title="5180. 带限制的子序列和"></a>5180. 带限制的子序列和</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week186/5180_describe.png" alt=""></p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->

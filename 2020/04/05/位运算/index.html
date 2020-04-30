@@ -67,97 +67,61 @@
             <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>计算机中的数在内存中都是以二进制形式进行存储的，用位运算直接对整数在内存中的二进制位进行操作，提升了效率，提升了程序性能。</p>
 <h1 id="进制转换"><a href="#进制转换" class="headerlink" title="进制转换"></a>进制转换</h1><p>进制转换的原则： 转换前和转换后两数所表达的“量”应该是相同的。<br><br>本文主要运行8421码来进行进制转换(BCD码)，但在这里给出了通用的权值法：<br><br>$$…R^4+R^3+R^2+R^1+R^0….(R是对应进制)$$</p>
 <h2 id="十进制-→-二进制"><a href="#十进制-→-二进制" class="headerlink" title="十进制 → 二进制"></a>十进制 → 二进制</h2><p>以八位二进制为例.</p>
-<pre><code class="no-highlight"> 0    0  0  0  0  0  0  0 
-128  64 32 16  8  4  2  1 </code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> 0    0  0  0  0  0  0  0 </span><br><span class="line">128  64 32 16  8  4  2  1</span><br></pre></td></tr></table></figure>
 <p>十进制数$\color{red}{64}$所对应的二进制就为：</p>
-<pre><code class="no-highlight"> 0    1  0  0  0  0  0  0 
-128  64 32 16  8  4  2  1 </code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> 0    1  0  0  0  0  0  0 </span><br><span class="line">128  64 32 16  8  4  2  1</span><br></pre></td></tr></table></figure>
 <p>十进制数$\color{red}{67}$所对应的二进制数为：</p>
-<pre><code class="no-highlight"> 0    1  0  0  0  0  1  1 
-128  64 32 16  8  4  2  1 </code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> 0    1  0  0  0  0  1  1 </span><br><span class="line">128  64 32 16  8  4  2  1</span><br></pre></td></tr></table></figure>
 <p>十进制数$\color{red}{127}$所对应的二进数：</p>
-<pre><code class="no-highlight"> 0    1  1  1  1  1  1  1 
-128  64 32 16  8  4  2  1 </code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> 0    1  1  1  1  1  1  1 </span><br><span class="line">128  64 32 16  8  4  2  1</span><br></pre></td></tr></table></figure>
+
 <h2 id="二进制-→-十进制"><a href="#二进制-→-十进制" class="headerlink" title="二进制 → 十进制"></a>二进制 → 十进制</h2><p>和十进制转二进制方法类似，若给出一个二进制1101100</p>
-<pre><code class="no-highlight"> 0    1  1  0  1  1  0  0 
-128  64 32 16  8  4  2  1 </code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> 0    1  1  0  1  1  0  0 </span><br><span class="line">128  64 32 16  8  4  2  1</span><br></pre></td></tr></table></figure>
 <p>十进制数为 64 + 32 + 8 + 4 = 108</p>
 <h2 id="八进制-→-二进制"><a href="#八进制-→-二进制" class="headerlink" title="八进制 → 二进制"></a>八进制 → 二进制</h2><p>一个八进制数对应了$\color{red}{三}$位二进制数，所以我们可以从低位到高位把一个八进制数，每位换成三位二进制，位数不够补零。<br><br>八进制数$\color{red}{72}$所对应的二进制数：</p>
-<pre><code class="no-highlight"> 0  0  0    1  1  1    0  1  0 
- 4  2  1    4  2  1    4  2  1 </code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0  0  0    1  1  1    0  1  0 </span><br><span class="line">4  2  1    4  2  1    4  2  1</span><br></pre></td></tr></table></figure>
+
 <h2 id="二进制-→-八进制"><a href="#二进制-→-八进制" class="headerlink" title="二进制 → 八进制"></a>二进制 → 八进制</h2><p>将八进制转二进制的操作反过来做，三位二进制数对应一个八进制数<br><br>二进制数$\color{red}{10110101}$</p>
-<pre><code class="no-highlight"> 0  1  0    0  1  1    1  0  1 
- 4  2  1    4  2  1    4  2  1 </code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0  1  0    0  1  1    1  0  1 </span><br><span class="line">4  2  1    4  2  1    4  2  1</span><br></pre></td></tr></table></figure>
 <p>八进制数235</p>
 <h2 id="十六进制-→-二进制"><a href="#十六进制-→-二进制" class="headerlink" title="十六进制 → 二进制"></a>十六进制 → 二进制</h2><p>一个十六进制数对应了$\color{red}{四}$位二进制数，所以我们可以从低位到高位把一个十六进制数，每位换成四位二进制，位数不够补零。<br><br>十六进制数$\color{red}{34C}$所对应的二进制数：</p>
-<pre><code class="no-highlight"> 0  0  1  1    0  1  0  0    1  1  0  0 
- 8  4  2  1    8  4  2  1    8  4  2  1 </code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0  0  1  1    0  1  0  0    1  1  0  0 </span><br><span class="line">8  4  2  1    8  4  2  1    8  4  2  1</span><br></pre></td></tr></table></figure>
 <p>字母所对应的数字</p>
-<pre><code class="no-highlight"> A   B   C   D   E   F
-10  11  12  13  14  15</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> A   B   C   D   E   F</span><br><span class="line">10  11  12  13  14  15</span><br></pre></td></tr></table></figure>
+
 <h2 id="二进制-→-十六进制"><a href="#二进制-→-十六进制" class="headerlink" title="二进制 → 十六进制"></a>二进制 → 十六进制</h2><p>将二进制转十六进制的操作反过来做，四位二进制数对应一个十六进制数<br><br>二进制数$\color{red}{101111001101}$</p>
-<pre><code class="no-highlight"> 1  0  1  1    1  1  0  0    1  1  0  1 
- 8  4  2  1    8  4  2  1    8  4  2  1 </code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1  0  1  1    1  1  0  0    1  1  0  1 </span><br><span class="line">8  4  2  1    8  4  2  1    8  4  2  1</span><br></pre></td></tr></table></figure>
 <p>十六进制数BCD</p>
 <h2 id="八进制和十六进制之间的转换"><a href="#八进制和十六进制之间的转换" class="headerlink" title="八进制和十六进制之间的转换"></a>八进制和十六进制之间的转换</h2><p>利用二进制为中介，就这么简单</p>
 <h1 id="位操作符"><a href="#位操作符" class="headerlink" title="位操作符"></a>位操作符</h1><h2 id="amp-与运算符"><a href="#amp-与运算符" class="headerlink" title="&amp;与运算符"></a>&amp;与运算符</h2><p>当两个位都是1时，结果才为1，否则为0</p>
-<pre><code class="no-highlight">  1 0 0 1 1
-&amp; 1 1 0 0 1
-&gt; 1 0 0 0 1</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  1 0 0 1 1</span><br><span class="line">&amp; 1 1 0 0 1</span><br><span class="line">&gt; 1 0 0 0 1</span><br></pre></td></tr></table></figure>
 <h2 id="或运算符"><a href="#或运算符" class="headerlink" title="|或运算符"></a>|或运算符</h2><p>两个位都是0时，结果才为0，否则为1</p>
-<pre><code class="no-highlight">  1 0 0 1 1
-| 1 1 0 0 1
-&gt; 1 1 0 1 1</code></pre>
-<h2 id="异或运算符"><a href="#异或运算符" class="headerlink" title="^异或运算符"></a>^异或运算符</h2><p>两个位相同才为0，不同则为1</p>
-<pre><code class="no-highlight">  1 0 0 1 1
-^ 1 1 0 0 1
-&gt; 0 1 0 1 0</code></pre>
-<h2 id="取反运算符"><a href="#取反运算符" class="headerlink" title="~取反运算符"></a>~取反运算符</h2><p>0变1，1变0</p>
-<pre><code class="no-highlight">  1 0 0 1 1
-~ 1 1 0 0 1
-&gt; 0 1 1 0 0</code></pre>
-<h2 id="lt-lt-左移运算"><a href="#lt-lt-左移运算" class="headerlink" title="&lt;&lt;左移运算"></a>&lt;&lt;左移运算</h2><p>向左进行移位操作，高位丢弃，低位补0。</p>
-<pre><code class="no-highlight">int a = 8;
-a &lt;&lt; 3;
-移位前：0000 0000 0000 0000 0000 0000 0000 1000
-移位后：0000 0000 0000 0000 0000 0000 0100 0000</code></pre>
-<h2 id="gt-gt-右移运算"><a href="#gt-gt-右移运算" class="headerlink" title="&gt;&gt;右移运算"></a>&gt;&gt;右移运算</h2><p>向右进行移位操作，对无符号数，高位补 0，对于有符号数，高位补符号位。</p>
-<pre><code class="no-highlight">unsigned int a = 8; a &gt;&gt; 3; 
-移位前：0000 0000 0000 0000 0000 0000 0000 1000 
-移位后：0000 0000 0000 0000 0000 0000 0000 0001 ​ 
-int a = -8; a &gt;&gt; 3; 
-移位前：1111 1111 1111 1111 1111 1111 1111 1000 
-移位前：1111 1111 1111 1111 1111 1111 1111 1111</code></pre>
-<h1 id="位运算技巧"><a href="#位运算技巧" class="headerlink" title="位运算技巧"></a>位运算技巧</h1><h2 id="位运算实现乘法和除法"><a href="#位运算实现乘法和除法" class="headerlink" title="位运算实现乘法和除法"></a>位运算实现乘法和除法</h2><p>我们先来看十进制，若对于一个十进制数8，左移一位，变成了80，而80=8×10，所以这样一来左移可以想为乘以了基数10。在二进制中，数 a 向右移一位，相当于将 a 除以 2；数 a 向左移一位，相当于将 a 乘以 2</p>
-<pre><code class="no-highlight">int a = 2;
-a &gt;&gt; 1; -&gt; 1
-a &lt;&lt; 1; -&gt; 4</code></pre>
-<h2 id="位运算判断奇偶"><a href="#位运算判断奇偶" class="headerlink" title="位运算判断奇偶"></a>位运算判断奇偶</h2><p>和十进制转换为二进制联系到一起，二进制第一位表示1，而其余位都是2的倍数，那么如果十进制数是奇数，那么它所对应的二进制第一位必定是1。那么判断一个十进制数是否是偶数，只需要把它所对应二进制数末尾提取出来，看是否为0即可</p>
-<pre><code class="cpp">if (0 == (a &amp; 1)) {
- //偶数
-}</code></pre>
-<h2 id="位运算求绝对值"><a href="#位运算求绝对值" class="headerlink" title="位运算求绝对值"></a>位运算求绝对值</h2><p>我们首先判断其符号位（整数右移 31 位得到 0，负数右移 31 位得到 -1,即 0xffffffff），然后根据符号进行相应的操作</p>
-<pre><code class="cpp">int abs(int a) {
-  int i = a &gt;&gt; 31;
-  return i == 0 ? a : (~a + 1);
-}</code></pre>
-<h2 id="位运算消除数位"><a href="#位运算消除数位" class="headerlink" title="位运算消除数位"></a>位运算消除数位</h2><p>给定一个二进制我们求特定几个二进制位的数（例如5 - 8位），通过 &amp; 和左 右移运算即可完成。<br>例如二进制数 1100 1010 求前四位数所代表的十进制。而我们的目的是把1010前的二进制位全都消成0，&amp;运算符正好可以帮助我们完成这个事情</p>
-<pre><code class="cpp">  1100 1010
-&amp; 0000 1111
--&gt;0000 1010
-202 &amp; 15即可</code></pre>
-<p>如果还不理解看下面</p>
-<pre><code class="no-highlight">1010 1111 我要取出 1010
-直接右移四位变成 1010
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  1 0 0 1 1</span><br><span class="line">| 1 1 0 0 1</span><br><span class="line">&gt; 1 1 0 1 1</span><br></pre></td></tr></table></figure>
 
-1010 1100 1111 我要取出 1100
-第一步右移四位变成1100
-第二步和1111做“与”运算
-  1010 1100
-&amp; 0000 1111
-= 0000 1100
-完成
-最后把1111转换为十进制数</code></pre>
+<h2 id="异或运算符"><a href="#异或运算符" class="headerlink" title="^异或运算符"></a>^异或运算符</h2><p>两个位相同才为0，不同则为1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  1 0 0 1 1</span><br><span class="line">^ 1 1 0 0 1</span><br><span class="line">&gt; 0 1 0 1 0</span><br></pre></td></tr></table></figure>
+
+<h2 id="取反运算符"><a href="#取反运算符" class="headerlink" title="~取反运算符"></a>~取反运算符</h2><p>0变1，1变0</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  1 0 0 1 1</span><br><span class="line">~ 1 1 0 0 1</span><br><span class="line">&gt; 0 1 1 0 0</span><br></pre></td></tr></table></figure>
+
+<h2 id="lt-lt-左移运算"><a href="#lt-lt-左移运算" class="headerlink" title="&lt;&lt;左移运算"></a>&lt;&lt;左移运算</h2><p>向左进行移位操作，高位丢弃，低位补0。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int a &#x3D; 8;</span><br><span class="line">a &lt;&lt; 3;</span><br><span class="line">移位前：0000 0000 0000 0000 0000 0000 0000 1000</span><br><span class="line">移位后：0000 0000 0000 0000 0000 0000 0100 0000</span><br></pre></td></tr></table></figure>
+
+<h2 id="gt-gt-右移运算"><a href="#gt-gt-右移运算" class="headerlink" title="&gt;&gt;右移运算"></a>&gt;&gt;右移运算</h2><p>向右进行移位操作，对无符号数，高位补 0，对于有符号数，高位补符号位。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">unsigned int a &#x3D; 8; a &gt;&gt; 3; </span><br><span class="line">移位前：0000 0000 0000 0000 0000 0000 0000 1000 </span><br><span class="line">移位后：0000 0000 0000 0000 0000 0000 0000 0001 ​ </span><br><span class="line">int a &#x3D; -8; a &gt;&gt; 3; </span><br><span class="line">移位前：1111 1111 1111 1111 1111 1111 1111 1000 </span><br><span class="line">移位前：1111 1111 1111 1111 1111 1111 1111 1111</span><br></pre></td></tr></table></figure>
+
+<h1 id="位运算技巧"><a href="#位运算技巧" class="headerlink" title="位运算技巧"></a>位运算技巧</h1><h2 id="位运算实现乘法和除法"><a href="#位运算实现乘法和除法" class="headerlink" title="位运算实现乘法和除法"></a>位运算实现乘法和除法</h2><p>我们先来看十进制，若对于一个十进制数8，左移一位，变成了80，而80=8×10，所以这样一来左移可以想为乘以了基数10。在二进制中，数 a 向右移一位，相当于将 a 除以 2；数 a 向左移一位，相当于将 a 乘以 2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int a &#x3D; 2;</span><br><span class="line">a &gt;&gt; 1; -&gt; 1</span><br><span class="line">a &lt;&lt; 1; -&gt; 4</span><br></pre></td></tr></table></figure>
+<h2 id="位运算判断奇偶"><a href="#位运算判断奇偶" class="headerlink" title="位运算判断奇偶"></a>位运算判断奇偶</h2><p>和十进制转换为二进制联系到一起，二进制第一位表示1，而其余位都是2的倍数，那么如果十进制数是奇数，那么它所对应的二进制第一位必定是1。那么判断一个十进制数是否是偶数，只需要把它所对应二进制数末尾提取出来，看是否为0即可</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="number">0</span> == (a &amp; <span class="number">1</span>)) &#123;</span><br><span class="line"> <span class="comment">//偶数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="位运算求绝对值"><a href="#位运算求绝对值" class="headerlink" title="位运算求绝对值"></a>位运算求绝对值</h2><p>我们首先判断其符号位（整数右移 31 位得到 0，负数右移 31 位得到 -1,即 0xffffffff），然后根据符号进行相应的操作</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">abs</span><span class="params">(<span class="keyword">int</span> a)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> i = a &gt;&gt; <span class="number">31</span>;</span><br><span class="line">  <span class="keyword">return</span> i == <span class="number">0</span> ? a : (~a + <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="位运算消除数位"><a href="#位运算消除数位" class="headerlink" title="位运算消除数位"></a>位运算消除数位</h2><p>给定一个二进制我们求特定几个二进制位的数（例如5 - 8位），通过 &amp; 和左 右移运算即可完成。<br>例如二进制数 1100 1010 求前四位数所代表的十进制。而我们的目的是把1010前的二进制位全都消成0，&amp;运算符正好可以帮助我们完成这个事情</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  <span class="number">1100</span> <span class="number">1010</span></span><br><span class="line">&amp; <span class="number">0000</span> <span class="number">1111</span></span><br><span class="line">-&gt;<span class="number">0000</span> <span class="number">1010</span></span><br><span class="line"><span class="number">202</span> &amp; <span class="number">15</span>即可</span><br></pre></td></tr></table></figure>
+<p>如果还不理解看下面</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1010 1111 我要取出 1010</span><br><span class="line">直接右移四位变成 1010</span><br><span class="line"></span><br><span class="line">1010 1100 1111 我要取出 1100</span><br><span class="line">第一步右移四位变成1100</span><br><span class="line">第二步和1111做“与”运算</span><br><span class="line">  1010 1100</span><br><span class="line">&amp; 0000 1111</span><br><span class="line">&#x3D; 0000 1100</span><br><span class="line">完成</span><br><span class="line">最后把1111转换为十进制数</span><br></pre></td></tr></table></figure>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">

@@ -13,7 +13,7 @@
     <meta name="description" content="题目链接原题链接
 题目描述
 思路一道用回溯算法的经典题。
-代码 vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; permute(vector&amp;lt;int&amp;gt;&amp;amp; nums,"> 
+代码123456789101112131415161718192021222324252627282930313233343536 vect,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -69,42 +69,7 @@
             <h1 id="题目链接"><a href="#题目链接" class="headerlink" title="题目链接"></a>题目链接</h1><p><a href="https://leetcode-cn.com/problems/permutations/" target="_blank" rel="noopener">原题链接</a></p>
 <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/46/descrobe.png" alt=""></p>
 <h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>一道用回溯算法的经典题。</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code class="cpp"> vector&lt;vector&lt;int&gt;&gt; permute(vector&lt;int&gt;&amp; nums) {
-    int len = nums.size();
-    vector&lt;vector&lt;int&gt;&gt; result;
-    vector&lt;int&gt; list;
-    vector&lt;int&gt; visited(len, 0);
-    //dfs(nums, list, result, visited, 0, len);
-    perm(nums, result, 0, len - 1);
-    return result;
-}
-void dfs(vector&lt;int&gt; &amp;nums, vector&lt;int&gt; &amp;list, vector&lt;vector&lt;int&gt;&gt; &amp;result, vector&lt;int&gt; &amp;visited, int pos, int len){
-    if (pos == len){
-        result.push_back(list);
-        return;
-    }
-    for (int i = 0; i &lt; len; i++){
-        if (!visited[i]){
-            visited[i] = 1;
-            list.push_back(nums[i]);
-            dfs(nums, list, result, visited, pos + 1, len);
-            list.pop_back();
-            visited[i] = 0;
-        }
-    }
-    return;
-}
-void perm(vector&lt;int&gt; &amp;nums, vector&lt;vector&lt;int&gt;&gt; &amp;result, int begin, int len){
-    if (begin == len){
-        result.push_back(nums);
-    } else {
-        for (int i = begin; i &lt;= len; i++){
-            swap(nums[i], nums[begin]);
-            perm(nums, result, begin + 1, len);
-            swap(nums[i], nums[begin]);
-        }
-    }
-}</code></pre>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">permute</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len = nums.size();</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; result;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="built_in">list</span>;</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">visited</span><span class="params">(len, <span class="number">0</span>)</span></span>;</span><br><span class="line">    <span class="comment">//dfs(nums, list, result, visited, 0, len);</span></span><br><span class="line">    perm(nums, result, <span class="number">0</span>, len - <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;nums, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;<span class="built_in">list</span>, <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; &amp;result, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;visited, <span class="keyword">int</span> pos, <span class="keyword">int</span> len)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (pos == len)&#123;</span><br><span class="line">        result.push_back(<span class="built_in">list</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span> (!visited[i])&#123;</span><br><span class="line">            visited[i] = <span class="number">1</span>;</span><br><span class="line">            <span class="built_in">list</span>.push_back(nums[i]);</span><br><span class="line">            dfs(nums, <span class="built_in">list</span>, result, visited, pos + <span class="number">1</span>, len);</span><br><span class="line">            <span class="built_in">list</span>.pop_back();</span><br><span class="line">            visited[i] = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">perm</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;nums, <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; &amp;result, <span class="keyword">int</span> begin, <span class="keyword">int</span> len)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (begin == len)&#123;</span><br><span class="line">        result.push_back(nums);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = begin; i &lt;= len; i++)&#123;</span><br><span class="line">            swap(nums[i], nums[begin]);</span><br><span class="line">            perm(nums, result, begin + <span class="number">1</span>, len);</span><br><span class="line">            swap(nums[i], nums[begin]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
