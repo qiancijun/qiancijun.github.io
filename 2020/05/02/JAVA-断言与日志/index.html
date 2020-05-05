@@ -5,12 +5,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>神奇口袋 - hope you remember me</title>
+    <title>JAVA-断言与日志 - 神奇口袋</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
-    
+    <meta name="description" content="断言在一个具有自我保护能力的程序中，断言很常用，它允许对程序提出一个判断，可以将断言看作是异常处理的一种高级形式。断言表示为一些布尔表达式,程序员相信在程序中的某个特定点该表达式值为真。 
+概念断言,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -33,27 +34,100 @@
 <body class="loading">
     <span id="config-title" style="display:none">神奇口袋</span>
     <div id="loader"></div>
-    <div id="single" class="page">
-    <div id="top">
-        <a class="iconfont icon-left image-icon" href="javascript:history.back()"></a>
-    </div>
-    <div class="section">
-        <div class="article">
-            <div class="main">
-                <div class="content">
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://xlich.top"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">JAVA-断言与日志</h3>
+    <div class="social">
+        <div>
+            <div class="share">
                 
-                    <div class="set">
-  <h2>分类</h2>
-  <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/">LeetCode</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/">Algorithm</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mysql/">Mysql</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Golang/">Golang</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><span class="category-list-count">1</span></li></ul>
-</div>
-
-                
-                </div>
             </div>
+            <div id="qr"></div>
         </div>
     </div>
+    <div class="scrollbar"></div>
 </div>
 
+   
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">JAVA-断言与日志</h1>
+        <div class="stuff">
+            <span>五月 02, 2020</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h1 id="断言"><a href="#断言" class="headerlink" title="断言"></a>断言</h1><p>在一个具有自我保护能力的程序中，断言很常用，它允许对程序提出一个判断，可以将断言看作是异常处理的一种高级形式。断言表示为一些布尔表达式,程序员相信在程序中的某个特定点该表达式值为真。 </p>
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>断言机制允许在测试期间向代码中插入一些检查语句。当代码发布时，这些插入的检测语句将会被自动移走。<br>Java引入了关键字$\color{blue}{assert}$关键字，这个关键字有两个形式：</p>
+<ul>
+<li>assert 条件;</li>
+<li>assert 条件: 表达式;</li>
+</ul>
+<p>这两种形式都会对条件进行检测，如果结果为false，则抛出一个AssertionError异常。在第二种形式中，表达式将被传入AssertionError的构造器，并转换成一个消息字符串。<br>假设我们想要检查Math.sqrt(x)是不是有意义，x是经过另一个式子计算后的值；或者x是一个方法的参数，而这个方法要求参数是正值。我们想要进行检查以免出现错误。可以用抛出异常来解决这个问题。<br><code>if (x &lt; 0) throw new IllegalArgumentException(&quot;x &lt; 0&quot;);</code><br>但是这段代码会一直保留在程序中，即使测试完毕也不会自动地删除，此时我们可以使用断言机制来做测试：<br><code>assert x &gt;= 0;</code><br>或者将x的实际值传递给AssertionError对象，从而可以在后面显示出来：<br><code>assert x &gt;= 0: x;</code></p>
+<h2 id="使用断言完成参数检查"><a href="#使用断言完成参数检查" class="headerlink" title="使用断言完成参数检查"></a>使用断言完成参数检查</h2><p>在Java中给出了三种处理系统错误的机制：</p>
+<ul>
+<li>抛出一个异常</li>
+<li>日志</li>
+<li>使用断言</li>
+</ul>
+<p>什么时候使用断言：</p>
+<ul>
+<li>断言失败是致命的、不可恢复的错误</li>
+<li>断言检查只用于开发和测试阶段</li>
+</ul>
+<p>因此，不应该使用断言向程序的其他部分通告发生了可恢复性的错误，或者，不应该作为程序向用户通告问题的手段。断言只应该用于在测试阶段确定程序内部的错误位置。</p>
+<h1 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h1>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='https://link.hhtjim.com/163/155827.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='https://link.hhtjim.com/163/1491163.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='https://link.hhtjim.com/163/1992707.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='true'
+        data-ci='Iv1.06e5c405a7731b45'
+        data-cs='2fcfe85902a7d5812fa4b299b56a6f194c98e08a'
+        data-r='qiancijun.github.io'
+        data-o='qiancijun'
+        data-a='qiancijun'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#断言"><span class="toc-number">1.</span> <span class="toc-text">断言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#概念"><span class="toc-number">1.1.</span> <span class="toc-text">概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用断言完成参数检查"><span class="toc-number">1.2.</span> <span class="toc-text">使用断言完成参数检查</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#日志"><span class="toc-number">2.</span> <span class="toc-text">日志</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":250,"height":400},"mobile":{"show":false},"log":false});</script></body>
 
 

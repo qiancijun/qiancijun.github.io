@@ -94,6 +94,7 @@
 <p>class Employee implements Cloneable, Comparable</p>
 </blockquote>
 <h2 id="接口与抽象类"><a href="#接口与抽象类" class="headerlink" title="接口与抽象类"></a>接口与抽象类</h2><p>既然已经有了抽象类，为什么还要接口？原因就在于Java不同于C++能实现多继承，在Java中每个类只能扩展一个类。而接口可以实现在C++中的多重继承，同时能够避免多重继承的复杂性和低效性。</p>
+<h2 id="接口中的方法"><a href="#接口中的方法" class="headerlink" title="接口中的方法"></a>接口中的方法</h2><p>接口允许拥有自己的私有方法，默认方法和静态方法。其中静态方法只能按照<code>接口名.方法名</code>来进行调用。接口中允许拥有变量，但是该变量为静态常量<code>public static final</code>，修饰符可省略。接口与接口直接可以多继承。</p>
 <h1 id="回调"><a href="#回调" class="headerlink" title="回调"></a>回调</h1><p>回调是一种常见的设计模式。（书上的回调示例以及解释个人觉得讲的不是很清楚，以下都是我的理解）。加入现在我有两个类，一个叫A，一个叫B。其中A叫上级，B叫下级。回调机制一般都出现在分级类的方法中。在上级类A中有一个方法叫a()，在下级类B中有一个方法b()，而b()里又调用了方法a()，那么a()就被称为回调函数。这个例子可能还是很难懂，以领导和员工为例，领导要求员工干活，员工干完了回馈给领导信息“我做完了”。在这种模式中，可以指出某个特定事件发生时应该采取的动作。</p>
 <p>下面举一个例子：</p>
 <ol>
@@ -141,7 +142,7 @@
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#接口"><span class="toc-number">1.</span> <span class="toc-text">接口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#接口概念"><span class="toc-number">1.1.</span> <span class="toc-text">接口概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现接口"><span class="toc-number">1.2.</span> <span class="toc-text">实现接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#接口的特性"><span class="toc-number">1.3.</span> <span class="toc-text">接口的特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#接口与抽象类"><span class="toc-number">1.4.</span> <span class="toc-text">接口与抽象类</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#回调"><span class="toc-number">2.</span> <span class="toc-text">回调</span></a></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#接口"><span class="toc-number">1.</span> <span class="toc-text">接口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#接口概念"><span class="toc-number">1.1.</span> <span class="toc-text">接口概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现接口"><span class="toc-number">1.2.</span> <span class="toc-text">实现接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#接口的特性"><span class="toc-number">1.3.</span> <span class="toc-text">接口的特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#接口与抽象类"><span class="toc-number">1.4.</span> <span class="toc-text">接口与抽象类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#接口中的方法"><span class="toc-number">1.5.</span> <span class="toc-text">接口中的方法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#回调"><span class="toc-number">2.</span> <span class="toc-text">回调</span></a></li></ol>	
         </div>
     
 </div>

@@ -516,6 +516,7 @@
 <p>class Employee implements Cloneable, Comparable</p>
 </blockquote>
 <h2 id="接口与抽象类"><a href="#接口与抽象类" class="headerlink" title="接口与抽象类"></a>接口与抽象类</h2><p>既然已经有了抽象类，为什么还要接口？原因就在于Java不同于C++能实现多继承，在Java中每个类只能扩展一个类。而接口可以实现在C++中的多重继承，同时能够避免多重继承的复杂性和低效性。</p>
+<h2 id="接口中的方法"><a href="#接口中的方法" class="headerlink" title="接口中的方法"></a>接口中的方法</h2><p>接口允许拥有自己的私有方法，默认方法和静态方法。其中静态方法只能按照<code>接口名.方法名</code>来进行调用。接口中允许拥有变量，但是该变量为静态常量<code>public static final</code>，修饰符可省略。接口与接口直接可以多继承。</p>
 <h1 id="回调"><a href="#回调" class="headerlink" title="回调"></a>回调</h1><p>回调是一种常见的设计模式。（书上的回调示例以及解释个人觉得讲的不是很清楚，以下都是我的理解）。加入现在我有两个类，一个叫A，一个叫B。其中A叫上级，B叫下级。回调机制一般都出现在分级类的方法中。在上级类A中有一个方法叫a()，在下级类B中有一个方法b()，而b()里又调用了方法a()，那么a()就被称为回调函数。这个例子可能还是很难懂，以领导和员工为例，领导要求员工干活，员工干完了回馈给领导信息“我做完了”。在这种模式中，可以指出某个特定事件发生时应该采取的动作。</p>
 <p>下面举一个例子：</p>
 <ol>
@@ -2424,5 +2425,259 @@
       <categories>
         <category>JAVA</category>
       </categories>
+  </entry>
+  <entry>
+    <title>JAVA-异常处理</title>
+    <url>/2020/05/02/JAVA-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/</url>
+    <content><![CDATA[<h1 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h1><p>假设一个程序运行期间出现了错误。程序应该：</p>
+<ul>
+<li>返回一种安全状态，并能够让用户执行一些其他的命令</li>
+<li>允许用户保存所有操作结果，并且以妥善的方式终止程序</li>
+</ul>
+<h2 id="异常分类"><a href="#异常分类" class="headerlink" title="异常分类"></a>异常分类</h2><p>在Java中，异常对象都是派生于Throwable类的一个实例。所有的异常都是由Throwable继承而来，但在下一层立即分解为两个分支：error和Exception。<br>Error类层次描述了Java运行时系统的内部错误和资源耗尽错误。应用程序不应该抛出这种类型的对象。<br>Exception层次又分为两个分支：IOException和RuntimeException。由程序错误导致的异常属于RuntimeException；而程序本身没有问题，由于I/O错误这类问题导致的异常属于其他异常。<br>RuntimeException错误我们可以不对其进行处理，只是抛出，交给JVM处理。</p>
+<h2 id="异常处理-1"><a href="#异常处理-1" class="headerlink" title="异常处理"></a>异常处理</h2><p>throwable中定义了三个异常处理的方法</p>
+<table>
+<thead>
+<tr>
+<th align="left">方法名</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">String getMessage()</td>
+<td align="left">返回此异常的简短描述</td>
+</tr>
+<tr>
+<td align="left">String toString()</td>
+<td align="left">返回此异常的详细信息字符串（一般不用）</td>
+</tr>
+<tr>
+<td align="left">void printStackTrace()</td>
+<td align="left">将异常追踪输出至标准错误流</td>
+</tr>
+</tbody></table>
+<h3 id="throw"><a href="#throw" class="headerlink" title="throw"></a>throw</h3><p>在Java中，提供了一个关键字$\color{blue}{throw}。它用来抛出一个指定的异常对象。步骤：</p>
+<ul>
+<li>创建一个异常对象，封装一些提示信息</li>
+<li>需要将这个异常对象告知给调用者<br>throw用在方法内，用来抛出一个异常对象。将这个异常对象传递到调用者出，并结束当前方法的执行。<br>语法：<br><code>throw new 异常类名(参数);</code></li>
+</ul>
+<h3 id="声明异常throws"><a href="#声明异常throws" class="headerlink" title="声明异常throws"></a>声明异常throws</h3><ul>
+<li>声明异常：将问题标识出来，报告给调用者。如果方法内通过了throw抛出了其他异常，而没有进行捕获处理，那么必须通过throws进行声明，交给调用者处理。<br>声明异常格式：<br><code>修饰符 返回值类型 方法名(参数列表) throws 异常类名1， 异常类名2 ……</code></li>
+</ul>
+<h3 id="捕获异常try-catch"><a href="#捕获异常try-catch" class="headerlink" title="捕获异常try-catch"></a>捕获异常try-catch</h3><p>如果某个异常发生的时候并没有在任何地方进行捕获，那程序就会终止执行，并在控制台上打印出异常信息，其中包括异常的类型和堆栈的内容。<br>try-catch语法：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    code</span><br><span class="line">&#125; <span class="keyword">catch</span> (ExceptionType1 e)&#123;</span><br><span class="line">    handle Exception</span><br><span class="line">&#125; <span class="keyword">catch</span> (ExceptionType2 e)&#123;</span><br><span class="line">    handle Exception</span><br><span class="line">&#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">    code</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果在try语句块中的任何代码抛出了一个在catch子句中说明的异常类，那么：</p>
+<ul>
+<li>程序将跳过try语句块的其余代码。</li>
+<li>程序将执行catch子句中的异常处理代码。</li>
+<li>finally中的代码无论有没有异常都会被执行。</li>
+<li>如果finally中有return语句，返回的永远时finally中的值</li>
+</ul>
+<p>如果在try语句块中没有抛出任何异常，那么程序将跳过catch子句。catch可以有多句，捕获多个异常</p>
+<p>多个异常捕获时的注意事项：</p>
+<ul>
+<li>catch里面定义的异常变量，如果有子父类的关系，子类的异常变量必须写在父类异常变量之前</li>
+<li>父类方法没有抛出异常，子类覆盖父类方法时也不可抛出异常。此时子类出现异常，只能使用try-catch进行处理</li>
+</ul>
+<h2 id="自定义异常"><a href="#自定义异常" class="headerlink" title="自定义异常"></a>自定义异常</h2><p>JDK所提供的异常类型有限，在开发的需求中可以根据自己的需要去定义自己的异常类。</p>
+<ol>
+<li>自定义一个编译期异常：自定义类继承于Exception。</li>
+<li>自定义一个运行时期异常：自定义类继承于RuntimeException。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>JAVA-字符串</title>
+    <url>/2020/05/02/JAVA-%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>JAVA-IO流</title>
+    <url>/2020/05/02/JAVA-IO%E6%B5%81/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>JAVA-集合</title>
+    <url>/2020/05/02/JAVA-%E9%9B%86%E5%90%88/</url>
+    <content><![CDATA[<h1 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h1><ul>
+<li>java.util.List接口继承自Collection接口，是单列集合的一个重要分支。<br>本文只记录了具体集合的用法，这些集合怎么实现的，是数据结构课程的内容，本文不给予解释（篇幅太长）。<h2 id="List"><a href="#List" class="headerlink" title="List"></a>List</h2></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">方法名</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">void add(E newElement)</td>
+<td align="left">在当前位置前添加一个元素</td>
+</tr>
+<tr>
+<td align="left">void addAll(int i, Collection&lt;? extends E&gt; elements)</td>
+<td align="left">将某个集合中的所有元素添加到指定位置</td>
+</tr>
+<tr>
+<td align="left">E remove(int i)</td>
+<td align="left">删除给定位置的元素并返回这个元素</td>
+</tr>
+<tr>
+<td align="left">E get(int i)</td>
+<td align="left">获取给定位置的元素</td>
+</tr>
+<tr>
+<td align="left">E set(int i, E element)</td>
+<td align="left">用新元素取代给定位置的元素，并返回原来那个元素</td>
+</tr>
+<tr>
+<td align="left">int indexOf(Object element)</td>
+<td align="left">返回与之前元素相等的元素在列表中第一次出现的位置，如果没有返回-1</td>
+</tr>
+<tr>
+<td align="left">void set(E newElement)</td>
+<td align="left">用新元素取代next或previous上次访问的元素。如果在next或previous上次调用之后列表结构被修改了，将抛出一个IllegalStateException异常</td>
+</tr>
+<tr>
+<td align="left">boolean hasPrevious()</td>
+<td align="left">当反向迭代列表时，还有可供访问的元素，返回true</td>
+</tr>
+<tr>
+<td align="left">E previous()</td>
+<td align="left">返回前一个对象。如果已经到达了列表的头部，就抛出一个NoSuchElementException异常</td>
+</tr>
+<tr>
+<td align="left">int nextIndex()</td>
+<td align="left">返回下一次调用next方法时将返回的元素索引</td>
+</tr>
+<tr>
+<td align="left">int previousIndex()</td>
+<td align="left">返回下一次调用previous将返回的元素索引</td>
+</tr>
+</tbody></table>
+<h3 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h3><p>ArrayList的结构是数组结构。元素增删慢，查找快。$\color{red}{此实现不是同步的}$。如果多个线程同时访问一个ArrayList实例，而其中至少一个线程从结构上修改了列表，那么它对外必须保持同步。</p>
+<h3 id="LinkedList"><a href="#LinkedList" class="headerlink" title="LinkedList"></a>LinkedList</h3><p>LinkedList的结构时链表结构。元素增删快。双向链表</p>
+<table>
+<thead>
+<tr>
+<th align="left">方法名</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">void addFirst(E element)</td>
+<td align="left">添加元素</td>
+</tr>
+<tr>
+<td align="left">void addLast(E element)</td>
+<td align="left">添加元素</td>
+</tr>
+<tr>
+<td align="left">同样的有remove方法和get方法，pop等效于removeFirst，push等效于addFirst</td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<h3 id="Queue"><a href="#Queue" class="headerlink" title="Queue"></a>Queue</h3><p>特点：先进先出<br><code>Queue&lt;Integer&gt; q = new LinkedList&lt;&gt;();</code></p>
+<table>
+<thead>
+<tr>
+<th align="left">方法名</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">void add(E element)</td>
+<td align="left">在队尾添加元素</td>
+</tr>
+<tr>
+<td align="left">E element()</td>
+<td align="left">获取队头元素，不会移除队头元素，若队列为空会抛出异常</td>
+</tr>
+<tr>
+<td align="left">E peek()</td>
+<td align="left">获取队头元素，不会移除队头元素，队列为空不会抛出异常</td>
+</tr>
+<tr>
+<td align="left">E remove()</td>
+<td align="left">移除队头元素并且返回该元素，队列为空会抛出异常</td>
+</tr>
+<tr>
+<td align="left">E poll()</td>
+<td align="left">移除队头元素并且返回该元素，队列为空不会抛出异常</td>
+</tr>
+</tbody></table>
+<h3 id="PriorityQueue"><a href="#PriorityQueue" class="headerlink" title="PriorityQueue"></a>PriorityQueue</h3><p>优先队列:<code>PriorityQueue&lt;Integer&gt; pq = new PriorityQueue&lt;&gt;();</code></p>
+<blockquote>
+<p>PriorityQueue(Comparator&lt;? super E&gt; comparator)<br>Creates a PriorityQueue with the default initial capacity and whose elements are ordered according to the specified comparator.</p>
+</blockquote>
+<p>使用样例，可以new一个Compartor，也可以直接使用Lambda表达式。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QueueTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        PriorityQueue&lt;Person&gt; pq = <span class="keyword">new</span> PriorityQueue&lt;&gt;((Person p1, Person p2)-&gt;&#123;</span><br><span class="line">            <span class="keyword">return</span> p1.age - p2.age;</span><br><span class="line">        &#125;);</span><br><span class="line">        pq.add(<span class="keyword">new</span> Person(<span class="number">25</span>, <span class="string">"A"</span>));</span><br><span class="line">        pq.add(<span class="keyword">new</span> Person(<span class="number">30</span>, <span class="string">"B"</span>));</span><br><span class="line">        pq.add(<span class="keyword">new</span> Person(<span class="number">10</span>, <span class="string">"C"</span>));</span><br><span class="line">        <span class="keyword">for</span> (Person a: pq)&#123;</span><br><span class="line">            System.out.println(a.name + <span class="string">" "</span> + a.age);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> age;</span><br><span class="line">    String name;</span><br><span class="line">    Person(<span class="keyword">int</span> age, String name)&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Stack"><a href="#Stack" class="headerlink" title="Stack"></a>Stack</h3><p>特点：先进后出<br><code>Stack&lt;Integer&gt; s = new Stack&lt;&gt;();</code></p>
+<table>
+<thead>
+<tr>
+<th align="left">方法名</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">E push(E item)</td>
+<td align="left">压栈</td>
+</tr>
+<tr>
+<td align="left">E pop()</td>
+<td align="left">出栈并且返回该元素</td>
+</tr>
+<tr>
+<td align="left">E peek()</td>
+<td align="left">返回堆顶元素</td>
+</tr>
+<tr>
+<td align="left">boolean empty()</td>
+<td align="left">栈是否为空</td>
+</tr>
+</tbody></table>
+<h2 id="set"><a href="#set" class="headerlink" title="set"></a>set</h2><p>没有重复元素，没有下标索引（无序）。查询速度快。</p>
+<h3 id="HashSet"><a href="#HashSet" class="headerlink" title="HashSet"></a>HashSet</h3><p><code>HashSet&lt;Integer&gt; s = new HashSet&lt;&gt;();</code><br><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Java/Collection/HashSet.png" alt="HashSet"></p>
+<h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><h3 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h3><p><code>HashMap&lt;String, Integer&gt; m = new HashMap&lt;&gt;();</code><br><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Java/Collection/HashMap.png" alt="HashMap"></p>
+]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>JAVA-断言与日志</title>
+    <url>/2020/05/02/JAVA-%E6%96%AD%E8%A8%80%E4%B8%8E%E6%97%A5%E5%BF%97/</url>
+    <content><![CDATA[<h1 id="断言"><a href="#断言" class="headerlink" title="断言"></a>断言</h1><p>在一个具有自我保护能力的程序中，断言很常用，它允许对程序提出一个判断，可以将断言看作是异常处理的一种高级形式。断言表示为一些布尔表达式,程序员相信在程序中的某个特定点该表达式值为真。 </p>
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>断言机制允许在测试期间向代码中插入一些检查语句。当代码发布时，这些插入的检测语句将会被自动移走。<br>Java引入了关键字$\color{blue}{assert}$关键字，这个关键字有两个形式：</p>
+<ul>
+<li>assert 条件;</li>
+<li>assert 条件: 表达式;</li>
+</ul>
+<p>这两种形式都会对条件进行检测，如果结果为false，则抛出一个AssertionError异常。在第二种形式中，表达式将被传入AssertionError的构造器，并转换成一个消息字符串。<br>假设我们想要检查Math.sqrt(x)是不是有意义，x是经过另一个式子计算后的值；或者x是一个方法的参数，而这个方法要求参数是正值。我们想要进行检查以免出现错误。可以用抛出异常来解决这个问题。<br><code>if (x &lt; 0) throw new IllegalArgumentException(&quot;x &lt; 0&quot;);</code><br>但是这段代码会一直保留在程序中，即使测试完毕也不会自动地删除，此时我们可以使用断言机制来做测试：<br><code>assert x &gt;= 0;</code><br>或者将x的实际值传递给AssertionError对象，从而可以在后面显示出来：<br><code>assert x &gt;= 0: x;</code></p>
+<h2 id="使用断言完成参数检查"><a href="#使用断言完成参数检查" class="headerlink" title="使用断言完成参数检查"></a>使用断言完成参数检查</h2><p>在Java中给出了三种处理系统错误的机制：</p>
+<ul>
+<li>抛出一个异常</li>
+<li>日志</li>
+<li>使用断言</li>
+</ul>
+<p>什么时候使用断言：</p>
+<ul>
+<li>断言失败是致命的、不可恢复的错误</li>
+<li>断言检查只用于开发和测试阶段</li>
+</ul>
+<p>因此，不应该使用断言向程序的其他部分通告发生了可恢复性的错误，或者，不应该作为程序向用户通告问题的手段。断言只应该用于在测试阶段确定程序内部的错误位置。</p>
+<h1 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h1>]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>JAVA-File类</title>
+    <url>/2020/05/05/JAVA-File%E7%B1%BB/</url>
+    <content><![CDATA[]]></content>
   </entry>
 </search>

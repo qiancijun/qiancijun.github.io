@@ -1,0 +1,275 @@
+
+<!DOCTYPE html>
+<html lang="zh_CH" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>JAVA-异常处理 - 神奇口袋</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="qiancijun,"> 
+    <meta name="description" content="异常处理假设一个程序运行期间出现了错误。程序应该：
+
+返回一种安全状态，并能够让用户执行一些其他的命令
+允许用户保存所有操作结果，并且以妥善的方式终止程序
+
+异常分类在Java中，异常对象都是派生于,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">神奇口袋</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://xlich.top"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">JAVA-异常处理</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+   
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">JAVA-异常处理</h1>
+        <div class="stuff">
+            <span>五月 02, 2020</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h1 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h1><p>假设一个程序运行期间出现了错误。程序应该：</p>
+<ul>
+<li>返回一种安全状态，并能够让用户执行一些其他的命令</li>
+<li>允许用户保存所有操作结果，并且以妥善的方式终止程序</li>
+</ul>
+<h2 id="异常分类"><a href="#异常分类" class="headerlink" title="异常分类"></a>异常分类</h2><p>在Java中，异常对象都是派生于Throwable类的一个实例。所有的异常都是由Throwable继承而来，但在下一层立即分解为两个分支：error和Exception。<br>Error类层次描述了Java运行时系统的内部错误和资源耗尽错误。应用程序不应该抛出这种类型的对象。<br>Exception层次又分为两个分支：IOException和RuntimeException。由程序错误导致的异常属于RuntimeException；而程序本身没有问题，由于I/O错误这类问题导致的异常属于其他异常。<br>RuntimeException错误我们可以不对其进行处理，只是抛出，交给JVM处理。</p>
+<h2 id="异常处理-1"><a href="#异常处理-1" class="headerlink" title="异常处理"></a>异常处理</h2><p>throwable中定义了三个异常处理的方法</p>
+<table>
+<thead>
+<tr>
+<th align="left">方法名</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">String getMessage()</td>
+<td align="left">返回此异常的简短描述</td>
+</tr>
+<tr>
+<td align="left">String toString()</td>
+<td align="left">返回此异常的详细信息字符串（一般不用）</td>
+</tr>
+<tr>
+<td align="left">void printStackTrace()</td>
+<td align="left">将异常追踪输出至标准错误流</td>
+</tr>
+</tbody></table>
+<h3 id="throw"><a href="#throw" class="headerlink" title="throw"></a>throw</h3><p>在Java中，提供了一个关键字$\color{blue}{throw}。它用来抛出一个指定的异常对象。步骤：</p>
+<ul>
+<li>创建一个异常对象，封装一些提示信息</li>
+<li>需要将这个异常对象告知给调用者<br>throw用在方法内，用来抛出一个异常对象。将这个异常对象传递到调用者出，并结束当前方法的执行。<br>语法：<br><code>throw new 异常类名(参数);</code></li>
+</ul>
+<h3 id="声明异常throws"><a href="#声明异常throws" class="headerlink" title="声明异常throws"></a>声明异常throws</h3><ul>
+<li>声明异常：将问题标识出来，报告给调用者。如果方法内通过了throw抛出了其他异常，而没有进行捕获处理，那么必须通过throws进行声明，交给调用者处理。<br>声明异常格式：<br><code>修饰符 返回值类型 方法名(参数列表) throws 异常类名1， 异常类名2 ……</code></li>
+</ul>
+<h3 id="捕获异常try-catch"><a href="#捕获异常try-catch" class="headerlink" title="捕获异常try-catch"></a>捕获异常try-catch</h3><p>如果某个异常发生的时候并没有在任何地方进行捕获，那程序就会终止执行，并在控制台上打印出异常信息，其中包括异常的类型和堆栈的内容。<br>try-catch语法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    code</span><br><span class="line">&#125; <span class="keyword">catch</span> (ExceptionType1 e)&#123;</span><br><span class="line">    handle Exception</span><br><span class="line">&#125; <span class="keyword">catch</span> (ExceptionType2 e)&#123;</span><br><span class="line">    handle Exception</span><br><span class="line">&#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">    code</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果在try语句块中的任何代码抛出了一个在catch子句中说明的异常类，那么：</p>
+<ul>
+<li>程序将跳过try语句块的其余代码。</li>
+<li>程序将执行catch子句中的异常处理代码。</li>
+<li>finally中的代码无论有没有异常都会被执行。</li>
+<li>如果finally中有return语句，返回的永远时finally中的值</li>
+</ul>
+<p>如果在try语句块中没有抛出任何异常，那么程序将跳过catch子句。catch可以有多句，捕获多个异常</p>
+<p>多个异常捕获时的注意事项：</p>
+<ul>
+<li>catch里面定义的异常变量，如果有子父类的关系，子类的异常变量必须写在父类异常变量之前</li>
+<li>父类方法没有抛出异常，子类覆盖父类方法时也不可抛出异常。此时子类出现异常，只能使用try-catch进行处理</li>
+</ul>
+<h2 id="自定义异常"><a href="#自定义异常" class="headerlink" title="自定义异常"></a>自定义异常</h2><p>JDK所提供的异常类型有限，在开发的需求中可以根据自己的需要去定义自己的异常类。</p>
+<ol>
+<li>自定义一个编译期异常：自定义类继承于Exception。</li>
+<li>自定义一个运行时期异常：自定义类继承于RuntimeException。</li>
+</ol>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='https://link.hhtjim.com/163/155827.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='https://link.hhtjim.com/163/1491163.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='https://link.hhtjim.com/163/1992707.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='true'
+        data-ci='Iv1.06e5c405a7731b45'
+        data-cs='2fcfe85902a7d5812fa4b299b56a6f194c98e08a'
+        data-r='qiancijun.github.io'
+        data-o='qiancijun'
+        data-a='qiancijun'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#异常处理"><span class="toc-number">1.</span> <span class="toc-text">异常处理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#异常分类"><span class="toc-number">1.1.</span> <span class="toc-text">异常分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异常处理-1"><span class="toc-number">1.2.</span> <span class="toc-text">异常处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#throw"><span class="toc-number">1.2.1.</span> <span class="toc-text">throw</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#声明异常throws"><span class="toc-number">1.2.2.</span> <span class="toc-text">声明异常throws</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#捕获异常try-catch"><span class="toc-number">1.2.3.</span> <span class="toc-text">捕获异常try-catch</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义异常"><span class="toc-number">1.3.</span> <span class="toc-text">自定义异常</span></a></li></ol></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":250,"height":400},"mobile":{"show":false},"log":false});</script></body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-163098031-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+<script type="text/javascript" src="/js/love.js"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</html>
