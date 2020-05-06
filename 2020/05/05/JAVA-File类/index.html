@@ -130,6 +130,8 @@ public File(String ,">
 <td align="left">返回由此File表示的文件的长度</td>
 </tr>
 </tbody></table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    String pathname = <span class="string">"word.txt"</span>;</span><br><span class="line">    File f = <span class="keyword">new</span> File(pathname);</span><br><span class="line">    System.out.println(<span class="string">"文件绝对路径:"</span>+f.getAbsolutePath());</span><br><span class="line">    System.out.println(<span class="string">"文件构造路径:"</span>+f.getPath());</span><br><span class="line">    System.out.println(<span class="string">"文件名称:"</span>+f.getName());</span><br><span class="line">    System.out.println(<span class="string">"文件长度:"</span>+f.length()+<span class="string">"字节"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h3 id="判断功能的方法"><a href="#判断功能的方法" class="headerlink" title="判断功能的方法"></a>判断功能的方法</h3><table>
 <thead>
 <tr>
@@ -174,6 +176,8 @@ public File(String ,">
 <td align="left">创建由此File表示的目录，包括任何必需但不存在的父目录</td>
 </tr>
 </tbody></table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    String pathname = <span class="string">"text.txt"</span>;</span><br><span class="line">    File f = <span class="keyword">new</span> File(pathname);</span><br><span class="line">    <span class="keyword">if</span> (!f.exists())&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">boolean</span> newFile = f.createNewFile();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h3 id="静态成员"><a href="#静态成员" class="headerlink" title="静态成员"></a>静态成员</h3><ul>
 <li><code>static String Pathseparator</code> ：与系统有关的路径分隔符 windows：分号 Linux：冒号</li>
 <li><code>static String separator</code>：与系统有关的文件名分隔符 Windows：反斜杠 Linux：正斜杠</li>
@@ -183,7 +187,60 @@ public File(String ,">
 <li><strong>绝对路径</strong>：从盘符开始的路径，这是一个完整的路径。</li>
 <li><strong>相对路径</strong>：相对于项目目录的路径，这是一个便捷的路径，开发中经常使用。</li>
 </ul>
-
+<h2 id="目录遍历"><a href="#目录遍历" class="headerlink" title="目录遍历"></a>目录遍历</h2><table>
+<thead>
+<tr>
+<th align="left">方法名</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">public String[] list()</td>
+<td align="left">返回一个String数组，表示该File目录中的所有子文件或目录</td>
+</tr>
+<tr>
+<td align="left">public File[] listFiles()</td>
+<td align="left">返回一个File数组，表示该File目录中的所有的子文件或目录</td>
+</tr>
+</tbody></table>
+<p>注：</p>
+<ul>
+<li>list和listFiles方法遍历的是构造方法中给出的目录</li>
+<li>如果构造方法给出的目录的路径不存在，会抛出空指针异常</li>
+<li>如果构造方法给出的目录的路径不是一个目录，会抛出空指针异常</li>
+</ul>
+<p>listFiles实现原理：</p>
+<ul>
+<li>listFiles会对构造方法中传递的目录进行遍历，获取每一个文件/文件夹封装成File对象</li>
+<li>listFiles会调用传递参数的过滤器的方法accept</li>
+<li>listFiles会把遍历到得每一个File对象，传递给accept方法的参数pathname</li>
+</ul>
+<h2 id="文件过滤器"><a href="#文件过滤器" class="headerlink" title="文件过滤器"></a>文件过滤器</h2><ul>
+<li><p><code>java.io.FileFilter</code>是一个接口，是File的过滤器。 该接口的对象可以传递给File类的<code>listFiles(FileFilter)</code> 作为参数， 接口中只有一个方法。</p>
+<ul>
+<li><code>boolean accept(File pathname)</code> ：测试pathname是否应该包含在当前File目录中，符合则返回true。</li>
+</ul>
+</li>
+<li><p><code>java.io.FilenameFilter</code>是一个接口，是File的过滤器。 该接口的对象可以传递给File类的<code>listFiles(FilenameFilter)</code> 作为参数， 接口中只有一个方法。</p>
+<ul>
+<li><code>boolean accept(File dir, String name)</code> ：测试指定文件是否应该包含在某一文件列表中，符合则返回true。</li>
+</ul>
+</li>
+</ul>
+<p>listFiles重载方法：<br>|方法名|作用|<br>|:-|:-|<br>|public File[] listFiles(FileFilter filefilter)|用于抽象路径名的过滤器，用来过滤文件|<br>|public File[] listFiles(FilenameFileter filenamefilter)|用于过滤文件名称|</p>
+<p><strong>分析</strong>：</p>
+<ol>
+<li>接口作为参数，需要传递子类对象，重写其中方法。我们选择匿名内部类方式，比较简单。</li>
+<li><code>accept</code>方法，参数为File，表示当前File下所有的子文件和子目录。保留住则返回true，过滤掉则返回false。保留规则：<ol>
+<li>要么是.java文件。</li>
+<li>要么是目录，用于继续遍历。</li>
+</ol>
+</li>
+<li>通过过滤器的作用，<code>listFiles(FileFilter)</code>返回的数组元素中，子文件对象都是符合条件的，可以直接打印。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DiGuiDemo4</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        File dir = <span class="keyword">new</span> File(<span class="string">"D:\\aaa"</span>);</span><br><span class="line">        printDir2(dir);</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printDir2</span><span class="params">(File dir)</span> </span>&#123;</span><br><span class="line">      	<span class="comment">// 匿名内部类方式,创建过滤器子类对象</span></span><br><span class="line">        File[] files = dir.listFiles(<span class="keyword">new</span> FileFilter() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">accept</span><span class="params">(File pathname)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> pathname.getName().endsWith(<span class="string">".java"</span>)||pathname.isDirectory();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">      	<span class="comment">// 循环打印</span></span><br><span class="line">        <span class="keyword">for</span> (File file : files) &#123;</span><br><span class="line">            <span class="keyword">if</span> (file.isFile()) &#123;</span><br><span class="line">                System.out.println(<span class="string">"文件名:"</span> + file.getAbsolutePath());</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                printDir2(file);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用Lambda表达式</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printDir3</span><span class="params">(File dir)</span> </span>&#123;</span><br><span class="line">  	<span class="comment">// lambda的改写</span></span><br><span class="line">    File[] files = dir.listFiles(f -&gt;&#123; </span><br><span class="line">      	<span class="keyword">return</span> f.getName().endsWith(<span class="string">".java"</span>) || f.isDirectory(); </span><br><span class="line">    &#125;);</span><br><span class="line">  	</span><br><span class="line">	<span class="comment">// 循环打印</span></span><br><span class="line">    <span class="keyword">for</span> (File file : files) &#123;</span><br><span class="line">        <span class="keyword">if</span> (file.isFile()) &#123;</span><br><span class="line">            System.out.println(<span class="string">"文件名:"</span> + file.getAbsolutePath());</span><br><span class="line">      	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        	printDir3(file);</span><br><span class="line">      	&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
                 <source type="audio/mpeg" src="">
@@ -222,7 +279,7 @@ public File(String ,">
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#File类"><span class="toc-number">1.</span> <span class="toc-text">File类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-构造方法"><span class="toc-number">1.1.</span> <span class="toc-text">1.2 构造方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-常用方法"><span class="toc-number">1.2.</span> <span class="toc-text">1.3 常用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#获取功能的方法"><span class="toc-number">1.2.1.</span> <span class="toc-text">获取功能的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#判断功能的方法"><span class="toc-number">1.2.2.</span> <span class="toc-text">判断功能的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建删除功能的方法"><span class="toc-number">1.2.3.</span> <span class="toc-text">创建删除功能的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#静态成员"><span class="toc-number">1.2.4.</span> <span class="toc-text">静态成员</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#绝对路径和相对路径"><span class="toc-number">1.2.5.</span> <span class="toc-text">绝对路径和相对路径</span></a></li></ol></li></ol></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#File类"><span class="toc-number">1.</span> <span class="toc-text">File类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-构造方法"><span class="toc-number">1.1.</span> <span class="toc-text">1.2 构造方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-常用方法"><span class="toc-number">1.2.</span> <span class="toc-text">1.3 常用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#获取功能的方法"><span class="toc-number">1.2.1.</span> <span class="toc-text">获取功能的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#判断功能的方法"><span class="toc-number">1.2.2.</span> <span class="toc-text">判断功能的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建删除功能的方法"><span class="toc-number">1.2.3.</span> <span class="toc-text">创建删除功能的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#静态成员"><span class="toc-number">1.2.4.</span> <span class="toc-text">静态成员</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#绝对路径和相对路径"><span class="toc-number">1.2.5.</span> <span class="toc-text">绝对路径和相对路径</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#目录遍历"><span class="toc-number">1.3.</span> <span class="toc-text">目录遍历</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件过滤器"><span class="toc-number">1.4.</span> <span class="toc-text">文件过滤器</span></a></li></ol></li></ol>	
         </div>
     
 </div>
