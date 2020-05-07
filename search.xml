@@ -3567,7 +3567,26 @@
 
 </li>
 </ol>
-<h1 id="文件上传示例"><a href="#文件上传示例" class="headerlink" title="文件上传示例"></a>文件上传示例</h1>]]></content>
+<h1 id="文件上传示例"><a href="#文件上传示例" class="headerlink" title="文件上传示例"></a>文件上传示例</h1><ol>
+<li>【客户端】输入流，从硬盘读取文件数据到程序中。</li>
+<li>【客户端】输出流，写出文件数据到服务端。</li>
+<li>【服务端】输入流，读取文件数据到服务端程序。</li>
+<li>【服务端】输出流，写出文件数据到服务器硬盘中。<br><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Java/Web/6_upload.jpg" alt=""></li>
+</ol>
+<p>步骤：</p>
+<ol>
+<li>客户端使用本地的字节输入流读取要上传的文件</li>
+<li>客户端使用网络字节输出流，把读取到的文件上传到服务器</li>
+<li>服务器使用网络字节输入流，读取客户端上传的文件</li>
+<li>服务器使用本地字节输出流，把读取到的文件保存到服务器的硬盘上</li>
+<li>服务器使用网络字节输出流，给客户端回写一个“上传成功”</li>
+<li>客户端使用网络字节输入流，读取服务器回写的数据</li>
+<li>释放资源</li>
+</ol>
+<blockquote>
+<p>注：客户端和服务器和本地硬盘进行读写，需要使用自己创建的本地字节流流对象。客户端和服务器之间的读写必须使用Socket提供的字节流对象</p>
+</blockquote>
+]]></content>
       <categories>
         <category>JAVA</category>
       </categories>
@@ -3618,6 +3637,30 @@
       </categories>
       <tags>
         <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LeetCode-983-最低票价</title>
+    <url>/2020/05/07/LeetCode-983-%E6%9C%80%E4%BD%8E%E7%A5%A8%E4%BB%B7/</url>
+    <content><![CDATA[<h1 id="原题链接"><a href="#原题链接" class="headerlink" title="原题链接"></a>原题链接</h1><p><a href="https://leetcode-cn.com/problems/minimum-cost-for-tickets/" target="_blank" rel="noopener">原题连接</a></p>
+<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/983/describe.png" alt=""></p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><h2 id="记忆性递归"><a href="#记忆性递归" class="headerlink" title="记忆性递归"></a>记忆性递归</h2><p>我们用$\textit{dp}(i)$来表示从第 $\textit{i}$ 天开始到一年的结束，我们需要花的钱。考虑到一张通行证可以让我们在「接下来」的若干天进行旅行，所以我们「从后往前」倒着进行动态规划。<br>如何选择购买票还是不购买票：</p>
+<ul>
+<li>如果某一天不出行，我们就可以认为这一天不需要买票，所以对于不出行的一天有$\textit{dp(i)=dp(i+1)}$</li>
+<li>如果这一天需要出现，可以选择购买1、7、30的票，如果购买了$\textit{j}$天的票，那么后面的$\textit{j-1}$天都不需要再购买，继续考虑$\textit{i+j}$天。$\textit{dp(i)=min{cost(j)+dp(i+j)}}$，$\textit{j $\in$ {1, 7, 30}}$</li>
+</ul>
+<h2 id="记忆性迭代"><a href="#记忆性迭代" class="headerlink" title="记忆性迭代"></a>记忆性迭代</h2><p>和记忆性递归的思路是差不多的，都是从后向前推，不过把数组设置为366大小的时候要注意了，这里要把大小多设置30天，以免数组越界。其余代码几乎无差别</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p>方法一：记忆性递归(Java)</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    Set&lt;Integer&gt; dayset;</span><br><span class="line">    <span class="keyword">int</span>[] costs;</span><br><span class="line">    <span class="keyword">int</span>[] dp;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">mincostTickets</span><span class="params">(<span class="keyword">int</span>[] days, <span class="keyword">int</span>[] costs)</span> </span>&#123;</span><br><span class="line">        dp = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">366</span>];</span><br><span class="line">        <span class="keyword">this</span>.costs = costs;</span><br><span class="line">        dayset = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (Integer day: days)&#123;</span><br><span class="line">            dayset.add(day);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> helper(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">helper</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (i &gt; <span class="number">365</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (dp[i] != <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> dp[i];</span><br><span class="line">        <span class="keyword">if</span> (dayset.contains(i))&#123;</span><br><span class="line">            dp[i] = Math.min(Math.min(helper(i + <span class="number">1</span>) + costs[<span class="number">0</span>], helper(i + <span class="number">7</span>) + costs[<span class="number">1</span>]), helper(i + <span class="number">30</span>) + costs[<span class="number">2</span>]);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            dp[i] = helper(i + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>方法二：记忆性迭代(Java)</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    Set&lt;Integer&gt; dayset;</span><br><span class="line">    <span class="keyword">int</span>[] costs;</span><br><span class="line">    <span class="keyword">int</span>[] dp;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">mincostTickets</span><span class="params">(<span class="keyword">int</span>[] days, <span class="keyword">int</span>[] costs)</span> </span>&#123;</span><br><span class="line">        dp = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">396</span>];</span><br><span class="line">        <span class="keyword">this</span>.costs = costs;</span><br><span class="line">        dayset = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (Integer day: days)&#123;</span><br><span class="line">            dayset.add(day);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> d = <span class="number">365</span>; d &gt; <span class="number">0</span>; d--)&#123;</span><br><span class="line">            <span class="keyword">if</span> (dayset.contains(d))&#123;</span><br><span class="line">                dp[d] = Math.min(dp[d + <span class="number">1</span>] + costs[<span class="number">0</span>], dp[d + <span class="number">7</span>] + costs[<span class="number">1</span>]);</span><br><span class="line">                dp[d] = Math.min(dp[d], dp[d + <span class="number">30</span>] + costs[<span class="number">2</span>]);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                dp[d] = dp[d + <span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>动态规划</tag>
       </tags>
   </entry>
 </search>
