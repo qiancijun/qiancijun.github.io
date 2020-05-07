@@ -2913,9 +2913,65 @@
 </ul>
 <p>构造方法：</p>
 <ul>
-<li><code>public ObjectOutputStream(OutputStream out)</code>： 创建一个指定OutputStream的ObjectOutputStream。<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">FileOutputStream fileOut = <span class="keyword">new</span> FileOutputStream(<span class="string">"employee.txt"</span>);</span><br><span class="line">ObjectOutputStream out = <span class="keyword">new</span> ObjectOutputStream(fileOut);</span><br></pre></td></tr></table></figure></li>
+<li><code>public ObjectOutputStream(OutputStream out)</code>： 创建一个指定OutputStream的ObjectOutputStream。<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">FileOutputStream fileOut = <span class="keyword">new</span> FileOutputStream(<span class="string">"employee.txt"</span>);</span><br><span class="line">ObjectOutputStream out = <span class="keyword">new</span> ObjectOutputStream(fileOut);</span><br></pre></td></tr></table></figure>
+使用步骤</li>
 </ul>
-]]></content>
+<ol>
+<li><p>创建一个序列化流对象</p>
+</li>
+<li><p>使用成员方法writeObject把对象写入文件中</p>
+</li>
+<li><p>资源释放<br>特有的成员方法<code>public final void writeObject (Object obj)</code> : 将指定的对象写出。<br>序列化操作：</p>
+</li>
+<li><p>一个对象要想序列化，必须满足两个条件:</p>
+</li>
+</ol>
+<ul>
+<li>该类必须实现<code>java.io.Serializable</code> 接口，<code>Serializable</code> 是一个标记接口，不实现此接口的类将不会使任何状态序列化或反序列化，会抛出<code>NotSerializableException</code> 。</li>
+<li>该类的所有属性必须是可序列化的。如果有一个属性不需要可序列化的，则该属性必须注明是瞬态的，使用<code>transient</code> 关键字修饰。<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReaderDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        Person p1 = <span class="keyword">new</span> Person(<span class="number">18</span>, <span class="string">"A"</span>);</span><br><span class="line">        Person p2 = <span class="keyword">new</span> Person(<span class="number">19</span>, <span class="string">"B"</span>);</span><br><span class="line">        Person p3 = <span class="keyword">new</span> Person();</span><br><span class="line">        ObjectOutputStream oos = <span class="keyword">new</span> ObjectOutputStream(<span class="keyword">new</span> FileOutputStream(<span class="string">"1.txt"</span>));</span><br><span class="line">        oos.writeObject(p1);</span><br><span class="line">        oos.writeObject(p2);</span><br><span class="line">        oos.writeObject(p3);</span><br><span class="line">        oos.close();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> <span class="keyword">implements</span> <span class="title">Serializable</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> age;</span><br><span class="line">    String name;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span>  <span class="title">Person</span><span class="params">(<span class="keyword">int</span> age, String name)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="ObjectInputStream类"><a href="#ObjectInputStream类" class="headerlink" title="ObjectInputStream类"></a>ObjectInputStream类</h2><p>ObjectInputStream反序列化流，将之前使用ObjectOutputStream序列化的原始数据恢复为对象。 </p>
+<p>构造方法：</p>
+<ul>
+<li><code>public ObjectInputStream(InputStream in)</code>： 创建一个指定InputStream的ObjectInputStream。</li>
+</ul>
+<p>反序列化操作：</p>
+<p>如果能找到一个对象的class文件，我们可以进行反序列化操作，调用<code>ObjectInputStream</code>读取对象的方法：</p>
+<ul>
+<li><code>public final Object readObject ()</code> : 读取一个对象。<strong>对于JVM可以反序列化对象，它必须是能够找到class文件的类。如果找不到该类的class文件，则抛出一个 <code>ClassNotFoundException</code> 异常。</strong>  </li>
+</ul>
+<p><strong>另外，当JVM反序列化对象时，能找到class文件，但是class文件在序列化对象之后发生了修改，那么反序列化操作也会失败，抛出一个<code>InvalidClassException</code>异常。</strong>发生这个异常的原因如下：</p>
+<ul>
+<li>该类的序列版本号与从流中读取的类描述符的版本号不匹配 </li>
+<li>该类包含未知数据类型 </li>
+<li>该类没有可访问的无参数构造方法 <blockquote>
+<p><code>Serializable</code> 接口给需要序列化的类，提供了一个序列版本号。<code>serialVersionUID</code> 该版本号的目的在于验证序列化的对象和对应类是否版本匹配。</p>
+</blockquote>
+</li>
+</ul>
+<p>使用步骤：</p>
+<ol>
+<li>创建反序列化的对象，构造方法中传递字节输入流</li>
+<li>使用readObject方法，读取保存对象的文件</li>
+<li>释放资源</li>
+</ol>
+<h3 id="transient瞬态关键字"><a href="#transient瞬态关键字" class="headerlink" title="transient瞬态关键字"></a>transient瞬态关键字</h3><p>静态化数据不能够被反序列化，被transient修饰的成员变量，不能被序列化。transient功能和静态类似，但限制没有静态多。</p>
+<h1 id="打印流"><a href="#打印流" class="headerlink" title="打印流"></a>打印流</h1><h2 id="概述-3"><a href="#概述-3" class="headerlink" title="概述"></a>概述</h2><p>平时我们在控制台打印输出，是调用<code>print</code>方法和<code>println</code>方法完成的，这两个方法都来自于<code>java.io.PrintStream</code>类，该类能够方便地打印各种数据类型的值，是一种便捷的输出方式。</p>
+<h2 id="PrintStream类"><a href="#PrintStream类" class="headerlink" title="PrintStream类"></a>PrintStream类</h2><p>构造方法：</p>
+<ul>
+<li><code>public PrintStream(String fileName)</code>： 使用指定的文件名创建一个新的打印流。<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">PrintStream ps = <span class="keyword">new</span> PrintStream(<span class="string">"ps.txt"</span>)；</span><br></pre></td></tr></table></figure></li>
+<li>特点：<ul>
+<li>只负责数据的输出，不负责数据的读取</li>
+<li>与其他输出流不同，PrintStream永远不会抛出IOException</li>
+<li>特有方法， print,println</li>
+<li>如果使用继承自父类的write方法写数据，那么查看数据的时候，会查询编码表。如果使用自己特有的方法写数据，写的数据原样输出</li>
+</ul>
+</li>
+</ul>
+<p>改变打印流向：<br><code>System.out</code>就是<code>PrintStream</code>类型的，只不过它的流向是系统规定的，打印在控制台上。不过，既然是流对象，我们就可以玩一个”小把戏”，改变它的流向。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PrintDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">		<span class="comment">// 调用系统的打印流,控制台直接输出97</span></span><br><span class="line">        System.out.println(<span class="number">97</span>);</span><br><span class="line">      </span><br><span class="line">		<span class="comment">// 创建打印流,指定文件的名称</span></span><br><span class="line">        PrintStream ps = <span class="keyword">new</span> PrintStream(<span class="string">"ps.txt"</span>);</span><br><span class="line">      	</span><br><span class="line">      	<span class="comment">// 设置系统的打印流流向,输出到ps.txt</span></span><br><span class="line">        System.setOut(ps);</span><br><span class="line">      	<span class="comment">// 调用系统的打印流,ps.txt中输出97</span></span><br><span class="line">        System.out.println(<span class="number">97</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>JAVA</category>
       </categories>
