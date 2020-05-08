@@ -17,34 +17,22 @@
 </blockquote>
 <p>反射可以得到的信息：某个类的属性、方法、实现了哪些接口。对于每个类而言，JRE都为其保留一个不变的Class类型的对象。Class本身也是一个类，Class对象只能由系统建立。一个类在JVM中只会有一个Class实例，一个Class对象对应的是一个加载到JVM中的一个.class文件。通过Class可以得到一个类完整的结构。</p>
 <h3 id="实例化Class对象"><a href="#实例化Class对象" class="headerlink" title="实例化Class对象"></a>实例化Class对象</h3><ol>
-<li><p>$\color{blue}{若已知具体的类，通过类的class属性获取，该方法最为安全可靠，程序性能最高。}$ </p>
-<blockquote>
-<p>Class c = String.class;</p>
-</blockquote>
+<li><p>$\color{blue}{若已知具体的类，通过类的class属性获取，该方法最为安全可靠，程序性能最高。}$<br><code>Class c = String.class;</code><br>多用于参数的传递</p>
 </li>
-<li><p>$\color{blue}{已知某个类的实例，调用该实例的getClass()方法获取Class对象}$</p>
-<blockquote>
-<p>Class c =  p.getClass(); //p是一个对象</p>
-</blockquote>
+<li><p>$\color{blue}{已知某个类的实例，调用该实例的getClass()方法获取Class对象}$<br><code>Class c =  p.getClass(); //p是一个对象</code><br>多用于对象的获取字节码的方式</p>
 </li>
-<li><p>$\color{blue}{已知一个类的全类名，且该类在类路径下，可通过Class类的静态方法forName()获取，可能抛出ClassNotFoundException}$</p>
-<blockquote>
-<p>Class c = Class.forName(“java.lang.String”);</p>
-</blockquote>
+<li><p>$\color{blue}{已知一个类的全类名，且该类在类路径下，可通过Class类的静态方法forName()获取，可能抛出ClassNotFoundException}$<br><code>Class c = Class.forName(&quot;java.lang.String&quot;);</code><br>多用于配置文件，将类名定义在配置文件中。读取文件，加载类。</p>
 </li>
 </ol>
 <p>获取类的全名，实现的接口等方法全部通过调用方法实现，本文不做具体举例。</p>
-<h3 id="使用反射的构造方法来创造对象"><a href="#使用反射的构造方法来创造对象" class="headerlink" title="使用反射的构造方法来创造对象"></a>使用反射的构造方法来创造对象</h3><blockquote>
-<p>getDeclaredConstructor()获取类的全部构造方法<br>1.$\color{blue}{直接通过Class对象来创建}$<br>Objext o = c.newInstance(); //相当于调用类的无参构造<br>Person p = (Person)o;</p>
-</blockquote>
-<p>在jdk9之后可以写成：</p>
-<blockquote>
-<p>c.getDeclaredConstructor().newInstance();</p>
-</blockquote>
+<h3 id="使用反射的构造方法来创造对象"><a href="#使用反射的构造方法来创造对象" class="headerlink" title="使用反射的构造方法来创造对象"></a>使用反射的构造方法来创造对象</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">getDeclaredConstructor()获取类的全部构造方法</span><br></pre></td></tr></table></figure>
+<p>1.$\color{blue}{直接通过Class对象来创建}$</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Objext o = c.newInstance(); <span class="comment">//相当于调用类的无参构造</span></span><br><span class="line">Person p = (Person)o; <span class="comment">//如果用无参构造可以之间通过Class的newInstance方法</span></span><br></pre></td></tr></table></figure>
+
+<p>在jdk9之后可以写成：<br><code>c.getDeclaredConstructor().newInstance();</code></p>
 <p>反射机制可以强制的调用私有的构造方法：</p>
-<blockquote>
-<p>Constructor cst = c.getDeclaredConstructor(参数列表.class);<br>cst.setAccessible(true); //解除私有的封装，对私有方法强制调用<br>Person p = (Peron)cst.newInstance(实参);</p>
-</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Constructor cst = c.getDeclaredConstructor(参数列表<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">cst.setAccessible(<span class="keyword">true</span>); <span class="comment">//解除私有的封装，对私有方法强制调用</span></span><br><span class="line">Person p = (Peron)cst.newInstance(实参);</span><br></pre></td></tr></table></figure>
+
 <h3 id="使用反射获取类的方法"><a href="#使用反射获取类的方法" class="headerlink" title="使用反射获取类的方法"></a>使用反射获取类的方法</h3><blockquote>
 <p>public Method[] getDeclaredMethods();<br>返回此对象所表示的类或接口的所有方法；<br>public Method[] getMethods();<br>返回此对象所表示的类或接口的所有公共方法；</p>
 </blockquote>
@@ -80,9 +68,7 @@
 </tbody></table>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Fileds[] fs = c.getFileds(); <span class="comment">//获取类的共有属性，包括父类的属性</span></span><br><span class="line">Fileds[] fs = c.getDeclaredFileds(); <span class="comment">//获取所有（不包括父类）的属性（包括私有）</span></span><br><span class="line"><span class="keyword">for</span> (Field f: fs)&#123;</span><br><span class="line">    System.out.println(<span class="string">"属性的修饰符"</span> + f.getModifiers());</span><br><span class="line">    System.out.println(<span class="string">"属性的类型"</span> + f.getType());</span><br><span class="line">    System.out.println(<span class="string">"属性的名除"</span> + f.getName());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="使用反射获取类所在的包"><a href="#使用反射获取类所在的包" class="headerlink" title="使用反射获取类所在的包"></a>使用反射获取类所在的包</h3><blockquote>
-<p>Package p = c.getPackage();</p>
-</blockquote>
+<h3 id="使用反射获取类所在的包"><a href="#使用反射获取类所在的包" class="headerlink" title="使用反射获取类所在的包"></a>使用反射获取类所在的包</h3><p><code>Package p = c.getPackage();</code></p>
 <h2 id="通过反射调用类中的指定方法和属性"><a href="#通过反射调用类中的指定方法和属性" class="headerlink" title="通过反射调用类中的指定方法和属性"></a>通过反射调用类中的指定方法和属性</h2><h3 id="调用指定方法"><a href="#调用指定方法" class="headerlink" title="调用指定方法"></a>调用指定方法</h3><p>通过Method类完成：</p>
 <ol>
 <li><p>$\color{blue}{通过Class类的getMethod方法取得一个Method对象，并设置参数}$</p>
@@ -91,10 +77,7 @@
 <li><p>$\color{blue}{使用invoke进行调用}$</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Person p = (Person)c.getDeclaredConstucted(int.class, Sting.class).newInstance(10, "Q");</span><br><span class="line"><span class="comment">//可以直接设为Object不强制转换</span></span><br><span class="line">m.invoke(p, <span class="string">"hello"</span>); <span class="comment">//参数一：需要实例化的对象，参数二(可变参数)：调用当前的方法的实参</span></span><br><span class="line">m1.invoke(p);</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>$\color{blue}{如果调用的函数有返回值}$<br>假设showInfo方法返回一个int型的数据：</p>
-<blockquote>
-<p>int result = m.invoke(p, “hello”);</p>
-</blockquote>
+<li><p>$\color{blue}{如果调用的函数有返回值}$<br>假设showInfo方法返回一个int型的数据：<br><code>int result = m.invoke(p, &quot;hello&quot;);</code></p>
 </li>
 </ol>
 <h3 id="调用指定属性"><a href="#调用指定属性" class="headerlink" title="调用指定属性"></a>调用指定属性</h3><p>可以通过Field类操作类中的属性，通过Field类提供的set()和get()方法就可以完成设置和取得属性内容的操作。</p>
@@ -155,7 +138,167 @@
 <td align="center">获取类的接口类型</td>
 </tr>
 </tbody></table>
-<h1 id="示例类"><a href="#示例类" class="headerlink" title="示例类"></a>示例类</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> val;</span><br><span class="line">    String name;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">()</span></span>&#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(<span class="keyword">int</span> val)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.val = val;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span>  <span class="title">Person</span><span class="params">(<span class="keyword">int</span> val, String name)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.val = val;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showInfo</span><span class="params">(String n)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="keyword">this</span>.name + <span class="keyword">this</span>.val + n);</span><br><span class="line">    &#125;</span><br><span class="line">       </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">showName</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"这是一个私有方法"</span> + <span class="keyword">this</span>.name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+<h1 id="示例类"><a href="#示例类" class="headerlink" title="示例类"></a>示例类</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> val;</span><br><span class="line">    String name;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">()</span></span>&#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(<span class="keyword">int</span> val)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.val = val;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span>  <span class="title">Person</span><span class="params">(<span class="keyword">int</span> val, String name)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.val = val;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showInfo</span><span class="params">(String n)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="keyword">this</span>.name + <span class="keyword">this</span>.val + n);</span><br><span class="line">    &#125;</span><br><span class="line">       </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">showName</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"这是一个私有方法"</span> + <span class="keyword">this</span>.name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Junit测试"><a href="#Junit测试" class="headerlink" title="Junit测试"></a>Junit测试</h1><ul>
+<li>测试分类：<ol>
+<li>黑盒测试：不需要写代码，给输入值，看程序是否能够输出期望的值。</li>
+<li>白盒测试：需要写代码的。关注程序具体的执行流程。</li>
+</ol>
+</li>
+</ul>
+<h2 id="白盒测试"><a href="#白盒测试" class="headerlink" title="白盒测试"></a>白盒测试</h2><ul>
+<li><p>步骤：</p>
+<pre><code>1. 定义一个测试类(测试用例)
+    * 建议：
+        * 测试类名：被测试的类名Test        CalculatorTest
+        * 包名：xxx.xxx.xx.test        cn.itcast.test
+
+2. 定义测试方法：可以独立运行
+    * 建议：
+        * 方法名：test测试的方法名        testAdd()  
+        * 返回值：void
+        * 参数列表：空参
+
+3. 给方法加@Test
+4. 导入junit依赖环境</code></pre><ul>
+<li><p>判定结果：</p>
+<ul>
+<li>红色：失败</li>
+<li>绿色：成功</li>
+<li>一般我们会使用断言操作来处理结果<ul>
+<li>Assert.assertEquals(期望的结果,运算的结果);</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>补充：</p>
+<ul>
+<li>@Before:<ul>
+<li>修饰的方法会在测试方法之前被自动执行</li>
+</ul>
+</li>
+<li>@After:<ul>
+<li>修饰的方法会在测试方法执行之后自动被执行</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CalculatorTest</span> </span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    初始化方法</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Before</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"正在初始化"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    释放资源方法</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="meta">@After</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"正在释放"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    测试add方法</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testAdd</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Calculator c = <span class="keyword">new</span> Calculator();</span><br><span class="line">        <span class="keyword">int</span> a = c.add(<span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">        Assert.assertEquals(<span class="number">2</span>, a);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h2><ul>
+<li><p>概念：说明程序的。给计算机看的</p>
+</li>
+<li><p>注释：用文字描述程序的。给程序员看的</p>
+</li>
+<li><p>定义：注解（Annotation），也叫元数据。一种代码级别的说明。它是JDK1.5及以后版本引入的一个特性，与类、接口、枚举是在同一个层次。它可以声明在包、类、字段、方法、局部变量、方法参数等的前面，用来对这些元素进行说明，注释。</p>
+</li>
+<li><p>概念描述：</p>
+<ul>
+<li>JDK1.5之后的新特性</li>
+<li>说明程序的</li>
+<li>使用注解：@注解名称</li>
+</ul>
+</li>
+</ul>
+<h3 id="注解分类"><a href="#注解分类" class="headerlink" title="注解分类"></a>注解分类</h3><ul>
+<li><p>作用分类：<br>  ①编写文档：通过代码里标识的注解生成文档【生成文档doc文档】<br>  ②代码分析：通过代码里标识的注解对代码进行分析【使用反射】<br>  ③编译检查：通过代码里标识的注解让编译器能够实现基本的编译检查【Override】</p>
+</li>
+<li><p>JDK中预定义的一些注解</p>
+<ul>
+<li>@Override    ：检测被该注解标注的方法是否是继承自父类(接口)的</li>
+<li>@Deprecated：该注解标注的内容，表示已过时</li>
+<li>@SuppressWarnings：压制警告<ul>
+<li>一般传递参数all  @SuppressWarnings(“all”)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="自定义注解"><a href="#自定义注解" class="headerlink" title="自定义注解"></a>自定义注解</h3><ul>
+<li><p>格式：</p>
+<pre><code>元注解
+public @interface 注解名称{
+    属性列表;
+}</code></pre><ul>
+<li><p>本质：注解本质上就是一个接口，该接口默认继承Annotation接口</p>
+<ul>
+<li>public interface MyAnno extends java.lang.annotation.Annotation {}</li>
+</ul>
+</li>
+<li><p>属性：接口中的抽象方法</p>
+<ul>
+<li><p>要求：</p>
+<ol>
+<li><p>属性的返回值类型有下列取值</p>
+<ul>
+<li>基本数据类型</li>
+<li>String</li>
+<li>枚举</li>
+<li>注解</li>
+<li>以上类型的数组</li>
+</ul>
+</li>
+<li><p>定义了属性，在使用时需要给属性赋值</p>
+<ol>
+<li>如果定义属性时，使用default关键字给属性默认初始化值，则使用注解时，可以不进行属性的赋值。</li>
+<li>如果只有一个属性需要赋值，并且属性的名称是value，则value可以省略，直接定义值即可。</li>
+<li>数组赋值时，值使用{}包裹。如果数组中只有一个值，则{}可以省略</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>元注解：用于描述注解的注解</p>
+<ul>
+<li>@Target：描述注解能够作用的位置<ul>
+<li>ElementType取值：<ul>
+<li>TYPE：可以作用于类上</li>
+<li>METHOD：可以作用于方法上</li>
+<li>FIELD：可以作用于成员变量上</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>@Retention：描述注解被保留的阶段<ul>
+<li>@Retention(RetentionPolicy.RUNTIME)：当前被描述的注解，会保留到class字节码文件中，并被JVM读取到</li>
+</ul>
+</li>
+<li>@Documented：描述注解是否被抽取到api文档中</li>
+<li>@Inherited：描述注解是否被子类继承</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="使用注解"><a href="#使用注解" class="headerlink" title="使用注解"></a>使用注解</h2><ul>
+<li><p>在程序使用(解析)注解：获取注解中定义的属性值</p>
+<ol>
+<li><p>获取注解定义的位置的对象  （Class，Method,Field）</p>
+</li>
+<li><p>获取指定的注解</p>
+<ul>
+<li><p>getAnnotation(Class)<br>//其实就是在内存中生成了一个该注解接口的子类实现对象</p>
+<pre><code>public class ProImpl implements Pro{
+    public String className(){
+        return &quot;cn.itcast.annotation.Demo1&quot;;
+    }
+    public String methodName(){
+        return &quot;show&quot;;
+    }
+}</code></pre></li>
+</ul>
+</li>
+<li><p>调用注解中的抽象方法获取配置的属性值</p>
+</li>
+</ol>
+</li>
+</ul>
+]]></content>
       <categories>
         <category>JAVA</category>
       </categories>
@@ -1580,25 +1723,22 @@
 <h3 id="内连接"><a href="#内连接" class="headerlink" title="内连接"></a>内连接</h3><p>语法:</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span>     查询列表</span><br><span class="line"><span class="keyword">FROM</span>       表<span class="number">1</span> 别名</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> 表<span class="number">2</span> 别名</span><br><span class="line"><span class="keyword">ON</span>         连接条件</span><br><span class="line"><span class="keyword">AND</span>        附加连接条件</span><br><span class="line"><span class="comment">#INNER 可以省略</span></span><br></pre></td></tr></table></figure>
 
-<ol>
-<li>$\color{blue}{等值连接}$<blockquote>
+<h3 id="等值连接-1"><a href="#等值连接-1" class="headerlink" title="等值连接"></a>等值连接</h3><blockquote>
 <p>例：查询员工名、部门名：</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SELECT     last_name, department_name</span><br><span class="line">FROM       employees e</span><br><span class="line">INNER JOIN departments d</span><br><span class="line">ON         e.department_id &#x3D; d.department_id;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span>     last_name, department_name</span><br><span class="line"><span class="keyword">FROM</span>       employees e</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> departments d</span><br><span class="line"><span class="keyword">ON</span>         e.department_id = d.department_id;</span><br></pre></td></tr></table></figure>
 
-</li>
-</ol>
-<h3 id="color-blue-非等值连接"><a href="#color-blue-非等值连接" class="headerlink" title="$\color{blue}{非等值连接}$"></a>$\color{blue}{非等值连接}$</h3><blockquote>
+<h3 id="非等值连接-1"><a href="#非等值连接-1" class="headerlink" title="非等值连接"></a>非等值连接</h3><blockquote>
 <p>例：查询员工的工资级别</p>
 </blockquote>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line">        salary,grade_level</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">        employees e</span><br><span class="line"><span class="keyword">JOIN</span></span><br><span class="line">        job_grades d</span><br><span class="line"><span class="keyword">ON</span> </span><br><span class="line">        e.salary <span class="keyword">BETWEEN</span> g.lowest_sal <span class="keyword">AND</span> g.highest_sal;</span><br></pre></td></tr></table></figure>
 
-<h3 id="color-blue-自连接"><a href="#color-blue-自连接" class="headerlink" title="$\color{blue}{自连接}$"></a>$\color{blue}{自连接}$</h3><blockquote>
+<h3 id="自连接-1"><a href="#自连接-1" class="headerlink" title="自连接"></a>自连接</h3><blockquote>
 <p>例：查询员工的名字和上级名字</p>
 </blockquote>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">        e.last_name, m.last_name</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">        employees <span class="keyword">AS</span> e</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span></span><br><span class="line">        employees <span class="keyword">AS</span> m</span><br><span class="line"><span class="keyword">ON</span></span><br><span class="line">        e.manager_id = m.employee.id;</span><br></pre></td></tr></table></figure>
 
-<h3 id="color-blue-外连接"><a href="#color-blue-外连接" class="headerlink" title="$\color{blue}{外连接}$"></a>$\color{blue}{外连接}$</h3><p>用与查询一个表中有，另一个表中没有。</p>
+<h3 id="外连接"><a href="#外连接" class="headerlink" title="外连接"></a>外连接</h3><p>用与查询一个表中有，另一个表中没有。</p>
 <ul>
 <li>特点：<ul>
 <li>外连接的查询结果为主表中的所有记录</li>
@@ -1663,7 +1803,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="color-blue-标量子查询（单行子查询）"><a href="#color-blue-标量子查询（单行子查询）" class="headerlink" title="$\color{blue}{标量子查询（单行子查询）}$"></a>$\color{blue}{标量子查询（单行子查询）}$</h3><p>例1：谁的工资比Abel高？</p>
+<h3 id="标量子查询（单行子查询）"><a href="#标量子查询（单行子查询）" class="headerlink" title="标量子查询（单行子查询）"></a>标量子查询（单行子查询）</h3><p>例1：谁的工资比Abel高？</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">#查询Abel的工资</span></span><br><span class="line"><span class="keyword">SELECT</span> salary</span><br><span class="line"><span class="keyword">FROM</span> employees</span><br><span class="line"><span class="keyword">WHERE</span> last_name = <span class="string">'Abel'</span></span><br><span class="line"><span class="comment">#查询员工的信息，满足salary&gt;abel的工资</span></span><br><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> employees</span><br><span class="line"><span class="keyword">WHERE</span> salary &gt; (</span><br><span class="line">        <span class="keyword">SELECT</span> salary</span><br><span class="line">        <span class="keyword">FROM</span> employees</span><br><span class="line">        <span class="keyword">WHERE</span> last_name = <span class="string">'Abel'</span> <span class="comment">#子查询</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 
 <p>例2：返回job_id与141号员工相同，salary比143号员工多的员工姓名,job_id和工资：</p>
@@ -1672,7 +1812,7 @@
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">#查询最低工资</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MIN</span>(salary)</span><br><span class="line"><span class="keyword">FROM</span> employees</span><br><span class="line"><span class="comment">#查询last_name，job_id和salary，要求salary=MIN</span></span><br><span class="line"><span class="keyword">SELECT</span> last_name，job_id, salary</span><br><span class="line"><span class="keyword">FROM</span> employees</span><br><span class="line"><span class="keyword">WHERE</span> salary = (</span><br><span class="line">        <span class="keyword">SELECT</span> <span class="keyword">MIN</span>(salary)</span><br><span class="line">        <span class="keyword">FROM</span> employees</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 <p>在子查询中使用having，例：查询最低工资大于50号部门的部门id和其最低工资</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">#查询50号部门的最低工资</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MIN</span>(salary)</span><br><span class="line"><span class="keyword">FROM</span> employees</span><br><span class="line"><span class="keyword">WHERE</span> department_id = <span class="number">50</span></span><br><span class="line"><span class="comment">#查询每个部门的最低工资</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MIN</span>(salary), department_id</span><br><span class="line"><span class="keyword">FROM</span> employees</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> department_id</span><br><span class="line"><span class="comment">#筛选</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MIN</span>(salary), department_id</span><br><span class="line"><span class="keyword">FROM</span> employees</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> department_id</span><br><span class="line"><span class="keyword">HAVING</span> <span class="keyword">MIN</span>(salary) &gt; (</span><br><span class="line">        <span class="keyword">SELECT</span> <span class="keyword">MIN</span>(salary)</span><br><span class="line">        <span class="keyword">FROM</span> employees</span><br><span class="line">        <span class="keyword">WHERE</span> department_id = <span class="number">50</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-<h3 id="color-blue-列子查询（多行子查询）"><a href="#color-blue-列子查询（多行子查询）" class="headerlink" title="$\color{blue}{列子查询（多行子查询）}$"></a>$\color{blue}{列子查询（多行子查询）}$</h3><p>多行操作符：</p>
+<h3 id="多行子查询"><a href="#多行子查询" class="headerlink" title="多行子查询"></a>多行子查询</h3><p>多行操作符：</p>
 <table>
 <thead>
 <tr>
@@ -1697,7 +1837,7 @@
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">#查询location_id是1400或1700的部门编号</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> department_id</span><br><span class="line"><span class="keyword">FROM</span> department</span><br><span class="line"><span class="keyword">WHERE</span> location_id <span class="keyword">IN</span>(<span class="number">1400</span>, <span class="number">1700</span>)</span><br><span class="line"><span class="comment">#查询员工姓名，部门号是1400或1700</span></span><br><span class="line"><span class="keyword">SELECT</span> last_name</span><br><span class="line"><span class="keyword">FROM</span> employees</span><br><span class="line"><span class="keyword">WHERE</span> department_id <span class="keyword">IN</span>(</span><br><span class="line">        <span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> department_id</span><br><span class="line">        <span class="keyword">FROM</span> department</span><br><span class="line">        <span class="keyword">WHERE</span> location_id <span class="keyword">IN</span>(<span class="number">1400</span>, <span class="number">1700</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 <p>例2：返回其他工种中比job_id为”IT_PROG”部门任一工资低的员工信息：</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">#查询job_id为IT_PROG部门任一工资</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> salary</span><br><span class="line"><span class="keyword">FROM</span> employees</span><br><span class="line"><span class="keyword">WHERE</span> job_id = <span class="string">'IT_POG'</span></span><br><span class="line"><span class="comment">#查询员工信息salary &lt; any()</span></span><br><span class="line"><span class="keyword">SELECT</span> last_name, job_id, employee_id, salary</span><br><span class="line"><span class="keyword">FROM</span> employee</span><br><span class="line"><span class="keyword">WHERE</span> salary &lt; <span class="keyword">ANY</span>(</span><br><span class="line">        <span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> salary</span><br><span class="line">        <span class="keyword">FROM</span> employees</span><br><span class="line">        <span class="keyword">WHERE</span> job_id = <span class="string">'IT_PROG'</span></span><br><span class="line">) <span class="keyword">AND</span> job_id &lt;&gt; <span class="string">'IT_PROG'</span>;</span><br></pre></td></tr></table></figure>
-<h3 id="color-blue-行子查询"><a href="#color-blue-行子查询" class="headerlink" title="$\color{blue}{行子查询}$"></a>$\color{blue}{行子查询}$</h3><p>通常不用<br>例：查询员工编号最小并且工资最高的员工信息：(一般查询方式)</p>
+<h3 id="行子查询"><a href="#行子查询" class="headerlink" title="行子查询"></a>行子查询</h3><p>通常不用<br>例：查询员工编号最小并且工资最高的员工信息：(一般查询方式)</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">#查询最小的员工编号</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MIN</span>(employee_id)</span><br><span class="line"><span class="keyword">FROM</span> employees</span><br><span class="line"><span class="comment">#查询最高的工资</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MAX</span>(salary)</span><br><span class="line"><span class="keyword">FROM</span> employees</span><br><span class="line"><span class="comment">#查询员工信息</span></span><br><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> employees</span><br><span class="line"><span class="keyword">WHERE</span> employee_id = (</span><br><span class="line">        <span class="keyword">SELECT</span> <span class="keyword">MIN</span>(employee_id)</span><br><span class="line">        <span class="keyword">FROM</span> employees</span><br><span class="line">) <span class="keyword">AND</span> salary = (</span><br><span class="line">        <span class="keyword">SELECT</span> <span class="keyword">MAX</span>(salary)</span><br><span class="line">        <span class="keyword">FROM</span> employees</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 <p>用行子查询（如果有一样的操作符就可以使用）</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> employees</span><br><span class="line"><span class="keyword">WHERE</span> (employee_id, salary) = (</span><br><span class="line">        <span class="keyword">SELECT</span> <span class="keyword">MIN</span>(employee_id), <span class="keyword">MAX</span>(salary)</span><br><span class="line">        <span class="keyword">FROM</span> employees</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
@@ -1706,7 +1846,13 @@
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">#查询每个部门的信息</span></span><br><span class="line"><span class="keyword">SELECT</span> d.*, (</span><br><span class="line">        <span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(*)</span><br><span class="line">        <span class="keyword">FROM</span> employees</span><br><span class="line">        <span class="keyword">WHERE</span> e.department_id = d.department_id</span><br><span class="line">) <span class="keyword">AS</span> 个数</span><br><span class="line"><span class="keyword">FROM</span> departments <span class="keyword">AS</span> d;</span><br></pre></td></tr></table></figure>
 
 <p>例：查询员工号等于102的部门名</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> (</span><br><span class="line">        <span class="keyword">SELECT</span> department_name</span><br><span class="line">        <span class="keyword">FROM</span> departments</span><br><span class="line">        <span class="keyword">INNER</span> <span class="keyword">JOIN</span> employees e</span><br><span class="line">        <span class="keyword">ON</span> d.department_id = e.department_id</span><br><span class="line">        <span class="keyword">AND</span> e.employee_id = <span class="number">102</span></span><br><span class="line">) 部门名;</span><br></pre></td></tr></table></figure>]]></content>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> (</span><br><span class="line">        <span class="keyword">SELECT</span> department_name</span><br><span class="line">        <span class="keyword">FROM</span> departments</span><br><span class="line">        <span class="keyword">INNER</span> <span class="keyword">JOIN</span> employees e</span><br><span class="line">        <span class="keyword">ON</span> d.department_id = e.department_id</span><br><span class="line">        <span class="keyword">AND</span> e.employee_id = <span class="number">102</span></span><br><span class="line">) 部门名;</span><br></pre></td></tr></table></figure>
+
+<h2 id="from后面"><a href="#from后面" class="headerlink" title="from后面"></a>from后面</h2><p>例：查询每个部门的平均工资的工资等级</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">#1查询每个部门的平均工资</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">AVG</span>(salary), department_id</span><br><span class="line"><span class="keyword">FROM</span> employees</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> department_id</span><br><span class="line"><span class="comment">#2连接1的结果集和job_grades表，筛选条件</span></span><br><span class="line"><span class="keyword">SELECT</span> ag_dep.*, g.grade_level</span><br><span class="line"><span class="keyword">FROM</span> (</span><br><span class="line">        <span class="keyword">SELECT</span> <span class="keyword">AVG</span>(salary) <span class="keyword">AS</span> ag, department_id</span><br><span class="line">        <span class="keyword">FROM</span> employees</span><br><span class="line">        <span class="keyword">GROUP</span> <span class="keyword">BY</span> department_id</span><br><span class="line">) <span class="keyword">AS</span> ag_dep</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> job_grade g</span><br><span class="line"><span class="keyword">ON</span> ag_dep.ag <span class="keyword">BETWEEN</span> lowest_sal <span class="keyword">AND</span> highest_sal;</span><br></pre></td></tr></table></figure>
+
+<h2 id="exists后面-相关子查询"><a href="#exists后面-相关子查询" class="headerlink" title="exists后面(相关子查询)"></a>exists后面(相关子查询)</h2><p>语法：<br><code>exists(完整的查询语句)</code>结果1或0<br>例：查询有员工的部门名：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> department_name</span><br><span class="line"><span class="keyword">FROM</span> departments</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">EXISTS</span>(</span><br><span class="line">        <span class="keyword">SELECT</span> *</span><br><span class="line">        <span class="keyword">FROM</span> employees e</span><br><span class="line">        <span class="keyword">WHERE</span> d.department_id = e.department_id</span><br><span class="line">);</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>Mysql</category>
       </categories>
@@ -3586,7 +3732,46 @@
 <blockquote>
 <p>注：客户端和服务器和本地硬盘进行读写，需要使用自己创建的本地字节流流对象。客户端和服务器之间的读写必须使用Socket提供的字节流对象</p>
 </blockquote>
-]]></content>
+<p>客户端代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileUploadClient</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        String pathname = <span class="string">"1.jpg"</span>;</span><br><span class="line">        <span class="comment">//本地字节输出流</span></span><br><span class="line">        FileInputStream fis = <span class="keyword">new</span> FileInputStream(pathname);</span><br><span class="line">        <span class="comment">//客户端对象</span></span><br><span class="line">        Socket socket = <span class="keyword">new</span> Socket(<span class="string">"127.0.0.1"</span>, <span class="number">8888</span>);</span><br><span class="line">        OutputStream os = socket.getOutputStream();</span><br><span class="line">        InputStream is = socket.getInputStream();</span><br><span class="line">        <span class="comment">//读取本地文件字节</span></span><br><span class="line">        <span class="keyword">byte</span>[] bs = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">        <span class="keyword">int</span> len = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> ((len = fis.read(bs)) != -<span class="number">1</span>)&#123;</span><br><span class="line">            os.write(bs, <span class="number">0</span>, len);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//给服务器端一个结束标记</span></span><br><span class="line">        socket.shutdownOutput();</span><br><span class="line">        <span class="comment">//读取服务器回写的数据</span></span><br><span class="line">        <span class="keyword">while</span> ((len = is.read(bs)) != -<span class="number">1</span>)&#123;</span><br><span class="line">            System.out.println(<span class="keyword">new</span> String(bs, <span class="number">0</span>, len));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//释放资源</span></span><br><span class="line">        fis.close();</span><br><span class="line">        socket.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>服务器代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileUploadServer</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="comment">//本地字节输出流</span></span><br><span class="line">        FileOutputStream fos = <span class="keyword">new</span> FileOutputStream(<span class="string">"2.jpg"</span>);</span><br><span class="line">        <span class="comment">//服务器端对象</span></span><br><span class="line">        ServerSocket server = <span class="keyword">new</span> ServerSocket(<span class="number">8888</span>);</span><br><span class="line">        Socket s1 = server.accept();</span><br><span class="line">        <span class="comment">//网络字节流</span></span><br><span class="line">        OutputStream os = s1.getOutputStream();</span><br><span class="line">        InputStream is = s1.getInputStream();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">byte</span>[] bs = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">        <span class="keyword">int</span> len = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> ((len = is.read(bs)) != -<span class="number">1</span>)&#123;</span><br><span class="line">            fos.write(bs, <span class="number">0</span>, len);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        os.write(<span class="keyword">new</span> String(<span class="string">"文件上传成功"</span>).getBytes());</span><br><span class="line"></span><br><span class="line">        fos.close();</span><br><span class="line">        s1.close();</span><br><span class="line">        server.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="文件上传优化分析"><a href="#文件上传优化分析" class="headerlink" title="文件上传优化分析"></a>文件上传优化分析</h2><ol>
+<li><strong>文件名称写死的问题</strong></li>
+</ol>
+<p>服务端，保存文件的名称如果写死，那么最终导致服务器硬盘，只会保留一个文件，建议使用系统时间优化，保证文件名称唯一，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">FileOutputStream fis = <span class="keyword">new</span> FileOutputStream(System.currentTimeMillis()+<span class="string">".jpg"</span>) <span class="comment">// 文件名称</span></span><br><span class="line">BufferedOutputStream bos = <span class="keyword">new</span> BufferedOutputStream(fis);</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><strong>循环接收的问题</strong></li>
+</ol>
+<p>服务端，指保存一个文件就关闭了，之后的用户无法再上传，这是不符合实际的，使用循环改进，可以不断的接收不同用户的文件，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 每次接收新的连接,创建一个Socket</span></span><br><span class="line"><span class="keyword">while</span>（<span class="keyword">true</span>）&#123;</span><br><span class="line">    Socket accept = serverSocket.accept();</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><strong>效率问题</strong></li>
+</ol>
+<p>服务端，在接收大文件时，可能耗费几秒钟的时间，此时不能接收其他用户上传，所以，使用多线程技术优化，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>（<span class="keyword">true</span>）&#123;</span><br><span class="line">    Socket accept = serverSocket.accept();</span><br><span class="line">    <span class="comment">// accept 交给子线程处理.</span></span><br><span class="line">    <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">      	......</span><br><span class="line">        InputStream bis = accept.getInputStream();</span><br><span class="line">      	......</span><br><span class="line">    &#125;).start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>服务端代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileUploadServer</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="comment">//服务器端对象</span></span><br><span class="line">        ServerSocket server = <span class="keyword">new</span> ServerSocket(<span class="number">8888</span>);</span><br><span class="line">        <span class="comment">//创建一个文件夹接受图片</span></span><br><span class="line">        File file = <span class="keyword">new</span> File(<span class="string">"img"</span>);</span><br><span class="line">        <span class="keyword">if</span> (!file.exists())&#123;</span><br><span class="line">            file.mkdirs();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//使用多线程</span></span><br><span class="line">        <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">            Socket s1 = server.accept();</span><br><span class="line">            <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable()&#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        String filename = <span class="string">"img\\"</span> + System.currentTimeMillis() + <span class="string">".jpg"</span>;</span><br><span class="line">                        FileOutputStream fos = <span class="keyword">new</span> FileOutputStream(filename);</span><br><span class="line">                        InputStream is = s1.getInputStream();</span><br><span class="line">                        OutputStream os = s1.getOutputStream();</span><br><span class="line">                        <span class="keyword">int</span> len = <span class="number">0</span>;</span><br><span class="line">                        <span class="keyword">byte</span>[] bs = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">                        <span class="keyword">while</span> ((len = is.read(bs)) != -<span class="number">1</span>) &#123;</span><br><span class="line">                            fos.write(bs, <span class="number">0</span>, len);</span><br><span class="line">                        &#125;</span><br><span class="line">                        os.write(<span class="string">"上传成功"</span>.getBytes());</span><br><span class="line">                        is.close();</span><br><span class="line">                        os.close();</span><br><span class="line">                        fos.close();</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (IOException e)&#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;).start();</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="模拟B-S服务器"><a href="#模拟B-S服务器" class="headerlink" title="模拟B\S服务器"></a>模拟B\S服务器</h1><p>模拟网站服务器，使用浏览器访问自己编写的服务端程序，查看网页效果。</p>
+<h2 id="案例分析"><a href="#案例分析" class="headerlink" title="案例分析"></a>案例分析</h2><ol>
+<li><p>准备页面数据，web文件夹。</p>
+</li>
+<li><p>我们模拟服务器端，ServerSocket类监听端口，使用浏览器访问</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    	ServerSocket server = <span class="keyword">new</span> ServerSocket(<span class="number">8000</span>);</span><br><span class="line">    	Socket socket = server.accept();</span><br><span class="line">    	InputStream in = socket.getInputStream();</span><br><span class="line">   	    <span class="keyword">byte</span>[] bytes = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">    	<span class="keyword">int</span> len = in.read(bytes);</span><br><span class="line">    	System.out.println(<span class="keyword">new</span> String(bytes,<span class="number">0</span>,len));</span><br><span class="line">    	socket.close();</span><br><span class="line">    	server.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>服务器程序中字节输入流可以读取到浏览器发来的请求信息<br><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Java/Web/%E8%AF%BB%E5%8F%96%E8%AE%BF%E9%97%AE%E4%BF%A1%E6%81%AF.jpg" alt=""><br>GET/web/index.html HTTP/1.1是浏览器的请求消息。/web/index.html为浏览器想要请求的服务器端的资源,使用字符串切割方式获取到请求的资源。</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//转换流,读取浏览器请求第一行</span></span><br><span class="line">BufferedReader readWb = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(socket.getInputStream()));</span><br><span class="line">String requst = readWb.readLine();</span><br><span class="line"><span class="comment">//取出请求资源的路径</span></span><br><span class="line">String[] strArr = requst.split(<span class="string">" "</span>);</span><br><span class="line"><span class="comment">//去掉web前面的/</span></span><br><span class="line">String path = strArr[<span class="number">1</span>].substring(<span class="number">1</span>);</span><br><span class="line">System.out.println(path);</span><br></pre></td></tr></table></figure>
+
+<p>写入Http协议，固定写法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 写入HTTP协议响应头,固定写法</span></span><br><span class="line">out.write(<span class="string">"HTTP/1.1 200 OK\r\n"</span>.getBytes());</span><br><span class="line">out.write(<span class="string">"Content-Type:text/html\r\n"</span>.getBytes());</span><br><span class="line"><span class="comment">// 必须要写入空行,否则浏览器不解析</span></span><br><span class="line">out.write(<span class="string">"\r\n"</span>.getBytes());</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>JAVA</category>
       </categories>
@@ -3662,5 +3847,43 @@
       <tags>
         <tag>动态规划</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>JAVA-函数式接口</title>
+    <url>/2020/05/08/JAVA-%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3/</url>
+    <content><![CDATA[<h1 id="函数式接口"><a href="#函数式接口" class="headerlink" title="函数式接口"></a>函数式接口</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><ul>
+<li>函数式接口在Java中是指：有且仅有一个抽象方法的接口。</li>
+<li>函数式接口，即适用于函数式编程场景的接口。而Java中的函数式编程体现就是Lambda，所以函数式接口就是可 以适用于Lambda使用的接口。只有确保接口中有且仅有一个抽象方法，Java中的Lambda才能顺利地进行推导</li>
+</ul>
+<blockquote>
+<p>注：“语法糖”是指使用更加方便，但是原理不变的代码语法。例如在遍历集合时使用的for-each语法，其实 底层的实现原理仍然是迭代器，这便是“语法糖”。从应用层面来讲，Java中的Lambda可以被当做是匿名内部 类的“语法糖”，但是二者在原理上是不同的</p>
+</blockquote>
+<h2 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h2><p>只要确保接口中有且仅有一个抽象方法即可：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">修饰符 <span class="class"><span class="keyword">interface</span> 接口名称 </span>&#123;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> 返回值类型 方法名称(可选参数信息);     </span><br><span class="line"><span class="comment">// 其他非抽象方法内容</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于接口当中抽象方法的 public abstract 是可以省略的，所以定义一个函数式接口很简单：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MyFunctionInterface</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="FunctionalInterface注解"><a href="#FunctionalInterface注解" class="headerlink" title="@FunctionalInterface注解"></a>@FunctionalInterface注解</h2><p>与 @Override 注解的作用类似，Java 8中专门为函数式接口引入了一个新的注解： @FunctionalInterface该注解可用于一个接口的定义上：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FuncitonalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MyFunctionInterface</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">method</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一旦使用该注解来定义接口，编译器将会强制检查该接口是否确实有且仅有一个抽象方法，否则将会报错。需要注 意的是，即使不使用该注解，只要满足函数式接口的定义，这仍然是一个函数式接口，使用起来都一样。</p>
+<h2 id="自定义函数式接口"><a href="#自定义函数式接口" class="headerlink" title="自定义函数式接口"></a>自定义函数式接口</h2><p>对于刚刚定义好的<code>MyFunctionalInterface</code>函数式接口，典型使用场景就是作为方法的参数：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">methodLambda</span><span class="params">(MyFunctionInterface inter)</span></span>&#123;</span><br><span class="line">        inter.method();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        methodLambda(()-&gt;System.out.println(<span class="string">"Hello World"</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="常用的函数式接口"><a href="#常用的函数式接口" class="headerlink" title="常用的函数式接口"></a>常用的函数式接口</h1><p>JDK提供了大量常用的函数式接口以丰富Lambda的典型使用场景，它们主要在 java.util.function 包中被提供。 下面是简单的几个接口及使用示例：</p>
+<h2 id="Supplier接口"><a href="#Supplier接口" class="headerlink" title="Supplier接口"></a>Supplier接口</h2><p><code>java.util.function.Supplier&lt;T&gt;</code>接口仅包含一个无参的方法：T get()。用来获取一个泛型参数指定类型的对象数据。由于这是一个函数式接口，这也就意味着对应的Lambda表达式需要“对外提供”一个符合泛型类型的对象数据。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String s = getString(()-&gt;&#123;</span><br><span class="line">           <span class="comment">//生产一个字符串并返回</span></span><br><span class="line">           <span class="keyword">return</span> <span class="string">"Hello World"</span>;</span><br><span class="line">        &#125;);</span><br><span class="line">        System.out.println(s);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getString</span><span class="params">(Supplier&lt;String&gt; sup)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> sup.get();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Consumer接口"><a href="#Consumer接口" class="headerlink" title="Consumer接口"></a>Consumer接口</h2><p><code>java.util.function.Consumer&lt;T&gt;</code>接口则正好与Supplier接口相反，它不是生产一个数据，而是消费一个数据，其数据类型由泛型决定。</p>
+<p>抽象方法：accept 意为消费一个指定泛型的数据。<br>默认方法：andThen</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        method(<span class="string">"Hello"</span>, (String str)-&gt;&#123;</span><br><span class="line">            System.out.println(str);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">(String str, Consumer&lt;String&gt; con)</span></span>&#123;</span><br><span class="line">        con.accept(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Predicate接口"><a href="#Predicate接口" class="headerlink" title="Predicate接口"></a>Predicate接口</h2><p>有时候我们需要对某种类型的数据进行判断，从而得到一个boolean值结果。这时可以使用java.util.function.Predicate<T> 接口。<br>抽象方法：test</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">boolean</span> s = method(<span class="string">"Hello"</span>, (String str)-&gt;&#123;</span><br><span class="line">           <span class="keyword">return</span> str.length() &gt; <span class="number">5</span>;</span><br><span class="line">        &#125;);</span><br><span class="line">        System.out.println(s);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">method</span><span class="params">(String str, Predicate&lt;String&gt; per)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> per.test(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Funtion接口"><a href="#Funtion接口" class="headerlink" title="Funtion接口"></a>Funtion接口</h2><p><code>java.util.function.Function&lt;T,R&gt;</code>接口用来根据一个类型的数据得到另一个类型的数据，前者称为前置条件，后者称为后置条件。<br>抽象方法：apply： 根据类型T的参数获取类型R的结果。使用的场景例如：将 String 类型转换为 Integer 类型。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        mathod(<span class="string">"123"</span>, (String s)-&gt;&#123;</span><br><span class="line">            <span class="keyword">return</span> Integer.parseInt(s);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">mathod</span><span class="params">(String str, Function&lt;String, Integer&gt; func)</span></span>&#123;</span><br><span class="line">        Integer i = func.apply(str);</span><br><span class="line">        System.out.println(i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
   </entry>
 </search>
