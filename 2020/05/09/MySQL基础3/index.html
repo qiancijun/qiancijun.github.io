@@ -1,0 +1,516 @@
+
+<!DOCTYPE html>
+<html lang="zh_CH" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MySQL基础3 - 神奇口袋</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="qiancijun,"> 
+    <meta name="description" content="MySQL基础MySQL基础2
+DML语言数据操作语言：
+
+插入：insert
+修改：update
+删除：delete
+
+插入语句表已经存在，向表中添加数据。
+语法12insert into 表名(,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">神奇口袋</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://xlich.top"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">MySQL基础3</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+   
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">MySQL基础3</h1>
+        <div class="stuff">
+            <span>五月 09, 2020</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <p><a href="https://xlich.top/2020/04/24/MySQL%E5%9F%BA%E7%A1%80/">MySQL基础</a><br><a href="https://xlich.top/2020/04/28/MySQL%E5%9F%BA%E7%A1%802/">MySQL基础2</a></p>
+<h1 id="DML语言"><a href="#DML语言" class="headerlink" title="DML语言"></a>DML语言</h1><p>数据操作语言：</p>
+<ul>
+<li>插入：insert</li>
+<li>修改：update</li>
+<li>删除：delete</li>
+</ul>
+<h2 id="插入语句"><a href="#插入语句" class="headerlink" title="插入语句"></a>插入语句</h2><p>表已经存在，向表中添加数据。</p>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> 表名(列名, ...)</span><br><span class="line"><span class="keyword">values</span>(值<span class="number">1</span>,....);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>特点：<ul>
+<li>插入的值的类型要与列的类型要一致兼容</li>
+<li>可以为NULL的列可以插入NULL或者直接省略，不可以为NULL的列必须插入值</li>
+</ul>
+<ul>
+<li>列的顺序可以调换</li>
+</ul>
+<ul>
+<li>列数和值的个数必须一致</li>
+<li>可以省略列名，默认所有列，而且列的顺序和表中的顺序是一致的</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>注：不管使用哪种INSERT语法，都必须给出VALUES的正确数目。$\color{blue}{如果不提供列名}$，则必须给每个表列提供一个值。$\color{blue}{如果提供列名}$，则必须对每个列出的列给出一个值。如果不这样，将产生一条错误信息，相应的行插入不成功。</p>
+</blockquote>
+<h3 id="语法二"><a href="#语法二" class="headerlink" title="语法二"></a>语法二</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> 表名</span><br><span class="line"><span class="keyword">SET</span> 列名=值, 列名=值....</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>两种插入方式对比：</p>
+<ul>
+<li>语法一支持插入多行，语法二不支持</li>
+<li>语法一支持子查询，语法二不支持<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> customers(cust_name, cust_address, cust_city)</span><br><span class="line"><span class="keyword">VALUES</span>(<span class="string">"A"</span>, <span class="string">"BBB"</span>, <span class="string">"CCCC"</span>);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="提高整体性能"><a href="#提高整体性能" class="headerlink" title="提高整体性能"></a>提高整体性能</h3><p>数据库经常被多个客户访问，对处理什么请求以及用什么次序处理进行管理是MySQL的任务。<code>INSERT</code>操作可能很耗时（特别是有很多索引需要更新时），而且它可能降低等待处理的<code>SELECT</code>语句的性能。<br>如果数据检索是最重要的（通常是这样），则可以通过在<code>INSERT</code>和<code>INTO</code>之间添加关键字<code>LOW_PRIORITY</code>，指示MySQL降低<code>INSERT</code>语句的优先级。如<code>INSERT LOW_PRIORITY INTO</code>。这也适用于<code>UPDATE</code>和<code>DELETE</code>子句。</p>
+<h2 id="修改语句"><a href="#修改语句" class="headerlink" title="修改语句"></a>修改语句</h2><h3 id="修改单表的记录"><a href="#修改单表的记录" class="headerlink" title="修改单表的记录"></a>修改单表的记录</h3><ol>
+<li><p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> 表名</span><br><span class="line"><span class="keyword">set</span> 列 = 新值....</span><br><span class="line"><span class="keyword">where</span> 筛选条件</span><br></pre></td></tr></table></figure>
+<p>如果不写where会把表中所有列全部修改</p>
+</li>
+<li><p>例：客户10005有了新的电子邮箱</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> customs</span><br><span class="line"><span class="keyword">SET</span> cust_email = <span class="string">`emler@fudd.com`</span></span><br><span class="line"><span class="keyword">where</span> cust_id = <span class="number">10005</span>;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="修改多表的记录"><a href="#修改多表的记录" class="headerlink" title="修改多表的记录"></a>修改多表的记录</h3><ol>
+<li>语法：sql92<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> 表<span class="number">1</span> 别名, 表<span class="number">2</span> 别名...</span><br><span class="line"><span class="keyword">set</span> 列 = 值...</span><br><span class="line"><span class="keyword">where</span> 筛选条件</span><br><span class="line"><span class="keyword">and</span> 筛选条件</span><br></pre></td></tr></table></figure>
+语法：sql99<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> 表<span class="number">1</span> 别名</span><br><span class="line"><span class="keyword">join</span> 表<span class="number">2</span> 别名</span><br><span class="line"><span class="keyword">on</span> 连接条件</span><br><span class="line"><span class="keyword">set</span> 列 = 值...</span><br><span class="line"><span class="keyword">where</span> 筛选条件</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="删除语句"><a href="#删除语句" class="headerlink" title="删除语句"></a>删除语句</h2><p>整行删除，如果不写where筛选条件就删除整个表。</p>
+<h3 id="语法一"><a href="#语法一" class="headerlink" title="语法一"></a>语法一</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> 表名 </span><br><span class="line"><span class="keyword">where</span> 筛选条件</span><br></pre></td></tr></table></figure>
+
+<h3 id="语法二-1"><a href="#语法二-1" class="headerlink" title="语法二"></a>语法二</h3><p><code>truncate</code>关键字<br>语法:删除整表</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">truncate</span> <span class="keyword">table</span> 表名</span><br></pre></td></tr></table></figure>
+
+<h3 id="多表的删除"><a href="#多表的删除" class="headerlink" title="多表的删除"></a>多表的删除</h3><p>语法：sql92</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> 别名 <span class="comment">#如果单独删除表1或表2的别名那就只写表1的别名</span></span><br><span class="line"><span class="keyword">from</span> 表<span class="number">1</span> 别名, 表<span class="number">2</span> 别名</span><br><span class="line"><span class="keyword">where</span> 连接条件 </span><br><span class="line"><span class="keyword">and</span> 筛选条件;</span><br></pre></td></tr></table></figure>
+<p>语法：sql99</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> 别名</span><br><span class="line"><span class="keyword">from</span> 表<span class="number">1</span> 别名</span><br><span class="line"><span class="keyword">join</span> 表<span class="number">2</span> 别名</span><br><span class="line"><span class="keyword">on</span> 连接条件</span><br><span class="line"><span class="keyword">where</span> 筛选条件</span><br></pre></td></tr></table></figure>
+
+<h2 id="IGNORE关键字"><a href="#IGNORE关键字" class="headerlink" title="IGNORE关键字"></a>IGNORE关键字</h2><p>如果UPDATE语句更新多行，并且在更新这些行中的一行或多行时出现一个错误，则整个UPDATE操作被取消（错误发生前更新的所有行被恢复到它们原来的值）。即使是发生错误，也继续进行更新，可使用<code>IGNORE</code>关键字，<code>UPDATE IGNORE customers</code>。</p>
+<h1 id="DDL语言"><a href="#DDL语言" class="headerlink" title="DDL语言"></a>DDL语言</h1><p>数据定义语言：库和表的管理</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">创建： <span class="keyword">create</span></span><br><span class="line">修改： <span class="keyword">alter</span></span><br><span class="line">删除： <span class="keyword">drop</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="库的管理"><a href="#库的管理" class="headerlink" title="库的管理"></a>库的管理</h2><h3 id="创建库"><a href="#创建库" class="headerlink" title="创建库"></a>创建库</h3><p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> 库名;</span><br></pre></td></tr></table></figure>
+
+<p>例：创建库Books</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> Books;</span><br></pre></td></tr></table></figure>
+<p>如果表已经存在会报错，可以用if not exists添加条件</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">exists</span> Books;</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改库"><a href="#修改库" class="headerlink" title="修改库"></a>修改库</h3><p>基本上不修改，可以更改库的字符集</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">database</span> 库名 <span class="built_in">character</span> <span class="keyword">set</span> gbk;</span><br></pre></td></tr></table></figure>
+
+<h3 id="删除库"><a href="#删除库" class="headerlink" title="删除库"></a>删除库</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">database</span> 库名</span><br></pre></td></tr></table></figure>
+
+<h2 id="表的管理"><a href="#表的管理" class="headerlink" title="表的管理"></a>表的管理</h2><h3 id="表的创建（重点）"><a href="#表的创建（重点）" class="headerlink" title="表的创建（重点）"></a>表的创建（重点）</h3><p>语法：长度和约束为可选项</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> 表名(</span><br><span class="line">    列名 列的类型(长度) 约束</span><br><span class="line">    .</span><br><span class="line">    .</span><br><span class="line">    .</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h3 id="表的修改"><a href="#表的修改" class="headerlink" title="表的修改"></a>表的修改</h3><ol>
+<li>修改列名<br>column可以省略<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> 表名 <span class="keyword">change</span> <span class="keyword">column</span> 旧列名 新列名 类型;</span><br></pre></td></tr></table></figure></li>
+<li>修改类型或约束<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> 表名 <span class="keyword">modify</span> <span class="keyword">column</span> 列名 类型;</span><br></pre></td></tr></table></figure></li>
+<li>添加列</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> 表名 <span class="keyword">add</span> <span class="keyword">column</span> 新列名 类型;</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>删除列<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> 表名 <span class="keyword">drop</span> <span class="keyword">column</span> 列名</span><br></pre></td></tr></table></figure></li>
+<li>修改表名<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> 表名 <span class="keyword">rename</span> <span class="keyword">to</span> 新表名</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="表的删除"><a href="#表的删除" class="headerlink" title="表的删除"></a>表的删除</h3><p>语法：含容错性处理</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">exists</span> 表名</span><br></pre></td></tr></table></figure>
+
+<h3 id="表的复制"><a href="#表的复制" class="headerlink" title="表的复制"></a>表的复制</h3><ol>
+<li><p>仅复制表的结构</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> 复制的新表名 <span class="keyword">like</span> 要复制的表名;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>复制表的结构和数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> 复制的新表名</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> 要复制的表名</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>复制表的部分数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> 复制的新表名</span><br><span class="line"><span class="keyword">select</span> 要复制的数据 </span><br><span class="line"><span class="keyword">from</span> 要复制的表名</span><br><span class="line"><span class="keyword">where</span> 筛选条件</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>仅复制表的部分结构</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> 复制的新表名</span><br><span class="line"><span class="keyword">select</span> 要复制的数据</span><br><span class="line"><span class="keyword">from</span> 要复制的表名</span><br><span class="line"><span class="keyword">where</span> <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h1 id="常见的数据类型"><a href="#常见的数据类型" class="headerlink" title="常见的数据类型"></a>常见的数据类型</h1><p>分类：</p>
+<ul>
+<li>数值型：<ul>
+<li>整形</li>
+<li>浮点型</li>
+</ul>
+</li>
+<li>字符型：<ul>
+<li>较短的文本：char、varchar</li>
+<li>较长的文本：text、blob（较长的二进制数据）</li>
+</ul>
+</li>
+<li>日期型</li>
+</ul>
+<h2 id="数值型"><a href="#数值型" class="headerlink" title="数值型"></a>数值型</h2><table>
+<thead>
+<tr>
+<th align="left">数据类型</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">BIT</td>
+<td align="left">位字段，1~64位。（在MySQL 5之前，BIT在功能上等价于TINYINT）</td>
+</tr>
+<tr>
+<td align="left">BIGINT</td>
+<td align="left">整数值，支持-9223372036854775808~9223372036854775807。无符号型UNSIGNED，范围很大，不用记住</td>
+</tr>
+<tr>
+<td align="left">BOOLEAN或BOOL</td>
+<td align="left">布尔标志，或者为0或者为1</td>
+</tr>
+<tr>
+<td align="left">DECIMAL或DEC(M,D)</td>
+<td align="left">精度可变的浮点值，默认精度(10, 0)</td>
+</tr>
+<tr>
+<td align="left">DOUBLE(M,D)</td>
+<td align="left">双精度浮点值</td>
+</tr>
+<tr>
+<td align="left">FLOAT(M,D)</td>
+<td align="left">单精度浮点值</td>
+</tr>
+<tr>
+<td align="left">INT或INTEGER</td>
+<td align="left">整数值。支持$\textit{-}2^{31}$ ~ $2^{31} \textit{-} 1$</td>
+</tr>
+<tr>
+<td align="left">MEDIUMINT</td>
+<td align="left">整数值。支持$\textit{-}2^{23}$ ~ $2^{23} \textit{-} 1$</td>
+</tr>
+<tr>
+<td align="left">REAL</td>
+<td align="left">4字节的浮点值</td>
+</tr>
+<tr>
+<td align="left">SMALLINT</td>
+<td align="left">整数值。支持$\textit{-}2^{15}$ ~ $2^{15} \textit{-} 1$</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>注：存储货币数据类型：<br>MySQL中没有专门存储货币的数据类型，一般情况下使用DECIMAL(8,2)<br>M:有效数字的个数，整数加小数的位数 D:小数点后保留的位数</p>
+</blockquote>
+<ol>
+<li>创建一个无符号的数据类型<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> 表名(</span><br><span class="line">    t1 <span class="built_in">INT</span>,</span><br><span class="line">    t2 <span class="built_in">INT</span> <span class="keyword">unsigned</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：如果不设置有符号或无符号，默认是有符号，如果插入的值超出数据类型的范围，那么会默认插入临界值。如果不设置长度会有默认的长度。长度代表显示结果的长度，长度不够用0填充且必须搭配关键字<code>zerofill</code>，同时int变为无符号 </p>
+</blockquote>
+</li>
+</ol>
+<h2 id="串数据"><a href="#串数据" class="headerlink" title="串数据"></a>串数据</h2><table>
+<thead>
+<tr>
+<th align="left">数据类型</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">CHAR</td>
+<td align="left">1~255个字符的的定长串。它的长度必须在创建时指定</td>
+</tr>
+<tr>
+<td align="left">ENUM</td>
+<td align="left">接受最多64K个串组成的一个预定义集合的某个串</td>
+</tr>
+<tr>
+<td align="left">TEXT</td>
+<td align="left">最大长度为64K的边长文本</td>
+</tr>
+<tr>
+<td align="left">LONGTEXT</td>
+<td align="left">与TEXT相同，但最大长度为4GB</td>
+</tr>
+<tr>
+<td align="left">MEDIUMTEXT</td>
+<td align="left">与TEXT相同，但最大长度为16K</td>
+</tr>
+<tr>
+<td align="left">SET</td>
+<td align="left">接受最多64个串组成的一个预定义集合的零个或多个串</td>
+</tr>
+<tr>
+<td align="left">VARCHAR</td>
+<td align="left">长度可变，最多不超过255字节</td>
+</tr>
+</tbody></table>
+<h3 id="char和varchar"><a href="#char和varchar" class="headerlink" title="char和varchar"></a>char和varchar</h3><table>
+<thead>
+<tr>
+<th align="left">char</th>
+<th align="left">varchar</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">固定长度的字符串</td>
+<td align="left">可变长度的字符串</td>
+</tr>
+<tr>
+<td align="left">比较耗费</td>
+<td align="left">比较节省</td>
+</tr>
+<tr>
+<td align="left">效率高</td>
+<td align="left">效率低</td>
+</tr>
+</tbody></table>
+<h2 id="日期和时间类型"><a href="#日期和时间类型" class="headerlink" title="日期和时间类型"></a>日期和时间类型</h2><table>
+<thead>
+<tr>
+<th align="left">数据类型</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">DATE</td>
+<td align="left">表示1000-01-01~9999-12-31，格式为YYYY-MM-DD</td>
+</tr>
+<tr>
+<td align="left">TIME</td>
+<td align="left">格式为HH:MM:DD</td>
+</tr>
+<tr>
+<td align="left">DATETIME</td>
+<td align="left">DATE与TIME的组合</td>
+</tr>
+<tr>
+<td align="left">TIMESTAMP</td>
+<td align="left">时间戳</td>
+</tr>
+<tr>
+<td align="left">YEAR</td>
+<td align="left">用两位数字表示，70(1970)~69(2069)</td>
+</tr>
+</tbody></table>
+<h2 id="二进制类型"><a href="#二进制类型" class="headerlink" title="二进制类型"></a>二进制类型</h2><table>
+<thead>
+<tr>
+<th align="left">数据类型</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">BLOB</td>
+<td align="left">Blob最大长度为64KB</td>
+</tr>
+<tr>
+<td align="left">MEDIUMBLOB</td>
+<td align="left">MEDIUMBlob最大长度为16MB</td>
+</tr>
+<tr>
+<td align="left">LONGBLOB</td>
+<td align="left">LONGBlob最大长度为4GB</td>
+</tr>
+<tr>
+<td align="left">TINYBLOB</td>
+<td align="left">TINYBlob最大长度为255字节</td>
+</tr>
+</tbody></table>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='https://link.hhtjim.com/163/155827.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='https://link.hhtjim.com/163/1491163.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='https://link.hhtjim.com/163/1992707.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='true'
+        data-ci='Iv1.06e5c405a7731b45'
+        data-cs='2fcfe85902a7d5812fa4b299b56a6f194c98e08a'
+        data-r='qiancijun.github.io'
+        data-o='qiancijun'
+        data-a='qiancijun'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#DML语言"><span class="toc-number">1.</span> <span class="toc-text">DML语言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#插入语句"><span class="toc-number">1.1.</span> <span class="toc-text">插入语句</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#语法"><span class="toc-number">1.1.1.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#语法二"><span class="toc-number">1.1.2.</span> <span class="toc-text">语法二</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用"><span class="toc-number">1.1.3.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#提高整体性能"><span class="toc-number">1.1.4.</span> <span class="toc-text">提高整体性能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改语句"><span class="toc-number">1.2.</span> <span class="toc-text">修改语句</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#修改单表的记录"><span class="toc-number">1.2.1.</span> <span class="toc-text">修改单表的记录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改多表的记录"><span class="toc-number">1.2.2.</span> <span class="toc-text">修改多表的记录</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除语句"><span class="toc-number">1.3.</span> <span class="toc-text">删除语句</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#语法一"><span class="toc-number">1.3.1.</span> <span class="toc-text">语法一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#语法二-1"><span class="toc-number">1.3.2.</span> <span class="toc-text">语法二</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多表的删除"><span class="toc-number">1.3.3.</span> <span class="toc-text">多表的删除</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IGNORE关键字"><span class="toc-number">1.4.</span> <span class="toc-text">IGNORE关键字</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DDL语言"><span class="toc-number">2.</span> <span class="toc-text">DDL语言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#库的管理"><span class="toc-number">2.1.</span> <span class="toc-text">库的管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建库"><span class="toc-number">2.1.1.</span> <span class="toc-text">创建库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改库"><span class="toc-number">2.1.2.</span> <span class="toc-text">修改库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除库"><span class="toc-number">2.1.3.</span> <span class="toc-text">删除库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#表的管理"><span class="toc-number">2.2.</span> <span class="toc-text">表的管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#表的创建（重点）"><span class="toc-number">2.2.1.</span> <span class="toc-text">表的创建（重点）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#表的修改"><span class="toc-number">2.2.2.</span> <span class="toc-text">表的修改</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#表的删除"><span class="toc-number">2.2.3.</span> <span class="toc-text">表的删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#表的复制"><span class="toc-number">2.2.4.</span> <span class="toc-text">表的复制</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#常见的数据类型"><span class="toc-number">3.</span> <span class="toc-text">常见的数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数值型"><span class="toc-number">3.1.</span> <span class="toc-text">数值型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#串数据"><span class="toc-number">3.2.</span> <span class="toc-text">串数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#char和varchar"><span class="toc-number">3.2.1.</span> <span class="toc-text">char和varchar</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#日期和时间类型"><span class="toc-number">3.3.</span> <span class="toc-text">日期和时间类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二进制类型"><span class="toc-number">3.4.</span> <span class="toc-text">二进制类型</span></a></li></ol></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":250,"height":400},"mobile":{"show":false},"log":false});</script></body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-163098031-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+<script type="text/javascript" src="/js/love.js"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</html>
