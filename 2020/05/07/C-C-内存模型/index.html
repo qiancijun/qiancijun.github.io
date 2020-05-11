@@ -97,6 +97,7 @@ BSS段(Block Started by S,">
 </ul>
 <p>设计栈的方向向下，可以给应用程序设定栈的大小。如果栈的生长方式是向上的，就必须得指定栈和堆的一个严格分界线，但这个分界线怎么确定呢？平均分？但是有的程序使用的堆空间比较多，而有的程序使用的栈空间比较多。所以就可能出现这种情况：一个程序因为栈溢出而崩溃的时候，其实它还有大量闲置的堆空间呢，但是我们却无法使用这些闲置的堆空间。所以呢，最好的办法就是让堆和栈一个向上涨，一个向下涨，这样它们就可以最大程度地共用这块剩余的地址空间，达到利用率的最大化，这样设计可以使得堆和栈能够充分利用空闲的地址空间。</p>
 <p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/C%26C%2B%2B/%E6%A0%88.png" alt=""></p>
+<p>图解：<br><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/C%26C%2B%2B/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E5%9B%BE%E8%A7%A3.png" alt=""></p>
 <h2 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h2><p>堆是可以申请大块内存空间的区域。理论上，使用malloc最大能够申请空间大约3G。但这是理论值，因为实际中，还会包含代码区，全局变量区和栈区。</p>
 <h3 id="堆的生长方向"><a href="#堆的生长方向" class="headerlink" title="堆的生长方向"></a>堆的生长方向</h3><p>堆是由低地址向高地址生长的</p>
 <h2 id="内存溢出"><a href="#内存溢出" class="headerlink" title="内存溢出"></a>内存溢出</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>内存溢出 : out of memory 指程序在申请内存时,没有足够的内存空间供其使用,出现out fo memory 比如申请一个integer 但给它存了long才能存下的数那就是内存溢出。</p>

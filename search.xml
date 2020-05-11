@@ -3870,6 +3870,7 @@ offset从0开始可以省略
 </ul>
 <p>设计栈的方向向下，可以给应用程序设定栈的大小。如果栈的生长方式是向上的，就必须得指定栈和堆的一个严格分界线，但这个分界线怎么确定呢？平均分？但是有的程序使用的堆空间比较多，而有的程序使用的栈空间比较多。所以就可能出现这种情况：一个程序因为栈溢出而崩溃的时候，其实它还有大量闲置的堆空间呢，但是我们却无法使用这些闲置的堆空间。所以呢，最好的办法就是让堆和栈一个向上涨，一个向下涨，这样它们就可以最大程度地共用这块剩余的地址空间，达到利用率的最大化，这样设计可以使得堆和栈能够充分利用空闲的地址空间。</p>
 <p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/C%26C%2B%2B/%E6%A0%88.png" alt=""></p>
+<p>图解：<br><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/C%26C%2B%2B/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E5%9B%BE%E8%A7%A3.png" alt=""></p>
 <h2 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h2><p>堆是可以申请大块内存空间的区域。理论上，使用malloc最大能够申请空间大约3G。但这是理论值，因为实际中，还会包含代码区，全局变量区和栈区。</p>
 <h3 id="堆的生长方向"><a href="#堆的生长方向" class="headerlink" title="堆的生长方向"></a>堆的生长方向</h3><p>堆是由低地址向高地址生长的</p>
 <h2 id="内存溢出"><a href="#内存溢出" class="headerlink" title="内存溢出"></a>内存溢出</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>内存溢出 : out of memory 指程序在申请内存时,没有足够的内存空间供其使用,出现out fo memory 比如申请一个integer 但给它存了long才能存下的数那就是内存溢出。</p>
@@ -4345,10 +4346,11 @@ offset从0开始可以省略
 <ol>
 <li>脏读：对于两个事务T1,T2。T1读取了已经被T2更新但还$\color{blue}{没有被提交}$的字段。之后若T2回滚，T1读取的内容就是临时且无效的。</li>
 <li>不可重复读：对于两个事务T1,T2。T1读取了一个字符，然后T2$\color{blue}{更新}$了该字段。之后若T1再次读取同一个字段，值就不同了</li>
-<li>幻读：对于两个事务T1,T2。T1从一个表中读取了一个字段，然后T2再该表中$\color{blue}{插入}$了一些新的行。之后若T1再次读取同一个表，就会多出几行。<br>数据库系统必须具有隔离并发运行各个事务的能力，使它们不会互相影响，避免各自并发问题。</li>
+<li>幻读：对于两个事务T1,T2。T1从一个表中读取了一个字段，然后T2再该表中$\color{blue}{插入}$了一些新的行。之后若T1再次读取同一个表，就会多出几行。</li>
 </ol>
 </blockquote>
 </blockquote>
+<p>数据库事务的隔离性：数据库系统必须具有隔离并发运行各个事务的能力，使它们不会互相影响，避免各自并发问题。<br>MySQL支持四种事务隔离级别。默认的事务隔离级别为：$\color{red}{REPEATABLE}$ $\color{red}{READ}$</p>
 <h3 id="事务的创建"><a href="#事务的创建" class="headerlink" title="事务的创建"></a>事务的创建</h3><ul>
 <li>隐式事务：事务没有明显的开启和结束的标记<ul>
 <li>insert</li>
@@ -4370,9 +4372,369 @@ offset从0开始可以省略
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">语句1;</span><br><span class="line">语句2;</span><br><span class="line">...</span><br><span class="line">语句n;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>结束事务</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">commit</span>; 提交事务</span><br><span class="line"><span class="keyword">rollback</span>; 回滚事务</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">commit</span>; 提交事务</span><br><span class="line"><span class="keyword">rollback</span>; 回滚事务</span><br></pre></td></tr></table></figure>
+
+</li>
 </ol>
-]]></content>
+<h2 id="数据库的隔离级别"><a href="#数据库的隔离级别" class="headerlink" title="数据库的隔离级别"></a>数据库的隔离级别</h2><table>
+<thead>
+<tr>
+<th align="left">隔离界别</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">READ UNCOMMITED(读未提交数据)</td>
+<td align="left">允许事务读取未被其他事务提交的变更，脏读，不可重复读，幻读的问题都会出现</td>
+</tr>
+<tr>
+<td align="left">READ COMMITED(读已提交数据)</td>
+<td align="left">只允许事务读取已经被其它事务提交的变更，可以避免脏读，但不可避免不可重复读和幻读</td>
+</tr>
+<tr>
+<td align="left">REPEATABLE READ(可重复读)</td>
+<td align="left">确保事务可以多次从一个字段中读取相同的值，在这个事务持续期间，禁止其他事务对这个字段进行更新，可以避免脏读和不可重复读，但不可避免幻读</td>
+</tr>
+<tr>
+<td align="left">SERIALIZABLE(串行化)</td>
+<td align="left">确保事务从一个表中读取相同的行，在这个事务持续期间，禁止其他事务对该表执行插入，更新和删除操作，所有并发问题都可以避免，但性能十分低下</td>
+</tr>
+</tbody></table>
+<ol>
+<li>查看当前数据库的默认隔离级别：<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> @@transaction_isolation</span><br></pre></td></tr></table></figure></li>
+<li>设置当前的隔离级别：<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">transaction</span> <span class="keyword">isolation</span> <span class="keyword">level</span> 隔离级别;</span><br></pre></td></tr></table></figure></li>
+<li>设置数据库系统的全局的隔离级别：<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> <span class="keyword">transaction</span> <span class="keyword">isolation</span> <span class="keyword">level</span> 隔离级别;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">脏读</th>
+<th align="center">不可重复读</th>
+<th align="center">幻读</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">READ UNCOMMITED</td>
+<td align="center">✔</td>
+<td align="center">✔</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td align="center">READ COMMITED</td>
+<td align="center">✘</td>
+<td align="center">✔</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td align="center">REPEATABLE READ</td>
+<td align="center">✘</td>
+<td align="center">✘</td>
+<td align="center">✔</td>
+</tr>
+<tr>
+<td align="center">SERIALIZABLE</td>
+<td align="center">✘</td>
+<td align="center">✘</td>
+<td align="center">✘</td>
+</tr>
+</tbody></table>
+<p>MySQL默认的事务隔离级别为：$\color{red}{REPEATABLE}$ $\color{red}{READ}$</p>
+<h2 id="回滚点"><a href="#回滚点" class="headerlink" title="回滚点"></a>回滚点</h2><p>类似于保存点</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> autocommit = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> 表名 <span class="keyword">where</span> 筛选条件</span><br><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> 表名 <span class="keyword">where</span> 筛选条件</span><br><span class="line"><span class="keyword">savepoint</span> a; <span class="comment">#设置保存点</span></span><br><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> 表名 <span class="keyword">where</span> 筛选条件</span><br><span class="line"><span class="keyword">rollback</span> <span class="keyword">to</span> a; <span class="comment">#回滚到保存点处</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h1><ul>
+<li>视图：一种虚拟的表，和普通表一样使用。是通过表动态生成的数据。行和列的数据来自定义视图的查询中使用的表，并且是在使用视图时$\color{red}{动态生成}$的，只保存了sql逻辑，不保存查询结果。</li>
+</ul>
+<p>使用场景：</p>
+<ol>
+<li>多个地方用到同样的查询结果</li>
+<li>该查询结果使用的sql语句比较复杂</li>
+<li>使用表的组成部分而不是整个表</li>
+<li>保护数据（类似于面向对象中的封装）</li>
+<li>更改数据格式和表示</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">是否占用实际的物理空间</th>
+<th align="center">使用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">视图(view)</td>
+<td align="center">不完全占用</td>
+<td align="center">增删改查，一般只查</td>
+</tr>
+<tr>
+<td align="center">表(table)</td>
+<td align="center">占用</td>
+<td align="center">增删改查</td>
+</tr>
+</tbody></table>
+<h2 id="创建视图"><a href="#创建视图" class="headerlink" title="创建视图"></a>创建视图</h2><p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">view</span> 视图名</span><br><span class="line"><span class="keyword">as</span></span><br><span class="line">查询语句;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用案例"><a href="#使用案例" class="headerlink" title="使用案例"></a>使用案例</h2><ol>
+<li>例：查询姓名中包含a字符的员工名、部门名和工种信息：<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">#1创建视图</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">VIEW</span> myv1 <span class="keyword">AS</span></span><br><span class="line">    <span class="keyword">SELECT</span> </span><br><span class="line">        last_name, department_name, job_title</span><br><span class="line">    <span class="keyword">FROM</span></span><br><span class="line">        employees e</span><br><span class="line">            <span class="keyword">JOIN</span></span><br><span class="line">        departments d <span class="keyword">ON</span> e.department_id = d.department_id</span><br><span class="line">            <span class="keyword">JOIN</span></span><br><span class="line">        jobs j <span class="keyword">ON</span> j.job_id = e.job_id;</span><br><span class="line"><span class="comment">#2直接在视图中查询</span></span><br><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">    *</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">    myv1</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">    last_name <span class="keyword">LIKE</span> <span class="string">'%a%'</span>;</span><br></pre></td></tr></table></figure></li>
+<li>例：查询各部门的平均工资级别<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">VIEW</span> myv2 <span class="keyword">AS</span></span><br><span class="line">    <span class="keyword">SELECT</span> </span><br><span class="line">        <span class="keyword">AVG</span>(salary) ag, department_id</span><br><span class="line">    <span class="keyword">FROM</span></span><br><span class="line">        employees</span><br><span class="line">    <span class="keyword">GROUP</span> <span class="keyword">BY</span> department_id;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">    myv2.ag, g.grade_level</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">    myv2</span><br><span class="line">        <span class="keyword">JOIN</span></span><br><span class="line">    job_grades g <span class="keyword">ON</span> myv2.ag <span class="keyword">BETWEEN</span> g.lowest_sal <span class="keyword">AND</span> g.highest_sal;</span><br></pre></td></tr></table></figure></li>
+<li>例：查询平均工资最低的部门信息<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">#利用前面的结果</span></span><br><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">    *</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">    myv2</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> ag</span><br><span class="line"><span class="keyword">LIMIT</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="视图的修改"><a href="#视图的修改" class="headerlink" title="视图的修改"></a>视图的修改</h2><p>方式一：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">or</span> <span class="keyword">replace</span> <span class="keyword">view</span> 视图名</span><br><span class="line"><span class="keyword">as</span></span><br><span class="line">查询语句</span><br></pre></td></tr></table></figure>
+<p>方式二：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">view</span> 视图名</span><br><span class="line"><span class="keyword">as</span></span><br><span class="line">查询语句</span><br></pre></td></tr></table></figure>
+
+<h2 id="视图的删除"><a href="#视图的删除" class="headerlink" title="视图的删除"></a>视图的删除</h2><p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">view</span> 视图名,视图名,....;</span><br></pre></td></tr></table></figure>
+
+<h2 id="视图的查看"><a href="#视图的查看" class="headerlink" title="视图的查看"></a>视图的查看</h2><p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">desc 视图名;(直观)</span><br><span class="line">或者</span><br><span class="line"><span class="keyword">show</span> <span class="keyword">create</span> <span class="keyword">view</span> 视图名;(具体)</span><br></pre></td></tr></table></figure>
+
+<h2 id="视图的更新"><a href="#视图的更新" class="headerlink" title="视图的更新"></a>视图的更新</h2><p>视图的可更新性和视图中查询的定义有关系，基本上不使用更新。</p>
+<ol>
+<li>插入数据<br>视图和原始表都会插入该数据<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> 视图名 <span class="keyword">values</span>(对应视图中的列);</span><br></pre></td></tr></table></figure></li>
+<li>修改数据<br>视图和原始表都会更新数据<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">update</span> 视图名 <span class="keyword">set</span> 字段名=值 <span class="keyword">where</span> 筛选条件;</span><br></pre></td></tr></table></figure></li>
+<li>删除数据<br>视图和原始表都会删除数据<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> 视图名 <span class="keyword">where</span> 筛选条件</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><ul>
+<li>系统变量：<ul>
+<li>全局变量</li>
+<li>会话变量</li>
+</ul>
+</li>
+<li>自定义变量<ul>
+<li>用户变量</li>
+<li>局部变量</li>
+</ul>
+</li>
+</ul>
+<h2 id="系统变量"><a href="#系统变量" class="headerlink" title="系统变量"></a>系统变量</h2><p>变量由系统提供，不由用户定义，属于服务器层面。<br>语句：</p>
+<ol>
+<li><p>查看所有的系统变量</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">show</span> 关键词(<span class="keyword">global</span>, <span class="keyword">session</span>) <span class="keyword">variables</span>;</span><br></pre></td></tr></table></figure></li>
+<li><p>查看满足条件的部分系统变量<br>查询包含char字眼的系统变量</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">global</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">"%char%"</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看指定的某个系统变量</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> @@系统变量名;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>为某个具体的系统变量赋值</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">global</span>|<span class="keyword">session</span> 系统变量名 = 值;</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> @@系统变量名;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h2><p>跨链接也有效，服务器每次启动将为所有的全局变量赋予初始值。</p>
+<ol>
+<li><p>查看所有全局变量</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">global</span> <span class="keyword">variables</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看部分的全局变量</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">global</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">"%char%"</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看指定的全局变量</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> @@global.全局变量名;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>为某个全局变量赋值</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> @@global.全局变量名 = 值;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="会话变量"><a href="#会话变量" class="headerlink" title="会话变量"></a>会话变量</h2><p>仅仅针对于当前会话（链接）有效，具体会话变量的操作和全局变量类似</p>
+<h2 id="用户变量"><a href="#用户变量" class="headerlink" title="用户变量"></a>用户变量</h2><p>针对于当前会话有效。</p>
+<ol>
+<li><p>声明并初始化</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> @用户变量名=值;</span><br><span class="line"><span class="keyword">set</span> @用户变量名:=值;</span><br><span class="line"><span class="keyword">select</span> @用户变量名:=值;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>赋值或更新用户变量的值<br>直接通过1的方式来更新</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> 字段 <span class="keyword">into</span> 变量名</span><br><span class="line"><span class="keyword">from</span> 表;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看用户变量</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> @用户变量名;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="局部变量"><a href="#局部变量" class="headerlink" title="局部变量"></a>局部变量</h2><p>仅仅在局部有效，在定义它的begin-end中。</p>
+<ol>
+<li><p>声明</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">declare</span> 变量名 类型; </span><br><span class="line"><span class="keyword">declare</span> 变量名 类型 <span class="keyword">default</span> 值;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>赋值</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> 局部变量名=值;</span><br><span class="line"><span class="keyword">set</span> 局部变量名:=值;</span><br><span class="line"><span class="keyword">select</span> @局部变量名:=值;</span><br><span class="line"><span class="keyword">select</span> 字段 <span class="keyword">into</span> 局部变量名</span><br><span class="line"><span class="keyword">from</span> 表;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> 局部变量名;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h1 id="存储过程和函数"><a href="#存储过程和函数" class="headerlink" title="存储过程和函数"></a>存储过程和函数</h1><h2 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h2><ul>
+<li>一组预先编译好的sql语句的集合，批处理语句</li>
+<li>特点：<ul>
+<li>提高代码的重用性</li>
+<li>简化操作</li>
+<li>减少了编译的次数并且减少了和数据库服务器的连接次数。提高了效率</li>
+</ul>
+</li>
+</ul>
+<h3 id="创建存储过程"><a href="#创建存储过程" class="headerlink" title="创建存储过程"></a>创建存储过程</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">procedure</span> 存储过程名(参数列表)</span><br><span class="line"><span class="keyword">begin</span> </span><br><span class="line">        存储过程体;</span><br><span class="line">        一组合法有效的sql语句;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>注意：</p>
+<ol>
+<li>参数列表包含三部分： <ul>
+<li>参数模式</li>
+<li>参数名</li>
+<li>参数类型</li>
+</ul>
+</li>
+<li>参数模式：<ul>
+<li>IN：该参数可以作为输入</li>
+<li>OUT：该参数可以作为输出，可以作为返回值</li>
+<li>INOUT：既可以作为输入也可以作为输出</li>
+</ul>
+</li>
+<li>begin-end<ul>
+<li>如果存储过程仅仅只有一句话，begin-end可以省略</li>
+<li>存储过程体中的每条sql语句必须加分号</li>
+<li>存储过程的结尾可以使用<code>delimiter</code>重新设置<h3 id="调用存储过程"><a href="#调用存储过程" class="headerlink" title="调用存储过程"></a>调用存储过程</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">call</span> 存储过程名(实参列表);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><ol>
+<li><p>空参列表<br>例：插入到admin表中五条记录</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">#创建存储过程</span></span><br><span class="line">delimiter $</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">procedure</span> myp1()</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">insert</span> <span class="keyword">into</span> <span class="keyword">admin</span>(username, <span class="string">`password`</span>) <span class="keyword">values</span>(<span class="string">`A`</span>, <span class="number">0000</span>),</span><br><span class="line">        (<span class="string">`B`</span>, <span class="number">0001</span>), (<span class="string">`C`</span>, <span class="number">0002</span>), (<span class="string">`D`</span>, <span class="number">0003</span>), (<span class="string">`E`</span>, <span class="number">0004</span>);</span><br><span class="line"><span class="keyword">end</span> $</span><br><span class="line"><span class="comment">#调用</span></span><br><span class="line"><span class="keyword">call</span> myp1()$</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>带in模式的存储过程<br>例：创建存储过程实现</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">procedure</span> myp2(<span class="keyword">IN</span> <span class="keyword">name</span> <span class="built_in">varchar</span>(<span class="number">20</span>))</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">select</span> e.*</span><br><span class="line">        <span class="keyword">from</span> employees e</span><br><span class="line">        <span class="keyword">right</span> <span class="keyword">join</span> departments d <span class="keyword">on</span> e.id = d.id</span><br><span class="line">        <span class="keyword">where</span> e.last_name = <span class="keyword">name</span>; </span><br><span class="line"><span class="keyword">end</span> $</span><br><span class="line"><span class="comment">#调用</span></span><br><span class="line"><span class="keyword">call</span> myp2(<span class="string">`John`</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>带out模式的存储过程<br>例：根据学生名，返回对应的老师名字：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">delimiter $</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">procedure</span> myp5(<span class="keyword">IN</span> stuname <span class="built_in">varchar</span>(<span class="number">2</span>), <span class="keyword">out</span> teaname <span class="built_in">varchar</span>(<span class="number">20</span>))</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">select</span> st.students <span class="keyword">into</span> teaname</span><br><span class="line">        <span class="keyword">from</span> students st</span><br><span class="line">        <span class="keyword">inner</span> <span class="keyword">join</span> teachers te <span class="keyword">on</span> st.id = tea.id</span><br><span class="line">        <span class="keyword">where</span> st.teacher_name = stuname</span><br><span class="line"><span class="keyword">end</span> $</span><br><span class="line"><span class="comment">#调用</span></span><br><span class="line"><span class="keyword">set</span> @tname $ <span class="comment">#可以不定义</span></span><br><span class="line"><span class="keyword">call</span> myp5(<span class="string">`Jonh`</span>, @bname)$</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>带inout模式的存储过程<br>和in out模式的几乎无差别</p>
+</li>
+</ol>
+<h3 id="存储过程的删除"><a href="#存储过程的删除" class="headerlink" title="存储过程的删除"></a>存储过程的删除</h3><p>语法：<code>drop</code>，一次只能删除一个</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">procedure</span> 存储过程名</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看存储过程的结构"><a href="#查看存储过程的结构" class="headerlink" title="查看存储过程的结构"></a>查看存储过程的结构</h3><p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">create</span> <span class="keyword">procedure</span> 存储名</span><br></pre></td></tr></table></figure>
+
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><ul>
+<li>与存储过程的区别：<ul>
+<li>存储过程：可以有0个返回，也可以有多个返回，适合做批量插入，批量更新</li>
+<li>函数：只能有且仅有一个返回，适合做处理数据后返回一个结果</li>
+</ul>
+</li>
+</ul>
+<h3 id="创建语法"><a href="#创建语法" class="headerlink" title="创建语法"></a>创建语法</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">function</span> 函数名(参数列表) <span class="keyword">returns</span> 返回类型</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">        函数体</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>注：<ul>
+<li>参数列表包含两部分：参数名 参数类型（没有IN OUT模式）</li>
+<li>函数体肯定会有return语句</li>
+<li>函数体中只有一条语句，则可以省略begin-end</li>
+<li>使用delimiter语句作为设置结束标记</li>
+</ul>
+</li>
+</ul>
+<h3 id="调用函数"><a href="#调用函数" class="headerlink" title="调用函数"></a>调用函数</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> 函数名(实参列表);</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看和删除函数"><a href="#查看和删除函数" class="headerlink" title="查看和删除函数"></a>查看和删除函数</h3><ol>
+<li>查看：<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">create</span> <span class="keyword">function</span> 函数名;</span><br></pre></td></tr></table></figure></li>
+<li>删除：<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">function</span> 函数名;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="使用示例"><a href="#使用示例" class="headerlink" title="使用示例"></a>使用示例</h3><p>例：返回公司的员工个数</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">function</span> myf1() <span class="keyword">returns</span> <span class="built_in">int</span></span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">declare</span> <span class="keyword">result</span> <span class="built_in">int</span> <span class="keyword">default</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">select</span> <span class="keyword">count</span>(*) <span class="keyword">into</span> <span class="keyword">result</span></span><br><span class="line">        <span class="keyword">from</span> employees;</span><br><span class="line">        return result;</span><br><span class="line"><span class="keyword">end</span> $</span><br><span class="line"><span class="comment">#调用</span></span><br><span class="line"><span class="keyword">select</span> myf1() $</span><br></pre></td></tr></table></figure>
+
+<h1 id="流程控制结构"><a href="#流程控制结构" class="headerlink" title="流程控制结构"></a>流程控制结构</h1><ul>
+<li>程序结构：<ul>
+<li>顺序结构</li>
+<li>分支结构</li>
+<li>循环结构</li>
+</ul>
+</li>
+</ul>
+<h2 id="分支结构"><a href="#分支结构" class="headerlink" title="分支结构"></a>分支结构</h2><h3 id="if函数"><a href="#if函数" class="headerlink" title="if函数"></a>if函数</h3><p>能够实现简单的双分支。<br>语法：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">if(表达式1， 表达式2， 表达式3)</span><br><span class="line">执行顺序：</span><br><span class="line">    如果表达式1成立，则if函数返回表达式2的值</span><br><span class="line">    否则返回表达式3的值</span><br></pre></td></tr></table></figure>
+
+<h3 id="case"><a href="#case" class="headerlink" title="case"></a>case</h3><ol>
+<li>类似java中的switch语句，一般用于实现等值判断<br>语法：<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">case 变量|表达式|字段</span><br><span class="line">when 要判断的值 then 返回的值1</span><br><span class="line">when 要判断的值 then 返回的值2</span><br><span class="line">...</span><br><span class="line">else 要返回的值</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></li>
+<li>类似于java中的多重if，一般用于实现区间判断<br>语法：<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">case </span><br><span class="line">when 要判断的条件1 then 返回的值1</span><br><span class="line">when 要判断的条件2 then 返回的值2</span><br><span class="line">...</span><br><span class="line">else 要返回的值</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h3 id="if结构"><a href="#if结构" class="headerlink" title="if结构"></a>if结构</h3>实现多重分支<br>语法：<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">if 条件1 then 语句1;</span><br><span class="line">elseif 条件2 then 语句2;</span><br><span class="line">...</span><br><span class="line">else 语句n;</span><br><span class="line"><span class="keyword">end</span> <span class="keyword">if</span>;</span><br></pre></td></tr></table></figure>
+例：根据成绩返回级别<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">function</span> test_id(score <span class="built_in">INT</span>) <span class="keyword">returns</span> <span class="built_in">char</span></span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> score &gt;= <span class="number">90</span> <span class="keyword">and</span> score &lt;= <span class="number">100</span> <span class="keyword">then</span> <span class="keyword">return</span> <span class="string">'A'</span>;</span><br><span class="line">        elseif score &gt;= 80 then return 'B';</span><br><span class="line">        elseif score &gt;= 60 then return 'C';</span><br><span class="line">        else return 'D';</span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">if</span>;</span><br><span class="line"><span class="keyword">end</span> $</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>特点：</p>
+<ol>
+<li>可以作为表达式，嵌套在其他语句中使用，可以放在任何地方</li>
+<li>也可以作为独立的语句去使用，只能放在<code>begin-end</code>中</li>
+<li>如果<code>when</code>中的值满足或条件成立，则执行对应then后面的语句，并且结束case</li>
+<li>如果都不满足则执行<code>else</code>中的语句或值</li>
+<li>else可以省略，如果else省略了，并且所有when条件都不满足，则返回null</li>
+</ol>
+<h2 id="循环结构"><a href="#循环结构" class="headerlink" title="循环结构"></a>循环结构</h2><ul>
+<li><p>分类：</p>
+<ul>
+<li>while</li>
+<li>loop</li>
+<li>repeat</li>
+</ul>
+</li>
+<li><p>循环控制：</p>
+<ul>
+<li>iterate： 类似于continue，结束本次循环</li>
+<li>leave： 类似于break，结束当前所在的循环</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">语法</th>
+<th align="left">特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">while</td>
+<td align="left">Lable: while…end while Lable</td>
+<td align="left">先判断后执行</td>
+</tr>
+<tr>
+<td align="left">repeat</td>
+<td align="left">Lable: repeat…end repeat Lable</td>
+<td align="left">先执行后判断</td>
+</tr>
+<tr>
+<td align="left">loop</td>
+<td align="left">Lable: loop…end loop Lable</td>
+<td align="left">没有条件的死循环</td>
+</tr>
+</tbody></table>
+<h3 id="while"><a href="#while" class="headerlink" title="while"></a>while</h3><p>语法：标签可选，有标签可以搭配循环控制</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">标签:while 循环条件 <span class="keyword">do</span></span><br><span class="line">    循环体;</span><br><span class="line"><span class="keyword">end</span> <span class="keyword">while</span> 标签;</span><br></pre></td></tr></table></figure>
+
+<h3 id="loop"><a href="#loop" class="headerlink" title="loop"></a>loop</h3><p>语法：标签可选，不写标签就是一个死循环</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">标签:loop</span><br><span class="line">    循环体;</span><br><span class="line"><span class="keyword">end</span> <span class="keyword">loop</span> 标签;</span><br></pre></td></tr></table></figure>
+
+<h3 id="repeat"><a href="#repeat" class="headerlink" title="repeat"></a>repeat</h3><p>语法：标签可选</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">标签:repeat</span><br><span class="line">    循环体;</span><br><span class="line">until 结束循环的条件</span><br><span class="line"><span class="keyword">end</span> <span class="keyword">repeat</span> 标签;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用示例-1"><a href="#使用示例-1" class="headerlink" title="使用示例"></a>使用示例</h2><p>例：批量插入</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">procedure</span> pro_while1(<span class="keyword">IN</span> <span class="keyword">count</span> <span class="built_in">INT</span>)</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">declare</span> i <span class="built_in">INT</span> <span class="keyword">default</span> <span class="number">1</span>;</span><br><span class="line">        while i &lt;= count do</span><br><span class="line">            <span class="keyword">insert</span> <span class="keyword">into</span> <span class="keyword">admin</span>(username, <span class="string">`password`</span>) <span class="keyword">values</span>(<span class="string">`John`</span>, <span class="number">0000</span>);</span><br><span class="line">            <span class="keyword">set</span> i = i + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">while</span>;</span><br><span class="line"><span class="keyword">end</span> $</span><br></pre></td></tr></table></figure>
+<p>例：使用循环控制语句，批量插入，如果次数大于10则停止插入</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">procedure</span> pro_while1(<span class="keyword">IN</span> <span class="keyword">count</span> <span class="built_in">INT</span>)</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">declare</span> i <span class="built_in">INT</span> <span class="keyword">default</span> <span class="number">1</span>;</span><br><span class="line">        a: while i &lt;= count do</span><br><span class="line">            <span class="keyword">insert</span> <span class="keyword">into</span> <span class="keyword">admin</span>(username, <span class="string">`password`</span>) <span class="keyword">values</span>(<span class="string">`John`</span>, <span class="number">0000</span>);</span><br><span class="line">            if i &gt; 10 then leave a;</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">if</span>;</span><br><span class="line">            <span class="keyword">set</span> i = i + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">while</span> a;</span><br><span class="line"><span class="keyword">end</span> $</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>Mysql</category>
       </categories>
