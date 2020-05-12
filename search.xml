@@ -4766,4 +4766,83 @@ offset从0开始可以省略
         <tag>数组</tag>
       </tags>
   </entry>
+  <entry>
+    <title>JDBC</title>
+    <url>/2020/05/12/JDBC/</url>
+    <content><![CDATA[<h1 id="什么是JDBC"><a href="#什么是JDBC" class="headerlink" title="什么是JDBC"></a>什么是JDBC</h1><ul>
+<li>JDBC：Java Database Connectivity java和数据库的连接技术，sun公司专门推出的一套java应用程序访问数据库的技术<code>规范</code>。</li>
+<li>规范：抽象类和接口（接口居多）<br>在Java中，数据库存取技术可分为几类：</li>
+</ul>
+<ol>
+<li>JDBC直接访问数据库</li>
+<li>JDO技术（Java Data Object）</li>
+<li>第三方O/R工具，如Hibernate,Mybatis等</li>
+</ol>
+<h1 id="JDBC的使用"><a href="#JDBC的使用" class="headerlink" title="JDBC的使用"></a>JDBC的使用</h1><h2 id="注册驱动"><a href="#注册驱动" class="headerlink" title="注册驱动"></a>注册驱动</h2><p>首先来回顾一下类的加载方式：</p>
+<ol>
+<li>new 对象</li>
+<li>加载子类会导致父类的加载</li>
+<li>调用类中的静态成员</li>
+<li>通过反射</li>
+</ol>
+<p>使用new对象加载方式的不足：</p>
+<ol>
+<li>属于编译期加载，如果编译期间该类不存在，则直接报编译错误，依赖性太强</li>
+<li>导致Driver对象创建了两遍，效率较低</li>
+</ol>
+<p>采用反射的方式加载类：<br><code>Class.forName(全类名)</code></p>
+<ol>
+<li><p>属于运行期加载，大大降低了类的依赖性</p>
+</li>
+<li><p>Driver对象仅仅创建了一遍，效率较高</p>
+</li>
+<li><p>class.forNmae</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);<span class="comment">//加载数据库驱动  </span></span><br><span class="line">String url=<span class="string">"jdbc:mysql://localhost:3306/databasename"</span>;<span class="comment">//数据库连接子协议  </span></span><br><span class="line">Connection conn=DriverManager.getConnection(url,<span class="string">"username"</span>,<span class="string">"password"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建driver对象</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">new</span> com.mysql.jdbc.Driver();<span class="comment">//创建driver对象，加载数据库驱动  </span></span><br><span class="line">String url=<span class="string">"jdbc:mysql://localhost:3306/databasename"</span>;<span class="comment">//数据库连接子协议  </span></span><br><span class="line">Connection conn=DriverManager.getConnection(url,<span class="string">"username"</span>,<span class="string">"password"</span>);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="获取连接"><a href="#获取连接" class="headerlink" title="获取连接"></a>获取连接</h2><p><code>DriverManager.getConnection</code>有三种重载，返回一个connection对象。</p>
+<ol>
+<li><p>DriverManager.getConnection(“jdbc:mysql//localhost:3306/库名?user=root&amp;password=密码”);</p>
+</li>
+<li><p>DriverManager.getConnection(“jdbc:mysql//localhost:3306/库名”,Properties info);<br>用一个配置文件保存用户名密码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">user=用户名</span><br><span class="line">password=密码</span><br><span class="line">url=库地址</span><br><span class="line">driver=包名</span><br></pre></td></tr></table></figure>
+<p>例：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Properties info = <span class="keyword">new</span> Propeities();</span><br><span class="line">info.load(<span class="keyword">new</span> FileInputStream(<span class="string">"配置文件路径"</span>));</span><br><span class="line">String user = info.getProperty(<span class="string">"user"</span>);</span><br><span class="line"><span class="comment">//其余三项都一样操作不重复演示</span></span><br><span class="line">Class.forName(driver);</span><br><span class="line">Connection conn=DriverManager.getConnection(url,user,password);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="增删改查"><a href="#增删改查" class="headerlink" title="增删改查"></a>增删改查</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String sql1 = <span class="string">"sql语句"</span>;</span><br><span class="line"><span class="comment">//获取执行sql的命令对象</span></span><br><span class="line">Statement statement = connection.createStatement();</span><br><span class="line"><span class="comment">//执行sql语句</span></span><br><span class="line"><span class="keyword">int</span> line = statemnt.executeUpdate(sql);<span class="comment">//执行增删改语句，返回受影响的行数</span></span><br><span class="line">ResultSet set = statement.executeQuery(sql);<span class="comment">//执行查询语句，ResultSet是一种接口，表示查询后的结果集</span></span><br><span class="line"><span class="comment">//遍历结果集对象，原理类似于迭代器</span></span><br><span class="line"><span class="keyword">boolean</span> flag = set.next();</span><br><span class="line">String name = set.getString(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//用while循环遍历</span></span><br><span class="line"><span class="keyword">while</span> (set.next())&#123;</span><br><span class="line">    String name = set.getString(<span class="number">2</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//释放资源</span></span><br><span class="line">set.close();</span><br><span class="line">statement.close();</span><br><span class="line">connextion.close();</span><br></pre></td></tr></table></figure>
+<ul>
+<li>获取结果集中的数据 get数据类型(列的索引)。只针对于查询后的，不针对原来表。索引从1开始。也可以直接写列名，不写索引</li>
+<li>如果不知道列的类型：<ul>
+<li>可以使用getObject(列的索引或列名)</li>
+<li>也可以都getString()</li>
+<li>SQL的类型较弱，若不清楚都用getObject();</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>JAVA</category>
+        <category>MySQL</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Ducci序列(Ducci Sequence)[AC]</title>
+    <url>/2020/05/12/OJ1594Sequence/</url>
+    <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a href="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/OnlineJudge/p1954.pdf" target="_blank" rel="noopener">下载链接</a></p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>题目说什么写什么就好了，迭代和递归都可以解题，注意在处理数组的过程中不要丢失数据。</p>
+<h1 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h1><p>这道题可能你会陷入怎么去重，一开始我也是用一个set去重，但是回去仔细阅读下题目，循坏超过1000次就认为是陷入循环，找不到答案了，那么直接做1000次循环看做完后是不是满足全为0的条件</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//用与打印数组</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;nums)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.size(); i++)&#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; nums[i] &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//判断是否为ducci序列</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">is_ducci</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;nums)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len = nums.size();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span> (nums[i] != <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//递归算法，用一个set来判断是否陷入循环</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">solution</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;nums, <span class="keyword">int</span> time)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (is_ducci(nums))</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">if</span> (time &gt;= <span class="number">1000</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">int</span> first = nums[<span class="number">0</span>]; <span class="comment">//提前记录下数组第一个元素，不然数组第一个元素会丢失</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.size(); i++)&#123;</span><br><span class="line">        <span class="keyword">if</span> (i == nums.size() - <span class="number">1</span>)&#123;</span><br><span class="line">            nums[i] = <span class="built_in">abs</span>(nums[i] - first);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            nums[i] = <span class="built_in">abs</span>(nums[i] - nums[i + <span class="number">1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> solution(nums, time + <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    <span class="keyword">while</span> (n--)&#123;</span><br><span class="line">        <span class="keyword">int</span> size = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; size;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">nums</span><span class="params">(size, <span class="number">0</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++)&#123;</span><br><span class="line">            <span class="built_in">cin</span> &gt;&gt; nums[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (solution(nums, <span class="number">0</span>))&#123;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; <span class="string">"ZERO"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; <span class="string">"LOOP"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>OJ</category>
+      </categories>
+      <tags>
+        <tag>数组</tag>
+      </tags>
+  </entry>
 </search>

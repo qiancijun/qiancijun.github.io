@@ -1,0 +1,273 @@
+
+<!DOCTYPE html>
+<html lang="zh_CH" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>JDBC - 神奇口袋</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="qiancijun,"> 
+    <meta name="description" content="什么是JDBC
+JDBC：Java Database Connectivity java和数据库的连接技术，sun公司专门推出的一套java应用程序访问数据库的技术规范。
+规范：抽象类和接口（接口居,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">神奇口袋</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://xlich.top"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">JDBC</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+   
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">JDBC</h1>
+        <div class="stuff">
+            <span>五月 12, 2020</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h1 id="什么是JDBC"><a href="#什么是JDBC" class="headerlink" title="什么是JDBC"></a>什么是JDBC</h1><ul>
+<li>JDBC：Java Database Connectivity java和数据库的连接技术，sun公司专门推出的一套java应用程序访问数据库的技术<code>规范</code>。</li>
+<li>规范：抽象类和接口（接口居多）<br>在Java中，数据库存取技术可分为几类：</li>
+</ul>
+<ol>
+<li>JDBC直接访问数据库</li>
+<li>JDO技术（Java Data Object）</li>
+<li>第三方O/R工具，如Hibernate,Mybatis等</li>
+</ol>
+<h1 id="JDBC的使用"><a href="#JDBC的使用" class="headerlink" title="JDBC的使用"></a>JDBC的使用</h1><h2 id="注册驱动"><a href="#注册驱动" class="headerlink" title="注册驱动"></a>注册驱动</h2><p>首先来回顾一下类的加载方式：</p>
+<ol>
+<li>new 对象</li>
+<li>加载子类会导致父类的加载</li>
+<li>调用类中的静态成员</li>
+<li>通过反射</li>
+</ol>
+<p>使用new对象加载方式的不足：</p>
+<ol>
+<li>属于编译期加载，如果编译期间该类不存在，则直接报编译错误，依赖性太强</li>
+<li>导致Driver对象创建了两遍，效率较低</li>
+</ol>
+<p>采用反射的方式加载类：<br><code>Class.forName(全类名)</code></p>
+<ol>
+<li><p>属于运行期加载，大大降低了类的依赖性</p>
+</li>
+<li><p>Driver对象仅仅创建了一遍，效率较高</p>
+</li>
+<li><p>class.forNmae</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);<span class="comment">//加载数据库驱动  </span></span><br><span class="line">String url=<span class="string">"jdbc:mysql://localhost:3306/databasename"</span>;<span class="comment">//数据库连接子协议  </span></span><br><span class="line">Connection conn=DriverManager.getConnection(url,<span class="string">"username"</span>,<span class="string">"password"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建driver对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> com.mysql.jdbc.Driver();<span class="comment">//创建driver对象，加载数据库驱动  </span></span><br><span class="line">String url=<span class="string">"jdbc:mysql://localhost:3306/databasename"</span>;<span class="comment">//数据库连接子协议  </span></span><br><span class="line">Connection conn=DriverManager.getConnection(url,<span class="string">"username"</span>,<span class="string">"password"</span>);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="获取连接"><a href="#获取连接" class="headerlink" title="获取连接"></a>获取连接</h2><p><code>DriverManager.getConnection</code>有三种重载，返回一个connection对象。</p>
+<ol>
+<li><p>DriverManager.getConnection(“jdbc:mysql//localhost:3306/库名?user=root&amp;password=密码”);</p>
+</li>
+<li><p>DriverManager.getConnection(“jdbc:mysql//localhost:3306/库名”,Properties info);<br>用一个配置文件保存用户名密码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">user=用户名</span><br><span class="line">password=密码</span><br><span class="line">url=库地址</span><br><span class="line">driver=包名</span><br></pre></td></tr></table></figure>
+<p>例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Properties info = <span class="keyword">new</span> Propeities();</span><br><span class="line">info.load(<span class="keyword">new</span> FileInputStream(<span class="string">"配置文件路径"</span>));</span><br><span class="line">String user = info.getProperty(<span class="string">"user"</span>);</span><br><span class="line"><span class="comment">//其余三项都一样操作不重复演示</span></span><br><span class="line">Class.forName(driver);</span><br><span class="line">Connection conn=DriverManager.getConnection(url,user,password);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="增删改查"><a href="#增删改查" class="headerlink" title="增删改查"></a>增删改查</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">String sql1 = <span class="string">"sql语句"</span>;</span><br><span class="line"><span class="comment">//获取执行sql的命令对象</span></span><br><span class="line">Statement statement = connection.createStatement();</span><br><span class="line"><span class="comment">//执行sql语句</span></span><br><span class="line"><span class="keyword">int</span> line = statemnt.executeUpdate(sql);<span class="comment">//执行增删改语句，返回受影响的行数</span></span><br><span class="line">ResultSet set = statement.executeQuery(sql);<span class="comment">//执行查询语句，ResultSet是一种接口，表示查询后的结果集</span></span><br><span class="line"><span class="comment">//遍历结果集对象，原理类似于迭代器</span></span><br><span class="line"><span class="keyword">boolean</span> flag = set.next();</span><br><span class="line">String name = set.getString(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//用while循环遍历</span></span><br><span class="line"><span class="keyword">while</span> (set.next())&#123;</span><br><span class="line">    String name = set.getString(<span class="number">2</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//释放资源</span></span><br><span class="line">set.close();</span><br><span class="line">statement.close();</span><br><span class="line">connextion.close();</span><br></pre></td></tr></table></figure>
+<ul>
+<li>获取结果集中的数据 get数据类型(列的索引)。只针对于查询后的，不针对原来表。索引从1开始。也可以直接写列名，不写索引</li>
+<li>如果不知道列的类型：<ul>
+<li>可以使用getObject(列的索引或列名)</li>
+<li>也可以都getString()</li>
+<li>SQL的类型较弱，若不清楚都用getObject();</li>
+</ul>
+</li>
+</ul>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='https://link.hhtjim.com/163/155827.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='https://link.hhtjim.com/163/1491163.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='https://link.hhtjim.com/163/1992707.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='true'
+        data-ci='Iv1.06e5c405a7731b45'
+        data-cs='2fcfe85902a7d5812fa4b299b56a6f194c98e08a'
+        data-r='qiancijun.github.io'
+        data-o='qiancijun'
+        data-a='qiancijun'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是JDBC"><span class="toc-number">1.</span> <span class="toc-text">什么是JDBC</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JDBC的使用"><span class="toc-number">2.</span> <span class="toc-text">JDBC的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#注册驱动"><span class="toc-number">2.1.</span> <span class="toc-text">注册驱动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#获取连接"><span class="toc-number">2.2.</span> <span class="toc-text">获取连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#增删改查"><span class="toc-number">2.3.</span> <span class="toc-text">增删改查</span></a></li></ol></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":250,"height":400},"mobile":{"show":false},"log":false});</script></body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-163098031-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+<script type="text/javascript" src="/js/love.js"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</html>
