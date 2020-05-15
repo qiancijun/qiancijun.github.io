@@ -5313,5 +5313,166 @@ offset从0开始可以省略
 <li><code>&lt;vedio&gt;&lt;/vedio&gt;</code>: 向页面中引入一个视频文件，和音频插入基本相同</li>
 </ul>
 ]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>CSS笔记</title>
+    <url>/2020/05/15/CSS%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h1 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h1><p>网页分为三部分：</p>
+<ol>
+<li>结构（HTML）</li>
+<li>表现（CSS）</li>
+<li>行为（JavaScript）</li>
+</ol>
+<ul>
+<li>CSS：<ul>
+<li>层叠样式表，修改每一个标签长什么样子</li>
+<li>网页实际上是一个多层的结构，通过CSS可以分别为网页的每一个层来设置样式而最终我们能看到的只是网页的最上边一层</li>
+<li>CSS用来设置网页中元素的样式</li>
+</ul>
+</li>
+</ul>
+<p>例：使用CSS来修改元素的样式</p>
+<ol>
+<li><p>在标签内部通过style属性来设置元素的样式（内联样式，行内样式）在实际开发中不建议使用</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">style</span>=<span class="string">"color: darkmagenta; font-size: 50px;"</span>&gt;</span>这是一句话<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>style=&quot;color: darkmagenta; font-size: 200px;&quot;</code>：这句话就已经属于CSS样式了。使用内联样式只能对一个标签生效，如果希望影响到多个元素，必须在每个元素中都加上style。</p>
+</li>
+<li><p>将样式编写到head中的style标签里（内部样式表）：<br>将样式编写到head中的style标签里，然后通过CSS的选择器来选中元素并将其设置各自样式。<br>可以同时为多个标签设置样式，并且修改时只需要修改一处即可。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">    p&#123;</span><br><span class="line">        color: darkred;</span><br><span class="line">        font-size: 50px;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>但是内部样式表只能对一个网页起作用。不能跨页面进行复用</p>
+</li>
+<li><p>可以将CSS样式编写到外部css文件中（外部样式表）<br>通过link标签引入外部的css文件。外部样式表需要通过link标签进行引入，意味着只要想使用这些样式的网页都可以对其进行引用。可以使用浏览器的缓存机制加快网页的加载速度，提高效率。</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">p</span>&#123;</span><br><span class="line">    <span class="attribute">color</span>: darkblue;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">50px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>我的网页<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"./style.css"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>这是一句话<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h1 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h1><ul>
+<li>在style标签里不属于html，所以html语法不能用在style标签里</li>
+</ul>
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><ul>
+<li><code>/**/</code>:在中间添加注释，而不是用<code>&lt;!-- --&gt;</code></li>
+</ul>
+<h2 id="选择器"><a href="#选择器" class="headerlink" title="选择器"></a>选择器</h2><ul>
+<li>通过选择器可以选中页面中的指定元素，比如<code>p</code>即选中页面中所有的p元素</li>
+</ul>
+<h2 id="声明块"><a href="#声明块" class="headerlink" title="声明块"></a>声明块</h2><ul>
+<li>通过声明块来指定要为元素设置的样式<code>{}</code>。声明块由一个个的声明组成。</li>
+<li>声明是一个键值对结构，一个样式名对应一个样式值，名和值之间以<code>:</code>连接，以<code>;</code>结尾</li>
+</ul>
+<h1 id="常用选择器"><a href="#常用选择器" class="headerlink" title="常用选择器"></a>常用选择器</h1><p>各个选择器可以混合使用</p>
+<h2 id="元素选择器"><a href="#元素选择器" class="headerlink" title="元素选择器"></a>元素选择器</h2><ul>
+<li>根据标签名来选中指定的$\color{red}{所有}$元素<br>语法：<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">标签名&#123;</span><br><span class="line">    声明语句</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="id选择器"><a href="#id选择器" class="headerlink" title="id选择器"></a>id选择器</h2><ul>
+<li>根据元素的id属性值来选中$\color{red}{一个}$元素<br>语法：<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-id">#id</span>属性值&#123;</span><br><span class="line">    声明语句</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="类选择器"><a href="#类选择器" class="headerlink" title="类选择器"></a>类选择器</h2><ul>
+<li><code>class</code>是标签的一个属性，和id类似，不同的是class可以重复使用。通过class来为元素分组。可以为一个元素指定多个元素。<br>语法：<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.class</span>属性值&#123;</span><br><span class="line">    声明语句</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="通配选择器"><a href="#通配选择器" class="headerlink" title="通配选择器"></a>通配选择器</h2><ul>
+<li>选中页面中所有元素<br>语法：<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">*&#123;</span><br><span class="line">    声明语句</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>我的网页<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">        p&#123;</span><br><span class="line">            color: coral;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="css">        <span class="selector-id">#red</span>&#123;</span></span><br><span class="line">            color: red;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="css">        <span class="selector-class">.blue</span>&#123;</span></span><br><span class="line">            color: blue;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="css">        <span class="selector-class">.big</span>&#123;</span></span><br><span class="line">            font-size: 30px;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>我是大字<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>这是一句话<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span> = <span class="string">"red"</span>&gt;</span>这是二句话<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span> = <span class="string">"blue"</span>&gt;</span>这是三句话<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span> = <span class="string">"blue"</span>&gt;</span>这是四句话<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span> = <span class="string">"blue big"</span>&gt;</span>这是五句话<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="交集选择器"><a href="#交集选择器" class="headerlink" title="交集选择器"></a>交集选择器</h2><ul>
+<li>同时选中符合多个条件的元素<br>语法：<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">选择器<span class="selector-class">.class</span>属性值&#123;</span><br><span class="line">    声明语句</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：交集选择器中如果有元素选择器，必须使用元素选择器开头</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="并集选择器"><a href="#并集选择器" class="headerlink" title="并集选择器"></a>并集选择器</h2><ul>
+<li>同时选中多个选择器对应的元素<br>语法：<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">选择器1,选择器2...&#123;</span><br><span class="line">    声明语句</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h2><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>我的网页<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.red</span>&#123;</span></span><br><span class="line">            color: red;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="css">        <span class="selector-tag">div</span><span class="selector-class">.red</span>&#123;</span></span><br><span class="line">            font-size: 30px;</span><br><span class="line">        &#125;</span><br><span class="line">        div,span&#123;</span><br><span class="line">            font-style: oblique;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span> = <span class="string">"red"</span>&gt;</span>我是div<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span> = <span class="string">"red"</span>&gt;</span>我是p元素<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span>&gt;</span>我是span<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="关系选择器"><a href="#关系选择器" class="headerlink" title="关系选择器"></a>关系选择器</h2><ul>
+<li>父元素<ul>
+<li>直接包含子元素的元素</li>
+</ul>
+</li>
+<li>子元素<ul>
+<li>直接被父元素包含的元素</li>
+</ul>
+</li>
+<li>祖先元素<ul>
+<li>直接或间接包含元素的元素</li>
+<li>一个元素的父元素也是它的祖先元素</li>
+</ul>
+</li>
+<li>后代元素<ul>
+<li>直接或间接被祖先元素包含的元素</li>
+<li>子元素也是后代元素</li>
+</ul>
+</li>
+<li>兄弟元素<ul>
+<li>拥有相同父元素的元素是兄弟元素</li>
+</ul>
+</li>
+</ul>
+<h3 id="子元素选择器"><a href="#子元素选择器" class="headerlink" title="子元素选择器"></a>子元素选择器</h3><ul>
+<li>选中指定父元素的子元素，可以添加class属性<br>语法：<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">父元素 &gt; 子元素&#123;</span><br><span class="line">    声明语句</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="后代选择器"><a href="#后代选择器" class="headerlink" title="后代选择器"></a>后代选择器</h3><ul>
+<li>选择指定元素内的所有后代<br>语法：<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">祖先 后代&#123;</span><br><span class="line">    声明语句</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="兄弟选择器"><a href="#兄弟选择器" class="headerlink" title="兄弟选择器"></a>兄弟选择器</h3><ul>
+<li>选择下一个兄弟元素<br>语法：<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">上一个 + 下一个 &#123;</span><br><span class="line">    声明语句</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+把<code>+</code>换成<code>~</code>则会选择下面所有的兄弟元素</li>
+</ul>
+<h3 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>我的网页<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">        /*</span><br><span class="line">            为div直接包含的子元素span设置一个字体颜色</span><br><span class="line">        */</span><br><span class="line">        div &gt; span&#123;</span><br><span class="line">            color: red;</span><br><span class="line">        &#125;</span><br><span class="line">        div &gt; p &gt; span&#123;</span><br><span class="line">            color: violet;</span><br><span class="line">        &#125;</span><br><span class="line">        /*</span><br><span class="line">            为div中所有span设置字体大小</span><br><span class="line">        */</span><br><span class="line">        div span&#123;</span><br><span class="line">            font-size: 30px;</span><br><span class="line">        &#125;</span><br><span class="line">        /*</span><br><span class="line">            把p后的span设置为斜体</span><br><span class="line">        */</span><br><span class="line">        p + span&#123;</span><br><span class="line">            font-style: oblique;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        我是一个div</span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">            我是一个p在div中</span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span>&gt;</span>我是span在p中<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span>&gt;</span>我是span在div中<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span>&gt;</span>我是span在div外面<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="属性选择器"><a href="#属性选择器" class="headerlink" title="属性选择器"></a>属性选择器</h2><ul>
+<li>选择含有指定属性的元素，或选择含有指定属性和属性值的元素<br>语法：<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">标签<span class="selector-attr">[属性名 = 属性值]</span>&#123;</span><br><span class="line">    声明语句</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+选择属性值以指定值开头的元素：<br>··· css<br>[属性名 ^= 属性值]{<br>  声明语句<br>}<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">选择属性值以指定值结尾的元素：</span><br><span class="line">&#96;&#96;&#96; css</span><br><span class="line">[属性名 $&#x3D; 属性值]&#123;</span><br><span class="line">    声明语句</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+选择属性值有指定值的元素：<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-attr">[属性名 *= 属性值]</span>&#123;</span><br><span class="line">    声明语句</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="示例-3"><a href="#示例-3" class="headerlink" title="示例"></a>示例</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">        <span class="comment">/*让有title的变为红色*/</span></span></span><br><span class="line"><span class="css">        <span class="selector-tag">p</span><span class="selector-attr">[title]</span>&#123;</span></span><br><span class="line">            color: red;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="css">        <span class="selector-tag">p</span><span class="selector-attr">[title = b]</span>&#123;</span></span><br><span class="line">            color: blue;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>我是头<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">title</span>=<span class="string">"a"</span>&gt;</span>这是一句话<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">title</span>=<span class="string">"b"</span>&gt;</span>这是二句话<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">title</span>=<span class="string">"c"</span>&gt;</span>这是三句话<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>这是四句话<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>这是五句话<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="伪类选择器"><a href="#伪类选择器" class="headerlink" title="伪类选择器"></a>伪类选择器</h2><ul>
+<li>伪类：不存在的类，是一个特殊的类。用来描述一个元素的特殊状态。伪类都是依据所有的子元素进行排序的。<ul>
+<li>一般情况下都是使用<code>:</code>开头</li>
+<li><code>:first-child</code>：第一个子元素</li>
+<li><code>last-child</code>：最后一个子元素</li>
+<li><code>nth-child()</code>：任意第n个子元素，如果参数填n则全选子元素。2n选中偶数位的子元素。或者用even，odd表示奇偶</li>
+<li><code>first-of-type</code>：不同类型的第一个子元素</li>
+<li><code>last-of-type</code>：不同类型的最后一个子元素</li>
+<li><code>nth-of-type</code>：不同类型第n个子元素</li>
+<li><code>:not()</code>：否定伪类，将符合条件的元素从选择器中去除</li>
+</ul>
+</li>
+</ul>
+<h2 id="超链接的伪类"><a href="#超链接的伪类" class="headerlink" title="超链接的伪类"></a>超链接的伪类</h2><ul>
+<li><code>link</code>：用来表示没有访问过的连接（正常的连接）</li>
+<li><code>visited</code>：用来表示访问过的连接（运用的不多）</li>
+</ul>
+<ul>
+<li><code>hover</code>:用来表示鼠标移入的状态（不仅仅只有超链接能用）</li>
+<li><code>active</code>：用来表示鼠标点击后的状态</li>
+</ul>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
   </entry>
 </search>
