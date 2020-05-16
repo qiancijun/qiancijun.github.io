@@ -5470,6 +5470,200 @@ offset从0开始可以省略
 <li><code>hover</code>:用来表示鼠标移入的状态（不仅仅只有超链接能用）</li>
 <li><code>active</code>：用来表示鼠标点击后的状态</li>
 </ul>
+<h2 id="伪元素选择器"><a href="#伪元素选择器" class="headerlink" title="伪元素选择器"></a>伪元素选择器</h2><ul>
+<li>表示页面中一些特殊的并不真实存在的元素（特殊的位置）</li>
+<li>使用<code>::</code>开头：<ul>
+<li>::first-letter：表示第一个字母</li>
+<li>::first-line：表示第一行</li>
+<li>::selection：表示选中的内容</li>
+<li>::before：元素的开始位置</li>
+<li>::after：元素结束位置<ul>
+<li>before和after必须结合content属性来使用</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><ul>
+<li>样式的继承：为一个元素设置的样式，同时会被它的后代元素所应用<br>继承的设计是为了方便开发，利用继承可以将一些通用的样式统一设置到共同的祖先元素上，只需一次设计就可以让所有元素都可以获得该样式。但是并不是所有的样式都会被继承，比如：背景相关，布局相关，这些样式都不会被继承。</li>
+</ul>
+<h1 id="选择器的权重"><a href="#选择器的权重" class="headerlink" title="选择器的权重"></a>选择器的权重</h1><ul>
+<li><p>当我们通过不同的选择器，选中相同的元素，并且为相同的样式设置不同的值，此时就发生了样式的冲突。</p>
+</li>
+<li><p>发生样式冲突时，应用哪个样式由选择器的权重（优先级）决定</p>
+</li>
+<li><p>权重（从上到下）：</p>
+<ol>
+<li>内联样式         1,0,0,0</li>
+<li>id选择器         0,1,0,0</li>
+<li>类和伪类选择器    0,0,1,0</li>
+<li>元素选择器        0,0,0,1</li>
+<li>通配选择器        0,0,0,0</li>
+<li>继承样式         没有优先级<br>比较优先级时，需要将所有的选择器的优先级进行相加计算，最后优先级越高，则优先显示（分组选择器是单独计算的），选择器累加不会超过其最大的数量级。</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>注：可以在某一个样式的后边加<code>!important</code>，则此样式该样式会取得最高的优先级</p>
+</blockquote>
+<h1 id="文档流-normal-flow"><a href="#文档流-normal-flow" class="headerlink" title="文档流(normal flow)"></a>文档流(normal flow)</h1><ul>
+<li>网页是一个多层的结构，最底层的一层称为文档流，文档流是网页的基础。我们所创建的元素默认都是在文档流中进行排列的。</li>
+<li>对于元素主要有两个状态：<ul>
+<li>在文档流中</li>
+<li>脱离文档流</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>元素在文档流中：<ul>
+<li>块元素<ul>
+<li>在页面中独占一行，自上向下垂直排列</li>
+<li>默认宽度是父元素的全部（会把父元素撑满）</li>
+<li>默认高度是被子元素撑开</li>
+</ul>
+</li>
+<li>行内元素<ul>
+<li>不会独占页面的一行，只占自身的大小</li>
+<li>在页面中自左向右水平排列，如果一行中不能容纳下所有的行内元素，则元素会换到第一二行，继续自左向右排列</li>
+<li>行内元素的默认宽度和高度都是被内容撑开</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="盒子模型-box-model"><a href="#盒子模型-box-model" class="headerlink" title="盒子模型(box model)"></a>盒子模型(box model)</h1><ul>
+<li>CSS中将页面中的所有元素都设置为了一个矩形的盒子，将元素设置为矩形的盒子后，对页面的布局就变成将不同的盒子摆放到不同的位置</li>
+<li>每一个盒子都由以下几个部分组成：<ul>
+<li>内容区(content)</li>
+<li>内边距(padding)</li>
+<li>外边距(margin)</li>
+<li>边框(border)</li>
+</ul>
+</li>
+</ul>
+<h2 id="内容区"><a href="#内容区" class="headerlink" title="内容区"></a>内容区</h2><ul>
+<li>元素中的所有的子元素和文本的内容都在内容区中排列，内容区的大小由width和height两个属性来设置<ul>
+<li>width设置内容的宽度</li>
+<li>height设置内容区的高度</li>
+</ul>
+</li>
+</ul>
+<h2 id="边框"><a href="#边框" class="headerlink" title="边框"></a>边框</h2><ul>
+<li>边框属于盒子的边缘，边框里面属于盒子内容，出了边框都是盒子的外部，要设置边框需要至少设置三个样式<ul>
+<li>边框的宽度 border-width，可以分别为四个方向设置宽度(上 右 下 左)顺时针的顺序<ul>
+<li>指定四个方向的宽度border-XXX-width</li>
+</ul>
+</li>
+<li>边框的颜色 border-color 如果省略则自动为color的默认值</li>
+<li>边框的样式 border-style<blockquote>
+<p>注：边框的大小会影响到整个盒子的大小。如果border-width不写则为默认值</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="内边距"><a href="#内边距" class="headerlink" title="内边距"></a>内边距</h2><ul>
+<li>内容区与边框之间的间距是内边距。<ul>
+<li>padding-top</li>
+<li>padding-right</li>
+<li>padding-bottom</li>
+<li>padding-left</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>内边距的设置会影响盒子的大小</li>
+<li>背景颜色会延伸到内边距上</li>
+</ol>
+<h2 id="外边距"><a href="#外边距" class="headerlink" title="外边距"></a>外边距</h2><ul>
+<li>外边距不会影响盒子可见框的大小，但是会影响盒子的位置，也一共有四个方向<ul>
+<li>margin-top</li>
+<li>margin-left</li>
+<li>margin-right</li>
+<li>margin-bottom<blockquote>
+<p>注：默认情况下如果设置上和左外边距则会移动自身，若设置下和右外边距则会移动其他元素。<br>margin也可以设置负值，如果是负值则元素往反方向走</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="水平布局"><a href="#水平布局" class="headerlink" title="水平布局"></a>水平布局</h2><ul>
+<li>元素在其父元素中水平方向的位置由以下几个属性共同决定：<ul>
+<li>margin-left</li>
+<li>border-left</li>
+<li>pardding-left</li>
+<li>width</li>
+<li>border-right</li>
+<li>margin-right</li>
+<li>padding-right<blockquote>
+<p>注：水平布局必须满足等式:以上七个的总和等于其父元素内容区的宽度。如果这个等式不满足，则称为过度约束，则等式会自动调整margin-right</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>width | margin-left | margin-right可以设置为auto，会自动调整为auto的那个值使等式成立。width的默认值就是auto，而且先会默认将宽度拉到最大</li>
+</ul>
+<h2 id="垂直布局"><a href="#垂直布局" class="headerlink" title="垂直布局"></a>垂直布局</h2><ul>
+<li>默认情况下父元素的高度被内容撑开。</li>
+<li>子元素是在父元素的内容区中排列的：<ul>
+<li>如果子元素的大小超过了父元素，则子元素会从父元素中溢出</li>
+<li>使用<code>overflow</code>属性来设置父元素如何处理溢出的子元素<ul>
+<li>visible: 默认值，子元素会从父元素中溢出，在父元素外部的位置显示</li>
+<li>hidden: 溢出的内容将会被裁剪，不会显示</li>
+<li>scroll: 生成两个滚动条，通过滚动条来查看完整的内容</li>
+<li>auto: 根据需要生成滚动条</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="垂直外边界的折叠"><a href="#垂直外边界的折叠" class="headerlink" title="垂直外边界的折叠"></a>垂直外边界的折叠</h2><ul>
+<li>相邻的垂直方向外边距会发生重叠现象<ul>
+<li>兄弟元素：<ul>
+<li>兄弟元素间的相邻垂直外边距会取两者之间的$\color{blue}{较大值}$（两者都是正值）</li>
+<li>特殊情况：如果相邻的外边距一正一负，则取两者的和</li>
+<li>如果相邻的外边距都是负值，则取两者中绝对值较大的</li>
+<li>兄弟元素之间的外边距折叠，对于开发是有利的，所以我们不需要进行处理</li>
+</ul>
+</li>
+<li>父子元素：<ul>
+<li>父子元素间相邻外边距，子元素的会传递给父元素（上外边距）</li>
+<li>父子外边距的折叠会影响到页面的布局，必须要进行处理（可以用padding和magin但是不推荐）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="行内元素的盒子模型"><a href="#行内元素的盒子模型" class="headerlink" title="行内元素的盒子模型"></a>行内元素的盒子模型</h2><ul>
+<li>行内元素不支持设置宽度<code>width</code>和高度<code>height</code></li>
+<li>行内元素可以设置padding，但是垂直方向padding不会影响页面的布局</li>
+<li>行内元素可以设置border，垂直方向的border不会影响页面的布局</li>
+<li>行内元素可以设置margin，垂直方向的margin不会影响页面的布局</li>
+<li><code>display</code>：用来设置元素显示的类型<ul>
+<li>inline:将元素设置为行内元素，<code>display: inline;</code></li>
+</ul>
+<ul>
+<li>block:将元素设置为块元素</li>
+</ul>
+<ul>
+<li>inline-block:设置为行内块元素（尽量避免使用）<ul>
+<li>既可以设置宽度和高度，又不会独占一行</li>
+</ul>
+</li>
+<li>table:将元素设置为一个表格</li>
+<li>none:元素不再页面中显示</li>
+</ul>
+</li>
+<li><code>visibility</code>：用来设置元素的显示状态<ul>
+<li>visible:默认值，元素在页面中正常显示</li>
+<li>hidden:元素在页面中隐藏，不显示，但是依然占据页面中的位置</li>
+</ul>
+</li>
+</ul>
+<h1 id="浏览器的默认样式"><a href="#浏览器的默认样式" class="headerlink" title="浏览器的默认样式"></a>浏览器的默认样式</h1><ul>
+<li>通常情况下，浏览器会为元素设置一些默认样式。默认样式的存在会影响到页面的布局，我们编写网页时必须要去除掉浏览器的默认样式（PC端的页面）<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">body</span>&#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">p</span>&#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">ul</span>&#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="comment">/* 去除项目符号 */</span></span><br><span class="line">    <span class="attribute">list-style</span>: none;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>上面这种方式只是在一个一个标签设置默认样式，可以使用通配选择器<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">*&#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">ul</span>&#123;</span><br><span class="line">    <span class="attribute">list-style</span>: none;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
 ]]></content>
       <categories>
         <category>前端</category>
