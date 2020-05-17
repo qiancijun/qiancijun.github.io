@@ -5660,11 +5660,108 @@ offset从0开始可以省略
 </ul>
 </li>
 </ul>
+<h2 id="盒子的大小"><a href="#盒子的大小" class="headerlink" title="盒子的大小"></a>盒子的大小</h2><ul>
+<li><code>box-sizing</code>:用来设置盒子尺寸的计算方式（设置width和height的作用）<ul>
+<li>content-box: 默认值，宽度和高度用来设置内容区的大小</li>
+<li>border-box: 宽度和高度用来设置整个盒子可见框的大小</li>
+</ul>
+</li>
+</ul>
 <h1 id="浏览器的默认样式"><a href="#浏览器的默认样式" class="headerlink" title="浏览器的默认样式"></a>浏览器的默认样式</h1><ul>
 <li>通常情况下，浏览器会为元素设置一些默认样式。默认样式的存在会影响到页面的布局，我们编写网页时必须要去除掉浏览器的默认样式（PC端的页面）<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">body</span>&#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">p</span>&#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">ul</span>&#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="comment">/* 去除项目符号 */</span></span><br><span class="line">    <span class="attribute">list-style</span>: none;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>上面这种方式只是在一个一个标签设置默认样式，可以使用通配选择器<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">*&#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">ul</span>&#123;</span><br><span class="line">    <span class="attribute">list-style</span>: none;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>上面这种方式只是在一个一个标签设置默认样式，可以使用通配选择器<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">*&#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">ul</span>&#123;</span><br><span class="line">    <span class="attribute">list-style</span>: none;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
 </ul>
-]]></content>
+<h1 id="轮廓、圆角、阴影"><a href="#轮廓、圆角、阴影" class="headerlink" title="轮廓、圆角、阴影"></a>轮廓、圆角、阴影</h1><ul>
+<li><code>outline</code>：用来设置元素的轮廓线，用法和border一样<ul>
+<li>和边框的区别：轮廓不会影响到可见框的大小</li>
+</ul>
+</li>
+<li><code>box-shadow</code>：用来设置元素的阴影效果，不会影响到页面布局<ul>
+<li>偏移量：水平偏移量 垂直偏移量（负值向左，正值向右）</li>
+<li>模糊值</li>
+<li>颜色：一般用rgba</li>
+</ul>
+</li>
+<li><code>border-radius</code>：设置圆角<ul>
+<li>border-top-left</li>
+<li>border-top-right</li>
+<li>border-bottom-left</li>
+<li>border-bottom-right</li>
+</ul>
+</li>
+</ul>
+<h1 id="浮动"><a href="#浮动" class="headerlink" title="浮动"></a>浮动</h1><ul>
+<li>通过浮动可以使一个元素向其父元素的左侧或者右侧移动，使用<code>float</code>属性来设置于元素的浮动</li>
+<li><code>float</code>: <ul>
+<li>none：默认值，不浮动</li>
+<li>left：向左浮动</li>
+<li>right：向右浮动<blockquote>
+<p>注：元素设置浮动以后，水平布局的等式不需要强制成立了。元素设置浮动以后，会完全从文档流中脱离，不再占用文档流的位置</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<p>特点：</p>
+<ol>
+<li>浮动元素完全脱离文档流</li>
+<li>设置浮动以后元素会父元素的左侧或右侧移动</li>
+<li>浮动元素向左或向右移动时，不会超过它前面或其他的浮动元素</li>
+</ol>
+<p>脱离文档流的特点：</p>
+<ol>
+<li>块元素：<ul>
+<li>块元素不在独占页面的一行</li>
+<li>脱离文档流以后，块元素的宽度和高度默认都被内容撑开</li>
+</ul>
+</li>
+<li>行内元素<ul>
+<li>行内元素脱离文档流以后会变成块元素，特点和块元素一样</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>注：脱离文档流以后，不需要再区分块和行内了</p>
+</blockquote>
+<h1 id="高度塌陷和BFC"><a href="#高度塌陷和BFC" class="headerlink" title="高度塌陷和BFC"></a>高度塌陷和BFC</h1><ul>
+<li>高度塌陷：再浮动布局中，父元素的高度默认是被子元素撑开的，当子元素浮动后，其会完全脱离文档流，子元素从文档流中脱离，将会无法撑起父元素的高度，导致父元素的高度丢失。父元素高度丢失以后，其下的元素会自动上移，导致页面的布局混乱。</li>
+<li><code>BFC</code>(Block Formatting Context)：块级格式化环境<ul>
+<li>BFC是一个CSS中的一个隐含的属性，可以为一个元素开启BFC</li>
+<li>开启BFC以后该元素会变成一个独立的布局区域</li>
+<li>元素开启BFC后的特点：<ol>
+<li>开启BFC的元素不会被浮动元素所覆盖</li>
+<li>开启BFC的元素，子元素和父元素外边距不会重叠</li>
+<li>开启BFC的元素可以包含浮动的子元素</li>
+</ol>
+</li>
+<li>开启方式：<ol>
+<li>设置元素的浮动（宽度会丢失， 脱离文档流）</li>
+<li>将元素设置为行内块元素（宽度丢失）</li>
+<li>将元素的overflow设置为一个非visible的值：（副作用较小）<ul>
+<li>overflow:hidden（常用）</li>
+<li>overflow:auto</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="clear"><a href="#clear" class="headerlink" title="clear"></a>clear</h2><ul>
+<li>如果不希望某个元素因为其他元素浮动的影响而改变位置，可以通过<code>clear</code>属性来清楚浮动元素对当前元素所产生的影响。<ul>
+<li>left：清除左侧浮动元素对当前元素的影响</li>
+<li>right：清除右侧浮动元素对当前元素的影响</li>
+<li>both：清除两侧中最大影响的那侧<br>原理：设置清除浮动以后，浏览器会自动为元素添加一个上外边距。</li>
+</ul>
+</li>
+</ul>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.box1</span>&#123;</span></span><br><span class="line">            border: 10px solid red;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="css">        <span class="selector-class">.box2</span>&#123;</span></span><br><span class="line">            width: 100px;</span><br><span class="line">            height: 100px;</span><br><span class="line"><span class="css">            <span class="selector-tag">background-color</span>: <span class="selector-id">#bfa</span>;</span></span><br><span class="line">            float: left;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="css">        <span class="selector-class">.box1</span><span class="selector-pseudo">::after</span>&#123;</span></span><br><span class="line">            display: block;</span><br><span class="line">            content: " ";</span><br><span class="line">            clear: both;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box1"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box2"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-pseudo">::before</span>&#123;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">''</span>;</span><br><span class="line">    <span class="attribute">display</span>: table;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以解决外边距重叠问题，封装之后：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.clearfix</span><span class="selector-pseudo">::before</span>, </span><br><span class="line"><span class="selector-class">.clearfix</span><span class="selector-pseudo">::after</span>&#123;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">''</span>;</span><br><span class="line">    <span class="attribute">display</span>: table;</span><br><span class="line">    <span class="attribute">clear</span>: both;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>前端</category>
       </categories>
