@@ -512,6 +512,82 @@ CSS：
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-pseudo">::before</span>&#123;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">''</span>;</span><br><span class="line">    <span class="attribute">display</span>: table;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>可以解决外边距重叠问题，封装之后：</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.clearfix</span><span class="selector-pseudo">::before</span>, </span><br><span class="line"><span class="selector-class">.clearfix</span><span class="selector-pseudo">::after</span>&#123;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">''</span>;</span><br><span class="line">    <span class="attribute">display</span>: table;</span><br><span class="line">    <span class="attribute">clear</span>: both;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="定位"><a href="#定位" class="headerlink" title="定位"></a>定位</h1><ul>
+<li><p>定位是一种更高级的布局手段，通过定位可以将一个元素摆放到页面的任意位置。使用<code>position</code>属性来设置定位。</p>
+</li>
+<li><p><code>position</code>：可选值</p>
+<ul>
+<li>static:默认值元素是静止的，没有开启定位</li>
+<li>relative:开启元素的相对定位<ul>
+<li>元素开启相对定位以后，不设置偏移量，元素不会发生任何变化</li>
+<li>参照与元素在文档流之前的位置</li>
+<li>会提升元素的层级</li>
+<li>不会使元素脱离文档流</li>
+<li>不会改变元素的性质</li>
+</ul>
+</li>
+<li>absolute:开启元素的绝对定位<ul>
+<li>元素开启绝对定位以后，不设置偏移量，元素的位置不会发生任何变化</li>
+<li>元素从文档流中脱离</li>
+<li>会改变元素的性质</li>
+<li>会使元素提升一个层级</li>
+<li>相对于其包含快进行定位</li>
+</ul>
+</li>
+<li>fixed:开启元素的固定定位<ul>
+<li>固定定位也是一种绝对定位，特点大部分和绝对定位一样</li>
+<li>不同的是：固定定位永远参照与浏览器的视口进行定位</li>
+<li>不会随着网页的滚动条滚动</li>
+</ul>
+</li>
+<li>sticky:开启元素的粘滞定位（兼容性不好）<ul>
+<li>粘滞定位和相对定位的特点基本一致</li>
+<li>不同的是粘滞定位可以在元素到达某个位置时将其固定</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>偏移量(offset)：当元素开启了定位以后，可以通过偏移量来设置元素的位置。[top, bottom, left, right]</p>
+</blockquote>
+<blockquote>
+<p>包含快：正常情况下，包含快就是离当前元素最近的祖先块元素。开启绝对定位的包含块就是离它最近的开启了定位的祖先元素。</p>
+</blockquote>
+<p>对于开启了定位的元素，可以通过<code>z-index</code>属性来指定元素的层级，需要一个整数作为参数，值越大元素的层级越高，元素的层级越高越优先显示。祖先元素的层级再高也不会盖住后代元素</p>
+<h1 id="字体族"><a href="#字体族" class="headerlink" title="字体族"></a>字体族</h1><ul>
+<li><code>color</code>：设置字体颜色（前景色）</li>
+<li><code>font-size</code>：设置字体的大小<ul>
+<li>单位em：相当于当前元素的一个font-size</li>
+<li>单位rem：相当于根元素的一个font-size</li>
+</ul>
+</li>
+<li><code>font-family</code>：字体族（字体的格式）<ul>
+<li>serif：衬线字体</li>
+<li>sans-serif：非衬线字体</li>
+<li>monospace：等宽字体</li>
+</ul>
+</li>
+</ul>
+<h2 id="图标字体-iconfont"><a href="#图标字体-iconfont" class="headerlink" title="图标字体(iconfont)"></a>图标字体(iconfont)</h2><ul>
+<li>在网页中经常需要使用一些图标，可以通过图片来引入图标。但是图片大小会比较大并且不灵活。所以在使用图标时，我们还可以将图片直接设置为字体，通过font-face的形式来对字体进行引入。这样就可以使用字体的形式来使用图标了。</li>
+</ul>
+<h2 id="fontAwesome"><a href="#fontAwesome" class="headerlink" title="fontAwesome"></a>fontAwesome</h2><p>使用步骤：</p>
+<ol>
+<li>将css和webfonts移动到项目中</li>
+<li>将all.css引入到网页中</li>
+<li>使用图标字体：<ul>
+<li>直接通过类名来使用图标字体<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;i class="fas fa-bell"&gt;&lt;/i&gt;</span><br></pre></td></tr></table></figure></li>
+<li><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;i class="fab fa-accessible-icon"&gt;&lt;/i&gt;</span><br></pre></td></tr></table></figure>
+通过伪元素来设置图标字体：</li>
+</ul>
+</li>
+<li>找到要设置图标的元素通过before或after选中</li>
+<li>在content中设置字体的编码</li>
+<li>设置字体的样式<br>通过实体来使用图标字体：<code>&amp;#x图标的编码</code></li>
+</ol>
+
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
                 <source type="audio/mpeg" src="">
@@ -550,7 +626,7 @@ CSS：
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CSS"><span class="toc-number">1.</span> <span class="toc-text">CSS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#语法"><span class="toc-number">2.</span> <span class="toc-text">语法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#注释"><span class="toc-number">2.1.</span> <span class="toc-text">注释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#选择器"><span class="toc-number">2.2.</span> <span class="toc-text">选择器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#声明块"><span class="toc-number">2.3.</span> <span class="toc-text">声明块</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#常用选择器"><span class="toc-number">3.</span> <span class="toc-text">常用选择器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#元素选择器"><span class="toc-number">3.1.</span> <span class="toc-text">元素选择器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#id选择器"><span class="toc-number">3.2.</span> <span class="toc-text">id选择器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类选择器"><span class="toc-number">3.3.</span> <span class="toc-text">类选择器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#通配选择器"><span class="toc-number">3.4.</span> <span class="toc-text">通配选择器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#示例"><span class="toc-number">3.5.</span> <span class="toc-text">示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#交集选择器"><span class="toc-number">3.6.</span> <span class="toc-text">交集选择器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#并集选择器"><span class="toc-number">3.7.</span> <span class="toc-text">并集选择器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#示例-1"><span class="toc-number">3.8.</span> <span class="toc-text">示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关系选择器"><span class="toc-number">3.9.</span> <span class="toc-text">关系选择器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素选择器"><span class="toc-number">3.9.1.</span> <span class="toc-text">子元素选择器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#后代选择器"><span class="toc-number">3.9.2.</span> <span class="toc-text">后代选择器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#兄弟选择器"><span class="toc-number">3.9.3.</span> <span class="toc-text">兄弟选择器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#示例-2"><span class="toc-number">3.9.4.</span> <span class="toc-text">示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#属性选择器"><span class="toc-number">3.10.</span> <span class="toc-text">属性选择器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#示例-3"><span class="toc-number">3.10.1.</span> <span class="toc-text">示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#伪类选择器"><span class="toc-number">3.11.</span> <span class="toc-text">伪类选择器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#超链接的伪类"><span class="toc-number">3.12.</span> <span class="toc-text">超链接的伪类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#伪元素选择器"><span class="toc-number">3.13.</span> <span class="toc-text">伪元素选择器</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#继承"><span class="toc-number">4.</span> <span class="toc-text">继承</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#选择器的权重"><span class="toc-number">5.</span> <span class="toc-text">选择器的权重</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#文档流-normal-flow"><span class="toc-number">6.</span> <span class="toc-text">文档流(normal flow)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#盒子模型-box-model"><span class="toc-number">7.</span> <span class="toc-text">盒子模型(box model)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#内容区"><span class="toc-number">7.1.</span> <span class="toc-text">内容区</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#边框"><span class="toc-number">7.2.</span> <span class="toc-text">边框</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内边距"><span class="toc-number">7.3.</span> <span class="toc-text">内边距</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#外边距"><span class="toc-number">7.4.</span> <span class="toc-text">外边距</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#水平布局"><span class="toc-number">7.5.</span> <span class="toc-text">水平布局</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#垂直布局"><span class="toc-number">7.6.</span> <span class="toc-text">垂直布局</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#垂直外边界的折叠"><span class="toc-number">7.7.</span> <span class="toc-text">垂直外边界的折叠</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#行内元素的盒子模型"><span class="toc-number">7.8.</span> <span class="toc-text">行内元素的盒子模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#盒子的大小"><span class="toc-number">7.9.</span> <span class="toc-text">盒子的大小</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#浏览器的默认样式"><span class="toc-number">8.</span> <span class="toc-text">浏览器的默认样式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#轮廓、圆角、阴影"><span class="toc-number">9.</span> <span class="toc-text">轮廓、圆角、阴影</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#浮动"><span class="toc-number">10.</span> <span class="toc-text">浮动</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#高度塌陷和BFC"><span class="toc-number">11.</span> <span class="toc-text">高度塌陷和BFC</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#clear"><span class="toc-number">11.1.</span> <span class="toc-text">clear</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方案"><span class="toc-number">11.2.</span> <span class="toc-text">解决方案</span></a></li></ol></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CSS"><span class="toc-number">1.</span> <span class="toc-text">CSS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#语法"><span class="toc-number">2.</span> <span class="toc-text">语法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#注释"><span class="toc-number">2.1.</span> <span class="toc-text">注释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#选择器"><span class="toc-number">2.2.</span> <span class="toc-text">选择器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#声明块"><span class="toc-number">2.3.</span> <span class="toc-text">声明块</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#常用选择器"><span class="toc-number">3.</span> <span class="toc-text">常用选择器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#元素选择器"><span class="toc-number">3.1.</span> <span class="toc-text">元素选择器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#id选择器"><span class="toc-number">3.2.</span> <span class="toc-text">id选择器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类选择器"><span class="toc-number">3.3.</span> <span class="toc-text">类选择器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#通配选择器"><span class="toc-number">3.4.</span> <span class="toc-text">通配选择器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#示例"><span class="toc-number">3.5.</span> <span class="toc-text">示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#交集选择器"><span class="toc-number">3.6.</span> <span class="toc-text">交集选择器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#并集选择器"><span class="toc-number">3.7.</span> <span class="toc-text">并集选择器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#示例-1"><span class="toc-number">3.8.</span> <span class="toc-text">示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关系选择器"><span class="toc-number">3.9.</span> <span class="toc-text">关系选择器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素选择器"><span class="toc-number">3.9.1.</span> <span class="toc-text">子元素选择器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#后代选择器"><span class="toc-number">3.9.2.</span> <span class="toc-text">后代选择器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#兄弟选择器"><span class="toc-number">3.9.3.</span> <span class="toc-text">兄弟选择器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#示例-2"><span class="toc-number">3.9.4.</span> <span class="toc-text">示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#属性选择器"><span class="toc-number">3.10.</span> <span class="toc-text">属性选择器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#示例-3"><span class="toc-number">3.10.1.</span> <span class="toc-text">示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#伪类选择器"><span class="toc-number">3.11.</span> <span class="toc-text">伪类选择器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#超链接的伪类"><span class="toc-number">3.12.</span> <span class="toc-text">超链接的伪类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#伪元素选择器"><span class="toc-number">3.13.</span> <span class="toc-text">伪元素选择器</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#继承"><span class="toc-number">4.</span> <span class="toc-text">继承</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#选择器的权重"><span class="toc-number">5.</span> <span class="toc-text">选择器的权重</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#文档流-normal-flow"><span class="toc-number">6.</span> <span class="toc-text">文档流(normal flow)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#盒子模型-box-model"><span class="toc-number">7.</span> <span class="toc-text">盒子模型(box model)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#内容区"><span class="toc-number">7.1.</span> <span class="toc-text">内容区</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#边框"><span class="toc-number">7.2.</span> <span class="toc-text">边框</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内边距"><span class="toc-number">7.3.</span> <span class="toc-text">内边距</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#外边距"><span class="toc-number">7.4.</span> <span class="toc-text">外边距</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#水平布局"><span class="toc-number">7.5.</span> <span class="toc-text">水平布局</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#垂直布局"><span class="toc-number">7.6.</span> <span class="toc-text">垂直布局</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#垂直外边界的折叠"><span class="toc-number">7.7.</span> <span class="toc-text">垂直外边界的折叠</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#行内元素的盒子模型"><span class="toc-number">7.8.</span> <span class="toc-text">行内元素的盒子模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#盒子的大小"><span class="toc-number">7.9.</span> <span class="toc-text">盒子的大小</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#浏览器的默认样式"><span class="toc-number">8.</span> <span class="toc-text">浏览器的默认样式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#轮廓、圆角、阴影"><span class="toc-number">9.</span> <span class="toc-text">轮廓、圆角、阴影</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#浮动"><span class="toc-number">10.</span> <span class="toc-text">浮动</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#高度塌陷和BFC"><span class="toc-number">11.</span> <span class="toc-text">高度塌陷和BFC</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#clear"><span class="toc-number">11.1.</span> <span class="toc-text">clear</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方案"><span class="toc-number">11.2.</span> <span class="toc-text">解决方案</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#定位"><span class="toc-number">12.</span> <span class="toc-text">定位</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#字体族"><span class="toc-number">13.</span> <span class="toc-text">字体族</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#图标字体-iconfont"><span class="toc-number">13.1.</span> <span class="toc-text">图标字体(iconfont)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fontAwesome"><span class="toc-number">13.2.</span> <span class="toc-text">fontAwesome</span></a></li></ol></li></ol>	
         </div>
     
 </div>
