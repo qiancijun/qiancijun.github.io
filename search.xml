@@ -5312,6 +5312,57 @@ offset从0开始可以省略
 <ul>
 <li><code>&lt;vedio&gt;&lt;/vedio&gt;</code>: 向页面中引入一个视频文件，和音频插入基本相同</li>
 </ul>
+<h1 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h1><ul>
+<li>在<code>table</code>中使用<code>tr</code>来表示表格中的一行</li>
+<li>在<code>tr</code>中用<code>tb</code>表示一个单元格</li>
+<li><code>colspan</code>：横向的合并单元格</li>
+<li><code>rowspan</code>：纵向的合并单元格<br>可以将一个表格分成三个部分</li>
+</ul>
+<ol>
+<li>thead</li>
+<li>tbody</li>
+<li>tfoot</li>
+</ol>
+<h1 id="表单"><a href="#表单" class="headerlink" title="表单"></a>表单</h1><p>用于将本地的数据提交给远程的服务器，通过form标签来创建一个表单</p>
+<ul>
+<li><p><code>action</code>：表单要提交的服务器的地址</p>
+</li>
+<li><p>添加表单项：</p>
+<ul>
+<li><p>input：</p>
+<ul>
+<li>type属性</li>
+<li>text：文本框</li>
+<li>submit：提交按钮</li>
+<li>button：普通按钮</li>
+<li>reset：重置按钮</li>
+<li>password：密码框</li>
+<li>radio：单选按钮 通过name属性进行分组，否则没有单选效果，value值设置发送的数据，通过checked设置默认选中</li>
+<li>checkbox：多选按钮</li>
+<li>color：选择颜色（兼容性不好）</li>
+<li>email：邮件输入框，浏览器会检查语法</li>
+<li>value属性：改变文字</li>
+<li>name属性：数据提交到服务器必须设置name</li>
+</ul>
+</li>
+<li><p>select：下拉列表</p>
+<ul>
+<li>name：</li>
+<li>option：下拉选项</li>
+<li>selected设置默认选项</li>
+</ul>
+</li>
+<li><p>autocomplete：自动补充表单，默认开启</p>
+</li>
+<li><p>readonly：设置表单项只读</p>
+</li>
+<li><p>disable：将表单项设置禁用</p>
+</li>
+<li><p>autofocus：自动获取焦点</p>
+</li>
+</ul>
+</li>
+</ul>
 ]]></content>
       <categories>
         <category>前端</category>
@@ -5837,6 +5888,74 @@ offset从0开始可以省略
 <li>在content中设置字体的编码</li>
 <li>设置字体的样式<br>通过实体来使用图标字体：<code>&amp;#x图标的编码</code></li>
 </ol>
+<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><ul>
+<li><code>background-image</code>：设置背景图片。如果背景的图片小于元素，则背景图片会自动在元素中平铺。如果背景的图片大于元素，将会一个部分背景无法完全显示<ul>
+<li>url(图片路径)</li>
+</ul>
+</li>
+<li><code>background-repeat</code>：设置背景的重复方式<ul>
+<li>repeat：默认值，背景会沿着x轴和y轴双方向重复</li>
+<li>repeat-x：背景会沿着x轴双方向重复</li>
+<li>repeat-y：背景会沿着y轴双方向重复</li>
+<li>no-repeat：背景图片不重复</li>
+</ul>
+</li>
+<li><code>background-position</code>：用来设置背景图片的位置<ul>
+<li>通过top left right bottom center几个方位来设置，必须同时指定两个值，第二个默认为center</li>
+<li>通过偏移量来指定背景图片的位置：<ul>
+<li>水平方向偏移量</li>
+<li>垂直方向偏移量</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>background-clip</code>：设置背景的范围<ul>
+<li>border-box：默认值，背景会出现在边框下边</li>
+<li>padding-box：背景不会出现在边框，只出现在内容区和内边距</li>
+<li>contengt-box：背景只会出现在内容区</li>
+</ul>
+</li>
+<li><code>background-origin</code>：背景图片的偏移量计算的源点<ul>
+<li>padding-box：默认值，从内边距处开始计算</li>
+<li>content-box：背景图片的偏移量从内容区计算</li>
+<li>border-box：背景图片的变量从边框处计算</li>
+</ul>
+</li>
+<li><code>background-size</code>：设置背景图片的大小<ul>
+<li>宽度</li>
+<li>高度<ul>
+<li>如果直线一个，则第二个值默认是auto</li>
+</ul>
+</li>
+<li>cover：图片的比例不变，将元素铺满</li>
+<li>contain：图片比例不变，将图片完整显示</li>
+</ul>
+</li>
+<li><code>background-attachment</code>：背景图片是否跟随元素移动<ul>
+<li>scroll：默认值，背景图片会跟随元素移动</li>
+<li>fixed：背景图片会固定在页面中，不会随元素移动</li>
+</ul>
+</li>
+<li><code>background-position</code>：设置图片显示位置</li>
+</ul>
+<h2 id="雪碧图"><a href="#雪碧图" class="headerlink" title="雪碧图"></a>雪碧图</h2><ul>
+<li>解决图片闪烁问题：将多个小图片同一保存到一个大图片中，然后通过调整background-position来显示图片。这个技术在网页中应用十分广泛</li>
+</ul>
+<h2 id="渐变"><a href="#渐变" class="headerlink" title="渐变"></a>渐变</h2><ul>
+<li>通过渐变可以设置一些复杂的背景颜色，可以从一个颜色向其他颜色过度的效果，渐变是图片，需要通过<code>background-iamge</code>来设置。</li>
+<li><code>background-image</code>：<ul>
+<li>linear-gradient：线性渐变，颜色沿着一条直线发生变化linear-gradient(to 方向,red,yellow)</li>
+</ul>
+</li>
+</ul>
+<h2 id="径向渐变"><a href="#径向渐变" class="headerlink" title="径向渐变"></a>径向渐变</h2><ul>
+<li><code>radial-gradient</code>：径向渐变（放射性效果）默认情况下，径向渐变的形状是根据元素的形状来计算的，也可以手动指定圆心的大小</li>
+</ul>
+<h1 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h1><p>如果表格中没有使用tbody而是直接使用tr，那么浏览器会自动创建一个tbody，并且将tr全部放到tbody，tr不是table的子元素。</p>
+<ul>
+<li><code>border-spacing</code>：指定边框之间的距离</li>
+<li><code>border-collapse</code>：设置边框的合并</li>
+</ul>
 ]]></content>
       <categories>
         <category>前端</category>

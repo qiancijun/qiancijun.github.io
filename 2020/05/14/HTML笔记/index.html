@@ -240,6 +240,57 @@ keywords: 表示网站,">
 <ul>
 <li><code>&lt;vedio&gt;&lt;/vedio&gt;</code>: 向页面中引入一个视频文件，和音频插入基本相同</li>
 </ul>
+<h1 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h1><ul>
+<li>在<code>table</code>中使用<code>tr</code>来表示表格中的一行</li>
+<li>在<code>tr</code>中用<code>tb</code>表示一个单元格</li>
+<li><code>colspan</code>：横向的合并单元格</li>
+<li><code>rowspan</code>：纵向的合并单元格<br>可以将一个表格分成三个部分</li>
+</ul>
+<ol>
+<li>thead</li>
+<li>tbody</li>
+<li>tfoot</li>
+</ol>
+<h1 id="表单"><a href="#表单" class="headerlink" title="表单"></a>表单</h1><p>用于将本地的数据提交给远程的服务器，通过form标签来创建一个表单</p>
+<ul>
+<li><p><code>action</code>：表单要提交的服务器的地址</p>
+</li>
+<li><p>添加表单项：</p>
+<ul>
+<li><p>input：</p>
+<ul>
+<li>type属性</li>
+<li>text：文本框</li>
+<li>submit：提交按钮</li>
+<li>button：普通按钮</li>
+<li>reset：重置按钮</li>
+<li>password：密码框</li>
+<li>radio：单选按钮 通过name属性进行分组，否则没有单选效果，value值设置发送的数据，通过checked设置默认选中</li>
+<li>checkbox：多选按钮</li>
+<li>color：选择颜色（兼容性不好）</li>
+<li>email：邮件输入框，浏览器会检查语法</li>
+<li>value属性：改变文字</li>
+<li>name属性：数据提交到服务器必须设置name</li>
+</ul>
+</li>
+<li><p>select：下拉列表</p>
+<ul>
+<li>name：</li>
+<li>option：下拉选项</li>
+<li>selected设置默认选项</li>
+</ul>
+</li>
+<li><p>autocomplete：自动补充表单，默认开启</p>
+</li>
+<li><p>readonly：设置表单项只读</p>
+</li>
+<li><p>disable：将表单项设置禁用</p>
+</li>
+<li><p>autofocus：自动获取焦点</p>
+</li>
+</ul>
+</li>
+</ul>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
@@ -279,7 +330,7 @@ keywords: 表示网站,">
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#元数据"><span class="toc-number">1.</span> <span class="toc-text">元数据</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#语义化标签"><span class="toc-number">2.</span> <span class="toc-text">语义化标签</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#标题标签"><span class="toc-number">2.1.</span> <span class="toc-text">标题标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#p标签"><span class="toc-number">2.2.</span> <span class="toc-text">p标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hgroup标签-HTML5"><span class="toc-number">2.3.</span> <span class="toc-text">hgroup标签(HTML5)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#em标签"><span class="toc-number">2.4.</span> <span class="toc-text">em标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#strong标签"><span class="toc-number">2.5.</span> <span class="toc-text">strong标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#blockquote"><span class="toc-number">2.6.</span> <span class="toc-text">blockquote</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#br"><span class="toc-number">2.7.</span> <span class="toc-text">br</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#块和行元素"><span class="toc-number">2.8.</span> <span class="toc-text">块和行元素</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#结构化语义标签-HTML5"><span class="toc-number">3.</span> <span class="toc-text">结构化语义标签(HTML5)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#header"><span class="toc-number">3.1.</span> <span class="toc-text">header</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#main"><span class="toc-number">3.2.</span> <span class="toc-text">main</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#footer"><span class="toc-number">3.3.</span> <span class="toc-text">footer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nav"><span class="toc-number">3.4.</span> <span class="toc-text">nav</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#aside"><span class="toc-number">3.5.</span> <span class="toc-text">aside</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#article"><span class="toc-number">3.6.</span> <span class="toc-text">article</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#section"><span class="toc-number">3.7.</span> <span class="toc-text">section</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#div"><span class="toc-number">3.8.</span> <span class="toc-text">div</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#span"><span class="toc-number">3.9.</span> <span class="toc-text">span</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#列表"><span class="toc-number">4.</span> <span class="toc-text">列表</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#超链接"><span class="toc-number">5.</span> <span class="toc-text">超链接</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#属性"><span class="toc-number">5.1.</span> <span class="toc-text">属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#href"><span class="toc-number">5.1.1.</span> <span class="toc-text">href</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#target"><span class="toc-number">5.1.2.</span> <span class="toc-text">target</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#id属性"><span class="toc-number">5.2.</span> <span class="toc-text">id属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#超链接跳转到任意位置"><span class="toc-number">5.2.1.</span> <span class="toc-text">超链接跳转到任意位置</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#图片标签"><span class="toc-number">6.</span> <span class="toc-text">图片标签</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#内联框架"><span class="toc-number">7.</span> <span class="toc-text">内联框架</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#音视频播放"><span class="toc-number">8.</span> <span class="toc-text">音视频播放</span></a></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#元数据"><span class="toc-number">1.</span> <span class="toc-text">元数据</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#语义化标签"><span class="toc-number">2.</span> <span class="toc-text">语义化标签</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#标题标签"><span class="toc-number">2.1.</span> <span class="toc-text">标题标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#p标签"><span class="toc-number">2.2.</span> <span class="toc-text">p标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hgroup标签-HTML5"><span class="toc-number">2.3.</span> <span class="toc-text">hgroup标签(HTML5)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#em标签"><span class="toc-number">2.4.</span> <span class="toc-text">em标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#strong标签"><span class="toc-number">2.5.</span> <span class="toc-text">strong标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#blockquote"><span class="toc-number">2.6.</span> <span class="toc-text">blockquote</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#br"><span class="toc-number">2.7.</span> <span class="toc-text">br</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#块和行元素"><span class="toc-number">2.8.</span> <span class="toc-text">块和行元素</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#结构化语义标签-HTML5"><span class="toc-number">3.</span> <span class="toc-text">结构化语义标签(HTML5)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#header"><span class="toc-number">3.1.</span> <span class="toc-text">header</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#main"><span class="toc-number">3.2.</span> <span class="toc-text">main</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#footer"><span class="toc-number">3.3.</span> <span class="toc-text">footer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nav"><span class="toc-number">3.4.</span> <span class="toc-text">nav</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#aside"><span class="toc-number">3.5.</span> <span class="toc-text">aside</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#article"><span class="toc-number">3.6.</span> <span class="toc-text">article</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#section"><span class="toc-number">3.7.</span> <span class="toc-text">section</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#div"><span class="toc-number">3.8.</span> <span class="toc-text">div</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#span"><span class="toc-number">3.9.</span> <span class="toc-text">span</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#列表"><span class="toc-number">4.</span> <span class="toc-text">列表</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#超链接"><span class="toc-number">5.</span> <span class="toc-text">超链接</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#属性"><span class="toc-number">5.1.</span> <span class="toc-text">属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#href"><span class="toc-number">5.1.1.</span> <span class="toc-text">href</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#target"><span class="toc-number">5.1.2.</span> <span class="toc-text">target</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#id属性"><span class="toc-number">5.2.</span> <span class="toc-text">id属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#超链接跳转到任意位置"><span class="toc-number">5.2.1.</span> <span class="toc-text">超链接跳转到任意位置</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#图片标签"><span class="toc-number">6.</span> <span class="toc-text">图片标签</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#内联框架"><span class="toc-number">7.</span> <span class="toc-text">内联框架</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#音视频播放"><span class="toc-number">8.</span> <span class="toc-text">音视频播放</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#表格"><span class="toc-number">9.</span> <span class="toc-text">表格</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#表单"><span class="toc-number">10.</span> <span class="toc-text">表单</span></a></li></ol>	
         </div>
     
 </div>
