@@ -10,7 +10,10 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
-    
+    <meta name="description" content="前言HTML笔记CSS基础JavaScript笔记
+动画(Animation)过渡
+transition：通过过渡可以指定一个属性发送变化时的切换方式
+同时设置过渡相关的所有属性，没有次序要求，如果,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -61,7 +64,96 @@
 
         </div>
         <div class="content markdown">
-            
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><a href="https://xlich.top/2020/05/14/HTML%E7%AC%94%E8%AE%B0/">HTML笔记</a><br><a href="https://xlich.top/2020/05/15/CSS%E7%AC%94%E8%AE%B0/">CSS基础</a><br><a href="https://xlich.top/2020/05/20/JavaScript%E7%AC%94%E8%AE%B0/">JavaScript笔记</a></p>
+<h1 id="动画-Animation"><a href="#动画-Animation" class="headerlink" title="动画(Animation)"></a>动画(Animation)</h1><h2 id="过渡"><a href="#过渡" class="headerlink" title="过渡"></a>过渡</h2><ul>
+<li><code>transition</code>：通过过渡可以指定一个属性发送变化时的切换方式<ul>
+<li>同时设置过渡相关的所有属性，没有次序要求，如果要写延迟则两个时间中，第一个是持续时间第二个是延迟</li>
+<li>transition:margin-left 2s 1s</li>
+</ul>
+</li>
+<li><code>transition-property</code>：指定要执行过渡的属性，多个属性间使用逗号隔开，如果所有属性都要过渡，使用all关键字，大部分属性都支持过渡效果</li>
+<li><code>transition-duration</code>：指定过渡效果的持续时间，时间单位s 和 ms</li>
+<li><code>transition-timing-function</code>：过渡的时序函数，指定过渡的执行方式<ul>
+<li>ease：默认值，慢速开始，先加速，再减速</li>
+<li>linear：匀速运动</li>
+<li>ease-in：加速运动</li>
+<li>ease-out：减速运动</li>
+<li>ease-in-out：先加速后减速</li>
+<li>cubic-bezier()：来指定时序函数</li>
+<li>steps()：分布执行过渡效果<ul>
+<li>end：在时间结束时执行过渡</li>
+<li>start：在时间开始时执行过渡</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>transition-delay</code>：过渡效果的延迟，等待相应时间后再执行过渡</li>
+</ul>
+<h2 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h2><ul>
+<li>动画和过渡类似，都是可以实现一些动态的效果，不同的是过渡需要在某个属性发生变化时才会触发，动画可以自动触发动态效果。</li>
+<li>关键帧：设置动画效果，必须先要设置一个关键帧<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@keyframes</span> 关键字名字&#123;</span><br><span class="line">    <span class="comment">/* 表示动画的开始位置 也可以用%0表示*/</span></span><br><span class="line">    <span class="selector-tag">from</span>&#123;&#125;</span><br><span class="line">    <span class="comment">/* 表示动画的结束位置 也可以使用%100表示*/</span></span><br><span class="line">    <span class="selector-tag">to</span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>设置动画：<ul>
+<li><code>animation-name</code>：对当前元素生效的关键帧的名字</li>
+<li><code>animation-duration</code>：动画的执行时间</li>
+<li><code>animation-delay</code>：动画延时执行</li>
+<li><code>animation-timing-function</code>：动画的时序函数</li>
+<li><code>animation-iteration-count</code>：动画执行的次数<ul>
+<li>infinite：无限执行</li>
+</ul>
+</li>
+<li><code>animation-direction</code>：动画的执行方向<ul>
+<li>normal：默认值，从 from 向 to 执行</li>
+<li>reverse：从 to 向 from 执行</li>
+<li>alternate：从 from 向 to 执行，重复执行动画时反向执行</li>
+<li>alternate-reverse：从 to 向 from 执行，重复执行动画时反向执行</li>
+</ul>
+</li>
+<li><code>animation-play-state</code>：设置动画执行状态<ul>
+<li>running：默认值，运行状态</li>
+<li>paused：暂停状态</li>
+</ul>
+</li>
+<li><code>animation-fill-mode</code>：动画的填充模式<ul>
+<li>none：默认值，动画执行完毕元素回到原来位置</li>
+<li>forwards：动画执行完毕元素停留在停止在动画结束的位置</li>
+<li>backwards：动画延时等待时，元素就会处于开始位置</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="变形"><a href="#变形" class="headerlink" title="变形"></a>变形</h2><ul>
+<li>改变元素的形状或位置，变形不会影响到页面的布局</li>
+<li><code>transform</code>：用来设置元素的变形效果<ul>
+<li>translate()：平移，平移元素时百分比时相对于自身计算的<ul>
+<li>translateX()：沿着x轴平移</li>
+<li>translateY()：沿着y轴平移</li>
+<li>translateZ()：沿着z轴平移</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="居中的另一种实现方式"><a href="#居中的另一种实现方式" class="headerlink" title="居中的另一种实现方式"></a>居中的另一种实现方式</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">50%</span>;</span><br><span class="line">    <span class="attribute">transform</span>: <span class="built_in">translateX</span>(-<span class="number">50%</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="z轴变形"><a href="#z轴变形" class="headerlink" title="z轴变形"></a>z轴变形</h3><ul>
+<li>z轴平移，调整元素在z轴的位置，正常情况就是调整元素和人眼之间的距离，距离越大，元素离人越近。z轴平移属于立体效果（近大远小），默认情况下网页不支持透视，如果需要看见效果，必须设置网页的视距。</li>
+<li><code>perspective</code>：设置当前网页视距，人眼距离网页的距离</li>
+</ul>
+<h2 id="旋转"><a href="#旋转" class="headerlink" title="旋转"></a>旋转</h2><ul>
+<li>通过旋转可以使元素沿着x，y或z旋转指定的角度<ul>
+<li>rotateX()</li>
+<li>rotateY()</li>
+<li>rotateZ()</li>
+</ul>
+</li>
+<li><code>backface-visibility</code>：是否显示元素的背面<ul>
+<li>visible：默认值，显示</li>
+<li>hidden：隐藏</li>
+</ul>
+</li>
+</ul>
+
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
                 <source type="audio/mpeg" src="">
@@ -100,7 +192,7 @@
     </div>
     
         <div class='side'>
-				
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#动画-Animation"><span class="toc-number">2.</span> <span class="toc-text">动画(Animation)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#过渡"><span class="toc-number">2.1.</span> <span class="toc-text">过渡</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动画"><span class="toc-number">2.2.</span> <span class="toc-text">动画</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#变形"><span class="toc-number">2.3.</span> <span class="toc-text">变形</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#居中的另一种实现方式"><span class="toc-number">2.3.1.</span> <span class="toc-text">居中的另一种实现方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#z轴变形"><span class="toc-number">2.3.2.</span> <span class="toc-text">z轴变形</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#旋转"><span class="toc-number">2.4.</span> <span class="toc-text">旋转</span></a></li></ol></li></ol>	
         </div>
     
 </div>
