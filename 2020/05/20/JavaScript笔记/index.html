@@ -5,12 +5,15 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Category: JAVA - 神奇口袋</title>
+    <title>JavaScript笔记 - 神奇口袋</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
-    
+    <meta name="description" content="前言本文不记录普通语法，与其他编程语言类似，只记录与网页有关内容HTML笔记CSS笔记
+引入外部js文件
+与CSS一样，网页结构，网页表现和网页行为应该分开编写，便于维护。
+在script标签内加入,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -33,140 +36,86 @@
 <body class="loading">
     <span id="config-title" style="display:none">神奇口袋</span>
     <div id="loader"></div>
-    <div class="nav">
-    <ul id="menu-menu" class="menu">
-        
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="//" title="首页" target="_blank" rel="noopener">首页</a>
-        </li>
-        
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/categories/" title="分类" target="_blank" rel="noopener">分类</a>
-        </li>
-        
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/tags/" title="标签" target="_blank" rel="noopener">标签</a>
-        </li>
-        
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/archives/" title="归档" target="_blank" rel="noopener">归档</a>
-        </li>
-        
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/about/" title="关于" target="_blank" rel="noopener">关于</a>
-        </li>
-        
-    </ul>
-	<span class="target"></span>
-	<center>
-	<div class="hitokoto">
-		<span class="typed" id="hitokoto" data-st="true"></span>
-	</div>
-	</center>
-	
-	<p class="footerlinks">
-		<a href="#" class="iconfont icon-null"></a>
-		
-            <a href="/" title="facebook" class="iconfont icon-facebook" target="_blank" rel="noopener"> </a>
-        
-            <a href="/" title="twitter" class="iconfont icon-twitter" target="_blank" rel="noopener"> </a>
-        
-            <a href="/" title="github" class="iconfont icon-github" target="_blank" rel="noopener"> </a>
-        
-            <a href="/img/logo.png" title="wechat" class="iconfont icon-wechat" target="_blank" rel="noopener"> </a>
-        
-            <a href="/769303522@qq.com" title="email" class="iconfont icon-email" target="_blank" rel="noopener"> </a>
-        
-		<a href="#" class="iconfont icon-null"></a>
-	</p>
-	
-    <p id="copyright">
-        &copy; 2020 John Doe.
-        <span> | </span>Powered by <a href="https://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
-        <span> | </span>Theme <a href="https://github.com/Fechin/hexo-theme-diaspora" title="Diaspora" target="_blank" rel="noopener">Diaspora</a> by Fechin
-		
-    </p>
-</div>
-
-<div id="container">
-    
-<div id="screen">
-    <div id="mark">
-        <div class="layer" data-depth="0.4">
-            <img src="/img/welcome-cover.jpg" id="cover" crossorigin="anonymous" width="1920" height="1080">
-        </div>
-    </div>
-    <div id="vibrant">
-        <svg viewBox="0 0 2880 1620" height="100%" preserveAspectRatio="xMaxYMax slice">
-            <polygon opacity="0.7" points="2000,1620 0,1620 0,0 600,0 "/>
-        </svg>
-        <div></div>
-    </div>
-    <div id="header">
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://xlich.top"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">JavaScript笔记</h3>
+    <div class="social">
         <div>
-            <a class="image-logo" href="/"></a>
-			
-			<div class="iconfont icon-search switchsearch" href="/search/" title="搜索"></div>
-			
-            <div class="iconfont icon-menu switchmenu"></div>
+            <div class="share">
+                
+            </div>
+            <div id="qr"></div>
         </div>
     </div>
-    
-    <div id="post0">
-        <p>四月 30, 2020</p>
-        <h2><a href="/2020/04/30/JAVA-%E5%8F%8D%E5%B0%84/" title="JAVA-反射" class="posttitle">JAVA-反射</a></h2>
-        <p class="summary">反射反射(Reflection)是被视为动态语言的关键，反射机制允许程序在执行期间借助于Reflection AP...</p>
-    </div>
-    
+    <div class="scrollbar"></div>
 </div>
 
-    <div id="primary">
+   
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">JavaScript笔记</h1>
+        <div class="stuff">
+            <span>五月 20, 2020</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本文不记录普通语法，与其他编程语言类似，只记录与网页有关内容<br><a href="">HTML笔记</a><br><a href="">CSS笔记</a></p>
+<h1 id="引入外部js文件"><a href="#引入外部js文件" class="headerlink" title="引入外部js文件"></a>引入外部js文件</h1><ul>
+<li>与CSS一样，网页结构，网页表现和网页行为应该分开编写，便于维护。</li>
+<li>在<code>script</code>标签内加入<code>src</code>属性，指向外部js文件，一旦引入了外部文件，就不能再编写内部js代码。除非新建一个script标签。</li>
+</ul>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='https://link.hhtjim.com/163/155827.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='https://link.hhtjim.com/163/1491163.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='https://link.hhtjim.com/163/1992707.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
         
-<div class="post">
-    <a href="/2020/04/30/JAVA-%E5%8F%8D%E5%B0%84/" title="JAVA-反射">
-        <img src="/img/7.png" class="cover" width="680" height="440">
-    </a>
-    <div class="else">
-        <p>四月 30, 2020</p>
-        <h3><a href="/2020/04/30/JAVA-%E5%8F%8D%E5%B0%84/" title="JAVA-反射" class="posttitle">JAVA-反射</a></h3>
-        <p>反射反射(Reflection)是被视为动态语言的关键，反射机制允许程序在执行期间借助于Reflection API取得任何类的内部信息，并且能够直接操作...</p>
-    </div>
-</div>
-
-
-<div class="post">
-    <a href="/2020/04/30/JAVA-%E7%B1%BB/" title="JAVA-类">
-        <img src="/img/welcome-cover.jpg" class="cover" width="680" height="440">
-    </a>
-    <div class="else">
-        <p>四月 30, 2020</p>
-        <h3><a href="/2020/04/30/JAVA-%E7%B1%BB/" title="JAVA-类" class="posttitle">JAVA-类</a></h3>
-        <p>本文不是对类的具体介绍。只总结了部分关于类的内容，自取想要的部分。
-内部类在Java中允许一个类的定义位于另外一个类的内部，前者称为内部类，后者称为外部类...</p>
-    </div>
-</div>
-
-
-<div class="post">
-    <a href="/2020/04/30/JAVA-%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%9B%9E%E8%B0%83/" title="JAVA-接口与回调">
-        <img src="/img/3.jpg" class="cover" width="680" height="440">
-    </a>
-    <div class="else">
-        <p>四月 30, 2020</p>
-        <h3><a href="/2020/04/30/JAVA-%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%9B%9E%E8%B0%83/" title="JAVA-接口与回调" class="posttitle">JAVA-接口与回调</a></h3>
-        <p>接口接口概念在Java程序设计语言中，$\color{red}{接口不是类}$，而是对类的一组特殊需求，这些类要遵从接口描述的统一格式进行定义。比如Arr...</p>
-    </div>
-</div>
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='true'
+        data-ci='Iv1.06e5c405a7731b45'
+        data-cs='2fcfe85902a7d5812fa4b299b56a6f194c98e08a'
+        data-r='qiancijun.github.io'
+        data-o='qiancijun'
+        data-a='qiancijun'
+        data-d='false'
+    >查看评论</div>
 
 
     </div>
     
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#引入外部js文件"><span class="toc-number">2.</span> <span class="toc-text">引入外部js文件</span></a></li></ol>	
+        </div>
+    
 </div>
-<div id="preview"></div>
 
 
-
-
+    </div>
+</div>
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":250,"height":400},"mobile":{"show":false},"log":false});</script></body>
 
 
