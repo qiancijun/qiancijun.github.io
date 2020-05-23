@@ -6078,6 +6078,11 @@ offset从0开始可以省略
 </li>
 </ul>
 </li>
+<li><code>transform-style: preserve-3d</code>：设置3d变形效果</li>
+<li><code>transform-origin</code>：设置变形原点<ul>
+<li>center：默认值，元素中心</li>
+</ul>
+</li>
 </ul>
 <h3 id="居中的另一种实现方式"><a href="#居中的另一种实现方式" class="headerlink" title="居中的另一种实现方式"></a>居中的另一种实现方式</h3><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">50%</span>;</span><br><span class="line">    <span class="attribute">transform</span>: <span class="built_in">translateX</span>(-<span class="number">50%</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -6096,6 +6101,135 @@ offset从0开始可以省略
 <li>visible：默认值，显示</li>
 <li>hidden：隐藏</li>
 </ul>
+</li>
+</ul>
+<h2 id="缩放"><a href="#缩放" class="headerlink" title="缩放"></a>缩放</h2><ul>
+<li><code>scale()</code>：对元素进行缩放<ul>
+<li>scaleX()：对X轴进行缩放</li>
+<li>scaleY()：对Y轴进行缩放<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">transfrom</span><span class="selector-pseudo">:scale(2)</span>;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="less"><a href="#less" class="headerlink" title="less"></a>less</h1><ul>
+<li>less是一门css的预处理语言，less是一个css的增强版，通过less可以编写更少的代码实现更强大的样式。css原生也支持变量的设置。（兼容性不好）</li>
+<li>在less中添加了许多新特性，像对变量的支持，对mixin的支持等待，浏览器无法直接执行less代码，要执行必须将less转换为css，然后再执行.</li>
+<li>在less中所有的数值都可以直接进行运算<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">html</span>&#123;</span><br><span class="line">    <span class="comment">/* 格式 --变量名 */</span></span><br><span class="line">    <span class="attribute">--color</span>: <span class="number">#bfa</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="built_in">var</span>(--color);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><code>calc()</code>：计算函数，计算括号里的算式</li>
+</ul>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><ul>
+<li>变量的声明： @变量名<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="variable">@a:</span> <span class="number">100px</span>;</span><br><span class="line"><span class="selector-class">.box1</span>&#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="variable">@a</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>变量做类名使用<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="variable">@a:</span> box1;</span><br><span class="line"><span class="selector-class">.@&#123;a&#125;</span>&#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="引用别的属性值"><a href="#引用别的属性值" class="headerlink" title="引用别的属性值"></a>引用别的属性值</h2><ul>
+<li>语法：$属性名<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.box1</span>&#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#bfa</span>;</span><br><span class="line">    background-color: $color;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="amp-引用父元素"><a href="#amp-引用父元素" class="headerlink" title="&amp;引用父元素"></a>&amp;引用父元素</h2><ul>
+<li>如果想在父元素中设置父元素的伪元素，直接用<code>&amp;</code>符引用父元素。</li>
+</ul>
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.p1</span>&#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.p2</span><span class="selector-pseudo">:extend(.p1)</span>&#123;</span><br><span class="line">    <span class="attribute">color</span>: red; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>或者直接对指定的样式进行引用(mixin混合)<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.p3</span>&#123;</span><br><span class="line">    <span class="selector-class">.p1</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>使用类选择器时可以在选择器后边添加一个括号，这时我们实际上就创建了一个mixin。</li>
+</ul>
+<h2 id="混合函数"><a href="#混合函数" class="headerlink" title="混合函数"></a>混合函数</h2><ul>
+<li>在混合函数中可以直接设置变量<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.test</span>(<span class="variable">@w</span>)&#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="variable">@w</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">    <span class="selector-class">.test</span>(<span class="number">200px</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="import引入"><a href="#import引入" class="headerlink" title="import引入"></a>import引入</h2><ul>
+<li><code>import</code>：用来将其他的less引入到当前的less</li>
+</ul>
+<h1 id="弹性盒-flex"><a href="#弹性盒-flex" class="headerlink" title="弹性盒(flex)"></a>弹性盒(flex)</h1><ul>
+<li>主要用来代替浮动来完成页面的布局，flex可以使元素可以跟随页面的大小来改变</li>
+<li>主轴：弹性元素的排列方向</li>
+<li>侧轴：与主轴垂直方向的称为侧轴</li>
+<li><code>flex-direction</code>：指定容器中弹性元素的排列方式<ul>
+<li>row：默认值，弹性元素在容器中水平排列（左向右）<ul>
+<li>主轴自左向右</li>
+</ul>
+</li>
+<li>row-reverse：弹性元素在容器中反向水平排列<ul>
+<li>主轴自右向左</li>
+</ul>
+</li>
+<li>column：弹性元素纵向排列（自上向下）</li>
+<li>column-reverse：弹性元素纵向排列（自下向上）</li>
+</ul>
+</li>
+</ul>
+<h2 id="弹性容器"><a href="#弹性容器" class="headerlink" title="弹性容器"></a>弹性容器</h2><ul>
+<li>要使用弹性盒，必须先将一个元素设置为弹性容器，通过<code>display</code>来设置弹性容器<ul>
+<li>display: flex 设置为块级弹性容器</li>
+<li>display: inline-flex 设置为行内的弹性容器</li>
+</ul>
+</li>
+</ul>
+<h2 id="弹性元素"><a href="#弹性元素" class="headerlink" title="弹性元素"></a>弹性元素</h2><ul>
+<li>弹性容器的子元素是弹性元素</li>
+<li>一个元素可以同时是弹性容器和弹性元素</li>
+<li>弹性元素同时可以是弹性容器</li>
+</ul>
+<ul>
+<li><code>flex-grow</code>：指定弹性元素的生长系数。当父元素有多余空间时，子元素会按照比例进行分配</li>
+<li><code>flex-shrink</code>：指定弹性元素的收缩系数，当父元素的中的空间不足以容纳所有的子元素时，对子元素进行收缩</li>
+</ul>
+<h2 id="弹性容器的样式"><a href="#弹性容器的样式" class="headerlink" title="弹性容器的样式"></a>弹性容器的样式</h2><ul>
+<li><code>flex-wrap</code>：设置弹性元素是否在弹性容器中自动换行<ul>
+<li>nowrap：默认值，元素不会自动换行</li>
+<li>wrap：元素沿着辅轴方向自动换行</li>
+<li>wrap-reverse：元素沿着主轴反向换行</li>
+</ul>
+</li>
+<li><code>flex-flow</code>：wrap和direction的简写属性</li>
+<li><code>justify-content</code>：如何分配主轴上的空白空间<ul>
+<li>flex-start：元素沿着主轴起边排列</li>
+<li>flex-end：元素沿着主轴终边排列</li>
+<li>center：元素居中排列</li>
+<li>space-around：空白分布到元素两侧</li>
+<li>space-evenly：空白分布到元素的单侧（兼容性不好）</li>
+<li>space-between：空白均匀分布到元素间</li>
+</ul>
+</li>
+<li><code>align-items</code>：元素在侧轴上如何对齐，设置元素间的关系<ul>
+<li>stretch：默认值，将元素的长度设置为相同的值</li>
+<li>flex-start：元素不会拉伸，沿着侧轴起边对齐</li>
+<li>flex-end：元素不会拉伸，沿着侧轴终边对齐</li>
+<li>center：居中对齐</li>
+<li>baseline：基线对齐</li>
+</ul>
+</li>
+<li><code>align-content</code>：侧轴空白空间的分布</li>
+<li><code>align-self</code>：覆盖当前弹性元素上的align-items</li>
+</ul>
+<h2 id="弹性元素的样式"><a href="#弹性元素的样式" class="headerlink" title="弹性元素的样式"></a>弹性元素的样式</h2><ul>
+<li><code>order</code>：决定弹性元素的排列顺序</li>
+</ul>
+<h1 id="响应式布局"><a href="#响应式布局" class="headerlink" title="响应式布局"></a>响应式布局</h1><ul>
+<li>网页可以根据不同的设备或窗口大小呈现出不同的效果。使用响应式布局，可以使一个网页适用于所有设备。</li>
+</ul>
+<h2 id="媒体查询"><a href="#媒体查询" class="headerlink" title="媒体查询"></a>媒体查询</h2><ul>
+<li>通过媒体查询，可以为不同的设备，或设备的不同状态来分别设置样式</li>
+<li>媒体类型：<ul>
+<li>all 所有设备</li>
+<li>print 打印设备</li>
+<li>screen 带屏幕的设备</li>
+<li>speech 屏幕阅读器<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="keyword">@media</span> 查询规则</span><br><span class="line">&#123;</span><br><span class="line">    声明块</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="媒体特性"><a href="#媒体特性" class="headerlink" title="媒体特性"></a>媒体特性</h2><ul>
+<li><code>width</code>：视口的宽度</li>
+<li><code>max-width</code>：视口的最大宽度（视口小于指定高度时生效）</li>
+<li><code>min-width</code>：视口的最小宽度（视口大于指定高度时生效）</li>
+<li><code>height</code>：视口的高度<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 可以用and连接 */</span></span><br><span class="line"><span class="keyword">@media</span> (<span class="attribute">width:</span> <span class="number">100px</span>)&#123;</span><br><span class="line">    <span class="selector-tag">body</span>&#123;</span><br><span class="line">        <span class="attribute">background-color</span>: <span class="number">#bfa</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 ]]></content>
