@@ -84,8 +84,70 @@
 
 <h1 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h1><ul>
 <li>函数也是一个对象，函数中可以封装一些功能。typeof检查一个函数对象时，会返回一个Function()。</li>
-<li>可以将要封装的代码以字符串形式传递给构造函数<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> func = <span class="keyword">new</span> <span class="built_in">Function</span>(<span class="string">"console.log('Hello');"</span>);</span><br></pre></td></tr></table></figure></li>
+<li>可以将要封装的代码以字符串形式传递给构造函数<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> func = <span class="keyword">new</span> <span class="built_in">Function</span>(<span class="string">"console.log('Hello');"</span>);</span><br></pre></td></tr></table></figure>
+
+</li>
 </ul>
+<h1 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h1><ul>
+<li>全称：Document Object Model文档对象模型。</li>
+<li>JS中通过DOM来对HTML文档进行操作<ul>
+<li>文档：表示整个HTML网页文档</li>
+<li>对象：将网页中的每一个部分都转换为了一个对象</li>
+<li>模型：表示对象之间的关系</li>
+</ul>
+</li>
+</ul>
+<h2 id="节点"><a href="#节点" class="headerlink" title="节点"></a>节点</h2><ul>
+<li>Node，是构成网页的最基本的组成部分，网页中的每一个部分都可以称为是一个节点。节点的类型不同，属性和方法也都不相同。</li>
+<li>常用节点分为四类：<ul>
+<li>文档节点：整个HTML文档</li>
+<li>元素节点：HTML文档中的HTML标签</li>
+<li>属性节点：元素的属性</li>
+<li>文本节点：HTML中的文本内容</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"btn"</span>&gt;</span>一个按钮<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="actionscript">    <span class="comment">// 通过id获取按钮对象</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">"btn"</span>);</span></span><br><span class="line"><span class="actionscript">    <span class="comment">// 修改按钮的文本</span></span></span><br><span class="line"><span class="actionscript">    btn.innerHTML = <span class="string">"改个名字"</span>;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h2><ul>
+<li>文档或浏览器窗口中发生的一些特定的交互瞬间。可以在事件对应的属性中设置一些JS代码，当事件触发时，这些代码将会执行</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"btn"</span>&gt;</span>一个按钮<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="actionscript">    <span class="comment">// 通过id获取按钮对象</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">"btn"</span>);</span></span><br><span class="line"><span class="actionscript">    <span class="comment">// 绑定监听</span></span></span><br><span class="line"><span class="actionscript">    btn.onclick = <span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</span></span><br><span class="line"><span class="actionscript">        alert(<span class="string">"hello world"</span>);</span></span><br><span class="line">    &#125;;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="文档加载"><a href="#文档加载" class="headerlink" title="文档加载"></a>文档加载</h2><ul>
+<li>浏览器在加载一个页面时，是按照自上向下的顺序加载的</li>
+<li>如果将script标签写在head里，页面还没有加载，script标签找不到元素</li>
+<li>解决方案：（会影响速度）<ul>
+<li><code>onload</code>：在整个页面加载之后才触发，为window绑定一个onload事件<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    js代码</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="DOM查询"><a href="#DOM查询" class="headerlink" title="DOM查询"></a>DOM查询</h2><ul>
+<li>获取元素节点，通过document对象调用<ol>
+<li>getElementById()：<ul>
+<li>通过$\color{red}{id}$属性获取$\color{red}{一个}$元素节点对象</li>
+</ul>
+</li>
+<li>getElementByTagName()<ul>
+<li>通过$\color{red}{标签名}$获取$\color{red}{一组}$元素节点对象</li>
+</ul>
+</li>
+<li>getElementsByName()<ul>
+<li>通过$\color{red}{name}$属性获取$\color{red}{一组}$元素节点对象</li>
+</ul>
+</li>
+<li>getElementsByTagName()<ul>
+<li>通过$\color{red}{标签名}$获取$\color{red}{一组}$元素节点对象</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>innerHTML用于获取元素内部的HTML代码，自结束标签没有内部。使用元素.属性名获取值。class不能采用这种方式获取，读取class使用元素.className</p>
+</blockquote>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
@@ -125,7 +187,7 @@
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#引入外部js文件"><span class="toc-number">2.</span> <span class="toc-text">引入外部js文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#对象"><span class="toc-number">3.</span> <span class="toc-text">对象</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#对象字面量"><span class="toc-number">3.1.</span> <span class="toc-text">对象字面量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#枚举对象中的属性"><span class="toc-number">3.2.</span> <span class="toc-text">枚举对象中的属性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#函数"><span class="toc-number">4.</span> <span class="toc-text">函数</span></a></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#引入外部js文件"><span class="toc-number">2.</span> <span class="toc-text">引入外部js文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#对象"><span class="toc-number">3.</span> <span class="toc-text">对象</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#对象字面量"><span class="toc-number">3.1.</span> <span class="toc-text">对象字面量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#枚举对象中的属性"><span class="toc-number">3.2.</span> <span class="toc-text">枚举对象中的属性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#函数"><span class="toc-number">4.</span> <span class="toc-text">函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DOM"><span class="toc-number">5.</span> <span class="toc-text">DOM</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#节点"><span class="toc-number">5.1.</span> <span class="toc-text">节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件"><span class="toc-number">5.2.</span> <span class="toc-text">事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文档加载"><span class="toc-number">5.3.</span> <span class="toc-text">文档加载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DOM查询"><span class="toc-number">5.4.</span> <span class="toc-text">DOM查询</span></a></li></ol></li></ol>	
         </div>
     
 </div>

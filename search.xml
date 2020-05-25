@@ -5999,8 +5999,70 @@ offset从0开始可以省略
 
 <h1 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h1><ul>
 <li>函数也是一个对象，函数中可以封装一些功能。typeof检查一个函数对象时，会返回一个Function()。</li>
-<li>可以将要封装的代码以字符串形式传递给构造函数<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> func = <span class="keyword">new</span> <span class="built_in">Function</span>(<span class="string">"console.log('Hello');"</span>);</span><br></pre></td></tr></table></figure></li>
+<li>可以将要封装的代码以字符串形式传递给构造函数<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> func = <span class="keyword">new</span> <span class="built_in">Function</span>(<span class="string">"console.log('Hello');"</span>);</span><br></pre></td></tr></table></figure>
+
+</li>
 </ul>
+<h1 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h1><ul>
+<li>全称：Document Object Model文档对象模型。</li>
+<li>JS中通过DOM来对HTML文档进行操作<ul>
+<li>文档：表示整个HTML网页文档</li>
+<li>对象：将网页中的每一个部分都转换为了一个对象</li>
+<li>模型：表示对象之间的关系</li>
+</ul>
+</li>
+</ul>
+<h2 id="节点"><a href="#节点" class="headerlink" title="节点"></a>节点</h2><ul>
+<li>Node，是构成网页的最基本的组成部分，网页中的每一个部分都可以称为是一个节点。节点的类型不同，属性和方法也都不相同。</li>
+<li>常用节点分为四类：<ul>
+<li>文档节点：整个HTML文档</li>
+<li>元素节点：HTML文档中的HTML标签</li>
+<li>属性节点：元素的属性</li>
+<li>文本节点：HTML中的文本内容</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"btn"</span>&gt;</span>一个按钮<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="actionscript">    <span class="comment">// 通过id获取按钮对象</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">"btn"</span>);</span></span><br><span class="line"><span class="actionscript">    <span class="comment">// 修改按钮的文本</span></span></span><br><span class="line"><span class="actionscript">    btn.innerHTML = <span class="string">"改个名字"</span>;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h2><ul>
+<li>文档或浏览器窗口中发生的一些特定的交互瞬间。可以在事件对应的属性中设置一些JS代码，当事件触发时，这些代码将会执行</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"btn"</span>&gt;</span>一个按钮<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="actionscript">    <span class="comment">// 通过id获取按钮对象</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">"btn"</span>);</span></span><br><span class="line"><span class="actionscript">    <span class="comment">// 绑定监听</span></span></span><br><span class="line"><span class="actionscript">    btn.onclick = <span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</span></span><br><span class="line"><span class="actionscript">        alert(<span class="string">"hello world"</span>);</span></span><br><span class="line">    &#125;;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="文档加载"><a href="#文档加载" class="headerlink" title="文档加载"></a>文档加载</h2><ul>
+<li>浏览器在加载一个页面时，是按照自上向下的顺序加载的</li>
+<li>如果将script标签写在head里，页面还没有加载，script标签找不到元素</li>
+<li>解决方案：（会影响速度）<ul>
+<li><code>onload</code>：在整个页面加载之后才触发，为window绑定一个onload事件<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    js代码</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="DOM查询"><a href="#DOM查询" class="headerlink" title="DOM查询"></a>DOM查询</h2><ul>
+<li>获取元素节点，通过document对象调用<ol>
+<li>getElementById()：<ul>
+<li>通过$\color{red}{id}$属性获取$\color{red}{一个}$元素节点对象</li>
+</ul>
+</li>
+<li>getElementByTagName()<ul>
+<li>通过$\color{red}{标签名}$获取$\color{red}{一组}$元素节点对象</li>
+</ul>
+</li>
+<li>getElementsByName()<ul>
+<li>通过$\color{red}{name}$属性获取$\color{red}{一组}$元素节点对象</li>
+</ul>
+</li>
+<li>getElementsByTagName()<ul>
+<li>通过$\color{red}{标签名}$获取$\color{red}{一组}$元素节点对象</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>innerHTML用于获取元素内部的HTML代码，自结束标签没有内部。使用元素.属性名获取值。class不能采用这种方式获取，读取class使用元素.className</p>
+</blockquote>
 ]]></content>
       <categories>
         <category>前端</category>
@@ -6233,6 +6295,169 @@ offset从0开始可以省略
 </li>
 </ul>
 ]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>LeetCode-190周周赛</title>
+    <url>/2020/05/24/LeetCode-190%E5%91%A8%E5%91%A8%E8%B5%9B/</url>
+    <content><![CDATA[<h1 id="5416-检查单词是否为句中其他单词的前缀"><a href="#5416-检查单词是否为句中其他单词的前缀" class="headerlink" title="5416. 检查单词是否为句中其他单词的前缀"></a>5416. 检查单词是否为句中其他单词的前缀</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week190/5416describe.png" alt=""></p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>cpp有字符串输入流可以用来分割字符串，java可以直接调用方法对字符串操作。</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">isPrefixOfWord</span><span class="params">(<span class="built_in">string</span> sentence, <span class="built_in">string</span> searchWord)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; <span class="built_in">list</span>;</span><br><span class="line">        <span class="function"><span class="built_in">stringstream</span> <span class="title">ss</span><span class="params">(sentence)</span></span>;</span><br><span class="line">        <span class="built_in">string</span> tmp = <span class="string">""</span>;</span><br><span class="line">        <span class="keyword">while</span> (ss &gt;&gt; tmp)&#123;</span><br><span class="line">            <span class="built_in">list</span>.push_back(tmp);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">list</span>.size(); i++)&#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">list</span>[i].find(searchWord) == <span class="number">0</span>)</span><br><span class="line">                <span class="keyword">return</span> i + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h1 id="5417-定长子串中元音的最大数目"><a href="#5417-定长子串中元音的最大数目" class="headerlink" title="5417. 定长子串中元音的最大数目"></a>5417. 定长子串中元音的最大数目</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week190/5417describe.png" alt=""></p>
+<h2 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h2><p>一题滑动窗口题，维护一个长度为k的窗口，判断头尾是否为元音。代码还可以优化，i = j - k所以只需要一个指针就能完成。</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxVowels</span><span class="params">(<span class="built_in">string</span> s, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> result = <span class="number">0</span>, ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> len = s.size();</span><br><span class="line">        <span class="keyword">while</span> (j &lt; len)&#123;</span><br><span class="line">            <span class="keyword">if</span> (helper(s[j]))</span><br><span class="line">                ans++;</span><br><span class="line">            <span class="keyword">if</span> (j &gt;= k)&#123;</span><br><span class="line">                <span class="keyword">if</span> (helper(s[i]))</span><br><span class="line">                    ans--;</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">            j++;</span><br><span class="line">            result = max(ans, result);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">helper</span><span class="params">(<span class="keyword">char</span> s)</span></span>&#123;    </span><br><span class="line">        <span class="keyword">return</span> s == <span class="string">'a'</span> || s == <span class="string">'e'</span> || s == <span class="string">'i'</span> || s == <span class="string">'o'</span> || s == <span class="string">'u'</span>; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h1 id="5418-二叉树中的伪回文路径"><a href="#5418-二叉树中的伪回文路径" class="headerlink" title="5418. 二叉树中的伪回文路径"></a>5418. 二叉树中的伪回文路径</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week190/5418describe.png" alt=""></p>
+<h2 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h2><p>阅读一遍题目，应该想到这里要用到DFS去遍历树的节点，但是和平常的dfs又不太一样，多出了一个判断是否为叶节点的步骤。问题关键还是在子序列的问题，看示例不难发现，如果两个数字都出现了奇数次，那么必定不可能成为回文序列。所以遍历到叶节点时就判断是否为回文序列。计数用set和数组都可以实现，代码中用的数组。</p>
+<h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode() : val(0), left(nullptr), right(nullptr) &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(TreeNode* root, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="built_in">list</span>, <span class="keyword">int</span> &amp;result)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root)&#123;</span><br><span class="line">            <span class="built_in">list</span>.push_back(root-&gt;val);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!root-&gt;left &amp;&amp; !root-&gt;right)&#123;</span><br><span class="line">            <span class="keyword">if</span>(helper(<span class="built_in">list</span>))</span><br><span class="line">                result++;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (root-&gt;left)</span><br><span class="line">            dfs(root-&gt;left, <span class="built_in">list</span>, result);</span><br><span class="line">        <span class="keyword">if</span> (root-&gt;right)</span><br><span class="line">            dfs(root-&gt;right, <span class="built_in">list</span>, result);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">helper</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;<span class="built_in">list</span>)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> flag = <span class="number">0</span>;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span> &gt; <span class="title">visited</span><span class="params">(<span class="number">11</span>, <span class="number">0</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> i: <span class="built_in">list</span>)&#123;</span><br><span class="line">            visited[i]++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; <span class="number">11</span>; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span> (visited[i] % <span class="number">2</span> != <span class="number">0</span> &amp;&amp; flag == <span class="number">0</span>)&#123;</span><br><span class="line">                flag = <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (visited[i] % <span class="number">2</span> != <span class="number">0</span> &amp;&amp; flag == <span class="number">1</span>)&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">pseudoPalindromicPaths</span> <span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="built_in">list</span>;</span><br><span class="line">        dfs(root, <span class="built_in">list</span>, result);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h1 id="5419-两个子序列的最大点积"><a href="#5419-两个子序列的最大点积" class="headerlink" title="5419. 两个子序列的最大点积"></a>5419. 两个子序列的最大点积</h1><h2 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxDotProduct</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums1, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len1 = nums1.size();</span><br><span class="line">        <span class="keyword">int</span> len2 = nums2.size();</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt; <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt; <span class="title">dp</span><span class="params">(len1 + <span class="number">1</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(len2 + <span class="number">1</span>, <span class="number">-1e8</span>))</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= len1; i++)&#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= len2; j++)&#123;</span><br><span class="line">                dp[i][j] = nums1[i<span class="number">-1</span>] * nums2[j - <span class="number">1</span>];</span><br><span class="line">                dp[i][j] = max(dp[i][j], dp[i][j] + dp[i - <span class="number">1</span>][j - <span class="number">1</span>]);</span><br><span class="line">                dp[i][j] = max(dp[i][j], dp[i - <span class="number">1</span>][j]);</span><br><span class="line">                dp[i][j] = max(dp[i][j], dp[i][j - <span class="number">1</span>]);</span><br><span class="line">                dp[i][j] = max(dp[i][j], dp[i - <span class="number">1</span>][j - <span class="number">1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[len1][len2];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>试题</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL高级</title>
+    <url>/2020/05/24/MySQL%E9%AB%98%E7%BA%A7/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><a href="https://xlich.top/2020/04/24/MySQL%E5%9F%BA%E7%A1%80/">MySQL基础</a><br><a href="https://xlich.top/2020/04/28/MySQL%E5%9F%BA%E7%A1%802/">MySQL基础2</a><br><a href="https://xlich.top/2020/05/09/MySQL%E5%9F%BA%E7%A1%803/">MySQL基础3</a></p>
+<h1 id="中文乱码"><a href="#中文乱码" class="headerlink" title="中文乱码"></a>中文乱码</h1><ul>
+<li>解决步骤：<ol>
+<li>通过配置文件修改MySQL默认字符集</li>
+<li>重启服务</li>
+<li>修改数据库已生成表的字符集<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">alter</span> 库名 <span class="built_in">character</span> <span class="keyword">set</span> <span class="string">'utf8'</span>;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+</li>
+</ul>
+<h1 id="连接远程数据库"><a href="#连接远程数据库" class="headerlink" title="连接远程数据库"></a>连接远程数据库</h1><h2 id="查看远程数据库用户信息"><a href="#查看远程数据库用户信息" class="headerlink" title="查看远程数据库用户信息"></a>查看远程数据库用户信息</h2><ul>
+<li>查看系统库<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> mysql;</span><br></pre></td></tr></table></figure></li>
+<li>查看user表<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span>\G</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>\G:转换为列式查看</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">user</span> 用户名 <span class="keyword">identified</span> <span class="keyword">by</span> 密码</span><br></pre></td></tr></table></figure>
+
+<h2 id="给用户授权"><a href="#给用户授权" class="headerlink" title="给用户授权"></a>给用户授权</h2><ul>
+<li><p>授权命令并且创建用户</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">grant</span> 权限<span class="number">1</span>,权限<span class="number">2</span>,... <span class="keyword">on</span> 数据库名称.表名称 <span class="keyword">to</span> 用户名@用户地址 <span class="keyword">identified</span> <span class="keyword">by</span> <span class="string">'连接口令'</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>授予所有权限</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">grant</span> <span class="keyword">all</span> <span class="keyword">privileges</span> <span class="keyword">on</span> *.* <span class="keyword">to</span> root@% <span class="keyword">identified</span> <span class="keyword">by</span> <span class="string">'连接口令'</span>;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="MySQL配置项"><a href="#MySQL配置项" class="headerlink" title="MySQL配置项"></a>MySQL配置项</h1><ul>
+<li>查看MODE<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">'sql_mode'</span>;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="MySQL的逻辑架构"><a href="#MySQL的逻辑架构" class="headerlink" title="MySQL的逻辑架构"></a>MySQL的逻辑架构</h1><ol>
+<li>客户端程序访问连接池获取连接</li>
+<li>查看缓冲层有无数据可以被读取</li>
+<li>缓冲层无数据，访问SQL接口，解析SQL命令，生成执行计划</li>
+<li>存储引擎回馈数据给客户端程序和缓冲层<blockquote>
+<p>只有sql语句一模一样才会命中缓冲层</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="执行周期"><a href="#执行周期" class="headerlink" title="执行周期"></a>执行周期</h2><ul>
+<li>修改配置文件<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">新增一行：query_cache_type&#x3D;1</span><br><span class="line">重启mysql</span><br></pre></td></tr></table></figure></li>
+<li>开启profiling<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">'%profiling'</span></span><br><span class="line"><span class="keyword">set</span> profiling=<span class="number">1</span>;</span><br><span class="line"><span class="keyword">show</span> * <span class="keyword">from</span> 表名;</span><br><span class="line"><span class="keyword">show</span> <span class="keyword">profiles</span>; <span class="comment">#显示最近的几行查询</span></span><br></pre></td></tr></table></figure></li>
+<li>查看程序的执行步骤<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">show</span> profile cpu, <span class="keyword">block</span> io <span class="keyword">for</span> <span class="keyword">query</span> 编号;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="存储引擎"><a href="#存储引擎" class="headerlink" title="存储引擎"></a>存储引擎</h1><ul>
+<li>查看所有存储引擎<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">engines</span>;</span><br></pre></td></tr></table></figure></li>
+<li>$\color{red}{面试}$ 最常用的存储引擎MyISAM和InnoDB（默认存储引擎）</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">对比项</th>
+<th align="center">MyISAM</th>
+<th align="center">InnoDB</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">外键</td>
+<td align="center">不支持</td>
+<td align="center">支持</td>
+</tr>
+<tr>
+<td align="center">事务</td>
+<td align="center">不支持</td>
+<td align="center">支持</td>
+</tr>
+<tr>
+<td align="center">行表锁</td>
+<td align="center">表锁，即使操作一条记录也会锁住整个表，不适合高并发的操作</td>
+<td align="center">行锁，操作时只锁某一行，不对其他行有影响，适合高并发的操作（会出现死锁现象）</td>
+</tr>
+<tr>
+<td align="center">缓存</td>
+<td align="center">只缓存索引，不缓存真实数据</td>
+<td align="center">不仅缓存索引还要缓存真实数据</td>
+</tr>
+<tr>
+<td align="center">关注点</td>
+<td align="center">节省资源，消耗少，简单事务</td>
+<td align="center">并发写、事务、更大资源</td>
+</tr>
+<tr>
+<td align="center">默认安装</td>
+<td align="center">是</td>
+<td align="center">是</td>
+</tr>
+<tr>
+<td align="center">默认使用</td>
+<td align="center">否</td>
+<td align="center">是</td>
+</tr>
+<tr>
+<td align="center">自带系统表使用</td>
+<td align="center">是</td>
+<td align="center">否</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>Archive引擎<br>Archive档案引擎只支持INSERT和SELECT操作。<br>Archive表适合日志和数据采集应用。Archive表比MyISAM表要小大约25%，比支持事务处理的InnoDB表小大约83%。</p>
+</li>
+<li><p>Blackhole引擎<br>Blackhole引擎没有实现任何存储机制，它会丢弃所有插入的数据，不做任何保存。但服务器会记录Blackhole表的日志，所以可以用于复制数据到备库，或者简单地记录到日志。但这种应用方式会碰到很多问题，因此不推荐使用。</p>
+</li>
+<li><p>CSV引擎<br>CSV引擎可以将普通的CSV文件作为MySQL的表来处理，但不支持索引<br>CSV引擎可以作为一种数据交换的机制，非常有用。</p>
+</li>
+<li><p>Memory引擎<br>如果需要快速地访问数据，并且这些数据不会被修改，重启以后丢失也没有关系，那么使用Memory表是非常有用的。</p>
+</li>
+</ul>
+<h1 id="索引优化分析"><a href="#索引优化分析" class="headerlink" title="索引优化分析"></a>索引优化分析</h1><h2 id="优化SQL语句"><a href="#优化SQL语句" class="headerlink" title="优化SQL语句"></a>优化SQL语句</h2><ul>
+<li>性能下降的原因：<ol>
+<li>数据过多：分库分表</li>
+<li>关联太多的表：SQL优化</li>
+<li>没有充分利用索引：索引建立（优化效果最好）</li>
+<li>服务器调优及各个参数设置：调整配置文件</li>
+</ol>
+</li>
+</ul>
+<p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Mysql/join.png" alt=""></p>
+]]></content>
+      <categories>
+        <category>Mysql</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Vue笔记</title>
+    <url>/2020/05/23/Vue%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[]]></content>
       <categories>
         <category>前端</category>
       </categories>
