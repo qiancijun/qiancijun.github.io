@@ -388,12 +388,12 @@
 </li>
 <li><p><code>Extra</code>：</p>
 <ul>
-<li>$\color{red}{Using filesort}$<ul>
+<li>$\color{red}{Using}$ $\color{red}{filesort}$<ul>
 <li>order by没有使用索引，而是手动排序</li>
 <li>查询中排序的字段，排序字段若通过索引去访问将大大提高排序速度</li>
 </ul>
 </li>
-<li>$\color{red}{Using temporary}$<ul>
+<li>$\color{red}{Using} $$\color{red}{temporary}$<ul>
 <li>group by没有使用索引，group by包含一个order by</li>
 </ul>
 </li>
@@ -405,7 +405,7 @@
 <li>表示使用了where过滤</li>
 </ul>
 </li>
-<li>$\color{red}{Using join buffer}$<ul>
+<li>$\color{red}{Using}$ $\color{red}{join}$ $\color{red}{buffer}$<ul>
 <li>两表关联，关联字段没有使用索引</li>
 </ul>
 </li>
@@ -420,6 +420,50 @@
 </ul>
 </li>
 </ol>
+<h2 id="批量插入数据"><a href="#批量插入数据" class="headerlink" title="批量插入数据"></a>批量插入数据</h2><ul>
+<li>插入大量数据时，必须进行优化</li>
+<li>步骤：<ol>
+<li>建表</li>
+<li>设置参数<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> log_bin_trust_function_creators=<span class="number">1</span>;</span><br></pre></td></tr></table></figure></li>
+<li>创建函数，保证每条数据都不同<ul>
+<li>随机产生字符串<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">DELIMITER $$</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">FUNCTION</span> rand_string(n <span class="built_in">INT</span>) <span class="keyword">RETURNS</span> <span class="built_in">VARCHAR</span>(<span class="number">255</span>)</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line"><span class="keyword">DECLARE</span> chars_str <span class="built_in">VARCHAR</span>(<span class="number">100</span>) <span class="keyword">DEFAULT</span> <span class="string">'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'</span>;</span><br><span class="line"><span class="keyword">DECLARE</span> return_str <span class="built_in">VARCHAR</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="string">''</span>;</span><br><span class="line"><span class="keyword">DECLARE</span> i <span class="built_in">INT</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>;</span><br><span class="line">WHILE i &lt; n DO</span><br><span class="line"><span class="keyword">SET</span> return_str = <span class="keyword">CONCAT</span>(return_str, <span class="keyword">SUBSTRING</span>(chars_str, <span class="keyword">FLOOR</span>(<span class="number">1</span> + <span class="keyword">rand</span>() * <span class="number">52</span>), <span class="number">1</span>));</span><br><span class="line"><span class="keyword">SET</span> i = i + <span class="number">1</span>;</span><br><span class="line"><span class="keyword">END</span> <span class="keyword">WHILE</span>;</span><br><span class="line"><span class="keyword">END</span> $$</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>创建存储过程</li>
+</ol>
+</li>
+</ul>
+<h3 id="删除索引步骤（了解）"><a href="#删除索引步骤（了解）" class="headerlink" title="删除索引步骤（了解）"></a>删除索引步骤（了解）</h3><ol>
+<li>查询索引名<ul>
+<li>在infomation库的statistics表中包含了所有库的索引名<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> index_name <span class="keyword">FROM</span> information_schema.STATISTICS <span class="keyword">WHERE</span> table_name = 表名 <span class="keyword">AND</span> table_schema = 库名 <span class="keyword">AND</span> index_name &lt;&gt; <span class="string">'PRIMARY'</span> <span class="keyword">AND</span> seq_in_index = <span class="number">1</span>;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>取出索引名<ul>
+<li>查询后会得到该表除了主键索引的其余索引，利用<code>游标</code>取出每一个索引<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CURSOR 游标</span><br><span class="line">FETCH xxx INTO xxx</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>字符串转变为sql语句<ul>
+<li>对字符串进行预编译<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">PREPARE</span> 预编译 xxx</span><br><span class="line"></span><br><span class="line"><span class="keyword">EXECUTE</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="单表索引优化"><a href="#单表索引优化" class="headerlink" title="单表索引优化"></a>单表索引优化</h2><h3 id="避免全表扫描"><a href="#避免全表扫描" class="headerlink" title="避免全表扫描"></a>避免全表扫描</h3><ul>
+<li>如果查询语句带有where，为where后面的字段建立索引，解决全表扫描问题。</li>
+<li>字段顺序不影响优化器</li>
+</ul>
+<h3 id="最左匹配原则"><a href="#最左匹配原则" class="headerlink" title="最左匹配原则"></a>最左匹配原则</h3><ul>
+<li>如果索引了多列，要遵守最左匹配原则，从索引的最左侧列开始并且不跳过索引中的列</li>
+</ul>
+<h3 id="避免索引失效"><a href="#避免索引失效" class="headerlink" title="避免索引失效"></a>避免索引失效</h3><ul>
+<li>不要在索引列上做任何操作（计算、函数、类型转换），会导致索引失效而转向全表扫描</li>
+<li>存储引擎不能使用索引中范围条件右边的列</li>
+<li>在使用不等于的时候无法使用索引会导致全表扫描</li>
+<li>is not null也无法使用索引，但是is null是可以使用索引的</li>
+<li>like以通配符开头，会导致索引失效</li>
+<li>字符串不加单引号导致索引失效</li>
+</ul>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
@@ -459,7 +503,7 @@
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#中文乱码"><span class="toc-number">2.</span> <span class="toc-text">中文乱码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#连接远程数据库"><span class="toc-number">3.</span> <span class="toc-text">连接远程数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#查看远程数据库用户信息"><span class="toc-number">3.1.</span> <span class="toc-text">查看远程数据库用户信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建用户"><span class="toc-number">3.2.</span> <span class="toc-text">创建用户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#给用户授权"><span class="toc-number">3.3.</span> <span class="toc-text">给用户授权</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MySQL配置项"><span class="toc-number">4.</span> <span class="toc-text">MySQL配置项</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MySQL的逻辑架构"><span class="toc-number">5.</span> <span class="toc-text">MySQL的逻辑架构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#执行周期"><span class="toc-number">5.1.</span> <span class="toc-text">执行周期</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#存储引擎"><span class="toc-number">6.</span> <span class="toc-text">存储引擎</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#索引优化分析"><span class="toc-number">7.</span> <span class="toc-text">索引优化分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#优化SQL语句"><span class="toc-number">7.1.</span> <span class="toc-text">优化SQL语句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#索引简介"><span class="toc-number">7.2.</span> <span class="toc-text">索引简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义"><span class="toc-number">7.2.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#详解"><span class="toc-number">7.2.2.</span> <span class="toc-text">详解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#优势"><span class="toc-number">7.2.3.</span> <span class="toc-text">优势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#劣势"><span class="toc-number">7.2.4.</span> <span class="toc-text">劣势</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#索引结构"><span class="toc-number">7.3.</span> <span class="toc-text">索引结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#B树索引"><span class="toc-number">7.3.1.</span> <span class="toc-text">B树索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-树索引"><span class="toc-number">7.3.2.</span> <span class="toc-text">B+树索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#聚簇索引与非聚簇索引"><span class="toc-number">7.3.3.</span> <span class="toc-text">聚簇索引与非聚簇索引</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#索引分类"><span class="toc-number">7.4.</span> <span class="toc-text">索引分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#单值索引"><span class="toc-number">7.4.1.</span> <span class="toc-text">单值索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#唯一索引"><span class="toc-number">7.4.2.</span> <span class="toc-text">唯一索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主键索引"><span class="toc-number">7.4.3.</span> <span class="toc-text">主键索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#复合索引"><span class="toc-number">7.4.4.</span> <span class="toc-text">复合索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改索引"><span class="toc-number">7.4.5.</span> <span class="toc-text">修改索引</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用索引"><span class="toc-number">7.5.</span> <span class="toc-text">使用索引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#性能分析"><span class="toc-number">7.6.</span> <span class="toc-text">性能分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#字段解释"><span class="toc-number">7.6.1.</span> <span class="toc-text">字段解释</span></a></li></ol></li></ol></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#中文乱码"><span class="toc-number">2.</span> <span class="toc-text">中文乱码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#连接远程数据库"><span class="toc-number">3.</span> <span class="toc-text">连接远程数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#查看远程数据库用户信息"><span class="toc-number">3.1.</span> <span class="toc-text">查看远程数据库用户信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建用户"><span class="toc-number">3.2.</span> <span class="toc-text">创建用户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#给用户授权"><span class="toc-number">3.3.</span> <span class="toc-text">给用户授权</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MySQL配置项"><span class="toc-number">4.</span> <span class="toc-text">MySQL配置项</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MySQL的逻辑架构"><span class="toc-number">5.</span> <span class="toc-text">MySQL的逻辑架构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#执行周期"><span class="toc-number">5.1.</span> <span class="toc-text">执行周期</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#存储引擎"><span class="toc-number">6.</span> <span class="toc-text">存储引擎</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#索引优化分析"><span class="toc-number">7.</span> <span class="toc-text">索引优化分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#优化SQL语句"><span class="toc-number">7.1.</span> <span class="toc-text">优化SQL语句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#索引简介"><span class="toc-number">7.2.</span> <span class="toc-text">索引简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义"><span class="toc-number">7.2.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#详解"><span class="toc-number">7.2.2.</span> <span class="toc-text">详解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#优势"><span class="toc-number">7.2.3.</span> <span class="toc-text">优势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#劣势"><span class="toc-number">7.2.4.</span> <span class="toc-text">劣势</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#索引结构"><span class="toc-number">7.3.</span> <span class="toc-text">索引结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#B树索引"><span class="toc-number">7.3.1.</span> <span class="toc-text">B树索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-树索引"><span class="toc-number">7.3.2.</span> <span class="toc-text">B+树索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#聚簇索引与非聚簇索引"><span class="toc-number">7.3.3.</span> <span class="toc-text">聚簇索引与非聚簇索引</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#索引分类"><span class="toc-number">7.4.</span> <span class="toc-text">索引分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#单值索引"><span class="toc-number">7.4.1.</span> <span class="toc-text">单值索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#唯一索引"><span class="toc-number">7.4.2.</span> <span class="toc-text">唯一索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主键索引"><span class="toc-number">7.4.3.</span> <span class="toc-text">主键索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#复合索引"><span class="toc-number">7.4.4.</span> <span class="toc-text">复合索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改索引"><span class="toc-number">7.4.5.</span> <span class="toc-text">修改索引</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用索引"><span class="toc-number">7.5.</span> <span class="toc-text">使用索引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#性能分析"><span class="toc-number">7.6.</span> <span class="toc-text">性能分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#字段解释"><span class="toc-number">7.6.1.</span> <span class="toc-text">字段解释</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#批量插入数据"><span class="toc-number">7.7.</span> <span class="toc-text">批量插入数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#删除索引步骤（了解）"><span class="toc-number">7.7.1.</span> <span class="toc-text">删除索引步骤（了解）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#单表索引优化"><span class="toc-number">7.8.</span> <span class="toc-text">单表索引优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#避免全表扫描"><span class="toc-number">7.8.1.</span> <span class="toc-text">避免全表扫描</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最左匹配原则"><span class="toc-number">7.8.2.</span> <span class="toc-text">最左匹配原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#避免索引失效"><span class="toc-number">7.8.3.</span> <span class="toc-text">避免索引失效</span></a></li></ol></li></ol></li></ol>	
         </div>
     
 </div>

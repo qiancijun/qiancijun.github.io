@@ -6647,12 +6647,12 @@ offset从0开始可以省略
 </li>
 <li><p><code>Extra</code>：</p>
 <ul>
-<li>$\color{red}{Using filesort}$<ul>
+<li>$\color{red}{Using}$ $\color{red}{filesort}$<ul>
 <li>order by没有使用索引，而是手动排序</li>
 <li>查询中排序的字段，排序字段若通过索引去访问将大大提高排序速度</li>
 </ul>
 </li>
-<li>$\color{red}{Using temporary}$<ul>
+<li>$\color{red}{Using} $$\color{red}{temporary}$<ul>
 <li>group by没有使用索引，group by包含一个order by</li>
 </ul>
 </li>
@@ -6664,7 +6664,7 @@ offset从0开始可以省略
 <li>表示使用了where过滤</li>
 </ul>
 </li>
-<li>$\color{red}{Using join buffer}$<ul>
+<li>$\color{red}{Using}$ $\color{red}{join}$ $\color{red}{buffer}$<ul>
 <li>两表关联，关联字段没有使用索引</li>
 </ul>
 </li>
@@ -6679,6 +6679,50 @@ offset从0开始可以省略
 </ul>
 </li>
 </ol>
+<h2 id="批量插入数据"><a href="#批量插入数据" class="headerlink" title="批量插入数据"></a>批量插入数据</h2><ul>
+<li>插入大量数据时，必须进行优化</li>
+<li>步骤：<ol>
+<li>建表</li>
+<li>设置参数<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> log_bin_trust_function_creators=<span class="number">1</span>;</span><br></pre></td></tr></table></figure></li>
+<li>创建函数，保证每条数据都不同<ul>
+<li>随机产生字符串<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">DELIMITER $$</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">FUNCTION</span> rand_string(n <span class="built_in">INT</span>) <span class="keyword">RETURNS</span> <span class="built_in">VARCHAR</span>(<span class="number">255</span>)</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line"><span class="keyword">DECLARE</span> chars_str <span class="built_in">VARCHAR</span>(<span class="number">100</span>) <span class="keyword">DEFAULT</span> <span class="string">'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'</span>;</span><br><span class="line"><span class="keyword">DECLARE</span> return_str <span class="built_in">VARCHAR</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="string">''</span>;</span><br><span class="line"><span class="keyword">DECLARE</span> i <span class="built_in">INT</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>;</span><br><span class="line">WHILE i &lt; n DO</span><br><span class="line"><span class="keyword">SET</span> return_str = <span class="keyword">CONCAT</span>(return_str, <span class="keyword">SUBSTRING</span>(chars_str, <span class="keyword">FLOOR</span>(<span class="number">1</span> + <span class="keyword">rand</span>() * <span class="number">52</span>), <span class="number">1</span>));</span><br><span class="line"><span class="keyword">SET</span> i = i + <span class="number">1</span>;</span><br><span class="line"><span class="keyword">END</span> <span class="keyword">WHILE</span>;</span><br><span class="line"><span class="keyword">END</span> $$</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>创建存储过程</li>
+</ol>
+</li>
+</ul>
+<h3 id="删除索引步骤（了解）"><a href="#删除索引步骤（了解）" class="headerlink" title="删除索引步骤（了解）"></a>删除索引步骤（了解）</h3><ol>
+<li>查询索引名<ul>
+<li>在infomation库的statistics表中包含了所有库的索引名<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> index_name <span class="keyword">FROM</span> information_schema.STATISTICS <span class="keyword">WHERE</span> table_name = 表名 <span class="keyword">AND</span> table_schema = 库名 <span class="keyword">AND</span> index_name &lt;&gt; <span class="string">'PRIMARY'</span> <span class="keyword">AND</span> seq_in_index = <span class="number">1</span>;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>取出索引名<ul>
+<li>查询后会得到该表除了主键索引的其余索引，利用<code>游标</code>取出每一个索引<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">CURSOR 游标</span><br><span class="line">FETCH xxx INTO xxx</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>字符串转变为sql语句<ul>
+<li>对字符串进行预编译<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">PREPARE</span> 预编译 xxx</span><br><span class="line"></span><br><span class="line"><span class="keyword">EXECUTE</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="单表索引优化"><a href="#单表索引优化" class="headerlink" title="单表索引优化"></a>单表索引优化</h2><h3 id="避免全表扫描"><a href="#避免全表扫描" class="headerlink" title="避免全表扫描"></a>避免全表扫描</h3><ul>
+<li>如果查询语句带有where，为where后面的字段建立索引，解决全表扫描问题。</li>
+<li>字段顺序不影响优化器</li>
+</ul>
+<h3 id="最左匹配原则"><a href="#最左匹配原则" class="headerlink" title="最左匹配原则"></a>最左匹配原则</h3><ul>
+<li>如果索引了多列，要遵守最左匹配原则，从索引的最左侧列开始并且不跳过索引中的列</li>
+</ul>
+<h3 id="避免索引失效"><a href="#避免索引失效" class="headerlink" title="避免索引失效"></a>避免索引失效</h3><ul>
+<li>不要在索引列上做任何操作（计算、函数、类型转换），会导致索引失效而转向全表扫描</li>
+<li>存储引擎不能使用索引中范围条件右边的列</li>
+<li>在使用不等于的时候无法使用索引会导致全表扫描</li>
+<li>is not null也无法使用索引，但是is null是可以使用索引的</li>
+<li>like以通配符开头，会导致索引失效</li>
+<li>字符串不加单引号导致索引失效</li>
+</ul>
 ]]></content>
       <categories>
         <category>Mysql</category>
@@ -6691,5 +6735,61 @@ offset从0开始可以省略
       <categories>
         <category>前端</category>
       </categories>
+  </entry>
+  <entry>
+    <title>快慢指针</title>
+    <url>/2020/05/26/%E5%BF%AB%E6%85%A2%E6%8C%87%E9%92%88/</url>
+    <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><ul>
+<li>Floyd判圈算法(Floyd Cycle Detection Algorithm)，又称龟兔赛跑算法(Tortoise and Hare Algorithm),是一个可以在有限状态机、迭代函数或者链表上判断是否存在环，以及判断环的起点与长度的算法。</li>
+</ul>
+<h2 id="快慢指针"><a href="#快慢指针" class="headerlink" title="快慢指针"></a>快慢指针</h2><p>可以把数组看成一个图，索引所对应的值为下一个节点。我们设置两个指针，一个为快指针(fast)， 一个为慢指针(slow)，快指针一次走两步，慢指针一次走一步。根据Floyd判圈算法，如果存在环，两个指针一定会相遇。</p>
+<h1 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h1><h2 id="141-Linked-List-Cycle（环形列表）"><a href="#141-Linked-List-Cycle（环形列表）" class="headerlink" title="141. Linked List Cycle（环形列表）"></a>141. Linked List Cycle（环形列表）</h2><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/287/141_describe.png" alt=""></p>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>问题可以被分成两部分，有环和无环，并用快慢指针来做：</p>
+<ol>
+<li>无环</li>
+</ol>
+<ul>
+<li>由于快指针一次走两步，慢指针一次走一步，链表无环，所以必然快指针比慢指针先走到链表尾。但是快指针是否真的能走两步需要另外做判断：<ol>
+<li>如果只有一个节点[1]，那么下一个节点已经为Null，慢指针都无法走下一步</li>
+<li>如果有两个节点[1,2]，慢指针能走一步，快指针走两步已经到达链表尾。所以只有两个节点且无环的情况下，不用再对快指针做操作，直接返回false即可。</li>
+<li>如果有两个节点以上[1,2,3….n]，快指针再走下两步的同时先做判断，<ul>
+<li>如果快指针已经走到了链表尾，无需再走。</li>
+<li>如果快指针没有到链表尾，但是是最后一个节点（即fast.next = NULL），无需再走</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<ol start="2">
+<li>有环</li>
+</ol>
+<ul>
+<li>根据Floyd判圈算法，有环情况下，快慢指针一定会在一点相遇，判别相遇即为两指针是否同时指向一个节点。</li>
+</ul>
+<h3 id="代码-CPP"><a href="#代码-CPP" class="headerlink" title="代码(CPP)"></a>代码(CPP)</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * struct ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode *next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">hasCycle</span><span class="params">(ListNode *head)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 只有一个节点或两个节点直接返回false</span></span><br><span class="line">        <span class="keyword">if</span> (!head || !head-&gt;next)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="comment">// 定义快慢指针</span></span><br><span class="line">        ListNode *slow = head, *fast = head;</span><br><span class="line">        <span class="comment">// 先走再判断，也可以先判断再走</span></span><br><span class="line">        <span class="keyword">do</span> &#123;</span><br><span class="line">            <span class="comment">// 无环情况：如果快指针已经到达了链表尾或者链表最后一个节点</span></span><br><span class="line">           <span class="keyword">if</span> (!fast || !fast-&gt;next)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            <span class="comment">// 快慢指针移动</span></span><br><span class="line">           slow = slow-&gt;next;</span><br><span class="line">           fast = fast-&gt;next-&gt;next; </span><br><span class="line">        &#125; <span class="keyword">while</span> (slow != fast);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="287-寻找重复数"><a href="#287-寻找重复数" class="headerlink" title="287. 寻找重复数"></a>287. 寻找重复数</h2><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/287/describe.png" alt=""></p>
+<h3 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h3><p>题目给了一个数组，我们可以把数组构建成一个图，每个下标索引i连接一条nums[i]的边。因为数组中有重复的数组，所以一定有一个数组被连接了两条边，因此图中一定存在一个环，可以用快慢指针来解决。<br>找到了环的入口之后，快指针可以直接在环中循环，而慢指针从头开始移动。<br><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/287/solution.png" alt=""></p>
+<ul>
+<li>关于为什么要把慢指针移到起点后再相遇即为答案？</li>
+<li>先看慢指针：<ul>
+<li>根据图解，假设从起点到环的入口需要走a步，从环的入口再走b步快慢指针相遇，再走c步回到入口（即b+c=L）。那么慢指针一共走了$\textit{a+b}$步</li>
+</ul>
+</li>
+<li>再看快指针：<ul>
+<li>那么快指针一共走了多少步？根据一开始就写的快慢指针定义，快指针一次走两步，慢指针走一步，快指针走的总步数为慢指针的两倍，所以容易得出快指针一共走了$\textit{2(a+b)}$步。在这$\textit{2(a+b)}$中，我们也可以认为快指针比慢指针在环中已经走了若干圈（即kL），因此$\textit{2(a+b) = a + b + kL}$</li>
+</ul>
+</li>
+<li>整理上述等式：$\textit{a=(k−1)L+(L−b)=(k−1)L+c}$<br>把慢指针移到起点后，快指针也一次走一步，再做分析：<br>如果慢指针从起点出发，快指针从相遇位置出发，每次两个指针都移动一步，则慢指针走了a步之后到达环的入口，快指针在环里走了k-1圈之后又走了c步，由于从相遇位置继续走c步即可回到环的入口，因此快指针也到达环的入口。两个指针在环的入口相遇，相遇点就是答案。</li>
+</ul>
+<h3 id="代码-CPP-1"><a href="#代码-CPP-1" class="headerlink" title="代码(CPP)"></a>代码(CPP)</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findDuplicate</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 定义快慢指针</span></span><br><span class="line">        <span class="keyword">int</span> slow = <span class="number">0</span>, fast = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">do</span>&#123;</span><br><span class="line">            <span class="comment">// 先找相遇点入口</span></span><br><span class="line">            slow = nums[slow];</span><br><span class="line">            fast = nums[nums[fast]];</span><br><span class="line">        &#125; <span class="keyword">while</span> (slow != fast);</span><br><span class="line">        <span class="comment">// 把慢指针移到起始点</span></span><br><span class="line">        slow = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 再次相遇即为答案</span></span><br><span class="line">        <span class="keyword">while</span> (nums[slow] != nums[fast])&#123;</span><br><span class="line">            slow = nums[slow];</span><br><span class="line">            fast = nums[fast];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> nums[slow];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Algorithm</category>
+      </categories>
+      <tags>
+        <tag>双指针</tag>
+        <tag>C/C++</tag>
+        <tag>链表</tag>
+      </tags>
   </entry>
 </search>
