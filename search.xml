@@ -6111,6 +6111,41 @@ offset从0开始可以省略
 </ul>
 </li>
 </ol>
+<h3 id="其余方法"><a href="#其余方法" class="headerlink" title="其余方法"></a>其余方法</h3><ol>
+<li>获取body标签<ul>
+<li>document.body</li>
+</ul>
+</li>
+<li>获取根标签<ul>
+<li>document.documentElement</li>
+</ul>
+</li>
+<li>根据元素的class属性值查询一组元素节点对象<ul>
+<li>getElementsByClassName（不支持IE8）</li>
+</ul>
+</li>
+<li>document.querySelector()<ul>
+<li>需要一个选择器的字符串作为参数，可以根据一个CSS选择器来查询一个元素节点对象</li>
+<li>该方法总会返回唯一的一个元素，如果有多个元素满足，只会返回第一个</li>
+</ul>
+</li>
+<li>document.querySelectorAll()<ul>
+<li>和4类似，该方法返回所有满足的元素</li>
+</ul>
+</li>
+</ol>
+<h2 id="DOM增删改"><a href="#DOM增删改" class="headerlink" title="DOM增删改"></a>DOM增删改</h2><ul>
+<li><code>document.createElement()</code>：可以用于创建一个元素节点对象，需要一个标签名作为参数，将会根据该标签名创建元素节点对象，并将创建好的对象作为返回值返回。<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> li = <span class="built_in">document</span>.createElement(<span class="string">"li"</span>);</span><br></pre></td></tr></table></figure></li>
+<li><code>document.createTextNode()</code>：可以用来创建一个文本节点对象，需要一个文本内容作为参数，将会根据该内容创建文本节点，并将新的节点返回。<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> li_text = <span class="built_in">document</span>.createTextNode(<span class="string">"Hello World"</span>);</span><br></pre></td></tr></table></figure></li>
+<li><code>appendChild()</code>：向一个父节点中添加一个新的子节点<ul>
+<li>用法：父节点.appendChild(子节点);<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">li.appendChild(li_text);</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><code>insertBefore()</code>：在指定的子节点前面插入新的子节点（父元素调用）<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 往li前面添加一个li2</span></span><br><span class="line"><span class="built_in">document</span>.body.insertBefore(li2, li);</span><br></pre></td></tr></table></figure></li>
+<li><code>replaceChild</code>：替换子节点<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">document</span>.body.replaceChild(li2, li);</span><br></pre></td></tr></table></figure></li>
+<li><code>removeChild()</code>：删除子节点<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">document</span>.body.removeChild(li);</span><br><span class="line"><span class="comment">// 直接通过li自我删除</span></span><br><span class="line">li.parentNode.removeChild(li);</span><br></pre></td></tr></table></figure></li>
+<li>通过<code>innerHTML</code>直接添加li标签。<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">document</span>.body.innerHTML += <span class="string">"&lt;li&gt;Hi&lt;/li&gt;"</span>;</span><br></pre></td></tr></table></figure></li>
+</ul>
 ]]></content>
       <categories>
         <category>前端</category>
@@ -6942,9 +6977,19 @@ offset从0开始可以省略
 <ul>
 <li>行锁：<ul>
 <li>偏向<code>InnoDB</code>存储引擎，开销大，加锁慢；会出现死锁；锁定粒度最小，发生锁冲突的概率最低，并发度也最高。行锁支持事务</li>
+<li>索引失效会导致行锁变表锁</li>
+<li>间隙锁危害<ul>
+<li>当我们用范围条件而不是相等条件检索数据时，并请求共享或排他锁时，InnoDB会给符合条件的已有数据记录的索引项加锁；对于键值在条件范围内但并不存在的记录，叫做<code>间隙</code></li>
+<li>InnoDB也会对这个间隙加锁，这种锁机制就叫间隙锁</li>
+<li>危害：因为查询执行过程中通过范围查找的话，他会锁定整个范围内所有的索引键值，即使这个键值并不存在。间隙锁有一个比较致命的弱点，就是当锁定一个范围键值之后，即使某些不存在的键值也会被无辜的锁定，而造成在锁定的时候无法插入键值范围内的任何数据。在某些场景下这可能会对性能造成很大的危害</li>
+</ul>
+</li>
+<li>总结：尽可能让所有数据检索都通过索引来完成，避免无索引行锁升级为表锁。合理设计索引，尽量缩小锁的范围。尽可能较少检索条件，避免间隙锁。尽量控制事务大小，减少锁定资源量和时间长度。尽可能降低事务隔离级别</li>
 </ul>
 </li>
 </ul>
+<h2 id="如何锁定一行"><a href="#如何锁定一行" class="headerlink" title="如何锁定一行"></a>如何锁定一行</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> 表名 <span class="keyword">where</span> 条件 <span class="keyword">for</span> <span class="keyword">update</span>;</span><br></pre></td></tr></table></figure>
+
 <h1 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h1><h2 id="复制的基本原理"><a href="#复制的基本原理" class="headerlink" title="复制的基本原理"></a>复制的基本原理</h2>]]></content>
       <categories>
         <category>Mysql</category>

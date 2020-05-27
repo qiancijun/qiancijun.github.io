@@ -196,6 +196,41 @@
 </ul>
 </li>
 </ol>
+<h3 id="其余方法"><a href="#其余方法" class="headerlink" title="其余方法"></a>其余方法</h3><ol>
+<li>获取body标签<ul>
+<li>document.body</li>
+</ul>
+</li>
+<li>获取根标签<ul>
+<li>document.documentElement</li>
+</ul>
+</li>
+<li>根据元素的class属性值查询一组元素节点对象<ul>
+<li>getElementsByClassName（不支持IE8）</li>
+</ul>
+</li>
+<li>document.querySelector()<ul>
+<li>需要一个选择器的字符串作为参数，可以根据一个CSS选择器来查询一个元素节点对象</li>
+<li>该方法总会返回唯一的一个元素，如果有多个元素满足，只会返回第一个</li>
+</ul>
+</li>
+<li>document.querySelectorAll()<ul>
+<li>和4类似，该方法返回所有满足的元素</li>
+</ul>
+</li>
+</ol>
+<h2 id="DOM增删改"><a href="#DOM增删改" class="headerlink" title="DOM增删改"></a>DOM增删改</h2><ul>
+<li><code>document.createElement()</code>：可以用于创建一个元素节点对象，需要一个标签名作为参数，将会根据该标签名创建元素节点对象，并将创建好的对象作为返回值返回。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> li = <span class="built_in">document</span>.createElement(<span class="string">"li"</span>);</span><br></pre></td></tr></table></figure></li>
+<li><code>document.createTextNode()</code>：可以用来创建一个文本节点对象，需要一个文本内容作为参数，将会根据该内容创建文本节点，并将新的节点返回。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> li_text = <span class="built_in">document</span>.createTextNode(<span class="string">"Hello World"</span>);</span><br></pre></td></tr></table></figure></li>
+<li><code>appendChild()</code>：向一个父节点中添加一个新的子节点<ul>
+<li>用法：父节点.appendChild(子节点);<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">li.appendChild(li_text);</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><code>insertBefore()</code>：在指定的子节点前面插入新的子节点（父元素调用）<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 往li前面添加一个li2</span></span><br><span class="line"><span class="built_in">document</span>.body.insertBefore(li2, li);</span><br></pre></td></tr></table></figure></li>
+<li><code>replaceChild</code>：替换子节点<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.body.replaceChild(li2, li);</span><br></pre></td></tr></table></figure></li>
+<li><code>removeChild()</code>：删除子节点<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.body.removeChild(li);</span><br><span class="line"><span class="comment">// 直接通过li自我删除</span></span><br><span class="line">li.parentNode.removeChild(li);</span><br></pre></td></tr></table></figure></li>
+<li>通过<code>innerHTML</code>直接添加li标签。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.body.innerHTML += <span class="string">"&lt;li&gt;Hi&lt;/li&gt;"</span>;</span><br></pre></td></tr></table></figure></li>
+</ul>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
@@ -235,7 +270,7 @@
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#引入外部js文件"><span class="toc-number">2.</span> <span class="toc-text">引入外部js文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#对象"><span class="toc-number">3.</span> <span class="toc-text">对象</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#对象字面量"><span class="toc-number">3.1.</span> <span class="toc-text">对象字面量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#枚举对象中的属性"><span class="toc-number">3.2.</span> <span class="toc-text">枚举对象中的属性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#函数"><span class="toc-number">4.</span> <span class="toc-text">函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DOM"><span class="toc-number">5.</span> <span class="toc-text">DOM</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#节点"><span class="toc-number">5.1.</span> <span class="toc-text">节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件"><span class="toc-number">5.2.</span> <span class="toc-text">事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文档加载"><span class="toc-number">5.3.</span> <span class="toc-text">文档加载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DOM查询"><span class="toc-number">5.4.</span> <span class="toc-text">DOM查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#获取元素节点的子节点"><span class="toc-number">5.4.1.</span> <span class="toc-text">获取元素节点的子节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取父节点和兄弟节点"><span class="toc-number">5.4.2.</span> <span class="toc-text">获取父节点和兄弟节点</span></a></li></ol></li></ol></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#引入外部js文件"><span class="toc-number">2.</span> <span class="toc-text">引入外部js文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#对象"><span class="toc-number">3.</span> <span class="toc-text">对象</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#对象字面量"><span class="toc-number">3.1.</span> <span class="toc-text">对象字面量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#枚举对象中的属性"><span class="toc-number">3.2.</span> <span class="toc-text">枚举对象中的属性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#函数"><span class="toc-number">4.</span> <span class="toc-text">函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DOM"><span class="toc-number">5.</span> <span class="toc-text">DOM</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#节点"><span class="toc-number">5.1.</span> <span class="toc-text">节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件"><span class="toc-number">5.2.</span> <span class="toc-text">事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文档加载"><span class="toc-number">5.3.</span> <span class="toc-text">文档加载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DOM查询"><span class="toc-number">5.4.</span> <span class="toc-text">DOM查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#获取元素节点的子节点"><span class="toc-number">5.4.1.</span> <span class="toc-text">获取元素节点的子节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取父节点和兄弟节点"><span class="toc-number">5.4.2.</span> <span class="toc-text">获取父节点和兄弟节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其余方法"><span class="toc-number">5.4.3.</span> <span class="toc-text">其余方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DOM增删改"><span class="toc-number">5.5.</span> <span class="toc-text">DOM增删改</span></a></li></ol></li></ol>	
         </div>
     
 </div>
