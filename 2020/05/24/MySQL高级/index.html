@@ -119,7 +119,10 @@
 </ul>
 <h1 id="存储引擎"><a href="#存储引擎" class="headerlink" title="存储引擎"></a>存储引擎</h1><ul>
 <li>查看所有存储引擎<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">engines</span>;</span><br></pre></td></tr></table></figure></li>
-<li>$\color{red}{面试}$ 最常用的存储引擎MyISAM和InnoDB（默认存储引擎）</li>
+<li>$\color{red}{面试}$ 最常用的存储引擎MyISAM和InnoDB（默认存储引擎）<blockquote>
+<p>为什么MyISAM不适合做写为主表的引擎<br>写锁后，其它线程不能做任何操作，大量的更新会使查询很难得到锁，从而造成永远阻塞</p>
+</blockquote>
+</li>
 </ul>
 <table>
 <thead>
@@ -449,7 +452,13 @@
 </ul>
 </li>
 </ol>
-<h2 id="单表索引优化"><a href="#单表索引优化" class="headerlink" title="单表索引优化"></a>单表索引优化</h2><h3 id="避免全表扫描"><a href="#避免全表扫描" class="headerlink" title="避免全表扫描"></a>避免全表扫描</h3><ul>
+<h2 id="单表索引优化"><a href="#单表索引优化" class="headerlink" title="单表索引优化"></a>单表索引优化</h2><ul>
+<li>对于单键索引，尽量选择针对当前query过滤性更好的索引</li>
+<li>在选择组合索引的时候，当前query中过滤性最好的字段在索引字段顺序中，位置越靠前越好</li>
+<li>在选择组合索引的时候，尽量选择可以能够包含当前query中的where子句中更多字段的索引</li>
+<li>在选择组合索引的时候，如果某个字段可能出现范围查询时，尽量把这个字段放在索引次序的最后</li>
+</ul>
+<h3 id="避免全表扫描"><a href="#避免全表扫描" class="headerlink" title="避免全表扫描"></a>避免全表扫描</h3><ul>
 <li>如果查询语句带有where，为where后面的字段建立索引，解决全表扫描问题。</li>
 <li>字段顺序不影响优化器</li>
 </ul>
@@ -464,7 +473,172 @@
 <li>like以通配符开头，会导致索引失效</li>
 <li>字符串不加单引号导致索引失效</li>
 </ul>
+<h2 id="关联查询优化"><a href="#关联查询优化" class="headerlink" title="关联查询优化"></a>关联查询优化</h2><ul>
+<li>两表关联查询避免不了全表扫描，全表扫描的表称为驱动表，另一个叫被驱动表。应该把物理行数少的放在驱动表少</li>
+<li>left join时，选择小表作为驱动表，大表作为被驱动表</li>
+<li>inner join时，mysql会把小结果选为驱动表</li>
+<li>子查询尽量不要放在被驱动表，使用不了索引</li>
+<li>能够直接多表关联的尽量直接关联，不用子查询<blockquote>
+<p>STRAIGHT_JOIN可以指定驱动表和被驱动表。确定两个表的前后数量关系才用</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="子查询优化"><a href="#子查询优化" class="headerlink" title="子查询优化"></a>子查询优化</h3><ul>
+<li>尽量不要使用not in 或者 not exists，用left join on xxx is null 替代</li>
+</ul>
+<h2 id="排序分组优化"><a href="#排序分组优化" class="headerlink" title="排序分组优化"></a>排序分组优化</h2><ul>
+<li>排序想要用上索引必须加上过滤条件，如果没有，加上分页条件</li>
+<li>order by后面的字段必须按照索引的顺序写，优化器不会优化order by后面的顺序，优化器的定义：不改变查询结果的前提下改变字段的顺序，order by字段顺序交换结果完全不同</li>
+<li>order by要么都是升序要么都是降序。否则必然会手动排序，索引失效</li>
+<li>group by 使用索引的原则几乎根跟order by一致，唯一区别是group by即使没有过滤条件用到索引，也可以直接使用索引</li>
+</ul>
+<h2 id="覆盖索引"><a href="#覆盖索引" class="headerlink" title="覆盖索引"></a>覆盖索引</h2><ul>
+<li>概述：<ul>
+<li>select到from之间查询的列，使用索引列+主键</li>
+</ul>
+</li>
+<li>尽量不要写select *，用具体的字段代替*，这样可以使用覆盖索引</li>
+</ul>
+<h1 id="查询截取分析"><a href="#查询截取分析" class="headerlink" title="查询截取分析"></a>查询截取分析</h1><h2 id="慢查询日志"><a href="#慢查询日志" class="headerlink" title="慢查询日志"></a>慢查询日志</h2><ul>
+<li>MySQL的慢查询日志是MySQL提供的一种日志记录，它用来记录在MySQL中响应时间超过阀值的语句，具体指运行时间超过long_query_time值的SQL，则会被记录到慢查询日志中<blockquote>
+<p>long_query_time的默认值为10</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><ul>
+<li>查看是否开启慢查询日志<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> <span class="keyword">VARIABLES</span> <span class="keyword">LIKE</span> <span class="string">'%slow_query_log%'</span>;</span><br></pre></td></tr></table></figure></li>
+<li>开启慢查询日志<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> slow_query_log = <span class="number">1</span>;</span><br></pre></td></tr></table></figure></li>
+<li>查看long_query_time<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> <span class="keyword">VARIABLES</span> <span class="keyword">LIKE</span> <span class="string">'long_query_time%'</span>;</span><br></pre></td></tr></table></figure></li>
+<li>设置慢的阀值时间<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> long_query_time = <span class="number">0.1</span>;</span><br></pre></td></tr></table></figure>
 
+</li>
+</ul>
+<h3 id="日志分析工具-mysqldumpslow"><a href="#日志分析工具-mysqldumpslow" class="headerlink" title="日志分析工具(mysqldumpslow)"></a>日志分析工具(mysqldumpslow)</h3><ul>
+<li>用日志分析工具可以查看哪些查询语句，具体用法可以查阅api</li>
+</ul>
+<h3 id="SHOW-PROCESSLIST"><a href="#SHOW-PROCESSLIST" class="headerlink" title="SHOW PROCESSLIST"></a>SHOW PROCESSLIST</h3><ul>
+<li>显示数据库进程<br>杀死进程（多线程解决死锁问题）<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">kill</span> 进程<span class="keyword">id</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="视图分析"><a href="#视图分析" class="headerlink" title="视图分析"></a>视图分析</h1><ul>
+<li>视图：将一段查询sql封装为一个虚拟的表。这个虚拟表只保存了sql逻辑，不会保存任何查询结果。（不会对sql查询有优化效果）</li>
+</ul>
+<h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><ol>
+<li>封装复杂sql语句，提高复用性</li>
+<li>逻辑放在数据库上面，更新不需要发布程序，面对频繁的需求变得更灵活</li>
+</ol>
+<h2 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h2><ol>
+<li>很多地方可以共用的一组查询结果</li>
+<li>报表</li>
+</ol>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><ol>
+<li><p>创建视图</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">VIEW</span> 视图名</span><br><span class="line"><span class="keyword">AS</span></span><br><span class="line"><span class="keyword">SELECT</span> 字段名</span><br><span class="line"><span class="keyword">FROM</span> 表名</span><br><span class="line"><span class="keyword">WHERE</span> 条件</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用视图</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">FROM</span> 视图名</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>更新视图</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">OR</span> <span class="keyword">REPLACE</span> <span class="keyword">VIEW</span> 视图名</span><br><span class="line"><span class="keyword">AS</span></span><br><span class="line"><span class="keyword">SELECT</span> 字段名</span><br><span class="line"><span class="keyword">FROM</span> 表名</span><br><span class="line"><span class="keyword">WHERE</span> 条件</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h1 id="锁机制"><a href="#锁机制" class="headerlink" title="锁机制"></a>锁机制</h1><h2 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h2><ul>
+<li>锁是计算机协调多个进程或线程并发访问某一资源的机制</li>
+<li>在数据库中，除传统的计算资源的争用以外，数据也是一种供许多用户共享的资源。如何保证数据并发访问的一致性、有效性是所有数据库必须解决的一个问题。锁冲突也是影响数据库并发访问性能的一个重要因素。</li>
+</ul>
+<h2 id="锁的分类"><a href="#锁的分类" class="headerlink" title="锁的分类"></a>锁的分类</h2><ol>
+<li>从对数据操作的类型来分<ul>
+<li>读锁：针对同一份数据，多个读操作可以同时进行而不会互相影响</li>
+<li>写锁：当前写操作没有完成前，它会阻断其他写锁和读锁</li>
+</ul>
+</li>
+<li>从对数据操作的粒度分<ul>
+<li>表锁：锁整张表（偏读）</li>
+<li>行锁：锁整行（偏写）</li>
+</ul>
+</li>
+</ol>
+<h2 id="关于锁的指令"><a href="#关于锁的指令" class="headerlink" title="关于锁的指令"></a>关于锁的指令</h2><ol>
+<li>手动增加表锁<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">lock</span> <span class="keyword">table</span> 表名<span class="number">1</span> <span class="keyword">read</span>(write), 表名<span class="number">2</span> <span class="keyword">read</span>(write), 其他;</span><br></pre></td></tr></table></figure></li>
+<li>查看表的情况<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">open</span> <span class="keyword">tables</span>;</span><br></pre></td></tr></table></figure></li>
+<li>释放锁<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unlock</span> <span class="keyword">tables</span></span><br></pre></td></tr></table></figure></li>
+<li>分析表锁定<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">status</span> <span class="keyword">like</span> <span class="string">'table%'</span>;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li>有两个状态变量记录MySQL内部表级锁定的情况：<ul>
+<li>Table_locks_immediate：产生表级锁定的次数，表示可以立即获取锁的查询次数，每立即获取锁值加1</li>
+<li>Table_locks_waited：出现表级锁定争用而发生等待的次数（不能立即获取锁的次数，每次等待，值加1），此值高则说明存在着较严重的表级锁争用情况</li>
+</ul>
+</li>
+</ul>
+<h2 id="三锁"><a href="#三锁" class="headerlink" title="三锁"></a>三锁</h2><ul>
+<li>表锁：<ul>
+<li>偏向<code>MyISAM</code>存储引擎，开销小，加锁快；无死锁；锁定粒度大，发生锁冲突的概率最高，并发度最低</li>
+<li>当前session（READ）：<ul>
+<li>获得该表的锁定</li>
+<li>可以查询该表记录</li>
+<li>不能查询其它没有锁定的表</li>
+<li>不能更新锁定表的数据</li>
+</ul>
+</li>
+<li>其余session：<ul>
+<li>可以查询被锁表</li>
+<li>写锁表会遭到阻塞</li>
+</ul>
+</li>
+<li>当前session（WRITE）：<ul>
+<li>获得该表的锁定</li>
+<li>可以查询该表记录</li>
+<li>不能查询其它没有锁定的表</li>
+</ul>
+</li>
+<li>其余session：<ul>
+<li>查询锁表会被阻塞</li>
+<li>写锁表会被阻塞</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>结论：<ol>
+<li>对MyISAM表的读操作（加读锁），不会阻塞其它进程对同一表的读请求，但会阻塞对同一表的写请求，只有当读锁释放后，才会执行其它进程的写操作</li>
+<li>对MyISAM表的写操作（加写锁），会阻塞其它进程对同一表的读和写操作，只有当写锁释放后，才会执行其它进程的读写操作</li>
+</ol>
+</li>
+<li>$\color{red}{简而言之，读锁会阻塞写，但是不会阻塞读，而写锁则会把读和写都阻塞}$</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">锁类型</th>
+<th align="center">可否兼容</th>
+<th align="center">读锁</th>
+<th align="center">写锁</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">读锁</td>
+<td align="center">✔</td>
+<td align="center">✔</td>
+<td align="center">❌</td>
+</tr>
+<tr>
+<td align="center">写锁</td>
+<td align="center">✔</td>
+<td align="center">❌</td>
+<td align="center">❌</td>
+</tr>
+</tbody></table>
+<ul>
+<li>行锁：<ul>
+<li>偏向<code>InnoDB</code>存储引擎，开销大，加锁慢；会出现死锁；锁定粒度最小，发生锁冲突的概率最低，并发度也最高。行锁支持事务</li>
+</ul>
+</li>
+</ul>
+<h1 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h1><h2 id="复制的基本原理"><a href="#复制的基本原理" class="headerlink" title="复制的基本原理"></a>复制的基本原理</h2>
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
                 <source type="audio/mpeg" src="">
@@ -503,7 +677,7 @@
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#中文乱码"><span class="toc-number">2.</span> <span class="toc-text">中文乱码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#连接远程数据库"><span class="toc-number">3.</span> <span class="toc-text">连接远程数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#查看远程数据库用户信息"><span class="toc-number">3.1.</span> <span class="toc-text">查看远程数据库用户信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建用户"><span class="toc-number">3.2.</span> <span class="toc-text">创建用户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#给用户授权"><span class="toc-number">3.3.</span> <span class="toc-text">给用户授权</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MySQL配置项"><span class="toc-number">4.</span> <span class="toc-text">MySQL配置项</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MySQL的逻辑架构"><span class="toc-number">5.</span> <span class="toc-text">MySQL的逻辑架构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#执行周期"><span class="toc-number">5.1.</span> <span class="toc-text">执行周期</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#存储引擎"><span class="toc-number">6.</span> <span class="toc-text">存储引擎</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#索引优化分析"><span class="toc-number">7.</span> <span class="toc-text">索引优化分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#优化SQL语句"><span class="toc-number">7.1.</span> <span class="toc-text">优化SQL语句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#索引简介"><span class="toc-number">7.2.</span> <span class="toc-text">索引简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义"><span class="toc-number">7.2.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#详解"><span class="toc-number">7.2.2.</span> <span class="toc-text">详解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#优势"><span class="toc-number">7.2.3.</span> <span class="toc-text">优势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#劣势"><span class="toc-number">7.2.4.</span> <span class="toc-text">劣势</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#索引结构"><span class="toc-number">7.3.</span> <span class="toc-text">索引结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#B树索引"><span class="toc-number">7.3.1.</span> <span class="toc-text">B树索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-树索引"><span class="toc-number">7.3.2.</span> <span class="toc-text">B+树索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#聚簇索引与非聚簇索引"><span class="toc-number">7.3.3.</span> <span class="toc-text">聚簇索引与非聚簇索引</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#索引分类"><span class="toc-number">7.4.</span> <span class="toc-text">索引分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#单值索引"><span class="toc-number">7.4.1.</span> <span class="toc-text">单值索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#唯一索引"><span class="toc-number">7.4.2.</span> <span class="toc-text">唯一索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主键索引"><span class="toc-number">7.4.3.</span> <span class="toc-text">主键索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#复合索引"><span class="toc-number">7.4.4.</span> <span class="toc-text">复合索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改索引"><span class="toc-number">7.4.5.</span> <span class="toc-text">修改索引</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用索引"><span class="toc-number">7.5.</span> <span class="toc-text">使用索引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#性能分析"><span class="toc-number">7.6.</span> <span class="toc-text">性能分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#字段解释"><span class="toc-number">7.6.1.</span> <span class="toc-text">字段解释</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#批量插入数据"><span class="toc-number">7.7.</span> <span class="toc-text">批量插入数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#删除索引步骤（了解）"><span class="toc-number">7.7.1.</span> <span class="toc-text">删除索引步骤（了解）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#单表索引优化"><span class="toc-number">7.8.</span> <span class="toc-text">单表索引优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#避免全表扫描"><span class="toc-number">7.8.1.</span> <span class="toc-text">避免全表扫描</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最左匹配原则"><span class="toc-number">7.8.2.</span> <span class="toc-text">最左匹配原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#避免索引失效"><span class="toc-number">7.8.3.</span> <span class="toc-text">避免索引失效</span></a></li></ol></li></ol></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#中文乱码"><span class="toc-number">2.</span> <span class="toc-text">中文乱码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#连接远程数据库"><span class="toc-number">3.</span> <span class="toc-text">连接远程数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#查看远程数据库用户信息"><span class="toc-number">3.1.</span> <span class="toc-text">查看远程数据库用户信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建用户"><span class="toc-number">3.2.</span> <span class="toc-text">创建用户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#给用户授权"><span class="toc-number">3.3.</span> <span class="toc-text">给用户授权</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MySQL配置项"><span class="toc-number">4.</span> <span class="toc-text">MySQL配置项</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MySQL的逻辑架构"><span class="toc-number">5.</span> <span class="toc-text">MySQL的逻辑架构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#执行周期"><span class="toc-number">5.1.</span> <span class="toc-text">执行周期</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#存储引擎"><span class="toc-number">6.</span> <span class="toc-text">存储引擎</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#索引优化分析"><span class="toc-number">7.</span> <span class="toc-text">索引优化分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#优化SQL语句"><span class="toc-number">7.1.</span> <span class="toc-text">优化SQL语句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#索引简介"><span class="toc-number">7.2.</span> <span class="toc-text">索引简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义"><span class="toc-number">7.2.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#详解"><span class="toc-number">7.2.2.</span> <span class="toc-text">详解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#优势"><span class="toc-number">7.2.3.</span> <span class="toc-text">优势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#劣势"><span class="toc-number">7.2.4.</span> <span class="toc-text">劣势</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#索引结构"><span class="toc-number">7.3.</span> <span class="toc-text">索引结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#B树索引"><span class="toc-number">7.3.1.</span> <span class="toc-text">B树索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-树索引"><span class="toc-number">7.3.2.</span> <span class="toc-text">B+树索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#聚簇索引与非聚簇索引"><span class="toc-number">7.3.3.</span> <span class="toc-text">聚簇索引与非聚簇索引</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#索引分类"><span class="toc-number">7.4.</span> <span class="toc-text">索引分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#单值索引"><span class="toc-number">7.4.1.</span> <span class="toc-text">单值索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#唯一索引"><span class="toc-number">7.4.2.</span> <span class="toc-text">唯一索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主键索引"><span class="toc-number">7.4.3.</span> <span class="toc-text">主键索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#复合索引"><span class="toc-number">7.4.4.</span> <span class="toc-text">复合索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改索引"><span class="toc-number">7.4.5.</span> <span class="toc-text">修改索引</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用索引"><span class="toc-number">7.5.</span> <span class="toc-text">使用索引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#性能分析"><span class="toc-number">7.6.</span> <span class="toc-text">性能分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#字段解释"><span class="toc-number">7.6.1.</span> <span class="toc-text">字段解释</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#批量插入数据"><span class="toc-number">7.7.</span> <span class="toc-text">批量插入数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#删除索引步骤（了解）"><span class="toc-number">7.7.1.</span> <span class="toc-text">删除索引步骤（了解）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#单表索引优化"><span class="toc-number">7.8.</span> <span class="toc-text">单表索引优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#避免全表扫描"><span class="toc-number">7.8.1.</span> <span class="toc-text">避免全表扫描</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最左匹配原则"><span class="toc-number">7.8.2.</span> <span class="toc-text">最左匹配原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#避免索引失效"><span class="toc-number">7.8.3.</span> <span class="toc-text">避免索引失效</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关联查询优化"><span class="toc-number">7.9.</span> <span class="toc-text">关联查询优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#子查询优化"><span class="toc-number">7.9.1.</span> <span class="toc-text">子查询优化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#排序分组优化"><span class="toc-number">7.10.</span> <span class="toc-text">排序分组优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#覆盖索引"><span class="toc-number">7.11.</span> <span class="toc-text">覆盖索引</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#查询截取分析"><span class="toc-number">8.</span> <span class="toc-text">查询截取分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#慢查询日志"><span class="toc-number">8.1.</span> <span class="toc-text">慢查询日志</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用"><span class="toc-number">8.1.1.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#日志分析工具-mysqldumpslow"><span class="toc-number">8.1.2.</span> <span class="toc-text">日志分析工具(mysqldumpslow)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SHOW-PROCESSLIST"><span class="toc-number">8.1.3.</span> <span class="toc-text">SHOW PROCESSLIST</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#视图分析"><span class="toc-number">9.</span> <span class="toc-text">视图分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#作用"><span class="toc-number">9.1.</span> <span class="toc-text">作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#适用场景"><span class="toc-number">9.2.</span> <span class="toc-text">适用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#语法"><span class="toc-number">9.3.</span> <span class="toc-text">语法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#锁机制"><span class="toc-number">10.</span> <span class="toc-text">锁机制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#定义-1"><span class="toc-number">10.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#锁的分类"><span class="toc-number">10.2.</span> <span class="toc-text">锁的分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于锁的指令"><span class="toc-number">10.3.</span> <span class="toc-text">关于锁的指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三锁"><span class="toc-number">10.4.</span> <span class="toc-text">三锁</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#主从复制"><span class="toc-number">11.</span> <span class="toc-text">主从复制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#复制的基本原理"><span class="toc-number">11.1.</span> <span class="toc-text">复制的基本原理</span></a></li></ol></li></ol>	
         </div>
     
 </div>

@@ -146,8 +146,56 @@
 </li>
 </ul>
 <blockquote>
-<p>innerHTML用于获取元素内部的HTML代码，自结束标签没有内部。使用元素.属性名获取值。class不能采用这种方式获取，读取class使用元素.className</p>
+<p>innerHTML用于获取元素内部的HTML代码，自结束标签没有内部。使用元素.属性名获取值。class不能采用这种方式获取，读取class使用元素.className<br>innerText可以获取到元素的文本内容</p>
 </blockquote>
+<h3 id="获取元素节点的子节点"><a href="#获取元素节点的子节点" class="headerlink" title="获取元素节点的子节点"></a>获取元素节点的子节点</h3><ul>
+<li>通过具体的元素节点调用</li>
+</ul>
+<ol>
+<li>getElementsByTagName()<ul>
+<li>方法，返回当前节点的指定标签名后代节点</li>
+</ul>
+</li>
+<li>childNodes<ul>
+<li>属性，表示当前节点的所有子节点</li>
+<li>该属性会获取包括文本节点在内的所有节点。标签间的空白也会当成文本节点</li>
+</ul>
+</li>
+<li>firstChild<ul>
+<li>属性，表示当前节点的第一个子节点</li>
+</ul>
+</li>
+<li>lastChild<ul>
+<li>属性，表示当前节点的最后一个子节点</li>
+</ul>
+</li>
+<li>children<ul>
+<li>属性，获取当前元素的所有子元素</li>
+</ul>
+</li>
+</ol>
+<h3 id="获取父节点和兄弟节点"><a href="#获取父节点和兄弟节点" class="headerlink" title="获取父节点和兄弟节点"></a>获取父节点和兄弟节点</h3><ul>
+<li>通过具体的节点调用</li>
+</ul>
+<ol>
+<li>parentNode<ul>
+<li>属性，表示当前节点的父节点</li>
+</ul>
+</li>
+<li>previousSibling<ul>
+<li>属性，表示当前节点的前一个兄弟节点</li>
+<li>也可能获取到空白文本</li>
+</ul>
+</li>
+<li>nextSibling<ul>
+<li>属性，表示当前节点的后一个兄弟节点</li>
+</ul>
+</li>
+<li>previousElementSibling(IE8以下不支持)<ul>
+<li>属性，表示当前节点的前一个兄弟元素</li>
+</ul>
+</li>
+</ol>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
@@ -187,7 +235,7 @@
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#引入外部js文件"><span class="toc-number">2.</span> <span class="toc-text">引入外部js文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#对象"><span class="toc-number">3.</span> <span class="toc-text">对象</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#对象字面量"><span class="toc-number">3.1.</span> <span class="toc-text">对象字面量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#枚举对象中的属性"><span class="toc-number">3.2.</span> <span class="toc-text">枚举对象中的属性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#函数"><span class="toc-number">4.</span> <span class="toc-text">函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DOM"><span class="toc-number">5.</span> <span class="toc-text">DOM</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#节点"><span class="toc-number">5.1.</span> <span class="toc-text">节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件"><span class="toc-number">5.2.</span> <span class="toc-text">事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文档加载"><span class="toc-number">5.3.</span> <span class="toc-text">文档加载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DOM查询"><span class="toc-number">5.4.</span> <span class="toc-text">DOM查询</span></a></li></ol></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#引入外部js文件"><span class="toc-number">2.</span> <span class="toc-text">引入外部js文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#对象"><span class="toc-number">3.</span> <span class="toc-text">对象</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#对象字面量"><span class="toc-number">3.1.</span> <span class="toc-text">对象字面量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#枚举对象中的属性"><span class="toc-number">3.2.</span> <span class="toc-text">枚举对象中的属性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#函数"><span class="toc-number">4.</span> <span class="toc-text">函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DOM"><span class="toc-number">5.</span> <span class="toc-text">DOM</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#节点"><span class="toc-number">5.1.</span> <span class="toc-text">节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件"><span class="toc-number">5.2.</span> <span class="toc-text">事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文档加载"><span class="toc-number">5.3.</span> <span class="toc-text">文档加载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DOM查询"><span class="toc-number">5.4.</span> <span class="toc-text">DOM查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#获取元素节点的子节点"><span class="toc-number">5.4.1.</span> <span class="toc-text">获取元素节点的子节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取父节点和兄弟节点"><span class="toc-number">5.4.2.</span> <span class="toc-text">获取父节点和兄弟节点</span></a></li></ol></li></ol></li></ol>	
         </div>
     
 </div>
