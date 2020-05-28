@@ -6041,19 +6041,19 @@ offset从0开始可以省略
 </ul>
 <h2 id="DOM查询"><a href="#DOM查询" class="headerlink" title="DOM查询"></a>DOM查询</h2><ul>
 <li>获取元素节点，通过document对象调用<ol>
-<li>getElementById()：<ul>
+<li><code>getElementById()</code>：<ul>
 <li>通过$\color{red}{id}$属性获取$\color{red}{一个}$元素节点对象</li>
 </ul>
 </li>
-<li>getElementByTagName()<ul>
+<li><code>getElementByTagName()</code><ul>
 <li>通过$\color{red}{标签名}$获取$\color{red}{一组}$元素节点对象</li>
 </ul>
 </li>
-<li>getElementsByName()<ul>
+<li><code>getElementsByName()</code><ul>
 <li>通过$\color{red}{name}$属性获取$\color{red}{一组}$元素节点对象</li>
 </ul>
 </li>
-<li>getElementsByTagName()<ul>
+<li><code>getElementsByTagName()</code><ul>
 <li>通过$\color{red}{标签名}$获取$\color{red}{一组}$元素节点对象</li>
 </ul>
 </li>
@@ -6067,24 +6067,24 @@ offset从0开始可以省略
 <li>通过具体的元素节点调用</li>
 </ul>
 <ol>
-<li>getElementsByTagName()<ul>
+<li><code>getElementsByTagName()</code><ul>
 <li>方法，返回当前节点的指定标签名后代节点</li>
 </ul>
 </li>
-<li>childNodes<ul>
+<li><code>childNodes</code><ul>
 <li>属性，表示当前节点的所有子节点</li>
 <li>该属性会获取包括文本节点在内的所有节点。标签间的空白也会当成文本节点</li>
 </ul>
 </li>
-<li>firstChild<ul>
+<li><code>firstChild</code><ul>
 <li>属性，表示当前节点的第一个子节点</li>
 </ul>
 </li>
-<li>lastChild<ul>
+<li><code>lastChild</code><ul>
 <li>属性，表示当前节点的最后一个子节点</li>
 </ul>
 </li>
-<li>children<ul>
+<li><code>children</code><ul>
 <li>属性，获取当前元素的所有子元素</li>
 </ul>
 </li>
@@ -6093,43 +6093,43 @@ offset从0开始可以省略
 <li>通过具体的节点调用</li>
 </ul>
 <ol>
-<li>parentNode<ul>
+<li><code>parentNode</code><ul>
 <li>属性，表示当前节点的父节点</li>
 </ul>
 </li>
-<li>previousSibling<ul>
+<li><code>previousSibling</code><ul>
 <li>属性，表示当前节点的前一个兄弟节点</li>
 <li>也可能获取到空白文本</li>
 </ul>
 </li>
-<li>nextSibling<ul>
+<li><code>nextSibling</code><ul>
 <li>属性，表示当前节点的后一个兄弟节点</li>
 </ul>
 </li>
-<li>previousElementSibling(IE8以下不支持)<ul>
+<li><code>previousElementSibling</code>(IE8以下不支持)<ul>
 <li>属性，表示当前节点的前一个兄弟元素</li>
 </ul>
 </li>
 </ol>
 <h3 id="其余方法"><a href="#其余方法" class="headerlink" title="其余方法"></a>其余方法</h3><ol>
 <li>获取body标签<ul>
-<li>document.body</li>
+<li><code>document.body</code></li>
 </ul>
 </li>
 <li>获取根标签<ul>
-<li>document.documentElement</li>
+<li><code>document.documentElement</code></li>
 </ul>
 </li>
 <li>根据元素的class属性值查询一组元素节点对象<ul>
-<li>getElementsByClassName（不支持IE8）</li>
+<li><code>getElementsByClassName</code>（不支持IE8）</li>
 </ul>
 </li>
-<li>document.querySelector()<ul>
+<li><code>document.querySelector()</code><ul>
 <li>需要一个选择器的字符串作为参数，可以根据一个CSS选择器来查询一个元素节点对象</li>
 <li>该方法总会返回唯一的一个元素，如果有多个元素满足，只会返回第一个</li>
 </ul>
 </li>
-<li>document.querySelectorAll()<ul>
+<li><code>document.querySelectorAll()</code><ul>
 <li>和4类似，该方法返回所有满足的元素</li>
 </ul>
 </li>
@@ -6144,9 +6144,67 @@ offset从0开始可以省略
 <li><code>insertBefore()</code>：在指定的子节点前面插入新的子节点（父元素调用）<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 往li前面添加一个li2</span></span><br><span class="line"><span class="built_in">document</span>.body.insertBefore(li2, li);</span><br></pre></td></tr></table></figure></li>
 <li><code>replaceChild</code>：替换子节点<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">document</span>.body.replaceChild(li2, li);</span><br></pre></td></tr></table></figure></li>
 <li><code>removeChild()</code>：删除子节点<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">document</span>.body.removeChild(li);</span><br><span class="line"><span class="comment">// 直接通过li自我删除</span></span><br><span class="line">li.parentNode.removeChild(li);</span><br></pre></td></tr></table></figure></li>
-<li>通过<code>innerHTML</code>直接添加li标签。<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">document</span>.body.innerHTML += <span class="string">"&lt;li&gt;Hi&lt;/li&gt;"</span>;</span><br></pre></td></tr></table></figure></li>
+<li>通过<code>innerHTML</code>直接添加li标签。<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">document</span>.body.innerHTML += <span class="string">"&lt;li&gt;Hi&lt;/li&gt;"</span>;</span><br></pre></td></tr></table></figure>
+
+</li>
 </ul>
-]]></content>
+<h3 id="添加删除练习"><a href="#添加删除练习" class="headerlink" title="添加删除练习"></a>添加删除练习</h3><ul>
+<li><code>confirm()</code>：用于弹出一个带有确认和取消按钮的提示框。需要一个字符串作为参数，该字符串将会作为提示文字显示出来。如果用户点击确认则会返回true，如果点击取消则返回false<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    * 点击超链接以后，删除一个员工的信息</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//获取所有额超链接</span></span><br><span class="line">    <span class="keyword">var</span> allA = <span class="built_in">document</span>.getElementsByTagName(<span class="string">"a"</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//为每个超链接都绑定一个单击响应函数</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span> ; i &lt; allA.length ; i++)&#123;</span><br><span class="line">        allA[i].onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">//点击超链接以后需要删除超链接所在的那行</span></span><br><span class="line">            <span class="comment">//这里我们点击那个超链接this就是谁</span></span><br><span class="line">            <span class="comment">//获取当前tr</span></span><br><span class="line">            <span class="keyword">var</span> tr = <span class="keyword">this</span>.parentNode.parentNode;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">//获取要删除的员工的名字</span></span><br><span class="line">            <span class="comment">//var name = tr.getElementsByTagName("td")[0].innerHTML;</span></span><br><span class="line">            <span class="keyword">var</span> name = tr.children[<span class="number">0</span>].innerHTML;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">//删除之前弹出一个提示框</span></span><br><span class="line">            <span class="comment">/*</span></span><br><span class="line"><span class="comment">                * confirm()用于弹出一个带有确认和取消按钮的提示框</span></span><br><span class="line"><span class="comment">                * 	需要一个字符串作为参数，该字符串将会作为提示文字显示出来</span></span><br><span class="line"><span class="comment">                * 如果用户点击确认则会返回true，如果点击取消则返回false</span></span><br><span class="line"><span class="comment">                */</span></span><br><span class="line">            <span class="keyword">var</span> flag = confirm(<span class="string">"确认删除"</span>+name+<span class="string">"吗?"</span>);</span><br><span class="line">            </span><br><span class="line">            <span class="comment">//如果用户点击确认</span></span><br><span class="line">            <span class="keyword">if</span>(flag)&#123;</span><br><span class="line">                <span class="comment">//删除tr</span></span><br><span class="line">                tr.parentNode.removeChild(tr);</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">/*</span></span><br><span class="line"><span class="comment">                * 点击超链接以后，超链接会跳转页面，这个是超链接的默认行为，</span></span><br><span class="line"><span class="comment">                * 	但是此时我们不希望出现默认行为，可以通过在响应函数的最后return false来取消默认行为</span></span><br><span class="line"><span class="comment">                */</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="操作内联样式"><a href="#操作内联样式" class="headerlink" title="操作内联样式"></a>操作内联样式</h2><ul>
+<li><p>通过js来修改元素的样式，通过style属性设置的样式都是内联样式，拥有较高的优先级</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">元素.style.样式名 = 样式值</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：如果CSS样式名中含有”-“，这种名称在Js中是不合法的。需要将这种样式名修改为驼峰命名法，去掉”-“，将后面的第一个字母大写。</p>
+</blockquote>
+</li>
+<li><p>读取元素的样式</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> variable1 = 元素.style.样式名</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：通过style属性读取到的样式都是内联样式。</p>
+</blockquote>
+</li>
+<li><p>获取元素当前显示的样式</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 不支持chrome</span></span><br><span class="line"><span class="keyword">let</span> variable = 元素.currentStyle.样式名</span><br></pre></td></tr></table></figure>
+<p>在其它浏览器中可以使用<code>getComputedStyle()</code>方法来获取元素当前的样式，需要两个参数，第一个为要获取样式的元素，第二个可以传递一个伪元素，一般传null。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 不支持IE8</span></span><br><span class="line"><span class="keyword">let</span> variable = getComputedStyle(元素名.null);</span><br><span class="line"><span class="comment">// 获取该元素的宽度</span></span><br><span class="line">variable.width;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="getStyle"><a href="#getStyle" class="headerlink" title="getStyle()"></a>getStyle()</h3><ul>
+<li>针对不同浏览器的相同方法<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    * 定义一个函数，用来获取指定元素的当前的样式</span></span><br><span class="line"><span class="comment">    * 参数：</span></span><br><span class="line"><span class="comment">    * 		obj 要获取样式的元素</span></span><br><span class="line"><span class="comment">    * 		name 要获取的样式名</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getStyle</span>(<span class="params">obj , name</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">window</span>.getComputedStyle)&#123;</span><br><span class="line">        <span class="comment">//正常浏览器的方式，具有getComputedStyle()方法</span></span><br><span class="line">        <span class="keyword">return</span> getComputedStyle(obj , <span class="literal">null</span>)[name];</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="comment">//IE8的方式，没有getComputedStyle()方法</span></span><br><span class="line">        <span class="keyword">return</span> obj.currentStyle[name];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//return window.getComputedStyle ? getComputedStyle(obj , null)[name] : obj.currentStyle[name];</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="其它样式"><a href="#其它样式" class="headerlink" title="其它样式"></a>其它样式</h2><ul>
+<li>clientWidth、clientHeight：这两个属性可以获取元素的可见宽度和高度。这些属性都是不带px的，返回都是一个数字，可以直接进行计算。会获取元素宽度和高度，包括内容区和内边距。这些属性都是只读的，不能修改。</li>
+<li>offsetWidth、offsetHeight：获取元素的整个的宽度和高度，包括内容区、内边距和边框。</li>
+<li>offsetParent：可以用来获取当前元素的定位父元素。会获取到离当前元素最近的开启了定位的祖先元素。如果所有的祖先元素都没有开启定位，则返回body</li>
+<li>offsetLeft：当前元素相对于其定位父元素的水平偏移量</li>
+<li>offsetTop：当前元素相对于其定位父元素的垂直偏移量</li>
+<li>scrollWidth、scrollHeight：可以获取元素整个滚动区域的宽度和高度</li>
+<li>scrollLeft：可以获取水平滚动条滚动的距离</li>
+<li>scrollTop：可以获取垂直滚动条滚动的距离<ul>
+<li>当满足scrollHeight - scrollTop == clientHeight 说明垂直滚动条滚动到底了</li>
+<li>当满足scrollWidth - scrollLeft == clientWidth 说明水平滚动条滚动到底</li>
+</ul>
+</li>
+</ul>
+<h2 id="事件对象"><a href="#事件对象" class="headerlink" title="事件对象"></a>事件对象</h2><ul>
+<li>事件对象：当事件的响应函数被触发时，浏览器每次都会将一个事件对象作为实参传递进响应函数,在事件对象中封装了当前事件相关的一切信息，比如：鼠标的坐标、键盘哪个按键被按下、鼠标滚轮滚动的方向。</li>
+<li><code>onmousemove</code>：该事件将会在鼠标在元素中移动时被触发</li>
+<li><code>event</code>：事件对象（IE8不支持）<ul>
+<li>clientX：获取鼠标指针的水平坐标</li>
+<li>clientY：获取鼠标指针的垂直坐标<blockquote>
+<p>解决事件对象的兼容性问题.在IE8及以下的浏览器中，是将事件对象作为window对象的属性保存的 event = event || window.event;</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="div跟随鼠标移动"><a href="#div跟随鼠标移动" class="headerlink" title="div跟随鼠标移动"></a>div跟随鼠标移动</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">document</span>.onmousemove = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//解决兼容问题</span></span><br><span class="line">    event = event || <span class="built_in">window</span>.event;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//获取滚动条滚动的距离</span></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * chrome认为浏览器的滚动条是body的，可以通过body.scrollTop来获取</span></span><br><span class="line"><span class="comment">        * 火狐等浏览器认为浏览器的滚动条是html的，</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">    <span class="keyword">var</span> st = <span class="built_in">document</span>.body.scrollTop || <span class="built_in">document</span>.documentElement.scrollTop;</span><br><span class="line">    <span class="keyword">var</span> sl = <span class="built_in">document</span>.body.scrollLeft || <span class="built_in">document</span>.documentElement.scrollLeft;</span><br><span class="line">    <span class="comment">//var st = document.documentElement.scrollTop;</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">//获取到鼠标的坐标</span></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * clientX和clientY</span></span><br><span class="line"><span class="comment">        * 	用于获取鼠标在当前的可见窗口的坐标</span></span><br><span class="line"><span class="comment">        * div的偏移量，是相对于整个页面的</span></span><br><span class="line"><span class="comment">        * </span></span><br><span class="line"><span class="comment">        * pageX和pageY可以获取鼠标相对于当前页面的坐标</span></span><br><span class="line"><span class="comment">        * 	但是这个两个属性在IE8中不支持，所以如果需要兼容IE8，则不要使用</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">    <span class="keyword">var</span> left = event.clientX;</span><br><span class="line">    <span class="keyword">var</span>　top = event.clientY;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//设置div的偏移量</span></span><br><span class="line">    box1.style.left = left + sl - <span class="number">50</span> + <span class="string">"px"</span> ;</span><br><span class="line">    box1.style.top = top + st - <span class="number">50</span> + <span class="string">"px"</span>;</span><br><span class="line">    </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>前端</category>
       </categories>
