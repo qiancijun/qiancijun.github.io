@@ -5,12 +5,14 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Tag: 排序 - 神奇口袋</title>
+    <title>Redis - 神奇口袋</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
-    
+    <meta name="description" content="NoSQL概述
+NoSQL(Not Only SQL)：$\color{red}{泛指非关系型数据库}$。
+传统的关系数据库在应付web2.0网站，特别是超大规模和高并发的SNS类型的动态网站已经显,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -33,154 +35,127 @@
 <body class="loading">
     <span id="config-title" style="display:none">神奇口袋</span>
     <div id="loader"></div>
-    <div class="nav">
-    <ul id="menu-menu" class="menu">
-        
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="//" title="首页" target="_blank" rel="noopener">首页</a>
-        </li>
-        
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/categories/" title="分类" target="_blank" rel="noopener">分类</a>
-        </li>
-        
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/tags/" title="标签" target="_blank" rel="noopener">标签</a>
-        </li>
-        
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/archives/" title="归档" target="_blank" rel="noopener">归档</a>
-        </li>
-        
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/about/" title="关于" target="_blank" rel="noopener">关于</a>
-        </li>
-        
-    </ul>
-	<span class="target"></span>
-	<center>
-	<div class="hitokoto">
-		<span class="typed" id="hitokoto" data-st="true"></span>
-	</div>
-	</center>
-	
-	<p class="footerlinks">
-		<a href="#" class="iconfont icon-null"></a>
-		
-            <a href="/" title="facebook" class="iconfont icon-facebook" target="_blank" rel="noopener"> </a>
-        
-            <a href="/" title="twitter" class="iconfont icon-twitter" target="_blank" rel="noopener"> </a>
-        
-            <a href="/" title="github" class="iconfont icon-github" target="_blank" rel="noopener"> </a>
-        
-            <a href="/img/logo.png" title="wechat" class="iconfont icon-wechat" target="_blank" rel="noopener"> </a>
-        
-            <a href="/769303522@qq.com" title="email" class="iconfont icon-email" target="_blank" rel="noopener"> </a>
-        
-		<a href="#" class="iconfont icon-null"></a>
-	</p>
-	
-    <p id="copyright">
-        &copy; 2020 John Doe.
-        <span> | </span>Powered by <a href="https://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
-        <span> | </span>Theme <a href="https://github.com/Fechin/hexo-theme-diaspora" title="Diaspora" target="_blank" rel="noopener">Diaspora</a> by Fechin
-		
-    </p>
-</div>
-
-<div id="container">
-    
-<div id="screen">
-    <div id="mark">
-        <div class="layer" data-depth="0.4">
-            <img src="/img/1.jpg" id="cover" crossorigin="anonymous" width="1920" height="1080">
-        </div>
-    </div>
-    <div id="vibrant">
-        <svg viewBox="0 0 2880 1620" height="100%" preserveAspectRatio="xMaxYMax slice">
-            <polygon opacity="0.7" points="2000,1620 0,1620 0,0 600,0 "/>
-        </svg>
-        <div></div>
-    </div>
-    <div id="header">
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://xlich.top"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Redis</h3>
+    <div class="social">
         <div>
-            <a class="image-logo" href="/"></a>
-			
-			<div class="iconfont icon-search switchsearch" href="/search/" title="搜索"></div>
-			
-            <div class="iconfont icon-menu switchmenu"></div>
+            <div class="share">
+                
+            </div>
+            <div id="qr"></div>
         </div>
     </div>
-    
-    <div id="post0">
-        <p>四月 24, 2020</p>
-        <h2><a href="/2020/04/24/LeetCode-%E9%9D%A2%E8%AF%95%E9%A2%9851-%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E9%80%86%E5%BA%8F%E5%AF%B9/" title="LeetCode-面试题51-数组中的逆序对" class="posttitle">LeetCode-面试题51-数组中的逆序对</a></h2>
-        <p class="summary">原题链接原题链接
-题目描述
-思路由于题目给了限制，第一时间想到的双重循环暴力解法一定会超时。这道题典型运用了分治思...</p>
-    </div>
-    
+    <div class="scrollbar"></div>
 </div>
 
-    <div id="primary">
+   
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Redis</h1>
+        <div class="stuff">
+            <span>五月 28, 2020</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h1 id="NoSQL概述"><a href="#NoSQL概述" class="headerlink" title="NoSQL概述"></a>NoSQL概述</h1><ul>
+<li>NoSQL(Not Only SQL)：$\color{red}{泛指非关系型数据库}$。<ul>
+<li>传统的关系数据库在应付web2.0网站，特别是超大规模和高并发的SNS类型的动态网站已经显得力不从心，暴露了很多难以克服的问题，而非关系型数据库则由于其本身的特点得到了非常迅速的发展。NoSQL数据库的产生就是为了解决大规模数据集合多重数据种类带来的挑战，尤其是大数据应用难题，包括超大规模数据的存储。</li>
+<li>这些类型的数据存储不需要固定的模式，无需多余操作就可以横向扩展</li>
+</ul>
+</li>
+</ul>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><ol>
+<li>易扩展：<ul>
+<li>NoSQL数据库种类繁多，但是一个共同的特点都是去掉关系数据库的关系型特性。</li>
+<li>数据之间无关系，这样就非常容易扩展。也无形之间，在架构的层面上带来了可扩展的能力</li>
+</ul>
+</li>
+<li>大数据高性能：<ul>
+<li>NoSQL数据库都具有非常高的读写性能，尤其在大数据量下，同样表现优秀。这得益于它的无关系性，数据库的结构简单</li>
+<li>一般MySQL使用Query Cache，每次表的更新Cache就失败，是一种大粒度的Cache，在针对web2.0的交互频繁的应用，Cache性能不高，而NoSQL的Cache是记录级的，是一种细粒度的Cache，所以NoSQL在这个层面上来说性能高很多了</li>
+</ul>
+</li>
+<li>多样灵活的数据模型<ul>
+<li>NoSQL无需事先为要存储的数据建立字段，随时可以存储自定义的数据格式。而在关系数据库里，增删字段是一件非常麻烦的事情。如果是非常大数据量的表，增加字段简直是一个噩梦。</li>
+</ul>
+</li>
+<li>和传统关系型数据库的对比</li>
+</ol>
+<ul>
+<li>RDBMS：<ul>
+<li>高度组织化结构化数据</li>
+<li>结构化查询语言(SQL)</li>
+<li>数据和关系都存储在单独的表中</li>
+<li>数据操纵语言，数据定义语言</li>
+<li>严格的一致性</li>
+<li>基础事务</li>
+</ul>
+</li>
+<li>NoSQL<ul>
+<li>代表着不仅仅是SQL</li>
+<li>没有声明性查询语言</li>
+<li>没有预定义的模式</li>
+<li>键值对存储，列存储，文档存储，图形数据库</li>
+<li>最终一致性，而非ACID属性</li>
+<li>非结构化和不可预知的数据</li>
+<li>CAP定理</li>
+<li>高性能，高可用性和可伸缩性</li>
+</ul>
+</li>
+</ul>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='https://link.hhtjim.com/163/155827.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='https://link.hhtjim.com/163/1491163.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='https://link.hhtjim.com/163/1992707.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
         
-<div class="post">
-    <a href="/2020/04/16/LeetCode-56-%E5%90%88%E5%B9%B6%E5%8C%BA%E9%97%B4/" title="LeetCode-56-合并区间">
-        <img src="/img/6.jpg" class="cover" width="680" height="440">
-    </a>
-    <div class="else">
-        <p>四月 16, 2020</p>
-        <h3><a href="/2020/04/16/LeetCode-56-%E5%90%88%E5%B9%B6%E5%8C%BA%E9%97%B4/" title="LeetCode-56-合并区间" class="posttitle">LeetCode-56-合并区间</a></h3>
-        <p>原题链接原题链接
-题目描述
-思路很常规的思路。在给的数组最后加一个最大值方便操作数组。先对原数组进行排序，把区间第一个数组从小到大排序。再判断第一个区间和...</p>
-    </div>
-</div>
-
-
-<div class="post">
-    <a href="/2020/04/06/%E5%A0%86%E6%8E%92%E5%BA%8F/" title="堆排序">
-        <img src="/img/5.jpg" class="cover" width="680" height="440">
-    </a>
-    <div class="else">
-        <p>四月 06, 2020</p>
-        <h3><a href="/2020/04/06/%E5%A0%86%E6%8E%92%E5%BA%8F/" title="堆排序" class="posttitle">堆排序</a></h3>
-        <p>前言在选择排序中，找到数组中的最大值，并和数组末尾交换值，每完成一次选择，就能使一个元素确定它的位置。在数组这种顺序结构中，要查找数组中的最大值，采取顺序...</p>
-    </div>
-</div>
-
-
-<div class="post">
-    <a href="/2020/04/05/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/" title="归并排序">
-        <img src="/img/8.png" class="cover" width="680" height="440">
-    </a>
-    <div class="else">
-        <p>四月 05, 2020</p>
-        <h3><a href="/2020/04/05/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/" title="归并排序" class="posttitle">归并排序</a></h3>
-        <p>前言本文介绍的是排序算法中较常用的方法，$\color{red}{归并排序}$，该方法的核心想法为分治法。分而治之，将原问题划分成多个子问题，子问题解决后...</p>
-    </div>
-</div>
-
-
-<div class="post">
-    <a href="/2020/04/04/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/" title="快速排序">
-        <img src="/img/cover.jpg" class="cover" width="680" height="440">
-    </a>
-    <div class="else">
-        <p>四月 04, 2020</p>
-        <h3><a href="/2020/04/04/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/" title="快速排序" class="posttitle">快速排序</a></h3>
-        <p>前言排序作为数据结构与算法基础算法之一，形式多样，复杂度不同，在不同情况下选用适当的排序算法能够使效率最大化。本文主要介绍排序算法中的 $\color{r...</p>
-    </div>
-</div>
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='true'
+        data-ci='Iv1.06e5c405a7731b45'
+        data-cs='2fcfe85902a7d5812fa4b299b56a6f194c98e08a'
+        data-r='qiancijun.github.io'
+        data-o='qiancijun'
+        data-a='qiancijun'
+        data-d='false'
+    >查看评论</div>
 
 
     </div>
     
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#NoSQL概述"><span class="toc-number">1.</span> <span class="toc-text">NoSQL概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#特点"><span class="toc-number">1.1.</span> <span class="toc-text">特点</span></a></li></ol></li></ol>	
+        </div>
+    
 </div>
-<div id="preview"></div>
 
 
-
+    </div>
+</div>
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":250,"height":400},"mobile":{"show":false},"log":false});</script></body>
 
 

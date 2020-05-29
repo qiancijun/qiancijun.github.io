@@ -1532,7 +1532,7 @@ public @interface 注解名称{
 </ol>
 ]]></content>
       <categories>
-        <category>Mysql</category>
+        <category>数据库</category>
       </categories>
   </entry>
   <entry>
@@ -1929,7 +1929,7 @@ offset从0开始可以省略
 </ol>
 ]]></content>
       <categories>
-        <category>Mysql</category>
+        <category>数据库</category>
       </categories>
   </entry>
   <entry>
@@ -4743,7 +4743,7 @@ offset从0开始可以省略
 <p>例：使用循环控制语句，批量插入，如果次数大于10则停止插入</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">procedure</span> pro_while1(<span class="keyword">IN</span> <span class="keyword">count</span> <span class="built_in">INT</span>)</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">declare</span> i <span class="built_in">INT</span> <span class="keyword">default</span> <span class="number">1</span>;</span><br><span class="line">        a: while i &lt;= count do</span><br><span class="line">            <span class="keyword">insert</span> <span class="keyword">into</span> <span class="keyword">admin</span>(username, <span class="string">`password`</span>) <span class="keyword">values</span>(<span class="string">`John`</span>, <span class="number">0000</span>);</span><br><span class="line">            if i &gt; 10 then leave a;</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">if</span>;</span><br><span class="line">            <span class="keyword">set</span> i = i + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">while</span> a;</span><br><span class="line"><span class="keyword">end</span> $</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>Mysql</category>
+        <category>数据库</category>
       </categories>
   </entry>
   <entry>
@@ -5116,6 +5116,7 @@ offset从0开始可以省略
 ]]></content>
       <categories>
         <category>JAVA</category>
+        <category>数据库</category>
       </categories>
   </entry>
   <entry>
@@ -6204,7 +6205,74 @@ offset从0开始可以省略
 </ul>
 </li>
 </ul>
-<h3 id="div跟随鼠标移动"><a href="#div跟随鼠标移动" class="headerlink" title="div跟随鼠标移动"></a>div跟随鼠标移动</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">document</span>.onmousemove = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//解决兼容问题</span></span><br><span class="line">    event = event || <span class="built_in">window</span>.event;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//获取滚动条滚动的距离</span></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * chrome认为浏览器的滚动条是body的，可以通过body.scrollTop来获取</span></span><br><span class="line"><span class="comment">        * 火狐等浏览器认为浏览器的滚动条是html的，</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">    <span class="keyword">var</span> st = <span class="built_in">document</span>.body.scrollTop || <span class="built_in">document</span>.documentElement.scrollTop;</span><br><span class="line">    <span class="keyword">var</span> sl = <span class="built_in">document</span>.body.scrollLeft || <span class="built_in">document</span>.documentElement.scrollLeft;</span><br><span class="line">    <span class="comment">//var st = document.documentElement.scrollTop;</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">//获取到鼠标的坐标</span></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * clientX和clientY</span></span><br><span class="line"><span class="comment">        * 	用于获取鼠标在当前的可见窗口的坐标</span></span><br><span class="line"><span class="comment">        * div的偏移量，是相对于整个页面的</span></span><br><span class="line"><span class="comment">        * </span></span><br><span class="line"><span class="comment">        * pageX和pageY可以获取鼠标相对于当前页面的坐标</span></span><br><span class="line"><span class="comment">        * 	但是这个两个属性在IE8中不支持，所以如果需要兼容IE8，则不要使用</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">    <span class="keyword">var</span> left = event.clientX;</span><br><span class="line">    <span class="keyword">var</span>　top = event.clientY;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//设置div的偏移量</span></span><br><span class="line">    box1.style.left = left + sl - <span class="number">50</span> + <span class="string">"px"</span> ;</span><br><span class="line">    box1.style.top = top + st - <span class="number">50</span> + <span class="string">"px"</span>;</span><br><span class="line">    </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
+<h3 id="div跟随鼠标移动"><a href="#div跟随鼠标移动" class="headerlink" title="div跟随鼠标移动"></a>div跟随鼠标移动</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">document</span>.onmousemove = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//解决兼容问题</span></span><br><span class="line">    event = event || <span class="built_in">window</span>.event;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//获取滚动条滚动的距离</span></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * chrome认为浏览器的滚动条是body的，可以通过body.scrollTop来获取</span></span><br><span class="line"><span class="comment">        * 火狐等浏览器认为浏览器的滚动条是html的，</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">    <span class="keyword">var</span> st = <span class="built_in">document</span>.body.scrollTop || <span class="built_in">document</span>.documentElement.scrollTop;</span><br><span class="line">    <span class="keyword">var</span> sl = <span class="built_in">document</span>.body.scrollLeft || <span class="built_in">document</span>.documentElement.scrollLeft;</span><br><span class="line">    <span class="comment">//var st = document.documentElement.scrollTop;</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">//获取到鼠标的坐标</span></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * clientX和clientY</span></span><br><span class="line"><span class="comment">        * 	用于获取鼠标在当前的可见窗口的坐标</span></span><br><span class="line"><span class="comment">        * div的偏移量，是相对于整个页面的</span></span><br><span class="line"><span class="comment">        * </span></span><br><span class="line"><span class="comment">        * pageX和pageY可以获取鼠标相对于当前页面的坐标</span></span><br><span class="line"><span class="comment">        * 	但是这个两个属性在IE8中不支持，所以如果需要兼容IE8，则不要使用</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">    <span class="keyword">var</span> left = event.clientX;</span><br><span class="line">    <span class="keyword">var</span>　top = event.clientY;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//设置div的偏移量</span></span><br><span class="line">    box1.style.left = left + sl - <span class="number">50</span> + <span class="string">"px"</span> ;</span><br><span class="line">    box1.style.top = top + st - <span class="number">50</span> + <span class="string">"px"</span>;</span><br><span class="line">    </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="事件的冒泡"><a href="#事件的冒泡" class="headerlink" title="事件的冒泡"></a>事件的冒泡</h3><ul>
+<li>所谓的冒泡指的就是事件的向上传导，当后代元素上的事件被触发时，其祖先元素的相同事件也会被触发。在开发中大部分情况冒泡都是有用的,如果不希望发生事件冒泡可以通过事件对象来取消冒泡<ul>
+<li>取消冒泡：可以将事件对象的cancelBubble设置为true，即可取消冒泡</li>
+</ul>
+</li>
+</ul>
+<h3 id="事件的委派"><a href="#事件的委派" class="headerlink" title="事件的委派"></a>事件的委派</h3><ul>
+<li>我们希望，只绑定一次事件，即可应用到多个的元素上，即使元素是后添加的。我们可以尝试将其绑定给元素的共同的祖先元素</li>
+<li>事件的委派：指将事件统一绑定给元素的共同的祖先元素，这样当后代元素上的事件触发时，会一直冒泡到祖先元素，从而通过祖先元素的响应函数来处理事件。事件委派是利用了冒泡，通过委派可以减少事件绑定的次数，提高程序的性能。</li>
+<li><code>target</code>：event中的target表示触发事件的对象<ul>
+<li>alert(event.target);</li>
+<li>如果触发事件的对象是我们期望的元素，则执行否则不执行<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(event.target.className == <span class="string">"类名"</span>)&#123;</span><br><span class="line">    alert(<span class="string">"我是ul的单击响应函数"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="事件的绑定"><a href="#事件的绑定" class="headerlink" title="事件的绑定"></a>事件的绑定</h3><ul>
+<li>只能同时为一个元素的一个事件绑定一个响应函数，不能绑定多个，如果绑定了多个，则后边会覆盖掉前边的。</li>
+<li><code>addEventListener()</code>：通过这个方法也可以为元素绑定响应函数（IE8不支持）<ul>
+<li>参数：<ul>
+<li>事件的字符串，不要on</li>
+<li>回调函数，当事件触发时该函数会被调用</li>
+<li>是否在捕获阶段触发事件，需要一个布尔值，一般都传false</li>
+</ul>
+</li>
+<li>使用addEventListener()可以同时为一个元素的相同事件同时绑定多个响应函数，这样当事件被触发时，响应函数将会按照函数的绑定顺序执行。</li>
+</ul>
+</li>
+<li><code>attachEvent()</code>：在IE8中可以使用attachEvent()来绑定事件（chrome不支持）<ul>
+<li>参数：<ul>
+<li>事件的字符串，要on</li>
+<li>回调函数</li>
+</ul>
+</li>
+<li>这个方法也可以同时为一个事件绑定多个处理函数，不同的是它是后绑定先执行，执行顺序和addEventListener()相反</li>
+</ul>
+</li>
+<li>解决兼容性问题<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bind</span>(<span class="params">obj , eventStr , callback</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(obj.addEventListener)&#123;</span><br><span class="line">        <span class="comment">//大部分浏览器兼容的方式</span></span><br><span class="line">        obj.addEventListener(eventStr , callback , <span class="literal">false</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">            * this是谁由调用方式决定</span></span><br><span class="line"><span class="comment">            * callback.call(obj)</span></span><br><span class="line"><span class="comment">            */</span></span><br><span class="line">        <span class="comment">//IE8及以下</span></span><br><span class="line">        obj.attachEvent(<span class="string">"on"</span>+eventStr , <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="comment">//在匿名函数中调用回调函数</span></span><br><span class="line">            callback.call(obj);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="拖拽"><a href="#拖拽" class="headerlink" title="拖拽"></a>拖拽</h2><ul>
+<li>拖拽的流程：<ol>
+<li>当鼠标在被拖拽元素上按下时，开始拖拽  onmousedown</li>
+<li>当鼠标移动时被拖拽元素跟随鼠标移动 onmousemove</li>
+<li>当鼠标松开时，被拖拽元素固定在当前位置    onmouseup</li>
+</ol>
+</li>
+</ul>
+<p>页面布局</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"box1"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//获取box1</span></span><br><span class="line">    <span class="keyword">var</span> box1 = <span class="built_in">document</span>.getElementById(<span class="string">"box1"</span>);</span><br><span class="line">    <span class="comment">//为box1绑定一个鼠标按下事件</span></span><br><span class="line">    <span class="comment">//当鼠标在被拖拽元素上按下时，开始拖拽  onmousedown</span></span><br><span class="line">    box1.onmousedown = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">        event = event || <span class="built_in">window</span>.event;</span><br><span class="line">        <span class="comment">//div的偏移量 鼠标.clentX - 元素.offsetLeft</span></span><br><span class="line">        <span class="comment">//div的偏移量 鼠标.clentY - 元素.offsetTop</span></span><br><span class="line">        <span class="keyword">var</span> ol = event.clientX - box1.offsetLeft;</span><br><span class="line">        <span class="keyword">var</span> ot = event.clientY - box1.offsetTop;</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        <span class="comment">//为document绑定一个onmousemove事件</span></span><br><span class="line">        <span class="built_in">document</span>.onmousemove = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">            event = event || <span class="built_in">window</span>.event;</span><br><span class="line">            <span class="comment">//当鼠标移动时被拖拽元素跟随鼠标移动 onmousemove</span></span><br><span class="line">            <span class="comment">//获取鼠标的坐标</span></span><br><span class="line">            <span class="keyword">var</span> left = event.clientX - ol;</span><br><span class="line">            <span class="keyword">var</span> top = event.clientY - ot;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">//修改box1的位置</span></span><br><span class="line">            box1.style.left = left+<span class="string">"px"</span>;</span><br><span class="line">            box1.style.top = top+<span class="string">"px"</span>;</span><br><span class="line">            </span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="comment">//为document绑定一个鼠标松开事件</span></span><br><span class="line">        <span class="built_in">document</span>.onmouseup = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="comment">//当鼠标松开时，被拖拽元素固定在当前位置	onmouseup</span></span><br><span class="line">            <span class="comment">//取消document的onmousemove事件</span></span><br><span class="line">            <span class="built_in">document</span>.onmousemove = <span class="literal">null</span>;</span><br><span class="line">            <span class="comment">//取消document的onmouseup事件</span></span><br><span class="line">            <span class="built_in">document</span>.onmouseup = <span class="literal">null</span>;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="拖拽异常"><a href="#拖拽异常" class="headerlink" title="拖拽异常"></a>拖拽异常</h3><ul>
+<li>当我们拖拽一个网页中的内容时，浏览器会默认去搜索引擎中搜索内容，此时会导致拖拽功能的异常，这个是浏览器提供的默认行为，如果不希望发生这个行为，则可以通过return false来取消默认行为。（IE8不支持）</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//获取box1</span></span><br><span class="line">    <span class="keyword">var</span> box1 = <span class="built_in">document</span>.getElementById(<span class="string">"box1"</span>);</span><br><span class="line">    <span class="comment">//为box1绑定一个鼠标按下事件</span></span><br><span class="line">    <span class="comment">//当鼠标在被拖拽元素上按下时，开始拖拽  onmousedown</span></span><br><span class="line">    box1.onmousedown = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">        event = event || <span class="built_in">window</span>.event;</span><br><span class="line">        <span class="comment">//div的偏移量 鼠标.clentX - 元素.offsetLeft</span></span><br><span class="line">        <span class="comment">//div的偏移量 鼠标.clentY - 元素.offsetTop</span></span><br><span class="line">        <span class="keyword">var</span> ol = event.clientX - box1.offsetLeft;</span><br><span class="line">        <span class="keyword">var</span> ot = event.clientY - box1.offsetTop;</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        <span class="comment">//为document绑定一个onmousemove事件</span></span><br><span class="line">        <span class="built_in">document</span>.onmousemove = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">            event = event || <span class="built_in">window</span>.event;</span><br><span class="line">            <span class="comment">//当鼠标移动时被拖拽元素跟随鼠标移动 onmousemove</span></span><br><span class="line">            <span class="comment">//获取鼠标的坐标</span></span><br><span class="line">            <span class="keyword">var</span> left = event.clientX - ol;</span><br><span class="line">            <span class="keyword">var</span> top = event.clientY - ot;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">//修改box1的位置</span></span><br><span class="line">            box1.style.left = left+<span class="string">"px"</span>;</span><br><span class="line">            box1.style.top = top+<span class="string">"px"</span>;</span><br><span class="line">            </span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="comment">//为document绑定一个鼠标松开事件</span></span><br><span class="line">        <span class="built_in">document</span>.onmouseup = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="comment">//当鼠标松开时，被拖拽元素固定在当前位置	onmouseup</span></span><br><span class="line">            <span class="comment">//取消document的onmousemove事件</span></span><br><span class="line">            <span class="built_in">document</span>.onmousemove = <span class="literal">null</span>;</span><br><span class="line">            <span class="comment">//取消document的onmouseup事件</span></span><br><span class="line">            <span class="built_in">document</span>.onmouseup = <span class="literal">null</span>;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="滚轮事件"><a href="#滚轮事件" class="headerlink" title="滚轮事件"></a>滚轮事件</h2><ul>
+<li><code>onmousewheel</code>鼠标滚轮滚动的事件，会在滚轮滚动时触发，但是火狐不支持该属性。在火狐中需要使用 <code>DOMMouseScroll</code>，来绑定滚动事件，该事件需要通过addEventListener()函数来绑定。</li>
+<li><code>event.wheelDelta</code>：获取滚动滚轮的方向，向上滚为120，向下滚为-120。这个值不看大小只看正负，在火狐中不支持。在火狐中使用<code>event.detail</code>来获取滚动的方向，向上滚为-3，向下滚为3。</li>
+<li>当滚轮滚动时，如果浏览器有滚动条，滚动条会随之滚动，这是浏览器的默认行为，如果不希望发生，则可以取消默认行为。使用addEventListener()方法绑定响应函数，取消默认行为时不能使用return false。需要使用event来取消默认行为event.preventDefault();但是IE8不支持event.preventDefault();这个玩意，如果直接调用会报错<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> box1 = <span class="built_in">document</span>.getElementById(<span class="string">"box1"</span>);</span><br><span class="line">    box1.onmousewheel = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">        event = event || <span class="built_in">window</span>.event;</span><br><span class="line">        <span class="keyword">if</span>(event.wheelDelta &gt; <span class="number">0</span> || event.detail &lt; <span class="number">0</span>)&#123;</span><br><span class="line">            box1.style.height = box1.clientHeight - <span class="number">10</span> + <span class="string">"px"</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            box1.style.height = box1.clientHeight + <span class="number">10</span> + <span class="string">"px"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        event.preventDefault &amp;&amp; event.preventDefault();</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    bind(box1,<span class="string">"DOMMouseScroll"</span>,box1.onmousewheel);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bind</span>(<span class="params">obj , eventStr , callback</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(obj.addEventListener)&#123;</span><br><span class="line">        obj.addEventListener(eventStr , callback , <span class="literal">false</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        obj.attachEvent(<span class="string">"on"</span>+eventStr , <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            callback.call(obj);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
       <categories>
         <category>前端</category>
       </categories>
@@ -7128,7 +7196,7 @@ offset从0开始可以省略
 </ul>
 ]]></content>
       <categories>
-        <category>Mysql</category>
+        <category>数据库</category>
       </categories>
   </entry>
   <entry>
@@ -7194,5 +7262,59 @@ offset从0开始可以省略
         <tag>C/C++</tag>
         <tag>链表</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Redis</title>
+    <url>/2020/05/28/Redis/</url>
+    <content><![CDATA[<h1 id="NoSQL概述"><a href="#NoSQL概述" class="headerlink" title="NoSQL概述"></a>NoSQL概述</h1><ul>
+<li>NoSQL(Not Only SQL)：$\color{red}{泛指非关系型数据库}$。<ul>
+<li>传统的关系数据库在应付web2.0网站，特别是超大规模和高并发的SNS类型的动态网站已经显得力不从心，暴露了很多难以克服的问题，而非关系型数据库则由于其本身的特点得到了非常迅速的发展。NoSQL数据库的产生就是为了解决大规模数据集合多重数据种类带来的挑战，尤其是大数据应用难题，包括超大规模数据的存储。</li>
+<li>这些类型的数据存储不需要固定的模式，无需多余操作就可以横向扩展</li>
+</ul>
+</li>
+</ul>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><ol>
+<li>易扩展：<ul>
+<li>NoSQL数据库种类繁多，但是一个共同的特点都是去掉关系数据库的关系型特性。</li>
+<li>数据之间无关系，这样就非常容易扩展。也无形之间，在架构的层面上带来了可扩展的能力</li>
+</ul>
+</li>
+<li>大数据高性能：<ul>
+<li>NoSQL数据库都具有非常高的读写性能，尤其在大数据量下，同样表现优秀。这得益于它的无关系性，数据库的结构简单</li>
+<li>一般MySQL使用Query Cache，每次表的更新Cache就失败，是一种大粒度的Cache，在针对web2.0的交互频繁的应用，Cache性能不高，而NoSQL的Cache是记录级的，是一种细粒度的Cache，所以NoSQL在这个层面上来说性能高很多了</li>
+</ul>
+</li>
+<li>多样灵活的数据模型<ul>
+<li>NoSQL无需事先为要存储的数据建立字段，随时可以存储自定义的数据格式。而在关系数据库里，增删字段是一件非常麻烦的事情。如果是非常大数据量的表，增加字段简直是一个噩梦。</li>
+</ul>
+</li>
+<li>和传统关系型数据库的对比</li>
+</ol>
+<ul>
+<li>RDBMS：<ul>
+<li>高度组织化结构化数据</li>
+<li>结构化查询语言(SQL)</li>
+<li>数据和关系都存储在单独的表中</li>
+<li>数据操纵语言，数据定义语言</li>
+<li>严格的一致性</li>
+<li>基础事务</li>
+</ul>
+</li>
+<li>NoSQL<ul>
+<li>代表着不仅仅是SQL</li>
+<li>没有声明性查询语言</li>
+<li>没有预定义的模式</li>
+<li>键值对存储，列存储，文档存储，图形数据库</li>
+<li>最终一致性，而非ACID属性</li>
+<li>非结构化和不可预知的数据</li>
+<li>CAP定理</li>
+<li>高性能，高可用性和可伸缩性</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
   </entry>
 </search>
