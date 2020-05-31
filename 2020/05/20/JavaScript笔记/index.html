@@ -383,6 +383,154 @@
 </li>
 <li><p>限制文本框的输入：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> input = <span class="built_in">document</span>.getElementsByTagName(<span class="string">"input"</span>)[<span class="number">0</span>];</span><br><span class="line">input.onkeydown = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">    event = event || <span class="built_in">window</span>.event;</span><br><span class="line">    <span class="comment">//数字 48 - 57</span></span><br><span class="line">    <span class="comment">//使文本框中不能输入数字</span></span><br><span class="line">    <span class="keyword">if</span>(event.keyCode &gt;= <span class="number">48</span> &amp;&amp; event.keyCode &lt;= <span class="number">57</span>)&#123;</span><br><span class="line">        <span class="comment">//在文本框中输入内容，属于onkeydown的默认行为</span></span><br><span class="line">        <span class="comment">//如果在onkeydown中取消了默认行为，则输入的内容，不会出现在文本框中</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="BOM"><a href="#BOM" class="headerlink" title="BOM"></a>BOM</h1><ul>
+<li>BOM: 浏览器对象模型。可以通过JS来操作浏览器，在BOM中为我们提供了一组对象，用来完成对浏览器的操作</li>
+<li>分类：<ul>
+<li>Window<ul>
+<li>代表的是整个浏览器的窗口，同时window也是网页中的全局对象</li>
+</ul>
+</li>
+<li>Navigator<ul>
+<li>代表的当前浏览器的信息，通过该对象可以来识别不同的浏览器</li>
+<li>由于历史原因，Navigator对象中的大部分属性都已经不能帮助我们识别浏览器了，一般我们只会使用<code>userAgent</code>来判断浏览器的信息，<ul>
+<li><code>userAgent</code>是一个字符串，这个字符串中包含有用来描述浏览器信息的内容，不同的浏览器会有不同的<code>userAgent</code></li>
+</ul>
+</li>
+<li>如果通过UserAgent不能判断，还可以通过一些浏览器中特有的对象，来判断浏览器的信息,比如：<code>ActiveXObject</code></li>
+</ul>
+</li>
+<li>Location<ul>
+<li>代表当前浏览器的地址栏信息，通过Location可以获取地址栏信息，或者操作浏览器跳转页面</li>
+</ul>
+</li>
+<li>History<ul>
+<li>代表浏览器的历史记录，可以通过该对象来操作浏览器的历史记录。</li>
+<li>由于隐私原因，该对象不能获取到具体的历史记录，只能操作浏览器向前或向后翻页，而且该操作只在当次访问时有效。</li>
+</ul>
+</li>
+<li>Screen<ul>
+<li>代表用户的屏幕的信息，通过该对象可以获取到用户的显示器的相关的信息</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>BOM对象在浏览器中都是作为window对象的属性保存的，可以通过window对象来使用，也可以直接使用</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ua = navigator.userAgent;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(ua);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="regexp">/firefox/i</span>.test(ua))&#123;</span><br><span class="line">    alert(<span class="string">"你是火狐！！！"</span>);</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="regexp">/chrome/i</span>.test(ua))&#123;</span><br><span class="line">    alert(<span class="string">"你是Chrome"</span>);</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="regexp">/msie/i</span>.test(ua))&#123;</span><br><span class="line">    alert(<span class="string">"你是IE浏览器~~~"</span>);</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="string">"ActiveXObject"</span> <span class="keyword">in</span> <span class="built_in">window</span>)&#123;</span><br><span class="line">    alert(<span class="string">"你是IE11，枪毙了你~~~"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="history"><a href="#history" class="headerlink" title="history"></a>history</h2><ul>
+<li><code>history</code>：可以用来操作浏览器向前或向后翻页<ul>
+<li>length：<ul>
+<li>属性，可以获取到当成访问的链接数量</li>
+</ul>
+</li>
+<li>back()：<ul>
+<li>可以用来回退到上一个页面，作用和浏览器的回退按钮一样</li>
+</ul>
+</li>
+<li>forward()：<ul>
+<li>可以跳转下一个页面，作用和浏览器的前进按钮一样</li>
+</ul>
+</li>
+<li>go()：<ul>
+<li>可以用来跳转到指定的页面，需要一个整数作为参数</li>
+<li>1:表示向前跳转一个页面 相当于forward()</li>
+<li>2:表示向前跳转两个页面</li>
+<li>-1:表示向后跳转一个页面</li>
+<li>-2:表示向后跳转两个页面</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="location"><a href="#location" class="headerlink" title="location"></a>location</h2><ul>
+<li><code>location</code>：该对象中封装了浏览器的地址栏的信息。如果直接打印location，则可以获取到地址栏的信息（当前页面的完整路径）。</li>
+<li>如果直接将location属性修改为一个完整的路径，或相对路径，则页面会自动跳转到该路径，并且会生成相应的历史记录<ul>
+<li><code>assign()</code>：<ul>
+<li>用来跳转到其他的页面，作用和直接修改location一样</li>
+</ul>
+</li>
+<li><code>reload()</code>：<ul>
+<li>用于重新加载当前页面，作用和刷新按钮一样。如果在方法中传递一个true，作为参数，则会强制清空缓存刷新页面</li>
+</ul>
+</li>
+<li><code>replace()</code>：<ul>
+<li>可以使用一个新的页面替换当前页面，调用完毕也会跳转页面。不会生成历史记录，不能使用回退按钮回退</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="定时调用"><a href="#定时调用" class="headerlink" title="定时调用"></a>定时调用</h2><ul>
+<li><code>setInterval()</code>：可以将一个函数，每隔一段时间执行一次。参数：<ul>
+<li>回调函数，该函数会每隔一段时间被调用一次</li>
+<li>每次调用间隔的时间，单位是毫秒</li>
+<li>返回值：返回一个Number类型的数据，这个数字用来作为定时器的唯一标识</li>
+</ul>
+</li>
+<li><code>clearInterval()</code>：可以用来关闭一个定时器，方法中需要一个定时器的标识作为参数，这样将关闭标识对应的定时器<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> timer = setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    count.innerHTML = num++;</span><br><span class="line">    <span class="keyword">if</span>(num == <span class="number">11</span>)&#123;</span><br><span class="line">        <span class="comment">//关闭定时器</span></span><br><span class="line">        clearInterval(timer);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,<span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="延时调用"><a href="#延时调用" class="headerlink" title="延时调用"></a>延时调用</h2><ul>
+<li>延时调用一个函数不马上执行，而是隔一段时间以后在执行，而且只会执行一次。延时调用和定时调用的区别，定时调用会执行多次，而延时调用只会执行一次。延时调用和定时调用实际上是可以互相代替的，在开发中可以根据自己需要去选择</li>
+<li><code>setTimeout</code>：设置一个延时调用</li>
+<li><code>clearTimeout</code>：关闭一个延时调用</li>
+</ul>
+<h2 id="类操作"><a href="#类操作" class="headerlink" title="类操作"></a>类操作</h2><ul>
+<li>通过style属性来修改元素的样式，每修改一个样式，浏览器就需要重新渲染一次页面。这样的执行的性能是比较差的，而且这种形式当我们要修改多个样式时，也不太方便。</li>
+<li>修改box的class属性<ul>
+<li><code>box.className</code> :我们可以通过修改元素的class属性来间接的修改样式。这样一来，我们只需要修改一次，即可同时修改多个样式，浏览器只需要重新渲染页面一次，性能比较好，并且这种方式，可以使表现和行为进一步的分离。</li>
+</ul>
+</li>
+</ul>
+<p>步骤一：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">hasClass</span>(<span class="params">obj , cn</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//判断obj中有没有cn class</span></span><br><span class="line">    <span class="comment">//创建一个正则表达式</span></span><br><span class="line">    <span class="comment">//var reg = /\bb2\b/;</span></span><br><span class="line">    <span class="keyword">var</span> reg = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"\\b"</span>+cn+<span class="string">"\\b"</span>);</span><br><span class="line">    <span class="keyword">return</span> reg.test(obj.className);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>步骤二：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//用来向一个元素中添加指定的class属性值</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    * 参数:</span></span><br><span class="line"><span class="comment">    * 	obj 要添加class属性的元素</span></span><br><span class="line"><span class="comment">    *  cn 要添加的class值</span></span><br><span class="line"><span class="comment">    * 	</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addClass</span>(<span class="params">obj , cn</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//检查obj中是否含有cn</span></span><br><span class="line">    <span class="keyword">if</span>(!hasClass(obj , cn))&#123;</span><br><span class="line">        obj.className += <span class="string">" "</span>+cn;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>步骤三：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* 删除一个元素中的指定的class属性</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">removeClass</span>(<span class="params">obj , cn</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//创建一个正则表达式,\b有并且独立</span></span><br><span class="line">    <span class="keyword">var</span> reg = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"\\b"</span>+cn+<span class="string">"\\b"</span>);</span><br><span class="line">    <span class="comment">//删除class</span></span><br><span class="line">    obj.className = obj.className.replace(reg , <span class="string">""</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>步骤四：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* toggleClass可以用来切换一个类</span></span><br><span class="line"><span class="comment">* 	如果元素中具有该类，则删除</span></span><br><span class="line"><span class="comment">* 	如果元素中没有该类，则添加</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">toggleClass</span>(<span class="params">obj , cn</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//判断obj中是否含有cn</span></span><br><span class="line">    <span class="keyword">if</span>(hasClass(obj , cn))&#123;</span><br><span class="line">        <span class="comment">//有，则删除</span></span><br><span class="line">        removeClass(obj , cn);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="comment">//没有，则添加</span></span><br><span class="line">        addClass(obj , cn);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h1><ul>
+<li>JS中的对象只有JS自己认识，其他的语言都不认识。JSON就是一个特殊格式的字符串，这个字符串可以被任意的语言所识别，并且可以转换为任意语言中的对象，JSON在开发中主要用来数据的交互。</li>
+<li><code>JSON</code>：JavaScript Object Notation JS对象表示法<ul>
+<li>JSON和JS对象的格式一样，只不过JSON字符串中的属性名必须加双引号,其他的和JS语法一致。</li>
+</ul>
+</li>
+<li>分类：<ol>
+<li>对象 {}</li>
+<li>数组 []</li>
+</ol>
+</li>
+<li>JSON中允许的值：<ol>
+<li>字符串</li>
+<li>数值</li>
+<li>布尔值</li>
+<li>null</li>
+<li>对象</li>
+<li>数组</li>
+</ol>
+</li>
+</ul>
+<h2 id="转换"><a href="#转换" class="headerlink" title="转换"></a>转换</h2><ul>
+<li><code>JSON.parse()</code>：json -&gt; js<ul>
+<li>可以将以JSON字符串转换为js对象</li>
+<li>它需要一个JSON字符串作为参数，会将该字符串转换为JS对象并返回</li>
+</ul>
+</li>
+<li><code>JSON.stringify()</code>： js -&gt; json<ul>
+<li>可以将一个JS对象转换为JSON字符串</li>
+<li>需要一个js对象作为参数，会返回一个JSON字符串</li>
+</ul>
 </li>
 </ul>
 
@@ -424,7 +572,7 @@
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#引入外部js文件"><span class="toc-number">2.</span> <span class="toc-text">引入外部js文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#对象"><span class="toc-number">3.</span> <span class="toc-text">对象</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#对象字面量"><span class="toc-number">3.1.</span> <span class="toc-text">对象字面量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#枚举对象中的属性"><span class="toc-number">3.2.</span> <span class="toc-text">枚举对象中的属性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#函数"><span class="toc-number">4.</span> <span class="toc-text">函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DOM"><span class="toc-number">5.</span> <span class="toc-text">DOM</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#节点"><span class="toc-number">5.1.</span> <span class="toc-text">节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件"><span class="toc-number">5.2.</span> <span class="toc-text">事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文档加载"><span class="toc-number">5.3.</span> <span class="toc-text">文档加载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DOM查询"><span class="toc-number">5.4.</span> <span class="toc-text">DOM查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#获取元素节点的子节点"><span class="toc-number">5.4.1.</span> <span class="toc-text">获取元素节点的子节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取父节点和兄弟节点"><span class="toc-number">5.4.2.</span> <span class="toc-text">获取父节点和兄弟节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其余方法"><span class="toc-number">5.4.3.</span> <span class="toc-text">其余方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DOM增删改"><span class="toc-number">5.5.</span> <span class="toc-text">DOM增删改</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#添加删除练习"><span class="toc-number">5.5.1.</span> <span class="toc-text">添加删除练习</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#操作内联样式"><span class="toc-number">5.6.</span> <span class="toc-text">操作内联样式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#getStyle"><span class="toc-number">5.6.1.</span> <span class="toc-text">getStyle()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其它样式"><span class="toc-number">5.7.</span> <span class="toc-text">其它样式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件对象"><span class="toc-number">5.8.</span> <span class="toc-text">事件对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#div跟随鼠标移动"><span class="toc-number">5.8.1.</span> <span class="toc-text">div跟随鼠标移动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件的冒泡"><span class="toc-number">5.8.2.</span> <span class="toc-text">事件的冒泡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件的委派"><span class="toc-number">5.8.3.</span> <span class="toc-text">事件的委派</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件的绑定"><span class="toc-number">5.8.4.</span> <span class="toc-text">事件的绑定</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拖拽"><span class="toc-number">5.9.</span> <span class="toc-text">拖拽</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#拖拽异常"><span class="toc-number">5.9.1.</span> <span class="toc-text">拖拽异常</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#滚轮事件"><span class="toc-number">5.10.</span> <span class="toc-text">滚轮事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#键盘事件"><span class="toc-number">5.11.</span> <span class="toc-text">键盘事件</span></a></li></ol></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#引入外部js文件"><span class="toc-number">2.</span> <span class="toc-text">引入外部js文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#对象"><span class="toc-number">3.</span> <span class="toc-text">对象</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#对象字面量"><span class="toc-number">3.1.</span> <span class="toc-text">对象字面量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#枚举对象中的属性"><span class="toc-number">3.2.</span> <span class="toc-text">枚举对象中的属性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#函数"><span class="toc-number">4.</span> <span class="toc-text">函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DOM"><span class="toc-number">5.</span> <span class="toc-text">DOM</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#节点"><span class="toc-number">5.1.</span> <span class="toc-text">节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件"><span class="toc-number">5.2.</span> <span class="toc-text">事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文档加载"><span class="toc-number">5.3.</span> <span class="toc-text">文档加载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DOM查询"><span class="toc-number">5.4.</span> <span class="toc-text">DOM查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#获取元素节点的子节点"><span class="toc-number">5.4.1.</span> <span class="toc-text">获取元素节点的子节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取父节点和兄弟节点"><span class="toc-number">5.4.2.</span> <span class="toc-text">获取父节点和兄弟节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其余方法"><span class="toc-number">5.4.3.</span> <span class="toc-text">其余方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DOM增删改"><span class="toc-number">5.5.</span> <span class="toc-text">DOM增删改</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#添加删除练习"><span class="toc-number">5.5.1.</span> <span class="toc-text">添加删除练习</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#操作内联样式"><span class="toc-number">5.6.</span> <span class="toc-text">操作内联样式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#getStyle"><span class="toc-number">5.6.1.</span> <span class="toc-text">getStyle()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其它样式"><span class="toc-number">5.7.</span> <span class="toc-text">其它样式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件对象"><span class="toc-number">5.8.</span> <span class="toc-text">事件对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#div跟随鼠标移动"><span class="toc-number">5.8.1.</span> <span class="toc-text">div跟随鼠标移动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件的冒泡"><span class="toc-number">5.8.2.</span> <span class="toc-text">事件的冒泡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件的委派"><span class="toc-number">5.8.3.</span> <span class="toc-text">事件的委派</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件的绑定"><span class="toc-number">5.8.4.</span> <span class="toc-text">事件的绑定</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拖拽"><span class="toc-number">5.9.</span> <span class="toc-text">拖拽</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#拖拽异常"><span class="toc-number">5.9.1.</span> <span class="toc-text">拖拽异常</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#滚轮事件"><span class="toc-number">5.10.</span> <span class="toc-text">滚轮事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#键盘事件"><span class="toc-number">5.11.</span> <span class="toc-text">键盘事件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#BOM"><span class="toc-number">6.</span> <span class="toc-text">BOM</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#history"><span class="toc-number">6.1.</span> <span class="toc-text">history</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#location"><span class="toc-number">6.2.</span> <span class="toc-text">location</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#定时调用"><span class="toc-number">6.3.</span> <span class="toc-text">定时调用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#延时调用"><span class="toc-number">6.4.</span> <span class="toc-text">延时调用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类操作"><span class="toc-number">6.5.</span> <span class="toc-text">类操作</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JSON"><span class="toc-number">7.</span> <span class="toc-text">JSON</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#转换"><span class="toc-number">7.1.</span> <span class="toc-text">转换</span></a></li></ol></li></ol>	
         </div>
     
 </div>
