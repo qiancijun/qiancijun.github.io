@@ -7681,7 +7681,48 @@ offset从0开始可以省略
 </ul>
 <h2 id="scrollTop"><a href="#scrollTop" class="headerlink" title="scrollTop"></a>scrollTop</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> btns = <span class="built_in">document</span>.getElementsByTagName(<span class="string">"button"</span>);</span><br><span class="line">btns[<span class="number">0</span>].onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 获取元素滚动的偏移量</span></span><br><span class="line">    <span class="built_in">console</span>.log($(<span class="string">".box1"</span>).scrollTop());</span><br><span class="line">    <span class="comment">// 获取网页滚动的偏移量</span></span><br><span class="line">    <span class="comment">// ie不能写html，只能用body来获取，但是body在chrome获取不了</span></span><br><span class="line">    <span class="built_in">console</span>.log($(<span class="string">"html"</span>).scrollTop() + $(<span class="string">"body"</span>).scrollTop());</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">btns[<span class="number">1</span>].onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    $(<span class="string">".box1"</span>).scrollTop(<span class="number">100</span>);</span><br><span class="line">    <span class="comment">// 设置网页的滚动偏移量</span></span><br><span class="line">    $(<span class="string">"html, body"</span>).scrollTop(<span class="number">100</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<h1 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h1><h2 id="事件绑定"><a href="#事件绑定" class="headerlink" title="事件绑定"></a>事件绑定</h2>]]></content>
+<h1 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h1><h2 id="事件绑定"><a href="#事件绑定" class="headerlink" title="事件绑定"></a>事件绑定</h2><ol>
+<li>通过<code>eventName(fn)</code>：编码效率较高，有的js事件添加不上。多个绑定不会被覆盖<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$(<span class="string">"button"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">"hello"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+<li>通过<code>on(eventName,fn)</code>推荐用on，后面的会覆盖前面的<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$(<span class="string">"button"</span>).on(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">"hello"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="事件解绑"><a href="#事件解绑" class="headerlink" title="事件解绑"></a>事件解绑</h2><ul>
+<li><code>off()</code>：如果不传递参数，移除所有事件</li>
+<li><code>off(&quot;click&quot;, method)</code>：移除指定类型的指定事件 </li>
+</ul>
+<h2 id="事件自动触发"><a href="#事件自动触发" class="headerlink" title="事件自动触发"></a>事件自动触发</h2><ul>
+<li><code>trigger()</code>:事件自动触发，会触发事件冒泡，会触发默认行为<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$(<span class="string">"div"</span>).trigger(<span class="string">"click"</span>);</span><br></pre></td></tr></table></figure></li>
+<li><code>triggerHandler</code>自动触发事件，不会触发事件冒泡，不会触发默认行为<blockquote>
+<p>注：如果想对a标签用trigger建议在a中嵌套span</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="自定义事件"><a href="#自定义事件" class="headerlink" title="自定义事件"></a>自定义事件</h2><ol>
+<li>自定义事件只能通过<code>on</code>来绑定</li>
+<li>事件必须通过<code>trigger()</code>来触发<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$(<span class="string">"div"</span>).on(<span class="string">"myclick"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">"hello"</span>);</span><br><span class="line">&#125;);</span><br><span class="line">$(<span class="string">"div"</span>).trigger(<span class="string">"myclick"</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="事件命名空间"><a href="#事件命名空间" class="headerlink" title="事件命名空间"></a>事件命名空间</h2></li>
+</ol>
+<ul>
+<li>事件必须通过on来绑定，在on绑定的事件后面加上<code>.name</code>，再通过自动触发来调用<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$(<span class="string">"div"</span>).on(<span class="string">"click.my"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">"hello1"</span>);</span><br><span class="line">&#125;);</span><br><span class="line">$(<span class="string">"div"</span>).on(<span class="string">"click.you"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">"hello2"</span>);</span><br><span class="line">&#125;);</span><br><span class="line">$(<span class="string">"div"</span>).trigger(<span class="string">"click.you"</span>)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="事件委托"><a href="#事件委托" class="headerlink" title="事件委托"></a>事件委托</h2><ul>
+<li><code>delegate()</code>：要委托的对象，要委托的事件，回调函数<br>布局：<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span>&gt;</span>按钮<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>Hello<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>Hello<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>Hello<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+行为：<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    $(<span class="string">"button"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        $(<span class="string">"ul"</span>).append(<span class="string">"&lt;li&gt;Hi&lt;/li&gt;"</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    $(<span class="string">"ul"</span>).delegate(<span class="string">"li"</span>, <span class="string">"click"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log($(<span class="keyword">this</span>).text());</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="移入移出事件"><a href="#移入移出事件" class="headerlink" title="移入移出事件"></a>移入移出事件</h2><ul>
+<li><code>mouseover()</code>：鼠标移入事件</li>
+<li><code>mouseout()</code>：鼠标移出事件</li>
+<li>移入移出事件都会触发事件的冒泡，jQuery提供了另外两个方法</li>
+<li><code>mouseenter()</code>：鼠标移入事件</li>
+<li><code>mouseleave()</code>：鼠标移出事件</li>
+<li><code>hover(func1, func2)</code>：鼠标移入移出事件，第一个参数为移入函数，第二个参数为移出函数。如果只传入一个则即监听移入也监听移出。</li>
+</ul>
+]]></content>
       <categories>
         <category>前端</category>
       </categories>
