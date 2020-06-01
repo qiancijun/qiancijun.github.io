@@ -5343,6 +5343,8 @@ offset从0开始可以省略
 <ul>
 <li><p><code>action</code>：表单要提交的服务器的地址</p>
 </li>
+<li><p><code>method</code>：设置提交的方式为GET或POST</p>
+</li>
 <li><p>添加表单项：</p>
 <ul>
 <li><p>input：</p>
@@ -7507,6 +7509,181 @@ offset从0开始可以省略
 ]]></content>
       <categories>
         <category>数据库</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>jQuery</title>
+    <url>/2020/05/31/jQuery/</url>
+    <content><![CDATA[<h1 id="引入jQuery"><a href="#引入jQuery" class="headerlink" title="引入jQuery"></a>引入jQuery</h1><ul>
+<li>1.x版本支持IE678<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;script src=<span class="string">"./jquery-1.12.4.js"</span>&gt;&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="入口函数"><a href="#入口函数" class="headerlink" title="入口函数"></a>入口函数</h1><ul>
+<li>jQuery的windouw.onload<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">"hello world"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><ul>
+<li>原生JS会等到DOM元素加载完毕，才会执行。如果有多个入口函数，后编写会覆盖之前的。</li>
+<li>jQuery会等到DOM元素加载完毕，但是不会等到图片也加载完就会执行。如果有多个入口函数，不会覆盖。</li>
+</ul>
+<h2 id="其他写法"><a href="#其他写法" class="headerlink" title="其他写法"></a>其他写法</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">jQuery(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">"hello world"</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 推荐使用这种</span></span><br><span class="line">$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">"hello world"</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">jQuery(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">"hello world"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="冲突问题"><a href="#冲突问题" class="headerlink" title="冲突问题"></a>冲突问题</h2><ul>
+<li>如果其它框架也有$符号，会造成$符号的多义</li>
+<li>解决方案：<ul>
+<li>方案一：释放$的使用权 <code>jQuery.noConflict();</code></li>
+<li>方案二：自定义一个访问符号<code>let nj = jQuery.noConflict;</code></li>
+</ul>
+</li>
+</ul>
+<h1 id="核心函数"><a href="#核心函数" class="headerlink" title="核心函数"></a>核心函数</h1><ul>
+<li>$():就代表调用jQuery的核心函数</li>
+</ul>
+<ol>
+<li>接受一个函数<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">"hello world"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+<li>接受一个字符串选择器<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 返回一个jQuery对象，对象保存了找到的DOM元素</span></span><br><span class="line"><span class="keyword">let</span> $box1 = $(<span class="string">".box1"</span>);</span><br><span class="line"><span class="built_in">console</span>.log($box1);</span><br></pre></td></tr></table></figure></li>
+<li>接受一个代码片段<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 返回一个jQuery对象，对象保存了创建的DOM元素</span></span><br><span class="line"><span class="keyword">let</span> $p = $(<span class="string">"&lt;p&gt;我是p标签&lt;/p&gt;"</span>);</span><br><span class="line"><span class="built_in">console</span>.log($p);</span><br></pre></td></tr></table></figure></li>
+<li>接受一个DOM元素<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 原生js对象会被包装成jQuery对象，返回jQuery对象</span></span><br><span class="line"><span class="keyword">let</span> span = <span class="built_in">document</span>.getElementsByTagName(<span class="string">"span"</span>)[<span class="number">0</span>];</span><br><span class="line"><span class="keyword">let</span> $span = $(span);</span><br><span class="line"><span class="built_in">console</span>.log($span);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="jQuery对象"><a href="#jQuery对象" class="headerlink" title="jQuery对象"></a>jQuery对象</h2><ul>
+<li>jQuery对象是一个伪数组，有length属性</li>
+</ul>
+<h2 id="静态方法和实例方法"><a href="#静态方法和实例方法" class="headerlink" title="静态方法和实例方法"></a>静态方法和实例方法</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 类对象</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">AClass</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"><span class="comment">// 添加一个静态方法</span></span><br><span class="line">AClass.staticMethod = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">"static"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 添加一个实例方法</span></span><br><span class="line">AClass.prototype.instanceMethod = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">"instance"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 调用静态方法</span></span><br><span class="line">AClass.staticMethod();</span><br><span class="line"><span class="comment">// 调用实例方法</span></span><br><span class="line"><span class="keyword">let</span> a = <span class="keyword">new</span> AClass();</span><br><span class="line">a.instanceMethod();</span><br></pre></td></tr></table></figure>
+
+<h2 id="静态方法"><a href="#静态方法" class="headerlink" title="静态方法"></a>静态方法</h2><h3 id="each"><a href="#each" class="headerlink" title="each"></a>each</h3><ul>
+<li>原生js：原生的forEach方法只能遍历数组，不能遍历伪数组<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> nums = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line">nums.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">value, index</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(value, index);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+<li>jQuery：与原生js传入的参数不同，可以遍历伪数组<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> nums = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line">$.each(nums, <span class="function"><span class="keyword">function</span>(<span class="params">index, value</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(index, value);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="map"><a href="#map" class="headerlink" title="map"></a>map</h3><ul>
+<li><p>原生js：不能遍历伪数组</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> nums = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line"><span class="keyword">let</span> obj = &#123;<span class="number">0</span>:<span class="number">1</span>, <span class="number">1</span>:<span class="number">2</span>, <span class="number">2</span>:<span class="number">3</span>, <span class="number">3</span>:<span class="number">4</span>, <span class="number">4</span>:<span class="number">5</span>, <span class="attr">length</span>:<span class="number">5</span>&#125;;</span><br><span class="line">nums.map(<span class="function"><span class="keyword">function</span>(<span class="params">value, index, array</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(value, index, array);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+<li><p>jQuery：可以遍历伪数组</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> nums = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line"><span class="keyword">let</span> obj = &#123;<span class="number">0</span>:<span class="number">1</span>, <span class="number">1</span>:<span class="number">2</span>, <span class="number">2</span>:<span class="number">3</span>, <span class="number">3</span>:<span class="number">4</span>, <span class="number">4</span>:<span class="number">5</span>, <span class="attr">length</span>:<span class="number">5</span>&#125;;</span><br><span class="line">$.map(nums, <span class="function"><span class="keyword">function</span>(<span class="params">value, index</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(value, index);</span><br><span class="line">&#125;);</span><br><span class="line">$.map(obj, <span class="function"><span class="keyword">function</span>(<span class="params">value, index</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(value, index);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>jQuery中map与each的区别：</p>
+<ul>
+<li>each静态方法默认的返回值，遍历谁返回谁，不支持在回调函数中对遍历的数组进行处理</li>
+<li>map静态方法的返回值是一个空数组，可以在回调函数中通过return对遍历的数组进行处理，生成一个新的数组</li>
+</ul>
+</li>
+</ul>
+<h3 id="trim"><a href="#trim" class="headerlink" title="trim"></a>trim</h3><ul>
+<li>去除字符串中两端的空格<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">"   hello   "</span>;</span><br><span class="line"><span class="built_in">console</span>.log(str);</span><br><span class="line"><span class="keyword">let</span> $newStr = $.trim(str);</span><br><span class="line"><span class="built_in">console</span>.log($newStr);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="isArray"><a href="#isArray" class="headerlink" title="isArray"></a>isArray</h3><ul>
+<li>判断传入的对象是不是数组对象，返回一个布尔值，伪数组为false，只有真数组为true<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> nums = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line"><span class="keyword">let</span> obj = &#123;<span class="number">0</span>:<span class="number">1</span>, <span class="number">1</span>:<span class="number">2</span>, <span class="number">2</span>:<span class="number">3</span>, <span class="number">3</span>:<span class="number">4</span>, <span class="number">4</span>:<span class="number">5</span>, <span class="attr">length</span>:<span class="number">5</span>&#125;;</span><br><span class="line"><span class="keyword">let</span> num = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">let</span> res1 = $.isArray(nums);</span><br><span class="line"><span class="keyword">let</span> res2 = $.isArray(obj);</span><br><span class="line"><span class="keyword">let</span> res3 = $.isArray(num);</span><br><span class="line"><span class="built_in">console</span>.log(res1, res2, res3);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="isWindow"><a href="#isWindow" class="headerlink" title="isWindow"></a>isWindow</h3><ul>
+<li>判断传入的对象是不是window对象，返回一个布尔值<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> num = <span class="number">19</span>;</span><br><span class="line"><span class="keyword">let</span> res1 = $.isWindow(num);</span><br><span class="line"><span class="keyword">let</span> res2 = $.isWindow(<span class="built_in">window</span>);</span><br><span class="line"><span class="built_in">console</span>.log(res1, res2);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="isFunction"><a href="#isFunction" class="headerlink" title="isFunction"></a>isFunction</h3><ul>
+<li>判断传入的对象是不是一个函数，<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> nums = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line"><span class="keyword">let</span> obj = &#123;<span class="number">0</span>:<span class="number">1</span>, <span class="number">1</span>:<span class="number">2</span>, <span class="number">2</span>:<span class="number">3</span>, <span class="number">3</span>:<span class="number">4</span>, <span class="number">4</span>:<span class="number">5</span>, <span class="attr">length</span>:<span class="number">5</span>&#125;;</span><br><span class="line"><span class="keyword">let</span> num = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">let</span> func1 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"hello"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> res1 = $.isFunction(nums);</span><br><span class="line"><span class="keyword">let</span> res2 = $.isFunction(obj);</span><br><span class="line"><span class="keyword">let</span> res3 = $.isFunction(func1);</span><br><span class="line"><span class="built_in">console</span>.log(res1, res2, res3);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：jQuery本质是一个函数</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="holdReady"><a href="#holdReady" class="headerlink" title="holdReady"></a>holdReady</h3><ul>
+<li>暂停ready的执行，启用ready执行<code>$.holdReady(false);</code><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$.holdReady(<span class="literal">true</span>);</span><br><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">"hello"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="选择器"><a href="#选择器" class="headerlink" title="选择器"></a>选择器</h1><h2 id="内容选择器"><a href="#内容选择器" class="headerlink" title="内容选择器"></a>内容选择器</h2><ol>
+<li><p><code>:empty</code>：找到没有文本内容没有子元素的指定元素</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> $div = $(<span class="string">"div:empty"</span>);</span><br><span class="line"><span class="built_in">console</span>.log($div);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>:parent</code>：找到有文本内容或有子元素的指定元素</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> $div1 = $(<span class="string">"div:parent"</span>);</span><br><span class="line"><span class="built_in">console</span>.log($div1);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>:contains</code>：找到包含指定文本内容的指定元素</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> $div2 = $(<span class="string">"div:contains('我是div')"</span>);</span><br><span class="line"><span class="built_in">console</span>.log($div2);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>has：找到包含指定子元素的指定元素</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> $div3 = $(<span class="string">"div:has('p')"</span>);</span><br><span class="line"><span class="built_in">console</span>.log($div3);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="操作属性节点"><a href="#操作属性节点" class="headerlink" title="操作属性节点"></a>操作属性节点</h2><h3 id="attr"><a href="#attr" class="headerlink" title="attr"></a>attr</h3><ul>
+<li>获取，设置属性节点的值。可以传递一个或两个参数。如果传递一个参数代表获取属性节点的值，两个则代表设置属性节点的值<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> res = $(<span class="string">"span"</span>).attr(<span class="string">"class"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(res);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：无论找到多少个元素，都会返回第一个元素指定的属性节点的值</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> res = $(<span class="string">"span"</span>).attr(<span class="string">"class"</span>, <span class="string">"span3"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(res);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：如果是设置，则找到多少个，就设置多少个。如果没有该属性节点，就新增一个属性节点</p>
+</blockquote>
+<h3 id="removeAttr"><a href="#removeAttr" class="headerlink" title="removeAttr"></a>removeAttr</h3><ul>
+<li>删除属性节点<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$(<span class="string">"span"</span>).removeAttr(<span class="string">"class"</span>);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：会删除所有找到元素的属性节点</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="操作属性"><a href="#操作属性" class="headerlink" title="操作属性"></a>操作属性</h2><h3 id="prop"><a href="#prop" class="headerlink" title="prop"></a>prop</h3><ul>
+<li>特点和attr一致<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$span = $(<span class="string">"span"</span>).prop(<span class="string">"className"</span>);</span><br></pre></td></tr></table></figure></li>
+<li>不仅能够操作属性，还能够操作属性节点。在具有true和false的属性节点用prop，其余用attr<h3 id="removeProp"><a href="#removeProp" class="headerlink" title="removeProp"></a>removeProp</h3></li>
+<li>特点和removeAttr一致</li>
+</ul>
+<h1 id="jQuery操作class"><a href="#jQuery操作class" class="headerlink" title="jQuery操作class"></a>jQuery操作class</h1><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> btn = <span class="built_in">document</span>.getElementsByTagName(<span class="string">"button"</span>);</span><br><span class="line">    btn[<span class="number">0</span>].onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        $(<span class="string">"div"</span>).addClass(<span class="string">"class1 class2"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    btn[<span class="number">1</span>].onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        $(<span class="string">"div"</span>).removeClass(<span class="string">"class2"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    btn[<span class="number">2</span>].onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        $(<span class="string">"div"</span>).toggleClass(<span class="string">"class1"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="addClass"><a href="#addClass" class="headerlink" title="addClass"></a>addClass</h2><ul>
+<li>添加一个类，如果要添加多个，多个类名之间用空格隔开<br><code>$(&quot;div&quot;).addClass(&quot;class1 class2&quot;);</code><h2 id="removeClass"><a href="#removeClass" class="headerlink" title="removeClass"></a>removeClass</h2></li>
+<li>删除一个类，如果要删除多个，多个类名之间用空格隔开<br><code>$(&quot;div&quot;).removeClass(&quot;class2&quot;);</code><h2 id="toggleClass"><a href="#toggleClass" class="headerlink" title="toggleClass"></a>toggleClass</h2></li>
+<li>切换类，如果有就删除，没有就添加<br><code>$(&quot;div&quot;).toggleClass(&quot;class1&quot;);</code></li>
+</ul>
+<h1 id="文本值操作"><a href="#文本值操作" class="headerlink" title="文本值操作"></a>文本值操作</h1><p>布局:</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span>&gt;</span>设置HTML<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span>&gt;</span>获取HTML<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span>&gt;</span>设置text<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span>&gt;</span>获取text<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span>&gt;</span>设置val<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span>&gt;</span>获取val<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> btn = <span class="built_in">document</span>.getElementsByTagName(<span class="string">"button"</span>);</span><br><span class="line">    btn[<span class="number">0</span>].onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        $(<span class="string">"div"</span>).html(<span class="string">"&lt;p&gt;我是p标签&lt;/p&gt;"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    btn[<span class="number">1</span>].onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> $html = $(<span class="string">"div"</span>).html();</span><br><span class="line">        <span class="built_in">console</span>.log($html);</span><br><span class="line">    &#125;</span><br><span class="line">    btn[<span class="number">2</span>].onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        $(<span class="string">"div"</span>).text(<span class="string">"hello world"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    btn[<span class="number">3</span>].onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> $text = $(<span class="string">"div"</span>).text();</span><br><span class="line">        <span class="built_in">console</span>.log($text);</span><br><span class="line">    &#125;</span><br><span class="line">    btn[<span class="number">4</span>].onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        $(<span class="string">"input"</span>).val(<span class="string">"hello world"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    btn[<span class="number">5</span>].onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> $input = $(<span class="string">"input"</span>).val();</span><br><span class="line">        <span class="built_in">console</span>.log($input);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="html"><a href="#html" class="headerlink" title="html"></a>html</h2><ul>
+<li>和原生js中<code>innerHTML</code>一模一样<br><code>$(&quot;div&quot;).html(&quot;&lt;p&gt;我是p标签&lt;/p&gt;&quot;);</code></li>
+<li>获取HTML<br><code>let $html = $(&quot;div&quot;).html();</code><h2 id="text"><a href="#text" class="headerlink" title="text"></a>text</h2></li>
+<li>设置文本内容<br><code>$(&quot;div&quot;).text(&quot;hello world&quot;);</code></li>
+<li>获取文本内容<br><code>let $text = $(&quot;div&quot;).text();</code><h2 id="val"><a href="#val" class="headerlink" title="val"></a>val</h2></li>
+<li>设置input的value<br><code>$(&quot;input&quot;).val(&quot;hello world&quot;);</code></li>
+<li>获取input的value<br><code>let $input = $(&quot;input&quot;).val();</code></li>
+</ul>
+<h1 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h1><h2 id="操作CSS样式"><a href="#操作CSS样式" class="headerlink" title="操作CSS样式"></a>操作CSS样式</h2><ul>
+<li><code>css()</code>：通过css方法就可以用jQuery来操作css样式</li>
+</ul>
+<ol>
+<li>逐个设置<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$(<span class="string">"div"</span>).css(<span class="string">"height"</span>, <span class="string">"100px"</span>);</span><br><span class="line">$(<span class="string">"div"</span>).css(<span class="string">"width"</span>, <span class="string">"100px"</span>);</span><br><span class="line">$(<span class="string">"div"</span>).css(<span class="string">"background-color"</span>, <span class="string">"#bfa"</span>);</span><br></pre></td></tr></table></figure></li>
+<li>链式设置<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 如果大于三个不建议使用，降低了阅读性</span></span><br><span class="line">$(<span class="string">"div"</span>).css(<span class="string">"height"</span>, <span class="string">"100px"</span>).css(<span class="string">"width"</span>, <span class="string">"100px"</span>).css(<span class="string">"background-color"</span>, <span class="string">"#bfa"</span>);</span><br></pre></td></tr></table></figure></li>
+<li>批量设置</li>
+</ol>
+<ul>
+<li>往css方法中传入一个对象来设置<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$(<span class="string">"div"</span>).css(&#123;</span><br><span class="line">    height: <span class="string">"100px"</span>,</span><br><span class="line">    width: <span class="string">"100px"</span>,</span><br><span class="line">    backgroundColor: <span class="string">"#bfa"</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<ol start="4">
+<li>获取css样式<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> $width = $(<span class="string">"div"</span>).css(<span class="string">"width"</span>);</span><br><span class="line"><span class="keyword">let</span> $height = $(<span class="string">"div"</span>).css(<span class="string">"height"</span>);</span><br><span class="line"><span class="built_in">console</span>.log($width, $height);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="操作元素位置"><a href="#操作元素位置" class="headerlink" title="操作元素位置"></a>操作元素位置</h2><ul>
+<li><code>offset()</code>：获取元素距离窗口的偏移位</li>
+<li><code>position()</code>：元素距离定位元素的偏移位，只能获取，不能设置<br>页面结构：<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box1"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box2"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span>&gt;</span>获取<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span>&gt;</span>设置<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+页面样式:<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"> *&#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.box1</span>&#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#bfa</span>;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">    <span class="attribute">margin-left</span>: <span class="number">50px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.box2</span>&#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: orange;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">10px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+页面行为：<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> btns = <span class="built_in">document</span>.getElementsByTagName(<span class="string">"button"</span>);</span><br><span class="line"><span class="comment">// 获取</span></span><br><span class="line">btns[<span class="number">0</span>].onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 获取box1的宽度</span></span><br><span class="line">    <span class="keyword">let</span> $box1_width = $(<span class="string">".box1"</span>).width();</span><br><span class="line">    <span class="built_in">console</span>.log($box1_width);</span><br><span class="line">    <span class="comment">// 获取box2距离窗口左边的距离</span></span><br><span class="line">    <span class="keyword">let</span> $offset = $(<span class="string">".box2"</span>).offset().left;</span><br><span class="line">    <span class="built_in">console</span>.log($offset);</span><br><span class="line">    <span class="comment">// 获取box2距离box1左边的距离</span></span><br><span class="line">    <span class="keyword">let</span> $position = $(<span class="string">".box2"</span>).position().left;</span><br><span class="line">    <span class="built_in">console</span>.log($position);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 设置</span></span><br><span class="line">btns[<span class="number">1</span>].onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 设置元素的宽度</span></span><br><span class="line">    $box1_width = $(<span class="string">".box1"</span>).width(<span class="string">"300px"</span>);</span><br><span class="line">    设置box2距离窗口的距离</span><br><span class="line">    $(<span class="string">".box2"</span>).offset(&#123;</span><br><span class="line">        left: <span class="number">10</span></span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="scrollTop"><a href="#scrollTop" class="headerlink" title="scrollTop"></a>scrollTop</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> btns = <span class="built_in">document</span>.getElementsByTagName(<span class="string">"button"</span>);</span><br><span class="line">btns[<span class="number">0</span>].onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 获取元素滚动的偏移量</span></span><br><span class="line">    <span class="built_in">console</span>.log($(<span class="string">".box1"</span>).scrollTop());</span><br><span class="line">    <span class="comment">// 获取网页滚动的偏移量</span></span><br><span class="line">    <span class="comment">// ie不能写html，只能用body来获取，但是body在chrome获取不了</span></span><br><span class="line">    <span class="built_in">console</span>.log($(<span class="string">"html"</span>).scrollTop() + $(<span class="string">"body"</span>).scrollTop());</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">btns[<span class="number">1</span>].onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    $(<span class="string">".box1"</span>).scrollTop(<span class="number">100</span>);</span><br><span class="line">    <span class="comment">// 设置网页的滚动偏移量</span></span><br><span class="line">    $(<span class="string">"html, body"</span>).scrollTop(<span class="number">100</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h1 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h1><h2 id="事件绑定"><a href="#事件绑定" class="headerlink" title="事件绑定"></a>事件绑定</h2>]]></content>
+      <categories>
+        <category>前端</category>
       </categories>
   </entry>
 </search>
