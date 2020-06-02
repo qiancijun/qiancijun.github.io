@@ -275,6 +275,72 @@ jQuery的windouw,">
 <li><code>mouseleave()</code>：鼠标移出事件</li>
 <li><code>hover(func1, func2)</code>：鼠标移入移出事件，第一个参数为移入函数，第二个参数为移出函数。如果只传入一个则即监听移入也监听移出。</li>
 </ul>
+<h1 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h1><ol>
+<li>show</li>
+</ol>
+<ul>
+<li>显示动画，第一个参数为毫秒，第二个参数为回调函数</li>
+</ul>
+<ol start="2">
+<li>hide</li>
+</ol>
+<ul>
+<li>隐藏动画，第一个参数为毫秒数，第二个参数为回调函数</li>
+</ul>
+<ol start="3">
+<li>slideUp</li>
+</ol>
+<ul>
+<li>收起动画，第一个参数为毫秒数，第二个参数为回调函数</li>
+</ul>
+<ol start="4">
+<li>slideDown</li>
+</ol>
+<ul>
+<li>展开动画，第一个参数为毫秒数，第二个参数为回调函数</li>
+</ul>
+<ol start="5">
+<li>slideToggle</li>
+</ol>
+<ul>
+<li>收起和展开的切换</li>
+</ul>
+<ol start="6">
+<li>fadeIn</li>
+</ol>
+<ul>
+<li>淡入动画，第一个参数为毫秒数，第二个参数为回调函数</li>
+</ul>
+<ol start="7">
+<li>fadeOut</li>
+</ol>
+<ul>
+<li>淡出动画，第一个参数为毫秒数，第二个参数为回调函数</li>
+</ul>
+<ol start="8">
+<li>fadeToggle</li>
+</ol>
+<ul>
+<li>淡入淡出切换，第一个参数为毫秒数，第二个参数为回调函数</li>
+</ul>
+<ol start="9">
+<li>fadeTo</li>
+</ol>
+<ul>
+<li>淡入到动画，第一个参数为毫秒数，第二个参数为淡入程度，第三个参数为回调函数</li>
+</ul>
+<h2 id="自定义动画"><a href="#自定义动画" class="headerlink" title="自定义动画"></a>自定义动画</h2><ul>
+<li>animate：参数<ol>
+<li>可以接受一个对象，要修改的属性和值</li>
+<li>毫秒数</li>
+<li>效果，linear或swing</li>
+<li>回调函数</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>属性累加：如果想要在原基础上增加100，可以写”+=100”</p>
+</blockquote>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
@@ -314,7 +380,7 @@ jQuery的windouw,">
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#引入jQuery"><span class="toc-number">1.</span> <span class="toc-text">引入jQuery</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#入口函数"><span class="toc-number">2.</span> <span class="toc-text">入口函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#区别"><span class="toc-number">2.1.</span> <span class="toc-text">区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他写法"><span class="toc-number">2.2.</span> <span class="toc-text">其他写法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#冲突问题"><span class="toc-number">2.3.</span> <span class="toc-text">冲突问题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#核心函数"><span class="toc-number">3.</span> <span class="toc-text">核心函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#jQuery对象"><span class="toc-number">3.1.</span> <span class="toc-text">jQuery对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#静态方法和实例方法"><span class="toc-number">3.2.</span> <span class="toc-text">静态方法和实例方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#静态方法"><span class="toc-number">3.3.</span> <span class="toc-text">静态方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#each"><span class="toc-number">3.3.1.</span> <span class="toc-text">each</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#map"><span class="toc-number">3.3.2.</span> <span class="toc-text">map</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#trim"><span class="toc-number">3.3.3.</span> <span class="toc-text">trim</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#isArray"><span class="toc-number">3.3.4.</span> <span class="toc-text">isArray</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#isWindow"><span class="toc-number">3.3.5.</span> <span class="toc-text">isWindow</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#isFunction"><span class="toc-number">3.3.6.</span> <span class="toc-text">isFunction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#holdReady"><span class="toc-number">3.3.7.</span> <span class="toc-text">holdReady</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#选择器"><span class="toc-number">4.</span> <span class="toc-text">选择器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#内容选择器"><span class="toc-number">4.1.</span> <span class="toc-text">内容选择器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#操作属性节点"><span class="toc-number">4.2.</span> <span class="toc-text">操作属性节点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#attr"><span class="toc-number">4.2.1.</span> <span class="toc-text">attr</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#removeAttr"><span class="toc-number">4.2.2.</span> <span class="toc-text">removeAttr</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#操作属性"><span class="toc-number">4.3.</span> <span class="toc-text">操作属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#prop"><span class="toc-number">4.3.1.</span> <span class="toc-text">prop</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#removeProp"><span class="toc-number">4.3.2.</span> <span class="toc-text">removeProp</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#jQuery操作class"><span class="toc-number">5.</span> <span class="toc-text">jQuery操作class</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#addClass"><span class="toc-number">5.1.</span> <span class="toc-text">addClass</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#removeClass"><span class="toc-number">5.2.</span> <span class="toc-text">removeClass</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#toggleClass"><span class="toc-number">5.3.</span> <span class="toc-text">toggleClass</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#文本值操作"><span class="toc-number">6.</span> <span class="toc-text">文本值操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#html"><span class="toc-number">6.1.</span> <span class="toc-text">html</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#text"><span class="toc-number">6.2.</span> <span class="toc-text">text</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#val"><span class="toc-number">6.3.</span> <span class="toc-text">val</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CSS"><span class="toc-number">7.</span> <span class="toc-text">CSS</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#操作CSS样式"><span class="toc-number">7.1.</span> <span class="toc-text">操作CSS样式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#操作元素位置"><span class="toc-number">7.2.</span> <span class="toc-text">操作元素位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#scrollTop"><span class="toc-number">7.3.</span> <span class="toc-text">scrollTop</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#事件"><span class="toc-number">8.</span> <span class="toc-text">事件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#事件绑定"><span class="toc-number">8.1.</span> <span class="toc-text">事件绑定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件解绑"><span class="toc-number">8.2.</span> <span class="toc-text">事件解绑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件自动触发"><span class="toc-number">8.3.</span> <span class="toc-text">事件自动触发</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义事件"><span class="toc-number">8.4.</span> <span class="toc-text">自定义事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件命名空间"><span class="toc-number">8.5.</span> <span class="toc-text">事件命名空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件委托"><span class="toc-number">8.6.</span> <span class="toc-text">事件委托</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#移入移出事件"><span class="toc-number">8.7.</span> <span class="toc-text">移入移出事件</span></a></li></ol></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#引入jQuery"><span class="toc-number">1.</span> <span class="toc-text">引入jQuery</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#入口函数"><span class="toc-number">2.</span> <span class="toc-text">入口函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#区别"><span class="toc-number">2.1.</span> <span class="toc-text">区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他写法"><span class="toc-number">2.2.</span> <span class="toc-text">其他写法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#冲突问题"><span class="toc-number">2.3.</span> <span class="toc-text">冲突问题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#核心函数"><span class="toc-number">3.</span> <span class="toc-text">核心函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#jQuery对象"><span class="toc-number">3.1.</span> <span class="toc-text">jQuery对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#静态方法和实例方法"><span class="toc-number">3.2.</span> <span class="toc-text">静态方法和实例方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#静态方法"><span class="toc-number">3.3.</span> <span class="toc-text">静态方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#each"><span class="toc-number">3.3.1.</span> <span class="toc-text">each</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#map"><span class="toc-number">3.3.2.</span> <span class="toc-text">map</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#trim"><span class="toc-number">3.3.3.</span> <span class="toc-text">trim</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#isArray"><span class="toc-number">3.3.4.</span> <span class="toc-text">isArray</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#isWindow"><span class="toc-number">3.3.5.</span> <span class="toc-text">isWindow</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#isFunction"><span class="toc-number">3.3.6.</span> <span class="toc-text">isFunction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#holdReady"><span class="toc-number">3.3.7.</span> <span class="toc-text">holdReady</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#选择器"><span class="toc-number">4.</span> <span class="toc-text">选择器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#内容选择器"><span class="toc-number">4.1.</span> <span class="toc-text">内容选择器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#操作属性节点"><span class="toc-number">4.2.</span> <span class="toc-text">操作属性节点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#attr"><span class="toc-number">4.2.1.</span> <span class="toc-text">attr</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#removeAttr"><span class="toc-number">4.2.2.</span> <span class="toc-text">removeAttr</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#操作属性"><span class="toc-number">4.3.</span> <span class="toc-text">操作属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#prop"><span class="toc-number">4.3.1.</span> <span class="toc-text">prop</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#removeProp"><span class="toc-number">4.3.2.</span> <span class="toc-text">removeProp</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#jQuery操作class"><span class="toc-number">5.</span> <span class="toc-text">jQuery操作class</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#addClass"><span class="toc-number">5.1.</span> <span class="toc-text">addClass</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#removeClass"><span class="toc-number">5.2.</span> <span class="toc-text">removeClass</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#toggleClass"><span class="toc-number">5.3.</span> <span class="toc-text">toggleClass</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#文本值操作"><span class="toc-number">6.</span> <span class="toc-text">文本值操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#html"><span class="toc-number">6.1.</span> <span class="toc-text">html</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#text"><span class="toc-number">6.2.</span> <span class="toc-text">text</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#val"><span class="toc-number">6.3.</span> <span class="toc-text">val</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CSS"><span class="toc-number">7.</span> <span class="toc-text">CSS</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#操作CSS样式"><span class="toc-number">7.1.</span> <span class="toc-text">操作CSS样式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#操作元素位置"><span class="toc-number">7.2.</span> <span class="toc-text">操作元素位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#scrollTop"><span class="toc-number">7.3.</span> <span class="toc-text">scrollTop</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#事件"><span class="toc-number">8.</span> <span class="toc-text">事件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#事件绑定"><span class="toc-number">8.1.</span> <span class="toc-text">事件绑定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件解绑"><span class="toc-number">8.2.</span> <span class="toc-text">事件解绑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件自动触发"><span class="toc-number">8.3.</span> <span class="toc-text">事件自动触发</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义事件"><span class="toc-number">8.4.</span> <span class="toc-text">自定义事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件命名空间"><span class="toc-number">8.5.</span> <span class="toc-text">事件命名空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件委托"><span class="toc-number">8.6.</span> <span class="toc-text">事件委托</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#移入移出事件"><span class="toc-number">8.7.</span> <span class="toc-text">移入移出事件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#效果"><span class="toc-number">9.</span> <span class="toc-text">效果</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义动画"><span class="toc-number">9.1.</span> <span class="toc-text">自定义动画</span></a></li></ol></li></ol>	
         </div>
     
 </div>
