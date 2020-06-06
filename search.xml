@@ -7723,55 +7723,55 @@ offset从0开始可以省略
 <li><code>hover(func1, func2)</code>：鼠标移入移出事件，第一个参数为移入函数，第二个参数为移出函数。如果只传入一个则即监听移入也监听移出。</li>
 </ul>
 <h1 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h1><ol>
-<li>show</li>
+<li><code>show</code></li>
 </ol>
 <ul>
 <li>显示动画，第一个参数为毫秒，第二个参数为回调函数</li>
 </ul>
 <ol start="2">
-<li>hide</li>
+<li><code>hide</code></li>
 </ol>
 <ul>
 <li>隐藏动画，第一个参数为毫秒数，第二个参数为回调函数</li>
 </ul>
 <ol start="3">
-<li>slideUp</li>
+<li><code>slideUp</code></li>
 </ol>
 <ul>
 <li>收起动画，第一个参数为毫秒数，第二个参数为回调函数</li>
 </ul>
 <ol start="4">
-<li>slideDown</li>
+<li><code>slideDown</code></li>
 </ol>
 <ul>
 <li>展开动画，第一个参数为毫秒数，第二个参数为回调函数</li>
 </ul>
 <ol start="5">
-<li>slideToggle</li>
+<li><code>slideToggle</code></li>
 </ol>
 <ul>
 <li>收起和展开的切换</li>
 </ul>
 <ol start="6">
-<li>fadeIn</li>
+<li><code>fadeIn</code></li>
 </ol>
 <ul>
 <li>淡入动画，第一个参数为毫秒数，第二个参数为回调函数</li>
 </ul>
 <ol start="7">
-<li>fadeOut</li>
+<li><code>fadeOut</code></li>
 </ol>
 <ul>
 <li>淡出动画，第一个参数为毫秒数，第二个参数为回调函数</li>
 </ul>
 <ol start="8">
-<li>fadeToggle</li>
+<li><code>fadeToggle</code></li>
 </ol>
 <ul>
 <li>淡入淡出切换，第一个参数为毫秒数，第二个参数为回调函数</li>
 </ul>
 <ol start="9">
-<li>fadeTo</li>
+<li><code>fadeTo</code></li>
 </ol>
 <ul>
 <li>淡入到动画，第一个参数为毫秒数，第二个参数为淡入程度，第三个参数为回调函数</li>
@@ -7788,9 +7788,412 @@ offset从0开始可以省略
 <blockquote>
 <p>属性累加：如果想要在原基础上增加100，可以写”+=100”</p>
 </blockquote>
-]]></content>
+<h1 id="节点"><a href="#节点" class="headerlink" title="节点"></a>节点</h1><ol>
+<li>内部插入<ul>
+<li><code>append</code>：将指定元素添加到元素的最后</li>
+<li><code>prepend</code>：将指定元素添加到元素的最前</li>
+<li><code>appendTo</code>：将指定元素添加到元素的最后（调用者不同）</li>
+<li><code>prependTo</code>：将指定元素添加到元素的最前（调用者不同）</li>
+</ul>
+</li>
+<li>外部插入<ul>
+<li><code>after</code>：将指定元素添加到元素外部的后面</li>
+<li><code>insertAfter</code>：将指定元素添加到元素外部的后面（调用者不同）</li>
+<li><code>before</code>：将指定元素添加到元素外部的前面</li>
+<li><code>insertBefore</code>：将指定元素添加到元素外部的前面（调用者不同）</li>
+</ul>
+</li>
+<li>删除节点<ul>
+<li><code>remove()</code>：删除指定元素</li>
+<li><code>empty()</code>：删除指定元素的内容和子元素，指定元素自身不会被删除</li>
+</ul>
+</li>
+<li>替换节点<ul>
+<li><code>replaceWith</code>：替换所有匹配的元素为指定的元素</li>
+<li><code>replaceAll</code>：替换所有匹配的元素为指定的元素（调用者不同）</li>
+</ul>
+</li>
+<li>复制节点<ul>
+<li>clone<ul>
+<li>浅复制节点：传递false就为浅复制</li>
+<li>深复制节点：传递true就为深复制，会连同事件一同复制</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="实时监听textArea"><a href="#实时监听textArea" class="headerlink" title="实时监听textArea"></a>实时监听textArea</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$(<span class="string">"body"</span>).delegate(<span class="string">"textArea"</span>, <span class="string">"propertychange input"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 内容</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>前端</category>
       </categories>
+  </entry>
+  <entry>
+    <title>Ajax</title>
+    <url>/2020/06/05/Ajax/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>BootStrap</title>
+    <url>/2020/06/05/BootStrap/</url>
+    <content><![CDATA[<h1 id="Bootstrap"><a href="#Bootstrap" class="headerlink" title="Bootstrap"></a>Bootstrap</h1><ul>
+<li>是Twitter推出的一个用于前端开发的开源工具包。开发简洁，简化编码<ul>
+<li>定义了许多css样式和js插件，能直接得到丰富的页面效果</li>
+<li>响应式布局</li>
+</ul>
+</li>
+</ul>
+<h1 id="响应式布局"><a href="#响应式布局" class="headerlink" title="响应式布局"></a>响应式布局</h1><ul>
+<li>同一套页面可以兼容不同分辨率的设备</li>
+<li>实现：依赖于<code>栅格系统</code>：将一行分为平均分成十二个格子。可以指定元素占几个格子</li>
+<li>实现步骤：<ol>
+<li>定义容器<ul>
+<li>container：固定宽度</li>
+<li>container-fluid：100%宽度</li>
+</ul>
+</li>
+<li>定义行<ul>
+<li>样式：row</li>
+</ul>
+</li>
+<li>定义元素。指定该元素在不同的设备上所占的格子数目<ul>
+<li>样式：col-设备代号-格子数目</li>
+<li>设备代号：<ol>
+<li>.col-xs- (&lt;768px)</li>
+<li>.col-sm-  (≥768px)</li>
+<li>.col-md- (≥992px)</li>
+<li>.col-lg- (≥1200px)</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>栅格类适用于与屏幕宽度大于或等于分界点大小的设备 ， 并且针对小屏幕设备覆盖栅格类。</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container-fluid"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"row"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-lg-1 col-xs-2 box1"</span>&gt;</span>我是div<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="全局CSS样式"><a href="#全局CSS样式" class="headerlink" title="全局CSS样式"></a>全局CSS样式</h1><h2 id="按钮"><a href="#按钮" class="headerlink" title="按钮"></a>按钮</h2><ul>
+<li>class=”btn btn-default”</li>
+<li>注：<ul>
+<li>虽然按钮类可以应用到 <code>&lt;a&gt;</code> 和 <code>&lt;button&gt;</code> 元素上，但是，导航和导航条组件只支持 <code>&lt;button&gt;</code> 元素。</li>
+</ul>
+</li>
+</ul>
+<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><ul>
+<li>class=”img-responsive” ，其实质是为图片设置了 max-width: 100%;、 height: auto; 和 display: block; 属性，从而让图片在其父元素中更好的缩放。</li>
+</ul>
+<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><ul>
+<li>为任意 <code>&lt;table&gt;</code> 标签添加 .table 类可以为其赋予基本的样式</li>
+</ul>
+<h2 id="表单"><a href="#表单" class="headerlink" title="表单"></a>表单</h2><ul>
+<li>单独的表单控件会被自动赋予一些全局样式。所有设置了 .form-control 类的 <code>&lt;input&gt;</code>、<code>&lt;textarea&gt;</code> 和<code>&lt;select&gt;</code>元素都将被默认设置宽度属性为 width: 100%;。 将 label 元素和前面提到的控件包裹在 .form-group 中可以获得最好的排列。</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"exampleInputEmail1"</span>&gt;</span>Email address<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"email"</span> <span class="attr">class</span>=<span class="string">"form-control"</span> <span class="attr">id</span>=<span class="string">"exampleInputEmail1"</span> <span class="attr">placeholder</span>=<span class="string">"Email"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"exampleInputPassword1"</span>&gt;</span>Password<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">class</span>=<span class="string">"form-control"</span> <span class="attr">id</span>=<span class="string">"exampleInputPassword1"</span> <span class="attr">placeholder</span>=<span class="string">"Password"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"exampleInputFile"</span>&gt;</span>File input<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">id</span>=<span class="string">"exampleInputFile"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"help-block"</span>&gt;</span>Example block-level help text here.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"checkbox"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span>&gt;</span> Check me out</span><br><span class="line">    <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">class</span>=<span class="string">"btn btn-default"</span>&gt;</span>Submit<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h2><h3 id="导航条"><a href="#导航条" class="headerlink" title="导航条"></a>导航条</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">nav</span> <span class="attr">class</span>=<span class="string">"navbar navbar-default"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container-fluid"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Brand and toggle get grouped for better mobile display --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"navbar-header"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">class</span>=<span class="string">"navbar-toggle collapsed"</span> <span class="attr">data-toggle</span>=<span class="string">"collapse"</span> <span class="attr">data-target</span>=<span class="string">"#bs-example-navbar-collapse-1"</span> <span class="attr">aria-expanded</span>=<span class="string">"false"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"sr-only"</span>&gt;</span>Toggle navigation<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"icon-bar"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"icon-bar"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"icon-bar"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"navbar-brand"</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>Brand<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Collect the nav links, forms, and other content for toggling --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"collapse navbar-collapse"</span> <span class="attr">id</span>=<span class="string">"bs-example-navbar-collapse-1"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"nav navbar-nav"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"active"</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>Link <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"sr-only"</span>&gt;</span>(current)<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>Link<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"dropdown"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">class</span>=<span class="string">"dropdown-toggle"</span> <span class="attr">data-toggle</span>=<span class="string">"dropdown"</span> <span class="attr">role</span>=<span class="string">"button"</span> <span class="attr">aria-haspopup</span>=<span class="string">"true"</span> <span class="attr">aria-expanded</span>=<span class="string">"false"</span>&gt;</span>Dropdown <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"caret"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"dropdown-menu"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>Action<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>Another action<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>Something else here<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span> <span class="attr">role</span>=<span class="string">"separator"</span> <span class="attr">class</span>=<span class="string">"divider"</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>Separated link<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span> <span class="attr">role</span>=<span class="string">"separator"</span> <span class="attr">class</span>=<span class="string">"divider"</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>One more separated link<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">form</span> <span class="attr">class</span>=<span class="string">"navbar-form navbar-left"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">class</span>=<span class="string">"form-control"</span> <span class="attr">placeholder</span>=<span class="string">"Search"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">class</span>=<span class="string">"btn btn-default"</span>&gt;</span>Submit<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"nav navbar-nav navbar-right"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>Link<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"dropdown"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">class</span>=<span class="string">"dropdown-toggle"</span> <span class="attr">data-toggle</span>=<span class="string">"dropdown"</span> <span class="attr">role</span>=<span class="string">"button"</span> <span class="attr">aria-haspopup</span>=<span class="string">"true"</span> <span class="attr">aria-expanded</span>=<span class="string">"false"</span>&gt;</span>Dropdown <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"caret"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"dropdown-menu"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>Action<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>Another action<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>Something else here<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span> <span class="attr">role</span>=<span class="string">"separator"</span> <span class="attr">class</span>=<span class="string">"divider"</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>Separated link<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="comment">&lt;!-- /.navbar-collapse --&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="comment">&lt;!-- /.container-fluid --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="分页条"><a href="#分页条" class="headerlink" title="分页条"></a>分页条</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">nav</span> <span class="attr">aria-label</span>=<span class="string">"Page navigation"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"pagination"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">aria-label</span>=<span class="string">"Previous"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">aria-hidden</span>=<span class="string">"true"</span>&gt;</span><span class="symbol">&amp;laquo;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>1<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>2<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>3<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>4<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span>5<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">aria-label</span>=<span class="string">"Next"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">aria-hidden</span>=<span class="string">"true"</span>&gt;</span><span class="symbol">&amp;raquo;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="轮播图"><a href="#轮播图" class="headerlink" title="轮播图"></a>轮播图</h2><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"carousel-example-generic"</span> <span class="attr">class</span>=<span class="string">"carousel slide"</span> <span class="attr">data-ride</span>=<span class="string">"carousel"</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- Indicators --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">ol</span> <span class="attr">class</span>=<span class="string">"carousel-indicators"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">data-target</span>=<span class="string">"#carousel-example-generic"</span> <span class="attr">data-slide-to</span>=<span class="string">"0"</span> <span class="attr">class</span>=<span class="string">"active"</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">data-target</span>=<span class="string">"#carousel-example-generic"</span> <span class="attr">data-slide-to</span>=<span class="string">"1"</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">data-target</span>=<span class="string">"#carousel-example-generic"</span> <span class="attr">data-slide-to</span>=<span class="string">"2"</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">ol</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- Wrapper for slides --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"carousel-inner"</span> <span class="attr">role</span>=<span class="string">"listbox"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"item active"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"..."</span> <span class="attr">alt</span>=<span class="string">"..."</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"carousel-caption"</span>&gt;</span></span><br><span class="line">        ...</span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"item"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"..."</span> <span class="attr">alt</span>=<span class="string">"..."</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"carousel-caption"</span>&gt;</span></span><br><span class="line">        ...</span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- Controls --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"left carousel-control"</span> <span class="attr">href</span>=<span class="string">"#carousel-example-generic"</span> <span class="attr">role</span>=<span class="string">"button"</span> <span class="attr">data-slide</span>=<span class="string">"prev"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"glyphicon glyphicon-chevron-left"</span> <span class="attr">aria-hidden</span>=<span class="string">"true"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"sr-only"</span>&gt;</span>Previous<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"right carousel-control"</span> <span class="attr">href</span>=<span class="string">"#carousel-example-generic"</span> <span class="attr">role</span>=<span class="string">"button"</span> <span class="attr">data-slide</span>=<span class="string">"next"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"glyphicon glyphicon-chevron-right"</span> <span class="attr">aria-hidden</span>=<span class="string">"true"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"sr-only"</span>&gt;</span>Next<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>JavaWeb</title>
+    <url>/2020/06/06/JavaWeb/</url>
+    <content><![CDATA[<h1 id="Web相关"><a href="#Web相关" class="headerlink" title="Web相关"></a>Web相关</h1><ol>
+<li><p>软件架构</p>
+<ul>
+<li>C/S：客户端/服务器</li>
+<li>B/S：浏览器/服务器</li>
+</ul>
+</li>
+<li><p>资源分类</p>
+<ul>
+<li>静态资源：用户访问后得到的结果都是一样的，称为静态资源，静态资源可以直接被浏览器解析</li>
+<li>动态资源：每个用户访问后得到的结果可能不一样。动态资源被访问后，先要转换为静态资源，再返回给浏览器</li>
+</ul>
+</li>
+<li><p>网络通信三要素</p>
+<ul>
+<li>IP</li>
+<li>端口</li>
+<li>传输协议</li>
+</ul>
+</li>
+</ol>
+<h1 id="Tomcat"><a href="#Tomcat" class="headerlink" title="Tomcat"></a>Tomcat</h1><ul>
+<li><p>服务器： 安装了服务器软件的计算机</p>
+</li>
+<li><p>服务器软件：接受用户的请求，处理请求，做出响应</p>
+</li>
+<li><p>web服务器软件：接受用户的请求，处理请求，做出响应。</p>
+<ul>
+<li>在web服务器软件中，可以部署web项目，让用户通过浏览器来访问这些项目</li>
+<li>web容器：动态资源必须在容器中才能运行</li>
+</ul>
+</li>
+<li><p>常见的web服务器软件：</p>
+<ol>
+<li>webLogic：Oracle，大型的JavaEE服务器，支持所有的JavaEE规范</li>
+<li>webSphere：IBM，大型的JavaEE服务器，支持所有的JavaEE规范</li>
+<li>JBOSS：JBOSS，大型的JavaEE服务器，支持所有的JavaEE规范</li>
+<li>Tomcat：Apache基金组织，中小心JavaEE服务器，仅支持少量的JavaEE规范servlet/jsp，开源免费<ul>
+<li>一般会将tomcat的默认端口号修改为80.80端口是http协议的默认端口号。好处：在访问时不用输入端口号</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><ol>
+<li>直接将项目放到webapps目录下即可<br><code>localhost:8080/文件夹名称/文件名</code><br>简化部署：将项目打包成war包</li>
+<li>配置conf/serve.xml文件<br>在host标签下添加<br><code>&lt;Context docBase=&quot;项目路径&quot; path=&quot;虚拟路径&quot;/&gt;</code><br>这种方式不安全，会使其它的项目无法运行</li>
+<li>在conf/Catalina文件夹下创建一个xml文件<br><code>&lt;Context docBase=&quot;项目路径&quot;</code>，虚拟目录就为xml文件的名称</li>
+</ol>
+<h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><ul>
+<li>java动态项目的目录结构：<ul>
+<li>–项目的根目录<ul>
+<li>–WEB-INF目录<ul>
+<li>web.xml：web项目的核心配置文件</li>
+<li>classes目录：字节码文件目录</li>
+<li>lib目录：依赖的jar包</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Servlet"><a href="#Servlet" class="headerlink" title="Servlet"></a>Servlet</h1><ul>
+<li>Servlet：Server applet，运行在服务器端的小程序。<ul>
+<li>本质上就是一个接口，定义了Java类被浏览器访问到（tomcat识别）的规则。</li>
+<li>自定义一个类，实现servlet接口，复写方法</li>
+</ul>
+</li>
+</ul>
+<h2 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h2><ol>
+<li>创建一个JavaEE项目</li>
+<li>定义一个类，实现servlet接口<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServletDemo01</span> <span class="keyword">implements</span> <span class="title">Servlet</span></span></span><br></pre></td></tr></table></figure></li>
+<li>实现接口中的抽象方法</li>
+<li>配置servlet<br>在web.xml中配置，注意url中有<code>/</code><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>demo01<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>cn.qiancijun.web.servlet.ServletDemo01<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>demo01<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/demo01<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li>原理：<ol>
+<li>浏览器输入地址，首先访问到localhost主机地址，并且通过8080访问到tomcat应用程序</li>
+<li>通过虚拟路径找到要访问的项目名</li>
+<li>通过<code>/demo01</code>，在web.xml中找到对应的全类名</li>
+<li>找到全类名之后，通过反射，tomcat将全类名对应的字节码文件加载进内存。Class.forName()</li>
+<li>创建对象class.newInstance();</li>
+<li>调用service方法</li>
+</ol>
+</li>
+</ul>
+<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><ol>
+<li><p>init</p>
+<ul>
+<li>初始化方法</li>
+<li>在servlet被创建时执行，只会执行一次</li>
+</ul>
+</li>
+<li><p>service</p>
+<ul>
+<li>提供服务的方法</li>
+<li>每一次servlet被访问时执行。执行多次</li>
+</ul>
+</li>
+<li><p>destroy</p>
+<ul>
+<li>销毁方法</li>
+<li>在服务器正常关闭时执行</li>
+</ul>
+</li>
+<li><p>getServletConfig</p>
+<ul>
+<li>获取ServletConfig对象</li>
+</ul>
+</li>
+<li><p>getServletInfo</p>
+<ul>
+<li>获取servlet的信息</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><p>servlet的生命周期</p>
+<ol>
+<li>被创建：执行init方法，只执行一次<ul>
+<li>默认情况下，第一次被访问时，Servlet被创建</li>
+<li>可以配置Servlet创建时机，在<code>&lt;servlet&gt;</code>标签下配置<ul>
+<li>第一次被访问时创建：<code>&lt;load-on-startup&gt;</code>的值为负数，默认为负数</li>
+<li>在服务器启动时创建：<code>&lt;load-on-startup&gt;</code>的值为0或正整数<code>&lt;load-on-startup&gt;5&lt;/load-on-startup&gt;</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>提供服务：执行service方法，会执行多次<ul>
+<li>每次访问servlet时，service方法都会被调用一次</li>
+</ul>
+</li>
+<li>被销毁：执行destory方法，只执行一次<ul>
+<li>servlet被销毁时执行，服务器关闭时，servlet被执行</li>
+<li>只有服务器正常关闭时才会执行destory方法</li>
+<li>在servlet被销毁之前执行，一般用来释放资源</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>servlet的init方法，只执行一次，说明一个servlet在内存中只存在一个对象，Servlet是单例的。多个用户同时访问时，可能存在线程安全问题。</p>
+<ul>
+<li>解决方法：尽量不要在servlet中定义成员变量，即使定义了成员变量也不要对其修改</li>
+</ul>
+</li>
+</ul>
+<h2 id="Servlet3-0"><a href="#Servlet3-0" class="headerlink" title="Servlet3.0"></a>Servlet3.0</h2><ul>
+<li>优点：支持注解配置。可以不需要web.xml</li>
+<li>步骤：<ol>
+<li>创建JavaEE项目，选择Servlet版本为3.0以上，可以不创建web.xml</li>
+<li>定义类，实现servlet接口</li>
+<li>复写方法</li>
+<li>在类上使用注解<code>@webServlet</code>进行配置<ul>
+<li>@WebServlet(“/资源路径”)</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="体系结构"><a href="#体系结构" class="headerlink" title="体系结构"></a>体系结构</h2><ul>
+<li><code>GenericServlet</code>：实现了Servlet接口，是一个抽象类<ul>
+<li>将Servlet接口中的其它的方法做了默认的空实现，只将service方法作为抽象</li>
+<li>定义Servlet类时，可以继承GenericServlet，实现service方法</li>
+</ul>
+</li>
+<li><code>HttpServlet</code>：GenericServlet的子类，也是一个抽象类。<ul>
+<li>对HTTP协议的一种封装，简化操作</li>
+<li>定义类继承HttpServlet</li>
+<li>复写doGet或doPOST方法</li>
+</ul>
+</li>
+</ul>
+<h2 id="相关配置"><a href="#相关配置" class="headerlink" title="相关配置"></a>相关配置</h2><ol>
+<li>urlpartten：Servlet访问路径<ul>
+<li>一个Servlet可以定义多个访问路径<code>@WebServlet({&quot;/d1&quot;, &quot;/demo1&quot;, &quot;/demo1&quot;})</code></li>
+</ul>
+</li>
+<li>路径定义规则<ul>
+<li>/xxx</li>
+<li>/xxx/xxx：多层路径，目录结构</li>
+<li>*.xxx</li>
+</ul>
+</li>
+</ol>
+<h1 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h1><ul>
+<li>Hyper Text Transfer Protocol：超文本传输协议<ul>
+<li>传输协议：定义了客户端和服务器端通信时，发送数据的格式</li>
+<li>特点：<ol>
+<li>基于TCP/IP的高级协议</li>
+<li>默认端口号：80</li>
+<li>基于请求/响应模型，一次请求对应一次响应</li>
+<li>无状态：每次请求之间相互独立，不能交互数据</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="请求消息数据格式"><a href="#请求消息数据格式" class="headerlink" title="请求消息数据格式"></a>请求消息数据格式</h2><ol>
+<li>请求行<ul>
+<li>请求方式 请求url 请求协议/版本</li>
+<li>GET /index.html HTTP/1.1</li>
+</ul>
+</li>
+<li>请求头：浏览器告诉服务器一些信息<ul>
+<li>请求头名称：请求头值</li>
+<li>常见的请求头：<ul>
+<li>User-agent：浏览器告诉服务器，浏览器版本信息。可以在服务器端获取该信息，解决浏览器的兼容性问题</li>
+<li>Referer：告诉服务器，当前请求从哪里来。可以防止被盗取链接，做统计工作</li>
+<li>Connection：keep-alive 连接可以被复用</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>请求空行<ul>
+<li>空行，用于分割POST请求头和请求体</li>
+</ul>
+</li>
+<li>请求体（正文）<ul>
+<li>封装POST请求消息的请求参数</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>请求方式：HTTP有7中请求方式，常用的有2种<ul>
+<li>GET：<ol>
+<li>请求参数在请求行中，在url后</li>
+<li>请求的url长度有限制</li>
+<li>不太安全</li>
+</ol>
+</li>
+<li>POST<ol>
+<li>请求参数在请求体中</li>
+<li>请求的url长度无限制</li>
+<li>相对安全</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="响应消息数据格式"><a href="#响应消息数据格式" class="headerlink" title="响应消息数据格式"></a>响应消息数据格式</h2><h1 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h1><ul>
+<li>步骤：<ol>
+<li>tomcat服务器会根据请求url中的资源路径，创建对应的ServletDemo1的对象</li>
+<li>tomcat服务器会创建request和response对象，request对象中封装请求消息数据</li>
+<li>tomcat将request和response两个对象传递给sevice方法，并且调用sevice方法</li>
+<li>Java程序可以通过request对象获取请求消息数据，通过response对象设置响应消息数据</li>
+<li>服务器在给浏览器做出响应之前，会从response对象中拿出Java程序返回的响应消息数据</li>
+</ol>
+</li>
+<li>request对象和response对象原理：<ol>
+<li>request和response对象是由服务器创建的。</li>
+<li>request对象是来获取请求消息的，response对象是来设置响应消息</li>
+</ol>
+</li>
+</ul>
+<h2 id="体系结构-1"><a href="#体系结构-1" class="headerlink" title="体系结构"></a>体系结构</h2><ul>
+<li><p>ServletRequest：接口</p>
+</li>
+<li><p>HttpServletRequest：接口，继承了ServletRequest</p>
+</li>
+<li><p>org.apache.catalina.connector.RequestFacade：类（tomcat）实现了HttpServletRequest接口</p>
+</li>
+</ul>
+<h2 id="request功能"><a href="#request功能" class="headerlink" title="request功能"></a>request功能</h2><ul>
+<li>获取请求消息数据<ol>
+<li>获取请求行数据<ul>
+<li>GET /day14/demo1?name=qiancijun HTTP/1.1</li>
+<li>获取请求的方法：<code>GET</code> String getMethod()</li>
+<li>获取虚拟目录的方法：<code>/day14</code> String getContextPath()</li>
+<li>获取Servlet的路径：<code>/demo</code> String getServletPath()</li>
+<li>获取GET方式的请求参数：<code>name=qiancijun</code> String getQueryString()</li>
+<li>获取请求URL：String getRequest()</li>
+</ul>
+</li>
+<li>获取请求头数据</li>
+<li>获取请求体数据</li>
+</ol>
+</li>
+<li>其它功能</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
   </entry>
 </search>
