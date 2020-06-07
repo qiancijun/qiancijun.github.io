@@ -8176,19 +8176,128 @@ offset从0开始可以省略
 <li>获取请求行数据<ul>
 <li>GET /day14/demo1?name=qiancijun HTTP/1.1</li>
 <li>获取请求的方法：<code>GET</code> String getMethod()</li>
-<li>获取虚拟目录的方法：<code>/day14</code> String getContextPath()</li>
+<li>$\color{blue}{获取虚拟目录的方法：}$<code>/day14</code> String getContextPath()</li>
 <li>获取Servlet的路径：<code>/demo</code> String getServletPath()</li>
 <li>获取GET方式的请求参数：<code>name=qiancijun</code> String getQueryString()</li>
-<li>获取请求URL：String getRequest()</li>
+<li>$\color{blue}{获取请求URL：}$<code>/day14/demo1</code> String getRequestURI(), String getRequestURL() 带有http协议</li>
+<li>获取协议及版本：<code>HTTP/1.1</code> String getProtocol()</li>
+<li>获取客户机的IP地址： String getRemoteAddr()</li>
 </ul>
 </li>
-<li>获取请求头数据</li>
-<li>获取请求体数据</li>
+<li>获取请求头数据<ul>
+<li><code>String getHeader(String name)</code>：通过请求头的名称来获取请求头的值</li>
+<li><code>Enumeration\&lt;string\&gt; getHeaderNames()</code>：获取所有的请求头名称</li>
+</ul>
+</li>
+<li>获取请求体数据<ul>
+<li>请求体：只有POST方式才有请求体，在请求体中封装了POST请求的请求参数</li>
+</ul>
+<ul>
+<li>步骤：<ol>
+<li>获取流对象<ul>
+<li>BufferedReader getReader()：获取字符输入流，只能操作字符数据</li>
+<li>ServletInputStream getInputStream()：获取字节输入流，可以操作所有类型数据</li>
+</ul>
+</li>
+<li>再从流对象中拿数据</li>
 </ol>
 </li>
-<li>其它功能</li>
 </ul>
-]]></content>
+</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>URL：统一资源定位符，URI：统一资源标识符</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@WebServlet</span>(<span class="string">"/RequestDemo01"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RequestDemo01</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="comment">// 获取请求方式</span></span><br><span class="line">        String method = request.getMethod();</span><br><span class="line">        System.out.println(method);</span><br><span class="line">        <span class="comment">// 获取虚拟目录</span></span><br><span class="line">        String contextPath = request.getContextPath();</span><br><span class="line">        System.out.println(contextPath);</span><br><span class="line">        <span class="comment">// 获取Servlet路径</span></span><br><span class="line">        String servletPath = request.getServletPath();</span><br><span class="line">        System.out.println(servletPath);</span><br><span class="line">        <span class="comment">// 获取请求参数</span></span><br><span class="line">        String queryString = request.getQueryString();</span><br><span class="line">        System.out.println(queryString);</span><br><span class="line">        <span class="comment">// 获取请求URL不带http</span></span><br><span class="line">        String requestURI = request.getRequestURI();</span><br><span class="line">        System.out.println(requestURI);</span><br><span class="line">        <span class="comment">// 获取请求URL带http</span></span><br><span class="line">        StringBuffer requestURL = request.getRequestURL();</span><br><span class="line">        System.out.println(requestURL);</span><br><span class="line">        <span class="comment">// 获取HTTP及版本号</span></span><br><span class="line">        String protocol = request.getProtocol();</span><br><span class="line">        System.out.println(protocol);</span><br><span class="line">        <span class="comment">// 获取访问IP地址</span></span><br><span class="line">        String remoteAddr = request.getRemoteAddr();</span><br><span class="line">        System.out.println(remoteAddr);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>其它功能：</p>
+<ol>
+<li>获取请求参数（通用方式）<ul>
+<li><code>String getParameter(String name)</code>：根据参数名称来获取参数值</li>
+<li><code>String[] getParameterValues(String name)</code>：根据参数名称来获取参数值的数组</li>
+<li><code>Enumeration getParameterNames()</code>：获取所有请求的参数名称</li>
+<li><code>Map&lt;String, String[]&gt; getParameterMap()</code>：获取所有参数的map集合</li>
+</ul>
+</li>
+<li>请求转发：一种在服务器内部的资源跳转方式<ul>
+<li>通过request对象来获取请求转发器对象：RequestDispatcher getRequestDispatcher(String path)</li>
+</ul>
+<ul>
+<li>使用RequestDispatcher进行转发：forward(ServletRequest request ServletResponse response)</li>
+</ul>
+<ul>
+<li>特点：<ul>
+<li>浏览器地址栏路径不会变</li>
+<li>只能转发当前服务器内部的资源中</li>
+<li>转发是一次请求</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>共享数据：<ul>
+<li>域对象：一个有作用范围的对象，可以在范围内共享数据</li>
+<li>request域：代表一次请求的范围，一般用于请求转发的多个资源中共享数据</li>
+<li><code>setAttribute(String name, Object obj)</code>：存储数据</li>
+<li><code>Object getAttribute(String name)</code>：通过键来获取值</li>
+<li><code>removeAttribute(String name)</code>：通过键来移出键值对</li>
+</ul>
+</li>
+<li>获取ServletContext<ul>
+<li><code>ServletContext getServletContext()</code></li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>中文乱码问题</p>
+<ul>
+<li>get方式：tomcat8已经将get方式乱码问题解决了</li>
+<li>post方式：设置流的字符集 request.setCharacterEncoding(“utf-8”);</li>
+</ul>
+</li>
+</ul>
+<h2 id="用户登录案例"><a href="#用户登录案例" class="headerlink" title="用户登录案例"></a>用户登录案例</h2><ul>
+<li><p>login.html中form表单中路径的写法：</p>
+<ul>
+<li>虚拟目录 + Servlet的资源路径</li>
+</ul>
+</li>
+<li><p>BeanUtils来完成数据的封装，用于封装JavaBean</p>
+<ol>
+<li>JavaBean：标准的java类<ul>
+<li>必须被public修饰</li>
+<li>提供空参的构造器</li>
+<li>成员变量必须使用private修饰</li>
+<li>提供公共的setter和getter方法</li>
+<li>功能： 封装数据</li>
+</ul>
+</li>
+<li>概念：<ul>
+<li>成员变量</li>
+<li>属性：setter和getter方法截取后的产物</li>
+</ul>
+</li>
+<li>方法<ul>
+<li>setProperty()</li>
+<li>getProperty()</li>
+<li>populate()</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="User实体类"><a href="#User实体类" class="headerlink" title="User实体类"></a>User实体类</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> id;</span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"User&#123;"</span> +</span><br><span class="line">                <span class="string">"id="</span> + id +</span><br><span class="line">                <span class="string">", username='"</span> + username + <span class="string">'\''</span> +</span><br><span class="line">                <span class="string">", password='"</span> + password + <span class="string">'\''</span> +</span><br><span class="line">                <span class="string">'&#125;'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">(<span class="keyword">int</span> id, String username, String password)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.id = id;</span><br><span class="line">        <span class="keyword">this</span>.username = username;</span><br><span class="line">        <span class="keyword">this</span>.password = password;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">(String username, String password)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.username = username;</span><br><span class="line">        <span class="keyword">this</span>.password = password;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(<span class="keyword">int</span> id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.id = id;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getUsername</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> username;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUsername</span><span class="params">(String username)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.username = username;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getPassword</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> password;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPassword</span><span class="params">(String password)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.password = password;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="JDBC工具类"><a href="#JDBC工具类" class="headerlink" title="JDBC工具类"></a>JDBC工具类</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JDBCUtils</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> DataSource ds;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Properties config = <span class="keyword">new</span> Properties();</span><br><span class="line">            InputStream is = JDBCUtils.class.getClassLoader().getResourceAsStream("druid.properties");</span><br><span class="line">            config.load(is);</span><br><span class="line">            ds = DruidDataSourceFactory.createDataSource(config);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取连接对象</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        Connection connection = ds.getConnection();</span><br><span class="line">        <span class="keyword">return</span> connection;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="UserDAO"><a href="#UserDAO" class="headerlink" title="UserDAO"></a>UserDAO</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserDAO</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 登录方法</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> loginUser</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 全部数据</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> User <span class="title">UserLogin</span><span class="params">(User loginUser)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            String sql = <span class="string">"select * from users where username = ? and password = ?"</span>;</span><br><span class="line">            User queryUser = UserDAO.query(sql, loginUser.getUsername(), loginUser.getPassword());</span><br><span class="line">            <span class="keyword">return</span> queryUser;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 封装了一下DBUtils具体查询的过程</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> sql sql查询语句</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> obj 占位符</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> User对象</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> User <span class="title">query</span><span class="params">(String sql, Object... obj)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Connection connection = JDBCUtils.getConnection();</span><br><span class="line">            QueryRunner qr = <span class="keyword">new</span> QueryRunner();</span><br><span class="line">            User qu = qr.query(connection, sql, <span class="keyword">new</span> BeanHandler&lt;&gt;(User<span class="class">.<span class="keyword">class</span>),<span class="title">obj</span>)</span>;</span><br><span class="line">            connection.close();</span><br><span class="line">            <span class="keyword">return</span> qu;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="LoginServlet"><a href="#LoginServlet" class="headerlink" title="LoginServlet"></a>LoginServlet</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@WebServlet</span>(<span class="string">"/LoginServlet"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoginServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="comment">// 设置编码</span></span><br><span class="line">        request.setCharacterEncoding(<span class="string">"utf-8"</span>);</span><br><span class="line"><span class="comment">//        // 获取请求参数</span></span><br><span class="line"><span class="comment">//        String username = request.getParameter("username");</span></span><br><span class="line"><span class="comment">//        String password = request.getParameter("password");</span></span><br><span class="line"><span class="comment">//        // 封装user对象</span></span><br><span class="line"><span class="comment">//        User loginuser = new User();</span></span><br><span class="line"><span class="comment">//        loginuser.setUsername(username);</span></span><br><span class="line"><span class="comment">//        loginuser.setPassword(password);</span></span><br><span class="line">        <span class="comment">// 获取所有请求参数</span></span><br><span class="line">        Map&lt;String, String[]&gt; map= request.getParameterMap();</span><br><span class="line">        <span class="comment">// 创建一个User对象</span></span><br><span class="line">        User loginuser = <span class="keyword">new</span> User();</span><br><span class="line">        <span class="comment">// 使用BeanUtils封装对象</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            BeanUtils.populate(loginuser, map);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InvocationTargetException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 调用UserDAO的login方法</span></span><br><span class="line">        UserDAO userDAO = <span class="keyword">new</span> UserDAO();</span><br><span class="line">        User resultUser = userDAO.UserLogin(loginuser);</span><br><span class="line">        <span class="keyword">if</span> (resultUser == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">// 登录失败</span></span><br><span class="line">            request.getRequestDispatcher(<span class="string">"/FailServlet"</span>).forward(request, response);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//登录成功</span></span><br><span class="line">            <span class="comment">// 存储数据</span></span><br><span class="line">            request.setAttribute(<span class="string">"user"</span>, resultUser);</span><br><span class="line">            <span class="comment">// 转发</span></span><br><span class="line">            request.getRequestDispatcher(<span class="string">"/SuccessServlet"</span>).forward(request, response);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.doPost(request, response);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="SuccessServlet"><a href="#SuccessServlet" class="headerlink" title="SuccessServlet"></a>SuccessServlet</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@WebServlet</span>(<span class="string">"/SuccessServlet"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SuccessServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="comment">// 给页面写一句话</span></span><br><span class="line">        <span class="comment">// 获取request域中共享的User对象</span></span><br><span class="line">        User user = (User) request.getAttribute(<span class="string">"user"</span>);</span><br><span class="line">        <span class="comment">// 设置编码</span></span><br><span class="line">        response.setContentType(<span class="string">"text/html;charset=utf-8"</span>);</span><br><span class="line">        <span class="comment">// 输出</span></span><br><span class="line">        response.getWriter().write(<span class="string">"登录成功"</span> + user.getUsername() + <span class="string">"欢迎"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.doPost(request,response);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="FailServlet"><a href="#FailServlet" class="headerlink" title="FailServlet"></a>FailServlet</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@WebServlet</span>(<span class="string">"/FailServlet"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FailServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="comment">// 给页面写一句话</span></span><br><span class="line">        <span class="comment">// 设置编码</span></span><br><span class="line">        response.setContentType(<span class="string">"text/html;charset=utf-8"</span>);</span><br><span class="line">        <span class="comment">// 输出</span></span><br><span class="line">        response.getWriter().write(<span class="string">"登录失败，用户名或密码错误"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.doPost(request,response);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>Java</category>
       </categories>
