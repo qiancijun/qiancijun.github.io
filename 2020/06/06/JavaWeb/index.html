@@ -590,6 +590,172 @@ B/S：浏览器/服务器
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>chcekCode<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">let</span> img = <span class="built_in">document</span>.getElementById(<span class="string">"checkcode"</span>);</span></span><br><span class="line"><span class="javascript">            <span class="keyword">let</span> a = <span class="built_in">document</span>.getElementById(<span class="string">"change"</span>);</span></span><br><span class="line"><span class="actionscript">            <span class="function"><span class="keyword">function</span> <span class="title">changePic</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">                <span class="comment">// 加上时间戳</span></span></span><br><span class="line"><span class="javascript">                <span class="keyword">let</span> date = <span class="keyword">new</span> <span class="built_in">Date</span>().getMilliseconds();</span></span><br><span class="line"><span class="actionscript">                img.src = <span class="string">"/JavaWeb/CheckCode?"</span> + date;</span></span><br><span class="line">            &#125;</span><br><span class="line"><span class="actionscript">            a.onclick = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line">                changePic();</span><br><span class="line">            &#125;</span><br><span class="line"><span class="actionscript">            img.onclick = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line">                changePic();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"/JavaWeb/CheckCode"</span> <span class="attr">alt</span>=<span class="string">""</span> <span class="attr">id</span>=<span class="string">"checkcode"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"javascript:;"</span> <span class="attr">id</span>=<span class="string">"change"</span>&gt;</span>看不清？换一张<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>Java逻辑代码</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@WebServlet</span>(<span class="string">"/CheckCode"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CheckCode</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> width = <span class="number">100</span>;</span><br><span class="line">        <span class="keyword">int</span> height = <span class="number">50</span>;</span><br><span class="line">        <span class="comment">// 创建一个对象，在内存中存图片（验证码图片对象）</span></span><br><span class="line">        BufferedImage image = <span class="keyword">new</span> BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);</span><br><span class="line">        <span class="comment">// 美化图片</span></span><br><span class="line">        <span class="comment">// 填充背景色</span></span><br><span class="line">        Graphics graphics = image.getGraphics(); <span class="comment">//画笔对象</span></span><br><span class="line">        graphics.setColor(Color.WHITE); <span class="comment">//设置画笔颜色</span></span><br><span class="line">        graphics.fillRect(<span class="number">0</span>, <span class="number">0</span>, width, height);</span><br><span class="line">        graphics.setColor(Color.BLACK);</span><br><span class="line">        graphics.drawRect(<span class="number">0</span>, <span class="number">0</span>, width - <span class="number">1</span>, height - <span class="number">1</span>);</span><br><span class="line">        <span class="comment">// 写验证码</span></span><br><span class="line">        String str = <span class="string">"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"</span>;</span><br><span class="line">        <span class="comment">// 生成随机数</span></span><br><span class="line">        Random ran = <span class="keyword">new</span> Random();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">4</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> index = ran.nextInt(str.length());</span><br><span class="line">            <span class="comment">// 获取字符</span></span><br><span class="line">            <span class="keyword">char</span> ch = str.charAt(index); <span class="comment">// 随机字符</span></span><br><span class="line">            graphics.drawString(ch + <span class="string">""</span>, width / <span class="number">5</span> * i, height / <span class="number">2</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 画干扰线</span></span><br><span class="line">        graphics.setColor(Color.red);</span><br><span class="line">        <span class="comment">// 随机生成坐标点</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> x1 = ran.nextInt(width);</span><br><span class="line">            <span class="keyword">int</span> x2 = ran.nextInt(width);</span><br><span class="line">            <span class="keyword">int</span> y1 = ran.nextInt(height);</span><br><span class="line">            <span class="keyword">int</span> y2 = ran.nextInt(height);</span><br><span class="line">            graphics.drawLine(x1, y1, x2, y2);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 将图片输出到页面上展示</span></span><br><span class="line">        ImageIO.write(image, <span class="string">"jpg"</span>, response.getOutputStream());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.doPost(request, response);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="ServletContext对象"><a href="#ServletContext对象" class="headerlink" title="ServletContext对象"></a>ServletContext对象</h1><ul>
+<li>概念：代表整个web应用，可以和servlet程序的容器通信</li>
+<li>功能：<ol>
+<li>获取MIME类型</li>
+<li>域对象：共享数据</li>
+<li>获取文件的真实（服务器）路径</li>
+</ol>
+</li>
+<li>获取对象<ul>
+<li>通过request对象获取<code>request.getServletContext()</code></li>
+<li>通过HttpServlet获取<code>this.getServletContext()</code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@WebServlet</span>(<span class="string">"/ServletContextDemo01"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServletContextDemo01</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="comment">// ServletContext对象的获取</span></span><br><span class="line">        ServletContext context1 = request.getServletContext();</span><br><span class="line">        ServletContext context2 = <span class="keyword">this</span>.getServletContext();</span><br><span class="line">        <span class="comment">// context1 == context2</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.doPost(request, response);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>获取MIME类型</li>
+</ol>
+<ul>
+<li>MIME类型：在互联网通信过程中定义的一种文件数据类型<ul>
+<li>格式： 大类型/小类型 例:text/html</li>
+<li>获取：<code>String getMimeType(String file)</code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ServletContext对象的获取</span></span><br><span class="line">ServletContext context2 = <span class="keyword">this</span>.getServletContext();</span><br><span class="line"><span class="comment">// 获取MimeType</span></span><br><span class="line">String filename = <span class="string">"a.jpg"</span>;</span><br><span class="line">String mime = context2.getMimeType(filename);</span><br><span class="line">System.out.println(mime);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li><p>域对象</p>
+<ul>
+<li>setAttribute(String name, Object obj)：存储数据</li>
+<li>Object getAttribute(String name)：通过键来获取值</li>
+<li>removeAttribute(String name)：通过键来移出键值对</li>
+<li>ServletContext对象范围：所有用户所有请求的数据</li>
+</ul>
+</li>
+<li><p>获取文件的真实（服务器）路径</p>
+<ul>
+<li><code>String getRealPath(String path)</code><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ServletContext对象的获取</span></span><br><span class="line">ServletContext context2 = <span class="keyword">this</span>.getServletContext();</span><br><span class="line">String realPath = context2.getRealPath(<span class="string">"/b.txt"</span>); <span class="comment">// web目录下资源访问</span></span><br><span class="line">String realPath2 = context2.getRealPath(<span class="string">"/WEB-INF/c.txt"</span>); <span class="comment">// web-inf目录下资源访问</span></span><br><span class="line">String realPath3 = context2.getRealPath(<span class="string">"/WEB-INF/classes/a.txt"</span>); <span class="comment">// src目录下资源访问</span></span><br><span class="line">File file = <span class="keyword">new</span> File(realPath3);</span><br><span class="line">System.out.println(realPath3);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="会话技术"><a href="#会话技术" class="headerlink" title="会话技术"></a>会话技术</h1><ul>
+<li>会话：一次会话中包含了多次请求和响应。<ul>
+<li>一次会话：浏览器第一次给服务器资源发送请求，会话建立，直到有一方断开为止</li>
+<li>功能：在一次会话的范围内多次请求间，共享数据</li>
+<li>方式：<ol>
+<li>客户端会话技术：Cookie</li>
+<li>服务器端会话技术：Session</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h2><ul>
+<li><p>概念：客户端会话技术，将数据保存到客户端</p>
+</li>
+<li><p>使用步骤：</p>
+<ol>
+<li>创建Cookie对象，指定数据<ul>
+<li><code>Cookie(String name, String value)</code></li>
+</ul>
+</li>
+<li>发送Cookie对象<ul>
+<li><code>response.addCookie(Cookie cookie)</code></li>
+</ul>
+</li>
+<li>获取Cookie，拿到数据<ul>
+<li><code>Cookie[] request.getCookies()</code></li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>实现原理：基于响应头set-cookie和请求头cookie实现</p>
+</li>
+<li><p>细节：</p>
+<ol>
+<li>一次可以发送多个cookie</li>
+<li>当浏览器关闭后，Cookie数据被销毁</li>
+<li>持久化存储： <code>setMaxAge(int seconds)</code><ul>
+<li>正数：将Cookie数据写到硬盘的文件中。参数为cookie存活时间</li>
+<li>负数：默认值</li>
+<li>零： 删除cookie信息</li>
+</ul>
+</li>
+<li>在tomcat8之前，cookie不能直接存储中文， 在8之后支持中文数据<ul>
+<li>8之前需要将中文数据转码，一般采用URL编码(%两个十六进制数)</li>
+</ul>
+</li>
+<li>多个项目的cookie是不能共享的<ul>
+<li><code>setPath(string path)</code>：设置cookie的获取范围。默认情况下会去设置当前项目的虚拟目录</li>
+<li>如果要共享，可以将path设置为<code>/</code></li>
+<li>不同的tomcat服务期间数据共享：<ul>
+<li><code>setDomain(String path)</code>：如果设置一级域名相同，那么多个服务器之间cookie可以共享</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>特点：</p>
+<ol>
+<li>cookie存储数据在客户端浏览器，不安全</li>
+<li>浏览器对于单个cookie有限制（4KB），以及对同一个域名下的总cookie数量也有限制（20以内）</li>
+</ol>
+</li>
+<li><p>作用：</p>
+<ol>
+<li>cookie一般用于少量的不太敏感的数据</li>
+<li>在不登陆的情况下，完成服务器对客户端的身份识别<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建Cookie对象</span></span><br><span class="line">Cookie cookie = <span class="keyword">new</span> Cookie(<span class="string">"msg"</span>, <span class="string">"hello"</span>);</span><br><span class="line"><span class="comment">// 发送Cookie</span></span><br><span class="line">response.addCookie(cookie);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 接受Cookie</span></span><br><span class="line">Cookie[] cookies = request.getCookies();</span><br><span class="line"><span class="keyword">if</span> (cookies != <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span> (Cookie cookie : cookies) &#123;</span><br><span class="line">        String name = cookie.getName();</span><br><span class="line">        String value = cookie.getValue();</span><br><span class="line">        System.out.println(name + <span class="string">" = "</span>+ value);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h2></li>
+</ol>
+</li>
+<li><p>概念：服务器端会话技术，在一次会话的多次请求间共享数据，将数据保存在服务器端的对象中，HttpSession</p>
+</li>
+<li><p>方法：</p>
+<ul>
+<li><code>Object getAttribute(String name)</code></li>
+<li><code>void setAttribute(String name, Object value)</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取session</span></span><br><span class="line">HttpSession session = request.getSession();</span><br><span class="line"><span class="comment">// 存储数据</span></span><br><span class="line">session.setAttribute(<span class="string">"msg"</span>, <span class="string">"hello"</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取session</span></span><br><span class="line">HttpSession session = request.getSession();</span><br><span class="line"><span class="comment">// 存储数据</span></span><br><span class="line">Object msg = session.getAttribute(<span class="string">"msg"</span>);</span><br><span class="line">System.out.println(msg);</span><br></pre></td></tr></table></figure>
+
+<h1 id="JSP"><a href="#JSP" class="headerlink" title="JSP"></a>JSP</h1><ul>
+<li>概念：Java Server Pages java服务器端页面，一个特殊的页面，其中既可以直接定义html标签，也可以定义java代码</li>
+<li>原理：<ol>
+<li>jsp本质上就是一个servlet</li>
+</ol>
+</li>
+<li>JSP的脚本：JSP定义Java代码的方式<ol>
+<li>&lt;% Java代码 %&gt;：定义的Java代码，在service方法中。service方法中可以定义什么，该脚本中就可以定义什么</li>
+<li>&lt;%! Java代码 %&gt;：定义的Java代码在jsp转换后的java类的成员位置</li>
+<li>&lt;%= Java代码 %&gt;：定义的Java代码会输出到页面上，输出语句中可以定义什么，该脚本就可以定义什么</li>
+</ol>
+</li>
+<li>JSP的内置对象：在JSP页面中不需要获取和创建的对象，可以直接使用<ul>
+<li>一共有9个内置对象<ul>
+<li>request</li>
+<li>response</li>
+<li>out：字符输出流对象</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>原理：Session的实现是依赖于Cookie的</li>
+<li>细节：<ol>
+<li>当客户端关闭，服务器不关闭，两次获取的Session不是同一个，如果需要相同，可以设置Cookie来保存</li>
+<li>当客户端不关闭，服务器关闭，两次获取的Session不是同一个，但是要确保数据不丢失<ul>
+<li>Session的钝化：在服务器正常关闭之前，将Session对象序列化到硬盘上</li>
+<li>Session的活化：在服务器启动后，将Session文件反序列化</li>
+</ul>
+</li>
+<li>Session销毁<ul>
+<li>服务器关闭</li>
+<li>Session对象调用invalidate()</li>
+<li>默认三十分钟失效</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
                 <source type="audio/mpeg" src="">
@@ -628,7 +794,7 @@ B/S：浏览器/服务器
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Web相关"><span class="toc-number">1.</span> <span class="toc-text">Web相关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Tomcat"><span class="toc-number">2.</span> <span class="toc-text">Tomcat</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#部署"><span class="toc-number">2.1.</span> <span class="toc-text">部署</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#目录结构"><span class="toc-number">2.2.</span> <span class="toc-text">目录结构</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Servlet"><span class="toc-number">3.</span> <span class="toc-text">Servlet</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#实现步骤"><span class="toc-number">3.1.</span> <span class="toc-text">实现步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生命周期"><span class="toc-number">3.2.</span> <span class="toc-text">生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Servlet3-0"><span class="toc-number">3.3.</span> <span class="toc-text">Servlet3.0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#体系结构"><span class="toc-number">3.4.</span> <span class="toc-text">体系结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关配置"><span class="toc-number">3.5.</span> <span class="toc-text">相关配置</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTTP协议"><span class="toc-number">4.</span> <span class="toc-text">HTTP协议</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#请求消息数据格式"><span class="toc-number">4.1.</span> <span class="toc-text">请求消息数据格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#响应消息数据格式"><span class="toc-number">4.2.</span> <span class="toc-text">响应消息数据格式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Request"><span class="toc-number">5.</span> <span class="toc-text">Request</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#体系结构-1"><span class="toc-number">5.1.</span> <span class="toc-text">体系结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#request功能"><span class="toc-number">5.2.</span> <span class="toc-text">request功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用户登录案例"><span class="toc-number">5.3.</span> <span class="toc-text">用户登录案例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#User实体类"><span class="toc-number">5.3.1.</span> <span class="toc-text">User实体类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JDBC工具类"><span class="toc-number">5.3.2.</span> <span class="toc-text">JDBC工具类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UserDAO"><span class="toc-number">5.3.3.</span> <span class="toc-text">UserDAO</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LoginServlet"><span class="toc-number">5.3.4.</span> <span class="toc-text">LoginServlet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SuccessServlet"><span class="toc-number">5.3.5.</span> <span class="toc-text">SuccessServlet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FailServlet"><span class="toc-number">5.3.6.</span> <span class="toc-text">FailServlet</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Response"><span class="toc-number">6.</span> <span class="toc-text">Response</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#案例"><span class="toc-number">6.1.</span> <span class="toc-text">案例</span></a></li></ol></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Web相关"><span class="toc-number">1.</span> <span class="toc-text">Web相关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Tomcat"><span class="toc-number">2.</span> <span class="toc-text">Tomcat</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#部署"><span class="toc-number">2.1.</span> <span class="toc-text">部署</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#目录结构"><span class="toc-number">2.2.</span> <span class="toc-text">目录结构</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Servlet"><span class="toc-number">3.</span> <span class="toc-text">Servlet</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#实现步骤"><span class="toc-number">3.1.</span> <span class="toc-text">实现步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生命周期"><span class="toc-number">3.2.</span> <span class="toc-text">生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Servlet3-0"><span class="toc-number">3.3.</span> <span class="toc-text">Servlet3.0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#体系结构"><span class="toc-number">3.4.</span> <span class="toc-text">体系结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关配置"><span class="toc-number">3.5.</span> <span class="toc-text">相关配置</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTTP协议"><span class="toc-number">4.</span> <span class="toc-text">HTTP协议</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#请求消息数据格式"><span class="toc-number">4.1.</span> <span class="toc-text">请求消息数据格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#响应消息数据格式"><span class="toc-number">4.2.</span> <span class="toc-text">响应消息数据格式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Request"><span class="toc-number">5.</span> <span class="toc-text">Request</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#体系结构-1"><span class="toc-number">5.1.</span> <span class="toc-text">体系结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#request功能"><span class="toc-number">5.2.</span> <span class="toc-text">request功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用户登录案例"><span class="toc-number">5.3.</span> <span class="toc-text">用户登录案例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#User实体类"><span class="toc-number">5.3.1.</span> <span class="toc-text">User实体类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JDBC工具类"><span class="toc-number">5.3.2.</span> <span class="toc-text">JDBC工具类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UserDAO"><span class="toc-number">5.3.3.</span> <span class="toc-text">UserDAO</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LoginServlet"><span class="toc-number">5.3.4.</span> <span class="toc-text">LoginServlet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SuccessServlet"><span class="toc-number">5.3.5.</span> <span class="toc-text">SuccessServlet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FailServlet"><span class="toc-number">5.3.6.</span> <span class="toc-text">FailServlet</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Response"><span class="toc-number">6.</span> <span class="toc-text">Response</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#案例"><span class="toc-number">6.1.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ServletContext对象"><span class="toc-number">7.</span> <span class="toc-text">ServletContext对象</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#会话技术"><span class="toc-number">8.</span> <span class="toc-text">会话技术</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Cookie"><span class="toc-number">8.1.</span> <span class="toc-text">Cookie</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Session"><span class="toc-number">8.2.</span> <span class="toc-text">Session</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JSP"><span class="toc-number">9.</span> <span class="toc-text">JSP</span></a></li></ol>	
         </div>
     
 </div>
