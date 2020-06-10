@@ -755,6 +755,219 @@ B/S：浏览器/服务器
 </ol>
 </li>
 </ul>
+<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><ul>
+<li>作用：用于配置JSP页面，导入资源文件</li>
+<li>格式：<code>&lt;%@ 指令名称 属性名=属性值%&gt;</code></li>
+<li>分类<ul>
+<li>page:配置JSP文件</li>
+<li>include：导入页面的资源文件</li>
+<li>taglib：导入资源</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>page<ul>
+<li><code>contentType</code>：等同于response.setContentType()<ul>
+<li>设置响应体的Mime类型及字符集</li>
+<li>设置当前jsp页面的编码（只能是高级IDE才能生效，如果使用低级IDE，则需要设置<code>pageEncoding</code>来设置当前页面的字符集）</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><code>import</code>：导入java包</li>
+</ul>
+<ul>
+<li><code>errorPage</code>：错误页面。当前页面发送异常后会自动跳转到指定的错误页面</li>
+<li><code>isErrorPage</code>：标识当前页面是否为错误页面<ul>
+<li>true：是，可以使用Exception内置对象</li>
+<li>false：否，默认值</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><ol>
+<li>html注释： <code>&lt;!-- --&gt;</code>只能去注释html代码片段</li>
+<li>jsp注释： <code>&lt;%-- --%&gt;</code>可以注释所有</li>
+</ol>
+<h2 id="内置对象"><a href="#内置对象" class="headerlink" title="内置对象"></a>内置对象</h2><ul>
+<li>在jsp页面中不需要创建直接使用的对象，一共有9个</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">变量名</th>
+<th align="center">真实类型</th>
+<th align="center">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">pageContext</td>
+<td align="center">PageContext</td>
+<td align="center">当前页面共享数据，还可以获取其它八个内置对象</td>
+</tr>
+<tr>
+<td align="center">request</td>
+<td align="center">HttpServletRequest</td>
+<td align="center">一次请求访问的多个资源</td>
+</tr>
+<tr>
+<td align="center">session</td>
+<td align="center">HttpSession</td>
+<td align="center">一次会话的多个请求</td>
+</tr>
+<tr>
+<td align="center">application</td>
+<td align="center">ServletContext</td>
+<td align="center">多个用户间共享数据</td>
+</tr>
+<tr>
+<td align="center">response</td>
+<td align="center">HttpServletResponse</td>
+<td align="center">响应对象</td>
+</tr>
+<tr>
+<td align="center">page</td>
+<td align="center">Object</td>
+<td align="center">当前页面对象</td>
+</tr>
+<tr>
+<td align="center">out</td>
+<td align="center">JspWriter</td>
+<td align="center">输出对象，把数据输出到页面上</td>
+</tr>
+<tr>
+<td align="center">config</td>
+<td align="center">ServletConfig</td>
+<td align="center">Servlet的配置对象</td>
+</tr>
+<tr>
+<td align="center">exception</td>
+<td align="center">Throwable</td>
+<td align="center">异常对象</td>
+</tr>
+</tbody></table>
+<h2 id="MVC开发模式"><a href="#MVC开发模式" class="headerlink" title="MVC开发模式"></a>MVC开发模式</h2><ol>
+<li>jsp演变历史<ul>
+<li>早期只有servlet，只能使用response输出标签数据，非常麻烦</li>
+<li>sun公司用jsp来简化了servlet的开发，如果过渡使用jsp，难于维护，难于分工合作</li>
+<li>javaweb开发借鉴mvc开发模式，使得程序的设计更加合理</li>
+</ul>
+</li>
+<li>MVC：<ul>
+<li>M：model，模型，JavaBean，完成具体的业务操作，如查询数据库，封装对象</li>
+<li>V：Viem，视图，Jsp，展示数据</li>
+<li>C：Controller，控制器，Servlet，获取用户输入，调用模型，将数据交给视图进行展示</li>
+</ul>
+</li>
+<li>优点：<ul>
+<li>耦合性低，方便维护，可以利于分工</li>
+<li>重用性高</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>使得项目架构变得复杂，对开发人员要求高</li>
+</ul>
+</li>
+</ol>
+<h2 id="EL表达式"><a href="#EL表达式" class="headerlink" title="EL表达式"></a>EL表达式</h2><ul>
+<li>概念：Expression Language 表达式语言</li>
+<li>作用：替换和简化jsp页面中Java代码的编写</li>
+<li>语法：<code>${表达式}</code>，jsp默认支持EL表达式，如果想让jsp忽略EL表达式，则设置属性<code>isELIgnored=&quot;true&quot;</code>，也可以忽略单个EL表达式，在<code>$</code>前加<code>\</code></li>
+<li>使用：<ol>
+<li>运算<ul>
+<li>算术运算符： + - * /(div) %(mod)</li>
+<li>比较运算符： &gt; &lt; &gt;= &lt;= == !=</li>
+<li>逻辑运算符： &amp;&amp;(and) ||(or) !(not)</li>
+<li>空运算符： empty 用于判断字符串、集合和数组长度是否为0</li>
+</ul>
+</li>
+<li>获取值<ul>
+<li>EL表达式只能从域对象中获取值</li>
+<li>语法：<code>${域名称.键名称}</code>，从指定域中获取指定键的值</li>
+<li>域名称：<ol>
+<li>pageScope -&gt; pageContext</li>
+<li>requestScope -&gt; request</li>
+<li>sessionScope -&gt; session</li>
+<li>applicationScope -&gt; application(ServletContext)</li>
+</ol>
+</li>
+<li>例：在request中存储了name=qiancijun</li>
+<li>获取：<code>${requestScope.name}</code></li>
+<li>省略域名称：<code>${键名称}</code>，表示依次从最小的域中查找是否有该键对应的值，直到找到为止</li>
+</ul>
+</li>
+<li>获取对象的值<ul>
+<li>通过对象的属性来获取，setter和getter方法，去掉get和set，在将剩余部分首字母变小写</li>
+</ul>
+</li>
+<li>获取List集合的值<ul>
+<li><code>${域名称.键名[索引]}</code></li>
+</ul>
+</li>
+<li>获取map集合的值<ul>
+<li><code>${域名称.键名.key名称}</code></li>
+<li><code>${域名称.键名[&quot;key名称&quot;]}</code></li>
+</ul>
+</li>
+</ol>
+</li>
+<li>隐式对象：el表达式中有11个隐式对象，不用创建可以直接使用<ul>
+<li><code>pageContext</code>：获取jsp其它8个对象</li>
+</ul>
+</li>
+</ul>
+<h2 id="JSTL"><a href="#JSTL" class="headerlink" title="JSTL"></a>JSTL</h2><ul>
+<li>概念：JavaServer Pages Tag Library JSP标准标签库</li>
+<li>作用：用于简化和替换页面上的Java代码  </li>
+<li>步骤：<ol>
+<li>导入jar包</li>
+<li>引入标签库：taglib指令：<code>&lt;%% taglib&gt;</code></li>
+<li>使用标签</li>
+</ol>
+</li>
+<li>常用的JSTL标签<ol>
+<li>if：相当于Java中的if<ul>
+<li>test：必须属性，接受boolean表达式，如果表达式为true则显示if标签体内容，如果为false则不显示标签体内容，一般情况下会结合el表达式一起使用</li>
+</ul>
+</li>
+<li>choose：相当于Java中的switch<ul>
+<li>使用choose标签声明</li>
+<li>使用when标签做判断</li>
+<li>使用otherwise标签做其它情况的声明</li>
+</ul>
+</li>
+<li>foreach：相当于Java中的for<ul>
+<li>属性： <ul>
+<li>begin 开始值 </li>
+<li>end 结束值</li>
+<li>var 临时变量</li>
+<li>step 步长</li>
+<li>varStatus 循环状态<ul>
+<li>index：容器中元素的索引，从0开始</li>
+<li>count：循环的次数</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<p>if</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">    <span class="comment">// 判断request域中的一个List集合是否为空，不为空则遍历</span></span><br><span class="line">    List list = <span class="keyword">new</span> ArrayList();</span><br><span class="line">    list.add(<span class="string">"aaa"</span>);</span><br><span class="line">    list.add(<span class="string">"bbb"</span>);</span><br><span class="line">    request.setAttribute(<span class="string">"list"</span>, list);</span><br><span class="line">%&gt;</span><br><span class="line"></span><br><span class="line">&lt;c:<span class="keyword">if</span> test=<span class="string">"$&#123;not empty list&#125;"</span>&gt;</span><br><span class="line">    遍历集合</span><br><span class="line">    &lt;br&gt;</span><br><span class="line">    &lt;%</span><br><span class="line">        <span class="keyword">for</span> (Object o : list) &#123;</span><br><span class="line">            out.write(o.toString() + <span class="string">"&lt;br&gt;"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    %&gt;</span><br><span class="line">&lt;/c:if&gt;</span><br></pre></td></tr></table></figure>
+<p>choose</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">    request.setAttribute(<span class="string">"num"</span>, <span class="number">1</span>);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;c:choose&gt;</span><br><span class="line">    &lt;c:when test="$&#123;num == 1&#125;"&gt;星期一&lt;/c:when&gt;</span><br><span class="line">    &lt;c:when test="$&#123;num == 2&#125;"&gt;星期二&lt;/c:when&gt;</span><br><span class="line">    &lt;c:when test="$&#123;num == 3&#125;"&gt;星期三&lt;/c:when&gt;</span><br><span class="line">    &lt;c:when test="$&#123;num == 4&#125;"&gt;星期四&lt;/c:when&gt;</span><br><span class="line">    &lt;c:when test="$&#123;num == 5&#125;"&gt;星期五&lt;/c:when&gt;</span><br><span class="line">    &lt;c:when test="$&#123;num == 6&#125;"&gt;星期六&lt;/c:when&gt;</span><br><span class="line">    &lt;c:when test="$&#123;num == 7&#125;"&gt;星期七&lt;/c:when&gt;</span><br><span class="line">    &lt;c:otherwise&gt;数字输入有误&lt;/c:otherwise&gt;</span><br><span class="line">&lt;/c:choose&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="三层架构（软件设计架构）"><a href="#三层架构（软件设计架构）" class="headerlink" title="三层架构（软件设计架构）"></a>三层架构（软件设计架构）</h1><ol>
+<li><p>界面层（表示层）：用户看到的界面</p>
+</li>
+<li><p>业务逻辑层：处理业务逻辑</p>
+</li>
+<li><p>数据访问层（DAO data Access Object）：操作数据存储文件</p>
+</li>
+</ol>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
@@ -794,7 +1007,7 @@ B/S：浏览器/服务器
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Web相关"><span class="toc-number">1.</span> <span class="toc-text">Web相关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Tomcat"><span class="toc-number">2.</span> <span class="toc-text">Tomcat</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#部署"><span class="toc-number">2.1.</span> <span class="toc-text">部署</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#目录结构"><span class="toc-number">2.2.</span> <span class="toc-text">目录结构</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Servlet"><span class="toc-number">3.</span> <span class="toc-text">Servlet</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#实现步骤"><span class="toc-number">3.1.</span> <span class="toc-text">实现步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生命周期"><span class="toc-number">3.2.</span> <span class="toc-text">生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Servlet3-0"><span class="toc-number">3.3.</span> <span class="toc-text">Servlet3.0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#体系结构"><span class="toc-number">3.4.</span> <span class="toc-text">体系结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关配置"><span class="toc-number">3.5.</span> <span class="toc-text">相关配置</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTTP协议"><span class="toc-number">4.</span> <span class="toc-text">HTTP协议</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#请求消息数据格式"><span class="toc-number">4.1.</span> <span class="toc-text">请求消息数据格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#响应消息数据格式"><span class="toc-number">4.2.</span> <span class="toc-text">响应消息数据格式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Request"><span class="toc-number">5.</span> <span class="toc-text">Request</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#体系结构-1"><span class="toc-number">5.1.</span> <span class="toc-text">体系结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#request功能"><span class="toc-number">5.2.</span> <span class="toc-text">request功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用户登录案例"><span class="toc-number">5.3.</span> <span class="toc-text">用户登录案例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#User实体类"><span class="toc-number">5.3.1.</span> <span class="toc-text">User实体类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JDBC工具类"><span class="toc-number">5.3.2.</span> <span class="toc-text">JDBC工具类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UserDAO"><span class="toc-number">5.3.3.</span> <span class="toc-text">UserDAO</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LoginServlet"><span class="toc-number">5.3.4.</span> <span class="toc-text">LoginServlet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SuccessServlet"><span class="toc-number">5.3.5.</span> <span class="toc-text">SuccessServlet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FailServlet"><span class="toc-number">5.3.6.</span> <span class="toc-text">FailServlet</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Response"><span class="toc-number">6.</span> <span class="toc-text">Response</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#案例"><span class="toc-number">6.1.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ServletContext对象"><span class="toc-number">7.</span> <span class="toc-text">ServletContext对象</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#会话技术"><span class="toc-number">8.</span> <span class="toc-text">会话技术</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Cookie"><span class="toc-number">8.1.</span> <span class="toc-text">Cookie</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Session"><span class="toc-number">8.2.</span> <span class="toc-text">Session</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JSP"><span class="toc-number">9.</span> <span class="toc-text">JSP</span></a></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Web相关"><span class="toc-number">1.</span> <span class="toc-text">Web相关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Tomcat"><span class="toc-number">2.</span> <span class="toc-text">Tomcat</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#部署"><span class="toc-number">2.1.</span> <span class="toc-text">部署</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#目录结构"><span class="toc-number">2.2.</span> <span class="toc-text">目录结构</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Servlet"><span class="toc-number">3.</span> <span class="toc-text">Servlet</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#实现步骤"><span class="toc-number">3.1.</span> <span class="toc-text">实现步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生命周期"><span class="toc-number">3.2.</span> <span class="toc-text">生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Servlet3-0"><span class="toc-number">3.3.</span> <span class="toc-text">Servlet3.0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#体系结构"><span class="toc-number">3.4.</span> <span class="toc-text">体系结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关配置"><span class="toc-number">3.5.</span> <span class="toc-text">相关配置</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTTP协议"><span class="toc-number">4.</span> <span class="toc-text">HTTP协议</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#请求消息数据格式"><span class="toc-number">4.1.</span> <span class="toc-text">请求消息数据格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#响应消息数据格式"><span class="toc-number">4.2.</span> <span class="toc-text">响应消息数据格式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Request"><span class="toc-number">5.</span> <span class="toc-text">Request</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#体系结构-1"><span class="toc-number">5.1.</span> <span class="toc-text">体系结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#request功能"><span class="toc-number">5.2.</span> <span class="toc-text">request功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用户登录案例"><span class="toc-number">5.3.</span> <span class="toc-text">用户登录案例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#User实体类"><span class="toc-number">5.3.1.</span> <span class="toc-text">User实体类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JDBC工具类"><span class="toc-number">5.3.2.</span> <span class="toc-text">JDBC工具类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UserDAO"><span class="toc-number">5.3.3.</span> <span class="toc-text">UserDAO</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LoginServlet"><span class="toc-number">5.3.4.</span> <span class="toc-text">LoginServlet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SuccessServlet"><span class="toc-number">5.3.5.</span> <span class="toc-text">SuccessServlet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FailServlet"><span class="toc-number">5.3.6.</span> <span class="toc-text">FailServlet</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Response"><span class="toc-number">6.</span> <span class="toc-text">Response</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#案例"><span class="toc-number">6.1.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ServletContext对象"><span class="toc-number">7.</span> <span class="toc-text">ServletContext对象</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#会话技术"><span class="toc-number">8.</span> <span class="toc-text">会话技术</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Cookie"><span class="toc-number">8.1.</span> <span class="toc-text">Cookie</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Session"><span class="toc-number">8.2.</span> <span class="toc-text">Session</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JSP"><span class="toc-number">9.</span> <span class="toc-text">JSP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#指令"><span class="toc-number">9.1.</span> <span class="toc-text">指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注释"><span class="toc-number">9.2.</span> <span class="toc-text">注释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内置对象"><span class="toc-number">9.3.</span> <span class="toc-text">内置对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MVC开发模式"><span class="toc-number">9.4.</span> <span class="toc-text">MVC开发模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EL表达式"><span class="toc-number">9.5.</span> <span class="toc-text">EL表达式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JSTL"><span class="toc-number">9.6.</span> <span class="toc-text">JSTL</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三层架构（软件设计架构）"><span class="toc-number">10.</span> <span class="toc-text">三层架构（软件设计架构）</span></a></li></ol>	
         </div>
     
 </div>
