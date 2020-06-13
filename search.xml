@@ -7831,7 +7831,92 @@ offset从0开始可以省略
   <entry>
     <title>Ajax</title>
     <url>/2020/06/05/Ajax/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h1 id="Ajax"><a href="#Ajax" class="headerlink" title="Ajax"></a>Ajax</h1><ul>
+<li>Ajax：ASynchronous JavaScript And XML。是指一种创建交互式、快速动态网页应用的网页开发技术，$\color{red}{无需重新加载整个网页的情况下，能够更新部分网页的技术}$。通过在后台与服务器进行少量数据交换，Ajax 可以使网页实现异步更新。这意味着可以在不重新加载整个网页的情况下，对网页的某部分进行更新。<ol>
+<li>异步和同步<ul>
+<li>同步：客户端必须等待服务端的响应，在等待期间客户端不可以做其它操作</li>
+<li>异步：客户端不需要等待服务端的响应，在服务的处理请求的过程中，客户端可以进行其它的操作</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><ol>
+<li><p>原生js方式（了解）</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fun</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 发送异步请求</span></span><br><span class="line">    <span class="comment">// 创建核心对象</span></span><br><span class="line">    <span class="keyword">var</span> xmlhttp;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">window</span>.XMLHttpRequest) &#123;</span><br><span class="line">        <span class="comment">// 高版本浏览器</span></span><br><span class="line">        xmlhttp = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 低版本浏览器</span></span><br><span class="line">        xmlhttp = <span class="keyword">new</span> ActiveXObject(<span class="string">"Microsoft.XMLHTTP"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 建立连接</span></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 参数：</span></span><br><span class="line"><span class="comment">     *      1. 请求方式：GET方式请求参数在url后拼接，send方法为空参；POST方式请求参数在send方法中</span></span><br><span class="line"><span class="comment">     *      2. 请求的url路径</span></span><br><span class="line"><span class="comment">     *      3. 同步或异步请求 true异步 false同步</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    xmlhttp.open(<span class="string">"GET"</span>, <span class="string">"ajaxServlet?username=qiancijun"</span>, <span class="literal">true</span>)</span><br><span class="line">    <span class="comment">// 发送请求</span></span><br><span class="line">    xmlhttp.send();</span><br><span class="line">    <span class="comment">// 接受并处理来自服务器的响应结果</span></span><br><span class="line">    <span class="comment">// 当xmlhttp对象的就绪状态改变时触发一个事件</span></span><br><span class="line">    xmlhttp.onreadystatechange=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (xmlhttp.readyState==<span class="number">4</span> &amp;&amp; xmlhttp.status==<span class="number">200</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">var</span> responseText = xmlhttp.responseText</span><br><span class="line">            <span class="built_in">document</span>.getElementById(<span class="string">"myDiv"</span>).innerHTML=xmlhttp.responseText;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>jQuery方式</p>
+<ul>
+<li>$.ajax()<ul>
+<li>语法：<code>$.ajax(url, [settings])</code></li>
+<li>语法：<code>$.ajax({键值对})</code><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$.ajax(&#123;</span><br><span class="line">    url: <span class="string">"ajaxServlet"</span>, <span class="comment">// 请求路径</span></span><br><span class="line">    type: <span class="string">"POST"</span>, <span class="comment">// 请求方式</span></span><br><span class="line">    <span class="comment">// data: "username=qiancijun", //请求参数</span></span><br><span class="line">    data: &#123;</span><br><span class="line">        <span class="string">"username"</span>: <span class="string">"qiancijun"</span>,</span><br><span class="line">        <span class="string">"age"</span>: <span class="number">18</span></span><br><span class="line">    &#125;,</span><br><span class="line">    success: <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 响应成功后的回调函数</span></span><br><span class="line">        alert(data);</span><br><span class="line">    &#125;,</span><br><span class="line">    error: <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>$.get()：发送get请求<ul>
+<li>语法：<code>$.get(url, [data], [callback], [type]);</code></li>
+<li>url：请求路径</li>
+<li>data：请求参数</li>
+<li>callback：回调函数</li>
+<li>type：响应数据的类型</li>
+</ul>
+</li>
+<li>$.post()：发送post请求</li>
+</ul>
+</li>
+<li><p>其它参数</p>
+<ul>
+<li>dataType：设置接受到的响应数据的格式</li>
+</ul>
+</li>
+</ol>
+<h1 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h1><ul>
+<li>JavaScript Object Notation，是存储和交换文本信息的语法，类似XML， JSON比XML更小，更快，更易解析</li>
+</ul>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><ol>
+<li>基本规则<ul>
+<li>数据在名称/值对中：JSON数据是由键值对构成的<ul>
+<li>键用引号包括，也可以不使用引号</li>
+<li>取值类型：数字（整数或浮点数、字符串（在双引号中）、逻辑值（true 或 false）、数组（在方括号中）、对象（在花括号中）、null</li>
+</ul>
+</li>
+<li>数据由逗号分隔：多个键值对由逗号分割</li>
+<li>花括号保存对象：使用{}定义JSON格式</li>
+<li>方括号保存数组：使用[]定义数组</li>
+</ul>
+</li>
+<li>获取数据：<ol>
+<li>json对象.键名</li>
+<li>json对象[“键名”]</li>
+<li>数组对象[索引]</li>
+</ol>
+</li>
+<li>JSON数据和Java对象的相互转换<ul>
+<li>JSON解析器：常见的解析器<ul>
+<li>Jsonlib</li>
+<li>Gson：谷歌的解析器</li>
+<li>fastjson：阿里巴巴的解析器</li>
+<li>jackson：spring内置的解析器</li>
+</ul>
+</li>
+<li>JSON转为Java对象<ul>
+<li><code>readValue(json字符串数据, class)</code></li>
+</ul>
+</li>
+<li>Java对象转为JSON<ul>
+<li>创建jackson核心对象 ObjectMapper</li>
+<li>调用ObjectMapper的相关方法</li>
+<li>注解：<ol>
+<li>@JsonIgnore：排除属性</li>
+<li>@JsonFormat：属性值格式化</li>
+</ol>
+</li>
+<li>复杂的Java对象：List、Map集合<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="comment">// 创建Person对象</span></span><br><span class="line">    Person p = <span class="keyword">new</span> Person();</span><br><span class="line">    p.setName(<span class="string">"qiancijun"</span>);</span><br><span class="line">    p.setAge(<span class="number">3</span>);</span><br><span class="line">    p.setGerder(<span class="string">"未知"</span>);</span><br><span class="line">    <span class="comment">// 创建ObjectMapper对象</span></span><br><span class="line">    ObjectMapper objm = <span class="keyword">new</span> ObjectMapper();</span><br><span class="line">    <span class="comment">// 调用方法转换</span></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">        * 转换方法：</span></span><br><span class="line"><span class="comment">        *     writeValue(arg1, arg2)</span></span><br><span class="line"><span class="comment">        *         - 参数1：</span></span><br><span class="line"><span class="comment">        *         - File 将obj对象转换为JSON对象，并保存到指定的文件夹中</span></span><br><span class="line"><span class="comment">        *         - Writer 将obj对象转换为JSON字符串，并将JSON数据填充到字符输出流中</span></span><br><span class="line"><span class="comment">        *         - OutputStream 将obj对象转换为JSON字符串，并将JSON数据填充到字节输出流中</span></span><br><span class="line"><span class="comment">        *     writeValueAsString(obj)：将对象转为JSON字符串</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">    String json = objm.writeValueAsString(p);</span><br><span class="line">    System.out.println(json);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+]]></content>
       <categories>
         <category>前端</category>
       </categories>
@@ -8803,6 +8888,76 @@ offset从0开始可以省略
 <li><p>数据访问层（DAO data Access Object）：操作数据存储文件</p>
 </li>
 </ol>
+<h1 id="Filter"><a href="#Filter" class="headerlink" title="Filter"></a>Filter</h1><ul>
+<li>当访问服务器资源式，过滤器可以将请求拦截下来，完成一些特殊的功能</li>
+<li>作用：一般完成一些通用的操作。如：登录验证，统一编码处理</li>
+<li>步骤：<ol>
+<li>定义一个类，实现Filter接口</li>
+<li>复写方法</li>
+<li>配置拦截路径</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@WebFilter</span>(<span class="string">"/*"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FilterDemo01</span> <span class="keyword">implements</span> <span class="title">Filter</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(ServletRequest req, ServletResponse resp, FilterChain chain)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"doFilter被执行了"</span>);</span><br><span class="line">        <span class="comment">// 放行</span></span><br><span class="line">        chain.doFilter(req, resp);</span><br><span class="line">        System.out.println(<span class="string">"doFilter执行完了"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(FilterConfig config)</span> <span class="keyword">throws</span> ServletException </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>细节：<ol>
+<li>过滤器生命周期：<ul>
+<li>init：在服务器启动后，会创建Filter对象，然后调用init方法。只执行一次，用于加载资源</li>
+<li>doFilter：每一次请求被拦截资源时，会执行，执行多次</li>
+<li>destory：在服务器关闭后，Filter对象被销毁。如果服务器是正常关闭，则会执行destory方法。只执行一次，用于释放资源</li>
+</ul>
+</li>
+<li>过滤器配置：<ul>
+<li>拦截路径配置：<ol>
+<li>具体资源路径： <code>/index.jsp</code></li>
+<li>目录拦截：<code>/user/*</code> 访问user下的所有资源时，过滤器都会被执行</li>
+<li>后缀拦截：<code>*.jsp</code> 访问所有jsp资源时，过滤器都会被执行</li>
+<li>拦截所有：<code>/*</code></li>
+</ol>
+</li>
+<li>拦截方式配置：资源被访问的方式<ul>
+<li>注解配置<ul>
+<li>dispatcherTypes属性：可以配置多个值，用大括号包裹<ol>
+<li>REQUEST：默认值。浏览器直接请求资源</li>
+<li>FORWARD：转发访问资源</li>
+<li>INCLUDE：包含访问资源</li>
+<li>ERROR：错误跳转资源</li>
+<li>ASYNC：异步访问资源</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>web.xml配置</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li>过滤器链<ul>
+<li>执行顺序：如果有两个过滤器，分别是1和2。过滤器1先执行，过滤器2后执行，过滤器2先返回，过滤器1后返回</li>
+<li>先后顺序：按照类名的字符串比较顺序，值小的先执行</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+<h1 id="Listener"><a href="#Listener" class="headerlink" title="Listener"></a>Listener</h1><ul>
+<li>事件监听机制：<ol>
+<li>事件</li>
+<li>事件源：事件发生的地方</li>
+<li>监听器：一个对象或一段代码</li>
+<li>注册监听：将事件、事件源和监听器绑定在一起，当事件源上发生某个事件后执行监听器的代码</li>
+</ol>
+</li>
+<li><code>ServletContextListener</code>：监听ServletContext对象的创建和销毁</li>
+<li>步骤：<ol>
+<li>定义一个类，实现接口</li>
+<li>复写方法</li>
+<li>配置</li>
+</ol>
+</li>
+</ul>
 ]]></content>
       <categories>
         <category>JAVA</category>
