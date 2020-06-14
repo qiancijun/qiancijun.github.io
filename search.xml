@@ -4341,7 +4341,7 @@ offset从0开始可以省略
 <h3 id="事务的ACID属性（面试-）"><a href="#事务的ACID属性（面试-）" class="headerlink" title="事务的ACID属性（面试 ）"></a>事务的ACID属性（面试 ）</h3><ol>
 <li><p>$\color{blue}{原子性}$（Atomicity）<br>原子性是指事务是一个不可分割的工作单位，事务中的操作要么都发生，要么都不发生。</p>
 </li>
-<li><p>$\color{blue}{一致性}$（Consistency）<br>事务必须使数据库从一个一致性状态变换到另外一个一致性状态。</p>
+<li><p>$\color{blue}{一致性}$（Consistency）<br>事务必须使数据库从一个一致性状态变换到另外一个一致性状态。事务的运行不会改变数据库原本的一致性约束</p>
 </li>
 <li><p>$\color{blue}{隔离性}$（Isolation）<br>事务的隔离性是指一个事务的执行不能被其他事务干扰，即一个事务内部的操作及使用的数据对并发的其他事务是隔离的，并发执行的各个事务之间不能互相干扰。</p>
 </li>
@@ -7501,12 +7501,104 @@ offset从0开始可以省略
 <li><p>聚合模型：</p>
 <ul>
 <li>KV键值</li>
-<li>BSON</li>
+<li>BSON<ul>
+<li>MongoDB：是一个基于分布式文件存储的数据库，由C++编写，旨在为WEB应用提供可扩展的高性能数据库存储解决方案。是一个介于关系数据库和非关系数据库之间的产品，是非关系数据库当中功能最丰富</li>
+</ul>
+</li>
 <li>列族</li>
-<li>图形</li>
+<li>图形<ul>
+<li>关系图谱</li>
 </ul>
 </li>
 </ul>
+</li>
+</ul>
+<h2 id="在分布式数据库中的CAP"><a href="#在分布式数据库中的CAP" class="headerlink" title="在分布式数据库中的CAP"></a>在分布式数据库中的CAP</h2><ul>
+<li><p>传统的ACID</p>
+<ul>
+<li>A：Atomicity 原子性</li>
+<li>C：Consistency 一致性</li>
+<li>I：Isolation 独立性</li>
+<li>D：Durability 持久性</li>
+</ul>
+</li>
+<li><p>CAP</p>
+<ul>
+<li>C：Consistency 一致性</li>
+<li>A：Availability 可用性</li>
+<li>P：Partition tolerance 分区容错性</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>CAP的3进2<ul>
+<li>CAP理论的核心是：一个分布式系统不可能同时很好的满足一致性，可用性和分区容错性这三个需求，$\color{red}{最多只能同时较好的满足两个}$</li>
+<li>因此，根据CAP原理将NoSQL数据库分成了满足CA原则、满足CP原则和满足AP原则三大类</li>
+<li>CA：单点集群，满足一致性，可用性的系统，通常在可扩展性上不太强大</li>
+<li>CP：满足一致性，分区容错性的系统，通常性能不是特别高</li>
+<li>AP：满足可用性，分区容错性，通常可能对一致性要求低一些</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>CAP解读</p>
+<ul>
+<li>由于当前的网络硬件肯定会出现延迟丢包等问题，所以，$\color{red}{分区容错性}$是必须要实现的。所以只能在$\color{blue}{一致性}$和$\color{blue}{可用性}$之间进行权衡，没有NoSQL系统能同时保证这三点</li>
+<li>CA：传统Oracle数据库</li>
+<li>AP：大多数网站架构的选择</li>
+<li>CP：redis、MongoDB</li>
+</ul>
+</li>
+<li><p>一致性与可用性的抉择</p>
+<ul>
+<li>数据库事务一致性需求<ul>
+<li>很多web实时系统并不要求严格的数据库事务，对读一致性的要求很低，有些场合对写一致性要求并不高。允许实现最终一致性</li>
+</ul>
+</li>
+<li>数据库的写实时性和读实时性需求<ul>
+<li>对关系数据库来说，插入一条数据之后立刻查询，是肯定可以读出来这条数据的，但是对于很对web应用来说，并不要求这么高的实时性。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="BASE"><a href="#BASE" class="headerlink" title="BASE"></a>BASE</h2><ul>
+<li>BASE就是为了解决关系数据库强一致性引起的问题而引起的可用性降低而提出的解决方案<ul>
+<li>Basically Available：基本可用</li>
+<li>Soft state：软状态</li>
+<li>Eventually consistent：最终一致</li>
+</ul>
+</li>
+</ul>
+<h2 id="分布式和集群"><a href="#分布式和集群" class="headerlink" title="分布式和集群"></a>分布式和集群</h2><ul>
+<li>分布式系统：由多台计算机和通信的软件组件通过计算机网络连接组成。分布式系统是建立在网络之上的软件系统。正是因为软件的特性，所以分布式系统具有高度的内聚性和透明性。<ul>
+<li>不同的多台服务器上面部署不同的服务模块（工程），他们之间通过Rpc/Rmi之间通信和调用，对外提供服务和组内协作</li>
+</ul>
+</li>
+<li>集群：<ul>
+<li>不同的多台服务器上面部署相同的服务模块，通过分布式调度软件进行统一的调度，对外提供服务和访问</li>
+</ul>
+</li>
+</ul>
+<h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><ul>
+<li>Redis： REmote DIctionary Server（远程字典服务器）<ul>
+<li>完全开源免费，由C语言编写，遵守BSD协议，是一个高性能的（key/value）分布式内存数据库，基于内存运行并支持持久化的NoSQL数据库，也被称为数据结构服务器 </li>
+</ul>
+</li>
+<li>Redis与其它三个key/value数据库相比有三个特点<ol>
+<li>Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用</li>
+<li>Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储</li>
+<li>redis还支持数据的备份，即master-slave模式的数据备份</li>
+</ol>
+</li>
+</ul>
+<h2 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h2><ol>
+<li>内存存储和持久化：redis支持异步将内存中的数据写到硬盘上，同时不影响继续服务</li>
+<li>取最新N个数据的操作</li>
+<li>模拟类似于HttpSession这种需要设定过期时间的功能</li>
+<li>发布、订阅消息系统</li>
+<li>定时器和计时器</li>
+</ol>
 ]]></content>
       <categories>
         <category>数据库</category>
@@ -9005,6 +9097,27 @@ offset从0开始可以省略
         <tag>数组</tag>
         <tag>算法</tag>
         <tag>树</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LeetCode-193周赛</title>
+    <url>/2020/06/14/LeetCode-193%E5%91%A8%E8%B5%9B/</url>
+    <content><![CDATA[<h1 id="5436-一维数组的动态和"><a href="#5436-一维数组的动态和" class="headerlink" title="5436. 一维数组的动态和"></a>5436. 一维数组的动态和</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week193/5436describe.png" alt=""></p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>言简意赅</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">runningSum</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = nums.size();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; len; i++) &#123;</span><br><span class="line">            nums[i] += nums[i - <span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> nums;</span><br><span class="line">    &#125;   </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h1 id="5437-不同整数的最少数目"><a href="#5437-不同整数的最少数目" class="headerlink" title="5437. 不同整数的最少数目"></a>5437. 不同整数的最少数目</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week193/5437descri.png" alt=""></p>
+<h2 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h2><p>用哈希表存入所有的整数数目，再进行排序依次拿掉最少的数字</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findLeastNumOfUniqueInts</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; arr, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="built_in">list</span>;</span><br><span class="line">        <span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; m;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> a: arr) &#123;</span><br><span class="line">            m[a]++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> key: m) &#123;</span><br><span class="line">            <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; tmp = &#123;key.first, key.second&#125;;</span><br><span class="line">            <span class="built_in">list</span>.push_back(tmp);</span><br><span class="line">        &#125;</span><br><span class="line">        sort(<span class="built_in">list</span>.begin(), <span class="built_in">list</span>.end(), [](<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;v1, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;v2)-&gt;<span class="keyword">bool</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> v1[<span class="number">1</span>] &lt; v2[<span class="number">1</span>];</span><br><span class="line">        &#125;);</span><br><span class="line">        result = <span class="built_in">list</span>.size();</span><br><span class="line">        <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (k &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">list</span>[index][<span class="number">1</span>] != <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="built_in">list</span>[index][<span class="number">1</span>]--;</span><br><span class="line">                k--;</span><br><span class="line">                <span class="keyword">if</span> (<span class="built_in">list</span>[index][<span class="number">1</span>] == <span class="number">0</span>)</span><br><span class="line">                    result--;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                index++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">list</span>.size(); i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">2</span>; j++) &#123;</span><br><span class="line">                <span class="built_in">cout</span> &lt;&lt; <span class="built_in">list</span>[i][j] &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h1 id="5438-制作m束花所需的最少天数"><a href="#5438-制作m束花所需的最少天数" class="headerlink" title="5438. 制作m束花所需的最少天数"></a>5438. 制作m束花所需的最少天数</h1><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week193/5438describe.png" alt=""></p>
+<h2 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h2><p>先找到需要开花时间最久的那朵花，在对时间进行二分查找</p>
+<h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minDays</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; bloomDay, <span class="keyword">int</span> m, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = bloomDay.size();</span><br><span class="line">        <span class="keyword">if</span> (m * k &gt; len) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> right = *max_element(bloomDay.begin(), bloomDay.end()), left = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">            <span class="keyword">int</span> mid = left + (right - left) / <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">int</span> cnt = count(bloomDay, mid, k);</span><br><span class="line">            <span class="keyword">if</span> (cnt &gt;= m) &#123;</span><br><span class="line">                right = mid;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                left = mid + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> left;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">count</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;bloomDay, <span class="keyword">int</span> day, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; bloomDay.size(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (bloomDay[i] &lt;= day) &#123;</span><br><span class="line">                <span class="comment">// 开花了</span></span><br><span class="line">                count++;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 构不成一束</span></span><br><span class="line">                count = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (count == k) &#123;</span><br><span class="line">                <span class="comment">// 有连续k束相邻的花，捆在一束里</span></span><br><span class="line">                count = <span class="number">0</span>;</span><br><span class="line">                res++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>试题</tag>
       </tags>
   </entry>
 </search>
