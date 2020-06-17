@@ -7686,15 +7686,15 @@ offset从0开始可以省略
 <li>在set的基础上，加上一个score值</li>
 </ul>
 <ol>
-<li>zadd/zrange：添加/查看</li>
-<li>zrangebyscore key begin end：范围内分数的查询<ul>
-<li>zrangebyscore set1 60 90：60到90之间</li>
-<li>zrangebyscore set1 60 (90：不在60到90之间</li>
-<li>zrangebyscore set1 60 90 limit 开始下标 结束下标：限制个数</li>
+<li><code>zadd/zrange</code>：添加/查看</li>
+<li><code>zrangebyscore key begin end</code>：范围内分数的查询<ul>
+<li><code>zrangebyscore set1 60 90</code>：60到90之间</li>
+<li><code>zrangebyscore set1 60 (90</code>：不在60到90之间</li>
+<li><code>zrangebyscore set1 60 90 limit</code>：开始下标 结束下标：限制个数</li>
 </ul>
 </li>
-<li>zrem key value值：删除元素</li>
-<li>zcard/zcount key score区间/zrank key values值：获得下标值/zscore key 对应值，获得分数</li>
+<li><code>zrem key value</code>值：删除元素</li>
+<li><code>zcard/zcount key score区间/zrank key values值</code>：获得下标值/zscore key 对应值，获得分数</li>
 </ol>
 <h2 id="解析配置文件"><a href="#解析配置文件" class="headerlink" title="解析配置文件"></a>解析配置文件</h2><p>参数说明<br>redis.conf 配置项说明如下：</p>
 <ol>
@@ -7875,7 +7875,66 @@ offset从0开始可以省略
 <li><code>SUBSCRIBE channel [channel .]</code>：订阅给定的一个或多个频道的信息。</li>
 <li><code>UNSUBSCRIBE [channel [channel .]</code>：指退订给定的频道。</li>
 </ol>
-]]></content>
+<h1 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h1><ul>
+<li>主机数据更新后根据配置和策略，自动同步到备机的master/slaver机制，Master以写为主，Slave以读为主</li>
+</ul>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><ol>
+<li>配从库不配主库</li>
+<li>从库配置：slaveof 主库IP 主库端口<ul>
+<li>每这-atr开之后。幅需爱重新连接。除非你配置eds.coc性</li>
+</ul>
+</li>
+<li>修改配置文件<ul>
+<li>拷贝多个redis.conf文件</li>
+<li>开启daemonize yes</li>
+<li>Pid文件名字</li>
+<li>指定端口</li>
+<li>Log文件名字</li>
+<li>Dump.rdb名字</li>
+</ul>
+</li>
+<li>链式复制<ul>
+<li>上一个Slave可以是下一个slave的Master, slave同样可以接收其他slaves的连接和同步请求，那么该slave作为了链条中下一个的master,可以有效减轻master的写压力</li>
+<li>中途变更转向:会清除之前的数据，重新建立拷贝最新的</li>
+<li>Slaveof新主库IP新主库端口</li>
+</ul>
+</li>
+<li>取消主从复制<ul>
+<li>slaveof no one：使当前数据库停止与其他数据库的同步，转成主数据库</li>
+</ul>
+</li>
+</ol>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><ul>
+<li>Slave启动成功连接到master后会发送一个sync命令，Master接到命令启动后台的存盘进程，同时收集所有接收到的用于修改数据集命令，在后台进程执行完毕之后，master将传送整个数据文件到slave,以完成一次完全同步</li>
+<li>全量复制:slave服务在接收到数据库文件数据后，将其存盘并加载到内存中。</li>
+<li>增量复制:Master继续将新的所有收集到的修改命令依次传给slave,完成同步</li>
+<li>但是只要是重新连接master,一次完全同步(全量复制)将被自动执行</li>
+</ul>
+<h2 id="哨兵模式"><a href="#哨兵模式" class="headerlink" title="哨兵模式"></a>哨兵模式</h2><ul>
+<li>在主从复制中，主库宕机，就需要手动配置从库来修改主库ip。而哨兵模式可以自动把一台从服务器提升至主服务器</li>
+<li>配置：<ul>
+<li>在Redis安装目录下有一个sentinel.conf文件，copy一份进行修改<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 禁止保护模式</span><br><span class="line">protected-mode no</span><br><span class="line"># 配置监听的主服务器，这里sentinel monitor代表监控，mymaster代表服务器的名称，可以自定义，192.168.11.128代表监控的主服务器，6379代表端口</span><br><span class="line"># 2代表只有两个或两个以上的哨兵认为主服务器不可用的时候，才会进行failover操作。</span><br><span class="line">sentinel monitor mymaster 192.168.11.128 6379 2</span><br><span class="line"># sentinel author-pass定义服务的密码，mymaster是服务名称，123456是Redis服务器密码</span><br><span class="line"># sentinel auth-pass &lt;master-name&gt; &lt;password&gt;</span><br><span class="line">sentinel auth-pass mymaster 123456</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h2><ul>
+<li>复制延时：由于所有的写操作都是先在Master上操作，然后同步更新到Slave上，所以从Master同步到Slave机器有一定的延迟，当系统很繁忙的时候，延迟问题会更加严重，Slave机器数量的增加也会使这个问题更加严重。</li>
+</ul>
+<h1 id="集群"><a href="#集群" class="headerlink" title="集群"></a>集群</h1><ul>
+<li>Redis集群实现了对Redis水平扩容，即启动N个redis节点，将整个数据库分布存储在这N个节点中，每个节点存储总数居的1/N；</li>
+<li>Redis集群通过分区来提供一定程度的可用性，即使集群中有一部分节点失效或者无法进行通讯，集群也可以继续处理命令请求</li>
+</ul>
+<h1 id="Jedis"><a href="#Jedis" class="headerlink" title="Jedis"></a>Jedis</h1><h2 id="测试联通"><a href="#测试联通" class="headerlink" title="测试联通"></a>测试联通</h2><ul>
+<li>Java程序连接虚拟机Redis<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Jedis jedis = <span class="keyword">new</span> Jedis(<span class="string">"虚拟机ip"</span>, <span class="number">6379</span>);</span><br><span class="line">    System.out.println(jedis.ping());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>Linux下<code>ifconfig</code>找到ens33下inet为本机ip</li>
+<li>关闭Linux虚拟机的防火墙<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">systemctl stop firewall</span><br><span class="line"># 查看状态</span><br><span class="line">firewall-cmd --state</span><br></pre></td></tr></table></figure></li>
+<li>将redis.conf下的bind修改为本机虚拟机ip</li>
+</ul>
+<h2 id="事务-1"><a href="#事务-1" class="headerlink" title="事务"></a>事务</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Jedis jedis = <span class="keyword">new</span> Jedis(<span class="string">"192.168.200.131"</span>, <span class="number">6379</span>);</span><br><span class="line">    <span class="comment">// 获取一个事务</span></span><br><span class="line">    Transaction transaction = jedis.multi();</span><br><span class="line">    transaction.set(<span class="string">"k1"</span>, <span class="string">"v1"</span>);</span><br><span class="line">    transaction.set(<span class="string">"k2"</span>, <span class="string">"v2"</span>);</span><br><span class="line">    transaction.set(<span class="string">"k3"</span>, <span class="string">"v3"</span>);</span><br><span class="line">    <span class="comment">// 提交执行</span></span><br><span class="line">    transaction.exec();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="JedisPool"><a href="#JedisPool" class="headerlink" title="JedisPool"></a>JedisPool</h2>]]></content>
       <categories>
         <category>数据库</category>
       </categories>
