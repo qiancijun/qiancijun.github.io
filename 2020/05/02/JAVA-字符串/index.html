@@ -5,12 +5,15 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>JAVA-字符串 - 神奇口袋</title>
+    <title>JAVA-常用类 - 神奇口袋</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
-    
+    <meta name="description" content="String
+String是一个final类，代表不可变的字符序列
+字符串是常量，用双引号来表示，他们的值在创建之后不可被改变。
+源码：1234567public final class Strin,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -38,7 +41,7 @@
     <div class="bar" style="width: 0;"></div>
     <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://xlich.top"></a>
     <div title="播放/暂停" class="iconfont icon-play"></div>
-    <h3 class="subtitle">JAVA-字符串</h3>
+    <h3 class="subtitle">JAVA-常用类</h3>
     <div class="social">
         <div>
             <div class="share">
@@ -54,14 +57,30 @@
     <div class="section">
         <div class="article">
     <div class='main'>
-        <h1 class="title">JAVA-字符串</h1>
+        <h1 class="title">JAVA-常用类</h1>
         <div class="stuff">
             <span>五月 02, 2020</span>
             
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Java/" rel="tag">Java</a></li></ul>
+
 
         </div>
         <div class="content markdown">
-            
+            <h1 id="String"><a href="#String" class="headerlink" title="String"></a>String</h1><ul>
+<li>String是一个final类，代表不可变的字符序列</li>
+<li>字符串是常量，用双引号来表示，他们的值在创建之后不可被改变。</li>
+<li>源码：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">String</span></span></span><br><span class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span>, <span class="title">Comparable</span>&lt;<span class="title">String</span>&gt;, <span class="title">CharSequence</span> </span>&#123;</span><br><span class="line">    <span class="comment">/** The value is used for character storage. */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">char</span> value[];</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Cache the hash code for the string */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> hash; <span class="comment">// Default to 0</span></span><br></pre></td></tr></table></figure></li>
+<li>特点：<ol>
+<li>底层是一个字符数组</li>
+<li>String声明为final，不可被继承</li>
+<li>String实现了Serializable接口，表示字符串是可以被序列化的</li>
+<li>实现了Comparable接口，表示String可以比较大小</li>
+<li>通过字面量的方式（区别于new方式）给一个字符串赋值，此时的字符串声明在字符串常量池中。当对字符串重新赋值时，需重写指定内存区域赋值，不能在原有的value赋值</li>
+<li>字符串常量池中是不会存储相同的字符串的</li>
+</ol>
+</li>
+</ul>
+<h2 id="对象创建"><a href="#对象创建" class="headerlink" title="对象创建"></a>对象创建</h2><h1 id="StringBuffer"><a href="#StringBuffer" class="headerlink" title="StringBuffer"></a>StringBuffer</h1><h1 id="StringBuilder"><a href="#StringBuilder" class="headerlink" title="StringBuilder"></a>StringBuilder</h1><h1 id="System"><a href="#System" class="headerlink" title="System"></a>System</h1><h1 id="Date"><a href="#Date" class="headerlink" title="Date"></a>Date</h1>
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
                 <source type="audio/mpeg" src="">
@@ -100,7 +119,7 @@
     </div>
     
         <div class='side'>
-				
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#String"><span class="toc-number">1.</span> <span class="toc-text">String</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#对象创建"><span class="toc-number">1.1.</span> <span class="toc-text">对象创建</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#StringBuffer"><span class="toc-number">2.</span> <span class="toc-text">StringBuffer</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#StringBuilder"><span class="toc-number">3.</span> <span class="toc-text">StringBuilder</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#System"><span class="toc-number">4.</span> <span class="toc-text">System</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Date"><span class="toc-number">5.</span> <span class="toc-text">Date</span></a></li></ol>	
         </div>
     
 </div>
