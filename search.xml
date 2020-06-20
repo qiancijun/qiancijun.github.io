@@ -3976,6 +3976,46 @@ offset从0开始可以省略
 
 <h2 id="Funtion接口"><a href="#Funtion接口" class="headerlink" title="Funtion接口"></a>Funtion接口</h2><p><code>java.util.function.Function&lt;T,R&gt;</code>接口用来根据一个类型的数据得到另一个类型的数据，前者称为前置条件，后者称为后置条件。<br>抽象方法：apply： 根据类型T的参数获取类型R的结果。使用的场景例如：将 String 类型转换为 Integer 类型。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        mathod(<span class="string">"123"</span>, (String s)-&gt;&#123;</span><br><span class="line">            <span class="keyword">return</span> Integer.parseInt(s);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">mathod</span><span class="params">(String str, Function&lt;String, Integer&gt; func)</span></span>&#123;</span><br><span class="line">        Integer i = func.apply(str);</span><br><span class="line">        System.out.println(i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><table>
+<thead>
+<tr>
+<th align="center">函数式接口</th>
+<th align="center">参数类型</th>
+<th align="center">返回类型</th>
+<th align="center">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Consumer&lt;T&gt;</td>
+<td align="center">T</td>
+<td align="center">void</td>
+<td align="center">对类型为T的对象应用操作，包含方法void accept(T t)</td>
+</tr>
+<tr>
+<td align="center">Supplier&lt;T&gt;</td>
+<td align="center">无</td>
+<td align="center">T</td>
+<td align="center">返回类型为T的对象，包含方法T get()</td>
+</tr>
+<tr>
+<td align="center">Function&lt;T, R&gt;</td>
+<td align="center">T</td>
+<td align="center">R</td>
+<td align="center">对类型为T的对象应用操作，并返回结果。结果是R类型的对象。包含方法R apply(T t)</td>
+</tr>
+<tr>
+<td align="center">Predicate&lt;T&gt;</td>
+<td align="center">T</td>
+<td align="center">boolean</td>
+<td align="center">确定类型为T的对象是否满足某约束，并返回boolean值。包含方法boolean test(T t)</td>
+</tr>
+</tbody></table>
+<ul>
+<li>用lambda表达式实现<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//R apply(T t);函数型接口，一个参数，一个返回值</span></span><br><span class="line">Function&lt;String,Integer&gt; function = t -&gt;&#123;<span class="keyword">return</span> t.length();&#125;;</span><br><span class="line">System.out.println(function.apply(<span class="string">"abcd"</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//boolean test(T t);断定型接口，一个参数，返回boolean</span></span><br><span class="line">Predicate&lt;String&gt; predicate = t-&gt;&#123;<span class="keyword">return</span> t.startsWith(<span class="string">"a"</span>);&#125;;</span><br><span class="line">System.out.println(predicate.test(<span class="string">"a"</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// void accept(T t);消费型接口，一个参数，没有返回值</span></span><br><span class="line">Consumer&lt;String&gt; consumer = t-&gt;&#123;</span><br><span class="line">    System.out.println(t);</span><br><span class="line">&#125;;</span><br><span class="line">consumer.accept(<span class="string">"javaXXXX"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//T get(); 供给型接口，无参数，有返回值</span></span><br><span class="line">Supplier&lt;String&gt; supplier =()-&gt;&#123;<span class="keyword">return</span> UUID.randomUUID().toString();&#125;;</span><br><span class="line">System.out.println(supplier.get());</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
 ]]></content>
       <categories>
         <category>JAVA</category>
@@ -9496,17 +9536,24 @@ offset从0开始可以省略
 <li>JUC：Java.util.concurrent</li>
 </ul>
 <h2 id="进程-线程"><a href="#进程-线程" class="headerlink" title="进程/线程"></a>进程/线程</h2><ul>
-<li>进程：后台运行的一个程序</li>
-<li>线程：轻量级的进程</li>
+<li><p>进程：进程是一个具有一定独立功能的程序关于某个数据集合的一次运行活动。它是操作系统动态执行的基本单元，在传统的操作系统中，进程既是基本的分配单元，也是基本的执行单元。</p>
+</li>
+<li><p>线程：通常在一个进程中可以包含若干个线程，当然一个进程中至少有一个线程，不然没有存在的意义。线程可以利用进程所拥有的资源，在引入线程的操作系统中，通常都是把进程作为分配资源的基本单位，而把线程作为独立运行和独立调度的基本单位，由于线程比进程更小，基本上不拥有系统资源，故对它的调度所付出的开销就会小得多，能更高效的提高系统多个程序间并发执行的程度。</p>
+</li>
+</ul>
+<h3 id="wait和sleep区别"><a href="#wait和sleep区别" class="headerlink" title="wait和sleep区别"></a>wait和sleep区别</h3><ul>
+<li>wait放开手里所有的锁</li>
+<li>sleep继续持有锁</li>
 </ul>
 <h2 id="并发-并行"><a href="#并发-并行" class="headerlink" title="并发/并行"></a>并发/并行</h2><ul>
-<li>并发：多个线程强一个资源</li>
-<li>并行：同时处理多个事情</li>
+<li>并发：同一时刻多个线程在访问同一个资源，多个线程对一个点</li>
+<li>并行：多项工作一起执行，之后再汇总</li>
 </ul>
 <h2 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h2><ul>
 <li>三个售票员卖出30张票</li>
 <li>固定的编程套路+模板<ol>
 <li>在高内聚低耦合的前提下，线程操作资源类</li>
+<li>资源类里创建同步方法，同步代码块</li>
 </ol>
 </li>
 </ul>
@@ -9517,6 +9564,14 @@ offset从0开始可以省略
 <p>用Lambda表达式实现</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 程序一共五个线程，main线程，t1, t2, t3和GC垃圾回收线程</span></span><br><span class="line">        Ticket ticket = <span class="keyword">new</span> Ticket();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">30</span>; i++) ticket.sale();&#125;, <span class="string">"A"</span>).start();</span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">30</span>; i++) ticket.sale();&#125;, <span class="string">"B"</span>).start();</span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">30</span>; i++) ticket.sale();&#125;, <span class="string">"C"</span>).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h2 id="synchronized与Lock的区别"><a href="#synchronized与Lock的区别" class="headerlink" title="synchronized与Lock的区别"></a>synchronized与Lock的区别</h2><ol>
+<li>首先synchronized是java内置关键字，在jvm层面，Lock是个java类；</li>
+<li>synchronized无法判断是否获取锁的状态，Lock可以判断是否获取到锁；</li>
+<li>synchronized会自动释放锁(a 线程执行完同步代码会释放锁 ；b 线程执行过程中发生异常会释放锁)，Lock需在finally中手工释放锁（unlock()方法释放锁），否则容易造成线程死锁；</li>
+<li>用synchronized关键字的两个线程1和线程2，如果当前线程1获得锁，线程2线程等待。如果线程1阻塞，线程2则会一直等待下去，而Lock锁就不一定会等待下去，如果尝试获取不到锁，线程可以不用一直等待就结束了；</li>
+<li>synchronized的锁可重入、不可中断、非公平，而Lock锁可重入、可判断、可公平（两者皆可）</li>
+<li>Lock锁适合大量同步的代码的同步问题，synchronized锁适合代码少量的同步问题。</li>
+</ol>
 <h2 id="集合类不安全"><a href="#集合类不安全" class="headerlink" title="集合类不安全"></a>集合类不安全</h2><ol>
 <li>故障现象</li>
 </ol>
@@ -9542,7 +9597,9 @@ offset从0开始可以省略
 
 <p>源码</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> ReentrantLock lock = <span class="keyword">this</span>.lock;</span><br><span class="line">    lock.lock();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Object[] elements = getArray();</span><br><span class="line">        <span class="keyword">int</span> len = elements.length;</span><br><span class="line">        Object[] newElements = Arrays.copyOf(elements, len + <span class="number">1</span>);</span><br><span class="line">        newElements[len] = e;</span><br><span class="line">        setArray(newElements);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        lock.unlock();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<blockquote>
+<p>线程安全：多个线程同一时刻对同一个全局变量(同一份资源)做写操作(读操作不会涉及线程安全)时，如果跟我们预期的结果一样，我们就称之为线程安全，反之，线程不安全。</p>
+</blockquote>
 <h2 id="Callable"><a href="#Callable" class="headerlink" title="Callable"></a>Callable</h2><ul>
 <li><p>一种创建线程的方式</p>
 </li>
@@ -9552,6 +9609,14 @@ offset从0开始可以省略
 <li><p>get方法一般放在最后一行，调用了get方法，程序会等待线程执行完取得结果后再返回原线程继续执行。如果创建多个线程调用同一个FutureTask对象，只会执行一次，结果会直接保留在缓存。</p>
 </li>
 <li><p>在主线程中需要执行比较耗时的操作时，但又不想阻塞主线程时，可以把这些作业交给Future对象在后台完成，当主线程将来需要时，就可以通过Future对象获得后台作业的计算结果或者执行状态。</p>
+</li>
+</ul>
+<h2 id="FutureTask"><a href="#FutureTask" class="headerlink" title="FutureTask"></a>FutureTask</h2><ul>
+<li>主线程中需要执行比较耗时的操作时，但又不想阻塞主线程时，可以把这些作业交给Future对象在后台完成，当主线程将来需要时，就可以通过Future对象获得后台作业的计算结果或者执行状态。</li>
+<li>一般FutureTask多用于耗时的计算，主线程可以在完成自己的任务后，再去获取结果。</li>
+<li>仅在计算完成时才能检索结果；如果计算尚未完成，则阻塞 get 方法。一旦计算完成，就不能再重新开始或取消计算。get方法而获取结果只有在计算完成时获取，否则会一直阻塞直到任务转入完成状态，然后会返回结果或者抛出异常。 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">FutureTask&lt;Integer&gt; futureTask = <span class="keyword">new</span> FutureTask(()-&gt;&#123;</span><br><span class="line">    System.out.println(Thread.currentThread().getName()+<span class="string">"  come in callable"</span>);</span><br><span class="line">    TimeUnit.SECONDS.sleep(<span class="number">4</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1024</span>;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">new</span> Thread(futureTask,<span class="string">"A"</span>).start();</span><br><span class="line">System.out.println(futureTask.get());</span><br></pre></td></tr></table></figure>
+
+
 </li>
 </ul>
 <h2 id="CountDownLatch"><a href="#CountDownLatch" class="headerlink" title="CountDownLatch"></a>CountDownLatch</h2><ul>
@@ -9736,7 +9801,18 @@ offset从0开始可以省略
 </ul>
 </li>
 </ol>
-<h2 id="自定义线程池"><a href="#自定义线程池" class="headerlink" title="自定义线程池"></a>自定义线程池</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadPool</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 获取CPU核数</span></span><br><span class="line">        <span class="keyword">int</span> cpu = Runtime.getRuntime().availableProcessors();</span><br><span class="line">        <span class="comment">// 自定义线程池</span></span><br><span class="line">        ExecutorService pool = <span class="keyword">new</span> ThreadPoolExecutor(</span><br><span class="line">                <span class="number">2</span>,</span><br><span class="line">                cpu + <span class="number">1</span>,</span><br><span class="line">                <span class="number">2L</span>,</span><br><span class="line">                TimeUnit.SECONDS,</span><br><span class="line">                <span class="keyword">new</span> LinkedBlockingDeque&lt;&gt;(<span class="number">5</span>),</span><br><span class="line">                <span class="keyword">new</span> ThreadPoolExecutor.AbortPolicy()</span><br><span class="line">        );</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">40</span>; i++) &#123;</span><br><span class="line">                pool.execute(() -&gt; &#123;</span><br><span class="line">                    System.out.println(Thread.currentThread().getName() + <span class="string">"\t 来了"</span>);</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            pool.shutdown();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+<h2 id="自定义线程池"><a href="#自定义线程池" class="headerlink" title="自定义线程池"></a>自定义线程池</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadPool</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 获取CPU核数</span></span><br><span class="line">        <span class="keyword">int</span> cpu = Runtime.getRuntime().availableProcessors();</span><br><span class="line">        <span class="comment">// 自定义线程池</span></span><br><span class="line">        ExecutorService pool = <span class="keyword">new</span> ThreadPoolExecutor(</span><br><span class="line">                <span class="number">2</span>,</span><br><span class="line">                cpu + <span class="number">1</span>,</span><br><span class="line">                <span class="number">2L</span>,</span><br><span class="line">                TimeUnit.SECONDS,</span><br><span class="line">                <span class="keyword">new</span> LinkedBlockingDeque&lt;&gt;(<span class="number">5</span>),</span><br><span class="line">                Executors.defaultThreadFactory(),</span><br><span class="line">                <span class="keyword">new</span> ThreadPoolExecutor.AbortPolicy()</span><br><span class="line">        );</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">40</span>; i++) &#123;</span><br><span class="line">                pool.execute(() -&gt; &#123;</span><br><span class="line">                    System.out.println(Thread.currentThread().getName() + <span class="string">"\t 来了"</span>);</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            pool.shutdown();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>java.util.concurrent.RejectedExecutionException当阻塞队列满时在请求任务，默认拒绝策略会报出该异常</p>
+</blockquote>
+<h1 id="分支合并"><a href="#分支合并" class="headerlink" title="分支合并"></a>分支合并</h1><ul>
+<li>Fork：把一个复杂任务进行分拆，大事化小</li>
+<li>Join：把分拆任务的结果进行合并</li>
+</ul>
+<h2 id="架构图"><a href="#架构图" class="headerlink" title="架构图"></a>架构图</h2><p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Java/JUC/ForkJoinPool.png" alt="ForkJoinPool"><br><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Java/JUC/ForkJoinTask.png" alt="ForkJoinTask"><br><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Java/JUC/RecursiveTask.png" alt="RecursiveTask"></p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Fibonacci</span> <span class="keyword">extends</span> <span class="title">RecursiveTask</span>&lt;<span class="title">Integer</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> num;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Fibonacci</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.num = num;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> Integer <span class="title">compute</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (num &lt;= <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> num;</span><br><span class="line">        &#125;</span><br><span class="line">        Fibonacci myFibo1 = <span class="keyword">new</span> Fibonacci(num - <span class="number">1</span>);</span><br><span class="line">        Fibonacci myFibo2 = <span class="keyword">new</span> Fibonacci(num - <span class="number">2</span>);</span><br><span class="line">        myFibo1.fork();</span><br><span class="line">        myFibo2.fork();</span><br><span class="line">        <span class="keyword">return</span> myFibo2.join() + myFibo1.join();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadPool</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ExecutionException, InterruptedException </span>&#123;</span><br><span class="line">        Fibonacci myFibo = <span class="keyword">new</span> Fibonacci(<span class="number">10</span>);</span><br><span class="line">        ForkJoinPool threadPool = <span class="keyword">new</span> ForkJoinPool();</span><br><span class="line">        ForkJoinTask&lt;Integer&gt; task = threadPool.submit(myFibo);</span><br><span class="line">        System.out.println(task.get());</span><br><span class="line">        threadPool.shutdown();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="异步回调"><a href="#异步回调" class="headerlink" title="异步回调"></a>异步回调</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CompletableFutureDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//同步，异步，异步回调</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//同步</span></span><br><span class="line"><span class="comment">//        CompletableFuture&lt;Void&gt; completableFuture1 = CompletableFuture.runAsync(()-&gt;&#123;</span></span><br><span class="line"><span class="comment">//            System.out.println(Thread.currentThread().getName()+"\t completableFuture1");</span></span><br><span class="line"><span class="comment">//        &#125;);</span></span><br><span class="line"><span class="comment">//        completableFuture1.get();</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//异步回调</span></span><br><span class="line">        CompletableFuture&lt;Integer&gt; completableFuture2 = CompletableFuture.supplyAsync(()-&gt;&#123;</span><br><span class="line">            System.out.println(Thread.currentThread().getName()+<span class="string">"\t completableFuture2"</span>);</span><br><span class="line">            <span class="keyword">int</span> i = <span class="number">10</span>/<span class="number">0</span>;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1024</span>;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        completableFuture2.whenComplete((t,u)-&gt;&#123;</span><br><span class="line">            System.out.println(<span class="string">"-------t="</span>+t);</span><br><span class="line">            System.out.println(<span class="string">"-------u="</span>+u);</span><br><span class="line">        &#125;).exceptionally(f-&gt;&#123;</span><br><span class="line">            System.out.println(<span class="string">"-----exception:"</span>+f.getMessage());</span><br><span class="line">            <span class="keyword">return</span> <span class="number">444</span>;</span><br><span class="line">        &#125;).get();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>JAVA</category>
       </categories>

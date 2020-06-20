@@ -94,6 +94,46 @@
 <h2 id="Funtion接口"><a href="#Funtion接口" class="headerlink" title="Funtion接口"></a>Funtion接口</h2><p><code>java.util.function.Function&lt;T,R&gt;</code>接口用来根据一个类型的数据得到另一个类型的数据，前者称为前置条件，后者称为后置条件。<br>抽象方法：apply： 根据类型T的参数获取类型R的结果。使用的场景例如：将 String 类型转换为 Integer 类型。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        mathod(<span class="string">"123"</span>, (String s)-&gt;&#123;</span><br><span class="line">            <span class="keyword">return</span> Integer.parseInt(s);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">mathod</span><span class="params">(String str, Function&lt;String, Integer&gt; func)</span></span>&#123;</span><br><span class="line">        Integer i = func.apply(str);</span><br><span class="line">        System.out.println(i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><table>
+<thead>
+<tr>
+<th align="center">函数式接口</th>
+<th align="center">参数类型</th>
+<th align="center">返回类型</th>
+<th align="center">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Consumer&lt;T&gt;</td>
+<td align="center">T</td>
+<td align="center">void</td>
+<td align="center">对类型为T的对象应用操作，包含方法void accept(T t)</td>
+</tr>
+<tr>
+<td align="center">Supplier&lt;T&gt;</td>
+<td align="center">无</td>
+<td align="center">T</td>
+<td align="center">返回类型为T的对象，包含方法T get()</td>
+</tr>
+<tr>
+<td align="center">Function&lt;T, R&gt;</td>
+<td align="center">T</td>
+<td align="center">R</td>
+<td align="center">对类型为T的对象应用操作，并返回结果。结果是R类型的对象。包含方法R apply(T t)</td>
+</tr>
+<tr>
+<td align="center">Predicate&lt;T&gt;</td>
+<td align="center">T</td>
+<td align="center">boolean</td>
+<td align="center">确定类型为T的对象是否满足某约束，并返回boolean值。包含方法boolean test(T t)</td>
+</tr>
+</tbody></table>
+<ul>
+<li>用lambda表达式实现<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//R apply(T t);函数型接口，一个参数，一个返回值</span></span><br><span class="line">Function&lt;String,Integer&gt; function = t -&gt;&#123;<span class="keyword">return</span> t.length();&#125;;</span><br><span class="line">System.out.println(function.apply(<span class="string">"abcd"</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//boolean test(T t);断定型接口，一个参数，返回boolean</span></span><br><span class="line">Predicate&lt;String&gt; predicate = t-&gt;&#123;<span class="keyword">return</span> t.startsWith(<span class="string">"a"</span>);&#125;;</span><br><span class="line">System.out.println(predicate.test(<span class="string">"a"</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// void accept(T t);消费型接口，一个参数，没有返回值</span></span><br><span class="line">Consumer&lt;String&gt; consumer = t-&gt;&#123;</span><br><span class="line">    System.out.println(t);</span><br><span class="line">&#125;;</span><br><span class="line">consumer.accept(<span class="string">"javaXXXX"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//T get(); 供给型接口，无参数，有返回值</span></span><br><span class="line">Supplier&lt;String&gt; supplier =()-&gt;&#123;<span class="keyword">return</span> UUID.randomUUID().toString();&#125;;</span><br><span class="line">System.out.println(supplier.get());</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
                 <source type="audio/mpeg" src="">
@@ -132,7 +172,7 @@
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#函数式接口"><span class="toc-number">1.</span> <span class="toc-text">函数式接口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#格式"><span class="toc-number">1.2.</span> <span class="toc-text">格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FunctionalInterface注解"><span class="toc-number">1.3.</span> <span class="toc-text">@FunctionalInterface注解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义函数式接口"><span class="toc-number">1.4.</span> <span class="toc-text">自定义函数式接口</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#常用的函数式接口"><span class="toc-number">2.</span> <span class="toc-text">常用的函数式接口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Supplier接口"><span class="toc-number">2.1.</span> <span class="toc-text">Supplier接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Consumer接口"><span class="toc-number">2.2.</span> <span class="toc-text">Consumer接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Predicate接口"><span class="toc-number">2.3.</span> <span class="toc-text">Predicate接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Funtion接口"><span class="toc-number">2.4.</span> <span class="toc-text">Funtion接口</span></a></li></ol></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#函数式接口"><span class="toc-number">1.</span> <span class="toc-text">函数式接口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#格式"><span class="toc-number">1.2.</span> <span class="toc-text">格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FunctionalInterface注解"><span class="toc-number">1.3.</span> <span class="toc-text">@FunctionalInterface注解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义函数式接口"><span class="toc-number">1.4.</span> <span class="toc-text">自定义函数式接口</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#常用的函数式接口"><span class="toc-number">2.</span> <span class="toc-text">常用的函数式接口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Supplier接口"><span class="toc-number">2.1.</span> <span class="toc-text">Supplier接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Consumer接口"><span class="toc-number">2.2.</span> <span class="toc-text">Consumer接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Predicate接口"><span class="toc-number">2.3.</span> <span class="toc-text">Predicate接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Funtion接口"><span class="toc-number">2.4.</span> <span class="toc-text">Funtion接口</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>	
         </div>
     
 </div>
