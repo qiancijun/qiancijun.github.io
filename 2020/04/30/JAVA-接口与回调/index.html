@@ -10,7 +10,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
-    <meta name="description" content="接口接口概念在Java程序设计语言中，$\color{red}{接口不是类}$，而是对类的一组特殊需求，这些类要遵从接口描述的统一格式进行定义。比如Arrays类中的sort方法可以对对象数组进行排,"> 
+    <meta name="description" content="接口
+¶接口概念
+在Java程序设计语言中，$\color{red}{接口不是类}$，而是对类的一组特殊需求，这些类要遵从接口描述的统一格式进行定义。比如Arrays类中的sort方法可以对对象数组,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -61,19 +63,24 @@
 
         </div>
         <div class="content markdown">
-            <h1 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h1><h2 id="接口概念"><a href="#接口概念" class="headerlink" title="接口概念"></a>接口概念</h2><p>在Java程序设计语言中，$\color{red}{接口不是类}$，而是对类的一组特殊需求，这些类要遵从接口描述的统一格式进行定义。比如Arrays类中的sort方法可以对对象数组进行排序，但前提是该类必须实现了Comparable接口。</p>
+            <h1>接口</h1>
+<h2 id="接口概念"><a class="header-anchor" href="#接口概念">¶</a>接口概念</h2>
+<p>在Java程序设计语言中，$\color{red}{接口不是类}$，而是对类的一组特殊需求，这些类要遵从接口描述的统一格式进行定义。比如Arrays类中的sort方法可以对对象数组进行排序，但前提是该类必须实现了Comparable接口。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Comparable</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Object o)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在实现Comparable&lt;Employee&gt;接口的类中，必须提供compareTo方法。<br><br>接口中的所有方法自动地属于public。因此在接口中声明方法时，不必提供关键字public。</p>
-<h2 id="实现接口"><a href="#实现接口" class="headerlink" title="实现接口"></a>实现接口</h2><p>为了让一个类实现一个接口，通常需要下面两个步骤：</p>
+<p>在实现Comparable&lt;Employee&gt;接口的类中，必须提供compareTo方法。<br>
+<br>接口中的所有方法自动地属于public。因此在接口中声明方法时，不必提供关键字public。</p>
+<h2 id="实现接口"><a class="header-anchor" href="#实现接口">¶</a>实现接口</h2>
+<p>为了让一个类实现一个接口，通常需要下面两个步骤：</p>
 <ul>
 <li>将类声明为实现给定的接口。</li>
 <li>对接口中$\color{red}{所有}$方法进行定义。</li>
-<li>要将类声明为实现某个接口，需要使用关键字：implements:<blockquote>
+<li>要将类声明为实现某个接口，需要使用关键字：implements:</li>
+</ul>
+<blockquote>
 <p>class Employee implements Comparable</p>
 </blockquote>
-</li>
-</ul>
-<h2 id="接口的特性"><a href="#接口的特性" class="headerlink" title="接口的特性"></a>接口的特性</h2><p>接口不是类，尤其不能使用一个new运算符实例化一个接口：</p>
+<h2 id="接口的特性"><a class="header-anchor" href="#接口的特性">¶</a>接口的特性</h2>
+<p>接口不是类，尤其不能使用一个new运算符实例化一个接口：</p>
 <blockquote>
 <p>x = new Comparable(); //错误</p>
 </blockquote>
@@ -93,17 +100,29 @@
 <blockquote>
 <p>class Employee implements Cloneable, Comparable</p>
 </blockquote>
-<h2 id="接口与抽象类"><a href="#接口与抽象类" class="headerlink" title="接口与抽象类"></a>接口与抽象类</h2><p>既然已经有了抽象类，为什么还要接口？原因就在于Java不同于C++能实现多继承，在Java中每个类只能扩展一个类。而接口可以实现在C++中的多重继承，同时能够避免多重继承的复杂性和低效性。</p>
-<h2 id="接口中的方法"><a href="#接口中的方法" class="headerlink" title="接口中的方法"></a>接口中的方法</h2><p>接口允许拥有自己的私有方法，默认方法和静态方法。其中静态方法只能按照<code>接口名.方法名</code>来进行调用。接口中允许拥有变量，但是该变量为静态常量<code>public static final</code>，修饰符可省略。接口与接口直接可以多继承。</p>
-<h1 id="回调"><a href="#回调" class="headerlink" title="回调"></a>回调</h1><p>回调是一种常见的设计模式。（书上的回调示例以及解释个人觉得讲的不是很清楚，以下都是我的理解）。加入现在我有两个类，一个叫A，一个叫B。其中A叫上级，B叫下级。回调机制一般都出现在分级类的方法中。在上级类A中有一个方法叫a()，在下级类B中有一个方法b()，而b()里又调用了方法a()，那么a()就被称为回调函数。这个例子可能还是很难懂，以领导和员工为例，领导要求员工干活，员工干完了回馈给领导信息“我做完了”。在这种模式中，可以指出某个特定事件发生时应该采取的动作。</p>
+<h2 id="接口与抽象类"><a class="header-anchor" href="#接口与抽象类">¶</a>接口与抽象类</h2>
+<p>既然已经有了抽象类，为什么还要接口？原因就在于Java不同于C<ins>能实现多继承，在Java中每个类只能扩展一个类。而接口可以实现在C</ins>中的多重继承，同时能够避免多重继承的复杂性和低效性。</p>
+<h2 id="接口中的方法"><a class="header-anchor" href="#接口中的方法">¶</a>接口中的方法</h2>
+<p>接口允许拥有自己的私有方法，默认方法和静态方法。其中静态方法只能按照<code>接口名.方法名</code>来进行调用。接口中允许拥有变量，但是该变量为静态常量<code>public static final</code>，修饰符可省略。接口与接口直接可以多继承。</p>
+<h1>回调</h1>
+<p>回调是一种常见的设计模式。（书上的回调示例以及解释个人觉得讲的不是很清楚，以下都是我的理解）。加入现在我有两个类，一个叫A，一个叫B。其中A叫上级，B叫下级。回调机制一般都出现在分级类的方法中。在上级类A中有一个方法叫a()，在下级类B中有一个方法b()，而b()里又调用了方法a()，那么a()就被称为回调函数。这个例子可能还是很难懂，以领导和员工为例，领导要求员工干活，员工干完了回馈给领导信息“我做完了”。在这种模式中，可以指出某个特定事件发生时应该采取的动作。</p>
 <p>下面举一个例子：</p>
 <ol>
-<li>创建一个回调接口<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">CallBack</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doEvent</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>创建回调接口的实现类<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Boss</span> <span class="keyword">implements</span> <span class="title">CallBack</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doEvent</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"打电话给老板，告知已经完成工作了"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>创建控制类（回调接口）<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Employee</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    CallBack callBack;</span><br><span class="line">    <span class="comment">//有参构造，参数为一个接口变量，传入一个实现该接口的类。</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Employee</span><span class="params">(CallBack callBack)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.callBack=callBack;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//类方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doWork</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"工作中"</span>);</span><br><span class="line">        callBack.doEvent();<span class="comment">//回调</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>测试类<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestMain</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">//创建控制器对象，将提供给他的回调对象传入</span></span><br><span class="line">        Employee employee=<span class="keyword">new</span> Employee(<span class="keyword">new</span> Boss());</span><br><span class="line">        <span class="comment">//启动控制器对象运行</span></span><br><span class="line">        employee.doWork();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>创建一个回调接口</li>
 </ol>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">CallBack</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doEvent</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>创建回调接口的实现类</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Boss</span> <span class="keyword">implements</span> <span class="title">CallBack</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doEvent</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"打电话给老板，告知已经完成工作了"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>创建控制类（回调接口）</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Employee</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    CallBack callBack;</span><br><span class="line">    <span class="comment">//有参构造，参数为一个接口变量，传入一个实现该接口的类。</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Employee</span><span class="params">(CallBack callBack)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.callBack=callBack;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//类方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doWork</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"工作中"</span>);</span><br><span class="line">        callBack.doEvent();<span class="comment">//回调</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>测试类</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestMain</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">//创建控制器对象，将提供给他的回调对象传入</span></span><br><span class="line">        Employee employee=<span class="keyword">new</span> Employee(<span class="keyword">new</span> Boss());</span><br><span class="line">        <span class="comment">//启动控制器对象运行</span></span><br><span class="line">        employee.doWork();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
                 <source type="audio/mpeg" src="">
@@ -142,7 +161,7 @@
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#接口"><span class="toc-number">1.</span> <span class="toc-text">接口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#接口概念"><span class="toc-number">1.1.</span> <span class="toc-text">接口概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现接口"><span class="toc-number">1.2.</span> <span class="toc-text">实现接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#接口的特性"><span class="toc-number">1.3.</span> <span class="toc-text">接口的特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#接口与抽象类"><span class="toc-number">1.4.</span> <span class="toc-text">接口与抽象类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#接口中的方法"><span class="toc-number">1.5.</span> <span class="toc-text">接口中的方法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#回调"><span class="toc-number">2.</span> <span class="toc-text">回调</span></a></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">接口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#接口概念"><span class="toc-number">1.1.</span> <span class="toc-text">接口概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现接口"><span class="toc-number">1.2.</span> <span class="toc-text">实现接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#接口的特性"><span class="toc-number">1.3.</span> <span class="toc-text">接口的特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#接口与抽象类"><span class="toc-number">1.4.</span> <span class="toc-text">接口与抽象类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#接口中的方法"><span class="toc-number">1.5.</span> <span class="toc-text">接口中的方法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">2.</span> <span class="toc-text">回调</span></a></li></ol>	
         </div>
     
 </div>

@@ -10,12 +10,14 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
-    <meta name="description" content="异常处理假设一个程序运行期间出现了错误。程序应该：
+    <meta name="description" content="异常处理
+假设一个程序运行期间出现了错误。程序应该：
 
 返回一种安全状态，并能够让用户执行一些其他的命令
 允许用户保存所有操作结果，并且以妥善的方式终止程序
 
-异常分类在Java中，异常对象都是派生于,"> 
+¶异常分类
+在Java中，异常对象都是,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -66,42 +68,59 @@
 
         </div>
         <div class="content markdown">
-            <h1 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h1><p>假设一个程序运行期间出现了错误。程序应该：</p>
+            <h1>异常处理</h1>
+<p>假设一个程序运行期间出现了错误。程序应该：</p>
 <ul>
 <li>返回一种安全状态，并能够让用户执行一些其他的命令</li>
 <li>允许用户保存所有操作结果，并且以妥善的方式终止程序</li>
 </ul>
-<h2 id="异常分类"><a href="#异常分类" class="headerlink" title="异常分类"></a>异常分类</h2><p>在Java中，异常对象都是派生于Throwable类的一个实例。所有的异常都是由Throwable继承而来，但在下一层立即分解为两个分支：error和Exception。<br>Error类层次描述了Java运行时系统的内部错误和资源耗尽错误。应用程序不应该抛出这种类型的对象。<br>Exception层次又分为两个分支：IOException和RuntimeException。由程序错误导致的异常属于RuntimeException；而程序本身没有问题，由于I/O错误这类问题导致的异常属于其他异常。<br>RuntimeException错误我们可以不对其进行处理，只是抛出，交给JVM处理。</p>
-<h2 id="异常处理-1"><a href="#异常处理-1" class="headerlink" title="异常处理"></a>异常处理</h2><p>throwable中定义了三个异常处理的方法</p>
+<h2 id="异常分类"><a class="header-anchor" href="#异常分类">¶</a>异常分类</h2>
+<p>在Java中，异常对象都是派生于Throwable类的一个实例。所有的异常都是由Throwable继承而来，但在下一层立即分解为两个分支：error和Exception。<br>
+Error类层次描述了Java运行时系统的内部错误和资源耗尽错误。应用程序不应该抛出这种类型的对象。<br>
+Exception层次又分为两个分支：IOException和RuntimeException。由程序错误导致的异常属于RuntimeException；而程序本身没有问题，由于I/O错误这类问题导致的异常属于其他异常。<br>
+RuntimeException错误我们可以不对其进行处理，只是抛出，交给JVM处理。</p>
+<h2 id="异常处理"><a class="header-anchor" href="#异常处理">¶</a>异常处理</h2>
+<p>throwable中定义了三个异常处理的方法</p>
 <table>
 <thead>
 <tr>
-<th align="left">方法名</th>
-<th align="left">作用</th>
+<th style="text-align:left">方法名</th>
+<th style="text-align:left">作用</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="left">String getMessage()</td>
-<td align="left">返回此异常的简短描述</td>
+<tbody>
+<tr>
+<td style="text-align:left">String getMessage()</td>
+<td style="text-align:left">返回此异常的简短描述</td>
 </tr>
 <tr>
-<td align="left">String toString()</td>
-<td align="left">返回此异常的详细信息字符串（一般不用）</td>
+<td style="text-align:left">String toString()</td>
+<td style="text-align:left">返回此异常的详细信息字符串（一般不用）</td>
 </tr>
 <tr>
-<td align="left">void printStackTrace()</td>
-<td align="left">将异常追踪输出至标准错误流</td>
+<td style="text-align:left">void printStackTrace()</td>
+<td style="text-align:left">将异常追踪输出至标准错误流</td>
 </tr>
-</tbody></table>
-<h3 id="throw"><a href="#throw" class="headerlink" title="throw"></a>throw</h3><p>在Java中，提供了一个关键字$\color{blue}{throw}。它用来抛出一个指定的异常对象。步骤：</p>
+</tbody>
+</table>
+<h3 id="throw"><a class="header-anchor" href="#throw">¶</a>throw</h3>
+<p>在Java中，提供了一个关键字$\color{blue}{throw}。它用来抛出一个指定的异常对象。步骤：</p>
 <ul>
 <li>创建一个异常对象，封装一些提示信息</li>
-<li>需要将这个异常对象告知给调用者<br>throw用在方法内，用来抛出一个异常对象。将这个异常对象传递到调用者出，并结束当前方法的执行。<br>语法：<br><code>throw new 异常类名(参数);</code></li>
+<li>需要将这个异常对象告知给调用者<br>
+throw用在方法内，用来抛出一个异常对象。将这个异常对象传递到调用者出，并结束当前方法的执行。<br>
+语法：<br>
+<code>throw new 异常类名(参数);</code></li>
 </ul>
-<h3 id="声明异常throws"><a href="#声明异常throws" class="headerlink" title="声明异常throws"></a>声明异常throws</h3><ul>
-<li>声明异常：将问题标识出来，报告给调用者。如果方法内通过了throw抛出了其他异常，而没有进行捕获处理，那么必须通过throws进行声明，交给调用者处理。<br>声明异常格式：<br><code>修饰符 返回值类型 方法名(参数列表) throws 异常类名1， 异常类名2 ……</code></li>
+<h3 id="声明异常throws"><a class="header-anchor" href="#声明异常throws">¶</a>声明异常throws</h3>
+<ul>
+<li>声明异常：将问题标识出来，报告给调用者。如果方法内通过了throw抛出了其他异常，而没有进行捕获处理，那么必须通过throws进行声明，交给调用者处理。<br>
+声明异常格式：<br>
+<code>修饰符 返回值类型 方法名(参数列表) throws 异常类名1， 异常类名2 ……</code></li>
 </ul>
-<h3 id="捕获异常try-catch"><a href="#捕获异常try-catch" class="headerlink" title="捕获异常try-catch"></a>捕获异常try-catch</h3><p>如果某个异常发生的时候并没有在任何地方进行捕获，那程序就会终止执行，并在控制台上打印出异常信息，其中包括异常的类型和堆栈的内容。<br>try-catch语法：</p>
+<h3 id="捕获异常try-catch"><a class="header-anchor" href="#捕获异常try-catch">¶</a>捕获异常try-catch</h3>
+<p>如果某个异常发生的时候并没有在任何地方进行捕获，那程序就会终止执行，并在控制台上打印出异常信息，其中包括异常的类型和堆栈的内容。<br>
+try-catch语法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    code</span><br><span class="line">&#125; <span class="keyword">catch</span> (ExceptionType1 e)&#123;</span><br><span class="line">    handle Exception</span><br><span class="line">&#125; <span class="keyword">catch</span> (ExceptionType2 e)&#123;</span><br><span class="line">    handle Exception</span><br><span class="line">&#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">    code</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>如果在try语句块中的任何代码抛出了一个在catch子句中说明的异常类，那么：</p>
 <ul>
@@ -116,7 +135,8 @@
 <li>catch里面定义的异常变量，如果有子父类的关系，子类的异常变量必须写在父类异常变量之前</li>
 <li>父类方法没有抛出异常，子类覆盖父类方法时也不可抛出异常。此时子类出现异常，只能使用try-catch进行处理</li>
 </ul>
-<h2 id="自定义异常"><a href="#自定义异常" class="headerlink" title="自定义异常"></a>自定义异常</h2><p>JDK所提供的异常类型有限，在开发的需求中可以根据自己的需要去定义自己的异常类。</p>
+<h2 id="自定义异常"><a class="header-anchor" href="#自定义异常">¶</a>自定义异常</h2>
+<p>JDK所提供的异常类型有限，在开发的需求中可以根据自己的需要去定义自己的异常类。</p>
 <ol>
 <li>自定义一个编译期异常：自定义类继承于Exception。</li>
 <li>自定义一个运行时期异常：自定义类继承于RuntimeException。</li>
@@ -160,7 +180,7 @@
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#异常处理"><span class="toc-number">1.</span> <span class="toc-text">异常处理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#异常分类"><span class="toc-number">1.1.</span> <span class="toc-text">异常分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异常处理-1"><span class="toc-number">1.2.</span> <span class="toc-text">异常处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#throw"><span class="toc-number">1.2.1.</span> <span class="toc-text">throw</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#声明异常throws"><span class="toc-number">1.2.2.</span> <span class="toc-text">声明异常throws</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#捕获异常try-catch"><span class="toc-number">1.2.3.</span> <span class="toc-text">捕获异常try-catch</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义异常"><span class="toc-number">1.3.</span> <span class="toc-text">自定义异常</span></a></li></ol></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">异常处理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#异常分类"><span class="toc-number">1.1.</span> <span class="toc-text">异常分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异常处理"><span class="toc-number">1.2.</span> <span class="toc-text">异常处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#throw"><span class="toc-number">1.2.1.</span> <span class="toc-text">throw</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#声明异常throws"><span class="toc-number">1.2.2.</span> <span class="toc-text">声明异常throws</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#捕获异常try-catch"><span class="toc-number">1.2.3.</span> <span class="toc-text">捕获异常try-catch</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义异常"><span class="toc-number">1.3.</span> <span class="toc-text">自定义异常</span></a></li></ol></li></ol>	
         </div>
     
 </div>

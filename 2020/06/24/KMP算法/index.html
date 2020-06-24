@@ -5,14 +5,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>哀悼抗击新冠肺炎疫情牺牲烈士 - 神奇口袋</title>
+    <title>KMP算法 - 神奇口袋</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
-    <meta name="description" content="¶默哀 为在抗击新型冠状病毒中牺牲烈士和逝世同胞
-
-"> 
+    <meta name="description" content="123456789101112131415161718192021222324252627282930313233343536373839vector&amp;lt;int&amp;gt; Next(string ,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -40,7 +38,7 @@
     <div class="bar" style="width: 0;"></div>
     <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://xlich.top"></a>
     <div title="播放/暂停" class="iconfont icon-play"></div>
-    <h3 class="subtitle">哀悼抗击新冠肺炎疫情牺牲烈士</h3>
+    <h3 class="subtitle">KMP算法</h3>
     <div class="social">
         <div>
             <div class="share">
@@ -56,16 +54,16 @@
     <div class="section">
         <div class="article">
     <div class='main'>
-        <h1 class="title">哀悼抗击新冠肺炎疫情牺牲烈士</h1>
+        <h1 class="title">KMP算法</h1>
         <div class="stuff">
-            <span>四月 04, 2020</span>
+            <span>六月 24, 2020</span>
             
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="tag">字符串</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+
 
         </div>
         <div class="content markdown">
-            <h2 id="默哀-为在抗击新型冠状病毒中牺牲烈士和逝世同胞"><a class="header-anchor" href="#默哀-为在抗击新型冠状病毒中牺牲烈士和逝世同胞">¶</a>默哀 为在抗击新型冠状病毒中牺牲烈士和逝世同胞</h2>
-<p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Life/2020.4.4.jpeg" alt=""></p>
-
+            <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">Next</span><span class="params">(<span class="built_in">string</span> dest)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = dest.size();</span><br><span class="line">    <span class="keyword">int</span> len = <span class="number">0</span>; <span class="comment">// 最长公共前缀长度</span></span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">next</span><span class="params">(n, <span class="number">0</span>)</span></span>; <span class="comment">// next数组</span></span><br><span class="line">    next[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (i &lt; n) &#123;</span><br><span class="line">        <span class="keyword">if</span> (dest[i] == dest[len]) &#123;</span><br><span class="line">            len++; </span><br><span class="line">            next[i] = len;</span><br><span class="line">            i++;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (len &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                len = next[len - <span class="number">1</span>];</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                next[i] = len;</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> next;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">kmp</span><span class="params">(<span class="built_in">string</span> pattern, <span class="built_in">string</span> dest, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; next)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> p1 = pattern.size();</span><br><span class="line">    <span class="keyword">int</span> p2 = dest.size();</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>; i &lt; p1; i++) &#123;</span><br><span class="line">        <span class="keyword">while</span> (j &gt; <span class="number">0</span> &amp;&amp; pattern[i] != dest[j]) &#123;</span><br><span class="line">            j = next[j - <span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (pattern[i] == dest[j]) &#123;</span><br><span class="line">            j++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (j == p2) &#123;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; <span class="string">"position:"</span> &lt;&lt; i - j + <span class="number">1</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
                 <source type="audio/mpeg" src="">
@@ -104,7 +102,7 @@
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#默哀-为在抗击新型冠状病毒中牺牲烈士和逝世同胞"><span class="toc-number">1.</span> <span class="toc-text">默哀 为在抗击新型冠状病毒中牺牲烈士和逝世同胞</span></a></li></ol>	
+				
         </div>
     
 </div>

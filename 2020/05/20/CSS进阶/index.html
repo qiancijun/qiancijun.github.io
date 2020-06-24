@@ -10,10 +10,16 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
-    <meta name="description" content="前言HTML笔记CSS基础JavaScript笔记
-动画(Animation)过渡
+    <meta name="description" content="前言
+HTML笔记
+CSS基础
+JavaScript笔记
+动画(Animation)
+¶过渡
+
 transition：通过过渡可以指定一个属性发送变化时的切换方式
-同时设置过渡相关的所有属性，没有次序要求，如果,"> 
+
+同时设置过渡相关的所有属性，没有,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -64,23 +70,31 @@ transition：通过过渡可以指定一个属性发送变化时的切换方式
 
         </div>
         <div class="content markdown">
-            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><a href="https://xlich.top/2020/05/14/HTML%E7%AC%94%E8%AE%B0/">HTML笔记</a><br><a href="https://xlich.top/2020/05/15/CSS%E7%AC%94%E8%AE%B0/">CSS基础</a><br><a href="https://xlich.top/2020/05/20/JavaScript%E7%AC%94%E8%AE%B0/">JavaScript笔记</a></p>
-<h1 id="动画-Animation"><a href="#动画-Animation" class="headerlink" title="动画(Animation)"></a>动画(Animation)</h1><h2 id="过渡"><a href="#过渡" class="headerlink" title="过渡"></a>过渡</h2><ul>
-<li><code>transition</code>：通过过渡可以指定一个属性发送变化时的切换方式<ul>
+            <h1>前言</h1>
+<p><a href="https://xlich.top/2020/05/14/HTML%E7%AC%94%E8%AE%B0/">HTML笔记</a><br>
+<a href="https://xlich.top/2020/05/15/CSS%E7%AC%94%E8%AE%B0/">CSS基础</a><br>
+<a href="https://xlich.top/2020/05/20/JavaScript%E7%AC%94%E8%AE%B0/">JavaScript笔记</a></p>
+<h1>动画(Animation)</h1>
+<h2 id="过渡"><a class="header-anchor" href="#过渡">¶</a>过渡</h2>
+<ul>
+<li><code>transition</code>：通过过渡可以指定一个属性发送变化时的切换方式
+<ul>
 <li>同时设置过渡相关的所有属性，没有次序要求，如果要写延迟则两个时间中，第一个是持续时间第二个是延迟</li>
 <li>transition:margin-left 2s 1s</li>
 </ul>
 </li>
 <li><code>transition-property</code>：指定要执行过渡的属性，多个属性间使用逗号隔开，如果所有属性都要过渡，使用all关键字，大部分属性都支持过渡效果</li>
 <li><code>transition-duration</code>：指定过渡效果的持续时间，时间单位s 和 ms</li>
-<li><code>transition-timing-function</code>：过渡的时序函数，指定过渡的执行方式<ul>
+<li><code>transition-timing-function</code>：过渡的时序函数，指定过渡的执行方式
+<ul>
 <li>ease：默认值，慢速开始，先加速，再减速</li>
 <li>linear：匀速运动</li>
 <li>ease-in：加速运动</li>
 <li>ease-out：减速运动</li>
 <li>ease-in-out：先加速后减速</li>
 <li>cubic-bezier()：来指定时序函数</li>
-<li>steps()：分布执行过渡效果<ul>
+<li>steps()：分布执行过渡效果
+<ul>
 <li>end：在时间结束时执行过渡</li>
 <li>start：在时间开始时执行过渡</li>
 </ul>
@@ -89,31 +103,40 @@ transition：通过过渡可以指定一个属性发送变化时的切换方式
 </li>
 <li><code>transition-delay</code>：过渡效果的延迟，等待相应时间后再执行过渡</li>
 </ul>
-<h2 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h2><ul>
+<h2 id="动画"><a class="header-anchor" href="#动画">¶</a>动画</h2>
+<ul>
 <li>动画和过渡类似，都是可以实现一些动态的效果，不同的是过渡需要在某个属性发生变化时才会触发，动画可以自动触发动态效果。</li>
-<li>关键帧：设置动画效果，必须先要设置一个关键帧<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@keyframes</span> 关键字名字&#123;</span><br><span class="line">    <span class="comment">/* 表示动画的开始位置 也可以用%0表示*/</span></span><br><span class="line">    <span class="selector-tag">from</span>&#123;&#125;</span><br><span class="line">    <span class="comment">/* 表示动画的结束位置 也可以使用%100表示*/</span></span><br><span class="line">    <span class="selector-tag">to</span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>设置动画：<ul>
+<li>关键帧：设置动画效果，必须先要设置一个关键帧</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@keyframes</span> 关键字名字&#123;</span><br><span class="line">    <span class="comment">/* 表示动画的开始位置 也可以用%0表示*/</span></span><br><span class="line">    <span class="selector-tag">from</span>&#123;&#125;</span><br><span class="line">    <span class="comment">/* 表示动画的结束位置 也可以使用%100表示*/</span></span><br><span class="line">    <span class="selector-tag">to</span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>设置动画：
+<ul>
 <li><code>animation-name</code>：对当前元素生效的关键帧的名字</li>
 <li><code>animation-duration</code>：动画的执行时间</li>
 <li><code>animation-delay</code>：动画延时执行</li>
 <li><code>animation-timing-function</code>：动画的时序函数</li>
-<li><code>animation-iteration-count</code>：动画执行的次数<ul>
+<li><code>animation-iteration-count</code>：动画执行的次数
+<ul>
 <li>infinite：无限执行</li>
 </ul>
 </li>
-<li><code>animation-direction</code>：动画的执行方向<ul>
+<li><code>animation-direction</code>：动画的执行方向
+<ul>
 <li>normal：默认值，从 from 向 to 执行</li>
 <li>reverse：从 to 向 from 执行</li>
 <li>alternate：从 from 向 to 执行，重复执行动画时反向执行</li>
 <li>alternate-reverse：从 to 向 from 执行，重复执行动画时反向执行</li>
 </ul>
 </li>
-<li><code>animation-play-state</code>：设置动画执行状态<ul>
+<li><code>animation-play-state</code>：设置动画执行状态
+<ul>
 <li>running：默认值，运行状态</li>
 <li>paused：暂停状态</li>
 </ul>
 </li>
-<li><code>animation-fill-mode</code>：动画的填充模式<ul>
+<li><code>animation-fill-mode</code>：动画的填充模式
+<ul>
 <li>none：默认值，动画执行完毕元素回到原来位置</li>
 <li>forwards：动画执行完毕元素停留在停止在动画结束的位置</li>
 <li>backwards：动画延时等待时，元素就会处于开始位置</li>
@@ -122,10 +145,13 @@ transition：通过过渡可以指定一个属性发送变化时的切换方式
 </ul>
 </li>
 </ul>
-<h2 id="变形"><a href="#变形" class="headerlink" title="变形"></a>变形</h2><ul>
+<h2 id="变形"><a class="header-anchor" href="#变形">¶</a>变形</h2>
+<ul>
 <li>改变元素的形状或位置，变形不会影响到页面的布局</li>
-<li><code>transform</code>：用来设置元素的变形效果<ul>
-<li>translate()：平移，平移元素时百分比时相对于自身计算的<ul>
+<li><code>transform</code>：用来设置元素的变形效果
+<ul>
+<li>translate()：平移，平移元素时百分比时相对于自身计算的
+<ul>
 <li>translateX()：沿着x轴平移</li>
 <li>translateY()：沿着y轴平移</li>
 <li>translateZ()：沿着z轴平移</li>
@@ -134,82 +160,105 @@ transition：通过过渡可以指定一个属性发送变化时的切换方式
 </ul>
 </li>
 <li><code>transform-style: preserve-3d</code>：设置3d变形效果</li>
-<li><code>transform-origin</code>：设置变形原点<ul>
+<li><code>transform-origin</code>：设置变形原点
+<ul>
 <li>center：默认值，元素中心</li>
 </ul>
 </li>
 </ul>
-<h3 id="居中的另一种实现方式"><a href="#居中的另一种实现方式" class="headerlink" title="居中的另一种实现方式"></a>居中的另一种实现方式</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">50%</span>;</span><br><span class="line">    <span class="attribute">transform</span>: <span class="built_in">translateX</span>(-<span class="number">50%</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="z轴变形"><a href="#z轴变形" class="headerlink" title="z轴变形"></a>z轴变形</h3><ul>
+<h3 id="居中的另一种实现方式"><a class="header-anchor" href="#居中的另一种实现方式">¶</a>居中的另一种实现方式</h3>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">50%</span>;</span><br><span class="line">    <span class="attribute">transform</span>: <span class="built_in">translateX</span>(-<span class="number">50%</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="z轴变形"><a class="header-anchor" href="#z轴变形">¶</a>z轴变形</h3>
+<ul>
 <li>z轴平移，调整元素在z轴的位置，正常情况就是调整元素和人眼之间的距离，距离越大，元素离人越近。z轴平移属于立体效果（近大远小），默认情况下网页不支持透视，如果需要看见效果，必须设置网页的视距。</li>
 <li><code>perspective</code>：设置当前网页视距，人眼距离网页的距离</li>
 </ul>
-<h2 id="旋转"><a href="#旋转" class="headerlink" title="旋转"></a>旋转</h2><ul>
-<li>通过旋转可以使元素沿着x，y或z旋转指定的角度<ul>
+<h2 id="旋转"><a class="header-anchor" href="#旋转">¶</a>旋转</h2>
+<ul>
+<li>通过旋转可以使元素沿着x，y或z旋转指定的角度
+<ul>
 <li>rotateX()</li>
 <li>rotateY()</li>
 <li>rotateZ()</li>
 </ul>
 </li>
-<li><code>backface-visibility</code>：是否显示元素的背面<ul>
+<li><code>backface-visibility</code>：是否显示元素的背面
+<ul>
 <li>visible：默认值，显示</li>
 <li>hidden：隐藏</li>
 </ul>
 </li>
 </ul>
-<h2 id="缩放"><a href="#缩放" class="headerlink" title="缩放"></a>缩放</h2><ul>
-<li><code>scale()</code>：对元素进行缩放<ul>
+<h2 id="缩放"><a class="header-anchor" href="#缩放">¶</a>缩放</h2>
+<ul>
+<li><code>scale()</code>：对元素进行缩放
+<ul>
 <li>scaleX()：对X轴进行缩放</li>
-<li>scaleY()：对Y轴进行缩放<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">transfrom</span><span class="selector-pseudo">:scale(2)</span>;</span><br></pre></td></tr></table></figure>
-
-</li>
+<li>scaleY()：对Y轴进行缩放</li>
 </ul>
 </li>
 </ul>
-<h1 id="less"><a href="#less" class="headerlink" title="less"></a>less</h1><ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">transfrom</span><span class="selector-pseudo">:scale(2)</span>;</span><br></pre></td></tr></table></figure>
+<h1>less</h1>
+<ul>
 <li>less是一门css的预处理语言，less是一个css的增强版，通过less可以编写更少的代码实现更强大的样式。css原生也支持变量的设置。（兼容性不好）</li>
 <li>在less中添加了许多新特性，像对变量的支持，对mixin的支持等待，浏览器无法直接执行less代码，要执行必须将less转换为css，然后再执行.</li>
-<li>在less中所有的数值都可以直接进行运算<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">html</span>&#123;</span><br><span class="line">    <span class="comment">/* 格式 --变量名 */</span></span><br><span class="line">    <span class="attribute">--color</span>: <span class="number">#bfa</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="built_in">var</span>(--color);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>在less中所有的数值都可以直接进行运算</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">html</span>&#123;</span><br><span class="line">    <span class="comment">/* 格式 --变量名 */</span></span><br><span class="line">    <span class="attribute">--color</span>: <span class="number">#bfa</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="built_in">var</span>(--color);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
 <li><code>calc()</code>：计算函数，计算括号里的算式</li>
 </ul>
-<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><ul>
-<li>变量的声明： @变量名<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@a:</span> <span class="number">100px</span>;</span><br><span class="line"><span class="selector-class">.box1</span>&#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="variable">@a</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>变量做类名使用<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@a:</span> box1;</span><br><span class="line"><span class="selector-class">.@&#123;a&#125;</span>&#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
+<h2 id="变量"><a class="header-anchor" href="#变量">¶</a>变量</h2>
+<ul>
+<li>变量的声明： @变量名</li>
 </ul>
-<h2 id="引用别的属性值"><a href="#引用别的属性值" class="headerlink" title="引用别的属性值"></a>引用别的属性值</h2><ul>
-<li>语法：$属性名<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.box1</span>&#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#bfa</span>;</span><br><span class="line">    background-color: $color;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@a:</span> <span class="number">100px</span>;</span><br><span class="line"><span class="selector-class">.box1</span>&#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="variable">@a</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>变量做类名使用</li>
 </ul>
-<h2 id="amp-引用父元素"><a href="#amp-引用父元素" class="headerlink" title="&amp;引用父元素"></a>&amp;引用父元素</h2><ul>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@a:</span> box1;</span><br><span class="line"><span class="selector-class">.@&#123;a&#125;</span>&#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="引用别的属性值"><a class="header-anchor" href="#引用别的属性值">¶</a>引用别的属性值</h2>
+<ul>
+<li>语法：$属性名</li>
+</ul>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.box1</span>&#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#bfa</span>;</span><br><span class="line">    background-color: $color;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="引用父元素"><a class="header-anchor" href="#引用父元素">¶</a>&amp;引用父元素</h2>
+<ul>
 <li>如果想在父元素中设置父元素的伪元素，直接用<code>&amp;</code>符引用父元素。</li>
 </ul>
-<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.p1</span>&#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.p2</span><span class="selector-pseudo">:extend(.p1)</span>&#123;</span><br><span class="line">    <span class="attribute">color</span>: red; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="继承"><a class="header-anchor" href="#继承">¶</a>继承</h2>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.p1</span>&#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.p2</span><span class="selector-pseudo">:extend(.p1)</span>&#123;</span><br><span class="line">    <span class="attribute">color</span>: red; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>或者直接对指定的样式进行引用(mixin混合)<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.p3</span>&#123;</span><br><span class="line">    <span class="selector-class">.p1</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>或者直接对指定的样式进行引用(mixin混合)</li>
+</ul>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.p3</span>&#123;</span><br><span class="line">    <span class="selector-class">.p1</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
 <li>使用类选择器时可以在选择器后边添加一个括号，这时我们实际上就创建了一个mixin。</li>
 </ul>
-<h2 id="混合函数"><a href="#混合函数" class="headerlink" title="混合函数"></a>混合函数</h2><ul>
-<li>在混合函数中可以直接设置变量<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.test</span>(<span class="variable">@w</span>)&#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="variable">@w</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">    <span class="selector-class">.test</span>(<span class="number">200px</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
+<h2 id="混合函数"><a class="header-anchor" href="#混合函数">¶</a>混合函数</h2>
+<ul>
+<li>在混合函数中可以直接设置变量</li>
 </ul>
-<h2 id="import引入"><a href="#import引入" class="headerlink" title="import引入"></a>import引入</h2><ul>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.test</span>(<span class="variable">@w</span>)&#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="variable">@w</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">    <span class="selector-class">.test</span>(<span class="number">200px</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="import引入"><a class="header-anchor" href="#import引入">¶</a>import引入</h2>
+<ul>
 <li><code>import</code>：用来将其他的less引入到当前的less</li>
 </ul>
-<h1 id="弹性盒-flex"><a href="#弹性盒-flex" class="headerlink" title="弹性盒(flex)"></a>弹性盒(flex)</h1><ul>
+<h1>弹性盒(flex)</h1>
+<ul>
 <li>主要用来代替浮动来完成页面的布局，flex可以使元素可以跟随页面的大小来改变</li>
 <li>主轴：弹性元素的排列方向</li>
 <li>侧轴：与主轴垂直方向的称为侧轴</li>
-<li><code>flex-direction</code>：指定容器中弹性元素的排列方式<ul>
-<li>row：默认值，弹性元素在容器中水平排列（左向右）<ul>
+<li><code>flex-direction</code>：指定容器中弹性元素的排列方式
+<ul>
+<li>row：默认值，弹性元素在容器中水平排列（左向右）
+<ul>
 <li>主轴自左向右</li>
 </ul>
 </li>
-<li>row-reverse：弹性元素在容器中反向水平排列<ul>
+<li>row-reverse：弹性元素在容器中反向水平排列
+<ul>
 <li>主轴自右向左</li>
 </ul>
 </li>
@@ -218,14 +267,17 @@ transition：通过过渡可以指定一个属性发送变化时的切换方式
 </ul>
 </li>
 </ul>
-<h2 id="弹性容器"><a href="#弹性容器" class="headerlink" title="弹性容器"></a>弹性容器</h2><ul>
-<li>要使用弹性盒，必须先将一个元素设置为弹性容器，通过<code>display</code>来设置弹性容器<ul>
+<h2 id="弹性容器"><a class="header-anchor" href="#弹性容器">¶</a>弹性容器</h2>
+<ul>
+<li>要使用弹性盒，必须先将一个元素设置为弹性容器，通过<code>display</code>来设置弹性容器
+<ul>
 <li>display: flex 设置为块级弹性容器</li>
 <li>display: inline-flex 设置为行内的弹性容器</li>
 </ul>
 </li>
 </ul>
-<h2 id="弹性元素"><a href="#弹性元素" class="headerlink" title="弹性元素"></a>弹性元素</h2><ul>
+<h2 id="弹性元素"><a class="header-anchor" href="#弹性元素">¶</a>弹性元素</h2>
+<ul>
 <li>弹性容器的子元素是弹性元素</li>
 <li>一个元素可以同时是弹性容器和弹性元素</li>
 <li>弹性元素同时可以是弹性容器</li>
@@ -234,15 +286,18 @@ transition：通过过渡可以指定一个属性发送变化时的切换方式
 <li><code>flex-grow</code>：指定弹性元素的生长系数。当父元素有多余空间时，子元素会按照比例进行分配</li>
 <li><code>flex-shrink</code>：指定弹性元素的收缩系数，当父元素的中的空间不足以容纳所有的子元素时，对子元素进行收缩</li>
 </ul>
-<h2 id="弹性容器的样式"><a href="#弹性容器的样式" class="headerlink" title="弹性容器的样式"></a>弹性容器的样式</h2><ul>
-<li><code>flex-wrap</code>：设置弹性元素是否在弹性容器中自动换行<ul>
+<h2 id="弹性容器的样式"><a class="header-anchor" href="#弹性容器的样式">¶</a>弹性容器的样式</h2>
+<ul>
+<li><code>flex-wrap</code>：设置弹性元素是否在弹性容器中自动换行
+<ul>
 <li>nowrap：默认值，元素不会自动换行</li>
 <li>wrap：元素沿着辅轴方向自动换行</li>
 <li>wrap-reverse：元素沿着主轴反向换行</li>
 </ul>
 </li>
 <li><code>flex-flow</code>：wrap和direction的简写属性</li>
-<li><code>justify-content</code>：如何分配主轴上的空白空间<ul>
+<li><code>justify-content</code>：如何分配主轴上的空白空间
+<ul>
 <li>flex-start：元素沿着主轴起边排列</li>
 <li>flex-end：元素沿着主轴终边排列</li>
 <li>center：元素居中排列</li>
@@ -251,7 +306,8 @@ transition：通过过渡可以指定一个属性发送变化时的切换方式
 <li>space-between：空白均匀分布到元素间</li>
 </ul>
 </li>
-<li><code>align-items</code>：元素在侧轴上如何对齐，设置元素间的关系<ul>
+<li><code>align-items</code>：元素在侧轴上如何对齐，设置元素间的关系
+<ul>
 <li>stretch：默认值，将元素的长度设置为相同的值</li>
 <li>flex-start：元素不会拉伸，沿着侧轴起边对齐</li>
 <li>flex-end：元素不会拉伸，沿着侧轴终边对齐</li>
@@ -262,31 +318,35 @@ transition：通过过渡可以指定一个属性发送变化时的切换方式
 <li><code>align-content</code>：侧轴空白空间的分布</li>
 <li><code>align-self</code>：覆盖当前弹性元素上的align-items</li>
 </ul>
-<h2 id="弹性元素的样式"><a href="#弹性元素的样式" class="headerlink" title="弹性元素的样式"></a>弹性元素的样式</h2><ul>
+<h2 id="弹性元素的样式"><a class="header-anchor" href="#弹性元素的样式">¶</a>弹性元素的样式</h2>
+<ul>
 <li><code>order</code>：决定弹性元素的排列顺序</li>
 </ul>
-<h1 id="响应式布局"><a href="#响应式布局" class="headerlink" title="响应式布局"></a>响应式布局</h1><ul>
+<h1>响应式布局</h1>
+<ul>
 <li>网页可以根据不同的设备或窗口大小呈现出不同的效果。使用响应式布局，可以使一个网页适用于所有设备。</li>
 </ul>
-<h2 id="媒体查询"><a href="#媒体查询" class="headerlink" title="媒体查询"></a>媒体查询</h2><ul>
+<h2 id="媒体查询"><a class="header-anchor" href="#媒体查询">¶</a>媒体查询</h2>
+<ul>
 <li>通过媒体查询，可以为不同的设备，或设备的不同状态来分别设置样式</li>
-<li>媒体类型：<ul>
+<li>媒体类型：
+<ul>
 <li>all 所有设备</li>
 <li>print 打印设备</li>
 <li>screen 带屏幕的设备</li>
-<li>speech 屏幕阅读器<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@media</span> 查询规则</span><br><span class="line">&#123;</span><br><span class="line">    声明块</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
+<li>speech 屏幕阅读器</li>
 </ul>
 </li>
 </ul>
-<h2 id="媒体特性"><a href="#媒体特性" class="headerlink" title="媒体特性"></a>媒体特性</h2><ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@media</span> 查询规则</span><br><span class="line">&#123;</span><br><span class="line">    声明块</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="媒体特性"><a class="header-anchor" href="#媒体特性">¶</a>媒体特性</h2>
+<ul>
 <li><code>width</code>：视口的宽度</li>
 <li><code>max-width</code>：视口的最大宽度（视口小于指定高度时生效）</li>
 <li><code>min-width</code>：视口的最小宽度（视口大于指定高度时生效）</li>
-<li><code>height</code>：视口的高度<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 可以用and连接 */</span></span><br><span class="line"><span class="keyword">@media</span> (<span class="attribute">width:</span> <span class="number">100px</span>)&#123;</span><br><span class="line">    <span class="selector-tag">body</span>&#123;</span><br><span class="line">        <span class="attribute">background-color</span>: <span class="number">#bfa</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<li><code>height</code>：视口的高度</li>
 </ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 可以用and连接 */</span></span><br><span class="line"><span class="keyword">@media</span> (<span class="attribute">width:</span> <span class="number">100px</span>)&#123;</span><br><span class="line">    <span class="selector-tag">body</span>&#123;</span><br><span class="line">        <span class="attribute">background-color</span>: <span class="number">#bfa</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
@@ -326,7 +386,7 @@ transition：通过过渡可以指定一个属性发送变化时的切换方式
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#动画-Animation"><span class="toc-number">2.</span> <span class="toc-text">动画(Animation)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#过渡"><span class="toc-number">2.1.</span> <span class="toc-text">过渡</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动画"><span class="toc-number">2.2.</span> <span class="toc-text">动画</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#变形"><span class="toc-number">2.3.</span> <span class="toc-text">变形</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#居中的另一种实现方式"><span class="toc-number">2.3.1.</span> <span class="toc-text">居中的另一种实现方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#z轴变形"><span class="toc-number">2.3.2.</span> <span class="toc-text">z轴变形</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#旋转"><span class="toc-number">2.4.</span> <span class="toc-text">旋转</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#缩放"><span class="toc-number">2.5.</span> <span class="toc-text">缩放</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#less"><span class="toc-number">3.</span> <span class="toc-text">less</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#变量"><span class="toc-number">3.1.</span> <span class="toc-text">变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#引用别的属性值"><span class="toc-number">3.2.</span> <span class="toc-text">引用别的属性值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#amp-引用父元素"><span class="toc-number">3.3.</span> <span class="toc-text">&amp;引用父元素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#继承"><span class="toc-number">3.4.</span> <span class="toc-text">继承</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#混合函数"><span class="toc-number">3.5.</span> <span class="toc-text">混合函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#import引入"><span class="toc-number">3.6.</span> <span class="toc-text">import引入</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#弹性盒-flex"><span class="toc-number">4.</span> <span class="toc-text">弹性盒(flex)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#弹性容器"><span class="toc-number">4.1.</span> <span class="toc-text">弹性容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#弹性元素"><span class="toc-number">4.2.</span> <span class="toc-text">弹性元素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#弹性容器的样式"><span class="toc-number">4.3.</span> <span class="toc-text">弹性容器的样式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#弹性元素的样式"><span class="toc-number">4.4.</span> <span class="toc-text">弹性元素的样式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#响应式布局"><span class="toc-number">5.</span> <span class="toc-text">响应式布局</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#媒体查询"><span class="toc-number">5.1.</span> <span class="toc-text">媒体查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#媒体特性"><span class="toc-number">5.2.</span> <span class="toc-text">媒体特性</span></a></li></ol></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">2.</span> <span class="toc-text">动画(Animation)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#过渡"><span class="toc-number">2.1.</span> <span class="toc-text">过渡</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动画"><span class="toc-number">2.2.</span> <span class="toc-text">动画</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#变形"><span class="toc-number">2.3.</span> <span class="toc-text">变形</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#居中的另一种实现方式"><span class="toc-number">2.3.1.</span> <span class="toc-text">居中的另一种实现方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#z轴变形"><span class="toc-number">2.3.2.</span> <span class="toc-text">z轴变形</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#旋转"><span class="toc-number">2.4.</span> <span class="toc-text">旋转</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#缩放"><span class="toc-number">2.5.</span> <span class="toc-text">缩放</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">3.</span> <span class="toc-text">less</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#变量"><span class="toc-number">3.1.</span> <span class="toc-text">变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#引用别的属性值"><span class="toc-number">3.2.</span> <span class="toc-text">引用别的属性值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#引用父元素"><span class="toc-number">3.3.</span> <span class="toc-text">&amp;引用父元素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#继承"><span class="toc-number">3.4.</span> <span class="toc-text">继承</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#混合函数"><span class="toc-number">3.5.</span> <span class="toc-text">混合函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#import引入"><span class="toc-number">3.6.</span> <span class="toc-text">import引入</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">4.</span> <span class="toc-text">弹性盒(flex)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#弹性容器"><span class="toc-number">4.1.</span> <span class="toc-text">弹性容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#弹性元素"><span class="toc-number">4.2.</span> <span class="toc-text">弹性元素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#弹性容器的样式"><span class="toc-number">4.3.</span> <span class="toc-text">弹性容器的样式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#弹性元素的样式"><span class="toc-number">4.4.</span> <span class="toc-text">弹性元素的样式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">5.</span> <span class="toc-text">响应式布局</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#媒体查询"><span class="toc-number">5.1.</span> <span class="toc-text">媒体查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#媒体特性"><span class="toc-number">5.2.</span> <span class="toc-text">媒体特性</span></a></li></ol></li></ol>	
         </div>
     
 </div>

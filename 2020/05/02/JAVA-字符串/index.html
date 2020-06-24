@@ -11,9 +11,12 @@
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
     <meta name="description" content="String
+
 String是一个final类，代表不可变的字符序列
 字符串是常量，用双引号来表示，他们的值在创建之后不可被改变。
-源码：1234567public final class Strin,"> 
+源码：
+
+1234567public final class St,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -66,11 +69,16 @@ String是一个final类，代表不可变的字符序列
 
         </div>
         <div class="content markdown">
-            <h1 id="String"><a href="#String" class="headerlink" title="String"></a>String</h1><ul>
+            <h1>String</h1>
+<ul>
 <li>String是一个final类，代表不可变的字符序列</li>
 <li>字符串是常量，用双引号来表示，他们的值在创建之后不可被改变。</li>
-<li>源码：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">String</span></span></span><br><span class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span>, <span class="title">Comparable</span>&lt;<span class="title">String</span>&gt;, <span class="title">CharSequence</span> </span>&#123;</span><br><span class="line">    <span class="comment">/** The value is used for character storage. */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">char</span> value[];</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Cache the hash code for the string */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> hash; <span class="comment">// Default to 0</span></span><br></pre></td></tr></table></figure></li>
-<li>特点：<ol>
+<li>源码：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">String</span></span></span><br><span class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span>, <span class="title">Comparable</span>&lt;<span class="title">String</span>&gt;, <span class="title">CharSequence</span> </span>&#123;</span><br><span class="line">    <span class="comment">/** The value is used for character storage. */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">char</span> value[];</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Cache the hash code for the string */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> hash; <span class="comment">// Default to 0</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>特点：
+<ol>
 <li>底层是一个字符数组</li>
 <li>String声明为final，不可被继承</li>
 <li>String实现了Serializable接口，表示字符串是可以被序列化的</li>
@@ -80,7 +88,55 @@ String是一个final类，代表不可变的字符序列
 </ol>
 </li>
 </ul>
-<h2 id="对象创建"><a href="#对象创建" class="headerlink" title="对象创建"></a>对象创建</h2><h1 id="StringBuffer"><a href="#StringBuffer" class="headerlink" title="StringBuffer"></a>StringBuffer</h1><h1 id="StringBuilder"><a href="#StringBuilder" class="headerlink" title="StringBuilder"></a>StringBuilder</h1><h1 id="System"><a href="#System" class="headerlink" title="System"></a>System</h1><h1 id="Date"><a href="#Date" class="headerlink" title="Date"></a>Date</h1>
+<h2 id="对象创建"><a class="header-anchor" href="#对象创建">¶</a>对象创建</h2>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">String str = <span class="string">"hello"</span>;</span><br><span class="line"><span class="comment">// 本质上this,value = new char[0]</span></span><br><span class="line">String s1 = <span class="keyword">new</span> String();</span><br><span class="line"><span class="comment">// 本质上this,value = 5</span></span><br><span class="line">String s2 = <span class="keyword">new</span> String(<span class="string">"hello"</span>);</span><br><span class="line"><span class="comment">// this.value = Arrays.copyOf(value, value.length)</span></span><br><span class="line">String s3 = <span class="keyword">new</span> String(<span class="keyword">char</span>[] a);</span><br><span class="line">String s4 = <span class="keyword">new</span> String(<span class="keyword">char</span> value[], <span class="keyword">int</span> offset, <span class="keyword">int</span> count)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>源码</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">String</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.value = <span class="string">""</span>.value;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">String</span><span class="params">(String original)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.value = original.value;</span><br><span class="line">    <span class="keyword">this</span>.hash = original.hash;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">String</span><span class="params">(<span class="keyword">char</span> value[])</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.value = Arrays.copyOf(value, value.length);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">String</span><span class="params">(<span class="keyword">char</span> value[], <span class="keyword">int</span> offset, <span class="keyword">int</span> count)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (offset &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> StringIndexOutOfBoundsException(offset);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (count &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (count &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> StringIndexOutOfBoundsException(count);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (offset &lt;= value.length) &#123;</span><br><span class="line">            <span class="keyword">this</span>.value = <span class="string">""</span>.value;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Note: offset or count might be near -1&gt;&gt;&gt;1.</span></span><br><span class="line">    <span class="keyword">if</span> (offset &gt; value.length - count) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> StringIndexOutOfBoundsException(offset + count);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.value = Arrays.copyOfRange(value, offset, offset+count);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>String str1 = &quot;abc&quot;;</code> 与 <code>String str2 = new String(&quot;abc&quot;);</code> 的区别
+<ul>
+<li>字符串常量存储在字符串常量池，目的是共享。字符串非常量对象存储在堆中。</li>
+<li>str1在栈空间种，str2在堆空间种</li>
+</ul>
+</li>
+<li><code>String s = new String(&quot;hello);</code> 方式创建对象，在内存中创建了几个对象
+<ul>
+<li>两个：一个在堆空间中<code>new String</code>创建的对象，第二个是<code>char型数组</code>在对应的常量池中</li>
+<li>如果常量池有了，只会创建一个</li>
+</ul>
+</li>
+</ul>
+<h2 id="字符串拼接"><a class="header-anchor" href="#字符串拼接">¶</a>字符串拼接</h2>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">String s1 = <span class="string">"hello"</span>;</span><br><span class="line">String s2 = <span class="string">"world"</span>;</span><br><span class="line">String s3 = <span class="string">"helloworld"</span>;</span><br><span class="line">String s4 = <span class="string">"hello"</span> + <span class="string">"world"</span>;</span><br><span class="line">String s5 = s1 + <span class="string">"world"</span>;</span><br><span class="line">String s6 = <span class="string">"hello"</span> + s2;</span><br><span class="line">String s7 = s6.intern();</span><br><span class="line">System.out.println(s3 == s4); <span class="comment">// true</span></span><br><span class="line">System.out.println(s3 == s5); <span class="comment">// false</span></span><br><span class="line">System.out.println(s3 == s6); <span class="comment">// false</span></span><br><span class="line">System.out.println(s7 == s6); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>常量与常量的拼接结果在常量池。且常量池中不会存在相同内容的常量。</li>
+<li>只要其中有一个是变量，结果就在堆中</li>
+<li>如果拼接的结果调用<code>intern()</code>方法，返回值就在常量池中。</li>
+</ul>
+<h2 id="类型转换"><a class="header-anchor" href="#类型转换">¶</a>类型转换</h2>
+<ul>
+<li>String --&gt; char[]</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">String str1 = <span class="string">"hello"</span>;</span><br><span class="line"><span class="keyword">char</span>[] charArray = str1.toCharArray();</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; charArray.length(); i++) &#123;</span><br><span class="line">    System.out.println(charArray[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>char[] --&gt; String</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span>[] arr = <span class="keyword">new</span> <span class="keyword">char</span>[]&#123;<span class="string">'h'</span>, <span class="string">'e'</span>, <span class="string">'l'</span>, <span class="string">'l'</span>, <span class="string">'o'</span>&#125;;</span><br><span class="line">String str = <span class="keyword">new</span> String(arr);</span><br><span class="line">System.out.println(str);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>String --&gt; byte[]</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String str = <span class="string">"hello"</span>;</span><br><span class="line"><span class="keyword">byte</span>[] bs = str.getBytes();</span><br><span class="line">System.out.println(Arrays.toString());</span><br></pre></td></tr></table></figure>
+<ul>
+<li>byte[] --&gt; String</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1>StringBuffer</h1>
+<h1>StringBuilder</h1>
+<h1>System</h1>
+<h1>Date</h1>
+
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
                 <source type="audio/mpeg" src="">
@@ -119,7 +175,7 @@ String是一个final类，代表不可变的字符序列
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#String"><span class="toc-number">1.</span> <span class="toc-text">String</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#对象创建"><span class="toc-number">1.1.</span> <span class="toc-text">对象创建</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#StringBuffer"><span class="toc-number">2.</span> <span class="toc-text">StringBuffer</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#StringBuilder"><span class="toc-number">3.</span> <span class="toc-text">StringBuilder</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#System"><span class="toc-number">4.</span> <span class="toc-text">System</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Date"><span class="toc-number">5.</span> <span class="toc-text">Date</span></a></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">String</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#对象创建"><span class="toc-number">1.1.</span> <span class="toc-text">对象创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字符串拼接"><span class="toc-number">1.2.</span> <span class="toc-text">字符串拼接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类型转换"><span class="toc-number">1.3.</span> <span class="toc-text">类型转换</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">2.</span> <span class="toc-text">StringBuffer</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">3.</span> <span class="toc-text">StringBuilder</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">4.</span> <span class="toc-text">System</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">5.</span> <span class="toc-text">Date</span></a></li></ol>	
         </div>
     
 </div>
