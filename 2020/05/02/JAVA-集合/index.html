@@ -104,6 +104,11 @@ Collection是一个接口，是Iterable的子接口，其下有许多的子接�
 <li>遍历：iterator()：返回迭代器对象，用于集合遍历</li>
 </ol>
 <h2 id="List"><a class="header-anchor" href="#List">¶</a>List</h2>
+<ul>
+<li>List集合类中元素有序、且可重复，集合中的每个元素都有其对应的顺序索引</li>
+<li>常用的实现类有ArrayList，LinkedList，Vector</li>
+</ul>
+<h3 id="常用方法-v2"><a class="header-anchor" href="#常用方法-v2">¶</a>常用方法</h3>
 <table>
 <thead>
 <tr>
@@ -159,9 +164,24 @@ Collection是一个接口，是Iterable的子接口，其下有许多的子接�
 </tbody>
 </table>
 <h3 id="ArrayList"><a class="header-anchor" href="#ArrayList">¶</a>ArrayList</h3>
-<p>ArrayList的结构是数组结构。元素增删慢，查找快。$\color{red}{此实现不是同步的}$。如果多个线程同时访问一个ArrayList实例，而其中至少一个线程从结构上修改了列表，那么它对外必须保持同步。</p>
+<ul>
+<li>ArrayList的结构是数组结构。元素增删慢，查找快。$\color{red}{此实现不是同步的}$。如果多个线程同时访问一个ArrayList实例，而其中至少一个线程从结构上修改了列表，那么它对外必须保持同步。</li>
+<li>底层是一个Object类型的数组<code>transient Object[] elementData; </code></li>
+<li>源码分析：jdk7与jdk8略有不同
+<ol>
+<li><code>ArrayList list = new ArrayList();</code>底层创建了长度为10的Object数组（jdk7）</li>
+<li><code>ArrayList list = new ArrayList();</code>底层数据并没有创建，只有在第一次调用add方法时，才会创建一个容量为10的底层数组</li>
+<li>扩容问题,如果添加元素后的长度小于容量，则ArrayList会扩容至原来的<code>1.5</code>倍</li>
+</ol>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">grow</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// overflow-conscious code</span></span><br><span class="line">    <span class="keyword">int</span> oldCapacity = elementData.length;</span><br><span class="line">    <span class="keyword">int</span> newCapacity = oldCapacity + (oldCapacity &gt;&gt; <span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 如果扩容完容量还不够，直接把minCapacity作为容量</span></span><br><span class="line">    <span class="keyword">if</span> (newCapacity - minCapacity &lt; <span class="number">0</span>)</span><br><span class="line">        newCapacity = minCapacity;</span><br><span class="line">    <span class="keyword">if</span> (newCapacity - MAX_ARRAY_SIZE &gt; <span class="number">0</span>)</span><br><span class="line">        newCapacity = hugeCapacity(minCapacity);</span><br><span class="line">    <span class="comment">// minCapacity is usually close to size, so this is a win:</span></span><br><span class="line">    <span class="comment">// 拷贝原来数组的数据</span></span><br><span class="line">    elementData = Arrays.copyOf(elementData, newCapacity);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 <h3 id="LinkedList"><a class="header-anchor" href="#LinkedList">¶</a>LinkedList</h3>
-<p>LinkedList的结构时链表结构。元素增删快。双向链表</p>
+<ul>
+<li>LinkedList的结构时链表结构。元素增删快。双向链表</li>
+<li>源码：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">    E item;</span><br><span class="line">    Node&lt;E&gt; next;</span><br><span class="line">    Node&lt;E&gt; prev;</span><br><span class="line"></span><br><span class="line">    Node(Node&lt;E&gt; prev, E element, Node&lt;E&gt; next) &#123;</span><br><span class="line">        <span class="keyword">this</span>.item = element;</span><br><span class="line">        <span class="keyword">this</span>.next = next;</span><br><span class="line">        <span class="keyword">this</span>.prev = prev;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <table>
 <thead>
 <tr>
@@ -181,6 +201,11 @@ Collection是一个接口，是Iterable的子接口，其下有许多的子接�
 </tbody>
 </table>
 <p>同样的有remove方法和get方法，pop等效于removeFirst，push等效于addFirst</p>
+<h3 id="Vector"><a class="header-anchor" href="#Vector">¶</a>Vector</h3>
+<ul>
+<li>线程安全，出现的版本比较早，效率低</li>
+<li>底层是一个Object类型的数组</li>
+</ul>
 <h3 id="Queue"><a class="header-anchor" href="#Queue">¶</a>Queue</h3>
 <p>特点：先进先出<br>
 <code>Queue&lt;Integer&gt; q = new LinkedList&lt;&gt;();</code></p>
@@ -299,7 +324,7 @@ Creates a PriorityQueue with the default initial capacity and whose elements are
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">Collection</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#常用方法"><span class="toc-number">1.1.</span> <span class="toc-text">常用方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#List"><span class="toc-number">1.2.</span> <span class="toc-text">List</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ArrayList"><span class="toc-number">1.2.1.</span> <span class="toc-text">ArrayList</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LinkedList"><span class="toc-number">1.2.2.</span> <span class="toc-text">LinkedList</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Queue"><span class="toc-number">1.2.3.</span> <span class="toc-text">Queue</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PriorityQueue"><span class="toc-number">1.2.4.</span> <span class="toc-text">PriorityQueue</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Stack"><span class="toc-number">1.2.5.</span> <span class="toc-text">Stack</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#set"><span class="toc-number">1.3.</span> <span class="toc-text">set</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HashSet"><span class="toc-number">1.3.1.</span> <span class="toc-text">HashSet</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Map"><span class="toc-number">1.4.</span> <span class="toc-text">Map</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HashMap"><span class="toc-number">1.4.1.</span> <span class="toc-text">HashMap</span></a></li></ol></li></ol></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">Collection</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#常用方法"><span class="toc-number">1.1.</span> <span class="toc-text">常用方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#List"><span class="toc-number">1.2.</span> <span class="toc-text">List</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#常用方法-v2"><span class="toc-number">1.2.1.</span> <span class="toc-text">常用方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ArrayList"><span class="toc-number">1.2.2.</span> <span class="toc-text">ArrayList</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LinkedList"><span class="toc-number">1.2.3.</span> <span class="toc-text">LinkedList</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vector"><span class="toc-number">1.2.4.</span> <span class="toc-text">Vector</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Queue"><span class="toc-number">1.2.5.</span> <span class="toc-text">Queue</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PriorityQueue"><span class="toc-number">1.2.6.</span> <span class="toc-text">PriorityQueue</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Stack"><span class="toc-number">1.2.7.</span> <span class="toc-text">Stack</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#set"><span class="toc-number">1.3.</span> <span class="toc-text">set</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HashSet"><span class="toc-number">1.3.1.</span> <span class="toc-text">HashSet</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Map"><span class="toc-number">1.4.</span> <span class="toc-text">Map</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HashMap"><span class="toc-number">1.4.1.</span> <span class="toc-text">HashMap</span></a></li></ol></li></ol></li></ol>	
         </div>
     
 </div>
