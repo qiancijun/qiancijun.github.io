@@ -13538,4 +13538,47 @@ Spring官网：<a href="https://spring.io/" target="_blank" rel="noopener">https
         <category>框架</category>
       </categories>
   </entry>
+  <entry>
+    <title>LeetCode-196周周赛</title>
+    <url>/2020/07/05/LeetCode-196%E5%91%A8%E5%91%A8%E8%B5%9B/</url>
+    <content><![CDATA[<h1>5452. 判断能否形成等差数列</h1>
+<p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week196/5452.png" alt=""></p>
+<h2 id="思路"><a class="header-anchor" href="#思路">¶</a>思路</h2>
+<ul>
+<li>排序一下，相邻两个相减是否相同。</li>
+</ul>
+<h2 id="代码-CPP"><a class="header-anchor" href="#代码-CPP">¶</a>代码(CPP)</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">canMakeArithmeticProgression</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; arr)</span> </span>&#123;</span><br><span class="line">        sort(arr.begin(), arr.end());</span><br><span class="line">        <span class="keyword">int</span> len = arr.size();</span><br><span class="line">        <span class="keyword">int</span> tmp = arr[<span class="number">1</span>] - arr[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt; len; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[i] - arr[i - <span class="number">1</span>] != tmp)</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="代码"><a class="header-anchor" href="#代码">¶</a>代码</h2>
+<h1>5453. 所有蚂蚁掉下来前的最后一刻</h1>
+<p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week196/5453.png" alt=""></p>
+<h2 id="思路-v2"><a class="header-anchor" href="#思路-v2">¶</a>思路</h2>
+<ul>
+<li>不用考虑转向问题，转向意为蚂蚁之间可以穿过，直接判断最远那个是谁就可</li>
+</ul>
+<h2 id="代码-CPP-v2"><a class="header-anchor" href="#代码-CPP-v2">¶</a>代码(CPP)</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getLastMoment</span><span class="params">(<span class="keyword">int</span> n, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; left, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; right)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> len_left = left.size();</span><br><span class="line">        <span class="keyword">int</span> len_right = right.size();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len_left; i++) &#123;</span><br><span class="line">            result = max(result, left[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len_right; i++) &#123;</span><br><span class="line">            result = max(result, n - right[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1>5454. 统计全 1 子矩形</h1>
+<p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/LeetCode/Week196/5454.png" alt=""></p>
+<h2 id="思路-v3"><a class="header-anchor" href="#思路-v3">¶</a>思路</h2>
+<ul>
+<li>判断第i,j个位置左边一共有多少个连续的1，再以i,j为矩阵右下角，向上检测</li>
+</ul>
+<h2 id="代码-CPP-v3"><a class="header-anchor" href="#代码-CPP-v3">¶</a>代码(CPP)</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numSubmat</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; mat)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m = mat.size();</span><br><span class="line">        <span class="keyword">int</span> n = mat[<span class="number">0</span>].size();</span><br><span class="line">        <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">dp</span><span class="params">(m, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(n, <span class="number">0</span>))</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> number = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (mat[i][j] == <span class="number">1</span>)</span><br><span class="line">                    number++;</span><br><span class="line">                <span class="keyword">else</span> </span><br><span class="line">                    number = <span class="number">0</span>;</span><br><span class="line">                dp[i][j] = number;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">                <span class="keyword">int</span> tmp = INT_MAX;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> k = i; k &gt;= <span class="number">0</span>; k--) &#123;</span><br><span class="line">                    tmp = min(tmp, dp[k][j]);</span><br><span class="line">                    result += tmp;</span><br><span class="line">                &#125;    </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>试题</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>设计模式</title>
+    <url>/2020/07/05/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+  </entry>
 </search>
