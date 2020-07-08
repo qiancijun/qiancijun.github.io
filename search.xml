@@ -13576,9 +13576,266 @@ Spring官网：<a href="https://spring.io/" target="_blank" rel="noopener">https
   <entry>
     <title>设计模式</title>
     <url>/2020/07/05/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h1>设计模式的目的</h1>
+<ul>
+<li>在编写软件过程中，面临着来自耦合性、内聚性以及可维护性，可扩展性，重用性，灵活性等多方面的问题，设计模式就是为了让程序有更好的性能。
+<ul>
+<li>重用性：相同功能的代码，不用多次编写</li>
+<li>可读性：编程规范性，便于其他程序员的阅读</li>
+<li>扩展性：当需要增加新的功能时，非常的方便</li>
+<li>可靠性：当增加新的功能后，对原有的功能没有影响</li>
+</ul>
+</li>
+</ul>
+<h1>七大原则</h1>
+<ol>
+<li>单一职责原则</li>
+<li>接口隔离原则</li>
+<li>依赖倒转原则</li>
+<li>里氏替换原则</li>
+<li>开闭原则</li>
+<li>迪米特法则</li>
+<li>合成复用原则</li>
+</ol>
+<h2 id="单一职责原则"><a class="header-anchor" href="#单一职责原则">¶</a>单一职责原则</h2>
+<ul>
+<li>对类来说，一个类应该只负责一项职责。如果类A负责两个不同职责：职责1，职责2。当职责1需求变更而改变A时，可能造成职责2执行错误，所以需要将A的粒度分解为A1，A2</li>
+</ul>
+<h3 id="注意事项和细节"><a class="header-anchor" href="#注意事项和细节">¶</a>注意事项和细节</h3>
+<ol>
+<li>降低类的复杂度，一个类只负责一项职责</li>
+<li>提高类的可读性，可维护性</li>
+<li>降低变更引起的风险</li>
+<li>通常情况下，我们应该遵守单一职责原则，只有逻辑足够简单，才可以在代码级违反单一职责原则；只有类中方法数量足够少，可以在方法级别保持单一职责原则</li>
+</ol>
+<h2 id="接口隔离原则"><a class="header-anchor" href="#接口隔离原则">¶</a>接口隔离原则</h2>
+<ul>
+<li>客户端不应该依赖它不需要的接口，即一个类对另一个类的依赖应该建立在最小的接口上</li>
+</ul>
+<h2 id="依赖倒转原则"><a class="header-anchor" href="#依赖倒转原则">¶</a>依赖倒转原则</h2>
+<ol>
+<li>高层模块不应该依赖底层模块，二者都应该依赖其抽象</li>
+<li>抽象不应该依赖细节，细节应该依赖抽象</li>
+<li>依赖倒转的中心思想是面向接口编程</li>
+<li>依赖倒转原则的设计理念：
+<ul>
+<li>相对于细节的多变性，抽象的东西要稳定的多。以抽象为基础搭建的架构比以细节为基础的架构要稳定的多。</li>
+<li>在java中，抽象指的是接口或抽象类，细节就是具体的实现类</li>
+</ul>
+</li>
+<li>使用接口或抽象类的目的是制定好规范，而不涉及任何具体的操作，把展现细节的任务交给它们的实现类去完成</li>
+</ol>
+<h3 id="依赖传递"><a class="header-anchor" href="#依赖传递">¶</a>依赖传递</h3>
+<ol>
+<li>接口传递</li>
+<li>构造方法传递</li>
+<li>setter方式传递</li>
+</ol>
+<h3 id="注意事项和细节-v2"><a class="header-anchor" href="#注意事项和细节-v2">¶</a>注意事项和细节</h3>
+<ol>
+<li>底层模块尽量都要有抽象类或接口，或者两者都有，程序稳定性更好</li>
+<li>变量的声明类尽量是抽象类或接口，这样我们的变量引用和实际对象间，就存在一个缓冲层，利于程序的扩展和优化</li>
+<li>继承时遵循里氏替换原则</li>
+</ol>
+<h2 id="里氏替换原则"><a class="header-anchor" href="#里氏替换原则">¶</a>里氏替换原则</h2>
+<ul>
+<li>OO中的继承性的思考和说明
+<ol>
+<li>继承包含这样一层含义：父类中凡是已经实现好的方法，实际上是在设定规范和契约，虽然它不强制要求所有的子类必须遵循这些契约，但是如果子类对这些已经实现的方法任意修改，就会对整个继承体系造成破坏</li>
+<li>继承在给程序设计带来便利的同时，也带来了弊端。比如使用继承会给程序带来侵入性，程序的可移植性降低，增加对象间的耦合性，如果一个类被其他的类所继承，则当这个类需要修改时，必须考虑到所有的子类，并且父类修改以后，所有涉及到子类的功能都有可能产生故障</li>
+</ol>
+</li>
+<li>里氏替换原则：
+<ol>
+<li>如果对每个类型为T1的对象o1，都有类型为T2的o2，使得以T1定义的所有程序P在所有的对象o1都代换成o2时，程序P的行为没有发生变化，那么类型T2时类型T1的子类型。换句话说，所有引用基类的地方必须能透明的使用其子类的对象</li>
+<li>在使用继承时，遵循里氏替换原则，在子类中尽量不要重写父类的方法</li>
+<li>里氏替换原则告诉我们，继承实际上让两个类耦合性增强了，在适当的情况下，可以通过聚合，组合，依赖来解决问题</li>
+</ol>
+</li>
+</ul>
+<h2 id="开闭原则"><a class="header-anchor" href="#开闭原则">¶</a>开闭原则</h2>
+<ol>
+<li>开闭原则时编程中最基础、最重要的设计原则</li>
+<li>一个软件实体如类，模块和函数应该对扩展开放，对修改关闭，用抽象构建框架，用实现扩展细节。</li>
+<li>当软件需要变化时，尽量通过对扩展软件实体的行为来实现变化，而不是通过修改已有的代码来实现变化</li>
+<li>编程中遵循其他原则，以及使用设计模式的目的就是遵循开闭原则</li>
+</ol>
+<h2 id="迪米特法则"><a class="header-anchor" href="#迪米特法则">¶</a>迪米特法则</h2>
+<ol>
+<li>一个对象应该对其他对象保持最少的了解</li>
+<li>类与类关系越密切，耦合度越大</li>
+<li>迪米特法则又叫最少知道原则，即一个类对自己依赖的类知道的越少越好，也就是说，对于被依赖的类不管多么复杂，都尽量将逻辑封装在类的内部，对外除了提供的public方法，不对外泄露任何信息</li>
+<li>迪米特法则还有个更简单的定义：只与直接的朋友通信
+<ul>
+<li>直接的朋友：每个对象都会与其他对象有耦合关系，只要两个对象之间有耦合关系，我们就说这两个对象之间是朋友关系。耦合的方式有很多，依赖，关联，组合，聚合等。其中，称出现成员变量，方法参数，方法返回值中的类为直接的朋友，而出现在局部变量中的类不是直接的朋友。也就是说，陌生的类最好不要以局部变量的形式出现在类的内部。</li>
+</ul>
+</li>
+</ol>
+<h3 id="注意事项和细节-v3"><a class="header-anchor" href="#注意事项和细节-v3">¶</a>注意事项和细节</h3>
+<ol>
+<li>迪米特法则的核心是降低类之间的耦合</li>
+<li>但是注意：由于每个类都减少了不必要的依赖，因此迪米特法则只是要求降低类间（对象间）的耦合关系，并不是要求完全没有依赖关系</li>
+</ol>
+<h2 id="合成复用原则"><a class="header-anchor" href="#合成复用原则">¶</a>合成复用原则</h2>
+<ol>
+<li>尽量使用合成/聚合的方式，而不是使用继承</li>
+</ol>
+<h1>设计模式概述</h1>
+<ul>
+<li>设计模式是程序员在面对同类软件工程设计问题总结出来的有用的经验，模式不是代码，而是某类问题的通用解决方案；设计模式代表了最佳的实践。这些解决方案是众多软件开发人民经过相当长的一段时间的试验和错误总结出来的</li>
+<li>设计模式的本质是提高软件的维护性，通用性和扩展性，并降低软件的复杂度</li>
+<li>设计模式分为三种类型，共23种
+<ol>
+<li>创建型模式：单例模式、抽象工厂模式、原型模式、建造者模式、工厂模式</li>
+<li>结构型模式：适配器模式、桥接模式、装饰模式、组合模式、外观模式、享元模式、代理模式</li>
+<li>行为型模式：模板方法模式、命令模式、访问者模式、迭代器模式、观察者模式、中介者模式、备忘录模式、解释器模式、状态模式、策略模式、职责链模式（责任链模式）</li>
+</ol>
+</li>
+</ul>
+<h1>单例模式</h1>
+<ul>
+<li>类的单例模式设计，就是采取一定的方法保证在整个的软件系统中，对某个类$\color{}{只能存在一个实例对象}$，并且该类只提供一个取得其对象的实例方法</li>
+<li>比如Hibernate的SessionFactory，它充当数据存储源的代理，并负责创建Session对象。SessionFactory并不是轻量级的，一般情况下，一个项目通常只要一个SessionFactory就够</li>
+<li>单例模式有八种方式：
+<ol>
+<li>饿汉式（静态常量）</li>
+<li>饿汉式（静态代码块）</li>
+<li>懒汉式（线程不安全）</li>
+<li>懒汉式（线程安全，同步方法）</li>
+<li>懒汉式（线程安全，同步代码块）</li>
+<li>双重检查</li>
+<li>静态内部类</li>
+<li>枚举</li>
+</ol>
+</li>
+<li>注意事项和细节说明：
+<ol>
+<li>单例模式保证了系统内存中该类只存在一个对象，节省了系统资源，对于一些需要频繁创建销毁的对象，使用单例模式可以提高系统性能</li>
+<li>当想实例化一个单例类的时候，必须要记住使用响应的获取对象的方法，而不是使用new</li>
+<li>单例模式的使用场景：需要频繁的进行创建和销毁的对象、创建对象时消耗过多或耗费资源过多（即：重量级对象），但又经常用到的对象、工具类对象、频繁访问数据库或文件的对象（比如数据源、session工厂等）</li>
+</ol>
+</li>
+</ul>
+<h2 id="饿汉式（静态常量）"><a class="header-anchor" href="#饿汉式（静态常量）">¶</a>饿汉式（静态常量）</h2>
+<ol>
+<li>构造器私有化（防止实例化对象）</li>
+<li>类的内部创建对象</li>
+<li>向外暴露一个静态的公共方法<code>getInstance()</code></li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 饿汉式 静态变量</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 构造器私有化，外部不能实例化对象</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 在内部创建一个对象实例</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> Singleton instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 对外提供一个公有的静态方法，返回实例对象</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>测试</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Singleton instance = Singleton.getInstance();</span><br><span class="line">    Singleton instance1 = Singleton.getInstance();</span><br><span class="line">    System.out.println(instance == instance1); <span class="comment">// true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>优点：
+<ul>
+<li>这种写法比较简单，在类装载的时候就完成了实例化，避免了线程同步问题</li>
+</ul>
+</li>
+<li>缺点：
+<ul>
+<li>在类装载的时候就完成了实例化，没有达到Lazy Loading的效果。如果从始至终都未使用过这个实例，则会造成内存的浪费</li>
+</ul>
+</li>
+<li>总结：
+<ul>
+<li>这种方式基于classloader机制避免了多线程的同步问题，不过，instance在类装载时就实例化，在单例模式种大多数都是调用getInstance方法，但是导致类装载的原因有很多种，因此不能确定有其他的方式（或者其他的静态方法）导致类装载，这时候初始化instance就没有达到lazy loading的效果</li>
+</ul>
+</li>
+</ul>
+<h2 id="饿汉式（静态代码块）"><a class="header-anchor" href="#饿汉式（静态代码块）">¶</a>饿汉式（静态代码块）</h2>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line">    <span class="comment">// 构造器私有化，外部不能实例化对象</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在静态代码块种。创建单例对象</span></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>优缺点：
+<ul>
+<li>这种方式和静态变量类似，只不过将类实例化的过程放在了静态代码块中，也是在类装载的时候，就执行静态代码块中的代码，初始化类的实例，优缺点和静态变量是一样的</li>
+</ul>
+</li>
+</ul>
+<h2 id="懒汉式（线程不安全）"><a class="header-anchor" href="#懒汉式（线程不安全）">¶</a>懒汉式（线程不安全）</h2>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 当使用到该方法时，才会创建instance</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">            instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>优缺点：
+<ul>
+<li>起到了Lazy Loading的效果，但是只能在单线程下使用</li>
+<li>如果在多线程下，一个线程进入了<code>if (singleton == null)</code>的判断语句块，还未来得及往下执行，另一个线程也通过了这个判断语句，这时便会产生多个实例。所以在多线程环境下不可以使用这种方式</li>
+<li>开发中尽量不用</li>
+</ul>
+</li>
+</ul>
+<h2 id="懒汉式（线程安全，同步方法）"><a class="header-anchor" href="#懒汉式（线程安全，同步方法）">¶</a>懒汉式（线程安全，同步方法）</h2>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 当使用到该方法时，才会创建instance</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">            instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>优缺点：
+<ul>
+<li>解决了线程不安全问题</li>
+<li>效率低，每个线程在想获取类的实例对象时，执行<code>getInstance()</code>方法都要进行同步，而其实这个方法只执行一次实例化代码就够了，后面想获得该类实例直接<code>return</code>返回对象。方法同步效率太低</li>
+</ul>
+</li>
+</ul>
+<h2 id="懒汉式（线程安全，同步代码块）"><a class="header-anchor" href="#懒汉式（线程安全，同步代码块）">¶</a>懒汉式（线程安全，同步代码块）</h2>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 当使用到该方法时，才会创建instance</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (Singleton<span class="class">.<span class="keyword">class</span>) </span>&#123;</span><br><span class="line">                instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这种同步并不能起到线程同步的作用</li>
+</ul>
+<h2 id="双重检查"><a class="header-anchor" href="#双重检查">¶</a>双重检查</h2>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> Singleton instance;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 当使用到该方法时，才会创建instance</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (Singleton<span class="class">.<span class="keyword">class</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>优缺点：
+<ol>
+<li>Double-check概念是多线程开发中常使用到的，进行两次if的检查，能够保证线程安全</li>
+<li>线程安全；延迟加载；效率较高</li>
+</ol>
+</li>
+</ul>
+<h2 id="静态内部类"><a class="header-anchor" href="#静态内部类">¶</a>静态内部类</h2>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    <span class="comment">// JVM在装载类的时候是线程安全的</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonInstance</span> </span>&#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton INSTANCE = <span class="keyword">new</span> Singleton();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> SingletonInstance.INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>优缺点：
+<ul>
+<li>这种方式采用了类装载的机制来保证初始化实例时只有一个线程</li>
+<li>静态内部类方式在类被装载时不会立即实例化，而是在需要实例化时，调用<code>getInstance</code>方法才会装载</li>
+</ul>
+</li>
+</ul>
+<h2 id="枚举"><a class="header-anchor" href="#枚举">¶</a>枚举</h2>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">enum</span> Singleton &#123;</span><br><span class="line">    INSTANCE;</span><br><span class="line">    <span class="comment">// 方法</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>优缺点：
+<ul>
+<li>借助JDK1.5中添加的枚举来实现单例模式，不仅能够避免线程同步问题，而且还能防止反序列化重新创建新的对象</li>
+</ul>
+</li>
+</ul>
+]]></content>
       <categories>
         <category>JAVA</category>
       </categories>
+  </entry>
+  <entry>
+    <title>LeetCode-63-不同路径II</title>
+    <url>/2020/07/06/LeetCode-63-%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84II/</url>
+    <content><![CDATA[<h1>原题链接</h1>
+<p><img src="https://leetcode-cn.com/problems/unique-paths-ii/" alt=""></p>
+<h1>思路</h1>
+<ul>
+<li>这题用动态规划解决，就要思考记录什么状态。
+<ol>
+<li>如果是一个$\textit{2 × 2}$的矩阵，向右只有一种走法，向下也只有一种走法，而向对角线有两种走法</li>
+<li>边界的处理，当在四条边的时候永远只有一种走法</li>
+</ol>
+</li>
+<li>状态转移方程：$\textit{dp[i][j] = d[i - 1][j] + dp[i][j - 1]}$</li>
+</ul>
+<h1>代码</h1>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">uniquePathsWithObstacles</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; obstacleGrid)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m = obstacleGrid.size();</span><br><span class="line">        <span class="keyword">int</span> n = obstacleGrid[<span class="number">0</span>].size();</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">dp</span><span class="params">(m, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(n, <span class="number">0</span>))</span></span>;</span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="comment">// 状态转移方程 dp[i][j] = d[i - 1][j] + dp[i][j - 1];</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (obstacleGrid[i][j] == <span class="number">1</span>) &#123;</span><br><span class="line">                    dp[i][j] = <span class="number">0</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (obstacleGrid[i][j] == <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (i == <span class="number">0</span> &amp;&amp; j &gt; <span class="number">0</span>) </span><br><span class="line">                        dp[i][j] = dp[i][j - <span class="number">1</span>];</span><br><span class="line">                    <span class="keyword">else</span> <span class="keyword">if</span> (j == <span class="number">0</span> &amp;&amp; i &gt; <span class="number">0</span>) </span><br><span class="line">                        dp[i][j] = dp[i - <span class="number">1</span>][j];</span><br><span class="line">                    <span class="keyword">else</span> <span class="keyword">if</span> (i &gt; <span class="number">0</span> &amp;&amp; j &gt; <span class="number">0</span>)</span><br><span class="line">                        dp[i][j] = dp[i - <span class="number">1</span>][j] + dp[i][j - <span class="number">1</span>];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[m - <span class="number">1</span>][n - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>动态规划</tag>
+        <tag>数组</tag>
+      </tags>
   </entry>
 </search>
