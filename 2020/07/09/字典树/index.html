@@ -5,12 +5,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Tag: 动态规划 - 神奇口袋</title>
+    <title>字典树 - 神奇口袋</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
-    
+    <meta name="description" content="字典树
+又称单词查找树，Trie树，是一种树形结构，是一种哈希树的变种。典型应用是用于统计，排序和保存大量的字符串（但不仅限于字符串），所以经常被搜索引擎系统用于文本词频统计。它的优点是：利用字符串,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -33,164 +34,108 @@
 <body class="loading">
     <span id="config-title" style="display:none">神奇口袋</span>
     <div id="loader"></div>
-    <div class="nav">
-    <ul id="menu-menu" class="menu">
-        
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="//" title="首页" target="_blank" rel="noopener">首页</a>
-        </li>
-        
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/categories/" title="分类" target="_blank" rel="noopener">分类</a>
-        </li>
-        
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/tags/" title="标签" target="_blank" rel="noopener">标签</a>
-        </li>
-        
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/archives/" title="归档" target="_blank" rel="noopener">归档</a>
-        </li>
-        
-        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
-            <a href="/about/" title="关于" target="_blank" rel="noopener">关于</a>
-        </li>
-        
-    </ul>
-	<span class="target"></span>
-	<center>
-	<div class="hitokoto">
-		<span class="typed" id="hitokoto" data-st="true"></span>
-	</div>
-	</center>
-	
-	<p class="footerlinks">
-		<a href="#" class="iconfont icon-null"></a>
-		
-            <a href="/" title="facebook" class="iconfont icon-facebook" target="_blank" rel="noopener"> </a>
-        
-            <a href="/" title="twitter" class="iconfont icon-twitter" target="_blank" rel="noopener"> </a>
-        
-            <a href="/" title="github" class="iconfont icon-github" target="_blank" rel="noopener"> </a>
-        
-            <a href="/img/logo.png" title="wechat" class="iconfont icon-wechat" target="_blank" rel="noopener"> </a>
-        
-            <a href="/769303522@qq.com" title="email" class="iconfont icon-email" target="_blank" rel="noopener"> </a>
-        
-		<a href="#" class="iconfont icon-null"></a>
-	</p>
-	
-    <p id="copyright">
-        &copy; 2020 John Doe.
-        <span> | </span>Powered by <a href="https://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
-        <span> | </span>Theme <a href="https://github.com/Fechin/hexo-theme-diaspora" title="Diaspora" target="_blank" rel="noopener">Diaspora</a> by Fechin
-		
-    </p>
-</div>
-
-<div id="container">
-    
-<div id="screen">
-    <div id="mark">
-        <div class="layer" data-depth="0.4">
-            <img src="/img/1.jpg" id="cover" crossorigin="anonymous" width="1920" height="1080">
-        </div>
-    </div>
-    <div id="vibrant">
-        <svg viewBox="0 0 2880 1620" height="100%" preserveAspectRatio="xMaxYMax slice">
-            <polygon opacity="0.7" points="2000,1620 0,1620 0,0 600,0 "/>
-        </svg>
-        <div></div>
-    </div>
-    <div id="header">
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://xlich.top"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">字典树</h3>
+    <div class="social">
         <div>
-            <a class="image-logo" href="/"></a>
-			
-			<div class="iconfont icon-search switchsearch" href="/search/" title="搜索"></div>
-			
-            <div class="iconfont icon-menu switchmenu"></div>
+            <div class="share">
+                
+            </div>
+            <div id="qr"></div>
         </div>
     </div>
-    
-    <div id="post0">
-        <p>七月 06, 2020</p>
-        <h2><a href="/2020/07/06/LeetCode-63-%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84II/" title="LeetCode-63-不同路径II" class="posttitle">LeetCode-63-不同路径II</a></h2>
-        <p class="summary">原题链接
-
-思路
-
-这题用动态规划解决，就要思考记录什么状态。
-
-如果是一个$\textit{2 × 2}$的矩阵...</p>
-    </div>
-    
+    <div class="scrollbar"></div>
 </div>
 
-    <div id="primary">
+   
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">字典树</h1>
+        <div class="stuff">
+            <span>七月 09, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/" rel="tag">位运算</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E6%A0%91/" rel="tag">树</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h1 id="字典树"><a href="#字典树" class="headerlink" title="字典树"></a>字典树</h1><ul>
+<li>又称单词查找树，Trie树，是一种树形结构，是一种哈希树的变种。典型应用是用于统计，排序和保存大量的字符串（但不仅限于字符串），所以经常被搜索引擎系统用于文本词频统计。它的优点是：利用字符串的公共前缀来减少查询时间，最大限度地减少无谓的字符串比较，查询效率比哈希树高。</li>
+<li>基本操作有：插入、查找、删除（少见）</li>
+<li>Trie字典树(主要用于存储字符串)查找速度主要和它的元素(字符串)的长度相关[O(w)]<h2 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h2></li>
+</ul>
+<ol>
+<li>根节点不包含字符，除根节点外每一个节点都只包含一个字符</li>
+<li>从根节点到某一节点，路径上经过的字符连接起来，为该节点对应的字符串</li>
+<li>每个节点的所有子节点包含的字符都不相同</li>
+</ol>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><ol>
+<li>串的快速检索<br> —— 给出N个单词组成的熟词表，以及一篇全用小写英文书写的文章，请你按最早出现的顺序写出所有不在熟词表中的生词。在这道题中，我们可以用数组枚举，用哈希，用字典树，先把熟词建一棵树，然后读入文章进行比较，这种方法效率是比较高的。</li>
+<li>“串”排序<ul>
+<li>给定N个互不相同的仅由一个单词构成的英文名，让你将他们按字典序从小到大输出。用字典树进行排序，采用数组的方式创建字典树，这棵树的每个结点的所有儿子很显然地按照其字母大小排序。对这棵树进行先序遍历即可。</li>
+</ul>
+</li>
+<li>最长公共前缀<ul>
+<li>对所有串建立字典树，对于两个串的最长公共前缀的长度即他们所在的结点的公共祖先个数，于是，问题就转化为当时公共祖先问题。<h2 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h2></li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>现在要构建一棵字典树，存入apple, applet, boy, cat四个单词</li>
+<li>说明，如果用户想要查询app这个单词，虽然apple中包含了app，但是实际上并没有储存这个单词，所以要在最后一个字母的节点上，添加isWord属性</li>
+</ul>
+<h1 id="01字典树"><a href="#01字典树" class="headerlink" title="01字典树"></a>01字典树</h1>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='https://link.hhtjim.com/163/155827.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='https://link.hhtjim.com/163/1491163.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='https://link.hhtjim.com/163/1992707.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
         
-<div class="post">
-    <a href="/2020/05/07/LeetCode-983-%E6%9C%80%E4%BD%8E%E7%A5%A8%E4%BB%B7/" title="LeetCode-983-最低票价">
-        <img src="/img/6.jpg" class="cover" width="680" height="440">
-    </a>
-    <div class="else">
-        <p>五月 07, 2020</p>
-        <h3><a href="/2020/05/07/LeetCode-983-%E6%9C%80%E4%BD%8E%E7%A5%A8%E4%BB%B7/" title="LeetCode-983-最低票价" class="posttitle">LeetCode-983-最低票价</a></h3>
-        <p>原题链接
-原题连接
-题目描述
-
-思路
-¶记忆性递归
-我们用$\textit{dp}(i)$来表示从第 $\textit{i}$ 天开始到一年的结束，我们需...</p>
-    </div>
-</div>
-
-
-<div class="post">
-    <a href="/2020/04/15/LeerCode-5-%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/" title="LeerCode-5-最长回文子串">
-        <img src="/img/welcome-cover.jpg" class="cover" width="680" height="440">
-    </a>
-    <div class="else">
-        <p>四月 15, 2020</p>
-        <h3><a href="/2020/04/15/LeerCode-5-%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/" title="LeerCode-5-最长回文子串" class="posttitle">LeerCode-5-最长回文子串</a></h3>
-        <p>原题链接
-原题链接
-题目描述
-
-思路
-本文用的中心扩展算法，每一个字符从两边扩散。
-¶动态规划
-首先看一下怎么确定一个回文串，对于一个回文串来说，去掉两头...</p>
-    </div>
-</div>
-
-
-<div class="post">
-    <a href="/2020/04/15/LeetCode-542-01%E7%9F%A9%E9%98%B5/" title="LeetCode-542-01矩阵">
-        <img src="/img/6.jpg" class="cover" width="680" height="440">
-    </a>
-    <div class="else">
-        <p>四月 15, 2020</p>
-        <h3><a href="/2020/04/15/LeetCode-542-01%E7%9F%A9%E9%98%B5/" title="LeetCode-542-01矩阵" class="posttitle">LeetCode-542-01矩阵</a></h3>
-        <p>原题链接
-原题链接
-题目描述
-
-思路
-先遍历一遍矩阵，把0全部找出来，然后BFS模板一套，完事
-代码
-12345678910111213141516171...</p>
-    </div>
-</div>
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='true'
+        data-ci='Iv1.06e5c405a7731b45'
+        data-cs='2fcfe85902a7d5812fa4b299b56a6f194c98e08a'
+        data-r='qiancijun.github.io'
+        data-o='qiancijun'
+        data-a='qiancijun'
+        data-d='false'
+    >查看评论</div>
 
 
     </div>
     
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#字典树"><span class="toc-number">1.</span> <span class="toc-text">字典树</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#性质"><span class="toc-number">1.1.</span> <span class="toc-text">性质</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#应用"><span class="toc-number">1.2.</span> <span class="toc-text">应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#举例"><span class="toc-number">1.3.</span> <span class="toc-text">举例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#01字典树"><span class="toc-number">2.</span> <span class="toc-text">01字典树</span></a></li></ol>	
+        </div>
+    
 </div>
-<div id="preview"></div>
 
 
-
+    </div>
+</div>
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":250,"height":400},"mobile":{"show":false},"log":false});</script></body>
 
 
