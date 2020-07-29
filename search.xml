@@ -5493,7 +5493,9 @@ DataSource 通常被称为数据源，它包含连接池和连接池管理两个
 <li>ClassLoader只负责class文件的加载，至于它是否可以运行，则由Execution Engine决定</li>
 <li>加载的类信息存放于一块称为方法区的内存空间。除了类的信息外，方法区中还会存放运行时常量池信息，可能还包括字符串字面量和数字常量（这部分常量信息是Class文件中常量池部分的内存映射）</li>
 </ul>
+<p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Java/JVM/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%AD%90%E7%B3%BB%E7%BB%9F.png" alt=""></p>
 <h2 id="类的加载过程"><a class="header-anchor" href="#类的加载过程">¶</a>类的加载过程</h2>
+<p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Java/JVM/JVM.png" alt=""></p>
 <h3 id="加载"><a class="header-anchor" href="#加载">¶</a>加载</h3>
 <ol>
 <li>通过一个类的全限定名获取定义此类的二进制字节流</li>
@@ -5637,11 +5639,11 @@ DataSource 通常被称为数据源，它包含连接池和连接池管理两个
 </ul>
 </li>
 </ul>
-<h1>双亲委派机制</h1>
+<h2 id="双亲委派机制"><a class="header-anchor" href="#双亲委派机制">¶</a>双亲委派机制</h2>
 <ul>
 <li>Java虚拟机堆class文件采用的是==按需加载==的方式，也就是说当需要使用该类时才会将它的class文件加载到内存生成class对象。而且加载某个类的class文件时，Java虚拟机采用的时==双亲委派机制==，即把请求交给父类处理，它是一种任务委派模式</li>
 </ul>
-<h2 id="工作原理"><a class="header-anchor" href="#工作原理">¶</a>工作原理</h2>
+<h3 id="工作原理"><a class="header-anchor" href="#工作原理">¶</a>工作原理</h3>
 <ol>
 <li>如果一个类加载器收到了类加载请求，它并不会自己先去加载，而是把这个请求委托给父类的加载器去执行</li>
 <li>如果父类加载器还存在其父类加载器，则进一步向上委托，依次递归，请求最终到达顶层的启动类加载器</li>
@@ -5654,6 +5656,35 @@ DataSource 通常被称为数据源，它包含连接池和连接池管理两个
 <li>保护程序安全，防止核心API被随意篡改</li>
 </ul>
 </li>
+</ul>
+<h2 id="其余内容"><a class="header-anchor" href="#其余内容">¶</a>其余内容</h2>
+<ul>
+<li>在JVM中表示两个class对象是否为同一个类存在两个必要条件：
+<ul>
+<li>类的完整类名必须一致，包括包名</li>
+<li>加载这个类的ClassLoader（值classLoader实例对象）必须相同</li>
+</ul>
+</li>
+</ul>
+<h3 id="对类加载器的引用："><a class="header-anchor" href="#对类加载器的引用：">¶</a>对类加载器的引用：</h3>
+<ul>
+<li>JVM必须知道一个类型是由启动加载器加载的还是由用户类加载器加载的。如果一个类型是由用户类加载器加载的，那么JVM会==将这个类加载器的一个引用作为类型信息的一部分保存在方法区中==。当解析一个类型到另一个类型的引用的时候，JVM需要保证这两个类型的类加载器是相同的</li>
+</ul>
+<h3 id="类的主动使用和被动使用"><a class="header-anchor" href="#类的主动使用和被动使用">¶</a>类的主动使用和被动使用</h3>
+<ul>
+<li>Java程序对类的使用分为：主动使用和被动使用</li>
+<li>主动使用又分为七种情况：
+<ol>
+<li>创建类的实例</li>
+<li>访问某个类或接口的静态变量，或者对该静态变量赋值</li>
+<li>调用类的静态方法</li>
+<li>反射</li>
+<li>初始化一个类的子类</li>
+<li>Java虚拟机启动时被标明为启动类的类</li>
+<li>JDK7开始提供的动态语言支持</li>
+</ol>
+</li>
+<li>除了以上其中情况，其他使用Java类的方式都被看作是对类的被动使用，都不会导致类的初始化</li>
 </ul>
 ]]></content>
       <categories>
