@@ -5360,8 +5360,8 @@ DataSource 通常被称为数据源，它包含连接池和连接池管理两个
   <entry>
     <title>JVM</title>
     <url>/2020/06/18/JVM/</url>
-    <content><![CDATA[<h1>前言</h1>
-<h2 id="字节码"><a class="header-anchor" href="#字节码">¶</a>字节码</h2>
+    <content><![CDATA[<h1>一、前言</h1>
+<h2 id="1-1-字节码"><a class="header-anchor" href="#1-1-字节码">¶</a>1.1 字节码</h2>
 <ul>
 <li>
 <p>平时说的Java字节码，值得是用Java语言编译成的字节码。准确的说任何能在JVM平台上执行的执行的字节码格式都是一样的。所有应该统称为：$\color{red}{JVM字节码}$</p>
@@ -5373,24 +5373,22 @@ DataSource 通常被称为数据源，它包含连接池和连接池管理两个
 <p>Java虚拟机与Java语言并没有必然的联系，它只与特定的二进制文件格式-Class文件格式所关联，Class文件中包含了Java虚拟机指令集（或者称为字节码、Bytecodes）和符号表，还有一些其他辅助信息</p>
 </li>
 </ul>
-<h2 id="多语言混合编程"><a class="header-anchor" href="#多语言混合编程">¶</a>多语言混合编程</h2>
+<h2 id="1-2-多语言混合编程"><a class="header-anchor" href="#1-2-多语言混合编程">¶</a>1.2 多语言混合编程</h2>
 <ul>
 <li>Java平台上的多语言混合编程正成为主流，通过特定领域的语言去解决特定领域的问题是当前软件开发应对日趋复杂的项目需求的一个方向</li>
 </ul>
-<h2 id="虚拟机"><a class="header-anchor" href="#虚拟机">¶</a>虚拟机</h2>
+<h2 id="1-3-虚拟机"><a class="header-anchor" href="#1-3-虚拟机">¶</a>1.3 虚拟机</h2>
 <ul>
-<li>
-<p>所谓虚拟机就是一台虚拟的计算机，它是一款软件，同来执行一系列虚拟计算机指令。大体上，虚拟机可以分为系统虚拟机和程序虚拟机</p>
-<h3 id="java虚拟机"><a class="header-anchor" href="#java虚拟机">¶</a>java虚拟机</h3>
+<li>所谓虚拟机就是一台虚拟的计算机，它是一款软件，同来执行一系列虚拟计算机指令。大体上，虚拟机可以分为系统虚拟机和程序虚拟机</li>
+</ul>
+<h3 id="1-3-1-java虚拟机"><a class="header-anchor" href="#1-3-1-java虚拟机">¶</a>1.3.1 java虚拟机</h3>
 <ul>
 <li>Java虚拟机是一台执行Java字节码的虚拟计算机，它拥有独立的运行机制，其运行的Java字节码也未必由Java语言编译而成</li>
 <li>JVM平台的各种语言可以共享Java虚拟机带来的跨平台性、优秀的垃圾回收器，以及可靠的即时编译器</li>
 <li>Java技术的核心就是Java虚拟机，因为所有的Java程序都运行在Java虚拟机内部</li>
 <li>Java虚拟机就是二进制字节码的运行环境，负责装载字节码到其内部，解释/编译为对应平台上的机器指令执行。每一条Java指令，Java虚拟机规范中都有详细定义，如怎么取操作数，怎么处理操作数</li>
 </ul>
-</li>
-</ul>
-<h1>JVM架构模型</h1>
+<h1>二、JVM架构模型</h1>
 <ul>
 <li>
 <p>Java编译器输入的指令流基本上是一种基于栈的==指令集架构==，另外一种指令集架构则是基于==寄存器的指令集架构==</p>
@@ -5420,14 +5418,14 @@ DataSource 通常被称为数据源，它包含连接池和连接池管理两个
 </ol>
 </li>
 </ul>
-<h1>JVM发展历程</h1>
-<h2 id="Sun-Classic-VM"><a class="header-anchor" href="#Sun-Classic-VM">¶</a>Sun Classic VM</h2>
+<h1>三、JVM发展历程</h1>
+<h2 id="3-1-Sun-Classic-VM"><a class="header-anchor" href="#3-1-Sun-Classic-VM">¶</a>3.1 Sun Classic VM</h2>
 <ul>
 <li>早在1996年Java1.0版本的时候，Sun公司发布了一款名为Sun Classic VM的Java虚拟机，它同时是世界上第一款商用Java虚拟机，JDK1.4时完全被淘汰</li>
 <li>这款虚拟机内部只提供解释器</li>
 <li>如果使用JIT编译器，就需要进行外挂。但是一旦使用了JIT编译器，JIT就会接管虚拟机的执行系统。解释器就不再工作。解释器和编译器不能配合工作</li>
 </ul>
-<h2 id="Exact-VM"><a class="header-anchor" href="#Exact-VM">¶</a>Exact VM</h2>
+<h2 id="3-2-Exact-VM"><a class="header-anchor" href="#3-2-Exact-VM">¶</a>3.2 Exact VM</h2>
 <ul>
 <li>为了解决上一个虚拟机问题，jdk1.2时，sun提供了此虚拟机</li>
 <li>Exact Memory Mangement：准确式内存管理
@@ -5444,7 +5442,7 @@ DataSource 通常被称为数据源，它包含连接池和连接池管理两个
 </li>
 <li>只在Solaris平台短暂使用</li>
 </ul>
-<h2 id="HotSpot-VM"><a class="header-anchor" href="#HotSpot-VM">¶</a>HotSpot VM</h2>
+<h2 id="3-3-HotSpot-VM"><a class="header-anchor" href="#3-3-HotSpot-VM">¶</a>3.3 HotSpot VM</h2>
 <ul>
 <li>HotSpot历史：
 <ul>
@@ -5466,7 +5464,7 @@ DataSource 通常被称为数据源，它包含连接池和连接池管理两个
 </ul>
 </li>
 </ul>
-<h2 id="BEA的JRockit"><a class="header-anchor" href="#BEA的JRockit">¶</a>BEA的JRockit</h2>
+<h2 id="3-4-BEA的JRockit"><a class="header-anchor" href="#3-4-BEA的JRockit">¶</a>3.4 BEA的JRockit</h2>
 <ul>
 <li>专注于服务器端应用：
 <ul>
@@ -5481,22 +5479,22 @@ DataSource 通常被称为数据源，它包含连接池和连接池管理两个
 </ul>
 </li>
 </ul>
-<h2 id="IBM的J9"><a class="header-anchor" href="#IBM的J9">¶</a>IBM的J9</h2>
+<h2 id="3-5-IBM的J9"><a class="header-anchor" href="#3-5-IBM的J9">¶</a>3.5 IBM的J9</h2>
 <ul>
 <li>全称：IBM Technology for Java Vitual Machine， 简称IT4J，内部代号J9</li>
 <li>市场定位与HotSpot接近，服务器端，桌面应用、嵌入式等多用途VM</li>
 <li>广泛用于IBM的各种Java产品</li>
 </ul>
-<h1>类加载子系统</h1>
+<h1>四、类加载子系统</h1>
 <ul>
 <li>类加载器子系统负责从文件系统或者网络中加载Class文件，class文件在文件开头有特定的文件标识</li>
 <li>ClassLoader只负责class文件的加载，至于它是否可以运行，则由Execution Engine决定</li>
 <li>加载的类信息存放于一块称为方法区的内存空间。除了类的信息外，方法区中还会存放运行时常量池信息，可能还包括字符串字面量和数字常量（这部分常量信息是Class文件中常量池部分的内存映射）</li>
 </ul>
 <p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Java/JVM/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%AD%90%E7%B3%BB%E7%BB%9F.png" alt=""></p>
-<h2 id="类的加载过程"><a class="header-anchor" href="#类的加载过程">¶</a>类的加载过程</h2>
+<h2 id="4-1-类的加载过程"><a class="header-anchor" href="#4-1-类的加载过程">¶</a>4.1 类的加载过程</h2>
 <p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Java/JVM/JVM.png" alt=""></p>
-<h3 id="加载"><a class="header-anchor" href="#加载">¶</a>加载</h3>
+<h3 id="4-1-1-加载"><a class="header-anchor" href="#4-1-1-加载">¶</a>4.1.1 加载</h3>
 <ol>
 <li>通过一个类的全限定名获取定义此类的二进制字节流</li>
 <li>将这个字节流所代表的静态存储结构转化为方法区的运行时数据结构</li>
@@ -5513,7 +5511,7 @@ DataSource 通常被称为数据源，它包含连接池和连接池管理两个
 </ul>
 </li>
 </ol>
-<h3 id="链接"><a class="header-anchor" href="#链接">¶</a>链接</h3>
+<h3 id="4-1-2-链接"><a class="header-anchor" href="#4-1-2-链接">¶</a>4.1.2 链接</h3>
 <ol>
 <li>验证
 <ul>
@@ -5537,7 +5535,7 @@ DataSource 通常被称为数据源，它包含连接池和连接池管理两个
 </ul>
 </li>
 </ol>
-<h3 id="初始化"><a class="header-anchor" href="#初始化">¶</a>初始化</h3>
+<h3 id="4-1-3-初始化"><a class="header-anchor" href="#4-1-3-初始化">¶</a>4.1.3 初始化</h3>
 <ol>
 <li>初始化阶段就是执行类构造器方法<code>&lt;clinit&gt;()</code>的过程</li>
 <li>此方法不需定义，是javac编译器自动收集类中的所有类变量的赋值动作和静态代码块中的语句合并而来</li>
@@ -5546,13 +5544,13 @@ DataSource 通常被称为数据源，它包含连接池和连接池管理两个
 <li>若该类具有父类，JVM会保证子类的<code>&lt;clinit&gt;()</code>执行前，父类的<code>&lt;clinit&gt;()</code>已经执行完毕</li>
 <li>虚拟机必须保证一个类的<code>&lt;clinit&gt;()</code>方法在多线程下被同步加锁</li>
 </ol>
-<h2 id="类加载器的分类"><a class="header-anchor" href="#类加载器的分类">¶</a>类加载器的分类</h2>
+<h2 id="4-2-类加载器的分类"><a class="header-anchor" href="#4-2-类加载器的分类">¶</a>4.2 类加载器的分类</h2>
 <ul>
 <li>JVM支持两种类型的类加载器，分别为==引导类加载器（Bootstrap ClassLoader）==和==自定义类加载器（User-Defined ClassLoader）==</li>
 <li>从概念上来讲，自定义类加载器一般指的是程序中由开发人员自定义的一类类加载器，但是Java虚拟机规范却没有这么定义，而是将所有派生于抽象类ClassLoader的类加载器都划分为自定义类加载器</li>
 <li>无论类加载器的类型如何划分，在程序中最常见的类加载器始终只有3个</li>
 </ul>
-<h3 id="启动类加载器"><a class="header-anchor" href="#启动类加载器">¶</a>启动类加载器</h3>
+<h3 id="4-2-1-启动类加载器"><a class="header-anchor" href="#4-2-1-启动类加载器">¶</a>4.2.1 启动类加载器</h3>
 <ul>
 <li>启动类加载器（引导类加载器，Bootstrap ClassLoader）这个类加载使用C/C++语言实现的，嵌套在JVM内部</li>
 <li>它用来加载Java的核心库（JAVA_HOME/jre/lib/rt.jar、resources.jar或sun.boot.class.path路径下的内容），用于提供JVM自身需要的类</li>
@@ -5560,13 +5558,13 @@ DataSource 通常被称为数据源，它包含连接池和连接池管理两个
 <li>加载扩展类和应用程序类加载器，并指定为他们的父类加载器</li>
 <li>出于安全考虑，Bootstrap启动类加载器只加载包名为java、javax、sun等开头的类</li>
 </ul>
-<h3 id="扩展类加载器"><a class="header-anchor" href="#扩展类加载器">¶</a>扩展类加载器</h3>
+<h3 id="4-2-2-扩展类加载器"><a class="header-anchor" href="#4-2-2-扩展类加载器">¶</a>4.2.2 扩展类加载器</h3>
 <ul>
 <li>扩展类加载器（Extension ClassLoader）由Java语言编写，由sun.misc.Launcher$ExtClassLoader实现，派生于ClassLoader类</li>
 <li>父类加载器为启动类加载器</li>
 <li>从java.ext.dirs系统属性所指定的目录中加载类库，或从JDK的安装目录的jre/lib/ext子目录（扩展目录）下加载类库。如果用户创建的JAR放在此目录下，也会自动由扩展类加载器加载</li>
 </ul>
-<h3 id="应用程序类加载器"><a class="header-anchor" href="#应用程序类加载器">¶</a>应用程序类加载器</h3>
+<h3 id="4-2-3-应用程序类加载器"><a class="header-anchor" href="#4-2-3-应用程序类加载器">¶</a>4.2.3 应用程序类加载器</h3>
 <ul>
 <li>应用程序类加载器（系统类加载器 AppClassLoader）java语言编写，由sum.misc.Launcher$AppClassLoader实现，派生于ClassLoader类</li>
 <li>父类加载器为扩展类加载器</li>
@@ -5574,7 +5572,7 @@ DataSource 通常被称为数据源，它包含连接池和连接池管理两个
 <li>==该类加载是程序中默认的类加载器==，一般来说，Java应用的类都是由它来完成加载</li>
 <li>通过ClassLoader#getSystemClassLoader()方法可以获取到该类加载器</li>
 </ul>
-<h2 id="关于ClassLoader"><a class="header-anchor" href="#关于ClassLoader">¶</a>关于ClassLoader</h2>
+<h2 id="4-3-关于ClassLoader"><a class="header-anchor" href="#4-3-关于ClassLoader">¶</a>4.3 关于ClassLoader</h2>
 <ul>
 <li>
 <p>ClassLoader类是一个抽象类，其后所有的类加载器都继承自ClassLoader（不包括启动类加载器）</p>
@@ -5639,11 +5637,11 @@ DataSource 通常被称为数据源，它包含连接池和连接池管理两个
 </ul>
 </li>
 </ul>
-<h2 id="双亲委派机制"><a class="header-anchor" href="#双亲委派机制">¶</a>双亲委派机制</h2>
+<h2 id="4-4-双亲委派机制"><a class="header-anchor" href="#4-4-双亲委派机制">¶</a>4.4 双亲委派机制</h2>
 <ul>
 <li>Java虚拟机堆class文件采用的是==按需加载==的方式，也就是说当需要使用该类时才会将它的class文件加载到内存生成class对象。而且加载某个类的class文件时，Java虚拟机采用的时==双亲委派机制==，即把请求交给父类处理，它是一种任务委派模式</li>
 </ul>
-<h3 id="工作原理"><a class="header-anchor" href="#工作原理">¶</a>工作原理</h3>
+<h3 id="4-4-1-工作原理"><a class="header-anchor" href="#4-4-1-工作原理">¶</a>4.4.1 工作原理</h3>
 <ol>
 <li>如果一个类加载器收到了类加载请求，它并不会自己先去加载，而是把这个请求委托给父类的加载器去执行</li>
 <li>如果父类加载器还存在其父类加载器，则进一步向上委托，依次递归，请求最终到达顶层的启动类加载器</li>
@@ -5657,7 +5655,7 @@ DataSource 通常被称为数据源，它包含连接池和连接池管理两个
 </ul>
 </li>
 </ul>
-<h2 id="其余内容"><a class="header-anchor" href="#其余内容">¶</a>其余内容</h2>
+<h2 id="4-5-其余内容"><a class="header-anchor" href="#4-5-其余内容">¶</a>4.5 其余内容</h2>
 <ul>
 <li>在JVM中表示两个class对象是否为同一个类存在两个必要条件：
 <ul>
@@ -5666,11 +5664,11 @@ DataSource 通常被称为数据源，它包含连接池和连接池管理两个
 </ul>
 </li>
 </ul>
-<h3 id="对类加载器的引用："><a class="header-anchor" href="#对类加载器的引用：">¶</a>对类加载器的引用：</h3>
+<h3 id="4-5-1-对类加载器的引用："><a class="header-anchor" href="#4-5-1-对类加载器的引用：">¶</a>4.5.1 对类加载器的引用：</h3>
 <ul>
 <li>JVM必须知道一个类型是由启动加载器加载的还是由用户类加载器加载的。如果一个类型是由用户类加载器加载的，那么JVM会==将这个类加载器的一个引用作为类型信息的一部分保存在方法区中==。当解析一个类型到另一个类型的引用的时候，JVM需要保证这两个类型的类加载器是相同的</li>
 </ul>
-<h3 id="类的主动使用和被动使用"><a class="header-anchor" href="#类的主动使用和被动使用">¶</a>类的主动使用和被动使用</h3>
+<h3 id="4-5-2-类的主动使用和被动使用"><a class="header-anchor" href="#4-5-2-类的主动使用和被动使用">¶</a>4.5.2 类的主动使用和被动使用</h3>
 <ul>
 <li>Java程序对类的使用分为：主动使用和被动使用</li>
 <li>主动使用又分为七种情况：
@@ -5685,6 +5683,211 @@ DataSource 通常被称为数据源，它包含连接池和连接池管理两个
 </ol>
 </li>
 <li>除了以上其中情况，其他使用Java类的方式都被看作是对类的被动使用，都不会导致类的初始化</li>
+</ul>
+<h1>五、运行时数据区概述及线程</h1>
+<ul>
+<li>内存是非常重要的系统资源，是硬盘和CPU的中间仓库及桥梁，承载着操作系统和应用程序的实时运行。JVM内存布局规定了Java在运行过程中内存申请、分配、管理的策略，保证了JVM的高效稳定运行。==不同的JVM对于内存的划分方式和管理机制存在着部分差异==。</li>
+</ul>
+<img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Java/JVM/%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA.png" style="zoom:150%;" />
+<ul>
+<li>Java虚拟机定义了若干种程序运行期间会使用到的运行时数据区，其中有一些会随着虚拟机启动而创建，随着虚拟机退出而销毁。另外一些则是与线程一一对应的，这些与线程对应的数据区域会随着线程开始和结束而创建和销毁</li>
+</ul>
+<blockquote>
+<p>每个线程：独立包括程序计数器、栈、本地栈</p>
+<p>线程间共享：堆、堆外内存（永久代或元空间、代码缓存）</p>
+<p>灰色为单独线程私有的，红色的为多个线程共享的</p>
+</blockquote>
+<p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Java/JVM/%E6%A0%88.png" alt=""></p>
+<h2 id="5-1-线程"><a class="header-anchor" href="#5-1-线程">¶</a>5.1 线程</h2>
+<ul>
+<li>
+<p>线程是一个程序里的运行单元。JVM允许一个应用有多个线程并行的执行</p>
+</li>
+<li>
+<p>在Hotspot JVM里，每个线程都与操作系统的本地线程直接映射</p>
+<ul>
+<li>当一个Java线程准备好执行以后，此时一个操作系统的本地线程也同时创建。Java线程执行终止后，本地线程也会回收</li>
+</ul>
+</li>
+<li>
+<p>操作系统负责所有线程的安排调度到任何一个可用的CPU上。一旦本地线程初始化成功，他就会调用到Java线程中的run()方法</p>
+</li>
+<li>
+<p>如果使用调试工具，都能看到在后台有许多线程在运行。这些后台线程不包括调用public static main的main线程以及所有这个main线程自己创建的线程</p>
+</li>
+<li>
+<p>这些主要的后台系统线程在Hotspot JVM里主要是以下几个：</p>
+<ul>
+<li>虚拟机线程：这种线程的操作是需要JVM达到安全点才会出现，这些操作必须在不同的线程中发生的原因是他们都需要JVM达到安全点，这样堆才不会变化，这种线程的执行类型包括“stop-the-world”的垃圾收集；线程栈手机；线程挂起以及偏向锁撤销</li>
+<li>周期任务线程：这种线程是时间周期事件的体现（比如中断）；他们一般用于周期性操作的调度执行</li>
+<li>GC线程：这种线程对在JVM里不同种类的垃圾收集行为提供了支持</li>
+<li>编译线程：这种线程在运行时会将字节码编译成到本地代码</li>
+<li>信号调度线程：这种线程接受信号并发送给JVM；它在内部通过调用适当的方法进行处理</li>
+</ul>
+</li>
+</ul>
+<h2 id="5-2-程序计数器"><a class="header-anchor" href="#5-2-程序计数器">¶</a>5.2 程序计数器</h2>
+<ul>
+<li>
+<p>JVM中的程序计数寄存器（Program Counter Register）中，Register的命名源于CPU的寄存器，寄存器存储指令相关的现场信息。CPU只有把数据装载到寄存器才能够运行</p>
+</li>
+<li>
+<p>作用：PC寄存器用来存储指向下一条指令的地址，也即将要执行的指令代码。由执行引擎读取下一条指令</p>
+<p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Java/JVM/PCR.png" alt=""></p>
+</li>
+<li>
+<p>它是一块很小的内存空间，几乎可以忽略不记，也是运行速度最快的存储区域</p>
+</li>
+<li>
+<p>在JVM规范中，每个线程都有它自己的程序计数器，是线程私有的，生命周期与线程的生命周期保持一致</p>
+</li>
+<li>
+<p>任何时间一个线程都只有一个方法在执行，也就是所谓的当前方法。程序计数器会存储当前线程正在执行的Java方法的JVM指令地址；或者，如果是在执行native方法，则是未指定值（undefined）</p>
+</li>
+<li>
+<p>它是程序控制流的指示器，分支、循环、跳转、异常处理、线程恢复等基础功能都需要依赖这个计数器来完成</p>
+</li>
+<li>
+<p>字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令</p>
+</li>
+<li>
+<p>它是唯一一个在Java虚拟机规范中没有规定任何OutOfMemoryError情况的区域</p>
+</li>
+</ul>
+<h3 id="5-2-1-两个常见问题"><a class="header-anchor" href="#5-2-1-两个常见问题">¶</a>5.2.1 两个常见问题</h3>
+<ol>
+<li>使用PC寄存器存储字节码指令地址有什么用？为什么使用PC寄存器记录当前线程的执行地址？</li>
+</ol>
+<p>因为CPU需要不停的切换各个线程，这时候切换回来以后，就得知道接着从哪开始继续执行</p>
+<p>JVM的字节码解释器就需要通过改变PC寄存器的值来明确下一条应该执行什么样的字节码指令</p>
+<ol start="2">
+<li>PC寄存器为什么会被设定为线程私有</li>
+</ol>
+<p>所谓的多线程在一个特定的时间端内只会执行其中某一个线程的方法，CPU会不停地做任务切换，这样必然导致经常中断或恢复，如何保证分毫无差呢？为了能够准确的记录各个线程正在执行的当前字节码指令地址，最好的办法自然是为每一个线程都分配一个PC寄存器，这样一来各个线程之间便可以进行独立计算，从而不会出现相互干扰的情况</p>
+<h2 id="5-3-虚拟机栈"><a class="header-anchor" href="#5-3-虚拟机栈">¶</a>5.3 虚拟机栈</h2>
+<h3 id="5-3-1-概述"><a class="header-anchor" href="#5-3-1-概述">¶</a>5.3.1 概述</h3>
+<ul>
+<li>
+<p>Java虚拟机栈，早期也叫Java栈。每个线程在创建时都会创建一个虚拟机栈，其内部保存一个个的栈帧，对应一次次的Java方法调用。是线程私有的</p>
+<ul>
+<li>作用：主管Java程序的运行，它保存方法的局部变量（8种基本数据类型、对象的引用地址）、部分结果，并参与方法的调用和返回</li>
+</ul>
+</li>
+<li>
+<p>栈的特点：</p>
+<ul>
+<li>栈是一种快速有效的分配存储方式，访问速度仅次于程序计数器</li>
+<li>JVM直接对Java栈的操作只有两个：
+<ol>
+<li>每个方法执行，伴随着进栈</li>
+<li>执行结束后的出栈工作</li>
+</ol>
+</li>
+<li>对于栈来说不存在垃圾回收问题</li>
+</ul>
+</li>
+<li>
+<p>栈中可能出现的异常：Java虚拟机规范允许Java栈的大小是动态的或者是固定不变的</p>
+<ul>
+<li>如果采用固定大小的Java虚拟机栈，那每一个线程的Java虚拟机栈容量可以在线程创建的时候独立选定。如果线程请求分配的栈容量超过Java虚拟机栈允许的最大容量，Java虚拟机栈将会抛出一个$\color{red}{StackOverflowError}$异常</li>
+<li>如果Java虚拟机栈可以动态扩展，并且在尝试扩展的时候无法申请到足够的内存，或者在创建新的线程时没有足够的内存去创建对应的虚拟机栈，那Java虚拟机将会抛出一个$\color{red}{OutOfMemory}$异常</li>
+</ul>
+</li>
+<li>
+<p>设置栈内存大小：</p>
+<ul>
+<li>使用参数-Xss 选项来设置线程的最大栈空间，栈的大小直接决定了函数调用的最大可达深度</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-3-2-栈的存储单位"><a class="header-anchor" href="#5-3-2-栈的存储单位">¶</a>5.3.2 栈的存储单位</h3>
+<ul>
+<li>
+<p>每个线程都有自己的栈，栈中的数据都是以栈帧（Stack Frame）的格式存在</p>
+</li>
+<li>
+<p>在这个线程上正在执行的每个方法都各自对应一个栈帧</p>
+</li>
+<li>
+<p>栈帧是一个内存区块，是一个数据集，维系着方法执行过程种的各种数据信息</p>
+</li>
+<li>
+<p>JVM直接对Java栈的操作只有两个，就是对栈帧的$\color{red}{压栈和出栈}$，遵循$\color{blue}{先进后出}$的原则</p>
+</li>
+<li>
+<p>在一条活动线程种，一个时间点上，只会有一个活动的栈帧。即只有当前正在执行的方法的栈帧（栈顶栈帧）是有效的，这个栈帧被称为$\color{red}{当前栈帧}$，与当前栈帧相对应的方法就是$\color{red}{当前方法}$，定义这个方法的类就是$\color{red}{当前类}$</p>
+</li>
+<li>
+<p>执行引擎运行的所有字节码指令只针对当前栈帧进行操作</p>
+</li>
+<li>
+<p>如果在该方法中调用了其他方法，对应的新的栈帧会被创建出来，放在栈的顶端，称为新的当前帧。</p>
+</li>
+</ul>
+<h3 id="5-3-3-栈帧的内部结构"><a class="header-anchor" href="#5-3-3-栈帧的内部结构">¶</a>5.3.3 栈帧的内部结构</h3>
+<p>每个栈帧中存储着：</p>
+<ul>
+<li>局部变量表</li>
+<li>操作数栈</li>
+<li>动态链接（或指向运行时常量池的方法引用）</li>
+<li>方法返回地址</li>
+<li>一些附加信息</li>
+</ul>
+<h4 id="局部变量表"><a class="header-anchor" href="#局部变量表">¶</a>局部变量表</h4>
+<ul>
+<li>局部变量表也被称之为局部变量数组或本地变量表</li>
+<li>$\color{red}{定义为一个数字数组，主要用于存储方法参数和定义在方法体内的局部变量}$这些数据类型包括各类基本数据类型、对象引用，以及returnAddress类型</li>
+<li>由于局部变量表是建立在线程的栈上，是线程的私有数据，因此$\color{red}{不存在数据安全问题}$</li>
+<li>$\color{red}{局部变量表所需的容量大小是在编译器确定下来的}$，并保存在方法的Code属性的maximum local variables数据项中。在方法运行期间是不会改变局部变量表的大小的</li>
+<li>关于Slot：
+<ul>
+<li>参数值的存放总是在局部变量数组的index0开始，到数组长度-1的索引结束</li>
+<li>局部变量表，最基本的存储单元是Slot（变量槽）</li>
+<li>局部变量表中存放编译器可知的各种基本数据类型（8种），引用类型，returnAddress类型</li>
+<li>在局部变量表里，$\color{red}{32位以内的类型只占用一个slot（包括returnAddress类型），64位的类型（long和double)占用两个slot}$</li>
+</ul>
+</li>
+<li><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Java/JVM/slot1.png" alt=""></li>
+<li>JVM会为局部变量表中的每一个slot都分配一个访问索引，通过这个索引即可成功访问到局部变量表中指定的局部变量值</li>
+<li>当一个实例方法被调用的时候，它的方法参数和方法体内部定义局部变量将会按照顺序被复制到局部变量表中的每一个slot上</li>
+<li>如果需要访问局部变量表中一个64bit的局部变量值时，只需要使用前一个索引即可</li>
+<li>如果当前帧是由构造方法或者实例方法创建的，那么$\color{red}{该对象引用this将会存放在index为0的slot处}$，其余的参数按照参数表顺序继续排列</li>
+</ul>
+<h4 id="Slot的重复利用"><a class="header-anchor" href="#Slot的重复利用">¶</a>Slot的重复利用</h4>
+<ul>
+<li>
+<p>$\color{red}{栈帧中的局部变量表中的槽位是可以重用的}$，如果一个局部变量过了其作用域，那么在其作用域之后申明的新的局部变量就很有可能会复用过期局部变量的槽位，从而达到$\color{red}{节省资源的目的}$。</p>
+</li>
+<li>
+<pre><code class="language-java">  public class Test {
+      public static void main(String[] args) {
+          int a = 1;
+          {
+              int b = 2;
+          }
+          int c = 3;
+          System.out.println(&quot;test...&quot;);
+      }
+  }
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">![](https:&#x2F;&#x2F;qiancijun.coding.net&#x2F;p&#x2F;Image&#x2F;d&#x2F;Image&#x2F;git&#x2F;raw&#x2F;master&#x2F;Java&#x2F;JVM&#x2F;slot%E9%87%8D%E7%94%A8.png)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 操作数栈</span><br><span class="line"></span><br><span class="line">* 每一个独立的栈帧中除了包含局部变量表以外，还包含一个&#x3D;&#x3D;后进先出&#x3D;&#x3D;的操作数栈，也可以称之为表达式栈</span><br><span class="line">* 操作数栈，在方法执行过程中，根据字节码指令，往栈中写入数据或提取数据，即入栈&#x2F;出栈</span><br><span class="line">    * 某些字节码指令将值压入操作数栈，其余的字节码指令将操作数取出栈。使用它们后再把结果压入栈</span><br><span class="line">    * 比如：执行复制、交换、求和等操作</span><br><span class="line">* 作用和功能：</span><br><span class="line">    * 主要用于$\color&#123;red&#125;&#123;保存计算过程的中间结果，同时作为计算过程中变量临时的存储空间&#125;$</span><br><span class="line">    * 操作数栈是JVM执行引擎的一个工作区，当一个方法刚开始执行的时候，一个新的栈帧也会随之被创建出来，$\color&#123;red&#125;&#123;这个方法的操作数栈是空的&#125;$</span><br><span class="line">    * 每一个操作数栈都会拥有一个明确的栈深度用于存储数值，其所需的最大深度在编译器就定义好了，保存在方法的Code属性中，为max_stack的值</span><br><span class="line">    * 栈中的任何一个元素都是可以为任意的Java数据类型</span><br><span class="line">        * 32bit的类型占用一个栈单位深度</span><br><span class="line">        * 64bit的类型占用两个栈单位深度</span><br><span class="line">    * 操作数栈$\color&#123;red&#125;&#123;并非采用访问索引的方式来进行数据访问&#125;$的，而是只能通过标准的入栈和出栈操作来完成一次数据访问</span><br><span class="line">    * $\color&#123;red&#125;&#123;如果被调用的方法带有返回值的话，其返回值将会被压入当前栈帧的操作数栈中&#125;$，并更新PC寄存器中下一条需要执行的字节码指令</span><br><span class="line">    * Java虚拟机的$\color&#123;red&#125;&#123;解释引擎是基于栈的执行引擎&#125;$，其中的栈指的就是操作数栈</span><br><span class="line"></span><br><span class="line">代码追踪演示：</span><br><span class="line"></span><br><span class="line">* &#96;&#96;&#96; java</span><br><span class="line">    public class Test &#123;</span><br><span class="line">        public static void main(String[] args) &#123;</span><br><span class="line">            &#x2F;&#x2F; byte、short、char、boolean：都以int型来保存</span><br><span class="line">            int i &#x3D; 5;</span><br><span class="line">            byte j &#x3D; 13;</span><br><span class="line">            int k &#x3D; i + 5;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+</code></pre>
+</li>
+<li>
+<p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Java/JVM/%E6%93%8D%E4%BD%9C%E6%95%B0%E6%A0%88%E4%BB%A3%E7%A0%81%E6%BC%94%E7%A4%BA1.png" alt=""></p>
+</li>
+</ul>
+<h3 id="5-3-4-静态变量与局部变量的对比"><a class="header-anchor" href="#5-3-4-静态变量与局部变量的对比">¶</a>5.3.4 静态变量与局部变量的对比</h3>
+<ul>
+<li>参数表分配完毕之后，再根据方法体内定义的变量的顺序和作用域分配</li>
+<li>类变量表有两次初始化的机会，第一次是在“$\color{red}{准备阶段}$”，执行系统初始化，对类变量设置零值，另一次则是在“$\color{red}{初始化}$”阶段，赋予程序员在代码中定义的初始值</li>
+<li>和类变量初始化不同的是，局部变量表不存在系统初始化的过程，这意味着一旦定义了局部变量则必须人为的初始化，否则无法使用</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    System.out.println(i);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 这样的代码是错误的，没有复制不能够使用</span></span><br></pre></td></tr></table></figure>
+<h3 id="5-3-5-补充说明"><a class="header-anchor" href="#5-3-5-补充说明">¶</a>5.3.5 补充说明</h3>
+<ul>
+<li>在栈帧中，与性能调优关系最为密切的部分就是局部变量表，在方法执行时，虚拟机使用局部变量表完成方法的传递</li>
+<li>局部变量表中的变量也是重要的垃圾回收根节点，只要被局部变量表中直接或间接引用的对象都不会被回收</li>
 </ul>
 ]]></content>
       <categories>
@@ -14911,5 +15114,64 @@ Spring官网：<a href="https://spring.io/" target="_blank" rel="noopener">https
       <tags>
         <tag>试题</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>LeetCode-初级算法</title>
+    <url>/2020/08/01/LeetCode-%E5%88%9D%E7%BA%A7%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h1>数组</h1>
+<h2 id="删除排序数组中的重复项"><a class="header-anchor" href="#删除排序数组中的重复项">¶</a>删除排序数组中的重复项</h2>
+<p>双指针，i记录要返回数组的下标，j为当前索引</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">removeDuplicates</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = nums.size();</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (j &lt; len)&#123;</span><br><span class="line">            <span class="keyword">if</span> (j &lt; len - <span class="number">1</span> &amp;&amp; nums[j] == nums[j + <span class="number">1</span>])&#123;</span><br><span class="line">                j++;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                swap(nums[i], nums[j]);</span><br><span class="line">                i++;</span><br><span class="line">                j++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="买卖股票的最佳时机-II"><a class="header-anchor" href="#买卖股票的最佳时机-II">¶</a>买卖股票的最佳时机 II</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; prices)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(prices.size() == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> v = <span class="number">0</span>;<span class="comment">//最低</span></span><br><span class="line">        <span class="keyword">int</span> p = <span class="number">0</span>;<span class="comment">//最大</span></span><br><span class="line">        <span class="keyword">int</span> i;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; prices.size() - <span class="number">1</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">while</span> (i &lt; prices.size() - <span class="number">1</span> &amp;&amp; prices[i] &gt;= prices[i + <span class="number">1</span>]) i++;</span><br><span class="line">            v = prices[i];</span><br><span class="line">            <span class="keyword">while</span> (i &lt; prices.size() - <span class="number">1</span> &amp;&amp; prices[i] &lt;= prices[i + <span class="number">1</span>]) i++;</span><br><span class="line">            p = prices[i];</span><br><span class="line">            res = res + p - v;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="旋转数组"><a class="header-anchor" href="#旋转数组">¶</a>旋转数组</h2>
+<p>三次旋转，为了防止k超过数组长度，做旋转之前k需要做处理</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 7 6 5 4 3 2 1 </span></span><br><span class="line">        <span class="comment">// 5 6 7 4 3 2 1</span></span><br><span class="line">        <span class="comment">// 5 6 7 1 2 3 4</span></span><br><span class="line">        k = k % nums.size();</span><br><span class="line">        reverse(nums.begin(), nums.end());</span><br><span class="line">        reverse(nums.begin(), nums.begin() + k);</span><br><span class="line">        reverse(nums.begin() + k, nums.end());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="存在重复元素"><a class="header-anchor" href="#存在重复元素">¶</a>存在重复元素</h2>
+<p>集合暴力法</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">containsDuplicate</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">set</span>&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.size(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (s.count(nums[i])) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            s.insert(nums[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="只出现一次的数字"><a class="header-anchor" href="#只出现一次的数字">¶</a>只出现一次的数字</h2>
+<p>全员异或</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">singleNumber</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> result = nums[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; nums.size(); i++) &#123;</span><br><span class="line">            result ^= nums[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="两个数组的交集-II"><a class="header-anchor" href="#两个数组的交集-II">¶</a>两个数组的交集 II</h2>
+<p>排序之后用双指针</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">intersect</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums1, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums2)</span> </span>&#123;</span><br><span class="line">        sort(nums1.begin(), nums1.end());</span><br><span class="line">        sort(nums2.begin(), nums2.end());</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; result;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; nums1.size() &amp;&amp; j &lt; nums2.size()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums1[i] == nums2[j]) &#123;</span><br><span class="line">                result.push_back(nums1[i]);</span><br><span class="line">                i++;</span><br><span class="line">                j++;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nums1[i] &gt; nums2[j]) &#123;</span><br><span class="line">                j++;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nums2[j] &gt; nums1[i]) &#123;</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="加一"><a class="header-anchor" href="#加一">¶</a>加一</h2>
+<p>进位处理好就行</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">plusOne</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; digits)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = digits.size();</span><br><span class="line">        digits[len - <span class="number">1</span>]++;</span><br><span class="line">        <span class="keyword">if</span> (digits[len - <span class="number">1</span>] != <span class="number">10</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> digits;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = len - <span class="number">1</span>; i &gt; <span class="number">0</span>; i--) &#123;</span><br><span class="line">            <span class="keyword">if</span> (digits[i] == <span class="number">10</span>) &#123;</span><br><span class="line">                digits[i] -= <span class="number">10</span>;</span><br><span class="line">                digits[i - <span class="number">1</span>]++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(digits[<span class="number">0</span>] == <span class="number">10</span>)&#123;</span><br><span class="line">            digits[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">            digits.push_back(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> digits;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="移动零"><a class="header-anchor" href="#移动零">¶</a>移动零</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">moveZeroes</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i, j = <span class="number">0</span>, temp = <span class="number">0</span>; <span class="comment">//i当前指针，j指向零，temp用于交换</span></span><br><span class="line">        <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; nums.size(); ++i)&#123;</span><br><span class="line">            <span class="comment">// 遇到了新的零，如果前面已经存在0，不改变j的指向</span></span><br><span class="line">            <span class="keyword">if</span>(nums[i] == <span class="number">0</span> &amp;&amp; nums[j] != <span class="number">0</span>)&#123;</span><br><span class="line">                j = i;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 当前非零，判断是否要交换</span></span><br><span class="line">            <span class="keyword">if</span>(nums[i] != <span class="number">0</span> &amp;&amp; i &gt; j &amp;&amp; nums[j] == <span class="number">0</span>)&#123;</span><br><span class="line">                swap(nums[i], nums[j]);</span><br><span class="line">                <span class="keyword">for</span>(; j &lt; i; ++j)&#123;</span><br><span class="line">                    <span class="keyword">if</span>(nums[j] == <span class="number">0</span>)</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="两数之和"><a class="header-anchor" href="#两数之和">¶</a>两数之和</h2>
+<p>哈希表经典题</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">twoSum</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">map</span>&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; amap;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.size(); ++i)&#123;</span><br><span class="line">            amap.insert(make_pair(nums[i],i));        </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> n = <span class="number">0</span>; n &lt; nums.size(); ++n)&#123;</span><br><span class="line">            <span class="keyword">int</span> temp = target - nums[n];</span><br><span class="line">            <span class="keyword">auto</span> p = amap.find(temp);</span><br><span class="line">            <span class="keyword">if</span>(p != amap.end() &amp;&amp; p-&gt;second != n)&#123;</span><br><span class="line">                <span class="keyword">return</span> &#123;n, p-&gt;second&#125;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="number">-1</span>,<span class="number">-1</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="有效的数独"><a class="header-anchor" href="#有效的数独">¶</a>有效的数独</h2>
+<p>感觉和八皇后差不多的思路</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isValidSudoku</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt;&amp; board)</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">row</span> <span class="params">(<span class="number">9</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(<span class="number">9</span>,<span class="number">0</span>))</span></span>;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">col</span> <span class="params">(<span class="number">9</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(<span class="number">9</span>,<span class="number">0</span>))</span></span>;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">box</span> <span class="params">(<span class="number">9</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(<span class="number">9</span>,<span class="number">0</span>))</span></span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">9</span>; i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">9</span>; j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(board[i][j] == <span class="string">'.'</span>)&#123;</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">int</span> val = board[i][j] - <span class="string">'1'</span>;</span><br><span class="line">                <span class="keyword">int</span> box_index = (i / <span class="number">3</span>) * <span class="number">3</span> + j / <span class="number">3</span>;</span><br><span class="line">                <span class="keyword">if</span>(row[i][val] == <span class="number">0</span> &amp;&amp; col[j][val] == <span class="number">0</span> &amp;&amp; box[box_index][val] == <span class="number">0</span>)&#123;</span><br><span class="line">                    row[i][val] = <span class="number">1</span>;</span><br><span class="line">                    col[j][val] = <span class="number">1</span>;</span><br><span class="line">                    box[box_index][val] = <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span>&#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="旋转图像"><a class="header-anchor" href="#旋转图像">¶</a>旋转图像</h2>
+<p>先转置后镜像对称</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; matrix)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = matrix[<span class="number">0</span>].size();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; matrix.size(); i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; j++) &#123;</span><br><span class="line">                swap(matrix[i][j], matrix[j][i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; matrix.size(); i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; matrix.size() / <span class="number">2</span>; j++) &#123;</span><br><span class="line">                swap(matrix[i][j], matrix[i][len - j - <span class="number">1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1>字符串</h1>
+<h2 id="反转字符串"><a class="header-anchor" href="#反转字符串">¶</a>反转字符串</h2>
+<p>双指针</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">reverseString</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&amp; s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> right = s.size() - <span class="number">1</span>, left = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">            swap(s[left++], s[right--]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="整数反转"><a class="header-anchor" href="#整数反转">¶</a>整数反转</h2>
+<p>如果用int做，必须要处理数据溢出问题</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">reverse</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(x == INT_MIN) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> sign = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(x &lt; <span class="number">0</span>)&#123;</span><br><span class="line">            sign = <span class="number">-1</span>;</span><br><span class="line">            x *= <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(x != <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">int</span> i = x % <span class="number">10</span>;</span><br><span class="line">            x /= <span class="number">10</span>;</span><br><span class="line">            <span class="keyword">if</span>(result &gt; INT_MAX / <span class="number">10</span> || (sign == <span class="number">1</span> &amp;&amp; result == INT_MAX / <span class="number">10</span> &amp;&amp; i &gt; INT_MAX % <span class="number">10</span>)) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span>(result &gt; INT_MAX / <span class="number">10</span> || (sign == <span class="number">-1</span> &amp;&amp; result == INT_MAX / <span class="number">10</span> &amp;&amp; i &gt; INT_MAX % <span class="number">10</span> + <span class="number">1</span>)) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">            result = result * <span class="number">10</span> + i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result * sign;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="字符串中的第一个唯一字符"><a class="header-anchor" href="#字符串中的第一个唯一字符">¶</a>字符串中的第一个唯一字符</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">firstUniqChar</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; charmap;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c: s) &#123;</span><br><span class="line">            charmap[(c - <span class="string">'a'</span>)]++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.size(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (charmap[(s[i] - <span class="string">'a'</span>)] == <span class="number">1</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="有效的字母异位词"><a class="header-anchor" href="#有效的字母异位词">¶</a>有效的字母异位词</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isAnagram</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> t)</span> </span>&#123;</span><br><span class="line">        sort(s.begin(), s.end());</span><br><span class="line">        sort(t.begin(), t.end());</span><br><span class="line">        <span class="keyword">return</span> s == t;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="验证回文串"><a class="header-anchor" href="#验证回文串">¶</a>验证回文串</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isPalindrome</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = s.size();</span><br><span class="line">        <span class="built_in">string</span> tmp = <span class="string">""</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> ch : s) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">isalnum</span>(ch)) &#123;</span><br><span class="line">                tmp += <span class="built_in">tolower</span>(ch);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">string</span> res = tmp;</span><br><span class="line">        reverse(tmp.begin(), tmp.end());</span><br><span class="line">        <span class="keyword">return</span> res == tmp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="字符串转换整数-atoi"><a class="header-anchor" href="#字符串转换整数-atoi">¶</a>字符串转换整数 (atoi)</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">myAtoi</span><span class="params">(<span class="built_in">string</span> str)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> len = str.size();</span><br><span class="line">        <span class="keyword">int</span> i, sign = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(i = <span class="number">0</span>; <span class="built_in">isspace</span>(str[i]); ++i); <span class="comment">//跳过开头空白字符</span></span><br><span class="line">        sign = (str[i] == <span class="string">'-'</span>) ? <span class="number">-1</span> : <span class="number">1</span>; <span class="comment">// 记录负号</span></span><br><span class="line">        <span class="keyword">if</span>(!<span class="built_in">isdigit</span>(str[i]) &amp;&amp; str[i] != <span class="string">'-'</span> &amp;&amp; str[i] != <span class="string">'+'</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;<span class="comment">//第一个非空字符不是数字或正负号</span></span><br><span class="line">        <span class="keyword">if</span>(str[i] == <span class="string">'-'</span> || str[i] == <span class="string">'+'</span>)</span><br><span class="line">            ++i;<span class="comment">//跳过正负号</span></span><br><span class="line">        <span class="keyword">for</span>(result = <span class="number">0</span>; <span class="built_in">isdigit</span>(str[i]); ++i)&#123;</span><br><span class="line">            <span class="keyword">int</span> digit = str[i] - <span class="string">'0'</span>;</span><br><span class="line">            <span class="keyword">if</span>(result &gt; (INT_MAX - digit) / <span class="number">10</span>)&#123;</span><br><span class="line">                <span class="keyword">return</span> sign == <span class="number">-1</span> ? INT_MIN : INT_MAX; </span><br><span class="line">            &#125;</span><br><span class="line">            result = result * <span class="number">10</span> + digit;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result * sign;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="实现-strStr"><a class="header-anchor" href="#实现-strStr">¶</a>实现 strStr()</h2>
+<p>初学跳过此题</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">strStr</span><span class="params">(<span class="built_in">string</span> haystack, <span class="built_in">string</span> needle)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (haystack == <span class="string">""</span> &amp;&amp; needle == <span class="string">""</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (haystack != <span class="string">""</span> &amp;&amp; needle == <span class="string">""</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; next = Next(needle);</span><br><span class="line">        <span class="keyword">return</span> kmp(haystack, needle, next);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">Next</span><span class="params">(<span class="built_in">string</span> dest)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = dest.size();</span><br><span class="line">        <span class="keyword">int</span> len = <span class="number">0</span>; <span class="comment">// 最长公共前缀长度</span></span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">next</span><span class="params">(n, <span class="number">0</span>)</span></span>; <span class="comment">// next数组</span></span><br><span class="line">        next[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; n) &#123;</span><br><span class="line">            <span class="keyword">if</span> (dest[i] == dest[len]) &#123;</span><br><span class="line">                len++; </span><br><span class="line">                next[i] = len;</span><br><span class="line">                i++;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (len &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    len = next[len - <span class="number">1</span>];</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    next[i] = len;</span><br><span class="line">                    i++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">kmp</span><span class="params">(<span class="built_in">string</span> pattern, <span class="built_in">string</span> dest, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; next)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> p1 = pattern.size();</span><br><span class="line">        <span class="keyword">int</span> p2 = dest.size();</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>; i &lt; p1; i++) &#123;</span><br><span class="line">            <span class="keyword">while</span> (j &gt; <span class="number">0</span> &amp;&amp; pattern[i] != dest[j]) &#123;</span><br><span class="line">                j = next[j - <span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (pattern[i] == dest[j]) &#123;</span><br><span class="line">                j++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (j == p2) &#123;</span><br><span class="line">                <span class="keyword">return</span> i - j + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="最长公共前缀（Java）"><a class="header-anchor" href="#最长公共前缀（Java）">¶</a>最长公共前缀（Java）</h2>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">longestCommonPrefix</span><span class="params">(String[] strs)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (strs.length == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">        <span class="keyword">char</span>[] str = strs[<span class="number">0</span>].toCharArray();</span><br><span class="line">        String tmp = <span class="string">""</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; strs[<span class="number">0</span>].length(); i++) &#123;</span><br><span class="line">            tmp += str[i];</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; strs.length; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (strs[j].indexOf(tmp) != <span class="number">0</span>)</span><br><span class="line">                    <span class="keyword">return</span> tmp.substring(<span class="number">0</span>, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> tmp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
   </entry>
 </search>
