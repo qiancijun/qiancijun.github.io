@@ -15291,4 +15291,137 @@ Spring官网：<a href="https://spring.io/" target="_blank" rel="noopener">https
         <tag>试题</tag>
       </tags>
   </entry>
+  <entry>
+    <title>1389C Good String</title>
+    <url>/2020/08/05/1389C/</url>
+    <content><![CDATA[<h1>题目描述</h1>
+<p>C. Good String<br>
+time limit per test2 seconds<br>
+memory limit per test256 megabytes<br>
+inputstandard input<br>
+outputstandard output<br>
+Let’s call left cyclic shift of some string t1t2t3…tn−1tn as string t2t3…tn−1tnt1.</p>
+<p>Analogically, let’s call right cyclic shift of string t as string tnt1t2t3…tn−1.</p>
+<p>Let’s say string t is good if its left cyclic shift is equal to its right cyclic shift.</p>
+<p>You are given string s which consists of digits 0–9.</p>
+<p>What is the minimum number of characters you need to erase from s to make it good?</p>
+<p>Input<br>
+The first line contains single integer t (1≤t≤1000) — the number of test cases.</p>
+<p>Next t lines contains test cases — one per line. The first and only line of each test case contains string s (2≤|s|≤2⋅105). Each character si is digit 0–9.</p>
+<p>It’s guaranteed that the total length of strings doesn’t exceed 2⋅105.</p>
+<p>Output<br>
+For each test case, print the minimum number of characters you need to erase from s to make it good.</p>
+<p>Example<br>
+input<br>
+3<br>
+95831<br>
+100120013<br>
+252525252525<br>
+output<br>
+3<br>
+5<br>
+0<br>
+Note<br>
+In the first test case, you can erase any 3 characters, for example, the 1-st, the 3-rd, and the 4-th. You’ll get string 51 and it is good.</p>
+<p>In the second test case, we can erase all characters except 0: the remaining string is 0000 and it’s good.</p>
+<p>In the third test case, the given string s is already good.</p>
+<h1>思路</h1>
+<p>把题目两个字符串拿来对比以下<br>
+$\textit{tn t1 t2 t3 … tn-1}$<br>
+$\textit{t2 t3 t4 t5 … t1}$<br>
+如果为偶数项，那么t1 = t3 = … = tn-1<br>
+如果为奇数项，那么所有的t应该全部一样<br>
+如果为偶数项，那么最后肯定会形成ABABAB…AB的形式<br>
+那么我们只需要枚举所有AB出现次数最多的即可</p>
+<h1>代码(Java)</h1>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GoodString</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">check</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = str.length();</span><br><span class="line">        <span class="keyword">int</span> ans = len - <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= <span class="number">9</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= <span class="number">9</span>; j++) &#123;</span><br><span class="line">                <span class="keyword">int</span> now = i;</span><br><span class="line">                <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; len; k++) &#123;</span><br><span class="line">                    <span class="keyword">if</span>(str.charAt(k) - <span class="string">'0'</span> == now) &#123;</span><br><span class="line">                        <span class="keyword">if</span>(now == i) now = j;</span><br><span class="line">                        <span class="keyword">else</span> now = i;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        cnt++;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (now == i) &#123;</span><br><span class="line">                    ans = Math.min(ans, cnt);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = <span class="number">0</span>;</span><br><span class="line">        Scanner in = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">        n = in.nextInt();</span><br><span class="line">        String ch = in.nextLine();</span><br><span class="line">        <span class="keyword">while</span> (n &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            String input = in.nextLine();</span><br><span class="line">            System.out.println(solve(input));</span><br><span class="line">            n--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+  </entry>
+  <entry>
+    <title>动态规划问题汇总</title>
+    <url>/2020/08/02/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB/</url>
+    <content><![CDATA[<h1>线性DP</h1>
+<h2 id="最长上升子序列LIS"><a class="header-anchor" href="#最长上升子序列LIS">¶</a>最长上升子序列LIS</h2>
+<p><a href="https://leetcode-cn.com/problems/longest-increasing-subsequence/" target="_blank" rel="noopener">题目链接</a></p>
+<ul>
+<li>代码（CPP）</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">lengthOfLIS</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (nums.size() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">dp</span><span class="params">(nums.size(), <span class="number">0</span>)</span></span>;</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; nums.size(); i++) &#123;</span><br><span class="line">            dp[i] = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (nums[i] &gt; nums[j]) &#123;</span><br><span class="line">                    dp[i] = max(dp[i], dp[j] + <span class="number">1</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> *max_element(dp.begin(), dp.end());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>代码（Java）</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLIS</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = nums.length;</span><br><span class="line">        <span class="keyword">if</span> (len == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; len; i++) &#123;</span><br><span class="line">            dp[i] = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (nums[i] &gt; nums[j]) &#123;</span><br><span class="line">                    dp[i] = Math.max(dp[i], dp[j] + <span class="number">1</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; </span><br><span class="line">        <span class="comment">// int result = 0;</span></span><br><span class="line">        <span class="comment">// for (int i : dp) &#123;</span></span><br><span class="line">        <span class="comment">//     result = Math.max(result, i);</span></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line">        <span class="comment">// return result;</span></span><br><span class="line">        <span class="keyword">return</span> Arrays.stream(dp).max().getAsInt();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="1143-最长公共子序列（LCS）"><a class="header-anchor" href="#1143-最长公共子序列（LCS）">¶</a>1143. 最长公共子序列（LCS）</h2>
+<p><img src="https://leetcode-cn.com/problems/longest-common-subsequence/" alt=""></p>
+<ul>
+<li>代码（CPP）</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">longestCommonSubsequence</span><span class="params">(<span class="built_in">string</span> text1, <span class="built_in">string</span> text2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len1 = text1.size();</span><br><span class="line">        <span class="keyword">int</span> len2 = text2.size();</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">dp</span><span class="params">(len2 + <span class="number">1</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(len1 + <span class="number">1</span>, <span class="number">0</span>))</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= len2; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= len1; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (text2[i - <span class="number">1</span>] == text1[j - <span class="number">1</span>]) &#123;</span><br><span class="line">                    dp[i][j] = dp[i - <span class="number">1</span>][j - <span class="number">1</span>] + <span class="number">1</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    dp[i][j] = max(dp[i][j - <span class="number">1</span>], dp[i - <span class="number">1</span>][j]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[len2][len1];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="120-三角形最小路径和"><a class="header-anchor" href="#120-三角形最小路径和">¶</a>120. 三角形最小路径和</h2>
+<p><img src="https://leetcode-cn.com/problems/triangle/" alt=""></p>
+<ul>
+<li>代码（CPP）</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minimumTotal</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; triangle)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> result = INT_MAX;</span><br><span class="line">        <span class="keyword">int</span> m = triangle.size();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; m; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; triangle[i].size(); j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (j == <span class="number">0</span>) &#123;</span><br><span class="line">                    triangle[i][j] += triangle[i - <span class="number">1</span>][j];</span><br><span class="line">                &#125; </span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (j == triangle[i].size() - <span class="number">1</span>) &#123;</span><br><span class="line">                    triangle[i][j] += triangle[i - <span class="number">1</span>][triangle[i - <span class="number">1</span>].size() - <span class="number">1</span>];</span><br><span class="line">                &#125;</span><br><span class="line">                 <span class="keyword">else</span> &#123;</span><br><span class="line">                    triangle[i][j] = min(triangle[i][j] + triangle[i - <span class="number">1</span>][j - <span class="number">1</span>], triangle[i][j] + triangle[i - <span class="number">1</span>][j]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; triangle[m - <span class="number">1</span>].size(); i++) &#123;</span><br><span class="line">            result = min(result, triangle[m - <span class="number">1</span>][i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Algorithm</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>1830C</title>
+    <url>/2020/08/05/1830C/</url>
+    <content><![CDATA[<blockquote>
+<p>brute force<br>
+dp<br>
+greedy<br>
+implementation<br>
+sortings<br>
+*1400</p>
+</blockquote>
+<h1>题目描述</h1>
+<p>C. Create The Teams<br>
+time limit per test2 seconds<br>
+memory limit per test256 megabytes<br>
+inputstandard input<br>
+outputstandard output<br>
+There are n programmers that you want to split into several non-empty teams. The skill of the i-th programmer is ai. You want to assemble the maximum number of teams from them. There is a restriction for each team: the number of programmers in the team multiplied by the minimum skill among all programmers in the team must be at least x.</p>
+<p>Each programmer should belong to at most one team. Some programmers may be left without a team.</p>
+<p>Calculate the maximum number of teams that you can assemble.</p>
+<p>Input<br>
+The first line contains the integer t $\textit{1≤t≤1000}$ — the number of test cases.</p>
+<p>The first line of each test case contains two integers n and x $\textit{1≤n≤105;1≤x≤109}$ — the number of programmers and the restriction of team skill respectively.</p>
+<p>The second line of each test case contains n integers a1,a2,…,an $\textit{1≤ai≤109}$, where ai is the skill of the i-th programmer.</p>
+<p>The sum of n over all inputs does not exceed 105.</p>
+<p>Output<br>
+For each test case print one integer — the maximum number of teams that you can assemble.</p>
+<p>Example</p>
+<blockquote>
+<p>input<br>
+3<br>
+5 10<br>
+7 11 2 9 5<br>
+4 8<br>
+2 4 2 3<br>
+4 11<br>
+1 3 3 7</p>
+</blockquote>
+<blockquote>
+<p>output<br>
+2<br>
+1<br>
+0</p>
+</blockquote>
+<h1>思路</h1>
+<p>好好读读题，有以下几句关键句<br>
+$\textit{the number of programmers in the team multiplied by the minimum skill among all programmers in the team must be at least x}$<br>
+每组的程序员乘上改组值最小的，必须大于等于x的值<br>
+$\textit{Each programmer should belong to at most one team. Some programmers may be left without a team.}$<br>
+每个程序员只能在一组，可以有程序员没有组<br>
+用贪心的思想，每次找最大的，把最大的几个分一组，用双指针记录下标位置，方便计算个数</p>
+<h1>代码（CPP）</h1>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> ll = <span class="keyword">long</span> <span class="keyword">long</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, x;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; x;</span><br><span class="line">    <span class="comment">// 填充数组</span></span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">nums</span><span class="params">(n, <span class="number">0</span>)</span></span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 从大到小排序</span></span><br><span class="line">    sort(nums.rbegin(), nums.rend());</span><br><span class="line">    <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// j为当前数组下标索引</span></span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (j &lt; n) &#123;</span><br><span class="line">        <span class="comment">// j - i + 1为该组程序员的个数，因为从大到小排序，j指向的肯定是更小的</span></span><br><span class="line">        <span class="keyword">if</span> ((j - i + <span class="number">1</span>) * nums[j] &gt;= x) &#123;</span><br><span class="line">            ans++;</span><br><span class="line">            i = j + <span class="number">1</span>;</span><br><span class="line">        &#125; </span><br><span class="line">        j++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    <span class="keyword">while</span> (n--) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; solve() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>CodeForeces</category>
+      </categories>
+  </entry>
 </search>
