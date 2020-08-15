@@ -15443,8 +15443,12 @@ $\textit{Each programmer should belong to at most one team. Some programmers may
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> ll = <span class="keyword">long</span> <span class="keyword">long</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, x;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; x;</span><br><span class="line">    <span class="comment">// 填充数组</span></span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">nums</span><span class="params">(n, <span class="number">0</span>)</span></span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 从大到小排序</span></span><br><span class="line">    sort(nums.rbegin(), nums.rend());</span><br><span class="line">    <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// j为当前数组下标索引</span></span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (j &lt; n) &#123;</span><br><span class="line">        <span class="comment">// j - i + 1为该组程序员的个数，因为从大到小排序，j指向的肯定是更小的</span></span><br><span class="line">        <span class="keyword">if</span> ((j - i + <span class="number">1</span>) * nums[j] &gt;= x) &#123;</span><br><span class="line">            ans++;</span><br><span class="line">            i = j + <span class="number">1</span>;</span><br><span class="line">        &#125; </span><br><span class="line">        j++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    <span class="keyword">while</span> (n--) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; solve() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>CodeForeces</category>
+        <category>CodeForces</category>
       </categories>
+      <tags>
+        <tag>动态规划</tag>
+        <tag>贪心算法</tag>
+      </tags>
   </entry>
   <entry>
     <title>CodeForces-1373D. Maximum Sum on Even Positions</title>
@@ -15627,5 +15631,209 @@ input</p>
 到达起始点以后，做一次蛇形遍历，把遍历过的点跳掉即可</p>
 <h1>代码(cpp)</h1>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> ll = <span class="keyword">long</span> <span class="keyword">long</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> read(n, nums) for(int i = 0; i <span class="meta-string">&lt; n; i++) cin &gt;&gt; nums[i];</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _for(i, begin, end) for (int i = begin; i &lt; end; i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> print(nums) for (int i = 0; i &lt; nums.size(); i++) cout &lt;&lt; nums[i] &lt;&lt; <span class="meta-string">" "</span>; cout &lt;&lt; endl;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> IO ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; g;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> m, n, Sx, Sy;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; m &gt;&gt; n &gt;&gt; Sx &gt;&gt; Sy;</span><br><span class="line">    g = <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; (m + <span class="number">1</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(n + <span class="number">1</span>, <span class="number">0</span>));</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; Sx &lt;&lt; <span class="string">" "</span> &lt;&lt; Sy &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    g[Sx][Sy] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = Sx; i &gt;= <span class="number">1</span>; i--) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!g[i][Sy])</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="string">" "</span> &lt;&lt; Sy &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        g[i][Sy] = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = Sy; i &gt;= <span class="number">1</span>; i--) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!g[<span class="number">1</span>][i])</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; <span class="number">1</span> &lt;&lt; <span class="string">" "</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        g[<span class="number">1</span>][i] = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 偶数层从左向右遍历，奇数层从右向左遍历</span></span><br><span class="line">    <span class="keyword">int</span> level = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span> ; i &lt;= m; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (level % <span class="number">2</span> == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (!g[i][j])</span><br><span class="line">                    <span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="string">" "</span> &lt;&lt; j &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = n; j &gt;= <span class="number">1</span>; j--) &#123;</span><br><span class="line">                <span class="keyword">if</span> (!g[i][j])</span><br><span class="line">                    <span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="string">" "</span> &lt;&lt; j &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        level++;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    IO;</span><br><span class="line">    solve();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>数组</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CF1353E</title>
+    <url>/2020/08/15/CF1353E/</url>
+    <content><![CDATA[<h1>题目描述</h1>
+<p style="text-align:center; font-size:20px">E. K-periodic Garland
+time limit per test1 second
+<br/>memory limit per test256 megabytes
+<br/>inputstandard input
+<br/>outputstandard output
+</p>
+<p>You are given a garland consisting of n lamps. States of the lamps are represented by the string s of length n. The i-th character of the string si equals ‘0’ if the i-th lamp is turned off or ‘1’ if the i-th lamp is turned on. You are also given a positive integer k.</p>
+<p>In one move, you can choose one lamp and change its state (i.e. turn it on if it is turned off and vice versa).</p>
+<p>The garland is called k-periodic if the distance between each pair of adjacent turned on lamps is exactly k. Consider the case k=3. Then garlands “00010010”, “1001001”, “00010” and “0” are good but garlands “00101001”, “1000001” and “01001100” are not. Note that the garland is not cyclic, i.e. the first turned on lamp is not going after the last turned on lamp and vice versa.</p>
+<p>Your task is to find the minimum number of moves you need to make to obtain k-periodic garland from the given one.</p>
+<p>You have to answer t independent test cases.</p>
+<p>Input<br>
+The first line of the input contains one integer t $(1≤t≤25 000)$ — the number of test cases. Then t test cases follow.</p>
+<p>The first line of the test case contains two integers n and k $(1≤n≤106;1≤k≤n)$ — the length of s and the required period. The second line of the test case contains the string s consisting of n characters ‘0’ and ‘1’.</p>
+<p>It is guaranteed that the sum of n over all test cases does not exceed 106 (∑n≤106).</p>
+<p>Output<br>
+For each test case, print the answer — the minimum number of moves you need to make to obtain k-periodic garland from the given one.</p>
+<p>Example<br>
+input</p>
+<blockquote>
+<p>6<br>
+9 2<br>
+010001010<br>
+9 3<br>
+111100000<br>
+7 4<br>
+1111111<br>
+10 3<br>
+1001110101<br>
+1 1<br>
+1<br>
+1 1<br>
+0</p>
+</blockquote>
+<p>output</p>
+<blockquote>
+<p>1<br>
+2<br>
+5<br>
+4<br>
+0<br>
+0</p>
+</blockquote>
+<h1>思路</h1>
+<p>在每个k区间内最多只能存在一个’1’，所以可以进行枚举，先把所有开着的灯变为’0’，再去枚举每个区间k</p>
+<h1>代码(cpp)</h1>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> ll = <span class="keyword">long</span> <span class="keyword">long</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> read(n, nums) for(int i = 0; i <span class="meta-string">&lt; n; i++) cin &gt;&gt; nums[i];</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _for(i, begin, end) for (int i = begin; i &lt; end; i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _rep(i, begin, end) for (int i = begin; i &lt;= end; i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> print(n, nums) for (int i = 0; i &lt; n; i++) cout &lt;&lt; nums[i] &lt;&lt; <span class="meta-string">" "</span>; cout &lt;&lt; endl;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> IO ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1e6</span> + <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, k;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; k;</span><br><span class="line">    <span class="built_in">string</span> garland;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; garland;</span><br><span class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> ans = INT_MAX;</span><br><span class="line">    <span class="comment">// 把所有的灯变为'0'一共需要sum步</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) sum += garland[i] - <span class="string">'0'</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= k; i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = i; j &lt; n; j += k) &#123;</span><br><span class="line">            <span class="comment">// 如果当前已经开着了，那么不需要做操作，但是需要归还一个操作</span></span><br><span class="line">            <span class="keyword">if</span> (garland[j] == <span class="string">'1'</span>) cnt--;</span><br><span class="line">            <span class="comment">// 当前为关闭状态，重新打开，需要一个额外操作</span></span><br><span class="line">            <span class="keyword">else</span> cnt++;</span><br><span class="line">            cnt = min(cnt, <span class="number">0</span>);</span><br><span class="line">            ans = min(ans, sum + cnt);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; ans &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    IO;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    <span class="keyword">while</span> (n--) &#123;</span><br><span class="line">        solve();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>动态规划</tag>
+        <tag>贪心算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CodeForces-1394A. Boboniu Chats with Du</title>
+    <url>/2020/08/14/CF1394A/</url>
+    <content><![CDATA[<h1>题目描述</h1>
+<p style="text-align:center; font-size:20px">
+A. Boboniu Chats with Du
+</br>time limit per test1 second
+</br>memory limit per test256 megabytes
+</br>inputstandard input
+</br>outputstandard output
+</p>
+<p>Have you ever used the chat application QQ? Well, in a chat group of QQ, administrators can muzzle a user for days.</p>
+<p>In Boboniu’s chat group, there’s a person called Du Yi who likes to make fun of Boboniu every day.</p>
+<p>Du will chat in the group for n days. On the i-th day:</p>
+<p>If Du can speak, he’ll make fun of Boboniu with fun factor ai. But after that, he may be muzzled depending on Boboniu’s mood.<br>
+Otherwise, Du won’t do anything.<br>
+Boboniu’s mood is a constant m. On the i-th day:</p>
+<p>If Du can speak and ai&gt;m, then Boboniu will be angry and muzzle him for d days, which means that Du won’t be able to speak on the i+1,i+2,⋯,min$(i+d,n)$-th days.<br>
+Otherwise, Boboniu won’t do anything.<br>
+The total fun factor is the sum of the fun factors on the days when Du can speak.</p>
+<p>Du asked you to find the maximum total fun factor among all possible permutations of a.</p>
+<p>Input<br>
+The first line contains three integers n, d and m $(1≤d≤n≤105,0≤m≤109)$.</p>
+<p>The next line contains n integers a1,a2,…,an $(0≤ai≤109)$.</p>
+<p>Output<br>
+Print one integer: the maximum total fun factor among all permutations of a.</p>
+<p>Examples<br>
+input</p>
+<blockquote>
+<p>5 2 11<br>
+8 10 15 23 5</p>
+</blockquote>
+<p>output</p>
+<blockquote>
+<p>48</p>
+</blockquote>
+<p>input</p>
+<blockquote>
+<p>20 2 16<br>
+20 5 8 2 18 16 2 16 16 1 5 16 2 13 6 16 4 17 21 7</p>
+</blockquote>
+<p>output</p>
+<blockquote>
+<p>195</p>
+</blockquote>
+<p>Note<br>
+In the first example, you can set $a′=[15,5,8,10,23]$. Then Du’s chatting record will be:</p>
+<p>Make fun of Boboniu with fun factor 15.<br>
+Be muzzled.<br>
+Be muzzled.<br>
+Make fun of Boboniu with fun factor 10.<br>
+Make fun of Boboniu with fun factor 23.<br>
+Thus the total fun factor is 48.</p>
+<h1>思路</h1>
+<h1>代码（cpp）</h1>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> ll = <span class="keyword">long</span> <span class="keyword">long</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> read(n, nums) for(int i = 0; i <span class="meta-string">&lt; n; i++) cin &gt;&gt; nums[i];</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _for(i, begin, end) for (int i = begin; i &lt; end; i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> print(n, nums) for (int i = 0; i &lt; n; i++) cout &lt;&lt; nums[i] &lt;&lt; <span class="meta-string">" "</span>; cout &lt;&lt; endl;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> IO ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1e5</span> + <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;ll&gt; <span class="title">facMin</span><span class="params">(N)</span></span>;</span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;ll&gt; <span class="title">facMax</span><span class="params">(N)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, d, m;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; d &gt;&gt; m;</span><br><span class="line">    <span class="keyword">int</span> p1 = <span class="number">1</span>, p2 = <span class="number">1</span>;</span><br><span class="line">    _for (i, <span class="number">0</span>, n) &#123;</span><br><span class="line">        ll a;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; a;</span><br><span class="line">        <span class="keyword">if</span> (a &gt; m) &#123;</span><br><span class="line">            facMax[p2++] = a;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            facMin[p1++] = a;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    sort(facMin.begin() + <span class="number">1</span>, facMin.begin() + p1, [](ll v1, ll v2) -&gt; <span class="keyword">bool</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> v1 &gt; v2;</span><br><span class="line">    &#125;);</span><br><span class="line">    sort(facMax.begin() + <span class="number">1</span>, facMax.begin() + p2, [](ll v1, ll v2) -&gt; <span class="keyword">bool</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> v1 &gt; v2;</span><br><span class="line">    &#125;);</span><br><span class="line">    _for (i, <span class="number">1</span>, n + <span class="number">1</span>) facMin[i] = facMin[i - <span class="number">1</span>] + facMin[i];</span><br><span class="line">    ll ans = facMin[n];</span><br><span class="line">    ll sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= p2 - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        sum += facMax[i];</span><br><span class="line">        <span class="keyword">int</span> re = (i - <span class="number">1</span>) * (d + <span class="number">1</span>) + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (re &gt; n)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        re = n - re;</span><br><span class="line">        ans = max(ans, sum + facMin[re]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; ans &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    IO;</span><br><span class="line">    solve();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>CodeForces</category>
+      </categories>
+      <tags>
+        <tag>动态规划</tag>
+        <tag>双指针</tag>
+        <tag>贪心算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CodeForces-1360E. Polygon</title>
+    <url>/2020/08/13/CF1360E/</url>
+    <content><![CDATA[<h1>题目描述</h1>
+<p style="text-align:center; font-size:20px">
+E. Polygon
+<br/>time limit per test2 seconds
+<br/>memory limit per test256 megabytes
+<br/>inputstandard input
+<br/>outputstandard output
+</p>
+<p>Polygon is not only the best platform for developing problems but also a square matrix with side n, initially filled with the character 0.</p>
+<p>On the polygon, military training was held. The soldiers placed a cannon above each cell in the first row and a cannon to the left of each cell in the first column. Thus, exactly 2n cannons were placed.</p>
+<p>Initial polygon for n=4.<br>
+Cannons shoot character 1. At any moment of time, no more than one cannon is shooting. When a 1 flies out of a cannon, it flies forward (in the direction of the shot) until it collides with a polygon border or another 1. After that, it takes the cell in which it was before the collision and remains there. Take a look at the examples for better understanding.</p>
+<p>More formally:</p>
+<p>if a cannon stands in the row i, to the left of the first column, and shoots with a 1, then the 1 starts its flight from the cell (i,1) and ends in some cell (i,j);<br>
+if a cannon stands in the column j, above the first row, and shoots with a 1, then the 1 starts its flight from the cell (1,j) and ends in some cell (i,j).<br>
+For example, consider the following sequence of shots:</p>
+<p>You have a report from the military training on your desk. This report is a square matrix with side length n consisting of 0 and 1. You wonder if the training actually happened. In other words, is there a sequence of shots such that, after the training, you get the given matrix?</p>
+<p>Each cannon can make an arbitrary number of shots. Before the training, each cell of the polygon contains 0.</p>
+<p>Input<br>
+The first line contains an integer t (1≤t≤1000) — the number of test cases. Then t test cases follow.</p>
+<p>Each test case starts with a line containing an integer n (1≤n≤50) — the size of the polygon.</p>
+<p>This is followed by n lines of length n, consisting of 0 and 1 — the polygon matrix after the training.</p>
+<p>The total area of the matrices in all test cases in one test does not exceed 105.</p>
+<p>Output<br>
+For each test case print:</p>
+<p>YES if there is a sequence of shots leading to a given matrix;<br>
+NO if such a sequence does not exist.<br>
+The letters in the words YES and NO can be printed in any case.</p>
+<p>Example<br>
+input</p>
+<blockquote>
+<p>5<br>
+4<br>
+0010<br>
+0011<br>
+0000<br>
+0000<br>
+2<br>
+10<br>
+01<br>
+2<br>
+00<br>
+00<br>
+4<br>
+0101<br>
+1111<br>
+0101<br>
+0111<br>
+4<br>
+0100<br>
+1110<br>
+0101<br>
+0111</p>
+</blockquote>
+<p>output</p>
+<blockquote>
+<p>YES<br>
+NO<br>
+YES<br>
+YES<br>
+NO<br>
+Note<br>
+The first test case was explained in the statement.</p>
+</blockquote>
+<p>The answer to the second test case is NO, since a 1 in a cell (1,1) flying out of any cannon would continue its flight further.</p>
+<h1>思路</h1>
+<p>简单模拟一下即可，大炮的炮弹每次遇到墙或者是’1’就停下，所以直接去找底边和右边是否有炮弹，随后向左向上递归标记，最后再查看一遍整个图是否有没被标记到的</p>
+<h1>代码(cpp)</h1>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> ll = <span class="keyword">long</span> <span class="keyword">long</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> read(n, nums) for(int i = 0; i <span class="meta-string">&lt; n; i++) cin &gt;&gt; nums[i];</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _for(i, begin, end) for (int i = begin; i &lt; end; i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> print(nums) for (int i = 0; i &lt; nums.size(); i++) cout &lt;&lt; nums[i] &lt;&lt; <span class="meta-string">" "</span>; cout &lt;&lt; endl;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> IO ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1e5</span> + <span class="number">5</span>;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt; g;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (x &lt; <span class="number">0</span> || y &lt; <span class="number">0</span> || g[x][y] != <span class="string">'1'</span>)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    g[x][y] = <span class="string">'-'</span>;</span><br><span class="line">    dfs(n, x - <span class="number">1</span>, y);</span><br><span class="line">    dfs(n, x, y - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    g = <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt; (n, <span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt; (n, <span class="string">'0'</span>));</span><br><span class="line">    _for (i, <span class="number">0</span>, n) &#123;</span><br><span class="line">        _for (j, <span class="number">0</span>, n) &#123;</span><br><span class="line">            <span class="built_in">cin</span> &gt;&gt; g[i][j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    _for (i, <span class="number">0</span>, n) &#123;</span><br><span class="line">        <span class="keyword">if</span> (g[i][n - <span class="number">1</span>] == <span class="string">'1'</span>) dfs(n, i, n - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    _for (i, <span class="number">0</span>, n) &#123;</span><br><span class="line">        <span class="keyword">if</span> (g[n - <span class="number">1</span>][i] == <span class="string">'1'</span>) dfs(n, n - <span class="number">1</span>, i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 调试用</span></span><br><span class="line">    <span class="comment">// _for (i, 0, n) &#123;</span></span><br><span class="line">    <span class="comment">//     _for (j, 0, n) &#123;</span></span><br><span class="line">    <span class="comment">//         cout &lt;&lt; g[i][j];</span></span><br><span class="line">    <span class="comment">//     &#125;</span></span><br><span class="line">    <span class="comment">//     cout &lt;&lt; endl;</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line">    _for (i, <span class="number">0</span>, n) &#123;</span><br><span class="line">        _for (j, <span class="number">0</span>, n) &#123;</span><br><span class="line">            <span class="keyword">if</span> (g[i][j] == <span class="string">'1'</span>) &#123;</span><br><span class="line">                <span class="built_in">cout</span> &lt;&lt; <span class="string">"NO"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"YES"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    IO;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    <span class="keyword">while</span> (n--)</span><br><span class="line">    &#123;</span><br><span class="line">        solve();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// solve();</span></span><br><span class="line">    <span class="comment">// getchar();</span></span><br><span class="line">    <span class="comment">// getchar();</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>CodeForces</category>
+      </categories>
+      <tags>
+        <tag>深度优先搜索</tag>
+        <tag>图</tag>
+      </tags>
   </entry>
 </search>
