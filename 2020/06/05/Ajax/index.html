@@ -11,8 +11,7 @@
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
     <meta name="description" content="Ajax
-
-Ajax：ASynchronous JavaScript And XML。是指一种创建交互式、快速动态网页应用的网页开发技术，$\color{red}{无需重新加载整个网页的情况下，能够,"> 
+Ajax：ASynchronous JavaScript And XML。是指一种创建交互式、快速动态网页应用的网页开发技术，$\color{red}{无需重新加载整个网页的情况下，能够更,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -63,12 +62,9 @@ Ajax：ASynchronous JavaScript And XML。是指一种创建交互式、快速动
 
         </div>
         <div class="content markdown">
-            <h1>Ajax</h1>
-<ul>
-<li>Ajax：ASynchronous JavaScript And XML。是指一种创建交互式、快速动态网页应用的网页开发技术，$\color{red}{无需重新加载整个网页的情况下，能够更新部分网页的技术}$。通过在后台与服务器进行少量数据交换，Ajax 可以使网页实现异步更新。这意味着可以在不重新加载整个网页的情况下，对网页的某部分进行更新。
-<ol>
-<li>异步和同步
-<ul>
+            <h1 id="Ajax"><a href="#Ajax" class="headerlink" title="Ajax"></a>Ajax</h1><ul>
+<li>Ajax：ASynchronous JavaScript And XML。是指一种创建交互式、快速动态网页应用的网页开发技术，$\color{red}{无需重新加载整个网页的情况下，能够更新部分网页的技术}$。通过在后台与服务器进行少量数据交换，Ajax 可以使网页实现异步更新。这意味着可以在不重新加载整个网页的情况下，对网页的某部分进行更新。<ol>
+<li>异步和同步<ul>
 <li>同步：客户端必须等待服务端的响应，在等待期间客户端不可以做其它操作</li>
 <li>异步：客户端不需要等待服务端的响应，在服务的处理请求的过程中，客户端可以进行其它的操作</li>
 </ul>
@@ -76,26 +72,18 @@ Ajax：ASynchronous JavaScript And XML。是指一种创建交互式、快速动
 </ol>
 </li>
 </ul>
-<h2 id="实现方式"><a class="header-anchor" href="#实现方式">¶</a>实现方式</h2>
-<ol>
-<li>原生js方式（了解）</li>
-</ol>
+<h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><ol>
+<li><p>原生js方式（了解）</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fun</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 发送异步请求</span></span><br><span class="line">    <span class="comment">// 创建核心对象</span></span><br><span class="line">    <span class="keyword">var</span> xmlhttp;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">window</span>.XMLHttpRequest) &#123;</span><br><span class="line">        <span class="comment">// 高版本浏览器</span></span><br><span class="line">        xmlhttp = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 低版本浏览器</span></span><br><span class="line">        xmlhttp = <span class="keyword">new</span> ActiveXObject(<span class="string">"Microsoft.XMLHTTP"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 建立连接</span></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 参数：</span></span><br><span class="line"><span class="comment">     *      1. 请求方式：GET方式请求参数在url后拼接，send方法为空参；POST方式请求参数在send方法中</span></span><br><span class="line"><span class="comment">     *      2. 请求的url路径</span></span><br><span class="line"><span class="comment">     *      3. 同步或异步请求 true异步 false同步</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    xmlhttp.open(<span class="string">"GET"</span>, <span class="string">"ajaxServlet?username=qiancijun"</span>, <span class="literal">true</span>)</span><br><span class="line">    <span class="comment">// 发送请求</span></span><br><span class="line">    xmlhttp.send();</span><br><span class="line">    <span class="comment">// 接受并处理来自服务器的响应结果</span></span><br><span class="line">    <span class="comment">// 当xmlhttp对象的就绪状态改变时触发一个事件</span></span><br><span class="line">    xmlhttp.onreadystatechange=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (xmlhttp.readyState==<span class="number">4</span> &amp;&amp; xmlhttp.status==<span class="number">200</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">var</span> responseText = xmlhttp.responseText</span><br><span class="line">            <span class="built_in">document</span>.getElementById(<span class="string">"myDiv"</span>).innerHTML=xmlhttp.responseText;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>
-<p>jQuery方式</p>
+</li>
+<li><p>jQuery方式</p>
 <ul>
-<li>$.ajax()
-<ul>
+<li>$.ajax()<ul>
 <li>语法：<code>$.ajax(url, [settings])</code></li>
-<li>语法：<code>$.ajax({键值对})</code></li>
+<li>语法：<code>$.ajax({键值对})</code><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$.ajax(&#123;</span><br><span class="line">    url: <span class="string">"ajaxServlet"</span>, <span class="comment">// 请求路径</span></span><br><span class="line">    type: <span class="string">"POST"</span>, <span class="comment">// 请求方式</span></span><br><span class="line">    <span class="comment">// data: "username=qiancijun", //请求参数</span></span><br><span class="line">    data: &#123;</span><br><span class="line">        <span class="string">"username"</span>: <span class="string">"qiancijun"</span>,</span><br><span class="line">        <span class="string">"age"</span>: <span class="number">18</span></span><br><span class="line">    &#125;,</span><br><span class="line">    success: <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 响应成功后的回调函数</span></span><br><span class="line">        alert(data);</span><br><span class="line">    &#125;,</span><br><span class="line">    error: <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
-</ul>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$.ajax(&#123;</span><br><span class="line">    url: <span class="string">"ajaxServlet"</span>, <span class="comment">// 请求路径</span></span><br><span class="line">    type: <span class="string">"POST"</span>, <span class="comment">// 请求方式</span></span><br><span class="line">    <span class="comment">// data: "username=qiancijun", //请求参数</span></span><br><span class="line">    data: &#123;</span><br><span class="line">        <span class="string">"username"</span>: <span class="string">"qiancijun"</span>,</span><br><span class="line">        <span class="string">"age"</span>: <span class="number">18</span></span><br><span class="line">    &#125;,</span><br><span class="line">    success: <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 响应成功后的回调函数</span></span><br><span class="line">        alert(data);</span><br><span class="line">    &#125;,</span><br><span class="line">    error: <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<ul>
-<li>$.get()：发送get请求
-<ul>
+<li>$.get()：发送get请求<ul>
 <li>语法：<code>$.get(url, [data], [callback], [type]);</code></li>
 <li>url：请求路径</li>
 <li>data：请求参数</li>
@@ -106,23 +94,18 @@ Ajax：ASynchronous JavaScript And XML。是指一种创建交互式、快速动
 <li>$.post()：发送post请求</li>
 </ul>
 </li>
-<li>
-<p>其它参数</p>
+<li><p>其它参数</p>
 <ul>
 <li>dataType：设置接受到的响应数据的格式</li>
 </ul>
 </li>
 </ol>
-<h1>JSON</h1>
-<ul>
+<h1 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h1><ul>
 <li>JavaScript Object Notation，是存储和交换文本信息的语法，类似XML， JSON比XML更小，更快，更易解析</li>
 </ul>
-<h2 id="语法"><a class="header-anchor" href="#语法">¶</a>语法</h2>
-<ol>
-<li>基本规则
-<ul>
-<li>数据在名称/值对中：JSON数据是由键值对构成的
-<ul>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><ol>
+<li>基本规则<ul>
+<li>数据在名称/值对中：JSON数据是由键值对构成的<ul>
 <li>键用引号包括，也可以不使用引号</li>
 <li>取值类型：数字（整数或浮点数、字符串（在双引号中）、逻辑值（true 或 false）、数组（在方括号中）、对象（在花括号中）、null</li>
 </ul>
@@ -132,45 +115,39 @@ Ajax：ASynchronous JavaScript And XML。是指一种创建交互式、快速动
 <li>方括号保存数组：使用[]定义数组</li>
 </ul>
 </li>
-<li>获取数据：
-<ol>
+<li>获取数据：<ol>
 <li>json对象.键名</li>
 <li>json对象[“键名”]</li>
 <li>数组对象[索引]</li>
 </ol>
 </li>
-<li>JSON数据和Java对象的相互转换
-<ul>
-<li>JSON解析器：常见的解析器
-<ul>
+<li>JSON数据和Java对象的相互转换<ul>
+<li>JSON解析器：常见的解析器<ul>
 <li>Jsonlib</li>
 <li>Gson：谷歌的解析器</li>
 <li>fastjson：阿里巴巴的解析器</li>
 <li>jackson：spring内置的解析器</li>
 </ul>
 </li>
-<li>JSON转为Java对象
-<ul>
+<li>JSON转为Java对象<ul>
 <li><code>readValue(json字符串数据, class)</code></li>
 </ul>
 </li>
-<li>Java对象转为JSON
-<ul>
+<li>Java对象转为JSON<ul>
 <li>创建jackson核心对象 ObjectMapper</li>
 <li>调用ObjectMapper的相关方法</li>
-<li>注解：
-<ol>
+<li>注解：<ol>
 <li>@JsonIgnore：排除属性</li>
 <li>@JsonFormat：属性值格式化</li>
 </ol>
 </li>
-<li>复杂的Java对象：List、Map集合</li>
+<li>复杂的Java对象：List、Map集合<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="comment">// 创建Person对象</span></span><br><span class="line">    Person p = <span class="keyword">new</span> Person();</span><br><span class="line">    p.setName(<span class="string">"qiancijun"</span>);</span><br><span class="line">    p.setAge(<span class="number">3</span>);</span><br><span class="line">    p.setGerder(<span class="string">"未知"</span>);</span><br><span class="line">    <span class="comment">// 创建ObjectMapper对象</span></span><br><span class="line">    ObjectMapper objm = <span class="keyword">new</span> ObjectMapper();</span><br><span class="line">    <span class="comment">// 调用方法转换</span></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">        * 转换方法：</span></span><br><span class="line"><span class="comment">        *     writeValue(arg1, arg2)</span></span><br><span class="line"><span class="comment">        *         - 参数1：</span></span><br><span class="line"><span class="comment">        *         - File 将obj对象转换为JSON对象，并保存到指定的文件夹中</span></span><br><span class="line"><span class="comment">        *         - Writer 将obj对象转换为JSON字符串，并将JSON数据填充到字符输出流中</span></span><br><span class="line"><span class="comment">        *         - OutputStream 将obj对象转换为JSON字符串，并将JSON数据填充到字节输出流中</span></span><br><span class="line"><span class="comment">        *     writeValueAsString(obj)：将对象转为JSON字符串</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">    String json = objm.writeValueAsString(p);</span><br><span class="line">    System.out.println(json);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
 </ul>
 </li>
 </ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="comment">// 创建Person对象</span></span><br><span class="line">    Person p = <span class="keyword">new</span> Person();</span><br><span class="line">    p.setName(<span class="string">"qiancijun"</span>);</span><br><span class="line">    p.setAge(<span class="number">3</span>);</span><br><span class="line">    p.setGerder(<span class="string">"未知"</span>);</span><br><span class="line">    <span class="comment">// 创建ObjectMapper对象</span></span><br><span class="line">    ObjectMapper objm = <span class="keyword">new</span> ObjectMapper();</span><br><span class="line">    <span class="comment">// 调用方法转换</span></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">        * 转换方法：</span></span><br><span class="line"><span class="comment">        *     writeValue(arg1, arg2)</span></span><br><span class="line"><span class="comment">        *         - 参数1：</span></span><br><span class="line"><span class="comment">        *         - File 将obj对象转换为JSON对象，并保存到指定的文件夹中</span></span><br><span class="line"><span class="comment">        *         - Writer 将obj对象转换为JSON字符串，并将JSON数据填充到字符输出流中</span></span><br><span class="line"><span class="comment">        *         - OutputStream 将obj对象转换为JSON字符串，并将JSON数据填充到字节输出流中</span></span><br><span class="line"><span class="comment">        *     writeValueAsString(obj)：将对象转为JSON字符串</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">    String json = objm.writeValueAsString(p);</span><br><span class="line">    System.out.println(json);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
                 <source type="audio/mpeg" src="">
@@ -209,7 +186,7 @@ Ajax：ASynchronous JavaScript And XML。是指一种创建交互式、快速动
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">Ajax</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#实现方式"><span class="toc-number">1.1.</span> <span class="toc-text">实现方式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">2.</span> <span class="toc-text">JSON</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#语法"><span class="toc-number">2.1.</span> <span class="toc-text">语法</span></a></li></ol></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Ajax"><span class="toc-number">1.</span> <span class="toc-text">Ajax</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#实现方式"><span class="toc-number">1.1.</span> <span class="toc-text">实现方式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JSON"><span class="toc-number">2.</span> <span class="toc-text">JSON</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#语法"><span class="toc-number">2.1.</span> <span class="toc-text">语法</span></a></li></ol></li></ol>	
         </div>
     
 </div>

@@ -65,7 +65,7 @@
 
         </div>
         <div class="content markdown">
-            <pre><code class="language-cpp">void heapify(vector&lt;int&gt; &amp;tree, int len, int i){
+            <pre><code class="lang-cpp">void heapify(vector&lt;int&gt; &amp;tree, int len, int i){
     int cl = 2 * i + 1; //左节点
     int cr = 2 * i + 2; //右节点
     int max = i; //假设当前节点是最大值节点
@@ -79,7 +79,7 @@
         swap(tree[i], tree[max]); //交换元素
         heapify(tree, len, max); //对交换后的节点再进行堆化
     }
-    
+
 }//把当前第i个节点堆化
 
 void build_heap(vector&lt;int&gt; &amp;tree){

@@ -10,16 +10,13 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
-    <meta name="description" content="C语言内存模型
-¶程序在内存中被执行的流程
-
+    <meta name="description" content="C语言内存模型程序在内存中被执行的流程
 操作系统把硬盘中的代码加载到内存中
 操作系统把C语言代码分为五个部分
 操作系统找到main函数入口
 
-¶内存模型
-
-BSS段(Block Started,"> 
+内存模型
+BSS段(Block Started by S,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -72,18 +69,14 @@ BSS段(Block Started,">
 
         </div>
         <div class="content markdown">
-            <h1>C语言内存模型</h1>
-<h2 id="程序在内存中被执行的流程"><a class="header-anchor" href="#程序在内存中被执行的流程">¶</a>程序在内存中被执行的流程</h2>
-<ol>
+            <h1 id="C语言内存模型"><a href="#C语言内存模型" class="headerlink" title="C语言内存模型"></a>C语言内存模型</h1><h2 id="程序在内存中被执行的流程"><a href="#程序在内存中被执行的流程" class="headerlink" title="程序在内存中被执行的流程"></a>程序在内存中被执行的流程</h2><ol>
 <li>操作系统把硬盘中的代码加载到内存中</li>
 <li>操作系统把C语言代码分为五个部分</li>
 <li>操作系统找到main函数入口</li>
 </ol>
-<h2 id="内存模型"><a class="header-anchor" href="#内存模型">¶</a>内存模型</h2>
-<ol>
+<h2 id="内存模型"><a href="#内存模型" class="headerlink" title="内存模型"></a>内存模型</h2><ol>
 <li>BSS段(Block Started by Symbol): 通常是指用来存放程序中未初始化的全局变量的一块内存区域。</li>
-<li>数据段(data segment): 用来存放程序中已初始化的全局变量的内存区域。主要包括静态全局区和常量区：
-<ul>
+<li>数据段(data segment): 用来存放程序中已初始化的全局变量的内存区域。主要包括静态全局区和常量区：<ul>
 <li>全局区（静态区）（static）：全局变量和静态变量的存储是放在一块的，初始化的全局变量和静态变量在一块区域， 未初始化的全局变量和未初始化的静态变量在相邻的另一块区域。 程序结束后有系统释放。</li>
 <li>常量区 ：常量字符串就是放在这里的。 程序结束后由系统释放。</li>
 </ul>
@@ -93,36 +86,24 @@ BSS段(Block Started,">
 <li>栈（stack）：存放程序中的局部变量（但不包括static声明的变量，static变量放在数据段中）。同时，在函数被调用时，栈用来传递参数和返回值。由于栈先进先出特点。所以栈特别方便用来保存/恢复调用现场。</li>
 </ol>
 <p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/C%26C%2B%2B/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.jpg" alt=""></p>
-<h2 id="栈"><a class="header-anchor" href="#栈">¶</a>栈</h2>
-<p>内存中的栈和数据结构的栈操作方式类似，先进后出(FILO)。是由系统自动分配和释放，存放函数的参数值，返回值，局部变量等。</p>
-<h3 id="栈的空间申请"><a class="header-anchor" href="#栈的空间申请">¶</a>栈的空间申请</h3>
-<ol>
+<h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><p>内存中的栈和数据结构的栈操作方式类似，先进后出(FILO)。是由系统自动分配和释放，存放函数的参数值，返回值，局部变量等。</p>
+<h3 id="栈的空间申请"><a href="#栈的空间申请" class="headerlink" title="栈的空间申请"></a>栈的空间申请</h3><ol>
 <li>当在函数或块内部声明一个局部变量时，系统会判断申请的空间是否足够，足够，在栈中开辟空间，提供内存；不够空间，报异常提示栈溢出。</li>
 <li>栈是有一定大小的，通常情况下，栈只有2M，不同系统栈的大小可能不同。</li>
 </ol>
-<h3 id="栈的生长方式"><a class="header-anchor" href="#栈的生长方式">¶</a>栈的生长方式</h3>
-<p>栈的生长方向和存放数据的方向相反，自顶向下。</p>
+<h3 id="栈的生长方式"><a href="#栈的生长方式" class="headerlink" title="栈的生长方式"></a>栈的生长方式</h3><p>栈的生长方向和存放数据的方向相反，自顶向下。</p>
 <ul>
 <li><strong>为什么栈是自顶向下生长的？</strong></li>
 </ul>
 <p>设计栈的方向向下，可以给应用程序设定栈的大小。如果栈的生长方式是向上的，就必须得指定栈和堆的一个严格分界线，但这个分界线怎么确定呢？平均分？但是有的程序使用的堆空间比较多，而有的程序使用的栈空间比较多。所以就可能出现这种情况：一个程序因为栈溢出而崩溃的时候，其实它还有大量闲置的堆空间呢，但是我们却无法使用这些闲置的堆空间。所以呢，最好的办法就是让堆和栈一个向上涨，一个向下涨，这样它们就可以最大程度地共用这块剩余的地址空间，达到利用率的最大化，这样设计可以使得堆和栈能够充分利用空闲的地址空间。</p>
 <p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/C%26C%2B%2B/%E6%A0%88.png" alt=""></p>
-<p>图解：<br>
-<img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/C%26C%2B%2B/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E5%9B%BE%E8%A7%A3.png" alt=""></p>
-<h2 id="堆"><a class="header-anchor" href="#堆">¶</a>堆</h2>
-<p>堆是可以申请大块内存空间的区域。理论上，使用malloc最大能够申请空间大约3G。但这是理论值，因为实际中，还会包含代码区，全局变量区和栈区。</p>
-<h3 id="堆的生长方向"><a class="header-anchor" href="#堆的生长方向">¶</a>堆的生长方向</h3>
-<p>堆是由低地址向高地址生长的</p>
-<h2 id="内存溢出"><a class="header-anchor" href="#内存溢出">¶</a>内存溢出</h2>
-<h3 id="概念"><a class="header-anchor" href="#概念">¶</a>概念</h3>
-<p>内存溢出 : out of memory 指程序在申请内存时,没有足够的内存空间供其使用,出现out fo memory 比如申请一个integer 但给它存了long才能存下的数那就是内存溢出。</p>
-<h2 id="内存泄漏"><a class="header-anchor" href="#内存泄漏">¶</a>内存泄漏</h2>
-<h3 id="概念-v2"><a class="header-anchor" href="#概念-v2">¶</a>概念</h3>
-<p>内存泄漏memory leak :是指程序在申请内存后，无法释放已申请的内存空间，一次内存泄漏似乎不会有大的影响，但内存泄漏堆积后的后果就是内存溢出。</p>
-<h2 id="内存溢出与内存泄漏的关系"><a class="header-anchor" href="#内存溢出与内存泄漏的关系">¶</a>内存溢出与内存泄漏的关系</h2>
-<p>内存泄漏的堆积最终会导致内存溢出内存溢出就是你要的内存空间超过了系统实际分配给你的空间，此时系统相当于没法满足你的需求，就会报内存溢出的错误。内存泄漏是指你向系统申请分配内存进行使用(new)，可是使用完了以后却不归还(delete)，结果你申请到的那块内存你自己也不能再访问（也许你把它的地址给弄丢了），而系统也不能再次将它分配给需要的程序。</p>
-<h2 id="函数调用"><a class="header-anchor" href="#函数调用">¶</a>函数调用</h2>
-<p>在操作系统调用main函数的时候，会将main函数的返回地址和参数入栈，然后开始直行main函数，如果在main函数中调用了其他函数，会先将main函数的运行状态入栈，然后将被调用函数的返回值入栈，被调用函数的参数入栈，然后去执行被调用函数，如果还有其他调用函数，过程也是类似的。</p>
+<p>图解：<br><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/C%26C%2B%2B/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E5%9B%BE%E8%A7%A3.png" alt=""></p>
+<h2 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h2><p>堆是可以申请大块内存空间的区域。理论上，使用malloc最大能够申请空间大约3G。但这是理论值，因为实际中，还会包含代码区，全局变量区和栈区。</p>
+<h3 id="堆的生长方向"><a href="#堆的生长方向" class="headerlink" title="堆的生长方向"></a>堆的生长方向</h3><p>堆是由低地址向高地址生长的</p>
+<h2 id="内存溢出"><a href="#内存溢出" class="headerlink" title="内存溢出"></a>内存溢出</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>内存溢出 : out of memory 指程序在申请内存时,没有足够的内存空间供其使用,出现out fo memory 比如申请一个integer 但给它存了long才能存下的数那就是内存溢出。</p>
+<h2 id="内存泄漏"><a href="#内存泄漏" class="headerlink" title="内存泄漏"></a>内存泄漏</h2><h3 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h3><p>内存泄漏memory leak :是指程序在申请内存后，无法释放已申请的内存空间，一次内存泄漏似乎不会有大的影响，但内存泄漏堆积后的后果就是内存溢出。 </p>
+<h2 id="内存溢出与内存泄漏的关系"><a href="#内存溢出与内存泄漏的关系" class="headerlink" title="内存溢出与内存泄漏的关系"></a>内存溢出与内存泄漏的关系</h2><p>内存泄漏的堆积最终会导致内存溢出内存溢出就是你要的内存空间超过了系统实际分配给你的空间，此时系统相当于没法满足你的需求，就会报内存溢出的错误。内存泄漏是指你向系统申请分配内存进行使用(new)，可是使用完了以后却不归还(delete)，结果你申请到的那块内存你自己也不能再访问（也许你把它的地址给弄丢了），而系统也不能再次将它分配给需要的程序。</p>
+<h2 id="函数调用"><a href="#函数调用" class="headerlink" title="函数调用"></a>函数调用</h2><p>在操作系统调用main函数的时候，会将main函数的返回地址和参数入栈，然后开始直行main函数，如果在main函数中调用了其他函数，会先将main函数的运行状态入栈，然后将被调用函数的返回值入栈，被调用函数的参数入栈，然后去执行被调用函数，如果还有其他调用函数，过程也是类似的。</p>
 <p>在main函数中分配的内存，被调用函数是可以使用的。</p>
 <p>main函数可以在栈上，堆上，全局区上进行分配内存，这些内存是可以被函数中被调用函数使用的。</p>
 <p>而在被调用函数中栈上分配的内存，不能被主调函数使用，像堆上，还有全局区上分配的内存，都可以供主调函数使用，通过间接赋值的方式将内存的首地址传递出来就可以了。</p>
@@ -165,7 +146,7 @@ BSS段(Block Started,">
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">C语言内存模型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#程序在内存中被执行的流程"><span class="toc-number">1.1.</span> <span class="toc-text">程序在内存中被执行的流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内存模型"><span class="toc-number">1.2.</span> <span class="toc-text">内存模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#栈"><span class="toc-number">1.3.</span> <span class="toc-text">栈</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#栈的空间申请"><span class="toc-number">1.3.1.</span> <span class="toc-text">栈的空间申请</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#栈的生长方式"><span class="toc-number">1.3.2.</span> <span class="toc-text">栈的生长方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#堆"><span class="toc-number">1.4.</span> <span class="toc-text">堆</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#堆的生长方向"><span class="toc-number">1.4.1.</span> <span class="toc-text">堆的生长方向</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内存溢出"><span class="toc-number">1.5.</span> <span class="toc-text">内存溢出</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#概念"><span class="toc-number">1.5.1.</span> <span class="toc-text">概念</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内存泄漏"><span class="toc-number">1.6.</span> <span class="toc-text">内存泄漏</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#概念-v2"><span class="toc-number">1.6.1.</span> <span class="toc-text">概念</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内存溢出与内存泄漏的关系"><span class="toc-number">1.7.</span> <span class="toc-text">内存溢出与内存泄漏的关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数调用"><span class="toc-number">1.8.</span> <span class="toc-text">函数调用</span></a></li></ol></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#C语言内存模型"><span class="toc-number">1.</span> <span class="toc-text">C语言内存模型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#程序在内存中被执行的流程"><span class="toc-number">1.1.</span> <span class="toc-text">程序在内存中被执行的流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内存模型"><span class="toc-number">1.2.</span> <span class="toc-text">内存模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#栈"><span class="toc-number">1.3.</span> <span class="toc-text">栈</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#栈的空间申请"><span class="toc-number">1.3.1.</span> <span class="toc-text">栈的空间申请</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#栈的生长方式"><span class="toc-number">1.3.2.</span> <span class="toc-text">栈的生长方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#堆"><span class="toc-number">1.4.</span> <span class="toc-text">堆</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#堆的生长方向"><span class="toc-number">1.4.1.</span> <span class="toc-text">堆的生长方向</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内存溢出"><span class="toc-number">1.5.</span> <span class="toc-text">内存溢出</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#概念"><span class="toc-number">1.5.1.</span> <span class="toc-text">概念</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内存泄漏"><span class="toc-number">1.6.</span> <span class="toc-text">内存泄漏</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#概念-1"><span class="toc-number">1.6.1.</span> <span class="toc-text">概念</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内存溢出与内存泄漏的关系"><span class="toc-number">1.7.</span> <span class="toc-text">内存溢出与内存泄漏的关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数调用"><span class="toc-number">1.8.</span> <span class="toc-text">函数调用</span></a></li></ol></li></ol>	
         </div>
     
 </div>

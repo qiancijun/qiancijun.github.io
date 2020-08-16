@@ -10,11 +10,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
-    <meta name="description" content="题目描述
-C. Good String
-time limit per test2 seconds
-memory limit per test256 megabytes
-inputstandard i,"> 
+    <meta name="description" content="题目描述C. Good Stringtime limit per test2 secondsmemory limit per test256 megabytesinputstandard input,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -65,47 +61,20 @@ inputstandard i,">
 
         </div>
         <div class="content markdown">
-            <h1>题目描述</h1>
-<p>C. Good String<br>
-time limit per test2 seconds<br>
-memory limit per test256 megabytes<br>
-inputstandard input<br>
-outputstandard output<br>
-Let’s call left cyclic shift of some string t1t2t3…tn−1tn as string t2t3…tn−1tnt1.</p>
+            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>C. Good String<br>time limit per test2 seconds<br>memory limit per test256 megabytes<br>inputstandard input<br>outputstandard output<br>Let’s call left cyclic shift of some string t1t2t3…tn−1tn as string t2t3…tn−1tnt1.</p>
 <p>Analogically, let’s call right cyclic shift of string t as string tnt1t2t3…tn−1.</p>
 <p>Let’s say string t is good if its left cyclic shift is equal to its right cyclic shift.</p>
 <p>You are given string s which consists of digits 0–9.</p>
 <p>What is the minimum number of characters you need to erase from s to make it good?</p>
-<p>Input<br>
-The first line contains single integer t (1≤t≤1000) — the number of test cases.</p>
+<p>Input<br>The first line contains single integer t (1≤t≤1000) — the number of test cases.</p>
 <p>Next t lines contains test cases — one per line. The first and only line of each test case contains string s (2≤|s|≤2⋅105). Each character si is digit 0–9.</p>
 <p>It’s guaranteed that the total length of strings doesn’t exceed 2⋅105.</p>
-<p>Output<br>
-For each test case, print the minimum number of characters you need to erase from s to make it good.</p>
-<p>Example<br>
-input<br>
-3<br>
-95831<br>
-100120013<br>
-252525252525<br>
-output<br>
-3<br>
-5<br>
-0<br>
-Note<br>
-In the first test case, you can erase any 3 characters, for example, the 1-st, the 3-rd, and the 4-th. You’ll get string 51 and it is good.</p>
+<p>Output<br>For each test case, print the minimum number of characters you need to erase from s to make it good.</p>
+<p>Example<br>input<br>3<br>95831<br>100120013<br>252525252525<br>output<br>3<br>5<br>0<br>Note<br>In the first test case, you can erase any 3 characters, for example, the 1-st, the 3-rd, and the 4-th. You’ll get string 51 and it is good.</p>
 <p>In the second test case, we can erase all characters except 0: the remaining string is 0000 and it’s good.</p>
 <p>In the third test case, the given string s is already good.</p>
-<h1>思路</h1>
-<p>把题目两个字符串拿来对比以下<br>
-$\textit{tn t1 t2 t3 … tn-1}$<br>
-$\textit{t2 t3 t4 t5 … t1}$<br>
-如果为偶数项，那么t1 = t3 = … = tn-1<br>
-如果为奇数项，那么所有的t应该全部一样<br>
-如果为偶数项，那么最后肯定会形成ABABAB…AB的形式<br>
-那么我们只需要枚举所有AB出现次数最多的即可</p>
-<h1>代码(Java)</h1>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GoodString</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">check</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = str.length();</span><br><span class="line">        <span class="keyword">int</span> ans = len - <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= <span class="number">9</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= <span class="number">9</span>; j++) &#123;</span><br><span class="line">                <span class="keyword">int</span> now = i;</span><br><span class="line">                <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; len; k++) &#123;</span><br><span class="line">                    <span class="keyword">if</span>(str.charAt(k) - <span class="string">'0'</span> == now) &#123;</span><br><span class="line">                        <span class="keyword">if</span>(now == i) now = j;</span><br><span class="line">                        <span class="keyword">else</span> now = i;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        cnt++;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (now == i) &#123;</span><br><span class="line">                    ans = Math.min(ans, cnt);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = <span class="number">0</span>;</span><br><span class="line">        Scanner in = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">        n = in.nextInt();</span><br><span class="line">        String ch = in.nextLine();</span><br><span class="line">        <span class="keyword">while</span> (n &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            String input = in.nextLine();</span><br><span class="line">            System.out.println(solve(input));</span><br><span class="line">            n--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>把题目两个字符串拿来对比以下<br>$\textit{tn t1 t2 t3 … tn-1}$<br>$\textit{t2 t3 t4 t5 … t1}$<br>如果为偶数项，那么t1 = t3 = … = tn-1<br>如果为奇数项，那么所有的t应该全部一样<br>如果为偶数项，那么最后肯定会形成ABABAB…AB的形式<br>那么我们只需要枚举所有AB出现次数最多的即可</p>
+<h1 id="代码-Java"><a href="#代码-Java" class="headerlink" title="代码(Java)"></a>代码(Java)</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GoodString</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">check</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = str.length();</span><br><span class="line">        <span class="keyword">int</span> ans = len - <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= <span class="number">9</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= <span class="number">9</span>; j++) &#123;</span><br><span class="line">                <span class="keyword">int</span> now = i;</span><br><span class="line">                <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; len; k++) &#123;</span><br><span class="line">                    <span class="keyword">if</span>(str.charAt(k) - <span class="string">'0'</span> == now) &#123;</span><br><span class="line">                        <span class="keyword">if</span>(now == i) now = j;</span><br><span class="line">                        <span class="keyword">else</span> now = i;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        cnt++;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (now == i) &#123;</span><br><span class="line">                    ans = Math.min(ans, cnt);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = <span class="number">0</span>;</span><br><span class="line">        Scanner in = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">        n = in.nextInt();</span><br><span class="line">        String ch = in.nextLine();</span><br><span class="line">        <span class="keyword">while</span> (n &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            String input = in.nextLine();</span><br><span class="line">            System.out.println(solve(input));</span><br><span class="line">            n--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
                 <source type="audio/mpeg" src="">
@@ -144,7 +113,7 @@ $\textit{t2 t3 t4 t5 … t1}$<br>
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">2.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">3.</span> <span class="toc-text">代码(Java)</span></a></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#题目描述"><span class="toc-number">1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#思路"><span class="toc-number">2.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#代码-Java"><span class="toc-number">3.</span> <span class="toc-text">代码(Java)</span></a></li></ol>	
         </div>
     
 </div>

@@ -10,10 +10,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
-    <meta name="description" content="断言
-在一个具有自我保护能力的程序中，断言很常用，它允许对程序提出一个判断，可以将断言看作是异常处理的一种高级形式。断言表示为一些布尔表达式,程序员相信在程序中的某个特定点该表达式值为真。
-¶概念
-,"> 
+    <meta name="description" content="断言在一个具有自我保护能力的程序中，断言很常用，它允许对程序提出一个判断，可以将断言看作是异常处理的一种高级形式。断言表示为一些布尔表达式,程序员相信在程序中的某个特定点该表达式值为真。 
+概念断言,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -64,24 +62,14 @@
 
         </div>
         <div class="content markdown">
-            <h1>断言</h1>
-<p>在一个具有自我保护能力的程序中，断言很常用，它允许对程序提出一个判断，可以将断言看作是异常处理的一种高级形式。断言表示为一些布尔表达式,程序员相信在程序中的某个特定点该表达式值为真。</p>
-<h2 id="概念"><a class="header-anchor" href="#概念">¶</a>概念</h2>
-<p>断言机制允许在测试期间向代码中插入一些检查语句。当代码发布时，这些插入的检测语句将会被自动移走。<br>
-Java引入了关键字$\color{blue}{assert}$关键字，这个关键字有两个形式：</p>
+            <h1 id="断言"><a href="#断言" class="headerlink" title="断言"></a>断言</h1><p>在一个具有自我保护能力的程序中，断言很常用，它允许对程序提出一个判断，可以将断言看作是异常处理的一种高级形式。断言表示为一些布尔表达式,程序员相信在程序中的某个特定点该表达式值为真。 </p>
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>断言机制允许在测试期间向代码中插入一些检查语句。当代码发布时，这些插入的检测语句将会被自动移走。<br>Java引入了关键字$\color{blue}{assert}$关键字，这个关键字有两个形式：</p>
 <ul>
 <li>assert 条件;</li>
 <li>assert 条件: 表达式;</li>
 </ul>
-<p>这两种形式都会对条件进行检测，如果结果为false，则抛出一个AssertionError异常。在第二种形式中，表达式将被传入AssertionError的构造器，并转换成一个消息字符串。<br>
-假设我们想要检查Math.sqrt(x)是不是有意义，x是经过另一个式子计算后的值；或者x是一个方法的参数，而这个方法要求参数是正值。我们想要进行检查以免出现错误。可以用抛出异常来解决这个问题。<br>
-<code>if (x &lt; 0) throw new IllegalArgumentException(&quot;x &lt; 0&quot;);</code><br>
-但是这段代码会一直保留在程序中，即使测试完毕也不会自动地删除，此时我们可以使用断言机制来做测试：<br>
-<code>assert x &gt;= 0;</code><br>
-或者将x的实际值传递给AssertionError对象，从而可以在后面显示出来：<br>
-<code>assert x &gt;= 0: x;</code></p>
-<h2 id="使用断言完成参数检查"><a class="header-anchor" href="#使用断言完成参数检查">¶</a>使用断言完成参数检查</h2>
-<p>在Java中给出了三种处理系统错误的机制：</p>
+<p>这两种形式都会对条件进行检测，如果结果为false，则抛出一个AssertionError异常。在第二种形式中，表达式将被传入AssertionError的构造器，并转换成一个消息字符串。<br>假设我们想要检查Math.sqrt(x)是不是有意义，x是经过另一个式子计算后的值；或者x是一个方法的参数，而这个方法要求参数是正值。我们想要进行检查以免出现错误。可以用抛出异常来解决这个问题。<br><code>if (x &lt; 0) throw new IllegalArgumentException(&quot;x &lt; 0&quot;);</code><br>但是这段代码会一直保留在程序中，即使测试完毕也不会自动地删除，此时我们可以使用断言机制来做测试：<br><code>assert x &gt;= 0;</code><br>或者将x的实际值传递给AssertionError对象，从而可以在后面显示出来：<br><code>assert x &gt;= 0: x;</code></p>
+<h2 id="使用断言完成参数检查"><a href="#使用断言完成参数检查" class="headerlink" title="使用断言完成参数检查"></a>使用断言完成参数检查</h2><p>在Java中给出了三种处理系统错误的机制：</p>
 <ul>
 <li>抛出一个异常</li>
 <li>日志</li>
@@ -93,8 +81,7 @@ Java引入了关键字$\color{blue}{assert}$关键字，这个关键字有两个
 <li>断言检查只用于开发和测试阶段</li>
 </ul>
 <p>因此，不应该使用断言向程序的其他部分通告发生了可恢复性的错误，或者，不应该作为程序向用户通告问题的手段。断言只应该用于在测试阶段确定程序内部的错误位置。</p>
-<h1>日志</h1>
-
+<h1 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h1>
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
                 <source type="audio/mpeg" src="">
@@ -133,7 +120,7 @@ Java引入了关键字$\color{blue}{assert}$关键字，这个关键字有两个
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">断言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#概念"><span class="toc-number">1.1.</span> <span class="toc-text">概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用断言完成参数检查"><span class="toc-number">1.2.</span> <span class="toc-text">使用断言完成参数检查</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">2.</span> <span class="toc-text">日志</span></a></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#断言"><span class="toc-number">1.</span> <span class="toc-text">断言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#概念"><span class="toc-number">1.1.</span> <span class="toc-text">概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用断言完成参数检查"><span class="toc-number">1.2.</span> <span class="toc-text">使用断言完成参数检查</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#日志"><span class="toc-number">2.</span> <span class="toc-text">日志</span></a></li></ol>	
         </div>
     
 </div>
