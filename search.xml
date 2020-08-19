@@ -12615,35 +12615,22 @@ YES<br>
   <entry>
     <title>LeetCode-647-回文子串</title>
     <url>/2020/08/19/LeetCode-647-%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/</url>
-    <content><![CDATA[<h1>题目链接</h1>
-<p><a href="https://leetcode-cn.com/problems/palindromic-substrings/" target="_blank" rel="noopener">点我</a></p>
-<h1>题目描述</h1>
-<p>给定一个字符串，你的任务是计算这个字符串中有多少个回文子串。<br>
-具有不同开始位置或结束位置的子串，即使是由相同的字符组成，也会被视作不同的子串。</p>
+    <content><![CDATA[<h1 id="题目链接"><a href="#题目链接" class="headerlink" title="题目链接"></a>题目链接</h1><p><a href="https://leetcode-cn.com/problems/palindromic-substrings/" target="_blank" rel="noopener">点我</a></p>
+<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>给定一个字符串，你的任务是计算这个字符串中有多少个回文子串。<br>具有不同开始位置或结束位置的子串，即使是由相同的字符组成，也会被视作不同的子串。</p>
 <p>示例 1：</p>
-<blockquote></blockquote>
-<p>输入：“abc”<br>
-输出：3<br>
-解释：三个回文子串: “a”, “b”, “c”</p>
+<blockquote>
+<p>输入：”abc”<br>输出：3<br>解释：三个回文子串: “a”, “b”, “c”</p>
+</blockquote>
 <hr/>
+
 <p>示例 2：</p>
-<blockquote></blockquote>
-<p>输入：“aaa”<br>
-输出：6<br>
-解释：6个回文子串: “a”, “a”, “a”, “aa”, “aa”, “aaa”</p>
-<hr/>
-提示：
-输入的字符串长度不会超过 1000 。
-<h1>思路</h1>
-<p>我们把单个字符也视为一个回文串<br>
-用$dp[i]$来记录状态，$dp[i]$意为从$i$位置到当前遍历到的字符位置$j$是否为回文字符串<br>
-如果当前位置为$j$，等于遍历到的字符位置$i$，即$s[i] = s[j]$，<br>
-且从位置$j+1$到$i$也构成回文子串，即$dp[j + 1] = true$<br>
-那么我们可以得到一个新的回文子串，从位置$j$到位置$i$，答案加1，更新状态<br>
-时间复杂度$O(n^2)$</p>
+<blockquote>
+<p>输入：”aaa”<br>输出：6<br>解释：6个回文子串: “a”, “a”, “a”, “aa”, “aa”, “aaa”</p>
+</blockquote>
+<p><hr/><br>提示：<br>输入的字符串长度不会超过 1000 。</p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>我们把单个字符也视为一个回文串<br>用$dp[i]$来记录状态，$dp[i]$意为从$i$位置到当前遍历到的字符位置$j$是否为回文字符串<br>如果当前位置为$j$，等于遍历到的字符位置$i$，即$s[i] = s[j]$，<br>且从位置$j+1$到$i$也构成回文子串，即$dp[j + 1] = true$<br>那么我们可以得到一个新的回文子串，从位置$j$到位置$i$，答案加1，更新状态<br>时间复杂度$O(n^2)$</p>
 <p>题外：可以用中心扩展算法来降低时间复杂度，但是针对在处理回文串的问题上，有更快的manacher算法，把时间复杂度降低到了线性，如果有兴趣可以自行查阅了解</p>
-<h1>代码(cpp)</h1>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">countSubstrings</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = s.length();</span><br><span class="line">        <span class="keyword">int</span> dp[len + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">            dp[i] = <span class="number">1</span>;</span><br><span class="line">            ans++;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (s[i] == s[j] &amp;&amp; dp[j + <span class="number">1</span>] == <span class="number">1</span>) &#123;</span><br><span class="line">                    dp[j] = <span class="number">1</span>;</span><br><span class="line">                    ans++;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    dp[j] = <span class="number">0</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
+<h1 id="代码-cpp"><a href="#代码-cpp" class="headerlink" title="代码(cpp)"></a>代码(cpp)</h1><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">countSubstrings</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = s.length();</span><br><span class="line">        <span class="keyword">int</span> dp[len + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">            dp[i] = <span class="number">1</span>;</span><br><span class="line">            ans++;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (s[i] == s[j] &amp;&amp; dp[j + <span class="number">1</span>] == <span class="number">1</span>) &#123;</span><br><span class="line">                    dp[j] = <span class="number">1</span>;</span><br><span class="line">                    ans++;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    dp[j] = <span class="number">0</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>LeetCode</category>
       </categories>
