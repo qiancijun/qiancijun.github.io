@@ -12524,4 +12524,132 @@ $dp[l][r]$意为，在区间$l$至$r$内最长回文子序列的个数<br>
         <tag>动态规划</tag>
       </tags>
   </entry>
+  <entry>
+    <title>CodeForces-1375B. Neighbor Grid</title>
+    <url>/2020/08/19/CF1375B/</url>
+    <content><![CDATA[<h1>题目描述</h1>
+<p style="text-align:center; font-size:20px">
+B. Neighbor Grid
+<br/>time limit per test1 second
+<br/>memory limit per test256 megabytes
+<br/>inputstandard input
+outputstandard output
+</p>
+You are given a grid with n rows and m columns, where each cell has a non-negative integer written on it. We say the grid is good if for each cell the following condition holds: if it has a number k>0 written on it, then exactly k of its neighboring cells have a number greater than 0 written on them. Note that if the number in the cell is 0, there is no such restriction on neighboring cells.
+<p>You are allowed to take any number in the grid and increase it by 1. You may apply this operation as many times as you want, to any numbers you want. Perform some operations (possibly zero) to make the grid good, or say that it is impossible. If there are multiple possible answers, you may find any of them.</p>
+<p>Two cells are considered to be neighboring if they have a common edge.</p>
+<p>Input<br>
+The input consists of multiple test cases. The first line contains an integer t (1≤t≤5000)  — the number of test cases. The description of the test cases follows.</p>
+<p>The first line of each test case contains two integers n and m (2≤n,m≤300)  — the number of rows and columns, respectively.</p>
+<p>The following n lines contain m integers each, the j-th element in the i-th line ai,j is the number written in the j-th cell of the i-th row (0≤ai,j≤109).</p>
+<p>It is guaranteed that the sum of n⋅m over all test cases does not exceed 105.</p>
+<p>Output<br>
+If it is impossible to obtain a good grid, print a single line containing “NO”.</p>
+<p>Otherwise, print a single line containing “YES”, followed by n lines each containing m integers, which describe the final state of the grid. This final grid should be obtainable from the initial one by applying some operations (possibly zero).</p>
+<p>If there are multiple possible answers, you may print any of them.</p>
+<p>Example<br>
+input</p>
+<blockquote>
+<p>5<br>
+3 4<br>
+0 0 0 0<br>
+0 1 0 0<br>
+0 0 0 0<br>
+2 2<br>
+3 0<br>
+0 0<br>
+2 2<br>
+0 0<br>
+0 0<br>
+2 3<br>
+0 0 0<br>
+0 4 0<br>
+4 4<br>
+0 0 0 0<br>
+0 2 0 1<br>
+0 0 0 0<br>
+0 0 0 0</p>
+</blockquote>
+<p>output</p>
+<blockquote>
+<p>YES<br>
+0 0 0 0<br>
+0 1 1 0<br>
+0 0 0 0<br>
+NO<br>
+YES<br>
+0 0<br>
+0 0<br>
+NO<br>
+YES<br>
+0 1 0 0<br>
+1 4 2 1<br>
+0 2 0 0<br>
+1 3 1 0</p>
+</blockquote>
+<h1>思路</h1>
+<p>在输入的过程中就可以先去找输入的数据是否可能有结果</p>
+<ul>
+<li>几种不可能为结果的情况：
+<ul>
+<li>在矩阵的四个角上出现了 $ &gt; 2 $的数字，矩阵的四个角最多只有两个相邻的格子</li>
+<li>在矩阵的四条边上（不包括角）出现了$ &gt; 3 $的数字</li>
+<li>除了上述两种情况，出现了$ &gt; 4 $的数字<br>
+在输入过程中直接对这三种情况进行判断<br>
+如果可行，我们直接贪心的将数组填满，题目没有限制，我们可以对任意格子任意加1，以4 * 4为例，我们贪心的将矩阵变为</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">2 3 3 2</span><br><span class="line">3 4 4 3</span><br><span class="line">3 4 4 3</span><br><span class="line">2 3 3 2</span><br></pre></td></tr></table></figure>
+<p>那么我们只需要根据矩阵的大小去填充即可<br>
+下面是AC代码</p>
+<h1>AC代码(cpp)</h1>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> ll = <span class="keyword">long</span> <span class="keyword">long</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _for(i, begin, end) for (int i = begin; i &lt; end; i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _rep(i, begin, end) for (int i = begin; i &lt;= end; i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> print(n, nums) for (int i = 0; i &lt; n; i++) cout &lt;&lt; nums[i] &lt;&lt; <span class="meta-string">" "</span>; cout &lt;&lt; endl;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> IO ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> len(v) ((int)((v).size()))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> all(v) (v).begin(), (v).end()</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rall(v) (v).rbegin(), (v).rend()</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; g;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fillG</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> m = g.size();</span><br><span class="line">    <span class="keyword">int</span> n = g[<span class="number">0</span>].size();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; g.size(); i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; g[<span class="number">0</span>].size(); j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> ( (i == <span class="number">0</span> || i == m - <span class="number">1</span>) &amp;&amp; (j == <span class="number">0</span> || j == n - <span class="number">1</span>)) g[i][j] = <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (i == <span class="number">0</span> || i == m - <span class="number">1</span> || j == <span class="number">0</span> || j == n - <span class="number">1</span>) g[i][j] = <span class="number">3</span>;</span><br><span class="line">            <span class="keyword">else</span> g[i][j] = <span class="number">4</span>;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; g[i][j] &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> m, n;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; m &gt;&gt; n;</span><br><span class="line">    <span class="keyword">int</span> ans = <span class="number">-1</span>;</span><br><span class="line">    g = <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; (m, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; (n, <span class="number">0</span>));</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">            ll tmp;</span><br><span class="line">            <span class="built_in">cin</span> &gt;&gt; tmp;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (tmp &gt; <span class="number">4</span>) ans = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> ((i == <span class="number">0</span> || i == m - <span class="number">1</span>) &amp;&amp; (j == <span class="number">0</span> || j == n - <span class="number">1</span>) &amp;&amp; tmp &gt; <span class="number">2</span>) ans = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> ( (i == <span class="number">0</span> || i == m - <span class="number">1</span> || j == <span class="number">0</span> || j == n - <span class="number">1</span>) &amp;&amp; tmp &gt; <span class="number">3</span> ) ans = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (ans != <span class="number">-1</span>) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"NO"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"YES"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        fillG();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    IO;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    <span class="keyword">while</span> (n--) &#123;</span><br><span class="line">        solve();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>CodeForces</category>
+      </categories>
+      <tags>
+        <tag>贪心算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LeetCode-647-回文子串</title>
+    <url>/2020/08/19/LeetCode-647-%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/</url>
+    <content><![CDATA[<h1>题目链接</h1>
+<p><a href="https://leetcode-cn.com/problems/palindromic-substrings/" target="_blank" rel="noopener">点我</a></p>
+<h1>题目描述</h1>
+<p>给定一个字符串，你的任务是计算这个字符串中有多少个回文子串。<br>
+具有不同开始位置或结束位置的子串，即使是由相同的字符组成，也会被视作不同的子串。</p>
+<p>示例 1：</p>
+<blockquote></blockquote>
+<p>输入：“abc”<br>
+输出：3<br>
+解释：三个回文子串: “a”, “b”, “c”</p>
+<hr/>
+<p>示例 2：</p>
+<blockquote></blockquote>
+<p>输入：“aaa”<br>
+输出：6<br>
+解释：6个回文子串: “a”, “a”, “a”, “aa”, “aa”, “aaa”</p>
+<hr/>
+提示：
+输入的字符串长度不会超过 1000 。
+<h1>思路</h1>
+<p>我们把单个字符也视为一个回文串<br>
+用$dp[i]$来记录状态，$dp[i]$意为从$i$位置到当前遍历到的字符位置$j$是否为回文字符串<br>
+如果当前位置为$j$，等于遍历到的字符位置$i$，即$s[i] = s[j]$，<br>
+且从位置$j+1$到$i$也构成回文子串，即$dp[j + 1] = true$<br>
+那么我们可以得到一个新的回文子串，从位置$j$到位置$i$，答案加1，更新状态<br>
+时间复杂度$O(n^2)$</p>
+<p>题外：可以用中心扩展算法来降低时间复杂度，但是针对在处理回文串的问题上，有更快的manacher算法，把时间复杂度降低到了线性，如果有兴趣可以自行查阅了解</p>
+<h1>代码(cpp)</h1>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">countSubstrings</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = s.length();</span><br><span class="line">        <span class="keyword">int</span> dp[len + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">            dp[i] = <span class="number">1</span>;</span><br><span class="line">            ans++;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (s[i] == s[j] &amp;&amp; dp[j + <span class="number">1</span>] == <span class="number">1</span>) &#123;</span><br><span class="line">                    dp[j] = <span class="number">1</span>;</span><br><span class="line">                    ans++;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    dp[j] = <span class="number">0</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>动态规划</tag>
+        <tag>字符串</tag>
+      </tags>
+  </entry>
 </search>
