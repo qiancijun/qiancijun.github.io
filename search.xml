@@ -12914,4 +12914,95 @@ $dp[i][j][k] = max(dp[i - 1][j - 1][k] + r[i] * g[j], dp[i - 1][j][k - 1] + r[i]
         <tag>贪心算法</tag>
       </tags>
   </entry>
+  <entry>
+    <title>LeetCode-203周周赛</title>
+    <url>/2020/08/23/LeetCode-203%E5%91%A8%E5%91%A8%E8%B5%9B/</url>
+    <content><![CDATA[<h1 id="5495-圆形赛道上经过次数最多的扇区"><a href="#5495-圆形赛道上经过次数最多的扇区" class="headerlink" title="5495. 圆形赛道上经过次数最多的扇区"></a>5495. 圆形赛道上经过次数最多的扇区</h1><p>给你一个整数 $n$ 和一个整数数组 $rounds$ 。有一条圆形赛道由 $n$ 个扇区组成，扇区编号从 $1$ 到 $n$ 。现将在这条赛道上举办一场马拉松比赛，该马拉松全程由 $m$ 个阶段组成。其中，第 $i$ 个阶段将会从扇区 $rounds[i - 1]$ 开始，到扇区 $rounds[i]$ 结束。举例来说，第 $1$ 阶段从 $rounds[0]$ 开始，到 $rounds[1]$ 结束。</p>
+<p>请你以数组形式返回经过次数最多的那几个扇区，按扇区编号 升序 排列。</p>
+<p>注意，赛道按扇区编号升序逆时针形成一个圆（请参见第一个示例）。</p>
+<p>示例 1：</p>
+<blockquote>
+<p>输入：n = 4, rounds = [1,3,1,2]<br>输出：[1,2]<br>解释：本场马拉松比赛从扇区 1 开始。经过各个扇区的次序如下所示：<br>1 —&gt; 2 —&gt; 3（阶段 1 结束）—&gt; 4 —&gt; 1（阶段 2 结束）—&gt; 2（阶段 3 结束，即本场马拉松结束）<br>其中，扇区 1 和 2 都经过了两次，它们是经过次数最多的两个扇区。扇区 3 和 4 都只经过了一次。</p>
+</blockquote>
+<p><hr/><br>示例 2：</p>
+<blockquote>
+<p>输入：n = 2, rounds = [2,1,2,1,2,1,2,1,2]<br>输出：[2]</p>
+</blockquote>
+<p><hr/><br>示例 3：</p>
+<blockquote>
+<p>输入：n = 7, rounds = [1,3,5,7]<br>输出：[1,2,3,4,5,6,7]</p>
+</blockquote>
+<p><hr/><br>提示：<br>$2 &lt;= n &lt;= 100$<br>$1 &lt;= m &lt;= 100$<br>$rounds.length == m + 1$<br>$1 &lt;= rounds[i] &lt;= n$<br>$rounds[i] != rounds[i + 1] ，其中 0 &lt;= i &lt; m$</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>直接模拟即可</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">mostVisited</span><span class="params">(<span class="keyword">int</span> n, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; rounds)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = rounds.size();</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">list</span><span class="params">(<span class="number">110</span>, <span class="number">0</span>)</span></span>;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; result;</span><br><span class="line">        <span class="keyword">while</span> (i + <span class="number">1</span> &lt; len) &#123;</span><br><span class="line">            <span class="keyword">int</span> begin = rounds[i];</span><br><span class="line">            <span class="keyword">int</span> end = rounds[i + <span class="number">1</span>];</span><br><span class="line">            <span class="keyword">while</span> (begin != end) &#123;</span><br><span class="line">                <span class="comment">// cout &lt;&lt; begin &lt;&lt; endl;</span></span><br><span class="line">                <span class="built_in">list</span>[begin]++;</span><br><span class="line">                begin++;</span><br><span class="line">                <span class="keyword">if</span> (begin &gt; n)</span><br><span class="line">                    begin = <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">list</span>[rounds[len - <span class="number">1</span>]]++;</span><br><span class="line">        <span class="keyword">int</span> mx = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">100</span>; i++) &#123;</span><br><span class="line">            mx = max(mx, <span class="built_in">list</span>[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">100</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">list</span>[i] == mx)</span><br><span class="line">                result.push_back(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="5496-你可以获得的最大硬币数目"><a href="#5496-你可以获得的最大硬币数目" class="headerlink" title="5496. 你可以获得的最大硬币数目"></a>5496. 你可以获得的最大硬币数目</h1><p>有 $3n$ 堆数目不一的硬币，你和你的朋友们打算按以下方式分硬币：<br>每一轮中，你将会选出 任意 3 堆硬币（不一定连续）。<br>Alice 将会取走硬币数量最多的那一堆。<br>你将会取走硬币数量第二多的那一堆。<br>Bob 将会取走最后一堆。<br>重复这个过程，直到没有更多硬币。<br>给你一个整数数组 $piles$ ，其中 $piles[i]$ 是第 i 堆中硬币的数目。</p>
+<p>返回你可以获得的最大硬币数目。</p>
+<p>示例 1：</p>
+<blockquote>
+<p>输入：piles = [2,4,1,2,7,8]<br>输出：9<br>解释：选出 (2, 7, 8) ，Alice 取走 8 枚硬币的那堆，你取走 7 枚硬币的那堆，Bob 取走最后一堆。<br>选出 (1, 2, 4) , Alice 取走 4 枚硬币的那堆，你取走 2 枚硬币的那堆，Bob 取走最后一堆。<br>你可以获得的最大硬币数目：7 + 2 = 9.<br>考虑另外一种情况，如果选出的是 (1, 2, 8) 和 (2, 4, 7) ，你就只能得到 2 + 4 = 6 枚硬币，这不是最优解。</p>
+</blockquote>
+<p><hr/><br>示例 2：</p>
+<blockquote>
+<p>输入：piles = [2,4,5]<br>输出：4</p>
+</blockquote>
+<p><hr/><br>示例 3：</p>
+<blockquote>
+<p>输入：piles = [9,8,7,6,5,1,2,3,4]<br>输出：18</p>
+</blockquote>
+<p><hr/><br>提示：<br>$3 &lt;= piles.length &lt;= 10^5$<br>$piles.length % 3 == 0$<br>$1 &lt;= piles[i] &lt;= 10^4$</p>
+<h2 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h2><p>贪心，排序后每次去拿第二多的，k指针可以不要</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxCoins</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; piles)</span> </span>&#123;</span><br><span class="line">        sort(piles.begin(), piles.end());</span><br><span class="line">        <span class="keyword">int</span> len = piles.size();</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>, j = len - <span class="number">2</span>, k = len - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; j) &#123;</span><br><span class="line">            ans += piles[j];</span><br><span class="line">            i++;</span><br><span class="line">            j -= <span class="number">2</span>;</span><br><span class="line">            k -= <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="5497-查找大小为-M-的最新分组"><a href="#5497-查找大小为-M-的最新分组" class="headerlink" title="5497. 查找大小为 M 的最新分组"></a>5497. 查找大小为 M 的最新分组</h1><p>给你一个数组 arr ，该数组表示一个从 1 到 n 的数字排列。有一个长度为 n 的二进制字符串，该字符串上的所有位最初都设置为 0 。</p>
+<p>在从 1 到 n 的每个步骤 i 中（假设二进制字符串和 arr 都是从 1 开始索引的情况下），二进制字符串上位于位置 arr[i] 的位将会设为 1 。</p>
+<p>给你一个整数 m ，请你找出二进制字符串上存在长度为 m 的一组 1 的最后步骤。一组 1 是一个连续的、由 1 组成的子串，且左右两边不再有可以延伸的 1 。</p>
+<p>返回存在长度 恰好 为 m 的 一组 1  的最后步骤。如果不存在这样的步骤，请返回 -1 。</p>
+<p>示例 1：</p>
+<blockquote>
+<p>输入：arr = [3,5,1,2,4], m = 1<br>输出：4<br>解释：<br>步骤 1：”00100”，由 1 构成的组：[“1”]<br>步骤 2：”00101”，由 1 构成的组：[“1”, “1”]<br>步骤 3：”10101”，由 1 构成的组：[“1”, “1”, “1”]<br>步骤 4：”11101”，由 1 构成的组：[“111”, “1”]<br>步骤 5：”11111”，由 1 构成的组：[“11111”]<br>存在长度为 1 的一组 1 的最后步骤是步骤 4 。</p>
+</blockquote>
+<p><hr/><br>示例 2：</p>
+<blockquote>
+<p>输入：arr = [3,1,5,4,2], m = 2<br>输出：-1<br>解释：<br>步骤 1：”00100”，由 1 构成的组：[“1”]<br>步骤 2：”10100”，由 1 构成的组：[“1”, “1”]<br>步骤 3：”10101”，由 1 构成的组：[“1”, “1”, “1”]<br>步骤 4：”10111”，由 1 构成的组：[“1”, “111”]<br>步骤 5：”11111”，由 1 构成的组：[“11111”]<br>不管是哪一步骤都无法形成长度为 2 的一组 1 。</p>
+</blockquote>
+<p><hr/><br>示例 3：</p>
+<blockquote>
+<p>输入：arr = [1], m = 1<br>输出：1</p>
+</blockquote>
+<p><hr/><br>示例 4：</p>
+<blockquote>
+<p>输入：arr = [2,1], m = 2<br>输出：2</p>
+</blockquote>
+<p><hr/><br>提示：</p>
+<p>$n == arr.length$<br>$1 &lt;= n &lt;= 10^5$<br>$1 &lt;= arr[i] &lt;= n$<br>arr 中的所有整数 互不相同<br>$1 &lt;= m &lt;= arr.length$</p>
+<h2 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h2><p>一道二分查找题，逆着来做，假设先全部变成1，每次去移出一个，看是否能构成m个1，如果能构成直接返回，这样一做能保证我们的答案肯定是最后步骤得到的。<br>n的范围很大，我们在找连续m个1的时候，用暴力搜索必定TLE，所以我们需要优化算法。<br>利用map来记录区间，$map[i][j]$意为存在一个$i$至$j$的区间，$i,j$均为1。<br>如果我们要移出的点在这个区间内，我们只需要判断该点到区间两端的距离是否等于m，如果存在，直接返回答案。</p>
+<p><hr/><br>为什么可以这样做？<br>每次移出一个点的操作相当于在分割区间，每次分割完之后，判断两区间长度是否是我们要求的，<br>无限循环这个动作，不存在遗漏和重复</p>
+<h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findLatestStep</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; arr, <span class="keyword">int</span> m)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = arr.size();</span><br><span class="line">        <span class="keyword">if</span> (n == m) <span class="keyword">return</span> n;</span><br><span class="line">        <span class="built_in">map</span>&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; mp;</span><br><span class="line">        mp[<span class="number">0</span>] = n;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = n - <span class="number">1</span>; i &gt;= <span class="number">0</span>; --i) &#123;</span><br><span class="line">            <span class="keyword">int</span> x = arr[i] - <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">auto</span> it = prev(mp.upper_bound(x));</span><br><span class="line">            <span class="keyword">int</span> l = it-&gt;first, r = it-&gt;second;</span><br><span class="line">            <span class="keyword">if</span> (l &lt; x) &#123;</span><br><span class="line">                <span class="keyword">if</span> (x - l == m) <span class="keyword">return</span> i;</span><br><span class="line">                mp[l] = x;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (r &gt; x + <span class="number">1</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (r - x - <span class="number">1</span> == m) <span class="keyword">return</span> i;</span><br><span class="line">                mp[x + <span class="number">1</span>] = r;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="5498-石子游戏-V（TLE）"><a href="#5498-石子游戏-V（TLE）" class="headerlink" title="5498. 石子游戏 V（TLE）"></a>5498. 石子游戏 V（TLE）</h1><p>几块石子 排成一行 ，每块石子都有一个关联值，关联值为整数，由数组 stoneValue 给出。</p>
+<p>游戏中的每一轮：Alice 会将这行石子分成两个 非空行（即，左侧行和右侧行）；Bob 负责计算每一行的值，即此行中所有石子的值的总和。Bob 会丢弃值最大的行，Alice 的得分为剩下那行的值（每轮累加）。如果两行的值相等，Bob 让 Alice 决定丢弃哪一行。下一轮从剩下的那一行开始。</p>
+<p>只 剩下一块石子 时，游戏结束。Alice 的分数最初为 0 。</p>
+<p>返回 Alice 能够获得的最大分数 。</p>
+<p>示例 1：</p>
+<blockquote>
+<p>输入：stoneValue = [6,2,3,4,5,5]<br>输出：18<br>解释：在第一轮中，Alice 将行划分为 [6，2，3]，[4，5，5] 。左行的值是 11 ，右行的值是 14 。Bob 丢弃了右行，Alice 的分数现在是 11 。<br>在第二轮中，Alice 将行分成 [6]，[2，3] 。这一次 Bob 扔掉了左行，Alice 的分数变成了 16（11 + 5）。<br>最后一轮 Alice 只能将行分成 [2]，[3] 。Bob 扔掉右行，Alice 的分数现在是 18（16 + 2）。游戏结束，因为这行只剩下一块石头了。</p>
+</blockquote>
+<p><hr/><br>示例 2：</p>
+<blockquote>
+<p>输入：stoneValue = [7,7,7,7,7,7,7]<br>输出：28</p>
+</blockquote>
+<p><hr/><br>示例 3：</p>
+<blockquote>
+<p>输入：stoneValue = [4]<br>输出：0</p>
+</blockquote>
+<p><hr/><br>提示：</p>
+<p>$1 &lt;= stoneValue.length &lt;= 500$<br>$1 &lt;= stoneValue[i] &lt;= 10^6$</p>
+<h2 id="思路-3"><a href="#思路-3" class="headerlink" title="思路"></a>思路</h2><p>其实是一道很常规的区间dp，不做优化时间复杂度在$O(n^3)$，给的范围在500会超时</p>
+<h2 id="代码-TLE"><a href="#代码-TLE" class="headerlink" title="代码(TLE)"></a>代码(TLE)</h2><p>通过样例130/133，代码仅供参考<br><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">stoneGameV</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; stoneValue)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = stoneValue.size();</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">sum</span><span class="params">(n, <span class="number">0</span>)</span></span>; <span class="comment">// 前缀和</span></span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">dp</span><span class="params">(n,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; (n, <span class="number">0</span>))</span></span>;</span><br><span class="line">        sum[<span class="number">0</span>] = stoneValue[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++) </span><br><span class="line">            sum[i] = sum[i - <span class="number">1</span>] + stoneValue[i];</span><br><span class="line">        <span class="comment">// for (auto a: sum) cout &lt;&lt; a &lt;&lt; " ";</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> len = <span class="number">2</span>; len &lt;= n; len++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> l = <span class="number">0</span>; l + len - <span class="number">1</span> &lt; n; l++) &#123;</span><br><span class="line">                <span class="keyword">int</span> r = l + len - <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> k = l; k &lt;= r; k++) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (k + <span class="number">1</span> &gt; r) <span class="keyword">continue</span>;</span><br><span class="line">                    <span class="keyword">int</span> left = sum[k] - (l &gt; <span class="number">0</span> ? sum[l - <span class="number">1</span>] : <span class="number">0</span>);</span><br><span class="line">                    <span class="keyword">int</span> right = sum[r] - sum[k];</span><br><span class="line">                    <span class="keyword">if</span> (left == right) &#123;</span><br><span class="line">                        dp[l][r] = max(dp[l][r], max(dp[l][k] + left, dp[k + <span class="number">1</span>][r] + right));</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        <span class="keyword">if</span> (left &gt; right) &#123;</span><br><span class="line">                            dp[l][r] = max(dp[l][r], dp[k + <span class="number">1</span>][r] + right);</span><br><span class="line">                        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                            dp[l][r] = max(dp[l][r], dp[l][k] + left);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[<span class="number">0</span>][n - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>试题</tag>
+      </tags>
+  </entry>
 </search>
