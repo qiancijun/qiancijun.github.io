@@ -13500,4 +13500,70 @@ Hierholzer 算法用于在连通图中寻找欧拉路径，其流程如下：
         <tag>深度优先搜索</tag>
       </tags>
   </entry>
+  <entry>
+    <title>CodeForces-1400D. Zigzags</title>
+    <url>/2020/08/29/CF1400D/</url>
+    <content><![CDATA[<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p><p style="text-align:center; font-size:20px">
+D. Zigzags
+<br/>time limit per test2 seconds
+<br/>memory limit per test256 megabytes
+<br/>inputstandard input
+outputstandard output
+</p><br>You are given an array a1,a2…an. Calculate the number of tuples $(i,j,k,l)$ such that:</p>
+<p>$ 1 ≤ i &lt; j &lt; k &lt; l ≤ n;$<br>$ai=ak and aj=al;$<br>Input<br>The first line contains a single integer t $(1≤t≤100)$ — the number of test cases.</p>
+<p>The first line of each test case contains a single integer n $(4≤n≤3000)$ — the size of the array a.</p>
+<p>The second line of each test case contains n integers a1,a2,…,an $(1≤ai≤n)$ — the array a.</p>
+<p>It’s guaranteed that the sum of n in one test doesn’t exceed 3000.</p>
+<p>Output<br>For each test case, print the number of described tuples.</p>
+<p>Example<br>input</p>
+<blockquote>
+<p>2<br>5<br>2 2 2 2 2<br>6<br>1 3 3 1 2 3</p>
+</blockquote>
+<p>output</p>
+<blockquote>
+<p>5<br>2</p>
+</blockquote>
+<p>Note<br>In the first test case, for any four indices $i &lt; j &lt; k &lt; l$ are valid, so the answer is the number of tuples.</p>
+<p>In the second test case, there are 2 valid tuples:<br>$(1,2,4,6): a1=a4 and a2=a6;$<br>$(1,3,4,6): a1=a4 and a3=a6.$</p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>题目给的数据范围是3000，我们最多使用$O(n^2)$复杂度的算法，也就是说我们最多遍历两遍，如果想要用暴搜会超时<br>转变一下问题，其实我们只要记录$(i, j)$对或者记录$(k, l)$对，再对相同的$(k, l)$对或者$(i, j)$对相机<br>$dp[i][j]$意为$(i, j)$对出现的次数。<br>特别的，在遍历的时候对j做循环，因为$l &gt; k &gt; j$，其余的利用j表示即可 </p>
+<h1 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码"></a>AC代码</h1><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> ll = <span class="keyword">long</span> <span class="keyword">long</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _for(i, begin, end) for (int i = begin; i &lt; end; i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _rep(i, begin, end) for (int i = begin; i &lt;= end; i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> print(n, nums) for (int i = 0; i &lt; n; i++) cout &lt;&lt; nums[i] &lt;&lt; <span class="meta-string">" "</span>; cout &lt;&lt; endl;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> IO ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> len(v) ((int)((v).size()))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> all(v) (v).begin(), (v).end()</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rall(v) (v).rbegin(), (v).rend()</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">3010</span>;</span><br><span class="line">ll a[N], dp[N][N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ll n, ans = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) </span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; a[i];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j++) dp[i][j] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = n; j &gt; <span class="number">0</span>; j--) &#123;</span><br><span class="line">        <span class="keyword">int</span> k = j;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; j; i++) &#123;</span><br><span class="line">            ans += dp[a[i]][a[j]];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> l = k + <span class="number">1</span>; l &lt;= n; l++) &#123;</span><br><span class="line">            dp[a[k]][a[l]]++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; ans &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    IO;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    <span class="keyword">while</span> (n--) &#123;</span><br><span class="line">        solve();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>CodeForces</category>
+      </categories>
+      <tags>
+        <tag>动态规划</tag>
+        <tag>双指针</tag>
+        <tag>数学</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CodeForces-1400C. Binary String Reconstruction</title>
+    <url>/2020/08/28/CF1400C/</url>
+    <content><![CDATA[<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p><p style="text-align:center; font-size:20px">
+C. Binary String Reconstruction
+<br/>time limit per test2 seconds
+<br/>memory limit per test256 megabytes
+<br/>inputstandard input
+outputstandard output
+</p><br>Consider the following process. You have a binary string (a string where each character is either 0 or 1) w of length n and an integer x. You build a new binary string s consisting of n characters. The i-th character of s is chosen as follows:</p>
+<p>if the character wi−x exists and is equal to 1, then si is 1 (formally, if i&gt;x and wi−x= 1, then si= 1);<br>if the character wi+x exists and is equal to 1, then si is 1 (formally, if i+x≤n and wi+x= 1, then si= 1);<br>if both of the aforementioned conditions are false, then si is 0.<br>You are given the integer x and the resulting string s. Reconstruct the original string w.</p>
+<p>Input<br>The first line contains one integer t $(1≤t≤1000)$ — the number of test cases.</p>
+<p>Each test case consists of two lines. The first line contains the resulting string s ($2≤|s|≤105$, each character of s is either 0 or 1). The second line contains one integer x $(1≤x≤|s|−1)$.</p>
+<p>The total length of all strings s in the input does not exceed 105.</p>
+<p>Output<br>For each test case, print the answer on a separate line as follows:</p>
+<p>if no string w can produce the string s at the end of the process, print −1;<br>otherwise, print the binary string w consisting of |s| characters. If there are multiple answers, print any of them.</p>
+<p>Example<br>input</p>
+<blockquote>
+<p>3<br>101110<br>2<br>01<br>1<br>110<br>1</p>
+</blockquote>
+<p>output<br>1&gt;11011<br>10<br>-1</p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>题目给的是已经处理好的字符串，要你推原字符串。<br>先构造一个全’1’的字符串，如果给定的字符串中有’0’，那么把构造的字符串的$i - k$和$i + k$全设为’0’（如果有效）<br>这样就得到了一个伪原字符串，再把这个原字符串按条件再处理一遍，判断是否和给定的一样。如果相同就输出这个原字符串</p>
+<h1 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码"></a>AC代码</h1><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> ll = <span class="keyword">long</span> <span class="keyword">long</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _for(i, begin, end) for (int i = begin; i &lt; end; i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _rep(i, begin, end) for (int i = begin; i &lt;= end; i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> print(n, nums) for (int i = 0; i &lt; n; i++) cout &lt;&lt; nums[i] &lt;&lt; <span class="meta-string">" "</span>; cout &lt;&lt; endl;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> IO ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> len(v) ((int)((v).size()))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> all(v) (v).begin(), (v).end()</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rall(v) (v).rbegin(), (v).rend()</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">string</span> str;</span><br><span class="line">    <span class="keyword">int</span> k;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; str &gt;&gt; k;</span><br><span class="line">    <span class="built_in">string</span> ans = <span class="built_in">string</span>(str.length(), <span class="string">'1'</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; str.length(); i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (str[i] == <span class="string">'0'</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i - k &gt;= <span class="number">0</span>) ans[i - k] = <span class="string">'0'</span>;</span><br><span class="line">            <span class="keyword">if</span> (i + k &lt; str.length()) ans[i + k] = <span class="string">'0'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 重新生成字符串</span></span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">newStr</span><span class="params">(str.length(), <span class="string">'0'</span>)</span></span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; str.length(); i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> ( (i - k &gt;= <span class="number">0</span> &amp;&amp; ans[i - k] == <span class="string">'1'</span>) || (i + k &lt; str.length() &amp;&amp; ans[i + k] == <span class="string">'1'</span>) ) &#123;</span><br><span class="line">            newStr[i] = <span class="string">'1'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 如果不一样直接输出-1后面的也不用做了</span></span><br><span class="line">        <span class="keyword">if</span> (newStr[i] != str[i]) &#123;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; <span class="string">"-1"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; ans &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    IO;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    <span class="keyword">while</span> (n--) &#123;</span><br><span class="line">        solve();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>CodeForces</category>
+      </categories>
+      <tags>
+        <tag>贪心算法</tag>
+      </tags>
+  </entry>
 </search>
