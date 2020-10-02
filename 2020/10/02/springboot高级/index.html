@@ -5,12 +5,15 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SpringBoot - 神奇口袋</title>
+    <title>springboot高级 - 神奇口袋</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
-    
+    <meta name="description" content="缓存
+
+将方法的运行结果进行缓存；以后再要相同的数据，直接从缓存中获取，不用调用方法；
+CacheManager管理多个Cache组件的，对缓存的真正CRUD操作在Cache组件中，每一个缓存组件有,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -38,7 +41,7 @@
     <div class="bar" style="width: 0;"></div>
     <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://xlich.top"></a>
     <div title="播放/暂停" class="iconfont icon-play"></div>
-    <h3 class="subtitle">SpringBoot</h3>
+    <h3 class="subtitle">springboot高级</h3>
     <div class="social">
         <div>
             <div class="share">
@@ -54,14 +57,140 @@
     <div class="section">
         <div class="article">
     <div class='main'>
-        <h1 class="title">SpringBoot</h1>
+        <h1 class="title">springboot高级</h1>
         <div class="stuff">
-            <span>七月 11, 2020</span>
+            <span>十月 02, 2020</span>
             
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Java/" rel="tag">Java</a></li></ul>
+
 
         </div>
         <div class="content markdown">
-            
+            <h1>缓存</h1>
+<ul>
+<li>将方法的运行结果进行缓存；以后再要相同的数据，直接从缓存中获取，不用调用方法；</li>
+<li>CacheManager管理多个Cache组件的，对缓存的真正CRUD操作在Cache组件中，每一个缓存组件有自己唯一一个名字；</li>
+</ul>
+<h2 id="原理"><a class="header-anchor" href="#原理">¶</a>原理</h2>
+<ol>
+<li>
+<p>自动配置类；CacheAutoConfiguration</p>
+</li>
+<li>
+<p>缓存的配置类</p>
+<ul>
+<li>org.springframework.boot.autoconfigure.cache.GenericCacheConfiguration</li>
+<li>org.springframework.boot.autoconfigure.cache.JCacheCacheConfiguration</li>
+<li>org.springframework.boot.autoconfigure.cache.EhCacheCacheConfiguration</li>
+<li>org.springframework.boot.autoconfigure.cache.HazelcastCacheConfiguration</li>
+<li>org.springframework.boot.autoconfigure.cache.InfinispanCacheConfiguration</li>
+<li>org.springframework.boot.autoconfigure.cache.CouchbaseCacheConfiguration</li>
+<li>org.springframework.boot.autoconfigure.cache.RedisCacheConfiguration</li>
+<li>org.springframework.boot.autoconfigure.cache.CaffeineCacheConfiguration</li>
+<li>org.springframework.boot.autoconfigure.cache.GuavaCacheConfiguration</li>
+<li>org.springframework.boot.autoconfigure.cache.SimpleCacheConfiguration【默认】</li>
+<li>org.springframework.boot.autoconfigure.cache.NoOpCacheConfiguration</li>
+</ul>
+</li>
+<li>
+<p>哪个配置类默认生效：SimpleCacheConfiguration；</p>
+</li>
+<li>
+<p>给容器中注册了一个CacheManager：ConcurrentMapCacheManager</p>
+</li>
+<li>
+<p>可以获取和创建ConcurrentMapCache类型的缓存组件；他的作用将数据保存在ConcurrentMap中；</p>
+</li>
+</ol>
+<ul>
+<li>
+<p>运行流程：</p>
+<ol>
+<li>@Cacheable：
+<ul>
+<li>方法运行之前，先去查询Cache（缓存组件），按照cacheNames指定的名字获取；（CacheManager先获取相应的缓存），第一次获取缓存如果没有Cache组件会自动创建。</li>
+</ul>
+</li>
+<li>去Cache中查找缓存的内容，使用一个key，默认就是方法的参数；key是按照某种策略生成的；默认是使用keyGenerator生成的，默认使用SimpleKeyGenerator生成key； SimpleKeyGenerator生成key的默认策略；
+<ul>
+<li>如果没有参数；key=new SimpleKey()；</li>
+<li>如果有一个参数：key=参数的值</li>
+<li>如果有多个参数：key=new SimpleKey(params)；</li>
+</ul>
+</li>
+<li>没有查到缓存就调用目标方法；</li>
+<li>将目标方法返回的结果，放进缓存中
+<ul>
+<li>@Cacheable标注的方法执行之前先来检查缓存中有没有这个数据，默认按照参数的值作为key去查询缓存，如果没有就运行方法并将结果放入缓存；以后再来调用就可以直接使用缓存中的数据；</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>核心：</p>
+<ol>
+<li>使用CacheManager【ConcurrentMapCacheManager】按照名字得到Cache【ConcurrentMapCache】件</li>
+<li>key使用keyGenerator生成的，默认是SimpleKeyGenerator</li>
+</ol>
+</li>
+<li>
+<p>几个属性：</p>
+<ol>
+<li>cacheNames/value：指定缓存组件的名字;将方法的返回结果放在哪个缓存中，是数组的方式，可以指定多个存；</li>
+<li>key：缓存数据使用的key；可以用它来指定。默认是使用方法参数的值,1-方法的返回值编写SpEL； #i d;参数id的值   #a0  #p0  #root.args[0],getEmp[2]</li>
+<li>keyGenerator：key的生成器；可以自己指定key的生成器的组件id</li>
+</ol>
+<blockquote>
+<p>key/keyGenerator：二选一使用;</p>
+</blockquote>
+<ol start="4">
+<li>
+<p>cacheManager：指定缓存管理器；或者cacheResolver指定获取解析器</p>
+</li>
+<li>
+<p>condition：指定符合条件的情况下才缓存；(condition = “#id&gt;1”)第一个参数的值》1的时候才进行缓存</p>
+<ul>
+<li>unless:否定缓存；当unless指定的条件为true，方法的返回值就不会被缓存；可以获取到结果进行判断
+<ul>
+<li>unless = “#result == null”</li>
+<li>unless = “#a0==2”:如果第一个参数的值是2，结果不缓存；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>sync：是否使用异步模式</p>
+</li>
+</ol>
+</li>
+<li>
+<p>@CachePut：既调用方法，又更新缓存数据；同步更新缓存,修改了数据库的某个数据，同时更新缓存；</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@CachePut</span>(<span class="comment">/*value = "emp",*/</span>key = <span class="string">"#result.id"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> Employee <span class="title">updateEmp</span><span class="params">(Employee employee)</span></span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"updateEmp:"</span>+employee);</span><br><span class="line">    employeeMapper.updateEmp(employee);</span><br><span class="line">    <span class="keyword">return</span> employee;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>@CacheEvict：缓存清除
+<ul>
+<li>key：指定要清除的数据</li>
+<li>allEntries = true：指定清除这个缓存中所有的数据</li>
+<li>beforeInvocation = false：缓存的清除是否在方法之前执行
+<ul>
+<li>默认代表缓存清除操作是在方法执行之后执行;如果出现异常缓存就不会清除</li>
+</ul>
+</li>
+<li>beforeInvocation = true：
+<ul>
+<li>代表清除缓存操作是在方法运行之前执行，无论方法是否出现异常，缓存都清除</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@CacheEvict</span>(value=<span class="string">"emp"</span>,beforeInvocation = <span class="keyword">true</span><span class="comment">/*key = "#id",*/</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteEmp</span><span class="params">(Integer id)</span></span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"deleteEmp:"</span>+id);</span><br><span class="line">    <span class="comment">//employeeMapper.deleteEmpById(id);</span></span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">10</span>/<span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>@CacheConfig(cacheNames=&quot;emp&quot;/*,cacheManager = &quot;employeeCacheManager&quot;*/)</code> 抽取缓存的公共配置</li>
+</ul>
+
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
                 <source type="audio/mpeg" src="">
@@ -100,7 +229,7 @@
     </div>
     
         <div class='side'>
-				
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#原理"><span class="toc-number">1.1.</span> <span class="toc-text">原理</span></a></li></ol></li></ol>	
         </div>
     
 </div>
