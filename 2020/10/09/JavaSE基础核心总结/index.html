@@ -1,0 +1,335 @@
+
+<!DOCTYPE html>
+<html lang="zh_CH" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>JavaSE基础核心总结 - 神奇口袋</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="qiancijun,"> 
+    <meta name="description" content="Java基本语法
+¶数据类型
+在Java中，数据类型只有四类八种
+
+整数型：byte、short、int、long
+
+byte：字节，1byte = 8bits，byte的默认值是0
+short：短,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">神奇口袋</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://xlich.top"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">JavaSE基础核心总结</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+   
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">JavaSE基础核心总结</h1>
+        <div class="stuff">
+            <span>十月 09, 2020</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h1>Java基本语法</h1>
+<h2 id="数据类型"><a class="header-anchor" href="#数据类型">¶</a>数据类型</h2>
+<p>在Java中，数据类型只有<code>四类八种</code></p>
+<ul>
+<li>整数型：byte、short、int、long
+<ul>
+<li>byte：字节，1byte = 8bits，byte的默认值是0</li>
+<li>short：短整型，占用两个字节，也就是16位，默认值是0</li>
+<li>int：整形，占用四个字节，默认值是0</li>
+<li>long：长整形，占用八个字节，也就是64位，默认值是0L</li>
+</ul>
+</li>
+<li>浮点型：float、double
+<ul>
+<li>float：单精度浮点型，占用4位，1float = 32bits，默认值是0.0f</li>
+<li>double：双精度浮点型，占用8位，1double = 64bits，默认值是0.0d</li>
+</ul>
+</li>
+<li>字符型：char
+<ul>
+<li>char：单一的16位Unicode字符，最小值是<code>\u0000</code></li>
+</ul>
+</li>
+<li>布尔型：boolean
+<ul>
+<li>boolean：只有两种值，true或者是false，只表示1位，默认值是false</li>
+</ul>
+</li>
+</ul>
+<h1>面向对象</h1>
+<h2 id="对象的创建"><a class="header-anchor" href="#对象的创建">¶</a>对象的创建</h2>
+<p>在Java中（几乎）一切都是对象，尽管一切都看作对象，但操纵的标识符实际上是对象的一个引用，拥有一个引用并不一定需要有一个对象与它关联，例如可以创建一个<code>String</code>的引用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String s;</span><br></pre></td></tr></table></figure>
+<p>这里创建的只是引用，并不是对象，在创建一个引用的同时进行初始化</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String s = <span class="keyword">new</span> String(<span class="string">"hello world"</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="基本数据类型的对象"><a class="header-anchor" href="#基本数据类型的对象">¶</a>基本数据类型的对象</h2>
+<p>在程序设计中经常用到一系列类型，它们需要被特殊处理。在Java中&quot;new&quot;将对象存储在”堆“里，故用new创建一个对象（特别是小的），简单的变量，往往不是很有效。因此对于这些类型，Java采取与C和C++相同的方法。也就是不用new创建变量。而是创建一个并非是引用的”自动变量“，这个变量直接存储”值“并置与堆栈中，因此更加高效</p>
+<h3 id="高精度数字"><a class="header-anchor" href="#高精度数字">¶</a>高精度数字</h3>
+<p>Java提供了两个用于高精度计算的类：BigInteger和BigDecimal，二者都没有对应的基本的数据类型。不过这两个类包含的方法，提供的操作与对基本类型所能执行的操作相似，也就是说能作用与int或float的操作，也同样能作用与BigInteger和BigDecimal，只不过必须用方法调用的方式取代运算符方式来实现</p>
+<h2 id="构造器"><a class="header-anchor" href="#构造器">¶</a>构造器</h2>
+<p>创建对象时，如果其类具有构造器，Java就会在用户有能力操作对象之前自动调用响应的构造器，从而保证了初始化的进行。<br>
+构造器有助于减少错误，并使代码更易于阅读。从概念上讲，”初始化“与”创建“时彼此独立的，在Java中”初始化“和”创建”捆绑在一起。构造器是一种特殊类型的方法，new表达式确实返回了对新建对象的引用，但构造器本身并没有任何返回值</p>
+<h2 id="方法重载"><a class="header-anchor" href="#方法重载">¶</a>方法重载</h2>
+<p>在Java中一个很重要的概念是方法的重载，它是类名的不同表现形式，构造函数也是重载的一种，构成重载的条件：</p>
+<ol>
+<li>方法名称必须相同</li>
+<li>参数列表必须不同（个数不同，类型不同，参数类型排列顺序不同等）</li>
+<li>方法的返回类型可以相同也可以不相同</li>
+<li>仅仅返回类型不同不足以构成重载</li>
+<li>重载是发生在编译时的</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> age;</span><br><span class="line">    <span class="keyword">char</span> gender;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;<span class="keyword">this</span>.age = age;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(<span class="keyword">char</span> gender)</span> </span>&#123;<span class="keyword">this</span>.gender = gender;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(<span class="keyword">int</span> age, <span class="keyword">char</span> gender)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">        <span class="keyword">this</span>.gender = gender;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="方法的重写"><a class="header-anchor" href="#方法的重写">¶</a>方法的重写</h2>
+<p>方法的重写描述的是对子类和父类之间的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> age;</span><br><span class="line">    <span class="keyword">char</span> gender;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">say</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"I'm a person"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> grade;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">say</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"I'm a student"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>重写的方法必须要和父类保持一致，包括返回值类型，方法名，参数列表也一样</li>
+<li>重写的方法可以使用<code>@Override</code>注解来标识</li>
+<li>子类中重写方法的访问权限不能低于父类中方法的访问权限</li>
+</ul>
+<h2 id="初始化顺序"><a class="header-anchor" href="#初始化顺序">¶</a>初始化顺序</h2>
+<ul>
+<li>不涉及继承的初始化顺序</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Life l = <span class="keyword">new</span> Life();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Life</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 静态属性</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String staticField = getStaticField();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 静态代码块</span></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">"静态代码块初始化完成"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 普通属性</span></span><br><span class="line">    <span class="keyword">private</span> String field = getField();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 普通代码块</span></span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(<span class="string">"普通代码块初始化完成"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 构造器</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Life</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"构造函数初始化"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getStaticField</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"静态属性初始化完成"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Static Field Initial"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getField</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"普通方法初始化完成"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Field Initial"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>输出结果</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">静态属性初始化完成</span><br><span class="line">静态代码块初始化完成</span><br><span class="line">普通方法初始化完成</span><br><span class="line">普通代码块初始化完成</span><br><span class="line">构造函数初始化</span><br></pre></td></tr></table></figure>
+<ul>
+<li>总结：初始化顺序如下（普通属性和普通代码块的初始化顺序取决于编码前后顺序）
+<ol>
+<li>静态属性</li>
+<li>静态代码块</li>
+<li>普通方法</li>
+<li>普通代码块</li>
+<li>构造函数</li>
+</ol>
+</li>
+</ul>
+<h3 id="涉及子父类的初始化顺序"><a class="header-anchor" href="#涉及子父类的初始化顺序">¶</a>涉及子父类的初始化顺序</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        LifeSon l = <span class="keyword">new</span> LifeSon();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LifeFather</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 静态属性</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String staticField = getStaticField();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 静态代码块</span></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">"父类静态代码块初始化完成"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 普通属性</span></span><br><span class="line">    <span class="keyword">private</span> String field = getField();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 普通代码块</span></span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(<span class="string">"父类普通代码块初始化完成"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 构造器</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LifeFather</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"父类构造函数初始化"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getStaticField</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"父类静态属性初始化完成"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Static Field Initial"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getField</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"父类普通方法初始化完成"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Field Initial"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LifeSon</span> <span class="keyword">extends</span> <span class="title">LifeFather</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 静态属性</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String staticField = getStaticField();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 静态代码块</span></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">"子类静态代码块初始化完成"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 普通属性</span></span><br><span class="line">    <span class="keyword">private</span> String field = getField();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 普通代码块</span></span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(<span class="string">"子类普通代码块初始化完成"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 构造器</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LifeSon</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"子类构造函数初始化"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getStaticField</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"子类静态属性初始化完成"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Static Field Initial"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getField</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"子类普通方法初始化完成"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Field Initial"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>输出结果</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">父类静态属性初始化完成</span><br><span class="line">父类静态代码块初始化完成</span><br><span class="line">子类静态属性初始化完成</span><br><span class="line">子类静态代码块初始化完成</span><br><span class="line">子类普通方法初始化完成</span><br><span class="line">父类普通代码块初始化完成</span><br><span class="line">父类构造函数初始化</span><br><span class="line">子类普通方法初始化完成</span><br><span class="line">子类普通代码块初始化完成</span><br><span class="line">子类构造函数初始化</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>总结：初始化顺序如下（普通属性和普通代码块的初始化顺序取决于编码前后顺序）</p>
+<ol>
+<li>父类静态属性</li>
+<li>父类静态代码块</li>
+<li>子类静态属性</li>
+<li>子类静态代码块</li>
+<li>子类普通方法</li>
+<li>父类普通代码块</li>
+<li>父类构造函数</li>
+<li>子类普通方法</li>
+<li>子类普通代码块</li>
+<li>子类构造函数</li>
+</ol>
+</li>
+<li>
+<p>简洁版：<br>
+父类的静态代码块<br>
+子类的静态代码块<br>
+父类的普通代码块<br>
+父类的构造方法<br>
+子类的普通代码块<br>
+子类的构造方法</p>
+</li>
+</ul>
+<h2 id="this和super"><a class="header-anchor" href="#this和super">¶</a>this和super</h2>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='https://link.hhtjim.com/163/155827.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='https://link.hhtjim.com/163/1491163.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='https://link.hhtjim.com/163/1992707.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='true'
+        data-ci='Iv1.06e5c405a7731b45'
+        data-cs='2fcfe85902a7d5812fa4b299b56a6f194c98e08a'
+        data-r='qiancijun.github.io'
+        data-o='qiancijun'
+        data-a='qiancijun'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">Java基本语法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据类型"><span class="toc-number">1.1.</span> <span class="toc-text">数据类型</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">2.</span> <span class="toc-text">面向对象</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#对象的创建"><span class="toc-number">2.1.</span> <span class="toc-text">对象的创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基本数据类型的对象"><span class="toc-number">2.2.</span> <span class="toc-text">基本数据类型的对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#高精度数字"><span class="toc-number">2.2.1.</span> <span class="toc-text">高精度数字</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#构造器"><span class="toc-number">2.3.</span> <span class="toc-text">构造器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方法重载"><span class="toc-number">2.4.</span> <span class="toc-text">方法重载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方法的重写"><span class="toc-number">2.5.</span> <span class="toc-text">方法的重写</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#初始化顺序"><span class="toc-number">2.6.</span> <span class="toc-text">初始化顺序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#涉及子父类的初始化顺序"><span class="toc-number">2.6.1.</span> <span class="toc-text">涉及子父类的初始化顺序</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#this和super"><span class="toc-number">2.7.</span> <span class="toc-text">this和super</span></a></li></ol></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":250,"height":400},"mobile":{"show":false},"log":false});</script></body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-163098031-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+<script type="text/javascript" src="/js/love.js"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</html>

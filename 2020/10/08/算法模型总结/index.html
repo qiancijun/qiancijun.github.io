@@ -12,8 +12,9 @@
     <meta name="keywords" content="qiancijun,"> 
     <meta name="description" content="动态规划
 ¶数字三角形模型
-¶最长上升子序列模型
-"> 
+
+问题原型：数字三角形
+给定一个如下图所示的数字三角形，从顶部出发，在每一结点可以选择移动至其左下方的结点或移动至其右下方的结点，一直走到底层，要求找出一条路径，使路径上,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -66,6 +67,48 @@
         <div class="content markdown">
             <h1>动态规划</h1>
 <h2 id="数字三角形模型"><a class="header-anchor" href="#数字三角形模型">¶</a>数字三角形模型</h2>
+<ul>
+<li>问题原型：<a href="https://www.acwing.com/problem/content/900/" target="_blank" rel="noopener">数字三角形</a></li>
+<li>给定一个如下图所示的数字三角形，从顶部出发，在每一结点可以选择移动至其左下方的结点或移动至其右下方的结点，一直走到底层，要求找出一条路径，使路径上的数字的和最大。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">        7</span><br><span class="line">      3   8</span><br><span class="line">    8   1   0</span><br><span class="line">  2   7   4   4</span><br><span class="line">4   5   2   6   5</span><br></pre></td></tr></table></figure>
+<ul>
+<li>二维空间无优化版</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">510</span>;</span><br><span class="line"><span class="keyword">int</span> dp[N][N];</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= i; j++)</span><br><span class="line">            <span class="built_in">cin</span> &gt;&gt; dp[i][j];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= i; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (j == <span class="number">0</span>) dp[i][j] += dp[i - <span class="number">1</span>][j];</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (j == i) dp[i][j] += dp[i - <span class="number">1</span>][j - <span class="number">1</span>];</span><br><span class="line">            <span class="keyword">else</span> dp[i][j] = max(dp[i][j] + dp[i - <span class="number">1</span>][j - <span class="number">1</span>], dp[i][j] + dp[i - <span class="number">1</span>][j]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> ans = <span class="number">-1e8</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) ans = max(ans, dp[n - <span class="number">1</span>][i]);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; ans &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>问题变形：
+<ol>
+<li><a href="https://www.acwing.com/problem/content/1017/" target="_blank" rel="noopener">摘花生</a></li>
+<li><a href="https://www.acwing.com/problem/content/1020/" target="_blank" rel="noopener">最低通行费</a></li>
+<li><a href="https://leetcode-cn.com/problems/triangle/" target="_blank" rel="noopener">三角形最小路径和</a></li>
+<li><a href="https://www.acwing.com/problem/content/1029/" target="_blank" rel="noopener">方格取数</a></li>
+</ol>
+</li>
+</ul>
+<h3 id="方格取数"><a class="header-anchor" href="#方格取数">¶</a>方格取数</h3>
+<ul>
+<li>
+<p>设有 N×N 的方格图，我们在其中的某些方格中填入正整数，而其它的方格中则放入数字0。某人从图中的左上角 A 出发，可以向下行走，也可以向右行走，直到到达右下角的 B 点。在走过的路上，他可以取走方格中的数（取走后的方格中将变为数字0）。此人从 A 点到 B 点共走了两次，试找出两条这样的路径，使得取得的数字和为最大。</p>
+</li>
+<li>
+<p>思路：<br>
+之前的问题都是从某个点走到另一个点走一起，而这道题变成了走两次，对比一下两种的状态转移方程<br>
+走一次：$f[i, j]$表示所有从$(1, 1)$走到$(i, j)$的路径的最大值<br>
+走两次：$f[i1, j1, i2, j2]$表示所有从$(1, 1), (1, 1)%分别走到$(i1, j1), (i2, j2)$的路径的最大值。<br>
+不难发现只有在$i1 + j1 = i2 + j2$时，两条路径的格子才能重合，抽取两维状态变为$f(k, i1, i2)$其中$k$表示两条路线当前走到的格子的横纵坐标之和。$k = i1 + j1 = i2 + j2$<br>
+对应的$k - 1 = i1 + j1 - 1 = i2 + j2 - 1</p>
+</li>
+</ul>
+<hr/>
+状态转移方程：
+$f[i1−1][j1][i2−1][j2]==f[k−1][i1−1][i2−1]$
+$f[i1][j1−1][i2−1][j2]==f[k−1][i1][i2−1]$
+$f[i1−1][j1][i2][j2−1]==f[k−1][i1−1][i2]$
+<ul>
+<li>代码：</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">12</span>;</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">int</span> g[N][N], dp[N * <span class="number">2</span>][N][N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    <span class="keyword">int</span> u, v, w;</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; u &gt;&gt; v &gt;&gt; w &amp;&amp; (u || v || w)) g[u][v] = w;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">2</span>; k &lt;= n + n; k++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i1 = <span class="number">1</span>; i1 &lt;= n; i1++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i2 = <span class="number">1</span>; i2 &lt;= n; i2++) &#123;</span><br><span class="line">                <span class="keyword">int</span> j1 = k - i1, j2 = k - i2;</span><br><span class="line">                <span class="keyword">if</span> (j1 &gt;= <span class="number">1</span> &amp;&amp; j1 &lt;= n &amp;&amp; j2 &gt;= <span class="number">1</span> &amp;&amp; j2 &lt;= n)&#123;</span><br><span class="line">                    <span class="keyword">int</span> t = g[i1][j1];</span><br><span class="line">                    <span class="keyword">if</span> (i1 != i2) t += g[i2][j2];</span><br><span class="line">                    dp[k][i1][i2] = max(dp[k][i1][i2], dp[k - <span class="number">1</span>][i1 - <span class="number">1</span>][i2 - <span class="number">1</span>] + t);</span><br><span class="line">                    dp[k][i1][i2] = max(dp[k][i1][i2], dp[k - <span class="number">1</span>][i1 - <span class="number">1</span>][i2] + t);</span><br><span class="line">                    dp[k][i1][i2] = max(dp[k][i1][i2], dp[k - <span class="number">1</span>][i1][i2 - <span class="number">1</span>] + t);</span><br><span class="line">                    dp[k][i1][i2] = max(dp[k][i1][i2], dp[k - <span class="number">1</span>][i1][i2] + t);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; dp[n + n][n][n] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="最长上升子序列模型"><a class="header-anchor" href="#最长上升子序列模型">¶</a>最长上升子序列模型</h2>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
@@ -106,7 +149,7 @@
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">动态规划</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数字三角形模型"><span class="toc-number">1.1.</span> <span class="toc-text">数字三角形模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最长上升子序列模型"><span class="toc-number">1.2.</span> <span class="toc-text">最长上升子序列模型</span></a></li></ol></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">动态规划</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数字三角形模型"><span class="toc-number">1.1.</span> <span class="toc-text">数字三角形模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#方格取数"><span class="toc-number">1.1.1.</span> <span class="toc-text">方格取数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最长上升子序列模型"><span class="toc-number">1.2.</span> <span class="toc-text">最长上升子序列模型</span></a></li></ol></li></ol>	
         </div>
     
 </div>
