@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>JavaSE基础核心总结 - 神奇口袋</title>
+    <title>JavaSE核心总结 - 神奇口袋</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
@@ -45,7 +45,7 @@ short：短,">
     <div class="bar" style="width: 0;"></div>
     <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://xlich.top"></a>
     <div title="播放/暂停" class="iconfont icon-play"></div>
-    <h3 class="subtitle">JavaSE基础核心总结</h3>
+    <h3 class="subtitle">JavaSE核心总结</h3>
     <div class="social">
         <div>
             <div class="share">
@@ -61,7 +61,7 @@ short：短,">
     <div class="section">
         <div class="article">
     <div class='main'>
-        <h1 class="title">JavaSE基础核心总结</h1>
+        <h1 class="title">JavaSE核心总结</h1>
         <div class="stuff">
             <span>十月 09, 2020</span>
             
@@ -110,6 +110,10 @@ short：短,">
 <h2 id="构造器"><a class="header-anchor" href="#构造器">¶</a>构造器</h2>
 <p>创建对象时，如果其类具有构造器，Java就会在用户有能力操作对象之前自动调用响应的构造器，从而保证了初始化的进行。<br>
 构造器有助于减少错误，并使代码更易于阅读。从概念上讲，”初始化“与”创建“时彼此独立的，在Java中”初始化“和”创建”捆绑在一起。构造器是一种特殊类型的方法，new表达式确实返回了对新建对象的引用，但构造器本身并没有任何返回值</p>
+<ul>
+<li>默认构造器：又称无参构造器，是没有形式参数的，它的作用是创建一个默认对象。如果你写的类中没有构造器，则编译器会自动帮你创建一个默认构造器。</li>
+<li>如果你写的类中提供了有参构造器，则JVM不会生成无参构造器，如果想用无参构造，必须在类中写明无参构造器</li>
+</ul>
 <h2 id="方法重载"><a class="header-anchor" href="#方法重载">¶</a>方法重载</h2>
 <p>在Java中一个很重要的概念是方法的重载，它是类名的不同表现形式，构造函数也是重载的一种，构成重载的条件：</p>
 <ol>
@@ -180,8 +184,56 @@ short：短,">
 子类的构造方法</p>
 </li>
 </ul>
-<h2 id="this和super"><a class="header-anchor" href="#this和super">¶</a>this和super</h2>
-
+<h2 id="static"><a class="header-anchor" href="#static">¶</a>static</h2>
+<p>static可以用来修饰成员变量和方法，static用在没有创建对象的情况下调用 方法/变量</p>
+<ul>
+<li>用static声明的成员变量为静态成员变量，也称为类变量，类变量的声明周期和类相同，在整个应用程序执行期间都有效</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> String s = <span class="string">"hello world"</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用static修饰的方法称为静态方法，静态方法能够直接使用类名.方法名进行调用。由于静态方法不依赖与任何对象就可以直接访问，因此对于静态方法来说，是没有this关键字的，实例变量都会有this关键字。在静态方法中不能访问类的非静态成员变量和非静态方法</li>
+</ul>
+<h2 id="final"><a class="header-anchor" href="#final">¶</a>final</h2>
+<ul>
+<li>final：一个永恒不变的编译时常量，在运行时被初始化的值，不希望被改变<br>
+对于编译器常量这种情况，编译器可以将该变量值代入任何可能用到它的计算式中，也就是说可以在编译时就执行计算式，减轻了运行时的负担。在Java中这些常量必须是基本数据类型，并且以final表示，在对这个常量进行定义时候，必须对其进行赋值。</li>
+</ul>
+<hr/>
+一个即使final又是static的域只占据一段不能改变的存储空间，当对象引用不是基本数据类型而引用final时，final使引用永恒不变。一旦引用被初始化指向一个对象，就无法再把它改为指向另一个对象，然而对象其自身是可以被修改的
+<ul>
+<li>空白final：Java允许生成空白final，所谓空白final是指被声明为final但又未给定初始值的域，无论什么情况，编译器都确保空白final在使用前必须被初始化，空白final在final的使用上提供了更大的灵活性</li>
+<li>final参数：Java允许在参数列表中以声明的方式将参数指明为final。这意味着无法在方法中更改参数引用所指向的变量</li>
+<li>final方法：使用final方法的原因有两个。
+<ol>
+<li>把方法锁定，以防任何继承类修改它的含义。这是出以设计的考虑：想要确保在继承中使方法行为保持不变，并且不会被覆盖</li>
+<li>效率。在Java早期实现中，如果将一个方法指明为final，就是同意编译器将针对该方法的所有调用都转为内嵌调用。当编译器发现一个final方法调用命令时，它会根据自己的谨慎判断，跳过插入程序代码这种正常方式而执行方法调用机制</li>
+</ol>
+</li>
+<li>final和private：类中所有的private方法都隐式的指定为是final的。由于无法取用private方法，所以也就无法覆盖</li>
+<li>final类：当讲某个类的整体定义为final时就表明不打算继承该类</li>
+</ul>
+<h2 id="接口和抽象类"><a class="header-anchor" href="#接口和抽象类">¶</a>接口和抽象类</h2>
+<ul>
+<li>抽象类
+<ol>
+<li>可以拥有构造函数，不能new对象</li>
+<li>可以有静态方法</li>
+</ol>
+</li>
+<li>接口
+<ol>
+<li>接口中可以有变量，但是无论怎么写都是public static final的</li>
+<li>接口中可以有非抽象方法，例如default方法（JDK1.8）</li>
+<li>接口中可以有带有方法体的方法（JDK1.8）</li>
+<li>接口中的方法默认是public的</li>
+</ol>
+</li>
+</ul>
+<h2 id="多态"><a class="header-anchor" href="#多态">¶</a>多态</h2>
+<ul>
+<li>多态指的是同一个行为具有多个不同表现形式。是指一个类实例（对象）的相同方法在不同情形下具有不同表现形式。封装和继承是多态的基础。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Fruit apple = <span class="keyword">new</span> Apple();</span><br><span class="line">        apple.eat();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Fruit</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> num;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"eat fruit"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Apple</span> <span class="keyword">extends</span> <span class="title">Fruit</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.num = <span class="number">2</span>;</span><br><span class="line">        System.out.println(<span class="string">"eat"</span> + num + <span class="string">"apple"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
                 <source type="audio/mpeg" src="">
@@ -220,7 +272,7 @@ short：短,">
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">Java基本语法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据类型"><span class="toc-number">1.1.</span> <span class="toc-text">数据类型</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">2.</span> <span class="toc-text">面向对象</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#对象的创建"><span class="toc-number">2.1.</span> <span class="toc-text">对象的创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基本数据类型的对象"><span class="toc-number">2.2.</span> <span class="toc-text">基本数据类型的对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#高精度数字"><span class="toc-number">2.2.1.</span> <span class="toc-text">高精度数字</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#构造器"><span class="toc-number">2.3.</span> <span class="toc-text">构造器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方法重载"><span class="toc-number">2.4.</span> <span class="toc-text">方法重载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方法的重写"><span class="toc-number">2.5.</span> <span class="toc-text">方法的重写</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#初始化顺序"><span class="toc-number">2.6.</span> <span class="toc-text">初始化顺序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#涉及子父类的初始化顺序"><span class="toc-number">2.6.1.</span> <span class="toc-text">涉及子父类的初始化顺序</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#this和super"><span class="toc-number">2.7.</span> <span class="toc-text">this和super</span></a></li></ol></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">Java基本语法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据类型"><span class="toc-number">1.1.</span> <span class="toc-text">数据类型</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">2.</span> <span class="toc-text">面向对象</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#对象的创建"><span class="toc-number">2.1.</span> <span class="toc-text">对象的创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基本数据类型的对象"><span class="toc-number">2.2.</span> <span class="toc-text">基本数据类型的对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#高精度数字"><span class="toc-number">2.2.1.</span> <span class="toc-text">高精度数字</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#构造器"><span class="toc-number">2.3.</span> <span class="toc-text">构造器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方法重载"><span class="toc-number">2.4.</span> <span class="toc-text">方法重载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方法的重写"><span class="toc-number">2.5.</span> <span class="toc-text">方法的重写</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#初始化顺序"><span class="toc-number">2.6.</span> <span class="toc-text">初始化顺序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#涉及子父类的初始化顺序"><span class="toc-number">2.6.1.</span> <span class="toc-text">涉及子父类的初始化顺序</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#static"><span class="toc-number">2.7.</span> <span class="toc-text">static</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#final"><span class="toc-number">2.8.</span> <span class="toc-text">final</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#接口和抽象类"><span class="toc-number">2.9.</span> <span class="toc-text">接口和抽象类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多态"><span class="toc-number">2.10.</span> <span class="toc-text">多态</span></a></li></ol></li></ol>	
         </div>
     
 </div>
