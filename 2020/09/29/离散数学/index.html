@@ -170,11 +170,15 @@
 </tr>
 <tr>
 <td style="text-align:center">蕴涵等值式</td>
-<td style="text-align:center">$A \leftarrow \Leftrightarrow \lnot A \vee B$</td>
+<td style="text-align:center">$A \rightarrow B \Leftrightarrow \lnot A \vee B$</td>
+</tr>
+<tr>
+<td style="text-align:center">等价等值式</td>
+<td style="text-align:center">$A \leftrightarrow B \Leftrightarrow (A \rightarrow B) \wedge (B \rightarrow A)$</td>
 </tr>
 <tr>
 <td style="text-align:center">假言易位</td>
-<td style="text-align:center">$A \leftrightarrow B \Leftrightarrow (A \rightarrow B)(B \rightarrow A)$</td>
+<td style="text-align:center">$A \leftrightarrow B \Leftrightarrow A \leftrightarrow \lnot B$</td>
 </tr>
 <tr>
 <td style="text-align:center">等价否定等值式</td>
@@ -224,6 +228,24 @@
 <li>极小项（极大项）：在含有n个命题变项的简单合取式（简单析取式）中，若每个命题变项和它的否定式恰好出现一个仅出现一次，而命题变项或它的否定式按照下标从小到大或按照字典序排列，称这样的简单合取式（简单析取式）为极小项（极大项）</li>
 <li>主析取范式（主合取范式）：所有简单合取式（简单析取式）都是极小项（极大项）的析取范式（合取范式）<ul>
 <li>定理：任何命题公式都存在与之等值的主析取范式和主合取范式，并且都是唯一的</li>
+</ul>
+</li>
+<li>判断公式的类型：设A含n个命题变项<ul>
+<li>A为重言式（永真式）：<ul>
+<li>A的主析取范式含全部$2^{n}$个极小项</li>
+<li>A的主合取范式不含任何极大项，记为1</li>
+</ul>
+</li>
+<li>A为矛盾式（永假式）：<ul>
+<li>A的主析取范式不含任何极小项，记为0</li>
+<li>A的主合取范式含全部$2^{n}$个极大项</li>
+</ul>
+</li>
+<li>A为非重言式的可满足式：<ul>
+<li>A的主析取范式中至少包含一个，但不是全部极小项</li>
+<li>A的主合取范式中至少包含一个，但不是全部极大项</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
