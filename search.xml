@@ -15191,6 +15191,102 @@ $dp[m][n][2]$意为从${0, 0}$到${m, n}$的最大值和最小值，0为最小�
 </ul>
 </li>
 </ul>
+<h2 id="三、命题逻辑的的推理理论"><a href="#三、命题逻辑的的推理理论" class="headerlink" title="三、命题逻辑的的推理理论"></a>三、命题逻辑的的推理理论</h2><h3 id="推理的形式结构"><a href="#推理的形式结构" class="headerlink" title="推理的形式结构"></a>推理的形式结构</h3><ul>
+<li>定义3.1:设$A<em>{1}, A</em>{2}, …, A<em>{k}$和B都是命题公式，若对于$A</em>{1}, A<em>{2}, …, A</em>{k}$和B中出现的命题变项的任意一组赋值，或者$A<em>{1} \wedge A</em>{2} \wedge … \wedge A<em>{k}$为假，或者当$A</em>{1} \wedge A<em>{2} \wedge … \wedge A</em>{k}$为真时B也真，则称由前提$A<em>{1}, A</em>{2}, …, A_{k}$推出结论B的推理时$\color{red}{有效的}$或$\color{red}{正确的}$，并称B为$\color{red}{有效的结论}$</li>
+<li>推理的形式结构</li>
+<li>定理3.1:命题公式$A<em>{1}, A</em>{2}, …, A<em>{k}$推出B的推理正确当且仅当$A</em>{1}, A<em>{2}, …, A</em>{k} \rightarrow B$为重言式</li>
+<li>$\color{red}{注意}$：<ol>
+<li>只要不出现$A<em>{1} \wedge A</em>{2} \wedge … \wedge A_{k}$为1， B为0的情况，推理就是正确的</li>
+<li>推理正确不能保证结论一定正确，因为前提可能不成立</li>
+<li>由前提$A<em>{1}, A</em>{2}, …, A_{k}$推结论B的推理是否正确与前提的$\color{red}{排列次序无关}$;设前提集合为$\Gamma$，将由$\Gamma$推B的推理记为$\Gamma \vdash B$，称为$\color{red}{推理的形式结构}$，若推理是正确的，则记为$\Gamma \vDash B$，否则记为$\Gamma \nvDash B$</li>
+</ol>
+</li>
+<li>定理：由命题公式$A<em>{1}, A</em>{2}, …, A<em>{k}$推B的推理正确当且仅当$A</em>{1} \wedge A<em>{2} \wedge … \wedge A</em>{k} \leftarrow B$为重言式<ul>
+<li>推理的形式结构：${A<em>{1}, A</em>{2}, …, A<em>{k}} \vdash B$等同于蕴含式$A</em>{1} \wedge A<em>{2} \wedge … \wedge A</em>{k} \leftarrow B$</li>
+<li>推理正确${A<em>{1}, A</em>{2}, …, A<em>{k}} \vDash B$等同于$A</em>{1} \wedge A<em>{2} \wedge … \wedge A</em>{k} \Rightarrow B$表示$\color{red}{蕴含式为重言式}$</li>
+</ul>
+</li>
+</ul>
+<h4 id="推理定律"><a href="#推理定律" class="headerlink" title="推理定律"></a>推理定律</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">推理定律</th>
+<th style="text-align:center">名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$A \Rightarrow (A \vee B)$</td>
+<td style="text-align:center">附加律</td>
+</tr>
+<tr>
+<td style="text-align:center">$(A \wedge B) \Rightarrow A$</td>
+<td style="text-align:center">化简律</td>
+</tr>
+<tr>
+<td style="text-align:center">$(A \rightarrow B) \wedge A \Rightarrow B$</td>
+<td style="text-align:center">假言推理</td>
+</tr>
+<tr>
+<td style="text-align:center">$(A \rightarrow B) \wedge \lnot B \Rightarrow \lnot A$</td>
+<td style="text-align:center">拒取式</td>
+</tr>
+<tr>
+<td style="text-align:center">$(A \vee B) \wedge \lnot B \Rightarrow A$</td>
+<td style="text-align:center">析取三段论</td>
+</tr>
+<tr>
+<td style="text-align:center">$(A \rightarrow B) \wedge (B \rightarrow C) \Rightarrow (A \rightarrow C)$</td>
+<td style="text-align:center">假言三段论</td>
+</tr>
+<tr>
+<td style="text-align:center">$(A \leftrightarrow B) \wedge (B \leftrightarrow C) \Rightarrow (A \leftrightarrow C)$</td>
+<td style="text-align:center">等价三段论</td>
+</tr>
+<tr>
+<td style="text-align:center">$(A \rightarrow B) \wedge (C \rightarrow D) \wedge (A \vee C) \Rightarrow (B \vee D)$</td>
+<td style="text-align:center">构造性二难</td>
+</tr>
+<tr>
+<td style="text-align:center">$(A \rightarrow B) \wedge (\lnot A \rightarrow B) \Rightarrow B$</td>
+<td style="text-align:center">构造性二难（特殊形式）</td>
+</tr>
+<tr>
+<td style="text-align:center">$(A \rightarrow B) \wedge (C \rightarrow D) \wedge (\lnot B \vee \lnot D) \Rightarrow (\lnot A \wedge \lnot C)$</td>
+<td style="text-align:center">破坏性二难</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="自然推理系统P"><a href="#自然推理系统P" class="headerlink" title="自然推理系统P"></a>自然推理系统P</h3><ul>
+<li>一个形式系统l由下面4个部分组成<ol>
+<li>非空的字母表$A(l)$</li>
+<li>$A(l)$中的符号构造的合式公式集$E(I)$</li>
+<li>$E(I)$中一些特殊的公式组合的公理集$A_{x}(I)$</li>
+<li>推理规则集$R(I)$</li>
+</ol>
+</li>
+<li>自然推理系统P：<ol>
+<li>字母表：<ul>
+<li>命题变项符号：$p, q, r, …, p<em>{i}, q</em>{i}, r_{i}, …$</li>
+<li>联结词符号：$\lnot, \wedge, \vee, \rightarrow, \leftrightarrow$</li>
+<li>括号与逗号：$(,), ,$</li>
+</ul>
+</li>
+<li>合式公式</li>
+<li>推理规则<ul>
+<li>前提引入规则：在证明的任何步骤都可以引入前提</li>
+<li>结论引入前提：在证明的任何步骤所得到的结论都可以作为后续证明的前提</li>
+<li>置换规则：在证明的任何步骤，命题公式的子公式都可以用等值的公式置换，得到公式序列中的又一个公式</li>
+<li>假言推理规则：若证明的公式序列中已经出现过$A \rightarrow B$和A，则由假言推理定律$(A \rightarrow B) \wedge A \Rightarrow B$可知， B是$A \rightarrow B$和A的有效结论。</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h4 id="附加前提证明法"><a href="#附加前提证明法" class="headerlink" title="附加前提证明法"></a>附加前提证明法</h4><p>设推理的形式结构具有如下形式<br>$(A<em>{1} \wedge A</em>{2} \wedge …\wedge A<em>{k}) \rightarrow (A \rightarrow B)$<br>其结论也为蕴含式，此时可以将结论中的前件也作为推理的前提，使结论为B，即把推理的形式结构改写为<br>$(A</em>{1} \wedge A<em>{2} \wedge … \wedge A</em>{k} \wedge A) \rightarrow B$</p>
+<h4 id="归谬法"><a href="#归谬法" class="headerlink" title="归谬法"></a>归谬法</h4><p>在构造形式结构为<br>$(A<em>{1} \wedge A</em>{2} \wedge …\wedge A_{k}) \rightarrow (A \rightarrow B)$<br>的推理证明中，若将$\lnot B$作为前提能够推出矛盾来，比如说的出$(A \wedge \lnot A)$，则说明推理正确</p>
 ]]></content>
   </entry>
   <entry>
@@ -15383,19 +15479,13 @@ $dp[m][n][2]$意为从${0, 0}$到${m, n}$的最大值和最小值，0为最小�
   <entry>
     <title>算法模型总结</title>
     <url>/2020/10/08/%E7%AE%97%E6%B3%95%E6%A8%A1%E5%9E%8B%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<h1>动态规划</h1>
-<h2 id="数字三角形模型"><a class="header-anchor" href="#数字三角形模型">¶</a>数字三角形模型</h2>
-<ul>
+    <content><![CDATA[<h1 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h1><h2 id="数字三角形模型"><a href="#数字三角形模型" class="headerlink" title="数字三角形模型"></a>数字三角形模型</h2><ul>
 <li>问题原型：<a href="https://www.acwing.com/problem/content/900/" target="_blank" rel="noopener">数字三角形</a></li>
-<li>给定一个如下图所示的数字三角形，从顶部出发，在每一结点可以选择移动至其左下方的结点或移动至其右下方的结点，一直走到底层，要求找出一条路径，使路径上的数字的和最大。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">        7</span><br><span class="line">      3   8</span><br><span class="line">    8   1   0</span><br><span class="line">  2   7   4   4</span><br><span class="line">4   5   2   6   5</span><br></pre></td></tr></table></figure>
-<ul>
-<li>二维空间无优化版</li>
-</ul>
+<li>给定一个如下图所示的数字三角形，从顶部出发，在每一结点可以选择移动至其左下方的结点或移动至其右下方的结点，一直走到底层，要求找出一条路径，使路径上的数字的和最大。<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">        7</span><br><span class="line">      3   8</span><br><span class="line">    8   1   0</span><br><span class="line">  2   7   4   4</span><br><span class="line">4   5   2   6   5</span><br></pre></td></tr></table></figure></li>
+<li><p>二维空间无优化版</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">510</span>;</span><br><span class="line"><span class="keyword">int</span> dp[N][N];</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= i; j++)</span><br><span class="line">            <span class="built_in">cin</span> &gt;&gt; dp[i][j];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= i; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (j == <span class="number">0</span>) dp[i][j] += dp[i - <span class="number">1</span>][j];</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (j == i) dp[i][j] += dp[i - <span class="number">1</span>][j - <span class="number">1</span>];</span><br><span class="line">            <span class="keyword">else</span> dp[i][j] = max(dp[i][j] + dp[i - <span class="number">1</span>][j - <span class="number">1</span>], dp[i][j] + dp[i - <span class="number">1</span>][j]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> ans = <span class="number">-1e8</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) ans = max(ans, dp[n - <span class="number">1</span>][i]);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; ans &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>问题变形：
+</li>
+<li><p>问题变形：</p>
 <ol>
 <li><a href="https://www.acwing.com/problem/content/1017/" target="_blank" rel="noopener">摘花生</a></li>
 <li><a href="https://www.acwing.com/problem/content/1020/" target="_blank" rel="noopener">最低通行费</a></li>
@@ -15404,50 +15494,28 @@ $dp[m][n][2]$意为从${0, 0}$到${m, n}$的最大值和最小值，0为最小�
 </ol>
 </li>
 </ul>
-<h3 id="方格取数"><a class="header-anchor" href="#方格取数">¶</a>方格取数</h3>
-<ul>
-<li>
-<p>设有 N×N 的方格图，我们在其中的某些方格中填入正整数，而其它的方格中则放入数字0。某人从图中的左上角 A 出发，可以向下行走，也可以向右行走，直到到达右下角的 B 点。在走过的路上，他可以取走方格中的数（取走后的方格中将变为数字0）。此人从 A 点到 B 点共走了两次，试找出两条这样的路径，使得取得的数字和为最大。</p>
+<h3 id="方格取数"><a href="#方格取数" class="headerlink" title="方格取数"></a>方格取数</h3><ul>
+<li><p>设有 N×N 的方格图，我们在其中的某些方格中填入正整数，而其它的方格中则放入数字0。某人从图中的左上角 A 出发，可以向下行走，也可以向右行走，直到到达右下角的 B 点。在走过的路上，他可以取走方格中的数（取走后的方格中将变为数字0）。此人从 A 点到 B 点共走了两次，试找出两条这样的路径，使得取得的数字和为最大。</p>
 </li>
-<li>
-<p>思路：<br>
-之前的问题都是从某个点走到另一个点走一起，而这道题变成了走两次，对比一下两种的状态转移方程<br>
-走一次：$f[i, j]$表示所有从$(1, 1)$走到$(i, j)$的路径的最大值<br>
-走两次：$f[i1, j1, i2, j2]$表示所有从$(1, 1), (1, 1)%分别走到$(i1, j1), (i2, j2)$的路径的最大值。<br>
-不难发现只有在$i1 + j1 = i2 + j2$时，两条路径的格子才能重合，抽取两维状态变为$f(k, i1, i2)$其中$k$表示两条路线当前走到的格子的横纵坐标之和。$k = i1 + j1 = i2 + j2$<br>
-对应的$k - 1 = i1 + j1 - 1 = i2 + j2 - 1</p>
+<li><p>思路：<br>之前的问题都是从某个点走到另一个点走一起，而这道题变成了走两次，对比一下两种的状态转移方程<br>走一次：$f[i, j]$表示所有从$(1, 1)$走到$(i, j)$的路径的最大值<br>走两次：$f[i1, j1, i2, j2]$表示所有从$(1, 1), (1, 1)%分别走到$(i1, j1), (i2, j2)$的路径的最大值。<br>不难发现只有在$i1 + j1 = i2 + j2$时，两条路径的格子才能重合，抽取两维状态变为$f(k, i1, i2)$其中$k$表示两条路线当前走到的格子的横纵坐标之和。$k = i1 + j1 = i2 + j2$<br>对应的$k - 1 = i1 + j1 - 1 = i2 + j2 - 1<br><hr/><br>状态转移方程：<br>$f[i1−1][j1][i2−1][j2]==f[k−1][i1−1][i2−1]$<br>$f[i1][j1−1][i2−1][j2]==f[k−1][i1][i2−1]$<br>$f[i1−1][j1][i2][j2−1]==f[k−1][i1−1][i2]$</p>
 </li>
 </ul>
-<hr/>
-状态转移方程：
-$f[i1−1][j1][i2−1][j2]==f[k−1][i1−1][i2−1]$
-$f[i1][j1−1][i2−1][j2]==f[k−1][i1][i2−1]$
-$f[i1−1][j1][i2][j2−1]==f[k−1][i1−1][i2]$
 <ul>
-<li>代码：</li>
+<li>代码：<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">12</span>;</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">int</span> g[N][N], dp[N * <span class="number">2</span>][N][N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    <span class="keyword">int</span> u, v, w;</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; u &gt;&gt; v &gt;&gt; w &amp;&amp; (u || v || w)) g[u][v] = w;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">2</span>; k &lt;= n + n; k++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i1 = <span class="number">1</span>; i1 &lt;= n; i1++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i2 = <span class="number">1</span>; i2 &lt;= n; i2++) &#123;</span><br><span class="line">                <span class="keyword">int</span> j1 = k - i1, j2 = k - i2;</span><br><span class="line">                <span class="keyword">if</span> (j1 &gt;= <span class="number">1</span> &amp;&amp; j1 &lt;= n &amp;&amp; j2 &gt;= <span class="number">1</span> &amp;&amp; j2 &lt;= n)&#123;</span><br><span class="line">                    <span class="keyword">int</span> t = g[i1][j1];</span><br><span class="line">                    <span class="keyword">if</span> (i1 != i2) t += g[i2][j2];</span><br><span class="line">                    dp[k][i1][i2] = max(dp[k][i1][i2], dp[k - <span class="number">1</span>][i1 - <span class="number">1</span>][i2 - <span class="number">1</span>] + t);</span><br><span class="line">                    dp[k][i1][i2] = max(dp[k][i1][i2], dp[k - <span class="number">1</span>][i1 - <span class="number">1</span>][i2] + t);</span><br><span class="line">                    dp[k][i1][i2] = max(dp[k][i1][i2], dp[k - <span class="number">1</span>][i1][i2 - <span class="number">1</span>] + t);</span><br><span class="line">                    dp[k][i1][i2] = max(dp[k][i1][i2], dp[k - <span class="number">1</span>][i1][i2] + t);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; dp[n + n][n][n] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">12</span>;</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">int</span> g[N][N], dp[N * <span class="number">2</span>][N][N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    <span class="keyword">int</span> u, v, w;</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; u &gt;&gt; v &gt;&gt; w &amp;&amp; (u || v || w)) g[u][v] = w;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">2</span>; k &lt;= n + n; k++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i1 = <span class="number">1</span>; i1 &lt;= n; i1++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i2 = <span class="number">1</span>; i2 &lt;= n; i2++) &#123;</span><br><span class="line">                <span class="keyword">int</span> j1 = k - i1, j2 = k - i2;</span><br><span class="line">                <span class="keyword">if</span> (j1 &gt;= <span class="number">1</span> &amp;&amp; j1 &lt;= n &amp;&amp; j2 &gt;= <span class="number">1</span> &amp;&amp; j2 &lt;= n)&#123;</span><br><span class="line">                    <span class="keyword">int</span> t = g[i1][j1];</span><br><span class="line">                    <span class="keyword">if</span> (i1 != i2) t += g[i2][j2];</span><br><span class="line">                    dp[k][i1][i2] = max(dp[k][i1][i2], dp[k - <span class="number">1</span>][i1 - <span class="number">1</span>][i2 - <span class="number">1</span>] + t);</span><br><span class="line">                    dp[k][i1][i2] = max(dp[k][i1][i2], dp[k - <span class="number">1</span>][i1 - <span class="number">1</span>][i2] + t);</span><br><span class="line">                    dp[k][i1][i2] = max(dp[k][i1][i2], dp[k - <span class="number">1</span>][i1][i2 - <span class="number">1</span>] + t);</span><br><span class="line">                    dp[k][i1][i2] = max(dp[k][i1][i2], dp[k - <span class="number">1</span>][i1][i2] + t);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; dp[n + n][n][n] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="最长上升子序列模型"><a class="header-anchor" href="#最长上升子序列模型">¶</a>最长上升子序列模型</h2>
-<ul>
-<li>问题原型：<br>
-给定一个无序的整数数组，找到其中最长上升子序列的长度。<br>
-示例:</li>
-</ul>
-<blockquote>
-<p>输入: [10,9,2,5,3,7,101,18]<br>
-输出: 4<br>
-解释: 最长的上升子序列是 [2,3,7,101]，它的长度是 4。</p>
+<h2 id="最长上升子序列模型"><a href="#最长上升子序列模型" class="headerlink" title="最长上升子序列模型"></a>最长上升子序列模型</h2><ul>
+<li>问题原型：<br>给定一个无序的整数数组，找到其中最长上升子序列的长度。<br>示例:<blockquote>
+<p>输入: [10,9,2,5,3,7,101,18]<br>输出: 4<br>解释: 最长的上升子序列是 [2,3,7,101]，它的长度是 4。</p>
 </blockquote>
-<p>说明:<br>
-可能会有多种最长上升子序列的组合，你只需要输出对应的长度即可。<br>
-你算法的时间复杂度应该为 O(n2) 。<br>
-进阶: 你能将算法的时间复杂度降低到 O(n log n) 吗?</p>
-<ul>
-<li>代码:</li>
+</li>
 </ul>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLIS</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = nums.length;</span><br><span class="line">        <span class="keyword">if</span> (len == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> ans = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; len; i++) &#123;</span><br><span class="line">            dp[i] = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (nums[i] &gt; nums[j]) &#123;</span><br><span class="line">                    dp[i] = Math.max(dp[i], dp[j] + <span class="number">1</span>);</span><br><span class="line">                    ans = Math.max(ans, dp[i]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>说明:<br>可能会有多种最长上升子序列的组合，你只需要输出对应的长度即可。<br>你算法的时间复杂度应该为 O(n2) 。<br>进阶: 你能将算法的时间复杂度降低到 O(n log n) 吗?</p>
 <ul>
-<li>问题变形
+<li><p>代码:</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLIS</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = nums.length;</span><br><span class="line">        <span class="keyword">if</span> (len == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> ans = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; len; i++) &#123;</span><br><span class="line">            dp[i] = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (nums[i] &gt; nums[j]) &#123;</span><br><span class="line">                    dp[i] = Math.max(dp[i], dp[j] + <span class="number">1</span>);</span><br><span class="line">                    ans = Math.max(ans, dp[i]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>问题变形</p>
 <ol>
 <li><a href="https://www.acwing.com/problem/content/1019/" target="_blank" rel="noopener">怪盗基德的滑翔翼</a></li>
 <li><a href="https://www.acwing.com/problem/content/1016/" target="_blank" rel="noopener">登山</a></li>
@@ -15458,220 +15526,140 @@ $f[i1−1][j1][i2][j2−1]==f[k−1][i1−1][i2]$
 </ol>
 </li>
 </ul>
-<h3 id="登山"><a class="header-anchor" href="#登山">¶</a>登山</h3>
-<ul>
-<li>
-<p>题目描述：<br>
-五一到了，ACM队组织大家去登山观光，队员们发现山上一个有N个景点，并且决定按照顺序来浏览这些景点，即每次所浏览景点的编号都要大于前一个浏览景点的编号。同时队员们还有另一个登山习惯，就是不连续浏览海拔相同的两个景点，并且一旦开始下山，就不再向上走了。队员们希望在满足上面条件的同时，尽可能多的浏览景点，你能帮他们找出最多可能浏览的景点数么？</p>
+<h3 id="登山"><a href="#登山" class="headerlink" title="登山"></a>登山</h3><ul>
+<li><p>题目描述：<br>五一到了，ACM队组织大家去登山观光，队员们发现山上一个有N个景点，并且决定按照顺序来浏览这些景点，即每次所浏览景点的编号都要大于前一个浏览景点的编号。同时队员们还有另一个登山习惯，就是不连续浏览海拔相同的两个景点，并且一旦开始下山，就不再向上走了。队员们希望在满足上面条件的同时，尽可能多的浏览景点，你能帮他们找出最多可能浏览的景点数么？</p>
 </li>
-<li>
-<p>输入格式<br>
-第一行包含整数N，表示景点数量。第二行包含N个整数，表示每个景点的海拔。</p>
+<li><p>输入格式<br>第一行包含整数N，表示景点数量。第二行包含N个整数，表示每个景点的海拔。</p>
 </li>
-<li>
-<p>输出格式<br>
-输出一个整数，表示最多能浏览的景点数。</p>
+<li><p>输出格式<br>输出一个整数，表示最多能浏览的景点数。</p>
 </li>
-<li>
-<p>数据范围<br>
-$2≤N≤1000$<br>
-输入样例：</p>
+<li><p>数据范围<br>$2≤N≤1000$<br>输入样例：</p>
+<blockquote>
+<p>8<br>186 186 150 200 160 130 197 220</p>
+</blockquote>
 </li>
 </ul>
-<blockquote>
-<p>8<br>
-186 186 150 200 160 130 197 220</p>
-</blockquote>
 <p>输出样例：</p>
 <blockquote>
 <p>4</p>
 </blockquote>
 <ul>
-<li>
-<p>思路<br>
-枚举每个点，对于点$i$来说，它左边的最长上升子序列加上右边最长下降子序列是该点能参观景点的最大值，两遍的子序列会把该点加两次，需要减一</p>
+<li><p>思路<br>枚举每个点，对于点$i$来说，它左边的最长上升子序列加上右边最长下降子序列是该点能参观景点的最大值，两遍的子序列会把该点加两次，需要减一</p>
 </li>
-<li>
-<p>代码</p>
-</li>
-</ul>
+<li><p>代码</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1010</span>;</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">int</span> a[N],dp[N][N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">cin</span> &gt;&gt; a[i];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        dp[i][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (a[i] &gt; a[j])</span><br><span class="line">                dp[i][<span class="number">0</span>] = max(dp[i][<span class="number">0</span>], dp[j][<span class="number">0</span>] + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = n - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        dp[i][<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = n - <span class="number">1</span>; j &gt; i; j--) &#123;</span><br><span class="line">            <span class="keyword">if</span> (a[i] &gt; a[j]) </span><br><span class="line">                dp[i][<span class="number">1</span>] = max(dp[i][<span class="number">1</span>], dp[j][<span class="number">1</span>] + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; n; i++) &#123;</span><br><span class="line">        ans = max(ans, dp[i][<span class="number">0</span>] + dp[i][<span class="number">1</span>] - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; ans &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="最长上升子序列和"><a class="header-anchor" href="#最长上升子序列和">¶</a>最长上升子序列和</h3>
-<ul>
-<li>
-<p>题目描述<br>
-一个数的序列 $bi$，当 $b1 &lt; b2 &lt;… &lt; bS$ 的时候，我们称这个序列是上升的。<br>
-对于给定的一个序列$(a1,a2,…,aN)$，我们可以得到一些上升的子序列$(ai1,ai2,…,aiK)$，这里$1 ≤ i_1 &lt; i_2 &lt; … &lt; i_K ≤ N$。<br>
-比如，对于序列(1,7,3,5,9,4,8)，有它的一些上升子序列，如(1,7),(3,4,8)等等。<br>
-这些子序列中和最大为18，为子序列(1,3,5,9)的和。<br>
-你的任务，就是对于给定的序列，求出最大上升子序列和。<br>
-注意，最长的上升子序列的和不一定是最大的，比如序列(100,1,2,3)的最大上升子序列和为100，而最长上升子序列为(1,2,3)。</p>
-</li>
-<li>
-<p>思路<br>
-和最长上升子序列相同，只不过状态转移的时候记录的是和，而不是数量</p>
-</li>
-<li>
-<p>代码</p>
 </li>
 </ul>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1010</span>;</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">int</span> a[N], dp[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">cin</span> &gt;&gt; a[i];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        dp[i] = a[i];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (a[i] &gt; a[j]) </span><br><span class="line">                dp[i] = max(dp[i], dp[j] + a[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) ans = max(ans, dp[i]);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; ans &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="拦截导弹"><a class="header-anchor" href="#拦截导弹">¶</a>拦截导弹</h3>
+<h3 id="最长上升子序列和"><a href="#最长上升子序列和" class="headerlink" title="最长上升子序列和"></a>最长上升子序列和</h3><ul>
+<li>题目描述<br>一个数的序列 $bi$，当 $b1 &lt; b2 &lt;… &lt; bS$ 的时候，我们称这个序列是上升的。<br>对于给定的一个序列$(a1,a2,…,aN)$，我们可以得到一些上升的子序列$(ai1,ai2,…,aiK)$，这里$1 ≤ i_1 &lt; i_2 &lt; … &lt; i_K ≤ N$。<br>比如，对于序列(1,7,3,5,9,4,8)，有它的一些上升子序列，如(1,7),(3,4,8)等等。<br>这些子序列中和最大为18，为子序列(1,3,5,9)的和。<br>你的任务，就是对于给定的序列，求出最大上升子序列和。<br>注意，最长的上升子序列的和不一定是最大的，比如序列(100,1,2,3)的最大上升子序列和为100，而最长上升子序列为(1,2,3)。</li>
+</ul>
 <ul>
-<li>
-<p>题目描述<br>
-某国为了防御敌国的导弹袭击，发展出一种导弹拦截系统。<br>
-但是这种导弹拦截系统有一个缺陷：虽然它的第一发炮弹能够到达任意的高度，但是以后每一发炮弹都不能高于前一发的高度。<br>
-某天，雷达捕捉到敌国的导弹来袭。<br>
-由于该系统还在试用阶段，所以只有一套系统，因此有可能不能拦截所有的导弹。<br>
-输入导弹依次飞来的高度（雷达给出的高度数据是不大于30000的正整数，导弹数不超过1000），计算这套系统最多能拦截多少导弹，如果要拦截所有导弹最少要配备多少套这种导弹拦截系统。</p>
+<li><p>思路<br>和最长上升子序列相同，只不过状态转移的时候记录的是和，而不是数量</p>
 </li>
-<li>
-<p>思路<br>
-第一问是一个标准的LIS问题，逆着求或者正着求都可以<br>
-第二问求能覆盖整个数组的最长上升子序列的个数（贪心算法）<br>
-贪心：<br>
-用如下方式维护数组s，数组长度cnt，意为cnt个不下降子序列。保存的是每一个不上升子序列中的最后一个数：<br>
-遍历原序列，对于遍历到的每一个数x：</p>
+<li><p>代码</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1010</span>;</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">int</span> a[N], dp[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">cin</span> &gt;&gt; a[i];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        dp[i] = a[i];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (a[i] &gt; a[j]) </span><br><span class="line">                dp[i] = max(dp[i], dp[j] + a[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) ans = max(ans, dp[i]);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; ans &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="拦截导弹"><a href="#拦截导弹" class="headerlink" title="拦截导弹"></a>拦截导弹</h3><ul>
+<li><p>题目描述<br>某国为了防御敌国的导弹袭击，发展出一种导弹拦截系统。<br>但是这种导弹拦截系统有一个缺陷：虽然它的第一发炮弹能够到达任意的高度，但是以后每一发炮弹都不能高于前一发的高度。<br>某天，雷达捕捉到敌国的导弹来袭。<br>由于该系统还在试用阶段，所以只有一套系统，因此有可能不能拦截所有的导弹。<br>输入导弹依次飞来的高度（雷达给出的高度数据是不大于30000的正整数，导弹数不超过1000），计算这套系统最多能拦截多少导弹，如果要拦截所有导弹最少要配备多少套这种导弹拦截系统。</p>
+</li>
+<li><p>思路<br>第一问是一个标准的LIS问题，逆着求或者正着求都可以<br>第二问求能覆盖整个数组的最长上升子序列的个数（贪心算法）<br>贪心：<br>用如下方式维护数组s，数组长度cnt，意为cnt个不下降子序列。保存的是每一个不上升子序列中的最后一个数：<br>遍历原序列，对于遍历到的每一个数x：</p>
 </li>
 </ul>
 <ol>
 <li>若x大于s中每一个数，则新建一个不上升子序列，放入x;</li>
-<li>否则，找到s中大于等于x的最小的数，将其替换。<br>
-由于s每次增加长度时，增加的数必然大于其前面s中的任何一个数；且每次替换时，不改变x与被替换数左右相邻两数的相对大小关系，故s必然维持单调递增。则s即为原序列的最长上升子序列。</li>
+<li>否则，找到s中大于等于x的最小的数，将其替换。<br>由于s每次增加长度时，增加的数必然大于其前面s中的任何一个数；且每次替换时，不改变x与被替换数左右相邻两数的相对大小关系，故s必然维持单调递增。则s即为原序列的最长上升子序列。</li>
 </ol>
-<p>贪心算法的正确性：<br>
-设A为用该贪心算法得到的方案，B为最优解方案。记A的不上升子序列个数为la，B的不上升子序列个数为lb。<br>
-显然lb&lt;=la（否则B就不是最优解）。<br>
-故只需证明la&lt;=lb。用调整法(微调法)。<br>
-若A=B，则la=lb，显然成立。<br>
-否则（即A!=B），必然可以找到两方案中第一个(以原序列的顺序)不同之处（某数放在了不同的位置，且原序列中该数前的所有数在两方案中放的位置皆相同），将该数在两方案中所处的位置上的数(即该数本身)以及两位置之后方案中的序列相互对调，结果所得方案仍为合法解。即我们将贪心算法所得方案调整成了最优方案，且在调整过程中，方案的序列数没有增加，故la&gt;=lb（la -&gt; lb，且la转变为lb的过程中la的大小没有增加）。</p>
+<p>贪心算法的正确性：<br>设A为用该贪心算法得到的方案，B为最优解方案。记A的不上升子序列个数为la，B的不上升子序列个数为lb。<br>显然lb&lt;=la（否则B就不是最优解）。<br>故只需证明la&lt;=lb。用调整法(微调法)。<br>若A=B，则la=lb，显然成立。<br>否则（即A!=B），必然可以找到两方案中第一个(以原序列的顺序)不同之处（某数放在了不同的位置，且原序列中该数前的所有数在两方案中放的位置皆相同），将该数在两方案中所处的位置上的数(即该数本身)以及两位置之后方案中的序列相互对调，结果所得方案仍为合法解。即我们将贪心算法所得方案调整成了最优方案，且在调整过程中，方案的序列数没有增加，故la&gt;=lb（la -&gt; lb，且la转变为lb的过程中la的大小没有增加）。</p>
 <ul>
-<li>代码</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1010</span>;</span><br><span class="line"><span class="keyword">int</span> a[N], dp[N], g[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">    <span class="keyword">int</span> n, idx = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; n)</span><br><span class="line">        a[idx++] = n;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 正序求最长非递增子序列</span></span><br><span class="line">    <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; idx; i++) &#123;</span><br><span class="line">        dp[i] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; j++)</span><br><span class="line">            <span class="keyword">if</span> (a[i] &lt;= a[j])</span><br><span class="line">                dp[i] = max(dp[i], dp[j] + <span class="number">1</span>);</span><br><span class="line">        ans = max(ans, dp[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; idx; i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> k = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (k &lt; cnt &amp;&amp; g[k] &lt; a[i]) k++;</span><br><span class="line">        g[k] = a[i];</span><br><span class="line">        <span class="comment">// 需要新增一个序列</span></span><br><span class="line">        <span class="keyword">if</span> (k &gt;= cnt) cnt++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; cnt; i++) <span class="built_in">cout</span> &lt;&lt; g[i] &lt;&lt; <span class="string">' '</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; ans &lt;&lt; <span class="built_in">endl</span> &lt;&lt; cnt &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="导弹防御系统"><a class="header-anchor" href="#导弹防御系统">¶</a>导弹防御系统</h3>
-<ul>
-<li>代码</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">55</span>;</span><br><span class="line"><span class="keyword">int</span> n, ans;</span><br><span class="line"><span class="keyword">int</span> a[N], up[N], down[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> u, <span class="keyword">int</span> su, <span class="keyword">int</span> sd)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 剪枝，当前位置的上升子序列加上下降子序列已经大于答案，不是要求的</span></span><br><span class="line">    <span class="keyword">if</span> (su + sd &gt;= ans) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">if</span> (u == n) &#123;</span><br><span class="line">        ans = su + sd;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> k = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (k &lt; su &amp;&amp; a[u] &lt;= up[k]) k++;</span><br><span class="line">    <span class="keyword">int</span> t = up[k];</span><br><span class="line">    up[k] = a[u];</span><br><span class="line">    <span class="keyword">if</span> (k &lt; su) dfs(u + <span class="number">1</span>, su, sd); <span class="comment">// 存在一个子序列可以更新，所以su不用加1，直接往后递归一位</span></span><br><span class="line">    <span class="keyword">else</span> dfs(u + <span class="number">1</span>, su + <span class="number">1</span>, sd); <span class="comment">// 需要新开一个子序列</span></span><br><span class="line">    up[k] = t; <span class="comment">// 回溯</span></span><br><span class="line">    </span><br><span class="line">    k = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (k &lt; sd &amp;&amp; a[u] &gt;= down[k]) k++;</span><br><span class="line">    t = down[k];</span><br><span class="line">    down[k] = a[u];</span><br><span class="line">    <span class="keyword">if</span> (k &lt; sd) dfs(u + <span class="number">1</span>, su ,sd);</span><br><span class="line">    <span class="keyword">else</span> dfs(u + <span class="number">1</span>, su, sd + <span class="number">1</span>);</span><br><span class="line">    down[k] = t; <span class="comment">// 回溯</span></span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; n &amp;&amp; n) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">cin</span> &gt;&gt; a[i];</span><br><span class="line">        ans = n;</span><br><span class="line">        dfs(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; ans &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="背包模型"><a class="header-anchor" href="#背包模型">¶</a>背包模型</h2>
-<h3 id="01背包"><a class="header-anchor" href="#01背包">¶</a>01背包</h3>
-<ul>
-<li>
-<p>问题原型<br>
-有N件物品和一个容量是V的背包。每件物品只能使用一次。第i件物品的体积是$V_{i}$，价值是$W_{i}$。<br>
-求解将哪些物品装入背包，可使这些物品的总体积不超过背包容量，且总价值最大。<br>
-输出最大价值。</p>
-</li>
-<li>
-<p>代码</p>
+<li>代码<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1010</span>;</span><br><span class="line"><span class="keyword">int</span> a[N], dp[N], g[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">    <span class="keyword">int</span> n, idx = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; n)</span><br><span class="line">        a[idx++] = n;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 正序求最长非递增子序列</span></span><br><span class="line">    <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; idx; i++) &#123;</span><br><span class="line">        dp[i] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; j++)</span><br><span class="line">            <span class="keyword">if</span> (a[i] &lt;= a[j])</span><br><span class="line">                dp[i] = max(dp[i], dp[j] + <span class="number">1</span>);</span><br><span class="line">        ans = max(ans, dp[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; idx; i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> k = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (k &lt; cnt &amp;&amp; g[k] &lt; a[i]) k++;</span><br><span class="line">        g[k] = a[i];</span><br><span class="line">        <span class="comment">// 需要新增一个序列</span></span><br><span class="line">        <span class="keyword">if</span> (k &gt;= cnt) cnt++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; cnt; i++) <span class="built_in">cout</span> &lt;&lt; g[i] &lt;&lt; <span class="string">' '</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; ans &lt;&lt; <span class="built_in">endl</span> &lt;&lt; cnt &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+<h3 id="导弹防御系统"><a href="#导弹防御系统" class="headerlink" title="导弹防御系统"></a>导弹防御系统</h3><ul>
+<li>代码<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">55</span>;</span><br><span class="line"><span class="keyword">int</span> n, ans;</span><br><span class="line"><span class="keyword">int</span> a[N], up[N], down[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> u, <span class="keyword">int</span> su, <span class="keyword">int</span> sd)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 剪枝，当前位置的上升子序列加上下降子序列已经大于答案，不是要求的</span></span><br><span class="line">    <span class="keyword">if</span> (su + sd &gt;= ans) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">if</span> (u == n) &#123;</span><br><span class="line">        ans = su + sd;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> k = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (k &lt; su &amp;&amp; a[u] &lt;= up[k]) k++;</span><br><span class="line">    <span class="keyword">int</span> t = up[k];</span><br><span class="line">    up[k] = a[u];</span><br><span class="line">    <span class="keyword">if</span> (k &lt; su) dfs(u + <span class="number">1</span>, su, sd); <span class="comment">// 存在一个子序列可以更新，所以su不用加1，直接往后递归一位</span></span><br><span class="line">    <span class="keyword">else</span> dfs(u + <span class="number">1</span>, su + <span class="number">1</span>, sd); <span class="comment">// 需要新开一个子序列</span></span><br><span class="line">    up[k] = t; <span class="comment">// 回溯</span></span><br><span class="line">    </span><br><span class="line">    k = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (k &lt; sd &amp;&amp; a[u] &gt;= down[k]) k++;</span><br><span class="line">    t = down[k];</span><br><span class="line">    down[k] = a[u];</span><br><span class="line">    <span class="keyword">if</span> (k &lt; sd) dfs(u + <span class="number">1</span>, su ,sd);</span><br><span class="line">    <span class="keyword">else</span> dfs(u + <span class="number">1</span>, su, sd + <span class="number">1</span>);</span><br><span class="line">    down[k] = t; <span class="comment">// 回溯</span></span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; n &amp;&amp; n) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">cin</span> &gt;&gt; a[i];</span><br><span class="line">        ans = n;</span><br><span class="line">        dfs(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; ans &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="背包模型"><a href="#背包模型" class="headerlink" title="背包模型"></a>背包模型</h2><h3 id="01背包"><a href="#01背包" class="headerlink" title="01背包"></a>01背包</h3><ul>
+<li><p>问题原型<br>有N件物品和一个容量是V的背包。每件物品只能使用一次。第i件物品的体积是$V<em>{i}$，价值是$W</em>{i}$。<br>求解将哪些物品装入背包，可使这些物品的总体积不超过背包容量，且总价值最大。<br>输出最大价值。</p>
+</li>
+<li><p>代码</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1010</span>;</span><br><span class="line"><span class="keyword">int</span> n, m;</span><br><span class="line"><span class="keyword">int</span> v[N], w[N];</span><br><span class="line"><span class="keyword">int</span> dp[N][N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) <span class="built_in">cin</span> &gt;&gt; v[i] &gt;&gt; w[i];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= m; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (j &lt; v[i]) dp[i][j] = dp[i - <span class="number">1</span>][j];</span><br><span class="line">            <span class="keyword">else</span> dp[i][j] = max(dp[i - <span class="number">1</span>][j], dp[i - <span class="number">1</span>][j - v[i]] + w[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; dp[n][m];</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>问题变形：
+</li>
+<li><p>问题变形：</p>
 <ol>
 <li><a href="https://www.acwing.com/problem/content/425/" target="_blank" rel="noopener">采药</a></li>
 <li><a href="https://www.acwing.com/problem/content/1026/" target="_blank" rel="noopener">装箱问题</a></li>
 <li><a href="https://www.acwing.com/problem/content/280/" target="_blank" rel="noopener">数字组合</a> （01背包求方案数）</li>
-<li><a href="https://www.acwing.com/problem/content/11/" target="_blank" rel="noopener">背包问题求方案数</a></li>
+<li><a href="https://www.acwing.com/problem/content/11/" target="_blank" rel="noopener">背包问题求方案数</a> </li>
+<li><a href="https://leetcode-cn.com/problems/partition-equal-subset-sum/" target="_blank" rel="noopener">分割等和子集</a></li>
 </ol>
 </li>
 </ul>
-<h3 id="完全背包"><a class="header-anchor" href="#完全背包">¶</a>完全背包</h3>
+<h4 id="分割等和子集"><a href="#分割等和子集" class="headerlink" title="分割等和子集"></a>分割等和子集</h4><ul>
+<li>思路</li>
+</ul>
+<ol>
+<li>对数组中所有元素求和$sum$，如果不是偶数，那么根本不可能分成两堆相同的元素</li>
+<li>由于每个数只能选一次，所以是一个01背包问题，写一个01背包的模板，答案在哪找？ $dp[i]$意为背包中放入体积为i的最大价值，那么$dp[i] == i$说明有一组数能够组成i这个数</li>
+</ol>
 <ul>
-<li>
-<p>问题原型<br>
-有N种物品和一个容量是V的背包，每种物品都有无限件可用。第i种物品的体积是$V_{i}$，价值是$W_{i}$。<br>
-求解将哪些物品装入背包，可使这些物品的总体积不超过背包容量，且总价值最大。<br>
-输出最大价值。</p>
-</li>
-<li>
-<p>代码</p>
+<li>代码<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">canPartition</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = nums.size(), sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) sum += nums[i];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (sum % <span class="number">2</span> == <span class="number">1</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> target = sum / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">int</span> dp[target + <span class="number">1</span>];</span><br><span class="line">        <span class="built_in">memset</span>(dp, <span class="number">0</span>, <span class="keyword">sizeof</span> dp);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = target; j &gt;= nums[i]; j--) </span><br><span class="line">                dp[j] = max(dp[j], dp[j - nums[i]] + nums[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[target] == target;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+<h3 id="完全背包"><a href="#完全背包" class="headerlink" title="完全背包"></a>完全背包</h3><ul>
+<li><p>问题原型<br>有N种物品和一个容量是V的背包，每种物品都有无限件可用。第i种物品的体积是$V<em>{i}$，价值是$W</em>{i}$。<br>求解将哪些物品装入背包，可使这些物品的总体积不超过背包容量，且总价值最大。<br>输出最大价值。</p>
+</li>
+<li><p>代码</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1010</span>;</span><br><span class="line"><span class="keyword">int</span> n, m;</span><br><span class="line"><span class="keyword">int</span> v[N], w[N];</span><br><span class="line"><span class="keyword">int</span> dp[N][N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) <span class="built_in">cin</span> &gt;&gt; v[i] &gt;&gt; w[i];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= m; j++) &#123;</span><br><span class="line">            dp[i][j] = dp[i - <span class="number">1</span>][j];</span><br><span class="line">            <span class="keyword">if</span> (j &gt;= v[i])</span><br><span class="line">                dp[i][j] = max(dp[i][j], dp[i][j - v[i]] + w[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; dp[n][m] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>问题变形：
+</li>
+<li><p>问题变形：</p>
 <ol>
 <li><a href="https://www.acwing.com/problem/content/1023/" target="_blank" rel="noopener">货币系统</a> （背包问题求方案数， 且注意和数字组合题的区别）</li>
 </ol>
 </li>
 </ul>
-<h3 id="多重背包"><a class="header-anchor" href="#多重背包">¶</a>多重背包</h3>
-<ul>
-<li>
-<p>问题原型<br>
-有N种物品和一个容量是V的背包。第i种物品最多有$S_{i}$件，每件体积是$V_{i}$，价值是$W_{i}$。<br>
-求解将哪些物品装入背包，可使物品体积总和不超过背包容量，且价值总和最大。<br>
-输出最大价值。</p>
+<h3 id="多重背包"><a href="#多重背包" class="headerlink" title="多重背包"></a>多重背包</h3><ul>
+<li><p>问题原型<br>有N种物品和一个容量是V的背包。第i种物品最多有$S<em>{i}$件，每件体积是$V</em>{i}$，价值是$W_{i}$。<br>求解将哪些物品装入背包，可使物品体积总和不超过背包容量，且价值总和最大。<br>输出最大价值。</p>
 </li>
-<li>
-<p>代码</p>
-</li>
-</ul>
+<li><p>代码</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">110</span>;</span><br><span class="line"><span class="keyword">int</span> n, m;</span><br><span class="line"><span class="keyword">int</span> dp[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ios::sync_with_stdio(<span class="literal">false</span>);;</span><br><span class="line">    <span class="keyword">int</span> n, m;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> v, w, s;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; v &gt;&gt; w &gt;&gt; s;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = m; j &gt;= <span class="number">0</span>; j--) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">1</span>; k &lt;= s &amp;&amp; k * v &lt;= j; k++) &#123;</span><br><span class="line">                dp[j] = max(dp[j], dp[j - k * v] + k * w);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; dp[m] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>二进制优化</li>
-</ul>
+</li>
+<li><p>二进制优化</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PII pair<span class="meta-string">&lt;int, int&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> x first</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> y second</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">2010</span>;</span><br><span class="line"><span class="keyword">int</span> dp[N];</span><br><span class="line"><span class="keyword">int</span> n, m;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">vector</span>&lt;PII&gt; goods;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> v, w, s;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; v &gt;&gt; w &gt;&gt; s;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">1</span>; k &lt;= s; k *= <span class="number">2</span>) &#123;</span><br><span class="line">            s -= k;</span><br><span class="line">            goods.push_back(&#123;k * v, k * w&#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (s &gt; <span class="number">0</span>) goods.push_back(&#123;s * v, s * w&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> g: goods) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = m; i &gt;= g.x; i--) &#123;</span><br><span class="line">            dp[i] = max(dp[i], dp[i - g.x] + g.y);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; dp[m] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="混合背包"><a class="header-anchor" href="#混合背包">¶</a>混合背包</h3>
-<h3 id="二维费用的背包问题"><a class="header-anchor" href="#二维费用的背包问题">¶</a>二维费用的背包问题</h3>
-<ul>
-<li>
-<p>问题原型：<br>
-有 N 件物品和一个容量是 V 的背包，背包能承受的最大重量是 M。<br>
-每件物品只能用一次。体积是 $V_{i}$，重量是$M_{i}$，价值是 $W_{i}$。<br>
-求解将哪些物品装入背包，可使物品总体积不超过背包容量，总重量不超过背包可承受的最大重量，且价值总和最大。<br>
-输出最大价值。</p>
-</li>
-<li>
-<p>代码：</p>
 </li>
 </ul>
+<h3 id="混合背包"><a href="#混合背包" class="headerlink" title="混合背包"></a>混合背包</h3><h3 id="二维费用的背包问题"><a href="#二维费用的背包问题" class="headerlink" title="二维费用的背包问题"></a>二维费用的背包问题</h3><ul>
+<li><p>问题原型：<br>有 N 件物品和一个容量是 V 的背包，背包能承受的最大重量是 M。<br>每件物品只能用一次。体积是 $V<em>{i}$，重量是$M</em>{i}$，价值是 $W_{i}$。<br>求解将哪些物品装入背包，可使物品总体积不超过背包容量，总重量不超过背包可承受的最大重量，且价值总和最大。<br>输出最大价值。</p>
+</li>
+<li><p>代码：</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1010</span>;</span><br><span class="line"><span class="keyword">int</span> dp[N][N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">    <span class="keyword">int</span> n, v, m;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; v &gt;&gt; m;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> a, b, c;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; a &gt;&gt; b &gt;&gt; c;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = v; j &gt;= a; j--) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> k = m; k &gt;= b; k--) &#123;</span><br><span class="line">                dp[j][k] = max(dp[j][k], dp[j - a][k - b] + c);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; dp[v][m] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>问题变形
+</li>
+<li><p>问题变形</p>
 <ol>
 <li><a href="https://www.acwing.com/problem/content/1022/" target="_blank" rel="noopener">潜水员</a></li>
 </ol>
 </li>
 </ul>
-<h4 id="潜水员"><a class="header-anchor" href="#潜水员">¶</a>潜水员</h4>
-<p>这道题与普通的二维费用背包问题不一样</p>
+<h4 id="潜水员"><a href="#潜水员" class="headerlink" title="潜水员"></a>潜水员</h4><p>这道题与普通的二维费用背包问题不一样</p>
 <ul>
-<li>普通的二维费用背包问题状态转移方程</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> j =  V;j &gt;= v;j --)</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> k = M;k &gt;= m;k --)</span><br><span class="line">        f[j][k] = max(f[j][k], f[j - v][k - m] + w);</span><br></pre></td></tr></table></figure>
-<ul>
-<li>本题的状态转移方程</li>
-</ul>
+<li>普通的二维费用背包问题状态转移方程<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> j =  V;j &gt;= v;j --)</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> k = M;k &gt;= m;k --)</span><br><span class="line">        f[j][k] = max(f[j][k], f[j - v][k - m] + w);</span><br></pre></td></tr></table></figure></li>
+<li><p>本题的状态转移方程</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> j = V;j &gt;= <span class="number">0</span>;j --)</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> k = M;k &gt;= <span class="number">0</span>;k --)</span><br><span class="line">        f[j][k] = min(f[j][k], f[max(<span class="number">0</span>, j - v)][max(<span class="number">0</span>, k - m)] + w);</span><br></pre></td></tr></table></figure>
-<ul>
-<li>
-<p>两者产生差别的原因：普通的二维费用背包问题求的是：不超过体积V，重量M的前提下，所能拿到的最大价值，所以枚举体积和重量的时候不用超过给定的限定；本体的要求是：至少需要体积V，重量M的前提下，能拿到的最小价值，物品所多出来的体积或者重量并不关心，我们的目的是求最小价值，所以去枚举所有的情况</p>
 </li>
-<li>
-<p>代码</p>
+<li><p>两者产生差别的原因：普通的二维费用背包问题求的是：不超过体积V，重量M的前提下，所能拿到的最大价值，所以枚举体积和重量的时候不用超过给定的限定；本体的要求是：至少需要体积V，重量M的前提下，能拿到的最小价值，物品所多出来的体积或者重量并不关心，我们的目的是求最小价值，所以去枚举所有的情况</p>
 </li>
-</ul>
+<li><p>代码</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1010</span>;</span><br><span class="line"><span class="keyword">int</span> m, n, k;</span><br><span class="line"><span class="keyword">int</span> dp[N][N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m &gt;&gt; k;</span><br><span class="line">    <span class="built_in">memset</span>(dp, <span class="number">0x3f</span>, <span class="keyword">sizeof</span> dp);</span><br><span class="line">    dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> a, b, c;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; a &gt;&gt; b &gt;&gt; c;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = n; j &gt;= <span class="number">0</span>; j--) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> k = m; k &gt;= <span class="number">0</span>; k--) &#123;</span><br><span class="line">                dp[j][k] = min(dp[j][k], dp[max(<span class="number">0</span>, j - a)][max(<span class="number">0</span>, k - b)] + c);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; dp[n][m] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="分组背包"><a class="header-anchor" href="#分组背包">¶</a>分组背包</h3>
-<ul>
-<li>
-<p>问题原型<br>
-有N组物品和一个容量是V的背包。每组物品有若干个，同一组内的物品最多只能选一个。每件物品的体积是$V_{ij}$，价值是$W_{ij}$，其中i是组号j是组内编号。<br>
-求解将哪些物品装入背包，可使物品总体积不超过背包容量，且总价值最大。<br>
-输出最大价值。</p>
-</li>
-<li>
-<p>代码</p>
 </li>
 </ul>
+<h3 id="分组背包"><a href="#分组背包" class="headerlink" title="分组背包"></a>分组背包</h3><ul>
+<li><p>问题原型<br>有N组物品和一个容量是V的背包。每组物品有若干个，同一组内的物品最多只能选一个。每件物品的体积是$V<em>{ij}$，价值是$W</em>{ij}$，其中i是组号j是组内编号。<br>求解将哪些物品装入背包，可使物品总体积不超过背包容量，且总价值最大。<br>输出最大价值。</p>
+</li>
+<li><p>代码</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">110</span>;</span><br><span class="line"><span class="keyword">int</span> dp[N],v[N], w[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">    <span class="keyword">int</span> n, m;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> s;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; s;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; s; j++) <span class="built_in">cin</span> &gt;&gt; v[j] &gt;&gt; w[j];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = m; j &gt;= <span class="number">0</span>; j--) </span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; s; k++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (j - v[k] &gt;= <span class="number">0</span>)</span><br><span class="line">                    dp[j] = max(dp[j], dp[j - v[k]] + w[k]);</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; dp[m] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>有依赖的背包问题</li>
+</li>
+<li><p>有依赖的背包问题</p>
+</li>
 </ul>
 ]]></content>
       <categories>
