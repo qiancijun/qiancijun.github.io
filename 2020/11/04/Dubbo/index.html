@@ -1,0 +1,304 @@
+
+<!DOCTYPE html>
+<html lang="zh_CH" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Dubbo - 神奇口袋</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="qiancijun,"> 
+    <meta name="description" content="分布式基础理论
+¶分布式系统
+
+《分布式系统原理与范型》中定义：
+
+分布式系统是若干独立计算机的集合，这些计算机对于用户来说就像单个相关系统。分布式系统是建立在网络之上的软件系统。
+随着互联网的发展,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">神奇口袋</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://xlich.top"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Dubbo</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+   
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Dubbo</h1>
+        <div class="stuff">
+            <span>十一月 04, 2020</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h1>分布式基础理论</h1>
+<h2 id="分布式系统"><a class="header-anchor" href="#分布式系统">¶</a>分布式系统</h2>
+<ul>
+<li>《分布式系统原理与范型》中定义：</li>
+</ul>
+<p>分布式系统是若干独立计算机的集合，这些计算机对于用户来说就像单个相关系统。分布式系统是建立在网络之上的软件系统。<br>
+随着互联网的发展，网站应用的规模不断扩大，常规的垂直应用的架构已经无法应对，分布式服务架构以及流动计算架构势在必行。</p>
+<h2 id="架构演变"><a class="header-anchor" href="#架构演变">¶</a>架构演变</h2>
+<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Dubbo/%E6%9E%B6%E6%9E%84%E5%8E%86%E5%8F%B2.png" alt=""></p>
+<ul>
+<li>单一应用架构</li>
+</ul>
+<p>当网站流量很小时，只需一个应用，将所有功能都部署到一起，以减少部署节点和成本。此时，用于简化增删改查工作量的数据访问框架(ORM)是关键</p>
+<ul>
+<li>垂直应用架构</li>
+</ul>
+<p>界面和业务逻辑实现分离，应用不可能完全独立，大量应用之间需要交互</p>
+<ul>
+<li>分布式架构</li>
+</ul>
+<p>拆分业务，RPC：远程过程调用</p>
+<ul>
+<li>流动计算架构</li>
+</ul>
+<p>利用调度、治理中心，基于访问压力实时管理集群容量，提高集群利用率</p>
+<h2 id="RPC"><a class="header-anchor" href="#RPC">¶</a>RPC</h2>
+<p>RPC（Remote Proecdure Call）是指远程过程调用，是一种进程间通信方式，是一种技术的思想，而不是规范。它允许程序调用另一个地址空间（通常是共享网络的另一台机器上）的过程或函数，而不用程序员显示编码这个远程调用的细节。即程序员无论是调用本地的还是远程的函数，本质上编写的调用代码基本相同</p>
+<p>RPC两个核心模块：通讯、序列化</p>
+<h1>Dubbo</h1>
+<h2 id="简介"><a class="header-anchor" href="#简介">¶</a>简介</h2>
+<p>Apache Dubbo 是一款高性能、轻量级的开源Java RPC框架，它提供了三大核心能力：面向接口的远程方法调用，只能容错和负载均衡，以及服务自动注册和发现。</p>
+<h2 id="设计架构"><a class="header-anchor" href="#设计架构">¶</a>设计架构</h2>
+<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Dubbo/RPC.png" alt="设计架构"></p>
+<h1>Dubbo</h1>
+<h2 id="Zookeeper注册中心"><a class="header-anchor" href="#Zookeeper注册中心">¶</a>Zookeeper注册中心</h2>
+<p>Zookeeper 是 Apache Hadoop 的子项目，是一个树型的目录服务，支持变更推送，适合作为 Dubbo 服务的注册中心，工业强度较高，可用于生产环境，并推荐使用。</p>
+<ul>
+<li>
+<p>下载Zookeeper并解压，第一次启动会出现问题，需要重新配置下配置文件<br>
+<img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Dubbo/Zookeeper%E5%AE%89%E8%A3%851.png" alt=""></p>
+</li>
+<li>
+<p>在conf文件夹外创建data文件夹，指定临时数据的位置<br>
+<img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Dubbo/Zookeeper%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.png" alt=""></p>
+</li>
+<li>
+<p>使用<code>zkCli.cmd</code>测试</p>
+</li>
+</ul>
+<h2 id="管理控制台"><a class="header-anchor" href="#管理控制台">¶</a>管理控制台</h2>
+<p>在Dubbo官方Github中找到Dubbo-admin（下载时注意分支）。该项目是一个maven工程，以jar包方式运行，以SpringBoot启动，在cmd下输入<code>mvn clean package</code>进行打包（需要配置maven），打包完之后，使用<code>java -jar</code>命令启动，（需要打开Zookeeper服务）</p>
+<ul>
+<li>注意:<br>
+3.5Zookeeper会占用8080端口号，dubbo-admin会提示端口占用，在Zookeeper的配置文件下添加<code>admin.serverPort=8888</code></li>
+</ul>
+<h2 id="配置服务"><a class="header-anchor" href="#配置服务">¶</a>配置服务</h2>
+<ol>
+<li>将服务提供者注册到注册中心
+<ol>
+<li>导入dubbo依赖</li>
+<li>导入操作Zookeeper的客户端</li>
+<li>配置服务提供者</li>
+</ol>
+</li>
+<li>让服务消费者去注册中心订阅服务提供者的服务地址</li>
+</ol>
+<ul>
+<li>配置文件<br>
+指定当前服务/应用的名字（同样的服务名字相同，不要和别的服务同名）</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:application</span> <span class="attr">name</span>=<span class="string">"dubbo-provider"</span>&gt;</span><span class="tag">&lt;/<span class="name">dubbo:application</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>指定注册中心的位置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">address</span>=<span class="string">"zookeeper://localhost2181"</span> /&gt;</span></span><br><span class="line">或</span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">protocol</span>=<span class="string">"zookeeper"</span> <span class="attr">address</span>=<span class="string">"127.0.0.1:2181"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>指定通信规则（通信协议，通信端口）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:protocol</span> <span class="attr">name</span>=<span class="string">"dubbo"</span> <span class="attr">port</span>=<span class="string">"20001"</span>&gt;</span><span class="tag">&lt;/<span class="name">dubbo:protocol</span>&gt;</span></span><br><span class="line">其中name是固定写法</span><br></pre></td></tr></table></figure>
+<p>指明要暴露的服务</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">interface</span>=<span class="string">"com.qiancijun.service.ProviderService"</span> <span class="attr">ref</span>=<span class="string">"provideService"</span>&gt;</span><span class="tag">&lt;/<span class="name">dubbo:service</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"provideService"</span> <span class="attr">class</span>=<span class="string">"com.qiancijun.impl.ProvideService"</span>/&gt;</span></span><br><span class="line">interface：要暴露的接口</span><br><span class="line">ref：真正的实现</span><br></pre></td></tr></table></figure>
+<p>测试程序</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainApplication</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        ClassPathXmlApplicationContext ioc = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"provider.xml"</span>);</span><br><span class="line">        ioc.start();</span><br><span class="line">        System.in.read();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>若运行不成功检查依赖是否导入完整，需要额外导入curator-framework、curator-client、curator-recipes</p>
+</blockquote>
+<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Dubbo/%E9%85%8D%E7%BD%AEProvider.png" alt=""></p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='https://link.hhtjim.com/163/155827.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='https://link.hhtjim.com/163/1491163.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='https://link.hhtjim.com/163/1992707.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='true'
+        data-ci='Iv1.06e5c405a7731b45'
+        data-cs='2fcfe85902a7d5812fa4b299b56a6f194c98e08a'
+        data-r='qiancijun.github.io'
+        data-o='qiancijun'
+        data-a='qiancijun'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">分布式基础理论</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#分布式系统"><span class="toc-number">1.1.</span> <span class="toc-text">分布式系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#架构演变"><span class="toc-number">1.2.</span> <span class="toc-text">架构演变</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RPC"><span class="toc-number">1.3.</span> <span class="toc-text">RPC</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">2.</span> <span class="toc-text">Dubbo</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-number">2.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设计架构"><span class="toc-number">2.2.</span> <span class="toc-text">设计架构</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">3.</span> <span class="toc-text">Dubbo</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Zookeeper注册中心"><span class="toc-number">3.1.</span> <span class="toc-text">Zookeeper注册中心</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#管理控制台"><span class="toc-number">3.2.</span> <span class="toc-text">管理控制台</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置服务"><span class="toc-number">3.3.</span> <span class="toc-text">配置服务</span></a></li></ol></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":250,"height":400},"mobile":{"show":false},"log":false});</script></body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-163098031-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+<script type="text/javascript" src="/js/love.js"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</html>

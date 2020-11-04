@@ -286,7 +286,7 @@
 </li>
 </ul>
 <h2 id="三、命题逻辑的的推理理论"><a class="header-anchor" href="#三、命题逻辑的的推理理论">¶</a>三、命题逻辑的的推理理论</h2>
-<h3 id="推理的形式结构"><a class="header-anchor" href="#推理的形式结构">¶</a>推理的形式结构</h3>
+<h3 id="2-1-推理的形式结构"><a class="header-anchor" href="#2-1-推理的形式结构">¶</a>2.1 推理的形式结构</h3>
 <ul>
 <li>定义3.1:设$A_{1} , A_{2} , …, A_{k}$和B都是命题公式，若对于$A_{1}, A_{2}, …, A_{k}$和B中出现的命题变项的任意一组赋值，或者$A_{1} \wedge A_{2} \wedge … \wedge A_{k}$为假，或者当$A_{1} \wedge A_{2} \wedge … \wedge A_{k}$为真时B也真，则称由前提$A_{1}, A_{2}, …, A_{k}$推出结论B的推理时$\color{red}{有效的}$或$\color{red}{正确的}$，并称B为$\color{red}{有效的结论}$</li>
 <li>推理的形式结构</li>
@@ -356,7 +356,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="自然推理系统P"><a class="header-anchor" href="#自然推理系统P">¶</a>自然推理系统P</h3>
+<h3 id="2-2-自然推理系统P"><a class="header-anchor" href="#2-2-自然推理系统P">¶</a>2.2 自然推理系统P</h3>
 <ul>
 <li>一个形式系统l由下面4个部分组成
 <ol>
@@ -396,6 +396,235 @@ $A_{1} \wedge A_{2} \wedge … \wedge A_{k} \wedge A) \rightarrow B$</p>
 <p>在构造形式结构为<br>
 $(A_{1} \wedge A_{2} \wedge …\wedge A_{k}) \rightarrow (A \rightarrow B)$<br>
 的推理证明中，若将$\lnot B$作为前提能够推出矛盾来，比如说的出$(A \wedge \lnot A)$，则说明推理正确</p>
+<h2 id="四、一阶逻辑基本概念"><a class="header-anchor" href="#四、一阶逻辑基本概念">¶</a>四、一阶逻辑基本概念</h2>
+<h3 id="4-1-一阶逻辑命题符号化"><a class="header-anchor" href="#4-1-一阶逻辑命题符号化">¶</a>4.1 一阶逻辑命题符号化</h3>
+<ul>
+<li>个体词：所研究对象中可以独立存在的具体的或抽象的客体，例如：小王，小李，中国，3都可以作为个体词</li>
+<li>表示具体或特定的客体的个体词称作个体常项，一般用小写英文字母a, b, c来表示，而将表示抽象或泛指的个体词称作$\color{red}{个体变项}$，常用x,y,z表示，并称个体变项的取值范围为$\color{red}{个体域}$，有一个特殊的个体域，它是宇宙间一切事物组成的，称作$\color{red}{全总个体域}$</li>
+</ul>
+<h2 id="五、一阶逻辑等值演算与推理"><a class="header-anchor" href="#五、一阶逻辑等值演算与推理">¶</a>五、一阶逻辑等值演算与推理</h2>
+<h3 id="5-1-一阶逻辑等值式与置换规则"><a class="header-anchor" href="#5-1-一阶逻辑等值式与置换规则">¶</a>5.1 一阶逻辑等值式与置换规则</h3>
+<pre><code>* 定义：设$A, B$是一阶逻辑中任意两个公式，若$A \leftrightarrow B$是永真式，则称$A,B$等值，记作$A \Leftrightarrow B$，称$A \Leftrightarrow B$是$\color{red}{等值式}$
+</code></pre>
+<blockquote>
+<p>由定义可知，判断公式A与B是否等值，等价于判断公式$A \Leftrightarrow B$是否为永真式</p>
+</blockquote>
+<h4 id="一阶逻辑中基本等值式"><a class="header-anchor" href="#一阶逻辑中基本等值式">¶</a>一阶逻辑中基本等值式</h4>
+<ul>
+<li>第一组</li>
+</ul>
+<p>由于命题逻辑中的重言式的代换实例都是一阶逻辑中的永真式，因而第二章16组等值式模式给出的代换实例都是一阶逻辑的等值式</p>
+<ul>
+<li>第二组</li>
+</ul>
+<ol>
+<li>
+<p>量词否定等值式</p>
+<ul>
+<li>设公式$A(x)$含自由出现的个体变项$x$，则</li>
+<li>$\lnot \forall x A(x) \Leftrightarrow \exists x \lnot A(X)$</li>
+<li>$\lnot \exists x A(x) \Leftrightarrow \forall x \lnot A(x)$</li>
+</ul>
+</li>
+<li>
+<p>量词辖域收缩与扩张等值式</p>
+<ul>
+<li>$\forall x (A(x) \vee B) \Leftrightarrow \forall x A(x) \vee B$</li>
+<li>$\forall x (A(x) \wedge B) \Leftrightarrow \forall x A(x) \wedge B$</li>
+<li>$\forall x (A(x) \rightarrow B) \Leftrightarrow \exists x A(x) \rightarrow B$</li>
+<li>$\forall x (B \rightarrow A(x)) \Leftrightarrow B \rightarrow \forall x A(x)$</li>
+<li>$\exists x (A(x) \vee B) \Leftrightarrow \exists x A(x) \vee B$</li>
+<li>$\exists x (A(x) \wedge B) \Leftrightarrow \exists x A(x) \wedge B$</li>
+<li>$\exists x (A(x) \rightarrow B) \Leftrightarrow \forall x A(x) \rightarrow B$</li>
+<li>$\exists x (B \rightarrow A(x)) \Leftrightarrow B \rightarrow \exists x A(x)$</li>
+</ul>
+</li>
+<li>
+<p>量词分配等值式</p>
+<ul>
+<li>设公式$A(x),B(x)$含自由出现的个体变项$x$，则</li>
+<li>$\forall x (A(x) \wedge B(x)) \Leftrightarrow \forall x A(x) \wedge \forall x B(x)$</li>
+<li>$\exists x (A(x) \vee B(x)) \Leftrightarrow \exists x A(x) \vee \forall x B(x)$</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>两条规则
+<ol>
+<li>置换规则</li>
+<li>换名规则</li>
+</ol>
+</li>
+</ul>
+<h3 id="5-2-一阶逻辑前束范式"><a class="header-anchor" href="#5-2-一阶逻辑前束范式">¶</a>5.2 一阶逻辑前束范式</h3>
+<ul>
+<li>
+<p>前束范式</p>
+<p>具有如下形式$Q_1x_1Q_2x_2…Q_kx_kB$的一阶逻辑公式称作$\color{red}{前束范式}$，其中$Q_i(1 \le i \le k)$为$\exists$或$\forall$，$B$为不含量词的公式</p>
+<p>例如：$\forall x \forall y (F(x) \wedge G(y) \rightarrow H(x, y))$</p>
+</li>
+<li>
+<p>前束范式存在定理：一阶逻辑中的任何公式都存在等值的前束范式</p>
+</li>
+</ul>
+<h3 id="5-3-一阶逻辑的推理理论"><a class="header-anchor" href="#5-3-一阶逻辑的推理理论">¶</a>5.3 一阶逻辑的推理理论</h3>
+<p>在一阶逻辑中，从前提$A_1,A_2,…,A_k$出发推出结论$B$的推理的形式结构，依然采用如下的蕴含形式$A_1 \wedge A_2 \wedge … \wedge A_k \rightarrow B$为永真式，则称$\color{red}{推理正确}$，否则称$\color{red}{推理不正确}$</p>
+<ul>
+<li>推理定律：在一阶逻辑中永真式的蕴含式为$\color{red}{推理定律}$，若一个推理的形式结构是推理定律，则这个推理是正确的</li>
+<li>一些常用的推理定律
+<ul>
+<li>全称量词消去规则（简记为$\forall -$）</li>
+<li>全称量词引入规则（简记为$\forall +$）</li>
+<li>存在量词消去规则（简记为$\exists -$）</li>
+<li>存在量词引入规则（简记为$\exists +$）</li>
+<li>$\forall x A(x) \vee \forall x B(x) \Rightarrow \forall (A(x) \vee B(x))$</li>
+<li>$\exists x (A(x) \wedge B(x)) \Rightarrow \exists x A(x) \wedge \exists x B(x)$</li>
+<li>$\forall x (A(x) \rightarrow B(X)) \Rightarrow \forall x A(X) \rightarrow \forall x B(X)$</li>
+<li>$\exists x (A(x) \rightarrow B(x)) \Rightarrow \exists x A(x) \rightarrow \exists x B(x)$</li>
+</ul>
+</li>
+</ul>
+<h1>集合论</h1>
+<h2 id="六、-集合代数"><a class="header-anchor" href="#六、-集合代数">¶</a>六、 集合代数</h2>
+<h3 id="6-1-集合的基本概念"><a class="header-anchor" href="#6-1-集合的基本概念">¶</a>6.1 集合的基本概念</h3>
+<p>集合是不能精确定义的基本概念，直观的说，把一些事物汇集到一起组成一个整体就称作$\color{red}{集合}$，而这些事物就是这个集合的$\color{red}{元素}$或$\color{red}{成员}$</p>
+<ul>
+<li>元素与集合的关系：元素和集合之间的关系是隶属关系，即$\color{red}{属于}$或$\color{red}{不属于}$，属于记作$\in$，不属于记作$\notin$</li>
+<li>集合与集合的关系：设$A,B$为集合，如果$B$中的每个元素都是$A$中的元素，则称$B$是$A$的$\color{red}{子集合}$，简称$\color{red}{子集}$，这时也称$\color{red}{B被A包含}$，或$\color{red}{A包含B}$，记作$B \subseteq A$，如果$B$不被$A$包含，则记作$B \nsubseteq A$</li>
+<li>相等：设$A,B$为集合，如果$A \subseteq B$且$B \subseteq A$则称$A$与$B$相等，记作$A = B$</li>
+<li>真子集：设$A, B$为集合，如果$B \subseteq A$且$B \neq A$，则称$B$是$A$的$\color{red}{真子集}$，记作$B \subset A$，如果$B$不是$A$的真子集，则记作$B \not \subset A$</li>
+<li>空集：不含任何元素的集合，记作$\oslash$，空寂是一切集合的子集，空集是唯一的</li>
+</ul>
+<p>一般来说，对于n元集（含有n个元素）$A$，它的0元子集有$C(n, 0)$个，1元子集有$C(n, 1)$个，…，m元子集有$C(n, m)$个，子集总数为$C(n,0)+C(n,1)+C(n,2)+…+C(n,n)=2^{n}$</p>
+<ul>
+<li>幂集：设$A$为集合，把$A$的全体子集构成的集合称作$A$的$\color{red}{幂集}$，记作$P(A)$</li>
+<li>全集：在一个具体问题中，如果涉及的集合都是某个集合的子集，则称这个集合为全集，记为$E$</li>
+</ul>
+<h3 id="6-2-集合的运算"><a class="header-anchor" href="#6-2-集合的运算">¶</a>6.2 集合的运算</h3>
+<ul>
+<li>
+<p>并集：$A \cup B = \lbrace x \vert x \in A \vee x \in B \rbrace$</p>
+</li>
+<li>
+<p>交集：$A \cap B = \lbrace x \vert x \in A \wedge x \in B \rbrace$</p>
+</li>
+<li>
+<p>差集：$A - B = \lbrace x \vert x \in A \wedge x \not \in B \rbrace$</p>
+</li>
+<li>
+<p>对称差集：$A \oplus B = (A - B) \cup (B - A)$</p>
+<ul>
+<li>例如：$A = \lbrace a, b, c \rbrace$，$B = \lbrace b, d \rbrace$，则$A \oplus B = \lbrace a,c,d \rbrace$</li>
+<li>对称差集的另一种定义是：$A \oplus B = (A \cup B) - (A \cap B)$</li>
+</ul>
+</li>
+<li>
+<p>绝对补集：$\sim A = E - A = \lbrace x \vert x \in E \wedge x \not \in A \rbrace$</p>
+</li>
+</ul>
+<h3 id="6-3-有穷集的计数"><a class="header-anchor" href="#6-3-有穷集的计数">¶</a>6.3 有穷集的计数</h3>
+<ul>
+<li>容斥原理：设$S$为有穷集，$P_1,P_2,…,P_n$是n个性质，$S$中的任何元素$x$或者具有性质$P_i$或者不具有性质$P_i$，两种情况必居其一，令$A_i$表示$S$中具有性质$P_i$的元素构成的子集，则$S$中不具有性质$P_1,P_2,…,P_n$的元素数为</li>
+</ul>
+<p>$\vert \overline A_1 \cap \overline A_2 \cap … \cap \overline A_n = \vert S \vert - \sum\limits_{i=1}^{n} \vert A_i \vert + \sum\limits_{1 \le i &lt; j \le n} \vert A_i \cap A_j \vert - \sum\limits_{1 \le i &lt; j &lt; k \le n} |A_i \cap A_j \cap A_k \vert + … + (-1)^{n} \vert A_1 \cap A_2 \cap … \cap A_n \vert$</p>
+<h3 id="6-4-集合恒等式"><a class="header-anchor" href="#6-4-集合恒等式">¶</a>6.4 集合恒等式</h3>
+<ul>
+<li>吸收律：$A \cup (A \cap B) = A$ 、$A \cap (A \cup B) = A$</li>
+<li>德摩根律：
+<ul>
+<li>$A - (B \cup C) = (A - B) \cap (A - C)$</li>
+<li>$A - (B \cap C) = (A - B) \cup (A - C)$</li>
+<li>$\sim (B \cup C) = \sim B \cap \sim C$</li>
+<li>$\sim (B \cap C) = \sim B \cup \sim C$</li>
+</ul>
+</li>
+<li>对称差的分配律：$A \cap (B \oplus C) = (A \cap B) \oplus (A \cap C)$</li>
+</ul>
+<h2 id="七、-二元关系"><a class="header-anchor" href="#七、-二元关系">¶</a>七、 二元关系</h2>
+<h3 id="7-1-有序对与笛卡尔积"><a class="header-anchor" href="#7-1-有序对与笛卡尔积">¶</a>7.1 有序对与笛卡尔积</h3>
+<ul>
+<li>有序对：由两个元素$x$和$y$（允许$x = y$）按照一定顺序排列成二元组称作一个$\color{red}{有序对}$，记作$&lt;x, y&gt;$，其中$x$是它的第一元素，$y$是它的第二元素</li>
+<li>笛卡尔积：设$A,B$为集合，用$A$中元素为第一元素，$B$中元素为第二元素构成有序对，所有这样的有序对组成的集合称作$A$和$B$的$\color{red}{笛卡尔积}$，记作$A × B$
+<ul>
+<li>笛卡尔积运算不满足交换律，不满足结合律</li>
+<li>对并和交运算满足分配律</li>
+</ul>
+</li>
+</ul>
+<h3 id="7-2-二元关系"><a class="header-anchor" href="#7-2-二元关系">¶</a>7.2 二元关系</h3>
+<ul>
+<li>定义：如果一个集合满足以下条件之一，则称该集合为一个$\color{red}{二元关系}$，记作$R$，二元关系也可以简称为$\color{red}{关系}$，对于二元关系$R$，如果$&lt;x, y&gt; \in R$则记作$xRy$
+<ol>
+<li>集合非空，且它的元素都是有序对；</li>
+<li>集合是空集</li>
+</ol>
+</li>
+<li>定义：设$A,B$为集合，$A×B$的任何子集所定义的二元关系称作$\color{red}{从A到B的二元关系}$，特别的当$A = B$时称作$\color{red}{A上的二元关系}$</li>
+<li>全域关系$E_A$：$E_A = \lbrace &lt;x,y&gt; \vert x \in A \wedge y \in A \rbrace = A × A$ 元素都来自A子集</li>
+<li>恒等关系$I_A$：$I_A = \lbrace &lt;x, x&gt; \vert x \in A \rbrace$ 元素都来自A子集，并且两个元素相等</li>
+<li>空关系：对任何集合$A$，空集是$A×A$的子集</li>
+<li>小于等于关系$L_A$：$L_A = \lbrace &lt;x, y&gt; \vert x , y \in A, x \le y \rbrace$</li>
+<li>整除关系$D_A$：$D_A = \lbrace &lt;x,y&gt; \vert x, y \in , x \vert y \rbrace$</li>
+<li>包含关系$R_\subseteq$：$R_\subseteq = \lbrace &lt;x,y&gt; \vert x, y \in A, x \subseteq y \rbrace$</li>
+</ul>
+<h3 id="7-3-关系的运算"><a class="header-anchor" href="#7-3-关系的运算">¶</a>7.3 关系的运算</h3>
+<ul>
+<li>定义域：$R$中所有有序对的第一元素构成的集合称作$R$的$\corlor{red}{定义域}$，记作$domR$，形式化表示为：$domR = \lbrace x \vert \exists y (&lt;x,y&gt;) \in R \rbrace$</li>
+<li>值域：$R$中所有有序对的第二元素构成的集合称作$R$的$\color{red}{值域}$，记作$ranR$，形式化表示为$ranR = \lbrace y \vert \exists x (&lt;x, y&gt;) \in R \rbrace$</li>
+<li>域：$R$的定义域和值域的并集称作$R$的$\color{red}{域}$，记作$fldR$，形式化表示为：$fldR = domR \cup ranR$</li>
+</ul>
+<h4 id="逆关系"><a class="header-anchor" href="#逆关系">¶</a>逆关系</h4>
+<ul>
+<li>设$R$为二元关系，$R$的$\color{red}{逆关系}$，简称为$R$的逆，记作$R<sup>{-1}$，其中$R</sup>{-1} = \lbrace &lt;x,y&gt; \vert &lt;y,x&gt; \in R \rbrace$</li>
+</ul>
+<h4 id="右复合"><a class="header-anchor" href="#右复合">¶</a>右复合</h4>
+<ul>
+<li>设$F,G$为二元关系，$G$对$F$的$\color{red}{右复合}$记作$F \circ G$</li>
+</ul>
+<h4 id="限制、像"><a class="header-anchor" href="#限制、像">¶</a>限制、像</h4>
+<ul>
+<li>限制：$R$在$A$上的$\color{red}{限制}$记作$R \uparrow A = \lbrace &lt;x,y&gt; \vert xRy \wedge x \in A \rbrace$</li>
+<li>像：$A$在$R$下的$\color{red}{像}$记作$R[A]$，其中$R[A] = ran(R \uparrow A)$</li>
+</ul>
+<h4 id="运算性质"><a class="header-anchor" href="#运算性质">¶</a>运算性质</h4>
+<ul>
+<li>
+<p>设$F$是任意的关系，有：</p>
+<ol>
+<li>${(F<sup>{-1})}</sup>{-1} = F$</li>
+<li>$domF^{-1} = ranF, ranF^{-1} = domF$</li>
+</ol>
+</li>
+<li>
+<p>设$F,G,H$是任意的关系，有：</p>
+<ol>
+<li>$(F \circ G) \circ H = F \circ (G \circ H)$</li>
+<li>$(F \circ G)^{-1} = G^{-1} \circ F^{-1}$</li>
+</ol>
+</li>
+<li>
+<p>设$R$为$A$上的关系，有：</p>
+<ol>
+<li>$R \circ I_A = I_A \circ R = R$</li>
+</ol>
+</li>
+<li>
+<p>设$F,G,H$为任意关系，有：</p>
+<ol>
+<li>$F \circ (G \cup H) = F \circ G \cup F \circ H$</li>
+<li>$(G \cup H) \circ F = G \circ F \cup H \circ F$</li>
+<li>$F \circ (G \cap H) \subseteq F \circ G \cup F \circ H$</li>
+<li>$(G \cap H) \circ F \subseteq G \circ F \cap H \circ F$</li>
+</ol>
+</li>
+<li>
+<p>R的n次幂$R^{n}$：</p>
+<ol>
+<li>$R^{0} = \lbrace &lt;x,x&gt; \vert x \in A \rbrace = I_A$</li>
+<li>$R^{n+1} = R^{n} \circ R$</li>
+</ol>
+</li>
+</ul>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
@@ -435,7 +664,7 @@ $(A_{1} \wedge A_{2} \wedge …\wedge A_{k}) \rightarrow (A \rightarrow B)$<br>
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">数理逻辑</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、命题逻辑的基本概念"><span class="toc-number">1.1.</span> <span class="toc-text">一、命题逻辑的基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1命题与联结词"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1命题与联结词</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2命题公式及其赋值"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2命题公式及其赋值</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、命题逻辑等值预算"><span class="toc-number">1.2.</span> <span class="toc-text">二、命题逻辑等值预算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-析取范式与合取范式"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.2 析取范式与合取范式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#范式"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">范式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#极小极大项"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">极小极大项</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、命题逻辑的的推理理论"><span class="toc-number">1.3.</span> <span class="toc-text">三、命题逻辑的的推理理论</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#推理的形式结构"><span class="toc-number">1.3.1.</span> <span class="toc-text">推理的形式结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#推理定律"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">推理定律</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自然推理系统P"><span class="toc-number">1.3.2.</span> <span class="toc-text">自然推理系统P</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#附加前提证明法"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">附加前提证明法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#归谬法"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">归谬法</span></a></li></ol></li></ol></li></ol></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">数理逻辑</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、命题逻辑的基本概念"><span class="toc-number">1.1.</span> <span class="toc-text">一、命题逻辑的基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1命题与联结词"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1命题与联结词</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2命题公式及其赋值"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2命题公式及其赋值</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、命题逻辑等值预算"><span class="toc-number">1.2.</span> <span class="toc-text">二、命题逻辑等值预算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-析取范式与合取范式"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.2 析取范式与合取范式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#范式"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">范式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#极小极大项"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">极小极大项</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、命题逻辑的的推理理论"><span class="toc-number">1.3.</span> <span class="toc-text">三、命题逻辑的的推理理论</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-推理的形式结构"><span class="toc-number">1.3.1.</span> <span class="toc-text">2.1 推理的形式结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#推理定律"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">推理定律</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-自然推理系统P"><span class="toc-number">1.3.2.</span> <span class="toc-text">2.2 自然推理系统P</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#附加前提证明法"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">附加前提证明法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#归谬法"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">归谬法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、一阶逻辑基本概念"><span class="toc-number">1.4.</span> <span class="toc-text">四、一阶逻辑基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-一阶逻辑命题符号化"><span class="toc-number">1.4.1.</span> <span class="toc-text">4.1 一阶逻辑命题符号化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五、一阶逻辑等值演算与推理"><span class="toc-number">1.5.</span> <span class="toc-text">五、一阶逻辑等值演算与推理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-一阶逻辑等值式与置换规则"><span class="toc-number">1.5.1.</span> <span class="toc-text">5.1 一阶逻辑等值式与置换规则</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#一阶逻辑中基本等值式"><span class="toc-number">1.5.1.1.</span> <span class="toc-text">一阶逻辑中基本等值式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-一阶逻辑前束范式"><span class="toc-number">1.5.2.</span> <span class="toc-text">5.2 一阶逻辑前束范式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-一阶逻辑的推理理论"><span class="toc-number">1.5.3.</span> <span class="toc-text">5.3 一阶逻辑的推理理论</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">2.</span> <span class="toc-text">集合论</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#六、-集合代数"><span class="toc-number">2.1.</span> <span class="toc-text">六、 集合代数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-集合的基本概念"><span class="toc-number">2.1.1.</span> <span class="toc-text">6.1 集合的基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-集合的运算"><span class="toc-number">2.1.2.</span> <span class="toc-text">6.2 集合的运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-有穷集的计数"><span class="toc-number">2.1.3.</span> <span class="toc-text">6.3 有穷集的计数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-集合恒等式"><span class="toc-number">2.1.4.</span> <span class="toc-text">6.4 集合恒等式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#七、-二元关系"><span class="toc-number">2.2.</span> <span class="toc-text">七、 二元关系</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-有序对与笛卡尔积"><span class="toc-number">2.2.1.</span> <span class="toc-text">7.1 有序对与笛卡尔积</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-二元关系"><span class="toc-number">2.2.2.</span> <span class="toc-text">7.2 二元关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-关系的运算"><span class="toc-number">2.2.3.</span> <span class="toc-text">7.3 关系的运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#逆关系"><span class="toc-number">2.2.3.1.</span> <span class="toc-text">逆关系</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#右复合"><span class="toc-number">2.2.3.2.</span> <span class="toc-text">右复合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#限制、像"><span class="toc-number">2.2.3.3.</span> <span class="toc-text">限制、像</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#运算性质"><span class="toc-number">2.2.3.4.</span> <span class="toc-text">运算性质</span></a></li></ol></li></ol></li></ol></li></ol>	
         </div>
     
 </div>
