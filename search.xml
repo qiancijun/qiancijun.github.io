@@ -6532,6 +6532,51 @@ Java程序——&gt;JYM——&gt;OS——&gt;文件</p>
 <blockquote>
 <p>说明：Full GC是开发或调优中尽量要避免的。这样暂时时间会短一些</p>
 </blockquote>
+<h2 id="7-6-堆空间分代思想"><a class="header-anchor" href="#7-6-堆空间分代思想">¶</a>7.6 堆空间分代思想</h2>
+<p>不同对象的生命周期不同。70%-99%的对象都是临时对象</p>
+<ul>
+<li>新生代：有Eden、两块大小相同的Survivor（又称from/to，s0/s1）构成，to总为空</li>
+<li>老年代：存放新生代中经历多次GC仍然存活的对象</li>
+</ul>
+<p>不分代完全可以，分代的唯一理由就是优化GC性能。如果没有分代，那所有的对象都在一块。GC的时候要找哪些对象没用，这样就会对堆的所有区域进行扫描。而很多对象都是朝生夕死的，如果分代的话，把新创建的对象放到某一地方，当GC的时候先把这块存储对象的区域进行回收，这样就会腾出很大的空间</p>
+<h2 id="7-7-内存分配总结"><a class="header-anchor" href="#7-7-内存分配总结">¶</a>7.7 内存分配总结</h2>
+<p>如果对象在Eden区出生并经过第一次MinorGC后仍然存活，并且能被Survivor容纳的话，将被移动到Survivor空间中，并将对象年龄设为1。对象在Survivor区中每熬过一次MinorGC，年龄就增加1，当它的年龄增加到一定程度（默认15，其实每个JVM、每个GC都有所不同）时，就会被晋升到老年代中。</p>
+<p>对象晋升老年代的年龄阈值，可以通过选项<code>-XX:MaxTenuringThreshold</code>来设置</p>
+<h3 id="7-7-1-对象提升原则"><a class="header-anchor" href="#7-7-1-对象提升原则">¶</a>7.7.1 对象提升原则</h3>
+<p>针对不同年龄段的对象分配原则如下所示：</p>
+<ul>
+<li>优先分配到Eden</li>
+<li>大对象直接分配到老年代
+<ul>
+<li>尽量避免程序中出现过多的大对象</li>
+</ul>
+</li>
+<li>长期存活的对象分配到老年代</li>
+<li>动态对象年龄判断
+<ul>
+<li>如果Survivor区中相同年龄的所有对象大小的总和大于Survivor空间的一半，年龄大于或等于该年龄的对象可以直接进入老年代，无需等到MaxTenuringThreshold中要求的年龄</li>
+</ul>
+</li>
+<li>空间分配担保</li>
+</ul>
+<h2 id="7-8-为对象分配内存：TLAB"><a class="header-anchor" href="#7-8-为对象分配内存：TLAB">¶</a>7.8 为对象分配内存：TLAB</h2>
+<p>为什么需要TLAB（Thread Local Allocation Buffer）</p>
+<ul>
+<li>堆区是线程共享区域，任何线程都可以访问到堆区中的共享数据</li>
+<li>由于对象实例的创建在JVM中非常频繁，因此在并发环境下从堆区中划分内存空间是线程不安全的</li>
+<li>为避免多个线程操作同一地址，需要使用加锁等机制，进而影响分配速度</li>
+</ul>
+<p>TLAB</p>
+<ul>
+<li>从内存模型而不是垃圾收集的角度，对Eden区域继续进行划分，JVM为$\color{red}{每个线程分配了有个私有的缓存区域}$，它包含在Eden空间内</li>
+<li>多个线程同时分配内存时，使用TLAB可以避免一系列的非线程安全问题，同时还能够提升内存分配的吞吐量，因此我们可以将这种内存分配方式称之为$\color{red}{快速分配策略}$</li>
+<li>OpenJDK衍生出来的JVM都提供了TLAB的设计</li>
+<li>尽管不是所有的对象实例都能够在TLAB中成功分配内存，但$\color{red}{JVM确实是将TLAB作为内存分配的首选}$</li>
+<li>在程序中，开发人员可以通过选项<code>-XX:UserTLAB</code>设置是否开启TLAB空间</li>
+<li>默认情况下，TLAB空间的内存非常小，$\color{red}{仅占有整个Eden空间的百分之1}$，可以通过选项<code>-XX:TLABWasteTargetPervent</code>设置TLAB空间所占用Eden空间的百分比大小</li>
+<li>一旦对象在TLAB空间分配内存失败时，JVM就会成实者通过使用$\color{red}{加锁机制}$确保数据操作的原子性，从而直接在Eden空间中分配内存</li>
+</ul>
+<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/JVM/%E5%A0%86-TLAB.jpg" alt=""></p>
 ]]></content>
       <categories>
         <category>JAVA</category>
