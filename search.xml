@@ -5723,7 +5723,7 @@ Java程序——&gt;JYM——&gt;OS——&gt;文件</p>
   <entry>
     <title>KMP算法</title>
     <url>/2020/06/24/KMP%E7%AE%97%E6%B3%95/</url>
-    <content><![CDATA[<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">Next</span><span class="params">(<span class="built_in">string</span> dest)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = dest.size();</span><br><span class="line">    <span class="keyword">int</span> len = <span class="number">0</span>; <span class="comment">// 最长公共前缀长度</span></span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">next</span><span class="params">(n, <span class="number">0</span>)</span></span>; <span class="comment">// next数组</span></span><br><span class="line">    next[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (i &lt; n) &#123;</span><br><span class="line">        <span class="keyword">if</span> (dest[i] == dest[len]) &#123;</span><br><span class="line">            len++; </span><br><span class="line">            next[i] = len;</span><br><span class="line">            i++;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (len &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                len = next[len - <span class="number">1</span>];</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                next[i] = len;</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> next;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">kmp</span><span class="params">(<span class="built_in">string</span> pattern, <span class="built_in">string</span> dest, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; next)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> p1 = pattern.size();</span><br><span class="line">    <span class="keyword">int</span> p2 = dest.size();</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>; i &lt; p1; i++) &#123;</span><br><span class="line">        <span class="keyword">while</span> (j &gt; <span class="number">0</span> &amp;&amp; pattern[i] != dest[j]) &#123;</span><br><span class="line">            j = next[j - <span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (pattern[i] == dest[j]) &#123;</span><br><span class="line">            j++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (j == p2) &#123;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; <span class="string">"position:"</span> &lt;&lt; i - j + <span class="number">1</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    <content><![CDATA[<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">Next</span><span class="params">(<span class="built_in">string</span> dest)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = dest.size();</span><br><span class="line">    <span class="keyword">int</span> len = <span class="number">0</span>; <span class="comment">// 最长公共前缀长度</span></span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">next</span><span class="params">(n, <span class="number">0</span>)</span></span>; <span class="comment">// next数组</span></span><br><span class="line">    next[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (i &lt; n) &#123;</span><br><span class="line">        <span class="keyword">if</span> (dest[i] == dest[len]) &#123;</span><br><span class="line">            len++; </span><br><span class="line">            next[i] = len;</span><br><span class="line">            i++;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (len &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                len = next[len - <span class="number">1</span>];</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                next[i] = <span class="number">0</span>;</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> next;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">kmp</span><span class="params">(<span class="built_in">string</span> pattern, <span class="built_in">string</span> dest, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; next)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> p1 = pattern.size();</span><br><span class="line">    <span class="keyword">int</span> p2 = dest.size();</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>; i &lt; p1; i++) &#123;</span><br><span class="line">        <span class="keyword">while</span> (j &gt; <span class="number">0</span> &amp;&amp; pattern[i] != dest[j]) &#123;</span><br><span class="line">            j = next[j - <span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (pattern[i] == dest[j]) &#123;</span><br><span class="line">            j++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (j == p2) &#123;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; <span class="string">"position:"</span> &lt;&lt; i - j + <span class="number">1</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>Algorithm</category>
       </categories>
@@ -18396,5 +18396,158 @@ Hadoop的高性能通信和序列化组件（AVRO）的RPC框架，默认采用N
       <tags>
         <tag>Java</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Nginx</title>
+    <url>/2020/11/17/Nginx/</url>
+    <content><![CDATA[<h1>Nginx</h1>
+<p>Nginx是一个高性能得HTTP和反向代理服务器，特点是占有内存少，并发能力强，事实上nginx得并发能力在同类型得网页服务器中表现较好。Nginx专为性能优化而开发，性能是其最重要得考量，实现上非常注重效率，能经受高负载得考验，有报告表明能支持高达50000个并发连接数</p>
+<h2 id="正向代理"><a class="header-anchor" href="#正向代理">¶</a>正向代理</h2>
+<p>Nginx不仅可以做方向代理，实现负载均衡，还能用作正向代理来进行上网等功能。<br>
+如果把局域网外得Internet想象成一个巨大得资源库，则局域网中的客户端要访问Internet，则需要通过代理服务器来访问，这种代理服务就称为正向代理。</p>
+<h2 id="反向代理"><a class="header-anchor" href="#反向代理">¶</a>反向代理</h2>
+<p>客户端对代理是无感知的，因为客户端不需要任何配置就可以访问，我们只需要讲请求发送到反向代理服务器，由反向代理服务器去选择目标服务器获取数据后，在返回给客户端，此时反向代理服务器和目标服务器对外就是一个服务器，暴露的是代理服务器的地址，隐藏了真是服务器IP地址</p>
+<h2 id="负载均衡"><a class="header-anchor" href="#负载均衡">¶</a>负载均衡</h2>
+<p>客户端发送多个请求到服务器，服务器处理请求，有一些可能要与数据库进行交互，服务器处理完毕后，再将结果返回给客户端。<br>
+这种架构模式对于早期的系统相对单一，并发请求相对较少的情况下是比较适合的，成本也低。但是随着信息数量的不断增长，访问量和数据量的飞速增长，以及系统业务的复杂度增加，这种架构会造成服务器相应客户端的请求日益缓慢，并发量特别大的时候，还容易造成服务器直接崩溃。<br>
+单个服务器解决不了，我们增加服务器的数量，然后将请求分发到各个服务器上，将原先请求集中到单个服务器上的情况改为将请求分发到多个服务器上，将负载分发到不同的服务器，也就是我们所说的负载均衡</p>
+<h2 id="动静分离"><a class="header-anchor" href="#动静分离">¶</a>动静分离</h2>
+<p>为了加快网站的解析速度，可以把动态页面和静态页面由不同的服务器来解析，加快解析速度。降低原来单个服务器的压力。</p>
+<h1>安装</h1>
+<ol>
+<li>安装前置核心（pcre、openssl、zlib）</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum -y install make zlib zlib-devel gcc-c++ libtool openssl openssl-devel</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>安装Nginx
+<ul>
+<li>解压缩官网的nginx压缩包</li>
+<li>进入目录执行<code>./configure</code></li>
+<li>make &amp;&amp; make install</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>安装成功之后，在local文件夹下有nginx文件夹，在sbin下有启动脚本</li>
+</ul>
+<h1>常用命令</h1>
+<p>使用nginx操作命令前提条件：必须进入nginx的目录，或者设置全局变量</p>
+<ol>
+<li>查看版本号</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;nginx -v</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>启动nginx</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;nginx</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>关闭nginx</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;nginx -s stop</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>重新加载nginx</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;nginx -s reload</span><br></pre></td></tr></table></figure>
+<h1>配置文件</h1>
+<p>nginx配置文件由三部分组成</p>
+<ol>
+<li>全局块<br>
+从配置文件开始到 events 块之间的内容，主要会设置一些影响 nginx 服务器整体运行的配置指令，主要包括配置运行 Nginx 服务器的用户（组）、允许生成的 worker process 数，进程 PID 存放路径、日志存放路径和类型以及配置文件的引入等。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">worker_processes  1;</span><br></pre></td></tr></table></figure>
+<p>这是 Nginx 服务器并发处理服务的关键配置，worker_processes 值越大，可以支持的并发处理量也越多，但是会受到硬件、软件等设备的制约。</p>
+<ol start="2">
+<li>events块</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>events 块涉及的指令主要影响 Nginx 服务器与用户的网络连接，常用的设置包括是否开启对多 work process下的网络连接进行序列化，是否允许同时接收多个网络连接，选取哪种事件驱动模型来处理连接请求每个 wordprocess 可以同时支持的最大连接数等。<br>
+上述例子就表示每个 work process 支持的最大连接数为 1024.<br>
+这部分的配置对 Nginx 的性能影响较大，在实际中应该灵活配置。</p>
+<ol start="3">
+<li>http块</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application&#x2F;octet-stream;</span><br><span class="line">    sendfile        on;</span><br><span class="line">    #keepalive_timeout  0;</span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line">    server &#123;</span><br><span class="line">        listen       80;</span><br><span class="line">        server_name  localhost;</span><br><span class="line">        location &#x2F; &#123;</span><br><span class="line">            root   html;</span><br><span class="line">            index  index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line">        error_page   500 502 503 504  &#x2F;50x.html;</span><br><span class="line">        location &#x3D; &#x2F;50x.html &#123;</span><br><span class="line">            root   html;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这算是 Nginx 服务器配置中最频繁的部分，代理、缓存和日志定义等绝大多数功能和第三方模块的配置都在这里。<br>
+需要注意的是：http 块也可以包括 http 全局块、server 块。</p>
+<ul>
+<li>
+<p>http全局块<br>
+http 全局块配置的指令包括文件引入、MIME-TYPE 定义、日志自定义、连接超时时间、单链接请求数上限等。</p>
+</li>
+<li>
+<p>server块</p>
+<ul>
+<li>这块和虚拟主机有密切关系，虚拟主机从用户角度看，和一台独立的硬件主机是完全一样的，该技术的产生是为了节省互联网服务器硬件成本。</li>
+<li>每个 http 块可以包括多个 server 块，而每个 server 块就相当于一个虚拟主机。</li>
+<li>而每个 server 块也分为全局 server 块，以及可以同时包含多个 locaton 块。</li>
+<li>全局server块：
+<ul>
+<li>最常见的配置是本虚拟机主机的监听配置和本虚拟主机的名称或 IP 配置。</li>
+</ul>
+</li>
+<li>location块
+<ul>
+<li>一个 server 块可以配置多个 location 块。</li>
+<li>这块的主要作用是基于 Nginx 服务器接收到的请求字符串（例如 server_name/uri-string），对虚拟主机名称（也可以是 IP 别名）之外的字符串（例如 前面的 /uri-string）进行匹配，对特定的请求进行处理。地址定向、数据缓存和应答控制等功能，还有许多第三方模块的配置也在这里进行。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1>Nginx配置</h1>
+<h2 id="反向代理-v2"><a class="header-anchor" href="#反向代理-v2">¶</a>反向代理</h2>
+<ul>
+<li>效果：<a href="http://xn--www-0v1e42u56axb6g922tur7celn.qiancijun.com" target="_blank" rel="noopener">在浏览器输入地址www.qiancijun.com</a>，跳转到linux系统下面tomcat的主页面中</li>
+</ul>
+<ol>
+<li>
+<p>安装tomcat，使用默认端口号8080</p>
+<ul>
+<li>解压tomcat安装包</li>
+<li>进入tomcat的bin目录，使用指令<code>./start.sh</code>启动tomcat服务器</li>
+<li>进入log文件夹查看日志</li>
+</ul>
+</li>
+<li>
+<p>对外开放访问的端口</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">firewall-cmd --add-port&#x3D;8080&#x2F;tcp --permanent</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>配置windows的host文件，域名映射ip的地址<br>
+<img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Nginx/Nginx-hosts.png" alt=""></p>
+</li>
+<li>
+<p>修改nginx的配置文件（注意备份）<br>
+<img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Nginx/Nginx-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86.png" alt=""></p>
+</li>
+</ol>
+<ul>
+<li>效果：使用nginx反向代理，根据访问的路径跳转到不同端口的服务中，nginx监听端口为9001
+<ul>
+<li>访问<code>http://127.0.0.1:9001/edu/</code> 直接跳转到127.0.0.1:8080</li>
+<li>访问<code>http://127.0.0.1:9001/vod/</code> 直接跳转到127.0.0.1:8081</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>配置Nginx<br>
+<img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Nginx/Nginx-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%862.png" alt=""></li>
+</ol>
+<ul>
+<li>location 指令说明<br>
+语法：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">location [ &#x3D; | ~ | ~* | ^~] uri &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>= ：用于不含正则表达式的 uri 前，要求请求字符串与 uri 严格匹配，如果匹配成功，就停止继续向下搜索并立即处理该请求。</li>
+<li>~：用于表示 uri 包含正则表达式，并且区分大小写。</li>
+<li>~*：用于表示 uri 包含正则表达式，并且不区分大小写。</li>
+<li>、^~：用于不含正则表达式的 uri 前，要求 Nginx 服务器找到标识 uri 和请求字符串匹配度最高的 location 后，立即使用此 location 处理请求，而不再使用 location块中的正则 uri 和请求字符串做匹配。</li>
+</ol>
+<blockquote>
+<p>注意：如果 uri 包含正则表达式，则必须要有 ~ 或者 ~* 标识。</p>
+</blockquote>
+<h2 id="负载均衡-v2"><a class="header-anchor" href="#负载均衡-v2">¶</a>负载均衡</h2>
+]]></content>
   </entry>
 </search>
