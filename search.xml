@@ -17477,39 +17477,27 @@ a 和 b 都只包含小写英文字母</p>
 ]]></content>
   </entry>
   <entry>
-    <title>ActiveMQ基础</title>
+    <title>ActiveMQ</title>
     <url>/2020/10/29/ActiveMQ%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[<h1>消息中间件</h1>
-<ul>
-<li>没有引入消息中间件之前的问题：
-<ol>
+    <content><![CDATA[<h1 id="消息中间件"><a href="#消息中间件" class="headerlink" title="消息中间件"></a>消息中间件</h1><ul>
+<li>没有引入消息中间件之前的问题：<ol>
 <li>系统之间接口耦合比较严重</li>
 <li>面对大流量并发时，容易被冲垮：每个接口模块的吞吐能力是有限的，当大流量来临时，容易被冲垮</li>
 <li>等待同步存在性能问题</li>
 </ol>
 </li>
 </ul>
-<h2 id="三大优势"><a class="header-anchor" href="#三大优势">¶</a>三大优势</h2>
-<p>MQ能解决的问题：解耦 削峰 异步</p>
-<h2 id="MOM"><a class="header-anchor" href="#MOM">¶</a>MOM</h2>
-<ul>
-<li>
-<p>面向消息的中间件（message-orientde middleware）<br>
-利用高效可靠的消息传递机制与平台无关的数据交流，并基于数据通信来进行分布式系统的集成<br>
-通过提供消息传递和消息排队模型在分布式环境下提供应用解耦、弹性伸缩、冗余存储，流量削峰、异步通信、数据同步等功能</p>
+<h2 id="三大优势"><a href="#三大优势" class="headerlink" title="三大优势"></a>三大优势</h2><p>MQ能解决的问题：解耦 削峰 异步</p>
+<h2 id="MOM"><a href="#MOM" class="headerlink" title="MOM"></a>MOM</h2><ul>
+<li><p>面向消息的中间件（message-orientde middleware）<br>  利用高效可靠的消息传递机制与平台无关的数据交流，并基于数据通信来进行分布式系统的集成<br>  通过提供消息传递和消息排队模型在分布式环境下提供应用解耦、弹性伸缩、冗余存储，流量削峰、异步通信、数据同步等功能</p>
 </li>
-<li>
-<p>流程：<br>
-发送者把消息发送给消息服务器，消息服务器将消息存放在若干$\color{red}{队列/主题}$中，在合适的时候，消息服务器会将消息转发给接收者。在这个过程中，$\color{red}{发送和接受时异步的}$，也就是发送无需等待，而且发送者和接收者的生命周期也没有必然关系：尤其在发布pub/订阅sub模式下，也可以完成一对多的通信，即让一个消息有多个接受者。</p>
+<li><p>流程：<br>  发送者把消息发送给消息服务器，消息服务器将消息存放在若干$\color{red}{队列/主题}$中，在合适的时候，消息服务器会将消息转发给接收者。在这个过程中，$\color{red}{发送和接受时异步的}$，也就是发送无需等待，而且发送者和接收者的生命周期也没有必然关系：尤其在发布pub/订阅sub模式下，也可以完成一对多的通信，即让一个消息有多个接受者。</p>
 </li>
 </ul>
-<h1>ActiveMQ</h1>
-<h2 id="安装"><a class="header-anchor" href="#安装">¶</a>安装</h2>
-<p><a href="http://activemq.apache.org/index.html" target="_blank" rel="noopener">官网</a></p>
+<h1 id="ActiveMQ"><a href="#ActiveMQ" class="headerlink" title="ActiveMQ"></a>ActiveMQ</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p><a href="http://activemq.apache.org/index.html" target="_blank" rel="noopener">官网</a></p>
 <p>安装在Linux上步骤省略，不记</p>
 <ul>
-<li>Apache ActiveMQ控制台
-<ul>
+<li>Apache ActiveMQ控制台<ul>
 <li>虚拟机地址:8161</li>
 <li>默认的用户名和密码是admin/admin</li>
 </ul>
@@ -17518,19 +17506,17 @@ a 和 b 都只包含小写英文字母</p>
 <p>ActiveMQ的端口号是61616，提供JMS服务</p>
 <p>控制台的端口号是8161提供管理控制台服务</p>
 <ul>
-<li>
-<p>注：如果Windows主机打不开控制台页面，查看ActiveMQ的配置文件<code>jetty.xml</code>，查看当中的</p>
-<p><img src="E:%5CStudy%5CMyNotes%5CActiveMQ%5C%E6%8E%A7%E5%88%B6%E5%8F%B0%E5%9C%B0%E5%9D%80.png" alt=""></p>
-<p>是否是<code>127.0.0.1</code>，修改为Linux服务器的ip地址</p>
+<li><p>注：如果Windows主机打不开控制台页面，查看ActiveMQ的配置文件<code>jetty.xml</code>，查看当中的</p>
+<p>  <img src="E:\Study\MyNotes\ActiveMQ\控制台地址.png" alt=""></p>
+<p>  是否是<code>127.0.0.1</code>，修改为Linux服务器的ip地址</p>
 </li>
 </ul>
-<h2 id="JAVA-API"><a class="header-anchor" href="#JAVA-API">¶</a>JAVA API</h2>
-<p>在点对点的消息传递域中，目的地被称为队列</p>
+<h2 id="JAVA-API"><a href="#JAVA-API" class="headerlink" title="JAVA API"></a>JAVA API</h2><p>在点对点的消息传递域中，目的地被称为队列</p>
 <p>在发布订阅消息传递域中，目的地被称为主题</p>
 <p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/ActiveMQ/%E9%80%BB%E8%BE%91%E5%9B%BE.png" alt=""></p>
-<h2 id=""><a class="header-anchor" href="#">¶</a></h2>
-<h3 id="目的地为队列"><a class="header-anchor" href="#目的地为队列">¶</a>目的地为队列</h3>
-<p>先回顾JDBC操作数据库的步骤:</p>
+<p>引入Macen坐标</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.apache.activemq/activemq-all --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.activemq<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>activemq-all<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.16.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="目的地为队列"><a href="#目的地为队列" class="headerlink" title="目的地为队列"></a>目的地为队列</h3><p>先回顾JDBC操作数据库的步骤:</p>
 <ol>
 <li>注册驱动（仅做一次）</li>
 <li>建立连接（Connection）</li>
@@ -17547,6 +17533,7 @@ a 和 b 都只包含小写英文字母</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">final</span> String defaultURL = <span class="string">"tcp://"</span> + DEFAULT_BROKER_HOST + <span class="string">":"</span> + DEFAULT_BROKER_PORT;</span><br></pre></td></tr></table></figure>
 <p>如果代码没有问题，则可以在控制台看到有三条未处理的消息</p>
 <p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/ActiveMQ/%E5%85%A5%E9%97%A8%E7%94%9F%E4%BA%A7%E8%80%85%E7%BC%96%E7%A0%81.png" alt=""></p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -17573,6 +17560,7 @@ a 和 b 都只包含小写英文字母</p>
 </tr>
 </tbody>
 </table>
+</div>
 <p>消费者编码与生产者类似</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ActiveConsumer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String ACTIVEMQ_URL = <span class="string">"tcp://192.168.3.100:61616"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String QUEUE_NAME = <span class="string">"queue01"</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> JMSException </span>&#123;</span><br><span class="line">        <span class="comment">// 1. 获取连接工厂</span></span><br><span class="line">        ActiveMQConnectionFactory factory = <span class="keyword">new</span> ActiveMQConnectionFactory(ACTIVEMQ_URL);</span><br><span class="line">        <span class="comment">// 2. 获取连接</span></span><br><span class="line">        Connection connection = factory.createConnection();</span><br><span class="line">        connection.start();</span><br><span class="line">        <span class="comment">// 3. 创建会话session，第一个参数为事物，第二个参数为签收</span></span><br><span class="line">        Session session = connection.createSession(<span class="keyword">false</span>, Session.AUTO_ACKNOWLEDGE);</span><br><span class="line">        <span class="comment">// 4. 创建目的地</span></span><br><span class="line">        Queue queue = session.createQueue(QUEUE_NAME);</span><br><span class="line">        <span class="comment">// 5. 获取消费者</span></span><br><span class="line">        MessageConsumer consumer = session.createConsumer(queue);</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="comment">// 6. 获取消息，注意要类型统一</span></span><br><span class="line">            TextMessage message = (TextMessage) consumer.receive();</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">null</span> != message)&#123;</span><br><span class="line">                System.out.println(<span class="string">"msg : "</span> + message.getText());</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        consumer.close();</span><br><span class="line">        session.close();</span><br><span class="line">        connection.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>代码运行成功后，控制台显示为</p>
@@ -17581,8 +17569,7 @@ a 和 b 都只包含小写英文字母</p>
 <p>使用MessageListener：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ActiveConsumer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String ACTIVEMQ_URL = <span class="string">"tcp://192.168.3.100:61616"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String QUEUE_NAME = <span class="string">"queue01"</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> JMSException, IOException </span>&#123;</span><br><span class="line">        <span class="comment">// 1. 获取连接工厂</span></span><br><span class="line">        ActiveMQConnectionFactory factory = <span class="keyword">new</span> ActiveMQConnectionFactory(ACTIVEMQ_URL);</span><br><span class="line">        <span class="comment">// 2. 获取连接</span></span><br><span class="line">        Connection connection = factory.createConnection();</span><br><span class="line">        connection.start();</span><br><span class="line">        <span class="comment">// 3. 创建会话session，第一个参数为事物，第二个参数为签收</span></span><br><span class="line">        Session session = connection.createSession(<span class="keyword">false</span>, Session.AUTO_ACKNOWLEDGE);</span><br><span class="line">        <span class="comment">// 4. 创建目的地</span></span><br><span class="line">        Queue queue = session.createQueue(QUEUE_NAME);</span><br><span class="line">        <span class="comment">// 5. 获取消费者</span></span><br><span class="line">        MessageConsumer consumer = session.createConsumer(queue);</span><br><span class="line">        consumer.setMessageListener(message -&gt; &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">null</span> != message &amp;&amp; message <span class="keyword">instanceof</span> TextMessage) &#123;</span><br><span class="line">                TextMessage msg = (TextMessage) message;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    System.out.println(<span class="string">"msg : "</span> + msg.getText());</span><br><span class="line">                &#125; <span class="keyword">catch</span> (JMSException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        System.in.read(); <span class="comment">// 防止程序结束</span></span><br><span class="line">        consumer.close();</span><br><span class="line">        session.close();</span><br><span class="line">        connection.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>监听器方式是异步非阻塞式</p>
-<h3 id="目的地为主题"><a class="header-anchor" href="#目的地为主题">¶</a>目的地为主题</h3>
-<p>发布/订阅消息传递域的特点如下：</p>
+<h3 id="目的地为主题"><a href="#目的地为主题" class="headerlink" title="目的地为主题"></a>目的地为主题</h3><p>发布/订阅消息传递域的特点如下：</p>
 <ol>
 <li>生产者将消息发布到topic中，每个消息可以有多个消费者，属于1对多的关系</li>
 <li>生产者和消费者之间有时间上的相关性，订阅某一个主题的消费者只能消费自它订阅之后发布的消息</li>
@@ -17600,7 +17587,7 @@ a 和 b 都只包含小写英文字母</p>
 <p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/ActiveMQ/%E4%B8%BB%E9%A2%98%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B.png" alt=""></p>
 <p>如果先启动提供者后启动消费者，提供者的消息会成为废消息</p>
 <p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/ActiveMQ/%E4%B8%BB%E9%A2%98%E5%BA%9F%E6%B6%88%E6%81%AF.png" alt=""></p>
-<h3 id="Topic和Queue对比"><a class="header-anchor" href="#Topic和Queue对比">¶</a>Topic和Queue对比</h3>
+<h3 id="Topic和Queue对比"><a href="#Topic和Queue对比" class="headerlink" title="Topic和Queue对比"></a>Topic和Queue对比</h3><div class="table-container">
 <table>
 <thead>
 <tr>
@@ -17632,9 +17619,8 @@ a 和 b 都只包含小写英文字母</p>
 </tr>
 </tbody>
 </table>
-<h1>JMS</h1>
-<h2 id="JavaEE"><a class="header-anchor" href="#JavaEE">¶</a>JavaEE</h2>
-<p>JavaEE是一套使用Java进行企业级应用开发的一致遵循的13个核心规范工业标准。JavaEE平台提供了一个基于组件的方法来加快设计、开发、装配及部署企业应用程序</p>
+</div>
+<h1 id="JMS"><a href="#JMS" class="headerlink" title="JMS"></a>JMS</h1><h2 id="JavaEE"><a href="#JavaEE" class="headerlink" title="JavaEE"></a>JavaEE</h2><p>JavaEE是一套使用Java进行企业级应用开发的一致遵循的13个核心规范工业标准。JavaEE平台提供了一个基于组件的方法来加快设计、开发、装配及部署企业应用程序</p>
 <ol>
 <li>JDBC（Java Database Connection）：数据库连接</li>
 <li>JNDI（Java Naming and Directory Interfaces）：Java的命名和目录接口</li>
@@ -17650,45 +17636,36 @@ a 和 b 都只包含小写英文字母</p>
 <li>JavaMail</li>
 <li>JAF（JavaBean Activation Framework）</li>
 </ol>
-<h2 id="Java消息服务"><a class="header-anchor" href="#Java消息服务">¶</a>Java消息服务</h2>
-<p>Java消息服务指的是两个应用程序之间进行异步通信的API，它为标准消息协议和消息服务提供了一组通用接口，包括创建、发送、读取消息等，用于支持Java应用程序开发。在JavaEE中，当两个应用程序使用JMS进行通信时，它们之间并不是直接相连的，而是通过一个共同的消息收发服务组件关联起来以达到解耦、异步、削峰的效果。</p>
+<h2 id="Java消息服务"><a href="#Java消息服务" class="headerlink" title="Java消息服务"></a>Java消息服务</h2><p>Java消息服务指的是两个应用程序之间进行异步通信的API，它为标准消息协议和消息服务提供了一组通用接口，包括创建、发送、读取消息等，用于支持Java应用程序开发。在JavaEE中，当两个应用程序使用JMS进行通信时，它们之间并不是直接相连的，而是通过一个共同的消息收发服务组件关联起来以达到解耦、异步、削峰的效果。</p>
 <p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/ActiveMQ/JMS.png" alt=""></p>
-<h2 id="JMS四大元素"><a class="header-anchor" href="#JMS四大元素">¶</a>JMS四大元素</h2>
-<ol>
+<h2 id="JMS四大元素"><a href="#JMS四大元素" class="headerlink" title="JMS四大元素"></a>JMS四大元素</h2><ol>
 <li>JMS provider：实现JMS接口和规范的消息中间件，也就是MQ服务器</li>
 <li>JMS producer：消息生产者，创建和发送JMS消息的客户端应用</li>
 <li>JMS consumer：消息消费者，接受和处理JMS消息的客户端应用</li>
 <li>JMS message</li>
 </ol>
-<h2 id="JMS-message"><a class="header-anchor" href="#JMS-message">¶</a>JMS message</h2>
-<h3 id="消息头"><a class="header-anchor" href="#消息头">¶</a>消息头</h3>
-<ol>
+<h2 id="JMS-message"><a href="#JMS-message" class="headerlink" title="JMS message"></a>JMS message</h2><h3 id="消息头"><a href="#消息头" class="headerlink" title="消息头"></a>消息头</h3><ol>
 <li>setJMSDestination：设置某条消息指定的目的地</li>
-<li>setJMSDeliveryMode：设置持久模式和非持久模式
-<ul>
+<li>setJMSDeliveryMode：设置持久模式和非持久模式<ul>
 <li>一条持久性的消息：应该被传送仅仅一次，这意味着如果JMS提供者出现故障，该消息并不会丢失，它会在服务器恢复之后再次传递</li>
 <li>一条非持久的消息：最多会传送一次，这意味着服务器出现故障，该消息将永久丢失</li>
 </ul>
 </li>
-<li>setJMSExpiration：设置消息的过期时间
-<ul>
+<li>setJMSExpiration：设置消息的过期时间<ul>
 <li>消息过期时间，等于Destination的send方法中的timeToLive值加上发送时刻的GMT时间值。如果timeToLive值等于0，则JMSExpiratioin被设为0，表示消息永不过期。如果发送后，在消息过期时间之后，消息还没有被发送到目的地，则该消息清除</li>
 </ul>
 </li>
-<li>setJMSPriority：设置消息的优先级
-<ul>
+<li>setJMSPriority：设置消息的优先级<ul>
 <li>消息优先级，从0-9十个级别，0-4是普通消息，5-9是加急消息。</li>
 <li>JMS不要求MQ严格按照这十个优先级发送消息，但必须保证加急消息要先于普通消息到达。默认是4级</li>
 </ul>
 </li>
-<li>setJMSMessageID：设置消息的ID
-<ul>
+<li>setJMSMessageID：设置消息的ID<ul>
 <li>唯一识别每个消息的标识由MQ产生</li>
 </ul>
 </li>
 </ol>
-<h3 id="消息体"><a class="header-anchor" href="#消息体">¶</a>消息体</h3>
-<p>封装具体的消息数据，发送和接受的消息体类型必须一致对应</p>
+<h3 id="消息体"><a href="#消息体" class="headerlink" title="消息体"></a>消息体</h3><p>封装具体的消息数据，发送和接受的消息体类型必须一致对应</p>
 <p>五种消息体格式：</p>
 <ol>
 <li>TextMessage：一个普通字符串消息，包含一个String</li>
@@ -17697,41 +17674,32 @@ a 和 b 都只包含小写英文字母</p>
 <li>StreamMessage：Java数据流消息，用标准操作来顺序的填充和读取</li>
 <li>ObjectMessage：对象消息，包含一个可序列化的Java对象</li>
 </ol>
-<h3 id="消息属性"><a class="header-anchor" href="#消息属性">¶</a>消息属性</h3>
-<p>如果需要除消息头字段以外的值，可以使用消息属性。可以识别/去重/重点标注等操作。</p>
+<h3 id="消息属性"><a href="#消息属性" class="headerlink" title="消息属性"></a>消息属性</h3><p>如果需要除消息头字段以外的值，可以使用消息属性。可以识别/去重/重点标注等操作。</p>
 <p>他们是以属性名和属性值对的形式制定的。可以将属性是为消息头得扩展，属性指定一些消息头没有包括的附加信息，比如可以在属性里指定消息选择器。</p>
 <p>消息的属性就像可以分配给一条消息的附加消息头一样。它们允许开发者添加有关消息的不透明附加信息。还可以用于暴露消息选择器在消息过滤时使用的数据。</p>
-<h2 id="JMS的可靠性"><a class="header-anchor" href="#JMS的可靠性">¶</a>JMS的可靠性</h2>
-<h3 id="持久性"><a class="header-anchor" href="#持久性">¶</a>持久性</h3>
-<h4 id="队列"><a class="header-anchor" href="#队列">¶</a>队列</h4>
-<p>参数设置说明：</p>
+<h2 id="JMS的可靠性"><a href="#JMS的可靠性" class="headerlink" title="JMS的可靠性"></a>JMS的可靠性</h2><h3 id="持久性"><a href="#持久性" class="headerlink" title="持久性"></a>持久性</h3><h4 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h4><p>参数设置说明：</p>
 <ul>
 <li>非持久：<code>messageProducer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);</code>当服务器宕机，消息不存在</li>
-<li>持久化：<code>messageProducer.setDeliveryMode(DeliveryMode.PERSISTENT);</code>当服务器宕机，消息依然存在（默认持久化）
-<ul>
+<li>持久化：<code>messageProducer.setDeliveryMode(DeliveryMode.PERSISTENT);</code>当服务器宕机，消息依然存在（默认持久化）<ul>
 <li>这是队列的默认传送模式，此模式保证这些消息只被传送一次和成功使用一次。对于这些消息，可靠性是优先考虑的因素。</li>
 <li>可靠性的另一个重要方面是确保持久性消息传送至目标后，消息服务在向消费者传送它们之前不会丢失这些消息</li>
 </ul>
 </li>
 </ul>
-<h4 id="主题"><a class="header-anchor" href="#主题">¶</a>主题</h4>
-<p>与队列持久化不同，需要先将消息的生产者设置为持久化，再连接到MQ</p>
+<h4 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h4><p>与队列持久化不同，需要先将消息的生产者设置为持久化，再连接到MQ</p>
 <p>发布订阅</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ActiveProvider</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String ACTIVEMQ_URL = <span class="string">"tcp://192.168.3.100:61616"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String TOPIC_NAME = <span class="string">"topic01"</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> JMSException </span>&#123;</span><br><span class="line">        ActiveMQConnectionFactory factory = <span class="keyword">new</span> ActiveMQConnectionFactory(ACTIVEMQ_URL);</span><br><span class="line">        Connection connection = factory.createConnection();</span><br><span class="line">        Session session = connection.createSession(<span class="keyword">false</span>, Session.AUTO_ACKNOWLEDGE);</span><br><span class="line">        Destination topic = session.createTopic(TOPIC_NAME);</span><br><span class="line">        MessageProducer producer = session.createProducer(topic);</span><br><span class="line">        producer.setDeliveryMode(DeliveryMode.PERSISTENT);</span><br><span class="line"></span><br><span class="line">        connection.start();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">3</span>; i++) &#123;</span><br><span class="line">            TextMessage textMessage = session.createTextMessage(<span class="string">"msg -- "</span> + i);</span><br><span class="line">            producer.send(textMessage);</span><br><span class="line">        &#125;</span><br><span class="line">        producer.close();</span><br><span class="line">        session.close();</span><br><span class="line">        connection.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>接收订阅</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ActiveConsumer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String ACTIVEMQ_URL = <span class="string">"tcp://192.168.3.100:61616"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String TOPIC_NAME = <span class="string">"topic01"</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> JMSException, IOException </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"消费者2号"</span>);</span><br><span class="line">        ActiveMQConnectionFactory factory = <span class="keyword">new</span> ActiveMQConnectionFactory(ACTIVEMQ_URL);</span><br><span class="line">        Connection connection = factory.createConnection();</span><br><span class="line">        connection.setClientID(<span class="string">"2"</span>); <span class="comment">// 设置客户端ID</span></span><br><span class="line">        Session session = connection.createSession(<span class="keyword">false</span>, Session.AUTO_ACKNOWLEDGE);</span><br><span class="line">        Destination topic = session.createTopic(TOPIC_NAME);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 设置持久化订阅主题</span></span><br><span class="line">        TopicSubscriber topicSubscriber = session.createDurableSubscriber((Topic) topic, <span class="string">"remark"</span>);</span><br><span class="line"></span><br><span class="line">        connection.start();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 等待订阅消息</span></span><br><span class="line">        Message msg = topicSubscriber.receive();</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">null</span> != msg) &#123;</span><br><span class="line">            TextMessage textMessage = (TextMessage) msg;</span><br><span class="line">            System.out.println(<span class="string">"收到的持久化topic"</span> + textMessage.getText());</span><br><span class="line">            <span class="comment">// 等候5秒，如果还没有接收到新的订阅，就退出</span></span><br><span class="line">            msg = topicSubscriber.receive(<span class="number">5000L</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        session.close();</span><br><span class="line">        connection.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>注意</strong>：一定要先运行一次消费者，等于向MQ注册，类似我订阅了这个主题。然后再运行生产者发送消息，此时无论消费者是否在线，都会接收到，不在线的话，下次连接的时候，会把没有收过的消息都接收下来。</p>
-<h3 id="事务"><a class="header-anchor" href="#事务">¶</a>事务</h3>
-<p>事物偏向于生产者，事物的概念类似于数据库中的事物</p>
+<h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><p>事物偏向于生产者，事物的概念类似于数据库中的事物</p>
 <ol>
-<li>不开启事物
-<ul>
+<li>不开启事物<ul>
 <li>只要执行send，就进入到队列中</li>
 <li>关闭事物，那第二个签收参数的设置需要有效</li>
 </ul>
 </li>
-<li>开启事物
-<ul>
+<li>开启事物<ul>
 <li>先执行send再执行commit，消息才被真正的提交到队列中</li>
 <li>消息需要批量发送，需要缓冲区处理</li>
 </ul>
@@ -17740,8 +17708,7 @@ a 和 b 都只包含小写英文字母</p>
 <p>生产者代码</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ActiveProvider</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String ACTIVEMQ_URL = <span class="string">"tcp://192.168.3.100:61616"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String QUEUE_NAME = <span class="string">"queue01"</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> JMSException </span>&#123;</span><br><span class="line">        ActiveMQConnectionFactory factory = <span class="keyword">new</span> ActiveMQConnectionFactory(ACTIVEMQ_URL);</span><br><span class="line"></span><br><span class="line">        Connection connection = factory.createConnection();</span><br><span class="line">        connection.start();</span><br><span class="line">		</span><br><span class="line">        <span class="comment">// 设置事物为开启</span></span><br><span class="line">        Session session = connection.createSession(<span class="keyword">true</span>, Session.AUTO_ACKNOWLEDGE);</span><br><span class="line">        Queue queue = session.createQueue(QUEUE_NAME);</span><br><span class="line">        MessageProducer producer = session.createProducer(queue);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">3</span>; i++) &#123;</span><br><span class="line">            TextMessage textMessage = session.createTextMessage(<span class="string">"msg -- "</span> + i);</span><br><span class="line">            producer.send(textMessage);</span><br><span class="line">        &#125;</span><br><span class="line">        producer.close();</span><br><span class="line">        <span class="comment">// 在seesion关闭之前，提交事务</span></span><br><span class="line">        session.commit();</span><br><span class="line">        session.close();</span><br><span class="line">        connection.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>注意</strong>：消费者如果开启了事务，但是没有提交，会导致重复消费消息。</p>
-<h3 id="签收"><a class="header-anchor" href="#签收">¶</a>签收</h3>
-<p>非事务的情况下:</p>
+<h3 id="签收"><a href="#签收" class="headerlink" title="签收"></a>签收</h3><p>非事务的情况下:</p>
 <ol>
 <li>自动签收（默认）：<code>Session.AUTO_ACKNOWLEDGE</code></li>
 <li>手动签收：<code>Session.CLIENT_ACKNOWLEDGE</code>客户端调用acknowledge方法手动签收</li>
@@ -17753,46 +17720,117 @@ a 和 b 都只包含小写英文字母</p>
 <li>如果没有commit提交，只使用了acknowledge方法，消息不会变为已消费</li>
 </ol>
 <ul>
-<li>事务与签收的关系
-<ul>
+<li>事务与签收的关系<ul>
 <li>在事务性会话中，当一个事务被成功提交则消息被自动签收。如果事务回滚，则消息会被再次传送</li>
 <li>非事务性会话中，消息何时被确认取决于创建会话时的应答模式</li>
 </ul>
 </li>
 </ul>
-<h2 id="JMS的点对点总结"><a class="header-anchor" href="#JMS的点对点总结">¶</a>JMS的点对点总结</h2>
-<p>点对点模型是基于队列的，生产者发送消息到队列，消费者从队列接收消息，队列的存在使得消息的异步传输成为可能。</p>
+<h2 id="JMS的点对点总结"><a href="#JMS的点对点总结" class="headerlink" title="JMS的点对点总结"></a>JMS的点对点总结</h2><p>点对点模型是基于队列的，生产者发送消息到队列，消费者从队列接收消息，队列的存在使得消息的异步传输成为可能。</p>
 <ol>
 <li>如果在Session关闭时有部分消息已经被收到但是还没有被签收，当消费者下次连接到相同队列的时候，这些消息会被再次签收</li>
 <li>队列可以长久的保存消息知道消费者收到消息。消费者不需要因为担心消息会丢失而时刻和队列保持激活的连接状态，充分体现了异步传输模式的优势</li>
 </ol>
-<h1>Broker</h1>
-<p>相当于一个ActiveMQ服务器实例，用代码的形式启动ActiveMQ，将MQ嵌入到Java代码中，以便随时启动，节省资源，保证了可靠性。</p>
+<h1 id="Broker"><a href="#Broker" class="headerlink" title="Broker"></a>Broker</h1><p>相当于一个ActiveMQ服务器实例，用代码的形式启动ActiveMQ，将MQ嵌入到Java代码中，以便随时启动，节省资源，保证了可靠性。</p>
 <p>根据不同的配置文件来启动：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;activemq start xbean:file:&#x2F;安装路径&#x2F;apache-activemq-5.16.0&#x2F;conf&#x2F;activemq.xml</span><br></pre></td></tr></table></figure>
-<h2 id="嵌入式"><a class="header-anchor" href="#嵌入式">¶</a>嵌入式</h2>
-<ol>
+<h2 id="嵌入式"><a href="#嵌入式" class="headerlink" title="嵌入式"></a>嵌入式</h2><ol>
 <li>引入jackson</li>
 </ol>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fasterxml.jackson.core<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jackson-databind<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.12.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<ol start="2">
+<ol>
 <li>启动内嵌服务</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ActiveMQBroker</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        BrokerService brokerService = <span class="keyword">new</span> BrokerService();</span><br><span class="line">        brokerService.setUseJmx(<span class="keyword">true</span>);</span><br><span class="line">        brokerService.addConnector(<span class="string">"tcp://localhost:61616"</span>);</span><br><span class="line">        brokerService.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1>SpringBoot整合ActiveMQ</h1>
-<h2 id="配置文件"><a class="header-anchor" href="#配置文件">¶</a>配置文件</h2>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8888</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">activemq:</span></span><br><span class="line">    <span class="attr">broker-url:</span> <span class="string">tcp://192.168.3.100:61616</span></span><br><span class="line">    <span class="attr">user:</span> <span class="string">admin</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">admin</span></span><br><span class="line">  <span class="attr">jms:</span></span><br><span class="line">    <span class="attr">pub-sub-domain:</span> <span class="literal">false</span>  <span class="comment"># false为队列， true为主题</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 自定义队列名称</span></span><br><span class="line"><span class="attr">myqueue:</span> <span class="string">boot-activemq-queue</span></span><br></pre></td></tr></table></figure>
-<h2 id="配置主题"><a class="header-anchor" href="#配置主题">¶</a>配置主题</h2>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@EnableJms</span> <span class="comment">// 开启支持消息服务</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConfigBean</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;myqueue&#125;"</span>) <span class="comment">// 从配置文件中获取值</span></span><br><span class="line">    <span class="keyword">private</span> String queueName;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Queue <span class="title">queue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ActiveMQQueue(queueName); <span class="comment">// 创建队列目的地，加入到IOC容器中</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="测试类"><a class="header-anchor" href="#测试类">¶</a>测试类</h2>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BootActivemqApplicationTests</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> QueueProducer queueProducer;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">contextLoads</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        queueProducer.produceMessage();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="SpringBoot整合ActiveMQ"><a href="#SpringBoot整合ActiveMQ" class="headerlink" title="SpringBoot整合ActiveMQ"></a>SpringBoot整合ActiveMQ</h1><h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8888</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">activemq:</span></span><br><span class="line">    <span class="attr">broker-url:</span> <span class="string">tcp://192.168.3.100:61616</span></span><br><span class="line">    <span class="attr">user:</span> <span class="string">admin</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">admin</span></span><br><span class="line">  <span class="attr">jms:</span></span><br><span class="line">    <span class="attr">pub-sub-domain:</span> <span class="literal">false</span>  <span class="comment"># false为队列， true为主题</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 自定义队列名称</span></span><br><span class="line"><span class="attr">myqueue:</span> <span class="string">boot-activemq-queue</span></span><br></pre></td></tr></table></figure>
+<h2 id="配置主题"><a href="#配置主题" class="headerlink" title="配置主题"></a>配置主题</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@EnableJms</span> <span class="comment">// 开启支持消息服务</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConfigBean</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;myqueue&#125;"</span>) <span class="comment">// 从配置文件中获取值</span></span><br><span class="line">    <span class="keyword">private</span> String queueName;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Queue <span class="title">queue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ActiveMQQueue(queueName); <span class="comment">// 创建队列目的地，加入到IOC容器中</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="测试类"><a href="#测试类" class="headerlink" title="测试类"></a>测试类</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BootActivemqApplicationTests</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> QueueProducer queueProducer;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">contextLoads</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        queueProducer.produceMessage();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/ActiveMQ/%E6%95%B4%E5%90%88Springboot.png" alt=""></p>
-<h2 id="间隔定投"><a class="header-anchor" href="#间隔定投">¶</a>间隔定投</h2>
-<p>**要求：**每隔三秒钟往MQ推送消息</p>
+<h2 id="间隔定投"><a href="#间隔定投" class="headerlink" title="间隔定投"></a>间隔定投</h2><p><strong>要求：</strong>每隔三秒钟往MQ推送消息</p>
 <p>使用注解<code>@Scheduled</code>开启定时投递功能，<code>fixedDelay</code>设置间隔时间。主启动类添加<code>@EnableScheduling</code>注解开启支持<code>@Scheduled</code>功能</p>
-<h2 id="消费者"><a class="header-anchor" href="#消费者">¶</a>消费者</h2>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 配置文件同提供者，仅端口不同</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ActiveMQConsumer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@JmsListener</span>(destination = <span class="string">"$&#123;myqueue&#125;"</span>) <span class="comment">// 开启监听功能</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">receive</span><span class="params">(TextMessage textMessage)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        System.out.println(textMessage.getText());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
+<h2 id="消费者"><a href="#消费者" class="headerlink" title="消费者"></a>消费者</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 配置文件同提供者，仅端口不同</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ActiveMQConsumer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@JmsListener</span>(destination = <span class="string">"$&#123;myqueue&#125;"</span>) <span class="comment">// 开启监听功能</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">receive</span><span class="params">(TextMessage textMessage)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        System.out.println(textMessage.getText());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Topic生产者"><a href="#Topic生产者" class="headerlink" title="Topic生产者"></a>Topic生产者</h2><p>类似与Queue的生产者</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@EnableJms</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConfigBean</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;mytopic&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String topicName;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Topic <span class="title">topic</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ActiveMQTopic(topicName);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TopicProducer</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> JmsMessagingTemplate jmsMessagingTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> Topic topic;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">producer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        jmsMessagingTemplate.convertAndSend(topic, <span class="string">"boot-activemq-topic"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="" alt="springboot整合"></p>
+<p>消费者类似与队列的写法</p>
+<h1 id="传输协议"><a href="#传输协议" class="headerlink" title="传输协议"></a>传输协议</h1><p><a href="http://activemq.apache.org/configuring-version-5-transports" target="_blank" rel="noopener">官网介绍</a><br>在生产环境下，很少使用<code>TCP</code>协议，而更多的是使用<code>NIO</code>协议。<br>官网原话：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Same as the TCP transport, except that the New I&#x2F;O (NIO) package is used, which may provide better performance. The Java NIO package should not be confused with IBM’s AIO4J package.</span><br><span class="line"></span><br><span class="line">To switch from TCP to NIO, simply change the scheme portion of the URI. Here’s an example as defined within a broker’s XML configuration file.</span><br><span class="line"></span><br><span class="line">&lt;broker&gt;</span><br><span class="line">  ...</span><br><span class="line">  &lt;transportConnectors&gt;</span><br><span class="line">    &lt;transportConnector name&#x3D;&quot;nio&quot; uri&#x3D;&quot;nio:&#x2F;&#x2F;0.0.0.0:61616&quot;&#x2F;&gt;  </span><br><span class="line">  &lt;&#x2F;&lt;transportConnectors&gt;</span><br><span class="line">  ...</span><br><span class="line">&lt;&#x2F;broker&gt;</span><br><span class="line">Trying to use nio transport url on the client side will instantiate the regular TCP transport. For more information see the NIO Transport Reference</span><br></pre></td></tr></table></figure></p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>ActiveMQ支持的client-broker通讯协议有：TCP、NIO、UDP、SSL、Http(s)、VM<br>其中配置<code>Transport Connector</code>的文件在activeMQ安装目录的<code>conf/activemq.xml</code>中的<code>&lt;transportConnectors&gt;</code>标签之内。<br>在activeMQ中，默认的消息协议就是<code>openwire</code></p>
+<h2 id="Transmission-Control-Protocol"><a href="#Transmission-Control-Protocol" class="headerlink" title="Transmission Control Protocol"></a>Transmission Control Protocol</h2><ol>
+<li>这是默认的Broker配置，TCP的Client监听端口61616</li>
+<li>在网络传输数据前，必须要序列化数据，消息是通过一个叫wire protocol的来序列化成字节流。默认情况下ActiveMQ把wire protocol叫做openwire，它的目的是促使网络上的效率和数据快速交互</li>
+<li>TCP连接的URI形式如：<code>tcp://hostname:port?key=value&amp;key=value</code>，后面的参数是可选择的</li>
+<li>TCP传输的优点：<ol>
+<li>TCP协议传输可靠性高，稳定性强</li>
+<li>高效性：字节流方式传递，效率很高</li>
+<li>有效性、可用性：应用广泛，支持任何平台</li>
+</ol>
+</li>
+</ol>
+<p><a href="http://activemq.apache.org/tcp-transport-reference" target="_blank" rel="noopener">官方解释</a></p>
+<h2 id="New-I-O-API-Protocol"><a href="#New-I-O-API-Protocol" class="headerlink" title="New I/O API Protocol"></a>New I/O API Protocol</h2><ol>
+<li>NIO协议和TCP协议类似，但NIO更侧重于底层的访问操作。它允许开发人员对同一资源可有更多的client调用和服务端有更多的负载</li>
+<li>适合使用NIO协议的场景：<ol>
+<li>可能有大量的client去连接到broker上，一般情况下，大量的client去连接broker是被操作系统的线程所限制的。因此NIO的实现比TCP需要更少的线程去运行，所以建议使用NIO协议</li>
+<li>可能对于Broker有一个很迟钝的网络传输，NIO比TCP提供更好的性能</li>
+</ol>
+</li>
+<li>NIO连接的URI形式：<code>nio://hostname:port?key=value</code><br><a href="http://activemq.apache.org/nio-transport-reference" target="_blank" rel="noopener">官方解释</a></li>
+</ol>
+<h2 id="AMQP"><a href="#AMQP" class="headerlink" title="AMQP"></a>AMQP</h2><p>Advanced Message Queuing Protocol，一个提供统一消息服务的应用层标准高级消息队列协议，是应用层协议的一个开放标准，为面向消息的中间件设计。基于此协议的客户端与消息中间件可传递消息，并不受客户端/中间件不同产品，不同开发语言等条件的限制<br><a href="http://activemq.apache.org/amqp" target="_blank" rel="noopener">官方解释</a></p>
+<h2 id="stomp"><a href="#stomp" class="headerlink" title="stomp"></a>stomp</h2><p>Streaming Text Orientated Message Protocol，是流文本定向消息协议，是一种为MOM（Message Oriented Middleware，面向消息的中间件）设计的简单文本协议。<br><a href="http://activemq.apache.org/stomp" target="_blank" rel="noopener">官方解释</a></p>
+<h2 id="Secure-Sockets-Layer-Protocol"><a href="#Secure-Sockets-Layer-Protocol" class="headerlink" title="Secure Sockets Layer Protocol"></a>Secure Sockets Layer Protocol</h2><p><a href="http://activemq.apache.org/ssl-transport-reference" target="_blank" rel="noopener">官方解释</a></p>
+<h2 id="mqtt"><a href="#mqtt" class="headerlink" title="mqtt"></a>mqtt</h2><p>Message Queuing Telemetry Transport，消息队列遥测传输，是IBM开发的一个即时通讯协议，有可能成为物联网的重要组成部分。该协议支持所有平台，几乎可以把所有物联网物品和外部连接起来，被用来当做传感器和致动器（比如通过Twitter让房屋联网）的通信协议</p>
+<h2 id="ws"><a href="#ws" class="headerlink" title="ws"></a>ws</h2><p><a href="http://activemq.apache.org/websockets" target="_blank" rel="noopener">官方解释</a></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>协议</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TCP</td>
+<td>默认的协议，性能相对较好</td>
+</tr>
+<tr>
+<td>NIO</td>
+<td>基于TCP协议之上的，进行了扩展和优化，具有更好的扩展性</td>
+</tr>
+<tr>
+<td>UDP</td>
+<td>性能比TCP更好，但是不具有可靠性</td>
+</tr>
+<tr>
+<td>SSL</td>
+<td>安全链接</td>
+</tr>
+<tr>
+<td>HTTP</td>
+<td>基于HTTP或者HTTPS</td>
+</tr>
+<tr>
+<td>VM</td>
+<td>VM本身不是协议，当客户端和代理在同一个Java虚拟机中运行时，他们之间需要通信，但不想占用网络通道，而是直接通信，可以使用该方式</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="NIO传输协议"><a href="#NIO传输协议" class="headerlink" title="NIO传输协议"></a>NIO传输协议</h2><ol>
+<li><p>修改配置文件</p>
+<p> 修改前先备份</p>
+ <figure class="highlight"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">transportConnectors</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">transportConnector</span> <span class="attr">name</span>=<span class="string">"nio"</span> <span class="attr">uri</span>=<span class="string">"nio://0.0.0.0:61618?trace=true"</span>/&gt;</span>  </span><br><span class="line">&lt;/&lt;transportConnectors&gt;</span><br></pre></td></tr></table></figure>
+<p> 如果不特别指定ActiveMQ的网络监听端口，那么这些端口都将使用BIO网络IO模型。所以为了提高单节点的网络吞吐性能，需要明确的指定Active的网络IO模型。如：URI格式头以<code>nio</code>开头，表示这个端口使用以TCP协议为基础的NIO网络的IO模型。</p>
+</li>
+<li><p>URI格式头以<code>nio</code>开头，表示这个端口使用以TCP协议为基础的NIO网络IO模型，但是这样设置只能使这个端口支持openwire协议。</p>
+<p> 使用auto关键字，使用<code>+</code>来为端口设置多种特性</p>
+<p> 修改配置文件</p>
+ <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">transportConnector</span> <span class="attr">name</span>=<span class="string">"auto+nio"</span> <span class="attr">uri</span>=<span class="string">"auto+nio://0.0.0.0:61608?maximumConnections=1000&amp;wireFormat.maxFrameSize=104857600&amp;org.apache.activemq.transport.nio.SelectorManager.corePoolSize=20&amp;org.apache.activemq.transport.nio.SelectorManager.maximumPoolSize=50"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="消息持久化"><a href="#消息持久化" class="headerlink" title="消息持久化"></a>消息持久化</h1>]]></content>
       <categories>
         <category>Java</category>
       </categories>
