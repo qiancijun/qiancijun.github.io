@@ -19789,69 +19789,56 @@ events 块涉及的指令主要影响 Nginx 服务器与用户的网络连接，
   <entry>
     <title>Python-Pandas</title>
     <url>/2020/12/14/Python-Pandas/</url>
-    <content><![CDATA[<h1>简介</h1>
-<h2 id="Pandas-DataFrame"><a class="header-anchor" href="#Pandas-DataFrame">¶</a>Pandas DataFrame</h2>
-<p>Pandas是一个用于数据分析的开源Python库，它让Python能够处理电子表格等数据，提供了数据快速加载、操作、对齐、合并等功能。这些增强特性是通过引入两种数据实现的：Series和DataFrame。DataFrame表示整个电子表格或矩形数据，而Series是DataFrame的单列。也可以把DataFrame看作由Series对象组成的字典或集合。</p>
-<h3 id="安装Pandas"><a class="header-anchor" href="#安装Pandas">¶</a>安装Pandas</h3>
-<blockquote>
+    <content><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><h2 id="Pandas-DataFrame"><a href="#Pandas-DataFrame" class="headerlink" title="Pandas DataFrame"></a>Pandas DataFrame</h2><p>Pandas是一个用于数据分析的开源Python库，它让Python能够处理电子表格等数据，提供了数据快速加载、操作、对齐、合并等功能。这些增强特性是通过引入两种数据实现的：Series和DataFrame。DataFrame表示整个电子表格或矩形数据，而Series是DataFrame的单列。也可以把DataFrame看作由Series对象组成的字典或集合。</p>
+<h3 id="安装Pandas"><a href="#安装Pandas" class="headerlink" title="安装Pandas"></a>安装Pandas</h3><blockquote>
 <p>编译器使用的为Pycharm</p>
 </blockquote>
 <p>添加第三方依赖</p>
 <p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/Python/Pandas/%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83-%E7%95%8C%E9%9D%A2.png" alt=""></p>
 <p>添加阿里云镜像</p>
 <p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/Python/Pandas/%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83-%E9%95%9C%E5%83%8F.png" alt=""></p>
-<h3 id="加载数据集"><a class="header-anchor" href="#加载数据集">¶</a>加载数据集</h3>
-<p>当给定一个数据集时，首先要加载它并查看其结构和内容。查看数据集的最简单的方法是检查特定的行和列，并对他们取子集。</p>
+<h3 id="加载数据集"><a href="#加载数据集" class="headerlink" title="加载数据集"></a>加载数据集</h3><p>当给定一个数据集时，首先要加载它并查看其结构和内容。查看数据集的最简单的方法是检查特定的行和列，并对他们取子集。</p>
 <p>表结构</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Number,Name,Age</span><br><span class="line">1,a,10</span><br><span class="line">2,b,20</span><br><span class="line">3,c,30</span><br><span class="line">4,d,40</span><br><span class="line">5,e,50</span><br><span class="line">6,f,60</span><br></pre></td></tr></table></figure>
 <ol>
-<li>
-<p>由于Pandas并不是Python标准库的一部分，所以在使用之前需要先导入库</p>
+<li><p>由于Pandas并不是Python标准库的一部分，所以在使用之前需要先导入库</p>
  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br></pre></td></tr></table></figure>
 </li>
-<li>
-<p>使用<code>read_csv</code>函数来加载CSV数据文件。</p>
+<li><p>使用<code>read_csv</code>函数来加载CSV数据文件。</p>
  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Number,Name,Age</span><br><span class="line">1,a,10</span><br><span class="line">2,b,20</span><br><span class="line">3,c,30</span><br></pre></td></tr></table></figure>
  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">test = pd.read_csv(<span class="string">"TestCSV.csv"</span>, sep=<span class="string">','</span>, encoding=<span class="string">"utf-8"</span>)</span><br><span class="line">print(test.head())</span><br></pre></td></tr></table></figure>
-<p>读取结果</p>
+<p> 读取结果</p>
  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">   Number Name  Age</span><br><span class="line">0       1    a   10</span><br><span class="line">1       2    b   20</span><br><span class="line">2       3    c   30</span><br></pre></td></tr></table></figure>
 </li>
-<li>
-<p>使用type函数来查看<code>read_csv()</code>返回的是否是<code>DataFrame</code></p>
+<li><p>使用type函数来查看<code>read_csv()</code>返回的是否是<code>DataFrame</code></p>
  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">test = pd.read_csv(<span class="string">"TestCSV.csv"</span>, sep=<span class="string">','</span>, encoding=<span class="string">"utf-8"</span>)</span><br><span class="line">print(type(test)) <span class="comment"># &lt;class 'pandas.core.frame.DataFrame'&gt;</span></span><br></pre></td></tr></table></figure>
 </li>
-<li>
-<p>每个DataFrame都有一个<code>shape</code>属性，来查看DataFrame的行数和列数</p>
+<li><p>每个DataFrame都有一个<code>shape</code>属性，来查看DataFrame的行数和列数</p>
  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">test = pd.read_csv(<span class="string">"TestCSV.csv"</span>, sep=<span class="string">','</span>, encoding=<span class="string">"utf-8"</span>)</span><br><span class="line">print(test.shape) <span class="comment"># (3, 3)</span></span><br></pre></td></tr></table></figure>
-<p><code>shape</code>属性会返回一个元组，其中第一个值是行数，第二个值是列数。</p>
-<p><code>shape</code>是<code>DataFrame</code>的属性，而不是函数或者方法</p>
-<p>类似于<code>shape</code>属性，可以使用<code>columns</code>来获取列名</p>
+<p> <code>shape</code>属性会返回一个元组，其中第一个值是行数，第二个值是列数。</p>
+<p> <code>shape</code>是<code>DataFrame</code>的属性，而不是函数或者方法</p>
+<p> 类似于<code>shape</code>属性，可以使用<code>columns</code>来获取列名</p>
  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">test = pd.read_csv(<span class="string">"TestCSV.csv"</span>, sep=<span class="string">','</span>, encoding=<span class="string">"utf-8"</span>)</span><br><span class="line">print(test.columns) <span class="comment"># Index(['Number', 'Name', 'Age'], dtype='object')</span></span><br></pre></td></tr></table></figure>
 </li>
-<li>
-<p>每列的类型必须相同，而每行可以包含混合类型，<code>dtypes</code>来获取每一列的类型</p>
+<li><p>每列的类型必须相同，而每行可以包含混合类型，<code>dtypes</code>来获取每一列的类型</p>
  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">test = pd.read_csv(<span class="string">"TestCSV.csv"</span>, sep=<span class="string">','</span>, encoding=<span class="string">"utf-8"</span>)</span><br><span class="line">print(test.dtypes)</span><br><span class="line"><span class="comment"># Number     int64</span></span><br><span class="line"><span class="comment"># Name      object</span></span><br><span class="line"><span class="comment"># Age        int64</span></span><br><span class="line"><span class="comment"># dtype: object</span></span><br></pre></td></tr></table></figure>
 </li>
-<li>
-<p>使用<code>info()</code>方法来获取更多的信息</p>
+<li><p>使用<code>info()</code>方法来获取更多的信息</p>
  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">test = pd.read_csv(<span class="string">"TestCSV.csv"</span>, sep=<span class="string">','</span>, encoding=<span class="string">"utf-8"</span>)</span><br><span class="line">print(test.info())</span><br><span class="line"><span class="comment"># &lt;class 'pandas.core.frame.DataFrame'&gt;</span></span><br><span class="line"><span class="comment"># RangeIndex: 3 entries, 0 to 2</span></span><br><span class="line"><span class="comment"># Data columns (total 3 columns):</span></span><br><span class="line"><span class="comment">#  #   Column  Non-Null Count  Dtype</span></span><br><span class="line"><span class="comment"># ---  ------  --------------  -----</span></span><br><span class="line"><span class="comment">#  0   Number  3 non-null      int64</span></span><br><span class="line"><span class="comment">#  1   Name    3 non-null      object</span></span><br><span class="line"><span class="comment">#  2   Age     3 non-null      int64</span></span><br><span class="line"><span class="comment"># dtypes: int64(2), object(1)</span></span><br><span class="line"><span class="comment"># memory usage: 124.0+ bytes</span></span><br><span class="line"><span class="comment"># None</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<h3 id="查看列、行和单元格"><a class="header-anchor" href="#查看列、行和单元格">¶</a>查看列、行和单元格</h3>
-<p>查看数据的最佳方式是分别查看数据的各个子集。<code>DataFrame</code>的<code>head()</code>方法可以查看数据的前5行。这对于查看数据是否加载正确，了解列名非常有用，但是有时只需查看数据的特定行、列或值。</p>
-<h4 id="获取列子集"><a class="header-anchor" href="#获取列子集">¶</a>获取列子集</h4>
-<ol>
-<li>
-<p>根据名称获取列子集</p>
-<p>如果只想获取数据中的某列，可以把要访问的列名放入括号中</p>
+<h3 id="查看列、行和单元格"><a href="#查看列、行和单元格" class="headerlink" title="查看列、行和单元格"></a>查看列、行和单元格</h3><p>查看数据的最佳方式是分别查看数据的各个子集。<code>DataFrame</code>的<code>head()</code>方法可以查看数据的前5行。这对于查看数据是否加载正确，了解列名非常有用，但是有时只需查看数据的特定行、列或值。</p>
+<h4 id="获取列子集"><a href="#获取列子集" class="headerlink" title="获取列子集"></a>获取列子集</h4><ol>
+<li><p>根据名称获取列子集</p>
+<p> 如果只想获取数据中的某列，可以把要访问的列名放入括号中</p>
  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df = pd.read_csv(<span class="string">"TestCSV.csv"</span>, sep=<span class="string">','</span>, encoding=<span class="string">"utf-8"</span>)</span><br><span class="line">number_df = df[<span class="string">'Number'</span>]</span><br><span class="line">print(number_df)</span><br><span class="line"><span class="comment"># 0    1</span></span><br><span class="line"><span class="comment"># 1    2</span></span><br><span class="line"><span class="comment"># 2    3</span></span><br><span class="line"><span class="comment"># 3    4</span></span><br><span class="line"><span class="comment"># 4    5</span></span><br><span class="line"><span class="comment"># 5    6</span></span><br><span class="line"><span class="comment"># Name: Number, dtype: int64</span></span><br></pre></td></tr></table></figure>
-<p>使用<code>tail()</code>方法来显示最后5行</p>
+<p> 使用<code>tail()</code>方法来显示最后5行</p>
  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df = pd.read_csv(<span class="string">"TestCSV.csv"</span>, sep=<span class="string">','</span>, encoding=<span class="string">"utf-8"</span>)</span><br><span class="line">number_df = df[<span class="string">'Number'</span>]</span><br><span class="line">print(number_df.tail())</span><br><span class="line"><span class="comment"># 1    2</span></span><br><span class="line"><span class="comment"># 2    3</span></span><br><span class="line"><span class="comment"># 3    4</span></span><br><span class="line"><span class="comment"># 4    5</span></span><br><span class="line"><span class="comment"># 5    6</span></span><br><span class="line"><span class="comment"># Name: Number, dtype: int64</span></span><br></pre></td></tr></table></figure>
-<p>要通过列名指定多列，需要向方括号内传入一个Python列表</p>
+<p> 要通过列名指定多列，需要向方括号内传入一个Python列表</p>
  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df = pd.read_csv(<span class="string">"TestCSV.csv"</span>, sep=<span class="string">','</span>, encoding=<span class="string">"utf-8"</span>)</span><br><span class="line">sub_df = df[[<span class="string">'Name'</span>, <span class="string">'Age'</span>]] <span class="comment"># 两对方括号</span></span><br><span class="line">print(sub_df)</span><br><span class="line"><span class="comment">#   Name  Age</span></span><br><span class="line"><span class="comment"># 0    a   10</span></span><br><span class="line"><span class="comment"># 1    b   20</span></span><br><span class="line"><span class="comment"># 2    c   30</span></span><br><span class="line"><span class="comment"># 3    d   40</span></span><br><span class="line"><span class="comment"># 4    e   50</span></span><br><span class="line"><span class="comment"># 5    f   60</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<h4 id="获取行子集"><a class="header-anchor" href="#获取行子集">¶</a>获取行子集</h4>
+<h4 id="获取行子集"><a href="#获取行子集" class="headerlink" title="获取行子集"></a>获取行子集</h4><div class="table-container">
 <table>
 <thead>
 <tr>
@@ -19874,18 +19861,18 @@ events 块涉及的指令主要影响 Nginx 服务器与用户的网络连接，
 </tr>
 </tbody>
 </table>
+</div>
 <ol>
-<li>
-<p>通过索引标签获取行子集：loc</p>
+<li><p>通过索引标签获取行子集：loc</p>
  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">   Number Name  Age</span><br><span class="line">0       1    a   10</span><br><span class="line">1       2    b   20</span><br><span class="line">2       3    c   30</span><br><span class="line">3       4    d   40</span><br><span class="line">4       5    e   50</span><br><span class="line">5       6    f   60</span><br></pre></td></tr></table></figure>
-<p>在上面输出的<code>DataFrame</code>中，左侧是行号，即<code>DataFrame</code>得索引标签。Pandas会使用行号填充索引标签（从0开始）</p>
+<p> 在上面输出的<code>DataFrame</code>中，左侧是行号，即<code>DataFrame</code>得索引标签。Pandas会使用行号填充索引标签（从0开始）</p>
  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df = pd.read_csv(<span class="string">"TestCSV.csv"</span>, sep=<span class="string">','</span>, encoding=<span class="string">"utf-8"</span>)</span><br><span class="line">print(df.loc[<span class="number">0</span>]) <span class="comment"># 获取第一行</span></span><br><span class="line"><span class="comment"># Number     1</span></span><br><span class="line"><span class="comment"># Name       a</span></span><br><span class="line"><span class="comment"># Age       10</span></span><br><span class="line"><span class="comment"># Name: 0, dtype: object</span></span><br></pre></td></tr></table></figure>
-<p><strong>选取多行</strong>：和列一样，传入一个列表来表示选取哪些行</p>
+<p> <strong>选取多行</strong>：和列一样，传入一个列表来表示选取哪些行</p>
  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df = pd.read_csv(<span class="string">"TestCSV.csv"</span>, sep=<span class="string">','</span>, encoding=<span class="string">"utf-8"</span>)</span><br><span class="line">print(df.loc[[<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>]])</span><br><span class="line"><span class="comment">#    Number Name  Age</span></span><br><span class="line"><span class="comment"># 1       2    b   20</span></span><br><span class="line"><span class="comment"># 3       4    d   40</span></span><br><span class="line"><span class="comment"># 5       6    f   60</span></span><br></pre></td></tr></table></figure></li>
 </ol>
 ]]></content>
       <categories>
-        <category>DataAnalysis</category>
+        <category>Python</category>
       </categories>
       <tags>
         <tag>数据分析</tag>
