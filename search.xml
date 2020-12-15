@@ -17982,6 +17982,37 @@ a 和 b 都只包含小写英文字母</p>
 <p>这种方式克服了JDBC的不足，每次消息来都需要去写库和读库。ActiveMQ Journal使用高速缓存写入技术，大大提高了性能。当消费者的消费速度能够及时跟上生产者的生产速度时，Journal文件能够大大减少需要写入到DB中的消息。</p>
 <p>修改配置文件</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">persistenceFactory</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">journalPersistenceAdapterFactory</span> <span class="attr">journalLogFiles</span>=<span class="string">"5"</span></span></span><br><span class="line"><span class="tag">                                    <span class="attr">dataDirectory</span>=<span class="string">"$&#123;basedir&#125;/target"</span></span></span><br><span class="line"><span class="tag">                                    <span class="attr">useJournal</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">                                    <span class="attr">useQuickJorunal</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">                                    <span class="attr">dataSource</span>=<span class="string">"#mysql-ds"</span>/&gt;</span> </span><br><span class="line">    <span class="comment">&lt;!-- To use a different dataSource, use the following syntax : --&gt;</span> </span><br><span class="line">    <span class="comment">&lt;!-- &lt;journalPersistenceAdapterFactory journalLogFiles="5" dataDirectory="$&#123;basedir&#125;/activemq-data" dataSource="#mysql-ds"/&gt; --&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">persistenceFactory</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="集群"><a href="#集群" class="headerlink" title="集群"></a>集群</h1><p>基于ZooKeeper和LevelDB搭建ActiveMQ集群。集群仅提供主备方式的高可用集群功能，避免单点故障。</p>
+<h2 id="ZooKeeper"><a href="#ZooKeeper" class="headerlink" title="ZooKeeper"></a>ZooKeeper</h2><p>使用ZooKeeper集群注册所有的ActiveMQ Broker，但只有其中的一个Broker可以提供服务，它将被视为Master，其他的Broker处于待机状态被视为Slave。</p>
+<p>如果Master因故障而不能提供服务，ZooKeeper会从Slave中选举一个Broker充当Master。</p>
+<p>Slave连接Master并同步他们的存储状态，Slave不接收客户端连接。所有的存储操作都将被复制到连接至Master的Slaves。</p>
+<p>如果Master宕机得到了最新更新的Slave会成为Master。故障节点在恢复后重新加入到集群中并连接Master进入Slave模式。</p>
+<p>所有需要同步的消息操作都将等待存储状态被复制到其他节点的操作完成才能完成</p>
+<p>如果配置了<code>replicas=3</code>，那么法定大小是<code>(3 / 2) + 1 = 2</code>。Master将会存储并更新然后等待<code>(2 - 1) = 1</code>个Slave存储和更新完成，才汇报success。</p>
+<p>有一个node要作为观察者存在。当一个新的Master被选中，需要至少保障一个法定node在线以能够找到拥有最新状态的node。这个node才可以成为新的Master。</p>
+<h1 id="高级特性"><a href="#高级特性" class="headerlink" title="高级特性"></a>高级特性</h1><h2 id="异步投递Async-Sends"><a href="#异步投递Async-Sends" class="headerlink" title="异步投递Async Sends"></a>异步投递Async Sends</h2><ul>
+<li>ActiveMQ支持同步、异步两种发送的模式，将消息发送到Broker，模式的选择对发送延时有巨大的影响。Producer能达到的产出率主要受发送延时的影响，使用异步发送可以显著的提高发送的性能</li>
+<li>ActiveMQ默认使用异步发送的模式：除非明确指定使用同步发送的方式或者在未使用事务的前提下发送持久化的消息，这两种都是同步发送的</li>
+<li>如果没有使用事务且发送的是持久化消息，每一次发送都是同步发送的且会阻塞producer直到broker返回一个确认，表示消息已经被安全的持久化到磁盘。确认机制提供了消息安全的保障，但同时会阻塞客户端带来了很大的延时。</li>
+</ul>
+<p><a href="http://activemq.apache.org/async-sends" target="_blank" rel="noopener">官网解释</a></p>
+<p>三种设置异步投递的方式：</p>
+<ol>
+<li><p>在协议地址中增加kv键值对</p>
+ <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">cf = <span class="keyword">new</span> ActiveMQConnectionFactory(<span class="string">"tcp://locahost:61616?jms.useAsyncSend=true"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置连接工厂</p>
+ <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">((ActiveMQConnectionFactory)connectionFactory).setUseAsyncSend(<span class="keyword">true</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置连接</p>
+ <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">((ActiveMQConnection)connection).setUseAsyncSend(<span class="keyword">true</span>); <span class="comment">// 注意类型</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="异步投递如何确认发送成功"><a href="#异步投递如何确认发送成功" class="headerlink" title="异步投递如何确认发送成功"></a>异步投递如何确认发送成功</h3><ul>
+<li>异步发送丢失消息的场景是：生产者设置<code>UseAsyncSend=true</code>，使用<code>producer.send(msg)</code>持续发送消息。由于消息不阻塞，生产者会认为所有<code>send</code>的消息均被成功发送至MQ</li>
+<li>如果MQ突然宕机，此时生产者端内存中尚未被发送至MQ的消息都会丢失，所以，正确的异步发送方法是需要接收回调的</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ActiveProvider</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String ACTIVEMQ_URL = <span class="string">"tcp://192.168.74.100:61616"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String QUEUE_NAME = <span class="string">"jdbc01"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> JMSException </span>&#123;</span><br><span class="line">        ActiveMQConnectionFactory factory = <span class="keyword">new</span> ActiveMQConnectionFactory(ACTIVEMQ_URL);</span><br><span class="line">        factory.setUseAsyncSend(<span class="keyword">true</span>); <span class="comment">// 开启异步投递</span></span><br><span class="line"></span><br><span class="line">        Connection connection = factory.createConnection();</span><br><span class="line">        connection.start();</span><br><span class="line"></span><br><span class="line">        Session session = connection.createSession(<span class="keyword">true</span>, Session.CLIENT_ACKNOWLEDGE);</span><br><span class="line">        Queue queue = session.createQueue(QUEUE_NAME);</span><br><span class="line">        ActiveMQMessageProducer producer = (ActiveMQMessageProducer) session.createProducer(queue);</span><br><span class="line">        producer.setDeliveryMode(DeliveryMode.PERSISTENT);</span><br><span class="line">        TextMessage msg = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">3</span>; i++) &#123;</span><br><span class="line">            msg= session.createTextMessage(<span class="string">"msg -- "</span> + i);</span><br><span class="line">            msg.setJMSMessageID(UUID.randomUUID().toString());</span><br><span class="line">            String ID = msg.getJMSMessageID();</span><br><span class="line">            producer.send(msg, <span class="keyword">new</span> AsyncCallback() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                    System.out.println(ID + <span class="string">"--- success"</span>);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onException</span><span class="params">(JMSException exception)</span> </span>&#123;</span><br><span class="line">                    System.out.println(ID + <span class="string">"--- fail"</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        producer.close();</span><br><span class="line">        session.commit();</span><br><span class="line">        session.close();</span><br><span class="line">        connection.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>框架</category>
@@ -19877,5 +19908,56 @@ events 块涉及的指令主要影响 Nginx 服务器与用户的网络连接，
       <tags>
         <tag>数据分析</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>ZooKeeper</title>
+    <url>/2020/12/15/ZooKeeper/</url>
+    <content><![CDATA[<h1 id="ZooKeeper入门"><a href="#ZooKeeper入门" class="headerlink" title="ZooKeeper入门"></a>ZooKeeper入门</h1><p>Zookeeper是一个开源，为分布式应用提供协调服务的Hadoop的子项目</p>
+<h2 id="工作机制"><a href="#工作机制" class="headerlink" title="工作机制"></a>工作机制</h2><p>Zookeeper从设计模式角度来理解：是一个基于观察者模式设计的分布式服务管理框架，它负责存储和管理大家都关心的数据，然后接收观察者的注册，一旦这些数据的状态发生变化，Zookeeper就将负责通知已经在Zookeeper上注册的那些观察者做出相应的反应。</p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Zookeeper/Zookeeper%E7%89%B9%E7%82%B9.png" alt=""></p>
+<ol>
+<li>Zookeeper：一个领导者（Leader），多个跟随者（Follower）组成的集群</li>
+<li>集群中只要有半数以上节点存活，Zookeeper集群就能正常服务</li>
+<li>全局数据一致：每个Server保存一份相同的数据副本，Client无论连结到哪个Server，数据都是一致的</li>
+<li>更新请求顺序进行，来自同一个Client的更新请求按其发送顺序一次执行</li>
+<li>数据更新原子性，一次数据更新要么成功，要么失败</li>
+<li>实时性，在一定时间范围内，Client能读到最新数据</li>
+</ol>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Zookeeper/Zookeeper%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.png" alt=""></p>
+<p>Zookeeper数据模型的结构与Unix文件系统很类似，整体上可以看作是一棵树，每个节点称做一个<code>ZNode</code>。每一个<code>ZNode</code>默认能够存储1MB的数据，每个<code>ZNode</code>都可以通过其路径唯一标识</p>
+<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p>提供的服务包括：统一命名服务、统一配置管理、统一集群管理、服务器节点动态上下线、软负载均衡等</p>
+<h3 id="统一命名服务"><a href="#统一命名服务" class="headerlink" title="统一命名服务"></a>统一命名服务</h3><p>在分布式环境下，经常需要对应用/服务进行统一命名，便于识别。</p>
+<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Zookeeper/%E7%BB%9F%E4%B8%80%E5%91%BD%E5%90%8D%E6%9C%8D%E5%8A%A1.png" alt=""></p>
+<h3 id="统一配置管理"><a href="#统一配置管理" class="headerlink" title="统一配置管理"></a>统一配置管理</h3><ol>
+<li>分布式环境下，配置文件同步非常常见<ol>
+<li>一般要求一个集群中，所有节点的配置信息是一致的，比如Kafka集群</li>
+<li>对配置文件修改后，希望能够快速同步到各个节点上</li>
+</ol>
+</li>
+<li>配置管理可交由Zookeeper实现<ol>
+<li>可将配置信息写入Zookeeper上的一个ZNode</li>
+<li>各个客户端服务器监听这个ZNode</li>
+<li>一旦ZNode中的数据被修改，Zookeeper将通知各个客户端服务器</li>
+</ol>
+</li>
+</ol>
+<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Zookeeper/%E7%BB%9F%E4%B8%80%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86.png" alt=""></p>
+<h3 id="统一集群管理"><a href="#统一集群管理" class="headerlink" title="统一集群管理"></a>统一集群管理</h3><ol>
+<li></li>
+<li><p>分布式环境中，实时掌握每个节点的状态是必要的，可根据节点实时状态做出一些调整</p>
+</li>
+<li>Zookeeper可以实现实时监控节点状态变化<ol>
+<li>可将节点信息写入Zookeeper上的ZNode</li>
+<li>监听这个ZNode可获取它的实时状态变化</li>
+</ol>
+</li>
+</ol>
+<h3 id="服务器动态上下线"><a href="#服务器动态上下线" class="headerlink" title="服务器动态上下线"></a>服务器动态上下线</h3><p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Zookeeper/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8A%A8%E6%80%81%E4%B8%8A%E4%B8%8B%E7%BA%BF.png" alt=""></p>
+<h3 id="软负载均衡"><a href="#软负载均衡" class="headerlink" title="软负载均衡"></a>软负载均衡</h3><p>在Zookeeper中记录每台服务器的访问数，让访问数最少的服务器去处理最新的客户端请求</p>
+<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Zookeeper/%E8%BD%AF%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1.png" alt=""></p>
+]]></content>
+      <categories>
+        <category>大数据</category>
+      </categories>
   </entry>
 </search>
