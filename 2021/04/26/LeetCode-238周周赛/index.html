@@ -1,0 +1,348 @@
+
+<!DOCTYPE html>
+<html lang="zh_CH" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LeetCode-238周周赛 - 神奇口袋</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="qiancijun,"> 
+    <meta name="description" content="K 进制表示下的各位数字总和
+1837. K 进制表示下的各位数字总和
+题目描述
+给你一个整数 n（10 进制）和一个基数 k ，请你将 n 从 10 进制表示转换为 k 进制表示，计算并返回转换后,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">神奇口袋</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://xlich.top"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">LeetCode-238周周赛</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+   
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">LeetCode-238周周赛</h1>
+        <div class="stuff">
+            <span>四月 26, 2021</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E8%AF%95%E9%A2%98/" rel="tag">试题</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h1>K 进制表示下的各位数字总和</h1>
+<p><a href="https://leetcode-cn.com/problems/sum-of-digits-in-base-k/" target="_blank" rel="noopener">1837. K 进制表示下的各位数字总和</a></p>
+<p><strong>题目描述</strong></p>
+<p>给你一个整数 n（10 进制）和一个基数 k ，请你将 n 从 10 进制表示转换为 k 进制表示，计算并返回转换后各位数字的 总和 。</p>
+<p>转换后，各位数字应当视作是 10 进制数字，且它们的总和也应当按 10 进制表示返回。</p>
+<p><strong>示例1</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：n &#x3D; 34, k &#x3D; 6</span><br><span class="line">输出：9</span><br><span class="line">解释：34 (10 进制) 在 6 进制下表示为 54 。5 + 4 &#x3D; 9 。</span><br></pre></td></tr></table></figure>
+<p><strong>示例2</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：n &#x3D; 10, k &#x3D; 10</span><br><span class="line">输出：1</span><br><span class="line">解释：n 本身就是 10 进制。 1 + 0 &#x3D; 1 。</span><br></pre></td></tr></table></figure>
+<p><strong>数据范围</strong></p>
+<p>$1 \le n \le 100$</p>
+<p>$2 \le k \le 10$</p>
+<p><strong>思路</strong></p>
+<p>可以根据题意直接模拟进制转换，但是此题我们并不需要知道转换后数字是多少。这里采用除k取余记录总和</p>
+<p><strong>代码</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">sumBase</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (n) &#123;</span><br><span class="line">            ans += (n % k);</span><br><span class="line">            n /= k;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1>最高频元素的频数</h1>
+<p><a href="https://leetcode-cn.com/problems/frequency-of-the-most-frequent-element/" target="_blank" rel="noopener">1838. 最高频元素的频数</a></p>
+<p><strong>题目描述</strong></p>
+<p>元素的 频数 是该元素在一个数组中出现的次数。</p>
+<p>给你一个整数数组 nums 和一个整数 k 。在一步操作中，你可以选择 nums 的一个下标，并将该下标对应元素的值增加 1 。</p>
+<p>执行最多 k 次操作后，返回数组中最高频元素的 最大可能频数 。</p>
+<p><strong>示例1</strong></p>
+<blockquote>
+<p>输入：nums = [1,2,4], k = 5<br>
+输出：3<br>
+解释：对第一个元素执行 3 次递增操作，对第二个元素执 2 次递增操作，此时 nums = [4,4,4] 。<br>
+4 是数组中最高频元素，频数是 3 。</p>
+</blockquote>
+<p><strong>示例2</strong></p>
+<blockquote>
+<p>输入：nums = [1,4,8,13], k = 5<br>
+输出：2<br>
+解释：存在多种最优解决方案：</p>
+<ul>
+<li>对第一个元素执行 3 次递增操作，此时 nums = [4,4,8,13] 。4 是数组中最高频元素，频数是 2 。</li>
+<li>对第二个元素执行 4 次递增操作，此时 nums = [1,8,8,13] 。8 是数组中最高频元素，频数是 2 。</li>
+<li>对第三个元素执行 5 次递增操作，此时 nums = [1,4,13,13] 。13 是数组中最高频元素，频数是 2 。</li>
+</ul>
+</blockquote>
+<p><strong>示例3</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：nums &#x3D; [3,9,6], k &#x3D; 2</span><br><span class="line">输出：1</span><br></pre></td></tr></table></figure>
+<p><strong>数据范围</strong></p>
+<p>$1 \le nums.length \le 10^5$</p>
+<p>$1 \le nums[i] \le 10^5$</p>
+<p>$1 \le k \le 10^5$</p>
+<p><strong>思路</strong></p>
+<p>​	<em>如何求出一个值，小于改值到达他需要得次数？</em></p>
+<p>这里可以运用前缀和的思想，若给的数组有序，从小于当前数 $i$ 的数 $j$ ，所有 $j \sim i$ 当中的，到达 $i$ 所需要的次数为 $(i - j) * nums[i] - (pre[i] - pre[j])$，可以利用这个式子来维护一个滑动窗口，右边界扩张，左边界收缩。</p>
+<p>这里的 $i, j$ 为数组中的下标，$pre$ 为前缀和</p>
+<p><strong>代码</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> ll = <span class="keyword">long</span> <span class="keyword">long</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxFrequency</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> ans = <span class="number">1</span>, n = nums.size();</span><br><span class="line">        sort(nums.begin(), nums.end());</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;ll&gt; <span class="title">pre</span><span class="params">(n + <span class="number">1</span>)</span></span>;</span><br><span class="line">        pre[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">            pre[i] = pre[i - <span class="number">1</span>] + nums[i - <span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> left = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> right = <span class="number">0</span>; right &lt; n; right++) &#123;</span><br><span class="line">            <span class="keyword">while</span> ( (ll) nums[right] * (right - left) - pre[right] + pre[left] &gt; k)</span><br><span class="line">                left ++;</span><br><span class="line">            ans = max(ans, right - left + <span class="number">1</span>); </span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1>所有元音按顺序排布的最长子字符串</h1>
+<p><a href="https://leetcode-cn.com/problems/longest-substring-of-all-vowels-in-order/" target="_blank" rel="noopener">1839. 所有元音按顺序排布的最长子字符串</a></p>
+<p><strong>题目描述</strong></p>
+<p>当一个字符串满足如下条件时，我们称它是 美丽的 ：</p>
+<p>所有 5 个英文元音字母（‘a’ ，‘e’ ，‘i’ ，‘o’ ，‘u’）都必须 至少 出现一次。<br>
+这些元音字母的顺序都必须按照 字典序 升序排布（也就是说所有的 ‘a’ 都在 ‘e’ 前面，所有的 ‘e’ 都在 ‘i’ 前面，以此类推）<br>
+比方说，字符串 “aeiou” 和 “aaaaaaeiiiioou” 都是 美丽的 ，但是 “uaeio” ，“aeoiu” 和 “aaaeeeooo” 不是美丽的 。</p>
+<p>给你一个只包含英文元音字母的字符串 word ，请你返回 word 中 最长美丽子字符串的长度 。如果不存在这样的子字符串，请返回 0 。</p>
+<p>子字符串 是字符串中一个连续的字符序列。</p>
+<p><strong>示例1</strong></p>
+<blockquote>
+<p>输入：word = “aeiaaioaaaaeiiiiouuuooaauuaeiu”<br>
+输出：13<br>
+解释：最长子字符串是 “aaaaeiiiiouuu” ，长度为 13 。</p>
+</blockquote>
+<p><strong>示例2</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：word &#x3D; &quot;aeeeiiiioooauuuaeiou&quot;</span><br><span class="line">输出：5</span><br><span class="line">解释：最长子字符串是 &quot;aeiou&quot; ，长度为 5 。</span><br></pre></td></tr></table></figure>
+<p><strong>示例3</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：word &#x3D; &quot;a&quot;</span><br><span class="line">输出：0</span><br><span class="line">解释：没有美丽子字符串，所以返回 0 。</span><br></pre></td></tr></table></figure>
+<p><strong>数据范围</strong></p>
+<p>$1 \le word.length \le 5 * 10^5$</p>
+<p>word 只包含 <code>a</code>，<code>e</code>，<code>i</code>，<code>o</code>，<code>u</code></p>
+<p><strong>思路</strong></p>
+<p>采取的是滑动窗口的做法，关于状态机参考官方。</p>
+<p>由于五个元音字母是有严格大小关系的，很容易用滑动窗口来维护一个区间，使用一个集合来记录状态。</p>
+<p><strong>代码</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">longestBeautifulSubstring</span><span class="params">(<span class="built_in">string</span> word)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = word.size();</span><br><span class="line">        <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt; window;</span><br><span class="line">        <span class="built_in">set</span>&lt;<span class="keyword">char</span>&gt; st;</span><br><span class="line">        <span class="keyword">int</span> left = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> right = <span class="number">0</span>; right &lt; n; right ++ ) &#123;</span><br><span class="line">            <span class="keyword">if</span> (window.empty() || window.back() &lt;= word[right]) &#123;</span><br><span class="line">                window.push_back(word[right]);</span><br><span class="line">                st.insert(word[right]);</span><br><span class="line">                <span class="keyword">if</span> (st.size() == <span class="number">5</span>) &#123;</span><br><span class="line">                    ans = max(ans, right - left + <span class="number">1</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                window.clear();</span><br><span class="line">                st.clear();</span><br><span class="line">                left = right;</span><br><span class="line">                window.push_back(word[left]);</span><br><span class="line">                st.insert(word[left]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1>最高建筑高度</h1>
+<p><a href="https://leetcode-cn.com/problems/maximum-building-height/" target="_blank" rel="noopener">1840. 最高建筑高度</a></p>
+<p><strong>题目描述</strong></p>
+<p>在一座城市里，你需要建 n 栋新的建筑。这些新的建筑会从 1 到 n 编号排成一列。</p>
+<p>这座城市对这些新建筑有一些规定：</p>
+<ul>
+<li>每栋建筑的高度必须是一个非负整数。</li>
+<li>第一栋建筑的高度 必须 是 0 。</li>
+<li>任意两栋相邻建筑的高度差 不能超过  1 。</li>
+</ul>
+<p>除此以外，某些建筑还有额外的最高高度限制。这些限制会以二维整数数组 restrictions 的形式给出，其中 restrictions[i] = [idi, maxHeighti] ，表示建筑 idi 的高度 不能超过 maxHeighti 。</p>
+<p>题目保证每栋建筑在 restrictions 中 至多出现一次 ，同时建筑 1 不会 出现在 restrictions 中。</p>
+<p>请你返回 最高 建筑能达到的 最高高度 。</p>
+<p><strong>示例1</strong></p>
+<blockquote>
+<p>输入：n = 5, restrictions = [[2,1],[4,1]]<br>
+输出：2<br>
+解释：上图中的绿色区域为每栋建筑被允许的最高高度。<br>
+我们可以使建筑高度分别为 [0,1,2,1,2] ，最高建筑的高度为 2 。</p>
+</blockquote>
+<p><strong>示例2</strong></p>
+<blockquote>
+<p>输入：n = 6, restrictions = []<br>
+输出：5<br>
+解释：上图中的绿色区域为每栋建筑被允许的最高高度。<br>
+我们可以使建筑高度分别为 [0,1,2,3,4,5] ，最高建筑的高度为 5 。</p>
+</blockquote>
+<p><strong>示例3</strong></p>
+<blockquote>
+<p>输入：n = 10, restrictions = [[5,3],[2,5],[7,4],[10,3]]<br>
+输出：5<br>
+解释：上图中的绿色区域为每栋建筑被允许的最高高度。<br>
+我们可以使建筑高度分别为 [0,1,2,3,3,4,4,5,4,3] ，最高建筑的高度为 5 。</p>
+</blockquote>
+<p><strong>数据范围</strong></p>
+<p>$2 \le n \le 10^9$</p>
+<p>$0 \le restrictions.length \le min(n - 1, 10^5)$</p>
+<p>$2 \le id_i \le n$</p>
+<p>$0 \le maxHeight_i \le 10^9$</p>
+<p><strong>思路</strong></p>
+<p>题目给出的限制并不是真正的限制，它仅仅表达了每栋楼不能超过的最大限制，但是思考一下不难发现，有些楼根本无法到达这个高度，简单来说，题目所给我们的限制是无效的，而我们需要把限制有效化。</p>
+<p>直观的想法，可以求出每一栋楼它的最优高度，而这也是一种合理的解法，由于此题给的数据范围已经到达    $10^9$ 无论是在空间还是时间上都已经超出限制。</p>
+<p>在这种情况下，我们只能对给出的 $restrictions$ 求最优限制。</p>
+<p>对于两栋相邻限制的楼 $i, j$，满足 $i &lt; j$，根据限制的传递性，$i, j$ 之间的所有建筑应该形成一个山峰，即从$i$单调递增到最大值，再单调递减到$j$，于是可以得出等式<br>
+$$<br>
+Max(i, j) - limit_i + Max(i, j) - limit_j \le j - i<br>
+$$</p>
+<p><strong>代码</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxBuilding</span><span class="params">(<span class="keyword">int</span> n, <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; r)</span> </span>&#123;</span><br><span class="line">        r.push_back(&#123;<span class="number">1</span>, <span class="number">0</span>&#125;);</span><br><span class="line">        sort(r.begin(), r.end());</span><br><span class="line">        <span class="keyword">if</span> (r.back()[<span class="number">0</span>] != n) &#123;</span><br><span class="line">            r.push_back(&#123;n, n - <span class="number">1</span>&#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> len = r.size();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 从左向右传递限制</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; len; i ++ ) &#123;</span><br><span class="line">            r[i][<span class="number">1</span>] = min(r[i][<span class="number">1</span>], r[i - <span class="number">1</span>][<span class="number">1</span>] + (r[i][<span class="number">0</span>] - r[i - <span class="number">1</span>][<span class="number">0</span>]));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 从右向左传递限制</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = len - <span class="number">2</span>; i &gt;= <span class="number">0</span>; i -- ) &#123;</span><br><span class="line">            r[i][<span class="number">1</span>] = min(r[i][<span class="number">1</span>], r[i + <span class="number">1</span>][<span class="number">1</span>] + (r[i + <span class="number">1</span>][<span class="number">0</span>] - r[i][<span class="number">0</span>]));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len - <span class="number">1</span>; i ++ ) &#123;</span><br><span class="line">            ans = max(ans, (r[i + <span class="number">1</span>][<span class="number">0</span>] - r[i][<span class="number">0</span>] + r[i][<span class="number">1</span>] + r[i + <span class="number">1</span>][<span class="number">1</span>]) &gt;&gt; <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='https://link.hhtjim.com/163/155827.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='https://link.hhtjim.com/163/1491163.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='https://link.hhtjim.com/163/1992707.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='true'
+        data-ci='Iv1.06e5c405a7731b45'
+        data-cs='2fcfe85902a7d5812fa4b299b56a6f194c98e08a'
+        data-r='qiancijun.github.io'
+        data-o='qiancijun'
+        data-a='qiancijun'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">K 进制表示下的各位数字总和</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">2.</span> <span class="toc-text">最高频元素的频数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">3.</span> <span class="toc-text">所有元音按顺序排布的最长子字符串</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">4.</span> <span class="toc-text">最高建筑高度</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":250,"height":400},"mobile":{"show":false},"log":false});</script></body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-163098031-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+<script type="text/javascript" src="/js/love.js"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</html>
