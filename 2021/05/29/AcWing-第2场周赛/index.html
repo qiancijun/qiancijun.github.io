@@ -1,0 +1,327 @@
+
+<!DOCTYPE html>
+<html lang="zh_CH" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AcWing-第2场周赛 - 神奇口袋</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="qiancijun,"> 
+    <meta name="description" content="选择数字
+3577. 选择数字
+给定一个整数数组 $A$，其包含 $n$ 个正整数 $a_1,a_2,…,a_n$ 以及一个整数数组 $B$，其包含 $m$ 个正整数 $b_1,b_2,…,b_m$,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">神奇口袋</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://xlich.top"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">AcWing-第2场周赛</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+   
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">AcWing-第2场周赛</h1>
+        <div class="stuff">
+            <span>五月 29, 2021</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h1>选择数字</h1>
+<p><a href="https://www.acwing.com/problem/content/3580/" target="_blank" rel="noopener">3577. 选择数字</a></p>
+<p>给定一个整数数组 $A$，其包含 $n$ 个正整数 $a_1,a_2,…,a_n$ 以及一个整数数组 $B$，其包含 $m$ 个正整数 $b_1,b_2,…,b_m$。</p>
+<p>请从数组 $A$ 中挑选一个元素 $a$ 并从数组 $B$ 中挑选一个元素 $b$，使得 $a+b$ 既不包含于 $A$ 也不包含于 $B$。</p>
+<p>例如，如果 $A=[2,1,7]$ 而 $B=[1,3,4]$，则可以从 $A$ 中选取 $1$，从 $B$ 中选取 $4$，这样得到的数字 $1+4=5$ 既不在 $A$ 中，也不在 $B$ 中。</p>
+<p>但是，我们不能从 $A$ 中选取 $2$，从 $B$ 中选取 $1$，因为得到的数字 $2+1=3$ 包含于 $B$。</p>
+<p>可以证明这样的数对一定存在，如果答案不唯一则输出任意合理答案均可。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含整数 $n$。</p>
+<p>第二行包含 $n$ 个整数 $a_1,…,a_n$。</p>
+<p>第三行包含整数 $m$。</p>
+<p>第四行包含 $m$ 个整数 $b_1,…,b_m$。</p>
+<p><strong>输出格式</strong></p>
+<p>共一行，输出 $a$ 和 $b$，中间用空格隔开。</p>
+<p><strong>数据范围</strong></p>
+<p>对于 30% 的数据，$1≤n,m≤10$<br>
+对于 100% 的数据，$1≤n,m≤100,1≤a_i,b_i≤200$</p>
+<p><strong>输入样例1：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">20</span><br><span class="line">2</span><br><span class="line">10 20</span><br></pre></td></tr></table></figure>
+<p><strong>输出样例1：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">20 20</span><br></pre></td></tr></table></figure>
+<p><strong>输入样例2：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">3</span><br><span class="line">3 2 2</span><br><span class="line">5</span><br><span class="line">1 5 7 7 9</span><br></pre></td></tr></table></figure>
+<p><strong>输出样例2：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3 1</span><br></pre></td></tr></table></figure>
+<p><strong>输入样例3：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">4</span><br><span class="line">1 3 5 7</span><br><span class="line">4</span><br><span class="line">7 5 3 1</span><br></pre></td></tr></table></figure>
+<p><strong>输出样例3：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 1</span><br></pre></td></tr></table></figure>
+<h2 id="思路"><a class="header-anchor" href="#思路">¶</a>思路</h2>
+<p>用一个set集合记录当前哪些数不存在即可</p>
+<h2 id="代码"><a class="header-anchor" href="#代码">¶</a>代码</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;set&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">110</span>;</span><br><span class="line"><span class="keyword">int</span> n, m;</span><br><span class="line"><span class="keyword">int</span> a[N], b[N];</span><br><span class="line"><span class="built_in">set</span>&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; a[i];</span><br><span class="line">        s.insert(a[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; m;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i ++) &#123;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; b[i];</span><br><span class="line">        s.insert(b[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i ++ ) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; m; j ++ ) &#123;</span><br><span class="line">            <span class="keyword">int</span> tmp = a[i] + b[j];</span><br><span class="line">            <span class="keyword">if</span> (s.count(tmp) == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="built_in">cout</span> &lt;&lt; a[i] &lt;&lt; <span class="string">' '</span> &lt;&lt; b[j] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>最大中位数</h1>
+<p><a href="https://www.acwing.com/problem/content/3581/" target="_blank" rel="noopener">3578. 最大中位数</a></p>
+<p>给定一个由 $n$ 个整数组成的数组 $a$，其中 <strong>n 为奇数</strong>。</p>
+<p>你可以对其进行以下操作：</p>
+<ul>
+<li>选择数组中的一个元素（例如 $a_i$），将其增加 $1$（即，将其替换为 $a_i+1$）。</li>
+</ul>
+<p>你最多可以进行 $k$ 次操作，并希望该数组的中位数能够尽可能大。</p>
+<p>奇数长度的数组的中位数是数组以非降序排序后的中间元素。</p>
+<p>例如，数组 $[1,5,2,3,5]$ 的中位数为 $3$。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行包含两个整数 $n$ 和 $k$。</p>
+<p>第二行包含 $n$ 个整数 $a_1,a_2,…,a_n$。</p>
+<p><strong>输出格式</strong></p>
+<p>输出一个整数，表示通过操作可能得到的最大中位数。</p>
+<p><strong>数据范围</strong></p>
+<p>对于 30% 的数据，$1≤n≤5$。<br>
+对于 100% 的数据，$1≤n≤2×10<sup>5$，$1≤k≤10</sup>9$，$1≤a_i≤10^9$。</p>
+<p><strong>输入样例1：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">3 2</span><br><span class="line">1 3 5</span><br></pre></td></tr></table></figure>
+<p><strong>输出样例1：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">5</span><br></pre></td></tr></table></figure>
+<p><strong>输入样例2：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">5 5</span><br><span class="line">1 2 1 1 1</span><br></pre></td></tr></table></figure>
+<p><strong>输出样例2：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3</span><br></pre></td></tr></table></figure>
+<p><strong>输入样例3：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">7 7</span><br><span class="line">4 1 2 4 3 4 4</span><br></pre></td></tr></table></figure>
+<p><strong>输出样例3：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">5</span><br></pre></td></tr></table></figure>
+<h2 id="思路-v2"><a class="header-anchor" href="#思路-v2">¶</a>思路</h2>
+<p>由于寻找的是中位数，所以只需要看一半的数据。</p>
+<p>假设数组为 $nums$，中位数为 $nums[mid]$，那么中位数可以变大的条件为 $nums[mid] &lt; nums[mid + 1]$ 。在这种情况下，我们可以将 $nums[mid]$ 的大小增长到 $nums[mid + 1]$，那么此时，最大的中位数就变成了 $nums[mid + 1]$。相同的，检查是否可以增长到 $nums[mid + 2]$位置的大小，但注意此时花费的步数应该是 $2 * (nums[mid + 2] - nums[mid + 1)]$，以此类推。注意最后的边界处理</p>
+<h2 id="代码-v2"><a class="header-anchor" href="#代码-v2">¶</a>代码</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> ll = <span class="keyword">long</span> <span class="keyword">long</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">2e5</span> + <span class="number">10</span>;</span><br><span class="line">ll n, k;</span><br><span class="line">ll a[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; k;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; n; i ++ ) <span class="built_in">cin</span> &gt;&gt; a[i];</span><br><span class="line">    <span class="keyword">if</span> (n == <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; (ll) a[<span class="number">0</span>] + k &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    sort(a, a + n);</span><br><span class="line">    ll left = n / <span class="number">2</span>, right = left + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (right &lt; n &amp;&amp; k) &#123;</span><br><span class="line">        ll tmp = a[right] - a[left];</span><br><span class="line">        ll times = right - left;</span><br><span class="line">        <span class="keyword">if</span> (tmp * times &lt;= k) &#123;</span><br><span class="line">            k -= (tmp * times);</span><br><span class="line">            a[left] = a[right];</span><br><span class="line">            right ++;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (k == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; a[right - <span class="number">1</span>] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (right == n) &#123;</span><br><span class="line">        <span class="keyword">int</span> num = right - left;</span><br><span class="line">        k /= num;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; a[right - <span class="number">1</span>] + k &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (right != n) &#123;</span><br><span class="line">        <span class="keyword">int</span> num = right - left;</span><br><span class="line">        k /= num;</span><br><span class="line">        <span class="keyword">if</span> (a[right - <span class="number">1</span>] + k &gt; a[right]) &#123;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; a[right] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; a[right - <span class="number">1</span>] + k &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>数字移动</h1>
+<p><a href="https://www.acwing.com/problem/content/3582/" target="_blank" rel="noopener">3579. 数字移动</a></p>
+<p>将 $1∼n$ 按顺序排成一排，构成一个数列。</p>
+<p>数字 $i$ 刚好位于位置 $i$。</p>
+<p>再给定一个长度为 $n$ 的位置序列 $p_1,p_2,…,p_n$，它是 1∼n 的一种排列。</p>
+<p>接下来，我们会重复不断地对数列进行如下操作：</p>
+<ul>
+<li>重新排列数列中每个数的位置，将位于位置 $i$ 的数移动至位置 $p_i$。（如果 $i=p_i$ 则该数仍移动至位置 $i$）。</li>
+<li>每次操作开始时，所有数的移动同时进行，操作结束后，数列将变为一个新的 1∼n 的排列。</li>
+</ul>
+<p>例如，当 $n=6$ 并且 $p=[4,6,1,3,5,2]$ 时，第一次操作后，数字 1 将移动至位置 4，数字 2 将移动至位置 6，以此类推；第二次操作后，数字 1 将移动至位置 33，数字 2 将移动至位置 2，以此类推。</p>
+<p>你的任务是确定从 1 到 n 的每个数字 i，经过多少次操作后，第一次重新回到位置 i。</p>
+<p>例如，考虑 $p=[5,1,2,4,3]$，数字 1 的移动轨迹如下：</p>
+<ul>
+<li>第一次操作后，到达位置 5。</li>
+<li>第二次操作后，到达位置 3。</li>
+<li>第三次操作后，到达位置 2。</li>
+<li>第四次操作后，回到位置 1。</li>
+</ul>
+<p>所以，经过四次操作后，数字 1 第一次回到位置 1。</p>
+<p>值得一提的是，数字 4 经过一次操作后就回到了位置 4.</p>
+<h4 id="输入格式"><a class="header-anchor" href="#输入格式">¶</a>输入格式</h4>
+<p>第一行包含整数 T，表示共有 T 组测试数据。</p>
+<p>每组数据第一行包含整数 n。</p>
+<p>第二行包含 n 个整数 $p_1,…,p_n$。</p>
+<h4 id="输出格式"><a class="header-anchor" href="#输出格式">¶</a>输出格式</h4>
+<p>每组数据输出一行结果，包含 n 个整数，其中第 i 个整数表示数字 i 第一次回到位置 i 所经过的操作次数。</p>
+<p>整数之间用单个空格隔开。</p>
+<h4 id="数据范围"><a class="header-anchor" href="#数据范围">¶</a>数据范围</h4>
+<p>对于 30% 的数据，$1≤T≤10$，$1≤n≤10$。<br>
+对于 100% 的数据，$1≤T≤1000$，$1≤n≤2×10^5$，$1≤p_i≤n$。<br>
+保证 $p_1∼p_n$ 是 1∼n 的一种排列。<br>
+保证 $∑n≤2×10^5$（一个输入中的 T 个 n 相加之和不超过 $2×10^5$）。</p>
+<h4 id="输入样例："><a class="header-anchor" href="#输入样例：">¶</a>输入样例：</h4>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">6</span><br><span class="line">5</span><br><span class="line">1 2 3 4 5</span><br><span class="line">3</span><br><span class="line">2 3 1</span><br><span class="line">6</span><br><span class="line">4 6 2 1 5 3</span><br><span class="line">1</span><br><span class="line">1</span><br><span class="line">4</span><br><span class="line">3 4 1 2</span><br><span class="line">5</span><br><span class="line">5 1 2 4 3</span><br></pre></td></tr></table></figure>
+<h4 id="输出样例："><a class="header-anchor" href="#输出样例：">¶</a>输出样例：</h4>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1 1 1 1 1 </span><br><span class="line">3 3 3 </span><br><span class="line">2 3 3 2 1 3 </span><br><span class="line">1 </span><br><span class="line">2 2 2 2 </span><br><span class="line">4 4 4 1 4</span><br></pre></td></tr></table></figure>
+<h2 id="思路-v3"><a class="header-anchor" href="#思路-v3">¶</a>思路</h2>
+<p>先说结论：如果数字1可以走一圈重新到达数字一，那么在此过程的所有数字都在这个圈内。将这个圈看成一个集合。集合归类问题，用并查集解决。</p>
+<p>以示例$p=[5,1,2,4,3]$为例，数字1最终可以通过$1 \rightarrow5 \rightarrow 3 \rightarrow 2 \rightarrow 1$重新回到位置1，那么数字5就可以通过这条回路 $5 \rightarrow 3 \rightarrow 2 \rightarrow 1 \rightarrow 5$。由此看来只要在这条回路中出现的所有数字，都可以通过这条路回到原来位置，所经过的点数为集合中元素个数。因此这种集合问题可以用并查集来解决。</p>
+<h2 id="代码-v3"><a class="header-anchor" href="#代码-v3">¶</a>代码</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">2e5</span> + <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">int</span> a[N];</span><br><span class="line"><span class="keyword">int</span> p[N], cnt[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (x != p[x]) &#123;</span><br><span class="line">        p[x] = p[p[x]];</span><br><span class="line">        x = p[x];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> T;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; T;</span><br><span class="line">    <span class="keyword">while</span> (T -- ) &#123;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++ ) &#123;</span><br><span class="line">            p[i] = i;</span><br><span class="line">            cnt[i] = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++ ) <span class="built_in">cin</span> &gt;&gt; a[i];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++ ) &#123;</span><br><span class="line">            <span class="keyword">int</span> pa = a[i], pb = i;</span><br><span class="line">            pa = find(pa), pb = find(pb);</span><br><span class="line">            <span class="keyword">if</span> (pa != pb) &#123;</span><br><span class="line">                p[pb] = pa;</span><br><span class="line">                cnt[pa] += cnt[pb];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++ ) &#123;</span><br><span class="line">            <span class="keyword">int</span> t = find(i);</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; cnt[t] &lt;&lt; <span class="string">' '</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='https://link.hhtjim.com/163/155827.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='https://link.hhtjim.com/163/1491163.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='https://link.hhtjim.com/163/1992707.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='true'
+        data-ci='Iv1.06e5c405a7731b45'
+        data-cs='2fcfe85902a7d5812fa4b299b56a6f194c98e08a'
+        data-r='qiancijun.github.io'
+        data-o='qiancijun'
+        data-a='qiancijun'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">选择数字</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#思路"><span class="toc-number">1.1.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码"><span class="toc-number">1.2.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">2.</span> <span class="toc-text">最大中位数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#思路-v2"><span class="toc-number">2.1.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码-v2"><span class="toc-number">2.2.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">3.</span> <span class="toc-text">数字移动</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#输入格式"><span class="toc-number">3.0.0.1.</span> <span class="toc-text">输入格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#输出格式"><span class="toc-number">3.0.0.2.</span> <span class="toc-text">输出格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据范围"><span class="toc-number">3.0.0.3.</span> <span class="toc-text">数据范围</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#输入样例："><span class="toc-number">3.0.0.4.</span> <span class="toc-text">输入样例：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#输出样例："><span class="toc-number">3.0.0.5.</span> <span class="toc-text">输出样例：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#思路-v3"><span class="toc-number">3.1.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码-v3"><span class="toc-number">3.2.</span> <span class="toc-text">代码</span></a></li></ol></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":250,"height":400},"mobile":{"show":false},"log":false});</script></body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-163098031-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+<script type="text/javascript" src="/js/love.js"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</html>
