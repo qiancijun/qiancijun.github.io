@@ -1,0 +1,269 @@
+
+<!DOCTYPE html>
+<html lang="zh_CH" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Golang-Gin - 神奇口袋</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="qiancijun,"> 
+    <meta name="description" content="GinGin 是一个用 Go (Golang) 编写的 web 框架。 它是一个类似于 martini 但拥有更好性能的 API 框架, 由于 httprouter，速度提高了近 40 倍。
+特点
+,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">神奇口袋</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://xlich.top"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Golang-Gin</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+   
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Golang-Gin</h1>
+        <div class="stuff">
+            <span>十一月 04, 2021</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Go/" rel="tag">Go</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h1 id="Gin"><a href="#Gin" class="headerlink" title="Gin"></a>Gin</h1><p>Gin 是一个用 Go (Golang) 编写的 web 框架。 它是一个类似于 <a href="https://github.com/go-martini/martini" target="_blank" rel="noopener">martini</a> 但拥有更好性能的 API 框架, 由于 <a href="https://github.com/julienschmidt/httprouter" target="_blank" rel="noopener">httprouter</a>，速度提高了近 40 倍。</p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><ol>
+<li>快速：基于 Radix 树的路由，小内存占用。没有反射。可预测的 API 性能。</li>
+<li>支持中间件：传入的 HTTP 请求可以由一系列中间件和最终操作来处理。 例如：Logger，Authorization，GZIP，最终操作 DB。</li>
+<li>崩溃处理：Gin 可以 catch 一个发生在 HTTP 请求中的 panic 并 recover 它。这样，你的服务器将始终可用。例如，你可以向 Sentry 报告这个 panic！</li>
+<li>JSON验证</li>
+<li>路由组</li>
+<li>错误管理</li>
+</ol>
+<h2 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h2><ol>
+<li><p>安装Gin</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get -u github.com&#x2F;gin-gonic&#x2F;gin</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>引入Gin包</p>
+ <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">"github.com/gin-gonic/gin"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写代码</p>
+ <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"github.com/gin-gonic/gin"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	r := gin.Default()</span><br><span class="line">	r.GET(<span class="string">"/ping"</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		c.JSON(<span class="number">200</span>, gin.H&#123;</span><br><span class="line">			<span class="string">"message"</span>: <span class="string">"pong"</span>,</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;)</span><br><span class="line">	r.Run(<span class="string">":20000"</span>) <span class="comment">// listen and serve on 0.0.0.0:8080</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="Gin-API"><a href="#Gin-API" class="headerlink" title="Gin API"></a>Gin API</h1><h2 id="构建路由"><a href="#构建路由" class="headerlink" title="构建路由"></a>构建路由</h2><p>构建Gin引擎，通过引擎创建路由</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// Creates a gin router with default middleware:</span></span><br><span class="line">	<span class="comment">// logger and recovery (crash-free) middleware</span></span><br><span class="line">	router := gin.Default()</span><br><span class="line"></span><br><span class="line">	router.GET(<span class="string">"/someGet"</span>, getting)</span><br><span class="line">	router.POST(<span class="string">"/somePost"</span>, posting)</span><br><span class="line">	router.PUT(<span class="string">"/somePut"</span>, putting)</span><br><span class="line">	router.DELETE(<span class="string">"/someDelete"</span>, deleting)</span><br><span class="line">	router.PATCH(<span class="string">"/somePatch"</span>, patching)</span><br><span class="line">	router.HEAD(<span class="string">"/someHead"</span>, head)</span><br><span class="line">	router.OPTIONS(<span class="string">"/someOptions"</span>, options)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// By default it serves on :8080 unless a</span></span><br><span class="line">	<span class="comment">// PORT environment variable was defined.</span></span><br><span class="line">	router.Run()</span><br><span class="line">	<span class="comment">// router.Run(":3000") for a hard coded port</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="获取路由参数"><a href="#获取路由参数" class="headerlink" title="获取路由参数"></a>获取路由参数</h2><ol>
+<li><p>Get请求</p>
+ <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	r := gin.Default()</span><br><span class="line">	r.GET(<span class="string">"/user/:name"</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		name := c.Param(<span class="string">"name"</span>)</span><br><span class="line">		c.String(http.StatusOK, <span class="string">"%s"</span>, name)</span><br><span class="line">	&#125;)</span><br><span class="line">	r.Run() <span class="comment">// listen and serve on 0.0.0.0:8080</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 改路由只会匹配<code>/user/name/</code>，不会匹配<code>/user</code>或者<code>/user/</code>，如果提供可选参数，使用<code>*</code></p>
+ <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	r := gin.Default()</span><br><span class="line">	r.GET(<span class="string">"/user/*name"</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		name := c.Param(<span class="string">"name"</span>)</span><br><span class="line">		c.String(http.StatusOK, <span class="string">"%s"</span>, name)</span><br><span class="line">	&#125;)</span><br><span class="line">	r.Run() <span class="comment">// listen and serve on 0.0.0.0:8080</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 携带参数</p>
+ <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	r := gin.Default()</span><br><span class="line">	r.GET(<span class="string">"/user/"</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		key1 := c.DefaultQuery(<span class="string">"key1"</span>, <span class="string">"value1"</span>)</span><br><span class="line">		key2 := c.Query(<span class="string">"key2"</span>)</span><br><span class="line">		c.String(http.StatusOK, <span class="string">"%s %s"</span>, key1, key2)</span><br><span class="line">	&#125;)</span><br><span class="line">	r.Run() <span class="comment">// listen and serve on 0.0.0.0:8080</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 访问<code>localhost:8080/user?key2=value2</code></p>
+</li>
+<li><p>Post表单验证</p>
+ <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">r.POST(<span class="string">"/post"</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    name := c.PostForm(<span class="string">"name"</span>)</span><br><span class="line">    age := c.PostForm(<span class="string">"age"</span>)</span><br><span class="line"></span><br><span class="line">    fmt.Printf(<span class="string">"name: %s age: %s"</span>, name, age)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h2><h3 id="单文件上传"><a href="#单文件上传" class="headerlink" title="单文件上传"></a>单文件上传</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">r.MaxMultipartMemory = <span class="number">8</span> &lt;&lt; <span class="number">20</span>  <span class="comment">// 8 MiB</span></span><br><span class="line">r.POST(<span class="string">"/upload"</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    <span class="comment">// single file</span></span><br><span class="line">    file, _ := c.FormFile(<span class="string">"file"</span>)</span><br><span class="line">    <span class="comment">//log.Println(file.Filename)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Upload the file to specific dst.</span></span><br><span class="line">    c.SaveUploadedFile(file, <span class="string">"file.png"</span>)</span><br><span class="line"></span><br><span class="line">    c.String(http.StatusOK, fmt.Sprintf(<span class="string">"'%s' uploaded!"</span>, file.Filename))</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="多文件上传"><a href="#多文件上传" class="headerlink" title="多文件上传"></a>多文件上传</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	router := gin.Default()</span><br><span class="line">	<span class="comment">// Set a lower memory limit for multipart forms (default is 32 MiB)</span></span><br><span class="line">	router.MaxMultipartMemory = <span class="number">8</span> &lt;&lt; <span class="number">20</span>  <span class="comment">// 8 MiB</span></span><br><span class="line">	router.POST(<span class="string">"/upload"</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		<span class="comment">// Multipart form</span></span><br><span class="line">		form, _ := c.MultipartForm()</span><br><span class="line">		files := form.File[<span class="string">"upload[]"</span>]</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> _, file := <span class="keyword">range</span> files &#123;</span><br><span class="line">			log.Println(file.Filename)</span><br><span class="line"></span><br><span class="line">			<span class="comment">// Upload the file to specific dst.</span></span><br><span class="line">			c.SaveUploadedFile(file, dst)</span><br><span class="line">		&#125;</span><br><span class="line">		c.String(http.StatusOK, fmt.Sprintf(<span class="string">"%d files uploaded!"</span>, <span class="built_in">len</span>(files)))</span><br><span class="line">	&#125;)</span><br><span class="line">	router.Run(<span class="string">":8080"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="路由组"><a href="#路由组" class="headerlink" title="路由组"></a>路由组</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	r := gin.Default()</span><br><span class="line">	group1 := r.Group(<span class="string">"/g1"</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		group1.GET(<span class="string">"/hello"</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">			c.String(http.StatusOK, <span class="string">"%s"</span>, <span class="string">"world"</span>)</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;</span><br><span class="line">	r.Run() <span class="comment">// listen and serve on 0.0.0.0:8080</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="日志写入"><a href="#日志写入" class="headerlink" title="日志写入"></a>日志写入</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="comment">// Disable Console Color, you don't need console color when writing the logs to file.</span></span><br><span class="line">    gin.DisableConsoleColor()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Logging to a file.</span></span><br><span class="line">    f, _ := os.Create(<span class="string">"gin.log"</span>)</span><br><span class="line">    gin.DefaultWriter = io.MultiWriter(f)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Use the following code if you need to write the logs to file and console at the same time.</span></span><br><span class="line">    <span class="comment">// gin.DefaultWriter = io.MultiWriter(f, os.Stdout)</span></span><br><span class="line"></span><br><span class="line">    router := gin.Default()</span><br><span class="line">    router.GET(<span class="string">"/ping"</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">        c.String(<span class="number">200</span>, <span class="string">"pong"</span>)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    router.Run(<span class="string">":8080"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="自定义日志"><a href="#自定义日志" class="headerlink" title="自定义日志"></a>自定义日志</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">router.Use(gin.LoggerWithFormatter(<span class="function"><span class="keyword">func</span><span class="params">(param gin.LogFormatterParams)</span> <span class="title">string</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// your custom format</span></span><br><span class="line">    <span class="keyword">return</span> fmt.Sprintf(<span class="string">"%s - [%s] \"%s %s %s %d %s \"%s\" %s\"\n"</span>,</span><br><span class="line">                       param.ClientIP,</span><br><span class="line">                       param.TimeStamp.Format(time.RFC1123),</span><br><span class="line">                       param.Method,</span><br><span class="line">                       param.Path,</span><br><span class="line">                       param.Request.Proto,</span><br><span class="line">                       param.StatusCode,</span><br><span class="line">                       param.Latency,</span><br><span class="line">                       param.Request.UserAgent(),</span><br><span class="line">                       param.ErrorMessage,</span><br><span class="line">                      )</span><br><span class="line">&#125;))</span><br></pre></td></tr></table></figure>
+<h3 id="日志着色控制"><a href="#日志着色控制" class="headerlink" title="日志着色控制"></a>日志着色控制</h3><p>不着色</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="comment">// Disable log's color</span></span><br><span class="line">    gin.DisableConsoleColor()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Creates a gin router with default middleware:</span></span><br><span class="line">    <span class="comment">// logger and recovery (crash-free) middleware</span></span><br><span class="line">    router := gin.Default()</span><br><span class="line"></span><br><span class="line">    router.GET(<span class="string">"/ping"</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">        c.String(<span class="number">200</span>, <span class="string">"pong"</span>)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    router.Run(<span class="string">":8080"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>着色：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="comment">// Force log's color</span></span><br><span class="line">    gin.ForceConsoleColor()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Creates a gin router with default middleware:</span></span><br><span class="line">    <span class="comment">// logger and recovery (crash-free) middleware</span></span><br><span class="line">    router := gin.Default()</span><br><span class="line"></span><br><span class="line">    router.GET(<span class="string">"/ping"</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">        c.String(<span class="number">200</span>, <span class="string">"pong"</span>)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    router.Run(<span class="string">":8080"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="模型绑定与验证"><a href="#模型绑定与验证" class="headerlink" title="模型绑定与验证"></a>模型绑定与验证</h2><p>将请求体与相对应的类型绑定，仅支持JSON、XML、YAML、标准表单格式。Gin提供了两种绑定模型的方法。</p>
+<ul>
+<li>Must Bind：底层使用<code>MustBindWith</code>，如果发生绑定错误会触发<code>c.AbortWithError(400, err).SetType(ErrorTypeBind)</code>如果想控制错误返回，应该使用Should Bind</li>
+<li>Should Bind：底层使用<code>ShouldBindWith</code>，如果发生错误，开发者应自行处理。</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">router.POST(<span class="string">"/loginJSON"</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> json Login</span><br><span class="line">    <span class="keyword">if</span> err := c.ShouldBindJSON(&amp;json); err != <span class="literal">nil</span> &#123;</span><br><span class="line">        c.JSON(http.StatusBadRequest, gin.H&#123;<span class="string">"error"</span>: err.Error()&#125;)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> json.User != <span class="string">"manu"</span> || json.Password != <span class="string">"123"</span> &#123;</span><br><span class="line">        c.JSON(http.StatusUnauthorized, gin.H&#123;<span class="string">"status"</span>: <span class="string">"unauthorized"</span>&#125;)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    c.JSON(http.StatusOK, gin.H&#123;<span class="string">"status"</span>: <span class="string">"you are logged in"</span>&#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="自定义校验"><a href="#自定义校验" class="headerlink" title="自定义校验"></a>自定义校验</h3><h2 id="参数绑定"><a href="#参数绑定" class="headerlink" title="参数绑定"></a>参数绑定</h2>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='https://link.hhtjim.com/163/155827.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='https://link.hhtjim.com/163/1491163.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='https://link.hhtjim.com/163/1992707.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='true'
+        data-ci='Iv1.06e5c405a7731b45'
+        data-cs='2fcfe85902a7d5812fa4b299b56a6f194c98e08a'
+        data-r='qiancijun.github.io'
+        data-o='qiancijun'
+        data-a='qiancijun'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Gin"><span class="toc-number">1.</span> <span class="toc-text">Gin</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#特点"><span class="toc-number">1.1.</span> <span class="toc-text">特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#快速入门"><span class="toc-number">1.2.</span> <span class="toc-text">快速入门</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Gin-API"><span class="toc-number">2.</span> <span class="toc-text">Gin API</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#构建路由"><span class="toc-number">2.1.</span> <span class="toc-text">构建路由</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#获取路由参数"><span class="toc-number">2.2.</span> <span class="toc-text">获取路由参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件上传"><span class="toc-number">2.3.</span> <span class="toc-text">文件上传</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#单文件上传"><span class="toc-number">2.3.1.</span> <span class="toc-text">单文件上传</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多文件上传"><span class="toc-number">2.3.2.</span> <span class="toc-text">多文件上传</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#路由组"><span class="toc-number">2.4.</span> <span class="toc-text">路由组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#日志写入"><span class="toc-number">2.5.</span> <span class="toc-text">日志写入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#自定义日志"><span class="toc-number">2.5.1.</span> <span class="toc-text">自定义日志</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#日志着色控制"><span class="toc-number">2.5.2.</span> <span class="toc-text">日志着色控制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模型绑定与验证"><span class="toc-number">2.6.</span> <span class="toc-text">模型绑定与验证</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#自定义校验"><span class="toc-number">2.6.1.</span> <span class="toc-text">自定义校验</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参数绑定"><span class="toc-number">2.7.</span> <span class="toc-text">参数绑定</span></a></li></ol></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":250,"height":400},"mobile":{"show":false},"log":false});</script></body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-163098031-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+<script type="text/javascript" src="/js/love.js"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</html>
