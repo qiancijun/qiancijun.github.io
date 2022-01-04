@@ -10,12 +10,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
-    <meta name="description" content="原题链接
-点我
-题目描述
-给定一个字符串 s ，找到其中最长的回文子序列，并返回该序列的长度。可以假设 s 的最大长度为 1000 。
-示例一
-输入:
+    <meta name="description" content="原题链接点我
+题目描述给定一个字符串 s ，找到其中最长的回文子序列，并返回该序列的长度。可以假设 s 的最大长度为 1000 。示例一输入:
 
 “bbbab”
 
@@ -23,7 +19,7 @@
 
 4
 
-一个可能的,"> 
+一个可能的最长回文,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -76,12 +72,8 @@
 
         </div>
         <div class="content markdown">
-            <h1>原题链接</h1>
-<p><a href="https://leetcode-cn.com/problems/longest-palindromic-subsequence/" target="_blank" rel="noopener">点我</a></p>
-<h1>题目描述</h1>
-<p>给定一个字符串 s ，找到其中最长的回文子序列，并返回该序列的长度。可以假设 s 的最大长度为 1000 。<br>
-示例一<br>
-输入:</p>
+            <h1 id="原题链接"><a href="#原题链接" class="headerlink" title="原题链接"></a>原题链接</h1><p><a href="https://leetcode-cn.com/problems/longest-palindromic-subsequence/" target="_blank" rel="noopener">点我</a></p>
+<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>给定一个字符串 s ，找到其中最长的回文子序列，并返回该序列的长度。可以假设 s 的最大长度为 1000 。<br>示例一<br>输入:</p>
 <blockquote>
 <p>“bbbab”</p>
 </blockquote>
@@ -90,9 +82,7 @@
 <p>4</p>
 </blockquote>
 <p>一个可能的最长回文子序列为 “bbbb”。</p>
-<hr/>
-示例二
-输入:
+<p><hr/><br>示例二<br>输入:</p>
 <blockquote>
 <p>“cbbd”</p>
 </blockquote>
@@ -101,16 +91,8 @@
 <p>2</p>
 </blockquote>
 <p>一个可能的最长回文子序列为 “bb”。</p>
-<h1>思路</h1>
-<p>一道典型的区间DP题<br>
-$dp[l][r]$意为，在区间$l$至$r$内最长回文子序列的个数<br>
-动态转移方程：如果$s[l] = s[r]$，则$dp[l][r] = dp[l + 1][r - 1] + 2$<br>
-否则$dp[l][r] = max(dp[l + 1][r], dp[l][r - 1])$<br>
-显然如果$l = r$，可认为单个字符即可构成长度为1的回文子序列<br>
-我们可以从长度为2的子序列进行遍历，知道了子序列长度，和左区间的值，我们可以推出右区间是多少$r = l + len - 1$<br>
-时间复杂度：$O(n^2)$</p>
-<h1>代码</h1>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">longestPalindromeSubseq</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m = s.length();</span><br><span class="line">        <span class="keyword">if</span> (m == <span class="number">1</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">dp</span><span class="params">(m, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(m, <span class="number">0</span>))</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) dp[i][i] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> len = <span class="number">2</span>; len &lt;= m; len++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> l = <span class="number">0</span>; l + len - <span class="number">1</span> &lt; m; l++) &#123;</span><br><span class="line">                <span class="keyword">int</span> r = l + len - <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">if</span> (s[l] == s[r])</span><br><span class="line">                    dp[l][r] = dp[l + <span class="number">1</span>][r - <span class="number">1</span>] + <span class="number">2</span>;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    dp[l][r] = max(dp[l + <span class="number">1</span>][r], dp[l][r - <span class="number">1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[<span class="number">0</span>][m - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>一道典型的区间DP题<br>$dp[l][r]$意为，在区间$l$至$r$内最长回文子序列的个数<br>动态转移方程：如果$s[l] = s[r]$，则$dp[l][r] = dp[l + 1][r - 1] + 2$<br>否则$dp[l][r] = max(dp[l + 1][r], dp[l][r - 1])$<br>显然如果$l = r$，可认为单个字符即可构成长度为1的回文子序列<br>我们可以从长度为2的子序列进行遍历，知道了子序列长度，和左区间的值，我们可以推出右区间是多少$r = l + len - 1$<br>时间复杂度：$O(n^2)$</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">longestPalindromeSubseq</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m = s.length();</span><br><span class="line">        <span class="keyword">if</span> (m == <span class="number">1</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">dp</span><span class="params">(m, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(m, <span class="number">0</span>))</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) dp[i][i] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> len = <span class="number">2</span>; len &lt;= m; len++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> l = <span class="number">0</span>; l + len - <span class="number">1</span> &lt; m; l++) &#123;</span><br><span class="line">                <span class="keyword">int</span> r = l + len - <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">if</span> (s[l] == s[r])</span><br><span class="line">                    dp[l][r] = dp[l + <span class="number">1</span>][r - <span class="number">1</span>] + <span class="number">2</span>;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    dp[l][r] = max(dp[l + <span class="number">1</span>][r], dp[l][r - <span class="number">1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[<span class="number">0</span>][m - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
                 <source type="audio/mpeg" src="">
@@ -149,7 +131,7 @@ $dp[l][r]$意为，在区间$l$至$r$内最长回文子序列的个数<br>
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">原题链接</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">2.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">3.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">4.</span> <span class="toc-text">代码</span></a></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#原题链接"><span class="toc-number">1.</span> <span class="toc-text">原题链接</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#题目描述"><span class="toc-number">2.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#思路"><span class="toc-number">3.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#代码"><span class="toc-number">4.</span> <span class="toc-text">代码</span></a></li></ol>	
         </div>
     
 </div>

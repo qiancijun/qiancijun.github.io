@@ -1,0 +1,281 @@
+
+<!DOCTYPE html>
+<html lang="zh_CH" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>React - 神奇口袋</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="qiancijun,"> 
+    <meta name="description" content="安装
+全局安装npm install -g [create-react-app]
+创建项目create-react-app 项目名
+
+SCSS12cnpm i node-sass -Dcnpm in,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">神奇口袋</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://xlich.top"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">React</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+   
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">React</h1>
+        <div class="stuff">
+            <span>十一月 05, 2021</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><ol>
+<li>全局安装<code>npm install -g [create-react-app]</code></li>
+<li>创建项目<code>create-react-app 项目名</code></li>
+</ol>
+<h2 id="SCSS"><a href="#SCSS" class="headerlink" title="SCSS"></a>SCSS</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cnpm i node-sass -D</span><br><span class="line">cnpm install node-sass@4.14.1 -D</span><br></pre></td></tr></table></figure>
+<h3 id="配置全局SCSS"><a href="#配置全局SCSS" class="headerlink" title="配置全局SCSS"></a>配置全局SCSS</h3><ol>
+<li><p>安装<code>cnpm install sass-resources-loader</code></p>
+</li>
+<li><p>安装<code>cnpm install customize-cra</code></p>
+</li>
+<li><p>安装<code>cnpm install react-app-rewired</code></p>
+</li>
+<li><p>webpack配置创建<code>config-overrides.js</code>文件（与package-lock.json同级目录）</p>
+</li>
+<li><p>写配置文件</p>
+ <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">const &#123; override, adjustStyleLoaders &#125; = require("customize-cra");</span><br><span class="line">module.exports = override(</span><br><span class="line">  <span class="comment">// ...其他配置...</span></span><br><span class="line">  adjustStyleLoaders(rule =&gt; &#123;</span><br><span class="line">    if (rule.test.toString().includes("scss")) &#123;</span><br><span class="line">      rule.use.push(&#123;</span><br><span class="line">        loader: require.resolve("sass-resources-loader"),</span><br><span class="line">        options: &#123;</span><br><span class="line">          resources: "./src/assets/output.scss" //这里是你自己放公共scss变量的路径</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="comment">// ...其他配置...</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建全局scss样式文件</p>
+</li>
+</ol>
+<h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><h2 id="state"><a href="#state" class="headerlink" title="state"></a>state</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Weather</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span></span>&#123;</span><br><span class="line">    <span class="comment">//初始化状态</span></span><br><span class="line">    state = &#123;<span class="attr">isHot</span>:<span class="literal">false</span>,<span class="attr">wind</span>:<span class="string">'微风'</span>&#125;</span><br><span class="line"></span><br><span class="line">    render()&#123;</span><br><span class="line">        <span class="keyword">const</span> &#123;isHot,wind&#125; = <span class="keyword">this</span>.state</span><br><span class="line">        <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">onClick</span>=<span class="string">&#123;this.changeWeather&#125;</span>&gt;</span>今天天气很&#123;isHot ? '炎热' : '凉爽'&#125;，&#123;wind&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//自定义方法————要用赋值语句的形式+箭头函数</span></span><br><span class="line">    changeWeather = <span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">        <span class="keyword">const</span> isHot = <span class="keyword">this</span>.state.isHot</span><br><span class="line">        <span class="keyword">this</span>.setState(&#123;<span class="attr">isHot</span>:!isHot&#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="props"><a href="#props" class="headerlink" title="props"></a>props</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建组件</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span></span>&#123;</span><br><span class="line">    render()&#123;</span><br><span class="line">        <span class="comment">// console.log(this);</span></span><br><span class="line">        <span class="keyword">const</span> &#123;name,age,sex&#125; = <span class="keyword">this</span>.props</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            &lt;ul&gt;</span><br><span class="line">                &lt;li&gt;姓名：&#123;name&#125;&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">                &lt;li&gt;性别：&#123;sex&#125;&lt;/</span>li&gt;</span><br><span class="line">                &lt;li&gt;年龄：&#123;age+<span class="number">1</span>&#125;&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">            &lt;/u</span>l&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//渲染组件到页面</span></span><br><span class="line">ReactDOM.render(<span class="xml"><span class="tag">&lt;<span class="name">Person</span> <span class="attr">name</span>=<span class="string">"jerry"</span> <span class="attr">age</span>=<span class="string">&#123;19&#125;</span>  <span class="attr">sex</span>=<span class="string">"男"</span>/&gt;</span></span>,<span class="built_in">document</span>.getElementById(<span class="string">'test1'</span>))</span><br><span class="line">ReactDOM.render(<span class="xml"><span class="tag">&lt;<span class="name">Person</span> <span class="attr">name</span>=<span class="string">"tom"</span> <span class="attr">age</span>=<span class="string">&#123;18&#125;</span> <span class="attr">sex</span>=<span class="string">"女"</span>/&gt;</span></span>,<span class="built_in">document</span>.getElementById(<span class="string">'test2'</span>))</span><br><span class="line"><span class="keyword">const</span> p = &#123;<span class="attr">name</span>:<span class="string">'老刘'</span>,<span class="attr">age</span>:<span class="number">18</span>,<span class="attr">sex</span>:<span class="string">'女'</span>&#125;</span><br><span class="line">ReactDOM.render(<span class="xml"><span class="tag">&lt;<span class="name">Person</span> &#123;<span class="attr">...p</span>&#125;/&gt;</span></span>,<span class="built_in">document</span>.getElementById(<span class="string">'test3'</span>))</span><br></pre></td></tr></table></figure>
+<h3 id="对-props-进行限制"><a href="#对-props-进行限制" class="headerlink" title="对 props 进行限制"></a>对 props 进行限制</h3><p>​    前提：引入<code>prop-types.js</code></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建组件</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">constructor</span>(props)&#123;</span><br><span class="line">        <span class="comment">//构造器是否接收props，是否传递给super，取决于：是否希望在构造器中通过this访问props</span></span><br><span class="line">        <span class="comment">// console.log(props);</span></span><br><span class="line">        <span class="keyword">super</span>(props)</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'constructor'</span>,<span class="keyword">this</span>.props);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//对标签属性进行类型、必要性的限制</span></span><br><span class="line">    <span class="keyword">static</span> propTypes = &#123;</span><br><span class="line">        name:PropTypes.string.isRequired, <span class="comment">//限制name必传，且为字符串</span></span><br><span class="line">        sex:PropTypes.string,<span class="comment">//限制sex为字符串</span></span><br><span class="line">        age:PropTypes.number,<span class="comment">//限制age为数值</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//指定默认标签属性值</span></span><br><span class="line">    <span class="keyword">static</span> defaultProps = &#123;</span><br><span class="line">        sex:<span class="string">'男'</span>,<span class="comment">//sex默认值为男</span></span><br><span class="line">        age:<span class="number">18</span> <span class="comment">//age默认值为18</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    render()&#123;</span><br><span class="line">        <span class="comment">// console.log(this);</span></span><br><span class="line">        <span class="keyword">const</span> &#123;name,age,sex&#125; = <span class="keyword">this</span>.props</span><br><span class="line">        <span class="comment">//props是只读的</span></span><br><span class="line">        <span class="comment">//this.props.name = 'jack' //此行代码会报错，因为props是只读的</span></span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            &lt;ul&gt;</span><br><span class="line">                &lt;li&gt;姓名：&#123;name&#125;&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">                &lt;li&gt;性别：&#123;sex&#125;&lt;/</span>li&gt;</span><br><span class="line">                &lt;li&gt;年龄：&#123;age+<span class="number">1</span>&#125;&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">            &lt;/u</span>l&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="ref"><a href="#ref" class="headerlink" title="ref"></a>ref</h2><h3 id="字符串形式"><a href="#字符串形式" class="headerlink" title="字符串形式"></a>字符串形式</h3><p>​    字符串形式比较简便，但是在新版 React 中不再建议使用</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Demo</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span></span>&#123;</span><br><span class="line">    <span class="comment">//展示左侧输入框的数据</span></span><br><span class="line">    showData = <span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">        <span class="keyword">const</span> &#123;input1&#125; = <span class="keyword">this</span>.refs</span><br><span class="line">        alert(input1.value)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//展示右侧输入框的数据</span></span><br><span class="line">    showData2 = <span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">        <span class="keyword">const</span> &#123;input2&#125; = <span class="keyword">this</span>.refs</span><br><span class="line">        alert(input2.value)</span><br><span class="line">    &#125;</span><br><span class="line">    render()&#123;</span><br><span class="line">        <span class="keyword">return</span>(</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;input ref=<span class="string">"input1"</span> type=<span class="string">"text"</span> placeholder=<span class="string">"点击按钮提示数据"</span>/&gt;&amp;nbsp;</span><br><span class="line">                &lt;button onClick=&#123;<span class="keyword">this</span>.showData&#125;&gt;点我提示左侧的数据&lt;<span class="regexp">/button&gt;&amp;nbsp;</span></span><br><span class="line"><span class="regexp">                &lt;input ref="input2" onBlur=&#123;this.showData2&#125; type="text" placeholder="失去焦点提示数据"/</span>&gt;</span><br><span class="line">            &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">        )</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="回调函数形式"><a href="#回调函数形式" class="headerlink" title="回调函数形式"></a>回调函数形式</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Demo</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span></span>&#123;</span><br><span class="line">    <span class="comment">//展示左侧输入框的数据</span></span><br><span class="line">    showData = <span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">        <span class="keyword">const</span> &#123;input1&#125; = <span class="keyword">this</span></span><br><span class="line">        alert(input1.value)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//展示右侧输入框的数据</span></span><br><span class="line">    showData2 = <span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">        <span class="keyword">const</span> &#123;input2&#125; = <span class="keyword">this</span></span><br><span class="line">        alert(input2.value)</span><br><span class="line">    &#125;</span><br><span class="line">    render()&#123;</span><br><span class="line">        <span class="keyword">return</span>(</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;input ref=&#123;c =&gt; <span class="keyword">this</span>.input1 = c &#125; type=<span class="string">"text"</span> placeholder=<span class="string">"点击按钮提示数据"</span>/&gt;&amp;nbsp;</span><br><span class="line">                &lt;button onClick=&#123;<span class="keyword">this</span>.showData&#125;&gt;点我提示左侧的数据&lt;<span class="regexp">/button&gt;&amp;nbsp;</span></span><br><span class="line"><span class="regexp">                &lt;input onBlur=&#123;this.showData2&#125; ref=&#123;c =&gt; this.input2 = c &#125; type="text" placeholder="失去焦点提示数据"/</span>&gt;&amp;nbsp;</span><br><span class="line">            &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">        )</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="CreateRef"><a href="#CreateRef" class="headerlink" title="CreateRef"></a>CreateRef</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建组件</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Demo</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span></span>&#123;</span><br><span class="line">    <span class="comment">/* </span></span><br><span class="line"><span class="comment">				React.createRef调用后可以返回一个容器，该容器可以存储被ref所标识的节点,该容器是“专人专用”的</span></span><br><span class="line"><span class="comment">			 */</span></span><br><span class="line">    myRef = React.createRef()</span><br><span class="line">    myRef2 = React.createRef()</span><br><span class="line">    <span class="comment">//展示左侧输入框的数据</span></span><br><span class="line">    showData = <span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">        alert(<span class="keyword">this</span>.myRef.current.value);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//展示右侧输入框的数据</span></span><br><span class="line">    showData2 = <span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">        alert(<span class="keyword">this</span>.myRef2.current.value);</span><br><span class="line">    &#125;</span><br><span class="line">    render()&#123;</span><br><span class="line">        <span class="keyword">return</span>(</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;input ref=&#123;<span class="keyword">this</span>.myRef&#125; type=<span class="string">"text"</span> placeholder=<span class="string">"点击按钮提示数据"</span>/&gt;&amp;nbsp;</span><br><span class="line">                &lt;button onClick=&#123;<span class="keyword">this</span>.showData&#125;&gt;点我提示左侧的数据&lt;<span class="regexp">/button&gt;&amp;nbsp;</span></span><br><span class="line"><span class="regexp">                &lt;input onBlur=&#123;this.showData2&#125; ref=&#123;this.myRef2&#125; type="text" placeholder="失去焦点提示数据"/</span>&gt;&amp;nbsp;</span><br><span class="line">            &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">        )</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<h1 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cnpm i react-router-dom@5.2.0</span><br></pre></td></tr></table></figure>
+<h2 id="路由基础使用"><a href="#路由基础使用" class="headerlink" title="路由基础使用"></a>路由基础使用</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=<span class="string">"row"</span>&gt;</span><br><span class="line">    &lt;div className=<span class="string">"col-xs-2 col-xs-offset-2"</span>&gt;</span><br><span class="line">        &lt;div className=<span class="string">"list-group"</span>&gt;</span><br><span class="line"></span><br><span class="line">            &#123;<span class="comment">/* 原生html中，靠&lt;a&gt;跳转不同的页面 */</span>&#125;</span><br><span class="line">            &#123;<span class="comment">/* &lt;a className="list-group-item" href="./about.html"&gt;About&lt;/a&gt;</span></span><br><span class="line"><span class="comment">							&lt;a className="list-group-item active" href="./home.html"&gt;Home&lt;/a&gt; */</span>&#125;</span><br><span class="line">            &#123;<span class="comment">/* 在React中靠路由链接实现切换组件--编写路由链接 */</span>&#125;</span><br><span class="line">            &lt;Link className=<span class="string">"list-group-item"</span> to=<span class="string">"/about"</span>&gt;About&lt;<span class="regexp">/Link&gt;</span></span><br><span class="line"><span class="regexp">            &lt;Link className="list-group-item" to="/</span>home<span class="string">"&gt;Home&lt;/Link&gt;</span></span><br><span class="line"><span class="string">        &lt;/div&gt;</span></span><br><span class="line"><span class="string">    &lt;/div&gt;</span></span><br><span class="line"><span class="string">    &lt;div className="</span>col-xs<span class="number">-6</span><span class="string">"&gt;</span></span><br><span class="line"><span class="string">        &lt;div className="</span>panel<span class="string">"&gt;</span></span><br><span class="line"><span class="string">            &lt;div className="</span>panel-body<span class="string">"&gt;</span></span><br><span class="line"><span class="string">                &#123;/* 注册路由 */&#125;</span></span><br><span class="line"><span class="string">                &lt;Route path="</span>/about<span class="string">" component=&#123;About&#125;/&gt;</span></span><br><span class="line"><span class="string">                &lt;Route path="</span>/home<span class="string">" component=&#123;Home&#125;/&gt;</span></span><br><span class="line"><span class="string">            &lt;/div&gt;</span></span><br><span class="line"><span class="string">        &lt;/div&gt;</span></span><br><span class="line"><span class="string">    &lt;/div&gt;</span></span><br><span class="line"><span class="string">&lt;/div&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="NavLink"><a href="#NavLink" class="headerlink" title="NavLink"></a>NavLink</h3><p>​    NavLink可以实现路由链接的高亮，通过activeClassName指定样式名</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;NavLink activeClassName=<span class="string">"atguigu"</span> className=<span class="string">"list-group-item"</span> to=<span class="string">"/about"</span>&gt;About&lt;<span class="regexp">/NavLink&gt;</span></span><br><span class="line"><span class="regexp">&lt;NavLink activeClassName="atguigu" className="list-group-item" to="/</span>home<span class="string">"&gt;Home&lt;/NavLink&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="添加路由过渡效果"><a href="#添加路由过渡效果" class="headerlink" title="添加路由过渡效果"></a>添加路由过渡效果</h2><p>安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cnpm i react-transition-group</span><br><span class="line">cnpm i --save-dev @types&#x2F;react-transition-group</span><br><span class="line">cnpm i react-animated-router --save</span><br></pre></td></tr></table></figure>
+<p>将<code>animate.css</code>在入口文件中引入，其它地方可以只引用 react-animated-router，将 react-animated-router 和 animate.css 包装到一个模块文件中再默认导出，在其他地方引用该新模块</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 自己项目中的AnimatedRouter模块</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">'react-animated-router/animate.css'</span>; <span class="comment">//导入样式文件</span></span><br><span class="line"><span class="keyword">export</span> &#123; <span class="keyword">default</span> &#125; <span class="keyword">from</span> <span class="string">'react-animated-router'</span>; <span class="comment">//直接将react-animated-route作为默认导出</span></span><br></pre></td></tr></table></figure>
+<p>示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">AnimatedRouter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">"/login"</span> <span class="attr">component</span>=<span class="string">&#123;Login&#125;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">"/signup"</span> <span class="attr">component</span>=<span class="string">&#123;Signup&#125;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Redirect</span> <span class="attr">to</span>=<span class="string">"/login"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">AnimatedRouter</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/qiqiboy/react-animated-router#readme" target="_blank" rel="noopener">官方文档</a></p>
+<h1 id="Axios"><a href="#Axios" class="headerlink" title="Axios"></a>Axios</h1><p>安装 Axios</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm isntall axios --save</span><br></pre></td></tr></table></figure>
+<h2 id="配置跨域"><a href="#配置跨域" class="headerlink" title="配置跨域"></a>配置跨域</h2><ol>
+<li><p>在 <code>src</code>文件夹下新建文件<code>setupProxy.js</code></p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> proxy = <span class="built_in">require</span>(<span class="string">'http-proxy-middleware'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">app</span>)</span>&#123;</span><br><span class="line">	app.use(</span><br><span class="line">		proxy(<span class="string">'/api'</span>,&#123; <span class="comment">//遇见/api1前缀的请求，就会触发该代理配置</span></span><br><span class="line">			target:<span class="string">'http://localhost:8080'</span>, <span class="comment">//请求转发给谁</span></span><br><span class="line">			changeOrigin:<span class="literal">true</span>,<span class="comment">//控制服务器收到的请求头中Host的值</span></span><br><span class="line">			pathRewrite:&#123;<span class="string">'^/api'</span>:<span class="string">''</span>&#125; <span class="comment">//重写请求路径(必须)</span></span><br><span class="line">		&#125;)</span><br><span class="line">	)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>案例</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">axios.get(<span class="string">'/api/ping'</span>).then(</span><br><span class="line">    (&#123; data &#125;) =&gt; &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(data)</span><br><span class="line">    &#125;,</span><br><span class="line">    err =&gt; &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(err)</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="Antd"><a href="#Antd" class="headerlink" title="Antd"></a>Antd</h1><ol>
+<li><p>安装</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cnpm i antd -D</span><br><span class="line">cnpm i babel-plugin-import -D</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改配置文件</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">const &#123; override, adjustStyleLoaders, fixBabelImports &#125; &#x3D; require(&quot;customize-cra&quot;);</span><br><span class="line">module.exports &#x3D; override(</span><br><span class="line">  fixBabelImports(&#39;import&#39;, &#123;</span><br><span class="line">    libraryName: &#39;antd&#39;,</span><br><span class="line">    libraryDirectory: &#39;es&#39;,</span><br><span class="line">    style: &#39;css&#39;</span><br><span class="line">  &#125;),</span><br><span class="line">  adjustStyleLoaders(rule &#x3D;&gt; &#123;</span><br><span class="line">    if (rule.test.toString().includes(&quot;scss&quot;)) &#123;</span><br><span class="line">      rule.use.push(&#123;</span><br><span class="line">        loader: require.resolve(&quot;sass-resources-loader&quot;),</span><br><span class="line">        options: &#123;</span><br><span class="line">          resources: &quot;.&#x2F;src&#x2F;assets&#x2F;output.scss&quot; &#x2F;&#x2F;这里是你自己放公共scss变量的路径</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;),</span><br><span class="line">  &#x2F;&#x2F; ...其他配置...</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="Redux"><a href="#Redux" class="headerlink" title="Redux"></a>Redux</h1><h1 id="TypeScript"><a href="#TypeScript" class="headerlink" title="TypeScript"></a>TypeScript</h1><p>​        初始化 React/Typescript</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx create-react-app my-app --template typescript</span><br></pre></td></tr></table></figure>
+<h2 id="指定src文件夹"><a href="#指定src文件夹" class="headerlink" title="指定src文件夹"></a>指定src文件夹</h2><p>​        为了避免在代码中过多的<code>../../</code>来指定 src 文件夹，在tsconfig.json中的compilerOptions标签下添加</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"baseUrl": "src"</span><br></pre></td></tr></table></figure>
+<h1 id="Gin-加载打包页面"><a href="#Gin-加载打包页面" class="headerlink" title="Gin 加载打包页面"></a>Gin 加载打包页面</h1><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">router.LoadHTMLGlob(<span class="string">"./resources/html/*.html"</span>)</span><br><span class="line">router.StaticFS(<span class="string">"/static"</span>, http.Dir(<span class="string">"./resources/html/static"</span>))</span><br><span class="line">router.GET(<span class="string">"/"</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">    c.HTML(http.StatusOK, <span class="string">"index.html"</span>, <span class="literal">nil</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='https://link.hhtjim.com/163/155827.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='https://link.hhtjim.com/163/1491163.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='https://link.hhtjim.com/163/1992707.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='true'
+        data-ci='Iv1.06e5c405a7731b45'
+        data-cs='2fcfe85902a7d5812fa4b299b56a6f194c98e08a'
+        data-r='qiancijun.github.io'
+        data-o='qiancijun'
+        data-a='qiancijun'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SCSS"><span class="toc-number">1.1.</span> <span class="toc-text">SCSS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#配置全局SCSS"><span class="toc-number">1.1.1.</span> <span class="toc-text">配置全局SCSS</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基础"><span class="toc-number">2.</span> <span class="toc-text">基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#state"><span class="toc-number">2.1.</span> <span class="toc-text">state</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#props"><span class="toc-number">2.2.</span> <span class="toc-text">props</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#对-props-进行限制"><span class="toc-number">2.2.1.</span> <span class="toc-text">对 props 进行限制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ref"><span class="toc-number">2.3.</span> <span class="toc-text">ref</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串形式"><span class="toc-number">2.3.1.</span> <span class="toc-text">字符串形式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#回调函数形式"><span class="toc-number">2.3.2.</span> <span class="toc-text">回调函数形式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CreateRef"><span class="toc-number">2.3.3.</span> <span class="toc-text">CreateRef</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#路由"><span class="toc-number">3.</span> <span class="toc-text">路由</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#路由基础使用"><span class="toc-number">3.1.</span> <span class="toc-text">路由基础使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#NavLink"><span class="toc-number">3.1.1.</span> <span class="toc-text">NavLink</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加路由过渡效果"><span class="toc-number">3.2.</span> <span class="toc-text">添加路由过渡效果</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Axios"><span class="toc-number">4.</span> <span class="toc-text">Axios</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置跨域"><span class="toc-number">4.1.</span> <span class="toc-text">配置跨域</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Antd"><span class="toc-number">5.</span> <span class="toc-text">Antd</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Redux"><span class="toc-number">6.</span> <span class="toc-text">Redux</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TypeScript"><span class="toc-number">7.</span> <span class="toc-text">TypeScript</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#指定src文件夹"><span class="toc-number">7.1.</span> <span class="toc-text">指定src文件夹</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Gin-加载打包页面"><span class="toc-number">8.</span> <span class="toc-text">Gin 加载打包页面</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":250,"height":400},"mobile":{"show":false},"log":false});</script></body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-163098031-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+<script type="text/javascript" src="/js/love.js"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</html>
