@@ -1,0 +1,288 @@
+
+<!DOCTYPE html>
+<html lang="zh_CH" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Unity - 神奇口袋</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="qiancijun,"> 
+    <meta name="description" content="Unity Core
+Unity 版本 2020.3.25
+¶创建项目
+从 Hub 中创建一个 3D 的 Unity 项目；安装一系列必要的插件
+1window -&amp;gt; package mana,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">神奇口袋</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://xlich.top"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Unity</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+   
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Unity</h1>
+        <div class="stuff">
+            <span>一月 06, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h1>Unity Core</h1>
+<p>Unity 版本 2020.3.25</p>
+<h2 id="创建项目"><a class="header-anchor" href="#创建项目">¶</a>创建项目</h2>
+<p>从 Hub 中创建一个 3D 的 Unity 项目；安装一系列必要的插件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">window -&gt; package manage</span><br></pre></td></tr></table></figure>
+<p>搜索<code>Universal Render Pipeline</code></p>
+<ol>
+<li>
+<p>安装完成后需要创建自己的 Pipeline Asset</p>
+<p>![](E:\Study\MyNotes\Unity\URP Assets.png)</p>
+</li>
+<li>
+<p>edit -&gt; project settings -&gt; graphics 设置可编辑的渲染管线为urp</p>
+</li>
+<li>
+<p>edit -&gt; project settings -&gt; quality 修改默认的 renderer 为 urp</p>
+</li>
+<li>
+<p>edit -&gt; render pipeline -&gt; universal render pipeline -&gt; upgrade project materials to UniversalRP Materirals 将项目升级为 URP 项目</p>
+</li>
+</ol>
+<h2 id="修改skybox"><a class="header-anchor" href="#修改skybox">¶</a>修改skybox</h2>
+<p>使用的素材为<code>Skybox Extended</code></p>
+<p>window -&gt; rendering -&gt; Lighting -&gt; Environment  -&gt; skybox material 修改默认的天空盒子</p>
+<h2 id="设置阴影参数"><a class="header-anchor" href="#设置阴影参数">¶</a>设置阴影参数</h2>
+<p>当在场景中添加地面时，人物素材就拥有了阴影；通过设置urp的<code>Shadwos</code>参数来调整阴影效果</p>
+<p><img src="E:%5CStudy%5CMyNotes%5CUnity%5C%E9%98%B4%E5%BD%B1.png" alt=""></p>
+<h2 id="添加素材及摄像机"><a class="header-anchor" href="#添加素材及摄像机">¶</a>添加素材及摄像机</h2>
+<p>添加素材时，按住V可以开启吸附功能，将素材吸附到地面。</p>
+<p>选好视角，按<code>ctrl + shift + f</code>调整摄像机视角</p>
+<h2 id="Poly-Brush"><a class="header-anchor" href="#Poly-Brush">¶</a>Poly Brush</h2>
+<ol>
+<li>在 package manager 中安装 <code>polybrush</code></li>
+<li>在安装界面中点开<code>samples</code>根据项目导入shader</li>
+</ol>
+<h2 id="ProBuilder"><a class="header-anchor" href="#ProBuilder">¶</a>ProBuilder</h2>
+<p>​	安装方法同poly brush，选择显示方式为<code>Use Icon Mode</code></p>
+<p><img src="E:%5CStudy%5CMyNotes%5CUnity%5Cprobuilder.png" alt=""></p>
+<p>按住<code>Alt</code>键单机第一个Icon，可以在场景中新建Object，选择Plane，长宽为50，段数为30；这样建成的平面有一个缺点，其中心原点不在其几何中心，通过平移时可以看见。如果希望中心点在几何中心，可以点击probuilder中的<code>center pivot</code>来设定其中心</p>
+<h2 id="Progrid"><a class="header-anchor" href="#Progrid">¶</a>Progrid</h2>
+<p>该插件属于preview插件，在Unity2020版本之后，在package manager无法看见preview插件，需要手动开启</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">edit -&gt; project settings -&gt; Package Manager -&gt; Enable Preview Packages</span><br></pre></td></tr></table></figure>
+<p>随后安装方式同ProBuilder</p>
+<h2 id="添加自己的材质"><a class="header-anchor" href="#添加自己的材质">¶</a>添加自己的材质</h2>
+<p>在Assets下新建Materials，将新建的材质直接拖入要对应的Object，就可以更改颜色</p>
+<h1>AI 导航</h1>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">window -&gt; ai -&gt; navigation</span><br></pre></td></tr></table></figure>
+<p>打开AI 烘焙导航；点击Object，设置其static可以改变其属性，walkable表示改模型是可以行走的；</p>
+<p>点击玩家（player）在Inspector中<code>add component</code> -&gt; navigation -&gt; agent；随后选中player，按下f键锁定，根据模型修改宽和高（Navigation里也要修改）</p>
+<h2 id="Mouse-Manager"><a class="header-anchor" href="#Mouse-Manager">¶</a>Mouse Manager</h2>
+<ol>
+<li>
+<p>在Assets里新建文件夹<code>scripts</code>，创建第一个脚本文件<code>MouseManager.cs</code></p>
+</li>
+<li>
+<p>编辑代码</p>
+ <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"><span class="keyword">using</span> UnityEngine.Events;</span><br><span class="line"></span><br><span class="line">[<span class="meta">System.Serializable</span>]</span><br><span class="line">public class EventVector3 : UnityEvent&lt;Vector3&gt; &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MouseManager</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> RaycastHit _raycastHit;</span><br><span class="line">    <span class="keyword">public</span> EventVector3 onMouseClicked;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        SetCursorTexture();</span><br><span class="line">        MouseControl();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">SetCursorTexture</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);</span><br><span class="line">        <span class="keyword">if</span> (Physics.Raycast(ray, <span class="keyword">out</span> _raycastHit))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 切换鼠标贴图</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">MouseControl</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">if</span> (Input.GetMouseButtonDown(<span class="number">0</span>) &amp;&amp; _raycastHit.collider != <span class="literal">null</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (_raycastHit.collider.gameObject.CompareTag(<span class="string">"ground"</span>))</span><br><span class="line">                onMouseClicked?.Invoke(_raycastHit.point);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>在场景中新建一个空对象，将脚本文件拖入空对象，将要控制的物体拖入编写的事件中</p>
+<p><img src="E:%5CStudy%5CMyNotes%5CUnity%5CMouseManager.png" alt=""></p>
+</li>
+</ol>
+<h2 id="使用Event实现点击走路"><a class="header-anchor" href="#使用Event实现点击走路">¶</a>使用Event实现点击走路</h2>
+<p>修改 MouseManager 使其变为单例模式</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="comment">// [System.Serializable]</span></span><br><span class="line"><span class="comment">// public class EventVector3 : UnityEvent&lt;Vector3&gt; &#123;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MouseManager</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">event</span> Action&lt;Vector3&gt; OnMouseClicked; </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> MouseManager Instance;</span><br><span class="line">    <span class="keyword">private</span> RaycastHit _raycastHit;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Texture2D point, doorway, attack, target, arrow;</span><br><span class="line">    <span class="comment">// public EventVector3 onMouseClicked;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Awake</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">if</span> (Instance != <span class="literal">null</span>) </span><br><span class="line">            Destroy(gameObject);</span><br><span class="line">        Instance = <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        SetCursorTexture();</span><br><span class="line">        MouseControl();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">SetCursorTexture</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);</span><br><span class="line">        <span class="keyword">if</span> (Physics.Raycast(ray, <span class="keyword">out</span> _raycastHit))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 切换鼠标贴图</span></span><br><span class="line">            <span class="keyword">switch</span> (_raycastHit.collider.gameObject.tag)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">"ground"</span>:</span><br><span class="line">                    Cursor.SetCursor(target, <span class="keyword">new</span> Vector2(<span class="number">16</span>, <span class="number">16</span>), CursorMode.Auto);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">MouseControl</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">if</span> (Input.GetMouseButtonDown(<span class="number">0</span>) &amp;&amp; _raycastHit.collider != <span class="literal">null</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (_raycastHit.collider.gameObject.CompareTag(<span class="string">"ground"</span>))</span><br><span class="line">                OnMouseClicked?.Invoke(_raycastHit.point);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>新建player controller，专门用于控制角色</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"><span class="keyword">using</span> UnityEngine.AI;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">PlayerController</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> NavMeshAgent agent;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Awake</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        agent = GetComponent&lt;NavMeshAgent&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Start is called before the first frame update</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Update is called once per frame</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Update</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        MouseManager.Instance.OnMouseClicked += MoveToTarget;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">MoveToTarget</span>(<span class="params">Vector3 target</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        agent.destination = target;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将此controller用于player</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='https://link.hhtjim.com/163/155827.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='https://link.hhtjim.com/163/1491163.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='https://link.hhtjim.com/163/1992707.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='true'
+        data-ci='Iv1.06e5c405a7731b45'
+        data-cs='2fcfe85902a7d5812fa4b299b56a6f194c98e08a'
+        data-r='qiancijun.github.io'
+        data-o='qiancijun'
+        data-a='qiancijun'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">Unity Core</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建项目"><span class="toc-number">1.1.</span> <span class="toc-text">创建项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改skybox"><span class="toc-number">1.2.</span> <span class="toc-text">修改skybox</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置阴影参数"><span class="toc-number">1.3.</span> <span class="toc-text">设置阴影参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加素材及摄像机"><span class="toc-number">1.4.</span> <span class="toc-text">添加素材及摄像机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Poly-Brush"><span class="toc-number">1.5.</span> <span class="toc-text">Poly Brush</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ProBuilder"><span class="toc-number">1.6.</span> <span class="toc-text">ProBuilder</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Progrid"><span class="toc-number">1.7.</span> <span class="toc-text">Progrid</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加自己的材质"><span class="toc-number">1.8.</span> <span class="toc-text">添加自己的材质</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">2.</span> <span class="toc-text">AI 导航</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Mouse-Manager"><span class="toc-number">2.1.</span> <span class="toc-text">Mouse Manager</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用Event实现点击走路"><span class="toc-number">2.2.</span> <span class="toc-text">使用Event实现点击走路</span></a></li></ol></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":250,"height":400},"mobile":{"show":false},"log":false});</script></body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-163098031-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+<script type="text/javascript" src="/js/love.js"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</html>
