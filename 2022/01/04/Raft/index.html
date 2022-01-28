@@ -10,7 +10,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
-    <meta name="description" content="Raft简介​        Raft 是一种用来管理复制日志的一致性算法。它提供了和 Paxos 算法相同的功能和性能，但是它的算法结构和 Paxos 不同，使得 Raft 算法更加容易理解并且更,"> 
+    <meta name="description" content="Raft简介
+​		Raft 是一种用来管理复制日志的一致性算法。它提供了和 Paxos 算法相同的功能和性能，但是它的算法结构和 Paxos 不同，使得 Raft 算法更加容易理解并且更容易构建实,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -61,20 +62,23 @@
 
         </div>
         <div class="content markdown">
-            <h1 id="Raft简介"><a href="#Raft简介" class="headerlink" title="Raft简介"></a>Raft简介</h1><p>​        Raft 是一种用来管理复制日志的一致性算法。它提供了和 Paxos 算法相同的功能和性能，但是它的算法结构和 Paxos 不同，使得 Raft 算法更加容易理解并且更容易构建实际的系统。</p>
-<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><p>​        Raft 算法在许多方面和现有的一致性算法都很相似，但是它也有一些独特的特性：</p>
+            <h1>Raft简介</h1>
+<p>​		Raft 是一种用来管理复制日志的一致性算法。它提供了和 Paxos 算法相同的功能和性能，但是它的算法结构和 Paxos 不同，使得 Raft 算法更加容易理解并且更容易构建实际的系统。</p>
+<h2 id="特点"><a class="header-anchor" href="#特点">¶</a>特点</h2>
+<p>​		Raft 算法在许多方面和现有的一致性算法都很相似，但是它也有一些独特的特性：</p>
 <ul>
 <li>Strong Leader：和其他一致性算法相比，Raft 使用一种更强的领导能力形式。比如，日志条目只从领导人发送给其他的服务器。这种方式简化了对复制日志的管理并且使得 Raft 算法更加易于理解。</li>
 <li>Leader election：Raft 算法使用一个随机计时器来选举领导人。这种方式只是在任何一致性算法都必须实现的心跳机制上增加了一点机制。在解决冲突的时候会更加简单快捷。</li>
 <li>Membership changes：Raft 使用一种共同一致的方法来处理集群成员变换的问题，在这种方法下，处于调整过程中的两种不同的配置集群中大多数机器会有重叠，这就使得集群在成员变换的时候依然可以继续工作。</li>
 </ul>
-<h2 id="复制状态机"><a href="#复制状态机" class="headerlink" title="复制状态机"></a>复制状态机</h2><p>​        一致性算法是从复制状态机的背景下提出的。在这种方法中，一组服务器上的状态机产生相同状态的副本，并且在一些机器宕掉的情况下也可以继续运行。复制状态机在分布式系统中被用于解决很多容错的问题。</p>
-<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/博客图片/Algorithm/raft-%E5%9B%BE1.png?versionId=CAEQIhiBgIDNuuaP8RciIDE4NmI0MTFhYTcwYTRhN2FhZDY4ZWEwMzZkMjYwYTBi" alt=""></p>
+<h2 id="复制状态机"><a class="header-anchor" href="#复制状态机">¶</a>复制状态机</h2>
+<p>​		一致性算法是从复制状态机的背景下提出的。在这种方法中，一组服务器上的状态机产生相同状态的副本，并且在一些机器宕掉的情况下也可以继续运行。复制状态机在分布式系统中被用于解决很多容错的问题。</p>
+<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/Algorithm/raft-%E5%9B%BE1.png?versionId=CAEQIhiBgIDNuuaP8RciIDE4NmI0MTFhYTcwYTRhN2FhZDY4ZWEwMzZkMjYwYTBi" alt=""></p>
 <blockquote>
 <p>figure 1: Replicated state machine architecture. The consensus algorithm manages a replicated log containing state machine commands from clients. The state machines process identical sequences of commands from logs, so they produce the same outputs.</p>
 <p>当 client 发送给 Server 一条指令时，Leader 先写入自己的 Log 中，通过 AppendEntry 让集群中的所有 followers 也更新他们自己的 Log，当绝大多数 followers 都添加该日志条目，Leader 再更新自己的状态机，将结果返回给 client。一致性算法的任务是保证复制日志的一致性。</p>
 </blockquote>
-<p>​        实际系统中使用的一致性算法通常含有以下特性：</p>
+<p>​		实际系统中使用的一致性算法通常含有以下特性：</p>
 <ul>
 <li>安全性保证（绝对不会返回一个错误的结果）：在非拜占庭错误情况下，包括网络延迟、分区、丢包、重复和乱序等错误都可以保证正确。</li>
 <li>可用性：集群中只要有大多数的机器可运行并且能够相互通信、和客户端通信，就可以保证可用。因此，一个典型的包含 5 个节点的集群可以容忍两个节点的失败。服务器被停止就认为是失败。它们稍后可能会从可靠存储的状态中恢复并重新加入集群。</li>
@@ -82,15 +86,16 @@
 <blockquote>
 <p>一般地，把出现故障( crash 或 fail-stop，即不响应)但不会伪造信息的情况称为“非拜 占庭错误”( non-byzantine fault)或“故障错误”( Crash Fault);伪造信息恶意响应的情况称为“拜占庭错误”( Byzantine Fault)，对应节点为拜占庭节点。</p>
 </blockquote>
-<h1 id="Raft一致性算法"><a href="#Raft一致性算法" class="headerlink" title="Raft一致性算法"></a>Raft一致性算法</h1><p>​        Raft 将一致性问题分解成了三个相对独立的子问题：</p>
+<h1>Raft一致性算法</h1>
+<p>​		Raft 将一致性问题分解成了三个相对独立的子问题：</p>
 <ul>
 <li><strong>领导选举</strong>：当现存的领导人发生故障的时候, 一个新的领导人需要被选举出来</li>
 <li><strong>日志复制</strong>：领导人必须从客户端接收日志条目（log entries）然后复制到集群中的其他节点，并强制要求其他节点的日志和自己保持一致</li>
 <li><strong>安全性</strong>：在 Raft 中安全性的关键是在图 3 中展示的状态机安全：如果有任何的服务器节点已经应用了一个确定的日志条目到它的状态机中，那么其他服务器节点不能在同一个日志索引位置应用一个不同的指令。</li>
 </ul>
-<h2 id="状态机实现"><a href="#状态机实现" class="headerlink" title="状态机实现"></a>状态机实现</h2><p><strong>State</strong></p>
+<h2 id="状态机实现"><a class="header-anchor" href="#状态机实现">¶</a>状态机实现</h2>
+<p><strong>State</strong></p>
 <p>持久性状态</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -113,9 +118,7 @@
 </tr>
 </tbody>
 </table>
-</div>
 <p>易失性状态</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -134,9 +137,7 @@
 </tr>
 </tbody>
 </table>
-</div>
 <p>Leader 易失性状态</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -155,10 +156,8 @@
 </tr>
 </tbody>
 </table>
-</div>
 <p><strong>AppendEntries RPC</strong></p>
 <p>由领导人调用，用于日志条目的复制，同时也被当做心跳使用</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -193,8 +192,6 @@
 </tr>
 </tbody>
 </table>
-</div>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -213,7 +210,6 @@
 </tr>
 </tbody>
 </table>
-</div>
 <p>接收者的实现：</p>
 <ol>
 <li>返回假 如果领导人的任期小于接收者的当前任期</li>
@@ -224,7 +220,6 @@
 </ol>
 <p><strong>请求投票（RequestVote）RPC</strong>：</p>
 <p>由候选人负责调用用来征集选票</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -251,8 +246,6 @@
 </tr>
 </tbody>
 </table>
-</div>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -271,7 +264,6 @@
 </tr>
 </tbody>
 </table>
-</div>
 <p>接收者实现：</p>
 <ol>
 <li>如果<code>term &lt; currentTerm</code>返回 false</li>
@@ -290,7 +282,8 @@
 </ul>
 <p>候选人：</p>
 <ul>
-<li>在转变成候选人后就立即开始选举过程<ul>
+<li>在转变成候选人后就立即开始选举过程
+<ul>
 <li>自增当前的任期号（currentTerm）</li>
 <li>给自己投票</li>
 <li>重置选举超时计时器</li>
@@ -305,7 +298,8 @@
 <ul>
 <li>一旦成为领导人：发送空的附加日志（AppendEntries）RPC（心跳）给其他所有的服务器；在一定的空余时间之后不停的重复发送，以防止跟随者超时</li>
 <li>如果接收到来自客户端的请求：附加条目到本地日志中，在条目被应用到状态机后响应客户端</li>
-<li>如果对于一个跟随者，最后日志条目的索引值大于等于 nextIndex（<code>lastLogIndex ≥ nextIndex</code>），则发送从 nextIndex 开始的所有日志条目：<ul>
+<li>如果对于一个跟随者，最后日志条目的索引值大于等于 nextIndex（<code>lastLogIndex ≥ nextIndex</code>），则发送从 nextIndex 开始的所有日志条目：
+<ul>
 <li>如果成功：更新相应跟随者的 nextIndex 和 matchIndex</li>
 <li>如果因为日志不一致而失败，则 nextIndex 递减并重试</li>
 </ul>
@@ -315,38 +309,48 @@
 <blockquote>
 <p>这部分来自于 paper 中的 figure 2</p>
 </blockquote>
-<h2 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h2><p>​        一个 Raft 集群包含$2n + 1$个服务器节点，最多可以容忍$n$个节点失效。在任何时刻，每一个服务器节点都处于这三个状态之一：领导人、跟随者或者候选人。在通常情况下，系统中只有一个领导人并且其他的节点全部都是跟随者。跟随者都是被动的：他们不会发送任何请求，只是简单的响应来自领导人或者候选人的请求。领导人处理所有的客户端请求</p>
-<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/博客图片/Algorithm/raft-%E5%9B%BE4.png?versionId=CAEQIhiBgICTueaP8RciIDUzYTBhMTI1MDA2MTQyZmZiNzYxZTUxNmRhNDUzYzUw" alt=""></p>
+<h2 id="算法流程"><a class="header-anchor" href="#算法流程">¶</a>算法流程</h2>
+<p>​		一个 Raft 集群包含$2n + 1$个服务器节点，最多可以容忍$n$个节点失效。在任何时刻，每一个服务器节点都处于这三个状态之一：领导人、跟随者或者候选人。在通常情况下，系统中只有一个领导人并且其他的节点全部都是跟随者。跟随者都是被动的：他们不会发送任何请求，只是简单的响应来自领导人或者候选人的请求。领导人处理所有的客户端请求</p>
+<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/Algorithm/raft-%E5%9B%BE4.png?versionId=CAEQIhiBgICTueaP8RciIDUzYTBhMTI1MDA2MTQyZmZiNzYxZTUxNmRhNDUzYzUw" alt=""></p>
 <blockquote>
-<p><strong>Figure 4: </strong>Server states. Followers only respond to requests from other servers. If a follower receives no communication, it becomes a candidate and initates an election. A candidate that receives votes from a majority of the full cluster becomes the new leader. Leaders typically operate until they fail.</p>
+<p>**Figure 4: **Server states. Followers only respond to requests from other servers. If a follower receives no communication, it becomes a candidate and initates an election. A candidate that receives votes from a majority of the full cluster becomes the new leader. Leaders typically operate until they fail.</p>
 </blockquote>
-<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/博客图片/Algorithm/raft-%E5%9B%BE5.png?versionId=CAEQIhiBgIDNu.aP8RciIDkyMjdmMDMwYjY0ODQ2ZTFhODljNjJjNjEwYWViOGEw" alt=""></p>
+<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/Algorithm/raft-%E5%9B%BE5.png?versionId=CAEQIhiBgIDNu.aP8RciIDkyMjdmMDMwYjY0ODQ2ZTFhODljNjJjNjEwYWViOGEw" alt=""></p>
 <blockquote>
-<p><strong>Figure 5: </strong>Time is divided into terms, and each from begins with an election. After a successful election, a single leader manages the cluster until the end of the term. Some elections fail, in which case the term ends without choosing a leader. The transitions between terms may be observed at different times on different servers.</p>
+<p>**Figure 5: **Time is divided into terms, and each from begins with an election. After a successful election, a single leader manages the cluster until the end of the term. Some elections fail, in which case the term ends without choosing a leader. The transitions between terms may be observed at different times on different servers.</p>
 </blockquote>
-<p>​        Raft 把时间分割成任意长度的任期，任期用连续的整数标记。每一段任期从一次选举开始。任期在 Raft 算法中充当逻辑时钟的作用，任期使得服务器可以检测一些过期的信息：比如过期的领导人。每个节点存储一个当前任期号，这一编号在整个时期内单调递增。每当服务器之间通信的时候都会交换当前任期号；如果一个服务器的当前任期号比其他人小，那么他会更新自己的编号到较大的编号值。如果一个候选人或者领导人发现自己的任期号过期了，那么他会立即恢复成跟随者状态。如果一个节点接收到一个包含过期的任期号的请求，那么他会直接拒绝这个请求。</p>
-<p>​        Raft 算法中服务器节点之间通信使用远程过程调用（RPCs），并且基本的一致性算法只需要两种类型的 RPCs。请求投票（RequestVote） RPCs 由候选人在选举期间发起，然后附加条目（AppendEntries）RPCs 由领导人发起，用来复制日志和提供一种心跳机制。</p>
-<h2 id="Leader-Election"><a href="#Leader-Election" class="headerlink" title="Leader Election"></a>Leader Election</h2><p>​        Raft 使用一种心跳机制来触发领导人选举。当服务器程序启动时，他们都是跟随者身份。一个服务器节点继续保持着跟随者状态只要他从领导人或者候选人处接收到有效的 RPCs。领导人周期性的向所有跟随者发送心跳包（即不包含日志项内容的附加条目（AppendEntries） RPCs）来维持自己的权威。如果一个跟随者在一段时间里没有接收到任何消息，也就是<strong>选举超时</strong>，那么他就会认为系统中没有可用的领导人,并且发起选举以选出新的领导人。</p>
-<p>​        要开始一次选举过程，跟随者先要增加自己的当前任期号并且转换到候选人状态。然后他会并行的向集群中的其他服务器节点发送请求投票的 RPCs 来给自己投票。候选人会继续保持着当前状态直到以下三件事情之一发生：</p>
+<p>​		Raft 把时间分割成任意长度的任期，任期用连续的整数标记。每一段任期从一次选举开始。任期在 Raft 算法中充当逻辑时钟的作用，任期使得服务器可以检测一些过期的信息：比如过期的领导人。每个节点存储一个当前任期号，这一编号在整个时期内单调递增。每当服务器之间通信的时候都会交换当前任期号；如果一个服务器的当前任期号比其他人小，那么他会更新自己的编号到较大的编号值。如果一个候选人或者领导人发现自己的任期号过期了，那么他会立即恢复成跟随者状态。如果一个节点接收到一个包含过期的任期号的请求，那么他会直接拒绝这个请求。</p>
+<p>​		Raft 算法中服务器节点之间通信使用远程过程调用（RPCs），并且基本的一致性算法只需要两种类型的 RPCs。请求投票（RequestVote） RPCs 由候选人在选举期间发起，然后附加条目（AppendEntries）RPCs 由领导人发起，用来复制日志和提供一种心跳机制。</p>
+<h2 id="Leader-Election"><a class="header-anchor" href="#Leader-Election">¶</a>Leader Election</h2>
+<p>​		Raft 使用一种心跳机制来触发领导人选举。当服务器程序启动时，他们都是跟随者身份。一个服务器节点继续保持着跟随者状态只要他从领导人或者候选人处接收到有效的 RPCs。领导人周期性的向所有跟随者发送心跳包（即不包含日志项内容的附加条目（AppendEntries） RPCs）来维持自己的权威。如果一个跟随者在一段时间里没有接收到任何消息，也就是<strong>选举超时</strong>，那么他就会认为系统中没有可用的领导人,并且发起选举以选出新的领导人。</p>
+<p>​		要开始一次选举过程，跟随者先要增加自己的当前任期号并且转换到候选人状态。然后他会并行的向集群中的其他服务器节点发送请求投票的 RPCs 来给自己投票。候选人会继续保持着当前状态直到以下三件事情之一发生：</p>
 <ol>
 <li>他自己赢得了这次的选举</li>
 <li>其他的服务器成为领导人</li>
 <li>一段时间之后没有任何一个节点赢得选举</li>
 </ol>
-<p>​        当一个候选人从整个集群的大多数服务器节点获得了针对同一个任期号的选票，那么他就赢得了这次选举并成为领导人。每一个服务器最多会对一个任期号投出一张选票，按照先来先服务的原则。<strong>大多数节点同意</strong>原则，只会有一个候选人赢得此次选举。一旦候选人赢得选举，他就立即成为领导人。然后他会向其他的服务器发送心跳消息来建立自己的权威并且阻止发起新的选举。在等待投票的时候，候选人可能会从其他的服务器接收到声明它是领导人的附加条目（AppendEntries）RPC。如果这个领导人的任期号（包含在此次的 RPC中）大于等于候选人当前的任期号，那么候选人会承认领导人合法并回到跟随者状态。</p>
-<p>​        第三种可能的结果是候选人既没有赢得选举也没有输：如果有多个跟随者同时成为候选人，那么选票可能会被瓜分以至于没有候选人可以赢得大多数人的支持。当这种情况发生的时候，每一个候选人都会超时，然后通过增加当前任期号来开始一轮新的选举。然而，没有其他机制的话，选票可能会被无限的重复瓜分。Raft 算法使用随机选举超时时间的方法来确保很少会发生选票瓜分的情况，就算发生也能很快的解决。</p>
-<h2 id="Log-Replication"><a href="#Log-Replication" class="headerlink" title="Log Replication"></a>Log Replication</h2><p>​        客户端的每一个请求都包含一条被复制状态机执行的指令。领导人把这条指令作为一条新的日志条目附加到日志中去，然后并行的发起附加条目 RPCs 给其他的服务器，让他们复制这条日志条目。当这条日志条目被安全的复制，领导人会应用这条日志条目到它的状态机中然后把执行的结果返回给客户端。</p>
-<p>​        如果跟随者崩溃或者运行缓慢，再或者网络丢包，领导人会不断的重复尝试附加日志条目 RPCs （尽管已经回复了客户端）直到所有的跟随者都最终存储了所有的日志条目。</p>
-<h2 id="Safety"><a href="#Safety" class="headerlink" title="Safety"></a>Safety</h2><h3 id="选举限制"><a href="#选举限制" class="headerlink" title="选举限制"></a>选举限制</h3><p>​        只有当候选人的日志是否不落后于自身的日志时, 节点才会同意候选人成为领导人。这保证了 Leader Completeness 性质。在其后的 term 中, candidate 要想成为 leader，必须先获得大多数节点的同意. 也就要求 candidate 的日志不能落后于大多数节点, 即必须拥有大多数节点都有的日志. 而在前面的 term 中被 commit 的日志显然存在于大多数节点。反之，如果 candidate 不含前面的 term 中被 commit 的日志, 就不能得到大多数节点的同意，也就不能成为 leader。</p>
+<p>​		当一个候选人从整个集群的大多数服务器节点获得了针对同一个任期号的选票，那么他就赢得了这次选举并成为领导人。每一个服务器最多会对一个任期号投出一张选票，按照先来先服务的原则。<strong>大多数节点同意</strong>原则，只会有一个候选人赢得此次选举。一旦候选人赢得选举，他就立即成为领导人。然后他会向其他的服务器发送心跳消息来建立自己的权威并且阻止发起新的选举。在等待投票的时候，候选人可能会从其他的服务器接收到声明它是领导人的附加条目（AppendEntries）RPC。如果这个领导人的任期号（包含在此次的 RPC中）大于等于候选人当前的任期号，那么候选人会承认领导人合法并回到跟随者状态。</p>
+<p>​		第三种可能的结果是候选人既没有赢得选举也没有输：如果有多个跟随者同时成为候选人，那么选票可能会被瓜分以至于没有候选人可以赢得大多数人的支持。当这种情况发生的时候，每一个候选人都会超时，然后通过增加当前任期号来开始一轮新的选举。然而，没有其他机制的话，选票可能会被无限的重复瓜分。Raft 算法使用随机选举超时时间的方法来确保很少会发生选票瓜分的情况，就算发生也能很快的解决。</p>
+<h2 id="Log-Replication"><a class="header-anchor" href="#Log-Replication">¶</a>Log Replication</h2>
+<p>​		客户端的每一个请求都包含一条被复制状态机执行的指令。领导人把这条指令作为一条新的日志条目附加到日志中去，然后并行的发起附加条目 RPCs 给其他的服务器，让他们复制这条日志条目。当这条日志条目被安全的复制，领导人会应用这条日志条目到它的状态机中然后把执行的结果返回给客户端。</p>
+<p>​		如果跟随者崩溃或者运行缓慢，再或者网络丢包，领导人会不断的重复尝试附加日志条目 RPCs （尽管已经回复了客户端）直到所有的跟随者都最终存储了所有的日志条目。</p>
+<h2 id="Safety"><a class="header-anchor" href="#Safety">¶</a>Safety</h2>
+<h3 id="选举限制"><a class="header-anchor" href="#选举限制">¶</a>选举限制</h3>
+<p>​		只有当候选人的日志是否不落后于自身的日志时, 节点才会同意候选人成为领导人。这保证了 Leader Completeness 性质。在其后的 term 中, candidate 要想成为 leader，必须先获得大多数节点的同意. 也就要求 candidate 的日志不能落后于大多数节点, 即必须拥有大多数节点都有的日志. 而在前面的 term 中被 commit 的日志显然存在于大多数节点。反之，如果 candidate 不含前面的 term 中被 commit 的日志, 就不能得到大多数节点的同意，也就不能成为 leader。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(rf *Raft)</span> <span class="title">RequestVote</span><span class="params">(args *RequestVoteArgs, reply *RequestVoteReply)</span></span> &#123;</span><br><span class="line">	rf.mu.Lock()</span><br><span class="line">	<span class="keyword">defer</span> rf.mu.Unlock()</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 候选人的期数大于当前节点的期数</span></span><br><span class="line">	<span class="comment">// 更新当前节点的期数，并保持该节点为 Follower</span></span><br><span class="line">	<span class="keyword">if</span> args.Term &gt; rf.currentTerm &#123;</span><br><span class="line">		rf.setNewTerm(args.Term)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 候选人的期数小于当前节点的期数</span></span><br><span class="line">	<span class="comment">// 候选人不包含之前 term 中被 commit 的日志</span></span><br><span class="line">	<span class="comment">// 不应该成为 Leader，让其自动更新其 term 数</span></span><br><span class="line">	<span class="keyword">if</span> args.Term &lt; rf.currentTerm &#123;</span><br><span class="line">		reply.Term = rf.currentTerm</span><br><span class="line">		reply.VoteGranted = <span class="literal">false</span></span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	myLastLog := rf.log.lastLog()</span><br><span class="line">	upToDate := args.LastLogTerm &gt; myLastLog.Term ||</span><br><span class="line">		(args.LastLogTerm == myLastLog.Term &amp;&amp; args.LastLogIndex &gt;= myLastLog.Index)</span><br><span class="line">	<span class="keyword">if</span> (rf.votedFor == <span class="number">-1</span> || rf.votedFor == args.CandidateId) &amp;&amp; upToDate &#123;</span><br><span class="line">		reply.VoteGranted = <span class="literal">true</span></span><br><span class="line">		rf.votedFor = args.CandidateId</span><br><span class="line">		rf.persist()</span><br><span class="line">		rf.resetElectionTimer()</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		reply.VoteGranted = <span class="literal">false</span></span><br><span class="line">	&#125;</span><br><span class="line">	reply.Term = rf.currentTerm</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="提交之前任期内的日志"><a href="#提交之前任期内的日志" class="headerlink" title="提交之前任期内的日志"></a>提交之前任期内的日志</h2><p>​        leader 不能根据日志是否已经复制到大多数节点来判断是否可以将此日志 commit. leader 只能按照前面所说的机制, 直接 commit 当前 term 的日志，在 commit 当前 term 的日志时，会先 commit 此日志前的未 commit 的日志。这样就可以保证在之前的 term 中的日志得以被 commit。图中最重要的部分在于说明了某个 term 中的一条日志可以先在一个 term 中被复制到小部分节点，在后面的 term 继续复制到其他节点。</p>
-<h2 id="跟随者和候选人崩溃"><a href="#跟随者和候选人崩溃" class="headerlink" title="跟随者和候选人崩溃"></a>跟随者和候选人崩溃</h2><p>​        如果跟随者或者候选人崩溃了，那么后续发送给他们的 RPCs 都会失败。Raft 中处理这种失败就是简单的通过无限的重试；如果崩溃的机器重启了，那么这些 RPC 就会完整的成功。如果一个服务器在完成了一个 RPC，但是还没有响应的时候崩溃了，那么在他重新启动之后就会再次收到同样的请求。Raft 的 RPCs 都是幂等的，所以这样重试不会造成任何问题。</p>
-<h2 id="日志压缩"><a href="#日志压缩" class="headerlink" title="日志压缩"></a>日志压缩</h2><p>​        Raft 的日志在正常操作中不断的增长，但是在实际的系统中，日志不能无限制的增长。随着日志不断增长，他会占用越来越多的空间，花费越来越多的时间来重置。如果没有一定的机制去清除日志里积累的陈旧的信息，那么会带来可用性问题。</p>
-<p>​        Raft采用对整个系统进行snapshot来解决，snapshot之前的日志都可以丢弃。每个副本独立的对自己的系统状态进行snapshot，并且只能对已经提交的日志记录进行snapshot。</p>
-<p>​        每个服务器独立的创建快照，只包括已经被提交的日志。主要的工作包括将状态机的状态写入到快照中。Raft 也包含一些少量的元数据到快照中：<strong>最后被包含索引</strong>指的是被快照取代的最后的条目在日志中的索引值（状态机最后应用的日志），<strong>最后被包含的任期</strong>指的是该条目的任期号。保留这些数据是为了支持快照后紧接着的第一个条目的附加日志请求时的一致性检查，因为这个条目需要前一日志条目的索引值和任期号。为了支持集群成员更新。</p>
-<h2 id="集群成员变化"><a href="#集群成员变化" class="headerlink" title="集群成员变化"></a>集群成员变化</h2><p>​        我们都假设集群的配置（加入到一致性算法的服务器集合）是固定不变的。但是在实践中，偶尔是会改变集群的配置的，例如替换那些宕机的机器或者改变复制级别。尽管可以通过暂停整个集群，更新所有配置，然后重启整个集群的方式来实现，但是在更改的时候集群会不可用。Raft拥有自动化配置进行改变集群中的节点信息。</p>
-<p>​        为了保证安全性，配置更改必须使用两阶段方法。目前有很多种两阶段的实现。例如，有些系统在第一阶段停掉旧的配置所有集群就不能处理客户端请求；然后在第二阶段在启用新的配置。在 Raft 中，集群先切换到一个过渡的配置，我们称之为共同一致（<em>joint consensus</em>)；一旦共同一致已经被提交了，那么系统就切换到新的配置上。</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>Ongaro D, Ousterhout J. In search of an understandable consensus algorithm[C]//2014 {USENIX} Annual Technical Conference ({USENIX}{ATC} 14). 2014: 305-319.</p>
+<h2 id="提交之前任期内的日志"><a class="header-anchor" href="#提交之前任期内的日志">¶</a>提交之前任期内的日志</h2>
+<p>​		leader 不能根据日志是否已经复制到大多数节点来判断是否可以将此日志 commit. leader 只能按照前面所说的机制, 直接 commit 当前 term 的日志，在 commit 当前 term 的日志时，会先 commit 此日志前的未 commit 的日志。这样就可以保证在之前的 term 中的日志得以被 commit。图中最重要的部分在于说明了某个 term 中的一条日志可以先在一个 term 中被复制到小部分节点，在后面的 term 继续复制到其他节点。</p>
+<h2 id="跟随者和候选人崩溃"><a class="header-anchor" href="#跟随者和候选人崩溃">¶</a>跟随者和候选人崩溃</h2>
+<p>​		如果跟随者或者候选人崩溃了，那么后续发送给他们的 RPCs 都会失败。Raft 中处理这种失败就是简单的通过无限的重试；如果崩溃的机器重启了，那么这些 RPC 就会完整的成功。如果一个服务器在完成了一个 RPC，但是还没有响应的时候崩溃了，那么在他重新启动之后就会再次收到同样的请求。Raft 的 RPCs 都是幂等的，所以这样重试不会造成任何问题。</p>
+<h2 id="日志压缩"><a class="header-anchor" href="#日志压缩">¶</a>日志压缩</h2>
+<p>​		Raft 的日志在正常操作中不断的增长，但是在实际的系统中，日志不能无限制的增长。随着日志不断增长，他会占用越来越多的空间，花费越来越多的时间来重置。如果没有一定的机制去清除日志里积累的陈旧的信息，那么会带来可用性问题。</p>
+<p>​		Raft采用对整个系统进行snapshot来解决，snapshot之前的日志都可以丢弃。每个副本独立的对自己的系统状态进行snapshot，并且只能对已经提交的日志记录进行snapshot。</p>
+<p>​		每个服务器独立的创建快照，只包括已经被提交的日志。主要的工作包括将状态机的状态写入到快照中。Raft 也包含一些少量的元数据到快照中：<strong>最后被包含索引</strong>指的是被快照取代的最后的条目在日志中的索引值（状态机最后应用的日志），<strong>最后被包含的任期</strong>指的是该条目的任期号。保留这些数据是为了支持快照后紧接着的第一个条目的附加日志请求时的一致性检查，因为这个条目需要前一日志条目的索引值和任期号。为了支持集群成员更新。</p>
+<h2 id="集群成员变化"><a class="header-anchor" href="#集群成员变化">¶</a>集群成员变化</h2>
+<p>​		我们都假设集群的配置（加入到一致性算法的服务器集合）是固定不变的。但是在实践中，偶尔是会改变集群的配置的，例如替换那些宕机的机器或者改变复制级别。尽管可以通过暂停整个集群，更新所有配置，然后重启整个集群的方式来实现，但是在更改的时候集群会不可用。Raft拥有自动化配置进行改变集群中的节点信息。</p>
+<p>​		为了保证安全性，配置更改必须使用两阶段方法。目前有很多种两阶段的实现。例如，有些系统在第一阶段停掉旧的配置所有集群就不能处理客户端请求；然后在第二阶段在启用新的配置。在 Raft 中，集群先切换到一个过渡的配置，我们称之为共同一致（<em>joint consensus</em>)；一旦共同一致已经被提交了，那么系统就切换到新的配置上。</p>
+<h1>参考</h1>
+<p>Ongaro D, Ousterhout J. In search of an understandable consensus algorithm[C]//2014 {USENIX} Annual Technical Conference ({USENIX}{ATC} 14). 2014: 305-319.</p>
 <p><a href="https://zhuanlan.zhihu.com/p/66047414" target="_blank" rel="noopener">Raft算法总结</a></p>
 <p><a href="https://blog.csdn.net/daaikuaichuan/article/details/98627822" target="_blank" rel="noopener">RAFT算法详解</a></p>
 
@@ -388,7 +392,7 @@
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Raft简介"><span class="toc-number">1.</span> <span class="toc-text">Raft简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#特点"><span class="toc-number">1.1.</span> <span class="toc-text">特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#复制状态机"><span class="toc-number">1.2.</span> <span class="toc-text">复制状态机</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Raft一致性算法"><span class="toc-number">2.</span> <span class="toc-text">Raft一致性算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#状态机实现"><span class="toc-number">2.1.</span> <span class="toc-text">状态机实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#算法流程"><span class="toc-number">2.2.</span> <span class="toc-text">算法流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Leader-Election"><span class="toc-number">2.3.</span> <span class="toc-text">Leader Election</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Log-Replication"><span class="toc-number">2.4.</span> <span class="toc-text">Log Replication</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Safety"><span class="toc-number">2.5.</span> <span class="toc-text">Safety</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#选举限制"><span class="toc-number">2.5.1.</span> <span class="toc-text">选举限制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#提交之前任期内的日志"><span class="toc-number">2.6.</span> <span class="toc-text">提交之前任期内的日志</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#跟随者和候选人崩溃"><span class="toc-number">2.7.</span> <span class="toc-text">跟随者和候选人崩溃</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#日志压缩"><span class="toc-number">2.8.</span> <span class="toc-text">日志压缩</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#集群成员变化"><span class="toc-number">2.9.</span> <span class="toc-text">集群成员变化</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-number">3.</span> <span class="toc-text">参考</span></a></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">Raft简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#特点"><span class="toc-number">1.1.</span> <span class="toc-text">特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#复制状态机"><span class="toc-number">1.2.</span> <span class="toc-text">复制状态机</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">2.</span> <span class="toc-text">Raft一致性算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#状态机实现"><span class="toc-number">2.1.</span> <span class="toc-text">状态机实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#算法流程"><span class="toc-number">2.2.</span> <span class="toc-text">算法流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Leader-Election"><span class="toc-number">2.3.</span> <span class="toc-text">Leader Election</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Log-Replication"><span class="toc-number">2.4.</span> <span class="toc-text">Log Replication</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Safety"><span class="toc-number">2.5.</span> <span class="toc-text">Safety</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#选举限制"><span class="toc-number">2.5.1.</span> <span class="toc-text">选举限制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#提交之前任期内的日志"><span class="toc-number">2.6.</span> <span class="toc-text">提交之前任期内的日志</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#跟随者和候选人崩溃"><span class="toc-number">2.7.</span> <span class="toc-text">跟随者和候选人崩溃</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#日志压缩"><span class="toc-number">2.8.</span> <span class="toc-text">日志压缩</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#集群成员变化"><span class="toc-number">2.9.</span> <span class="toc-text">集群成员变化</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">3.</span> <span class="toc-text">参考</span></a></li></ol>	
         </div>
     
 </div>

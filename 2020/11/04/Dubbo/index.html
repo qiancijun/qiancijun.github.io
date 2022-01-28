@@ -10,10 +10,13 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
-    <meta name="description" content="分布式基础理论分布式系统
+    <meta name="description" content="分布式基础理论
+¶分布式系统
+
 《分布式系统原理与范型》中定义：
 
-分布式系统是若干独立计算机的集合，这些计算机对于用户来说就像单个相关系统。分布式系统是建立在网络之上的软件系统。随着互联网的发展，网站应,"> 
+分布式系统是若干独立计算机的集合，这些计算机对于用户来说就像单个相关系统。分布式系统是建立在网络之上的软件系统。
+随着互联网的发展,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -64,11 +67,15 @@
 
         </div>
         <div class="content markdown">
-            <h1 id="分布式基础理论"><a href="#分布式基础理论" class="headerlink" title="分布式基础理论"></a>分布式基础理论</h1><h2 id="分布式系统"><a href="#分布式系统" class="headerlink" title="分布式系统"></a>分布式系统</h2><ul>
+            <h1>分布式基础理论</h1>
+<h2 id="分布式系统"><a class="header-anchor" href="#分布式系统">¶</a>分布式系统</h2>
+<ul>
 <li>《分布式系统原理与范型》中定义：</li>
 </ul>
-<p>分布式系统是若干独立计算机的集合，这些计算机对于用户来说就像单个相关系统。分布式系统是建立在网络之上的软件系统。<br>随着互联网的发展，网站应用的规模不断扩大，常规的垂直应用的架构已经无法应对，分布式服务架构以及流动计算架构势在必行。</p>
-<h2 id="架构演变"><a href="#架构演变" class="headerlink" title="架构演变"></a>架构演变</h2><p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Dubbo/%E6%9E%B6%E6%9E%84%E5%8E%86%E5%8F%B2.png" alt=""></p>
+<p>分布式系统是若干独立计算机的集合，这些计算机对于用户来说就像单个相关系统。分布式系统是建立在网络之上的软件系统。<br>
+随着互联网的发展，网站应用的规模不断扩大，常规的垂直应用的架构已经无法应对，分布式服务架构以及流动计算架构势在必行。</p>
+<h2 id="架构演变"><a class="header-anchor" href="#架构演变">¶</a>架构演变</h2>
+<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Dubbo/%E6%9E%B6%E6%9E%84%E5%8E%86%E5%8F%B2.png" alt=""></p>
 <ul>
 <li>单一应用架构</li>
 </ul>
@@ -85,25 +92,40 @@
 <li>流动计算架构</li>
 </ul>
 <p>利用调度、治理中心，基于访问压力实时管理集群容量，提高集群利用率</p>
-<h2 id="RPC"><a href="#RPC" class="headerlink" title="RPC"></a>RPC</h2><p>RPC（Remote Proecdure Call）是指远程过程调用，是一种进程间通信方式，是一种技术的思想，而不是规范。它允许程序调用另一个地址空间（通常是共享网络的另一台机器上）的过程或函数，而不用程序员显示编码这个远程调用的细节。即程序员无论是调用本地的还是远程的函数，本质上编写的调用代码基本相同</p>
+<h2 id="RPC"><a class="header-anchor" href="#RPC">¶</a>RPC</h2>
+<p>RPC（Remote Proecdure Call）是指远程过程调用，是一种进程间通信方式，是一种技术的思想，而不是规范。它允许程序调用另一个地址空间（通常是共享网络的另一台机器上）的过程或函数，而不用程序员显示编码这个远程调用的细节。即程序员无论是调用本地的还是远程的函数，本质上编写的调用代码基本相同</p>
 <p>RPC两个核心模块：通讯、序列化</p>
-<h1 id="Dubbo"><a href="#Dubbo" class="headerlink" title="Dubbo"></a>Dubbo</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Apache Dubbo 是一款高性能、轻量级的开源Java RPC框架，它提供了三大核心能力：面向接口的远程方法调用，只能容错和负载均衡，以及服务自动注册和发现。</p>
-<h2 id="设计架构"><a href="#设计架构" class="headerlink" title="设计架构"></a>设计架构</h2><p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Dubbo/RPC.png" alt="设计架构"></p>
-<h1 id="Dubbo-1"><a href="#Dubbo-1" class="headerlink" title="Dubbo"></a>Dubbo</h1><h2 id="Zookeeper注册中心"><a href="#Zookeeper注册中心" class="headerlink" title="Zookeeper注册中心"></a>Zookeeper注册中心</h2><p>Zookeeper 是 Apache Hadoop 的子项目，是一个树型的目录服务，支持变更推送，适合作为 Dubbo 服务的注册中心，工业强度较高，可用于生产环境，并推荐使用。</p>
+<h1>Dubbo</h1>
+<h2 id="简介"><a class="header-anchor" href="#简介">¶</a>简介</h2>
+<p>Apache Dubbo 是一款高性能、轻量级的开源Java RPC框架，它提供了三大核心能力：面向接口的远程方法调用，只能容错和负载均衡，以及服务自动注册和发现。</p>
+<h2 id="设计架构"><a class="header-anchor" href="#设计架构">¶</a>设计架构</h2>
+<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Dubbo/RPC.png" alt="设计架构"></p>
+<h1>Dubbo</h1>
+<h2 id="Zookeeper注册中心"><a class="header-anchor" href="#Zookeeper注册中心">¶</a>Zookeeper注册中心</h2>
+<p>Zookeeper 是 Apache Hadoop 的子项目，是一个树型的目录服务，支持变更推送，适合作为 Dubbo 服务的注册中心，工业强度较高，可用于生产环境，并推荐使用。</p>
 <ul>
-<li><p>下载Zookeeper并解压，第一次启动会出现问题，需要重新配置下配置文件<br><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Dubbo/Zookeeper%E5%AE%89%E8%A3%851.png" alt=""></p>
+<li>
+<p>下载Zookeeper并解压，第一次启动会出现问题，需要重新配置下配置文件<br>
+<img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Dubbo/Zookeeper%E5%AE%89%E8%A3%851.png" alt=""></p>
 </li>
-<li><p>在conf文件夹外创建data文件夹，指定临时数据的位置<br><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Dubbo/Zookeeper%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.png" alt=""></p>
+<li>
+<p>在conf文件夹外创建data文件夹，指定临时数据的位置<br>
+<img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Dubbo/Zookeeper%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.png" alt=""></p>
 </li>
-<li><p>使用<code>zkCli.cmd</code>测试</p>
+<li>
+<p>使用<code>zkCli.cmd</code>测试</p>
 </li>
 </ul>
-<h2 id="管理控制台"><a href="#管理控制台" class="headerlink" title="管理控制台"></a>管理控制台</h2><p>在Dubbo官方Github中找到Dubbo-admin（下载时注意分支）。该项目是一个maven工程，以jar包方式运行，以SpringBoot启动，在cmd下输入<code>mvn clean package</code>进行打包（需要配置maven），打包完之后，使用<code>java -jar</code>命令启动，（需要打开Zookeeper服务）</p>
+<h2 id="管理控制台"><a class="header-anchor" href="#管理控制台">¶</a>管理控制台</h2>
+<p>在Dubbo官方Github中找到Dubbo-admin（下载时注意分支）。该项目是一个maven工程，以jar包方式运行，以SpringBoot启动，在cmd下输入<code>mvn clean package</code>进行打包（需要配置maven），打包完之后，使用<code>java -jar</code>命令启动，（需要打开Zookeeper服务）</p>
 <ul>
-<li>注意:<br>3.5Zookeeper会占用8080端口号，dubbo-admin会提示端口占用，在Zookeeper的配置文件下添加<code>admin.serverPort=8888</code></li>
+<li>注意:<br>
+3.5Zookeeper会占用8080端口号，dubbo-admin会提示端口占用，在Zookeeper的配置文件下添加<code>admin.serverPort=8888</code></li>
 </ul>
-<h2 id="配置服务"><a href="#配置服务" class="headerlink" title="配置服务"></a>配置服务</h2><ol>
-<li>将服务提供者注册到注册中心<ol>
+<h2 id="配置服务"><a class="header-anchor" href="#配置服务">¶</a>配置服务</h2>
+<ol>
+<li>将服务提供者注册到注册中心
+<ol>
 <li>导入dubbo依赖</li>
 <li>导入操作Zookeeper的客户端</li>
 <li>配置服务提供者</li>
@@ -112,13 +134,18 @@
 <li>让服务消费者去注册中心订阅服务提供者的服务地址</li>
 </ol>
 <ul>
-<li>配置文件<br>指定当前服务/应用的名字（同样的服务名字相同，不要和别的服务同名）<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:application</span> <span class="attr">name</span>=<span class="string">"dubbo-provider"</span>&gt;</span><span class="tag">&lt;/<span class="name">dubbo:application</span>&gt;</span></span><br></pre></td></tr></table></figure>
-指定注册中心的位置<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">address</span>=<span class="string">"zookeeper://localhost2181"</span> /&gt;</span></span><br><span class="line">或</span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">protocol</span>=<span class="string">"zookeeper"</span> <span class="attr">address</span>=<span class="string">"127.0.0.1:2181"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-指定通信规则（通信协议，通信端口）<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:protocol</span> <span class="attr">name</span>=<span class="string">"dubbo"</span> <span class="attr">port</span>=<span class="string">"20001"</span>&gt;</span><span class="tag">&lt;/<span class="name">dubbo:protocol</span>&gt;</span></span><br><span class="line">其中name是固定写法</span><br></pre></td></tr></table></figure>
-指明要暴露的服务<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">interface</span>=<span class="string">"com.qiancijun.service.ProviderService"</span> <span class="attr">ref</span>=<span class="string">"provideService"</span>&gt;</span><span class="tag">&lt;/<span class="name">dubbo:service</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"provideService"</span> <span class="attr">class</span>=<span class="string">"com.qiancijun.impl.ProvideService"</span>/&gt;</span></span><br><span class="line">interface：要暴露的接口</span><br><span class="line">ref：真正的实现</span><br></pre></td></tr></table></figure>
-</li>
+<li>配置文件<br>
+指定当前服务/应用的名字（同样的服务名字相同，不要和别的服务同名）</li>
 </ul>
-<p>测试程序<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainApplication</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        ClassPathXmlApplicationContext ioc = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"provider.xml"</span>);</span><br><span class="line">        ioc.start();</span><br><span class="line">        System.in.read();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:application</span> <span class="attr">name</span>=<span class="string">"dubbo-provider"</span>&gt;</span><span class="tag">&lt;/<span class="name">dubbo:application</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>指定注册中心的位置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">address</span>=<span class="string">"zookeeper://localhost2181"</span> /&gt;</span></span><br><span class="line">或</span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">protocol</span>=<span class="string">"zookeeper"</span> <span class="attr">address</span>=<span class="string">"127.0.0.1:2181"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>指定通信规则（通信协议，通信端口）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:protocol</span> <span class="attr">name</span>=<span class="string">"dubbo"</span> <span class="attr">port</span>=<span class="string">"20001"</span>&gt;</span><span class="tag">&lt;/<span class="name">dubbo:protocol</span>&gt;</span></span><br><span class="line">其中name是固定写法</span><br></pre></td></tr></table></figure>
+<p>指明要暴露的服务</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">interface</span>=<span class="string">"com.qiancijun.service.ProviderService"</span> <span class="attr">ref</span>=<span class="string">"provideService"</span>&gt;</span><span class="tag">&lt;/<span class="name">dubbo:service</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"provideService"</span> <span class="attr">class</span>=<span class="string">"com.qiancijun.impl.ProvideService"</span>/&gt;</span></span><br><span class="line">interface：要暴露的接口</span><br><span class="line">ref：真正的实现</span><br></pre></td></tr></table></figure>
+<p>测试程序</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainApplication</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        ClassPathXmlApplicationContext ioc = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"provider.xml"</span>);</span><br><span class="line">        ioc.start();</span><br><span class="line">        System.in.read();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>若运行不成功检查依赖是否导入完整，需要额外导入curator-framework、curator-client、curator-recipes</p>
 </blockquote>
@@ -162,7 +189,7 @@
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#分布式基础理论"><span class="toc-number">1.</span> <span class="toc-text">分布式基础理论</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#分布式系统"><span class="toc-number">1.1.</span> <span class="toc-text">分布式系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#架构演变"><span class="toc-number">1.2.</span> <span class="toc-text">架构演变</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RPC"><span class="toc-number">1.3.</span> <span class="toc-text">RPC</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Dubbo"><span class="toc-number">2.</span> <span class="toc-text">Dubbo</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-number">2.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设计架构"><span class="toc-number">2.2.</span> <span class="toc-text">设计架构</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Dubbo-1"><span class="toc-number">3.</span> <span class="toc-text">Dubbo</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Zookeeper注册中心"><span class="toc-number">3.1.</span> <span class="toc-text">Zookeeper注册中心</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#管理控制台"><span class="toc-number">3.2.</span> <span class="toc-text">管理控制台</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置服务"><span class="toc-number">3.3.</span> <span class="toc-text">配置服务</span></a></li></ol></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">分布式基础理论</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#分布式系统"><span class="toc-number">1.1.</span> <span class="toc-text">分布式系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#架构演变"><span class="toc-number">1.2.</span> <span class="toc-text">架构演变</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RPC"><span class="toc-number">1.3.</span> <span class="toc-text">RPC</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">2.</span> <span class="toc-text">Dubbo</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-number">2.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设计架构"><span class="toc-number">2.2.</span> <span class="toc-text">设计架构</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">3.</span> <span class="toc-text">Dubbo</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Zookeeper注册中心"><span class="toc-number">3.1.</span> <span class="toc-text">Zookeeper注册中心</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#管理控制台"><span class="toc-number">3.2.</span> <span class="toc-text">管理控制台</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置服务"><span class="toc-number">3.3.</span> <span class="toc-text">配置服务</span></a></li></ol></li></ol>	
         </div>
     
 </div>

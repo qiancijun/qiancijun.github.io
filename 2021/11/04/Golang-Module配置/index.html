@@ -67,20 +67,28 @@ Go Pr,">
         <div class="content markdown">
             <p>go module是go官方自带的go依赖管理库,在1.13版本正式推荐使用</p>
 <p>go module可以将某个项目(文件夹)下的所有依赖整理成一个 go.mod 文件,里面写入了依赖的版本等</p>
-<h1 id="Go-Proxy"><a href="#Go-Proxy" class="headerlink" title="Go Proxy"></a>Go Proxy</h1><p>go module 的目的是依赖管理,所以使用 go module 时你可以舍弃 go get 命令(但是不是禁止使用, 如果要指定包的版本或更新包可使用go get,平时没有必要使用)</p>
-<h2 id="Go-1-13-及以上（推荐）"><a href="#Go-1-13-及以上（推荐）" class="headerlink" title="Go 1.13 及以上（推荐）"></a>Go 1.13 及以上（推荐）</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">go env -w GO111MODULE=on</span><br><span class="line">go env -w GOPROXY=https://goproxy.cn,direct</span><br></pre></td></tr></table></figure>
-<h2 id="Mac-或-Linux"><a href="#Mac-或-Linux" class="headerlink" title="Mac 或 Linux"></a>Mac 或 Linux</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> GO111MODULE=on</span><br><span class="line"><span class="built_in">export</span> GOPROXY=https://goproxy.cn</span><br></pre></td></tr></table></figure>
+<h1>Go Proxy</h1>
+<p>go module 的目的是依赖管理,所以使用 go module 时你可以舍弃 go get 命令(但是不是禁止使用, 如果要指定包的版本或更新包可使用go get,平时没有必要使用)</p>
+<h2 id="Go-1-13-及以上（推荐）"><a class="header-anchor" href="#Go-1-13-及以上（推荐）">¶</a>Go 1.13 及以上（推荐）</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">go env -w GO111MODULE=on</span><br><span class="line">go env -w GOPROXY=https://goproxy.cn,direct</span><br></pre></td></tr></table></figure>
+<h2 id="Mac-或-Linux"><a class="header-anchor" href="#Mac-或-Linux">¶</a>Mac 或 Linux</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> GO111MODULE=on</span><br><span class="line"><span class="built_in">export</span> GOPROXY=https://goproxy.cn</span><br></pre></td></tr></table></figure>
 <p>或者</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"export GO111MODULE=on"</span> &gt;&gt; ~/.profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"export GOPROXY=https://goproxy.cn"</span> &gt;&gt; ~/.profile</span><br><span class="line"><span class="built_in">source</span> ~/.profile</span><br></pre></td></tr></table></figure>
-<h1 id="Go-Module"><a href="#Go-Module" class="headerlink" title="Go Module"></a>Go Module</h1><h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><ol>
+<h1>Go Module</h1>
+<h2 id="初始化"><a class="header-anchor" href="#初始化">¶</a>初始化</h2>
+<ol>
 <li>进入你的项目文件夹<code>路径/项目名</code></li>
 <li>执行<code>go mod init 项目名</code></li>
 </ol>
-<h2 id="检查依赖"><a href="#检查依赖" class="headerlink" title="检查依赖"></a>检查依赖</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">go mod tidy</span><br><span class="line">go mod graph  <span class="comment"># 打印依赖图</span></span><br></pre></td></tr></table></figure>
+<h2 id="检查依赖"><a class="header-anchor" href="#检查依赖">¶</a>检查依赖</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">go mod tidy</span><br><span class="line">go mod graph  <span class="comment"># 打印依赖图</span></span><br></pre></td></tr></table></figure>
 <p>tidy会检测该文件夹目录下所有引入的依赖,写入 go.mod 文件</p>
-<h2 id="下载依赖"><a href="#下载依赖" class="headerlink" title="下载依赖"></a>下载依赖</h2><p>我们需要将依赖下载至本地,而不是使用 go get</p>
+<h2 id="下载依赖"><a class="header-anchor" href="#下载依赖">¶</a>下载依赖</h2>
+<p>我们需要将依赖下载至本地,而不是使用 go get</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go mod download</span><br></pre></td></tr></table></figure>
-<h2 id="导入依赖"><a href="#导入依赖" class="headerlink" title="导入依赖"></a>导入依赖</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go mod vendor</span><br></pre></td></tr></table></figure>
+<h2 id="导入依赖"><a class="header-anchor" href="#导入依赖">¶</a>导入依赖</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go mod vendor</span><br></pre></td></tr></table></figure>
 <p>执行此命令,会将刚才下载至 GOPATH 下的依赖转移至该项目根目录下的 vendor(自动新建) 文件夹下</p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
@@ -121,7 +129,7 @@ Go Pr,">
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Go-Proxy"><span class="toc-number">1.</span> <span class="toc-text">Go Proxy</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Go-1-13-及以上（推荐）"><span class="toc-number">1.1.</span> <span class="toc-text">Go 1.13 及以上（推荐）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mac-或-Linux"><span class="toc-number">1.2.</span> <span class="toc-text">Mac 或 Linux</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Go-Module"><span class="toc-number">2.</span> <span class="toc-text">Go Module</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#初始化"><span class="toc-number">2.1.</span> <span class="toc-text">初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#检查依赖"><span class="toc-number">2.2.</span> <span class="toc-text">检查依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#下载依赖"><span class="toc-number">2.3.</span> <span class="toc-text">下载依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#导入依赖"><span class="toc-number">2.4.</span> <span class="toc-text">导入依赖</span></a></li></ol></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">Go Proxy</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Go-1-13-及以上（推荐）"><span class="toc-number">1.1.</span> <span class="toc-text">Go 1.13 及以上（推荐）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mac-或-Linux"><span class="toc-number">1.2.</span> <span class="toc-text">Mac 或 Linux</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">2.</span> <span class="toc-text">Go Module</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#初始化"><span class="toc-number">2.1.</span> <span class="toc-text">初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#检查依赖"><span class="toc-number">2.2.</span> <span class="toc-text">检查依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#下载依赖"><span class="toc-number">2.3.</span> <span class="toc-text">下载依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#导入依赖"><span class="toc-number">2.4.</span> <span class="toc-text">导入依赖</span></a></li></ol></li></ol>	
         </div>
     
 </div>

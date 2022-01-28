@@ -11,10 +11,11 @@
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
     <meta name="description" content="题目描述
+
 C. Boboniu and Bit Operations
 time limit per test1 second
 memory limit per test256 megabytes
-i,"> 
+,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -67,23 +68,30 @@ i,">
 
         </div>
         <div class="content markdown">
-            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p><p style="text-align:center; font-size:20px">
+            <h1>题目描述</h1>
+<p style="text-align:center; font-size:20px">
 C. Boboniu and Bit Operations
 <br/>time limit per test1 second
 <br/>memory limit per test256 megabytes
 <br/>inputstandard input
 outputstandard output
-</p><br>Boboniu likes bit operations. He wants to play a game with you.</p>
+</p>
+Boboniu likes bit operations. He wants to play a game with you.
 <p>Boboniu gives you two sequences of non-negative integers a1,a2,…,an and b1,b2,…,bm.</p>
 <p>For each i $(1≤i≤n)$, you’re asked to choose a j $(1≤j≤m)$ and let ci=ai&amp;bj, where &amp; denotes the bitwise AND operation. Note that you can pick the same j for different i’s.</p>
 <p>Find the minimum possible c1|c2|…|cn, where | denotes the bitwise OR operation.</p>
-<p>Input<br>The first line contains two integers n and m $(1≤n,m≤200)$.</p>
+<p>Input<br>
+The first line contains two integers n and m $(1≤n,m≤200)$.</p>
 <p>The next line contains n integers a1,a2,…,an $(0≤ai&lt;29)$.</p>
 <p>The next line contains m integers b1,b2,…,bm $(0≤bi&lt;29)$.</p>
-<p>Output<br>Print one integer: the minimum possible c1|c2|…|cn.</p>
-<p>Examples<br>input</p>
+<p>Output<br>
+Print one integer: the minimum possible c1|c2|…|cn.</p>
+<p>Examples<br>
+input</p>
 <blockquote>
-<p>4 2<br>2 6 4 0<br>2 4</p>
+<p>4 2<br>
+2 6 4 0<br>
+2 4</p>
 </blockquote>
 <p>output</p>
 <blockquote>
@@ -91,7 +99,9 @@ outputstandard output
 </blockquote>
 <p>input</p>
 <blockquote>
-<p>7 6<br>1 9 1 9 8 1 0<br>1 1 4 5 1 4</p>
+<p>7 6<br>
+1 9 1 9 8 1 0<br>
+1 1 4 5 1 4</p>
 </blockquote>
 <p>output</p>
 <blockquote>
@@ -99,14 +109,19 @@ outputstandard output
 </blockquote>
 <p>input</p>
 <blockquote>
-<p>8 5<br>179 261 432 162 82 43 10 38<br>379 357 202 184 197</p>
+<p>8 5<br>
+179 261 432 162 82 43 10 38<br>
+379 357 202 184 197</p>
 </blockquote>
 <p>output</p>
 <blockquote>
 <p>147</p>
 </blockquote>
-<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>答案的范围结果只能是从0到$2^9$，我们可以直接暴力枚举所有答案<br>如果有$a[i] &amp; b[j] | ans = ans$即为答案</p>
-<h1 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码"></a>AC代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> ll = <span class="keyword">long</span> <span class="keyword">long</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _for(i, begin, end) for (int i = begin; i &lt; end; i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _rep(i, begin, end) for (int i = begin; i &lt;= end; i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> print(n, nums) for (int i = 0; i &lt; n; i++) cout &lt;&lt; nums[i] &lt;&lt; <span class="meta-string">" "</span>; cout &lt;&lt; endl;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> IO ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> len(v) ((int)((v).size()))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> all(v) (v).begin(), (v).end()</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rall(v) (v).rbegin(), (v).rend()</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1</span> &lt;&lt; <span class="number">9</span> + <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> a[N], b[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, m;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">cin</span> &gt;&gt; a[i];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) <span class="built_in">cin</span> &gt;&gt; b[i];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> x = <span class="number">0</span>; x &lt; (<span class="number">1</span> &lt;&lt; <span class="number">9</span>); x++) &#123;</span><br><span class="line">        <span class="keyword">bool</span> check = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">bool</span> jugg = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; m; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> ( ((a[i] &amp; b[j]) | x) == x) &#123;</span><br><span class="line">                    jugg = <span class="number">1</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (jugg == <span class="number">0</span>) &#123;</span><br><span class="line">                check = <span class="literal">true</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!check) &#123;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; x &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    IO;</span><br><span class="line">    solve();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>思路</h1>
+<p>答案的范围结果只能是从0到$2^9$，我们可以直接暴力枚举所有答案<br>
+如果有$a[i] &amp; b[j] | ans = ans$即为答案</p>
+<h1>AC代码</h1>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> ll = <span class="keyword">long</span> <span class="keyword">long</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _for(i, begin, end) for (int i = begin; i &lt; end; i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _rep(i, begin, end) for (int i = begin; i &lt;= end; i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> print(n, nums) for (int i = 0; i &lt; n; i++) cout &lt;&lt; nums[i] &lt;&lt; <span class="meta-string">" "</span>; cout &lt;&lt; endl;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> IO ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> len(v) ((int)((v).size()))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> all(v) (v).begin(), (v).end()</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rall(v) (v).rbegin(), (v).rend()</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1</span> &lt;&lt; <span class="number">9</span> + <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> a[N], b[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, m;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">cin</span> &gt;&gt; a[i];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) <span class="built_in">cin</span> &gt;&gt; b[i];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> x = <span class="number">0</span>; x &lt; (<span class="number">1</span> &lt;&lt; <span class="number">9</span>); x++) &#123;</span><br><span class="line">        <span class="keyword">bool</span> check = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">bool</span> jugg = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; m; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> ( ((a[i] &amp; b[j]) | x) == x) &#123;</span><br><span class="line">                    jugg = <span class="number">1</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (jugg == <span class="number">0</span>) &#123;</span><br><span class="line">                check = <span class="literal">true</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!check) &#123;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; x &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    IO;</span><br><span class="line">    solve();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
                 <source type="audio/mpeg" src="">
@@ -145,7 +160,7 @@ outputstandard output
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#题目描述"><span class="toc-number">1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#思路"><span class="toc-number">2.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AC代码"><span class="toc-number">3.</span> <span class="toc-text">AC代码</span></a></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">2.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">3.</span> <span class="toc-text">AC代码</span></a></li></ol>	
         </div>
     
 </div>

@@ -10,10 +10,11 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
-    <meta name="description" content="题目描述E. K-periodic Garland
+    <meta name="description" content="题目描述
+E. K-periodic Garland
 time limit per test1 second
 memory limit per test256 megabytes
-inputstand,"> 
+inputstan,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -66,32 +67,54 @@ inputstand,">
 
         </div>
         <div class="content markdown">
-            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p style="text-align:center; font-size:20px">E. K-periodic Garland
+            <h1>题目描述</h1>
+<p style="text-align:center; font-size:20px">E. K-periodic Garland
 time limit per test1 second
 <br/>memory limit per test256 megabytes
 <br/>inputstandard input
 <br/>outputstandard output
 </p>
-
 <p>You are given a garland consisting of n lamps. States of the lamps are represented by the string s of length n. The i-th character of the string si equals ‘0’ if the i-th lamp is turned off or ‘1’ if the i-th lamp is turned on. You are also given a positive integer k.</p>
 <p>In one move, you can choose one lamp and change its state (i.e. turn it on if it is turned off and vice versa).</p>
 <p>The garland is called k-periodic if the distance between each pair of adjacent turned on lamps is exactly k. Consider the case k=3. Then garlands “00010010”, “1001001”, “00010” and “0” are good but garlands “00101001”, “1000001” and “01001100” are not. Note that the garland is not cyclic, i.e. the first turned on lamp is not going after the last turned on lamp and vice versa.</p>
 <p>Your task is to find the minimum number of moves you need to make to obtain k-periodic garland from the given one.</p>
 <p>You have to answer t independent test cases.</p>
-<p>Input<br>The first line of the input contains one integer t $(1≤t≤25 000)$ — the number of test cases. Then t test cases follow.</p>
+<p>Input<br>
+The first line of the input contains one integer t $(1≤t≤25 000)$ — the number of test cases. Then t test cases follow.</p>
 <p>The first line of the test case contains two integers n and k $(1≤n≤106;1≤k≤n)$ — the length of s and the required period. The second line of the test case contains the string s consisting of n characters ‘0’ and ‘1’.</p>
 <p>It is guaranteed that the sum of n over all test cases does not exceed 106 (∑n≤106).</p>
-<p>Output<br>For each test case, print the answer — the minimum number of moves you need to make to obtain k-periodic garland from the given one.</p>
-<p>Example<br>input</p>
+<p>Output<br>
+For each test case, print the answer — the minimum number of moves you need to make to obtain k-periodic garland from the given one.</p>
+<p>Example<br>
+input</p>
 <blockquote>
-<p>6<br>9 2<br>010001010<br>9 3<br>111100000<br>7 4<br>1111111<br>10 3<br>1001110101<br>1 1<br>1<br>1 1<br>0</p>
+<p>6<br>
+9 2<br>
+010001010<br>
+9 3<br>
+111100000<br>
+7 4<br>
+1111111<br>
+10 3<br>
+1001110101<br>
+1 1<br>
+1<br>
+1 1<br>
+0</p>
 </blockquote>
 <p>output</p>
 <blockquote>
-<p>1<br>2<br>5<br>4<br>0<br>0</p>
+<p>1<br>
+2<br>
+5<br>
+4<br>
+0<br>
+0</p>
 </blockquote>
-<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>在每个k区间内最多只能存在一个’1’，所以可以进行枚举，先把所有开着的灯变为’0’，再去枚举每个区间k</p>
-<h1 id="代码-cpp"><a href="#代码-cpp" class="headerlink" title="代码(cpp)"></a>代码(cpp)</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> ll = <span class="keyword">long</span> <span class="keyword">long</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> read(n, nums) for(int i = 0; i <span class="meta-string">&lt; n; i++) cin &gt;&gt; nums[i];</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _for(i, begin, end) for (int i = begin; i &lt; end; i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _rep(i, begin, end) for (int i = begin; i &lt;= end; i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> print(n, nums) for (int i = 0; i &lt; n; i++) cout &lt;&lt; nums[i] &lt;&lt; <span class="meta-string">" "</span>; cout &lt;&lt; endl;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> IO ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1e6</span> + <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, k;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; k;</span><br><span class="line">    <span class="built_in">string</span> garland;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; garland;</span><br><span class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> ans = INT_MAX;</span><br><span class="line">    <span class="comment">// 把所有的灯变为'0'一共需要sum步</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) sum += garland[i] - <span class="string">'0'</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= k; i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = i; j &lt; n; j += k) &#123;</span><br><span class="line">            <span class="comment">// 如果当前已经开着了，那么不需要做操作，但是需要归还一个操作</span></span><br><span class="line">            <span class="keyword">if</span> (garland[j] == <span class="string">'1'</span>) cnt--;</span><br><span class="line">            <span class="comment">// 当前为关闭状态，重新打开，需要一个额外操作</span></span><br><span class="line">            <span class="keyword">else</span> cnt++;</span><br><span class="line">            cnt = min(cnt, <span class="number">0</span>);</span><br><span class="line">            ans = min(ans, sum + cnt);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; ans &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    IO;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    <span class="keyword">while</span> (n--) &#123;</span><br><span class="line">        solve();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>思路</h1>
+<p>在每个k区间内最多只能存在一个’1’，所以可以进行枚举，先把所有开着的灯变为’0’，再去枚举每个区间k</p>
+<h1>代码(cpp)</h1>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> ll = <span class="keyword">long</span> <span class="keyword">long</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> read(n, nums) for(int i = 0; i <span class="meta-string">&lt; n; i++) cin &gt;&gt; nums[i];</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _for(i, begin, end) for (int i = begin; i &lt; end; i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _rep(i, begin, end) for (int i = begin; i &lt;= end; i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> print(n, nums) for (int i = 0; i &lt; n; i++) cout &lt;&lt; nums[i] &lt;&lt; <span class="meta-string">" "</span>; cout &lt;&lt; endl;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> IO ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1e6</span> + <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, k;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; k;</span><br><span class="line">    <span class="built_in">string</span> garland;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; garland;</span><br><span class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> ans = INT_MAX;</span><br><span class="line">    <span class="comment">// 把所有的灯变为'0'一共需要sum步</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) sum += garland[i] - <span class="string">'0'</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= k; i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = i; j &lt; n; j += k) &#123;</span><br><span class="line">            <span class="comment">// 如果当前已经开着了，那么不需要做操作，但是需要归还一个操作</span></span><br><span class="line">            <span class="keyword">if</span> (garland[j] == <span class="string">'1'</span>) cnt--;</span><br><span class="line">            <span class="comment">// 当前为关闭状态，重新打开，需要一个额外操作</span></span><br><span class="line">            <span class="keyword">else</span> cnt++;</span><br><span class="line">            cnt = min(cnt, <span class="number">0</span>);</span><br><span class="line">            ans = min(ans, sum + cnt);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; ans &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    IO;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    <span class="keyword">while</span> (n--) &#123;</span><br><span class="line">        solve();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
                 <source type="audio/mpeg" src="">
@@ -130,7 +153,7 @@ time limit per test1 second
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#题目描述"><span class="toc-number">1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#思路"><span class="toc-number">2.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#代码-cpp"><span class="toc-number">3.</span> <span class="toc-text">代码(cpp)</span></a></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">2.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">3.</span> <span class="toc-text">代码(cpp)</span></a></li></ol>	
         </div>
     
 </div>

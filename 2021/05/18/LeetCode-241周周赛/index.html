@@ -10,9 +10,10 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
-    <meta name="description" content="找出所有子集的异或总和再求和1863. 找出所有子集的异或总和再求和
+    <meta name="description" content="找出所有子集的异或总和再求和
+1863. 找出所有子集的异或总和再求和
 一个数组的 异或总和 定义为数组中所有元素按位 XOR 的结果；如果数组为 空 ，则异或总和为 0 。
-例如，数组 [2,5,6,"> 
+例如，数组 [2,5,,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -65,29 +66,39 @@
 
         </div>
         <div class="content markdown">
-            <h1 id="找出所有子集的异或总和再求和"><a href="#找出所有子集的异或总和再求和" class="headerlink" title="找出所有子集的异或总和再求和"></a>找出所有子集的异或总和再求和</h1><p><a href="https://leetcode-cn.com/problems/sum-of-all-subset-xor-totals/" target="_blank" rel="noopener">1863. 找出所有子集的异或总和再求和</a></p>
+            <h1>找出所有子集的异或总和再求和</h1>
+<p><a href="https://leetcode-cn.com/problems/sum-of-all-subset-xor-totals/" target="_blank" rel="noopener">1863. 找出所有子集的异或总和再求和</a></p>
 <p>一个数组的 异或总和 定义为数组中所有元素按位 XOR 的结果；如果数组为 空 ，则异或总和为 0 。</p>
-<p>例如，数组 [2,5,6] 的 异或总和 为 2 XOR 5 XOR 6 = 1 。<br>给你一个数组 nums ，请你求出 nums 中每个 子集 的 异或总和 ，计算并返回这些值相加之 和 。</p>
+<p>例如，数组 [2,5,6] 的 异或总和 为 2 XOR 5 XOR 6 = 1 。<br>
+给你一个数组 nums ，请你求出 nums 中每个 子集 的 异或总和 ，计算并返回这些值相加之 和 。</p>
 <p>注意：在本题中，元素 相同 的不同子集应 多次 计数。</p>
 <p>数组 a 是数组 b 的一个 子集 的前提条件是：从 b 删除几个（也可能不删除）元素能够得到 a 。</p>
 <p>示例 1：</p>
 <blockquote>
-<p>输入：nums = [1,3]<br>输出：6<br>解释：[1,3] 共有 4 个子集：</p>
+<p>输入：nums = [1,3]<br>
+输出：6<br>
+解释：[1,3] 共有 4 个子集：</p>
 <ul>
-<li><p>空子集的异或总和是 0 。</p>
+<li>
+<p>空子集的异或总和是 0 。</p>
 </li>
-<li><p>[1] 的异或总和为 1 。</p>
+<li>
+<p>[1] 的异或总和为 1 。</p>
 </li>
-<li><p>[3] 的异或总和为 3 。</p>
+<li>
+<p>[3] 的异或总和为 3 。</p>
 </li>
-<li><p>[1,3] 的异或总和为 1 XOR 3 = 2 。</p>
+<li>
+<p>[1,3] 的异或总和为 1 XOR 3 = 2 。</p>
 <p>0 + 1 + 3 + 2 = 6</p>
 </li>
 </ul>
 </blockquote>
 <p>示例 2：</p>
 <blockquote>
-<p>输入：nums = [5,1,6]<br>输出：28<br>解释：[5,1,6] 共有 8 个子集：</p>
+<p>输入：nums = [5,1,6]<br>
+输出：28<br>
+解释：[5,1,6] 共有 8 个子集：</p>
 <ul>
 <li>空子集的异或总和是 0 。</li>
 <li>[5] 的异或总和为 5 。</li>
@@ -96,80 +107,138 @@
 <li>[5,1] 的异或总和为 5 XOR 1 = 4 。</li>
 <li>[5,6] 的异或总和为 5 XOR 6 = 3 。</li>
 <li>[1,6] 的异或总和为 1 XOR 6 = 7 。</li>
-<li>[5,1,6] 的异或总和为 5 XOR 1 XOR 6 = 2 。<br>0 + 5 + 1 + 6 + 4 + 3 + 7 + 2 = 28</li>
+<li>[5,1,6] 的异或总和为 5 XOR 1 XOR 6 = 2 。<br>
+0 + 5 + 1 + 6 + 4 + 3 + 7 + 2 = 28</li>
 </ul>
 </blockquote>
 <p>示例 3：</p>
 <blockquote>
-<p>输入：nums = [3,4,5,6,7,8]<br>输出：480<br>解释：每个子集的全部异或总和值之和为 480 。</p>
+<p>输入：nums = [3,4,5,6,7,8]<br>
+输出：480<br>
+解释：每个子集的全部异或总和值之和为 480 。</p>
 </blockquote>
 <p>提示：</p>
-<p>$1 &lt;= nums.length &lt;= 12$<br>$1 &lt;= nums[i] &lt;= 20$</p>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>根据题意，可以写暴力DFS求出所有得子集，在求异或得出答案，暴力DFS的代码量太长，不太好写。</p>
+<p>$1 &lt;= nums.length &lt;= 12$<br>
+$1 &lt;= nums[i] &lt;= 20$</p>
+<h2 id="思路"><a class="header-anchor" href="#思路">¶</a>思路</h2>
+<p>根据题意，可以写暴力DFS求出所有得子集，在求异或得出答案，暴力DFS的代码量太长，不太好写。</p>
 <p>所以采取更为简洁的<strong>二进制枚举</strong></p>
 <p>若一个数为$1010$，则代表选取第二个数和第四个数</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">subsetXORSum</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = nums.size();</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="number">1</span> &lt;&lt; n); i ++ ) &#123;</span><br><span class="line">            <span class="keyword">int</span> tmp = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j ++ ) &#123;</span><br><span class="line">                <span class="keyword">if</span> (i &gt;&gt; j &amp; <span class="number">1</span>) tmp ^= nums[j];</span><br><span class="line">            &#125;</span><br><span class="line">            res += tmp;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h1 id="构成交替字符串需要的最小交换次数"><a href="#构成交替字符串需要的最小交换次数" class="headerlink" title="构成交替字符串需要的最小交换次数"></a>构成交替字符串需要的最小交换次数</h1><p><a href="https://leetcode-cn.com/problems/minimum-number-of-swaps-to-make-the-binary-string-alternating/" target="_blank" rel="noopener">1864. 构成交替字符串需要的最小交换次数</a></p>
+<h2 id="代码"><a class="header-anchor" href="#代码">¶</a>代码</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">subsetXORSum</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = nums.size();</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="number">1</span> &lt;&lt; n); i ++ ) &#123;</span><br><span class="line">            <span class="keyword">int</span> tmp = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j ++ ) &#123;</span><br><span class="line">                <span class="keyword">if</span> (i &gt;&gt; j &amp; <span class="number">1</span>) tmp ^= nums[j];</span><br><span class="line">            &#125;</span><br><span class="line">            res += tmp;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1>构成交替字符串需要的最小交换次数</h1>
+<p><a href="https://leetcode-cn.com/problems/minimum-number-of-swaps-to-make-the-binary-string-alternating/" target="_blank" rel="noopener">1864. 构成交替字符串需要的最小交换次数</a></p>
 <p>给你一个二进制字符串 s ，现需要将其转化为一个 交替字符串 。请你计算并返回转化所需的 最小 字符交换次数，如果无法完成转化，返回 -1 。</p>
 <p>交替字符串 是指：相邻字符之间不存在相等情况的字符串。例如，字符串 “010” 和 “1010” 属于交替字符串，但 “0100” 不是。</p>
 <p>任意两个字符都可以进行交换，不必相邻 。</p>
 <p><strong>示例 1</strong>：</p>
 <blockquote>
-<p>输入：s = “111000”<br>输出：1<br>解释：交换位置 1 和 4：”111000” -&gt; “101010” ，字符串变为交替字符串。</p>
+<p>输入：s = “111000”<br>
+输出：1<br>
+解释：交换位置 1 和 4：“111000” -&gt; “101010” ，字符串变为交替字符串。</p>
 </blockquote>
 <p><strong>示例 2：</strong></p>
 <blockquote>
-<p>输入：s = “010”<br>输出：0<br>解释：字符串已经是交替字符串了，不需要交换。</p>
+<p>输入：s = “010”<br>
+输出：0<br>
+解释：字符串已经是交替字符串了，不需要交换。</p>
 </blockquote>
 <p><strong>示例 3：</strong></p>
 <blockquote>
-<p>输入：s = “1110”<br>输出：-1</p>
+<p>输入：s = “1110”<br>
+输出：-1</p>
 </blockquote>
 <p><strong>提示：</strong></p>
-<p>$1 &lt;= s.length &lt;= 1000$<br>s[i] 的值为 ‘0’ 或 ‘1’</p>
-<h2 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h2><p>贪心的思路</p>
-<p>可以想到，最后的答案只会有”010101”或者”101010”这两种形式，那么可以选取分别到达这两种情况的最小值。</p>
+<p>$1 &lt;= s.length &lt;= 1000$<br>
+s[i] 的值为 ‘0’ 或 ‘1’</p>
+<h2 id="思路-v2"><a class="header-anchor" href="#思路-v2">¶</a>思路</h2>
+<p>贪心的思路</p>
+<p>可以想到，最后的答案只会有&quot;010101&quot;或者&quot;101010&quot;这两种形式，那么可以选取分别到达这两种情况的最小值。</p>
 <p>如何判断是不是可行？</p>
 <p>每次交换可以正确确定一次0和1的位置，如果0和1的数量不一样，那么最后就不能得到特定的字符串</p>
-<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minSwaps</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> n = s.size();</span><br><span class="line">        string s1(n, '0'), s2(n, '1');</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i += <span class="number">2</span> ) &#123;</span><br><span class="line">            s1[i] = <span class="string">'1'</span>;</span><br><span class="line">            s2[i] = <span class="string">'0'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// cout &lt;&lt; s1 &lt;&lt; endl &lt;&lt; s2 &lt;&lt; endl;</span></span><br><span class="line">        res = min(help(s, s1), help(s, s2));</span><br><span class="line">        <span class="keyword">if</span> (res == INT_MAX) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">help</span><span class="params">(<span class="built_in">string</span> src, <span class="built_in">string</span> dest)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = src.size();</span><br><span class="line">        <span class="keyword">int</span> one = <span class="number">0</span>, zero = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i ++ ) &#123;</span><br><span class="line">            <span class="keyword">if</span> (src[i] != dest[i]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (src[i] == <span class="string">'0'</span>) zero ++ ;</span><br><span class="line">                <span class="keyword">else</span> one ++ ;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (zero != one) <span class="keyword">return</span> INT_MAX;</span><br><span class="line">        <span class="keyword">return</span> zero;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h1 id="找出和为指定值的下标对"><a href="#找出和为指定值的下标对" class="headerlink" title="找出和为指定值的下标对"></a>找出和为指定值的下标对</h1><p><a href="https://leetcode-cn.com/problems/finding-pairs-with-a-certain-sum/" target="_blank" rel="noopener">1865.找出和为指定值的下标对</a></p>
+<h2 id="代码-v2"><a class="header-anchor" href="#代码-v2">¶</a>代码</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minSwaps</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> n = s.size();</span><br><span class="line">        string s1(n, '0'), s2(n, '1');</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i += <span class="number">2</span> ) &#123;</span><br><span class="line">            s1[i] = <span class="string">'1'</span>;</span><br><span class="line">            s2[i] = <span class="string">'0'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// cout &lt;&lt; s1 &lt;&lt; endl &lt;&lt; s2 &lt;&lt; endl;</span></span><br><span class="line">        res = min(help(s, s1), help(s, s2));</span><br><span class="line">        <span class="keyword">if</span> (res == INT_MAX) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">help</span><span class="params">(<span class="built_in">string</span> src, <span class="built_in">string</span> dest)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = src.size();</span><br><span class="line">        <span class="keyword">int</span> one = <span class="number">0</span>, zero = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i ++ ) &#123;</span><br><span class="line">            <span class="keyword">if</span> (src[i] != dest[i]) &#123;</span><br><span class="line">                <span class="keyword">if</span> (src[i] == <span class="string">'0'</span>) zero ++ ;</span><br><span class="line">                <span class="keyword">else</span> one ++ ;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (zero != one) <span class="keyword">return</span> INT_MAX;</span><br><span class="line">        <span class="keyword">return</span> zero;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1>找出和为指定值的下标对</h1>
+<p><a href="https://leetcode-cn.com/problems/finding-pairs-with-a-certain-sum/" target="_blank" rel="noopener">1865.找出和为指定值的下标对</a></p>
 <p>给你两个整数数组 nums1 和 nums2 ，请你实现一个支持下述两类查询的数据结构：</p>
-<p>累加 ，将一个正整数加到 nums2 中指定下标对应元素上。<br>计数 ，统计满足 nums1[i] + nums2[j] 等于指定值的下标对 (i, j) 数目（0 &lt;= i &lt; nums1.length 且 0 &lt;= j &lt; nums2.length）。<br>实现 FindSumPairs 类：</p>
-<p>FindSumPairs(int[] nums1, int[] nums2) 使用整数数组 nums1 和 nums2 初始化 FindSumPairs 对象。<br>void add(int index, int val) 将 val 加到 nums2[index] 上，即，执行 nums2[index] += val 。<br>int count(int tot) 返回满足 nums1[i] + nums2[j] == tot 的下标对 (i, j) 数目。</p>
+<p>累加 ，将一个正整数加到 nums2 中指定下标对应元素上。<br>
+计数 ，统计满足 nums1[i] + nums2[j] 等于指定值的下标对 (i, j) 数目（0 &lt;= i &lt; nums1.length 且 0 &lt;= j &lt; nums2.length）。<br>
+实现 FindSumPairs 类：</p>
+<p>FindSumPairs(int[] nums1, int[] nums2) 使用整数数组 nums1 和 nums2 初始化 FindSumPairs 对象。<br>
+void add(int index, int val) 将 val 加到 nums2[index] 上，即，执行 nums2[index] += val 。<br>
+int count(int tot) 返回满足 nums1[i] + nums2[j] == tot 的下标对 (i, j) 数目。</p>
 <p><strong>示例：</strong></p>
 <blockquote>
-<p>输入：<br>[“FindSumPairs”, “count”, “add”, “count”, “count”, “add”, “add”, “count”]<br>[[[1, 1, 2, 2, 2, 3], [1, 4, 5, 2, 5, 4]], [7], [3, 2], [8], [4], [0, 1], [1, 1], [7]]<br>输出：<br>[null, 8, null, 2, 1, null, null, 11]<br>解释：<br>FindSumPairs findSumPairs = new FindSumPairs([1, 1, 2, 2, 2, 3], [1, 4, 5, 2, 5, 4]);<br>findSumPairs.count(7);  // 返回 8 ; 下标对 (2,2), (3,2), (4,2), (2,4), (3,4), (4,4) 满足 2 + 5 = 7 ，下标对 (5,1), (5,5) 满足 3 + 4 = 7<br>findSumPairs.add(3, 2); // 此时 nums2 = [1,4,5,4,5,4]<br>findSumPairs.count(8);  // 返回 2 ；下标对 (5,2), (5,4) 满足 3 + 5 = 8<br>findSumPairs.count(4);  // 返回 1 ；下标对 (5,0) 满足 3 + 1 = 4<br>findSumPairs.add(0, 1); // 此时 nums2 = [2,4,5,4,5,4]<br>findSumPairs.add(1, 1); // 此时 nums2 = [2,5,5,4,5,4]<br>findSumPairs.count(7);  // 返回 11 ；下标对 (2,1), (2,2), (2,4), (3,1), (3,2), (3,4), (4,1), (4,2), (4,4) 满足 2 + 5 = 7 ，下标对 (5,3), (5,5) 满足 3 + 4 = 7</p>
+<p>输入：<br>
+[“FindSumPairs”, “count”, “add”, “count”, “count”, “add”, “add”, “count”]<br>
+[[[1, 1, 2, 2, 2, 3], [1, 4, 5, 2, 5, 4]], [7], [3, 2], [8], [4], [0, 1], [1, 1], [7]]<br>
+输出：<br>
+[null, 8, null, 2, 1, null, null, 11]<br>
+解释：<br>
+FindSumPairs findSumPairs = new FindSumPairs([1, 1, 2, 2, 2, 3], [1, 4, 5, 2, 5, 4]);<br>
+findSumPairs.count(7);  // 返回 8 ; 下标对 (2,2), (3,2), (4,2), (2,4), (3,4), (4,4) 满足 2 + 5 = 7 ，下标对 (5,1), (5,5) 满足 3 + 4 = 7<br>
+findSumPairs.add(3, 2); // 此时 nums2 = [1,4,5,4,5,4]<br>
+findSumPairs.count(8);  // 返回 2 ；下标对 (5,2), (5,4) 满足 3 + 5 = 8<br>
+findSumPairs.count(4);  // 返回 1 ；下标对 (5,0) 满足 3 + 1 = 4<br>
+findSumPairs.add(0, 1); // 此时 nums2 = [2,4,5,4,5,4]<br>
+findSumPairs.add(1, 1); // 此时 nums2 = [2,5,5,4,5,4]<br>
+findSumPairs.count(7);  // 返回 11 ；下标对 (2,1), (2,2), (2,4), (3,1), (3,2), (3,4), (4,1), (4,2), (4,4) 满足 2 + 5 = 7 ，下标对 (5,3), (5,5) 满足 3 + 4 = 7</p>
 </blockquote>
 <p><strong>提示：</strong></p>
-<p>$1 &lt;= nums1.length &lt;= 1000$<br>$1 &lt;= nums2.length &lt;= 105$<br>$1 &lt;= nums1[i] &lt;= 109$<br>$1 &lt;= nums2[i] &lt;= 105$<br>$0 &lt;= index &lt; nums2.length$<br>$1 &lt;= val &lt;= 105$<br>$1 &lt;= tot &lt;= 109$<br>最多调用 add 和 count 函数各 1000 次</p>
-<h2 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h2><p>观察数据范围，$nums1$的数据范围很小，可以直接暴力，但是$nums2$的数据范围很大，暴力会超时。那么可以把$nums2$的数据存放在哈希表里，枚举$nums1$来求答案。</p>
-<h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FindSumPairs</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; n1, n2;</span><br><span class="line">    <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; m;</span><br><span class="line">    FindSumPairs(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums1, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums2) &#123;</span><br><span class="line">        n1 = nums1;</span><br><span class="line">        n2 = nums2;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> num : nums2) &#123;</span><br><span class="line">            m[num] ++ ;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> index, <span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">        m[n2[index]] -- ;</span><br><span class="line">        n2[index] += val;</span><br><span class="line">        m[n2[index]] ++ ;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">count</span><span class="params">(<span class="keyword">int</span> tot)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = n1.size();</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i ++ ) &#123;</span><br><span class="line">            <span class="keyword">int</span> num = n1[i];</span><br><span class="line">            res += m[tot - num];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Your FindSumPairs object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"> * FindSumPairs* obj = new FindSumPairs(nums1, nums2);</span></span><br><span class="line"><span class="comment"> * obj-&gt;add(index,val);</span></span><br><span class="line"><span class="comment"> * int param_2 = obj-&gt;count(tot);</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
-<h1 id="恰有-K-根木棍可以看到的排列数目"><a href="#恰有-K-根木棍可以看到的排列数目" class="headerlink" title="恰有 K 根木棍可以看到的排列数目"></a>恰有 K 根木棍可以看到的排列数目</h1><p><a href="https://leetcode-cn.com/problems/number-of-ways-to-rearrange-sticks-with-k-sticks-visible/" target="_blank" rel="noopener">1866. 恰有 K 根木棍可以看到的排列数目</a></p>
+<p>$1 &lt;= nums1.length &lt;= 1000$<br>
+$1 &lt;= nums2.length &lt;= 105$<br>
+$1 &lt;= nums1[i] &lt;= 109$<br>
+$1 &lt;= nums2[i] &lt;= 105$<br>
+$0 &lt;= index &lt; nums2.length$<br>
+$1 &lt;= val &lt;= 105$<br>
+$1 &lt;= tot &lt;= 109$<br>
+最多调用 add 和 count 函数各 1000 次</p>
+<h2 id="思路-v3"><a class="header-anchor" href="#思路-v3">¶</a>思路</h2>
+<p>观察数据范围，$nums1$的数据范围很小，可以直接暴力，但是$nums2$的数据范围很大，暴力会超时。那么可以把$nums2$的数据存放在哈希表里，枚举$nums1$来求答案。</p>
+<h2 id="代码-v3"><a class="header-anchor" href="#代码-v3">¶</a>代码</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FindSumPairs</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; n1, n2;</span><br><span class="line">    <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; m;</span><br><span class="line">    FindSumPairs(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums1, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums2) &#123;</span><br><span class="line">        n1 = nums1;</span><br><span class="line">        n2 = nums2;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> num : nums2) &#123;</span><br><span class="line">            m[num] ++ ;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> index, <span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">        m[n2[index]] -- ;</span><br><span class="line">        n2[index] += val;</span><br><span class="line">        m[n2[index]] ++ ;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">count</span><span class="params">(<span class="keyword">int</span> tot)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = n1.size();</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i ++ ) &#123;</span><br><span class="line">            <span class="keyword">int</span> num = n1[i];</span><br><span class="line">            res += m[tot - num];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Your FindSumPairs object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"> * FindSumPairs* obj = new FindSumPairs(nums1, nums2);</span></span><br><span class="line"><span class="comment"> * obj-&gt;add(index,val);</span></span><br><span class="line"><span class="comment"> * int param_2 = obj-&gt;count(tot);</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+<h1>恰有 K 根木棍可以看到的排列数目</h1>
+<p><a href="https://leetcode-cn.com/problems/number-of-ways-to-rearrange-sticks-with-k-sticks-visible/" target="_blank" rel="noopener">1866. 恰有 K 根木棍可以看到的排列数目</a></p>
 <p>有 $n$ 根长度互不相同的木棍，长度为从 1 到 $n$ 的整数。请你将这些木棍排成一排，并满足从左侧 可以看到 恰好 $k$ 根木棍。从左侧 可以看到 木棍的前提是这个木棍的 左侧 不存在比它 更长的 木棍。</p>
-<p>例如，如果木棍排列为 $[1,3,2,5,4]$ ，那么从左侧可以看到的就是长度分别为 1、3 、5 的木棍。<br>给你 $n$ 和 $k$ ，返回符合题目要求的排列 数目 。由于答案可能很大，请返回对 $109 + 7$ 取余 的结果。</p>
+<p>例如，如果木棍排列为 $[1,3,2,5,4]$ ，那么从左侧可以看到的就是长度分别为 1、3 、5 的木棍。<br>
+给你 $n$ 和 $k$ ，返回符合题目要求的排列 数目 。由于答案可能很大，请返回对 $109 + 7$ 取余 的结果。</p>
 <p><strong>示例 1：</strong></p>
 <blockquote>
-<p>输入：n = 3, k = 2<br>输出：3<br>解释：[1,3,2], [2,3,1] 和 [2,1,3] 是仅有的能满足恰好 2 根木棍可以看到的排列。<br>可以看到的木棍已经用粗体+斜体标识。</p>
+<p>输入：n = 3, k = 2<br>
+输出：3<br>
+解释：[1,3,2], [2,3,1] 和 [2,1,3] 是仅有的能满足恰好 2 根木棍可以看到的排列。<br>
+可以看到的木棍已经用粗体+斜体标识。</p>
 </blockquote>
 <p><strong>示例 2：</strong></p>
 <blockquote>
-<p>输入：n = 5, k = 5<br>输出：1<br>解释：[1,2,3,4,5] 是唯一一种能满足全部 5 根木棍可以看到的排列。<br>可以看到的木棍已经用粗体+斜体标识。</p>
+<p>输入：n = 5, k = 5<br>
+输出：1<br>
+解释：[1,2,3,4,5] 是唯一一种能满足全部 5 根木棍可以看到的排列。<br>
+可以看到的木棍已经用粗体+斜体标识。</p>
 </blockquote>
 <p><strong>示例 3：</strong></p>
 <blockquote>
-<p>输入：n = 20, k = 11<br>输出：647427950<br>解释：总共有 647427950 (mod 109 + 7) 种能满足恰好有 11 根木棍可以看到的排列。</p>
+<p>输入：n = 20, k = 11<br>
+输出：647427950<br>
+解释：总共有 647427950 (mod 109 + 7) 种能满足恰好有 11 根木棍可以看到的排列。</p>
 </blockquote>
 <p><strong>提示：</strong></p>
-<p>$1 &lt;= n &lt;= 1000$<br>$1 &lt;= k &lt;= n$</p>
-<h2 id="思路-3"><a href="#思路-3" class="headerlink" title="思路"></a>思路</h2><p>第一类斯特林数<br>解决问题：给n个元素，求出k个环排列的方法数 。</p>
+<p>$1 &lt;= n &lt;= 1000$<br>
+$1 &lt;= k &lt;= n$</p>
+<h2 id="思路-v4"><a class="header-anchor" href="#思路-v4">¶</a>思路</h2>
+<p>第一类斯特林数<br>
+解决问题：给n个元素，求出k个环排列的方法数 。</p>
 <p>将每根能看到的木棍及其后面被挡住的木棍看作一个整体，则这 nn 根木棍被划分成了 kk 个部分，每个部分的第一根木棍即为可以看到的木棍。</p>
 <p>对于每个长为 m 的部分，对于其任意排列，我们总是可以将排列中最大的元素当作可以看到的木棍，移到该部分的开头，则剩余的木棍可以任意排列，因此每个部分的方案数为 (m-1)!，即为一个长为 m 的圆排列的方案数。</p>
 <p>因此原问题本质上就是在问长为 n 的排列划分成 k 个非空圆排列的方案数，这就是第一类斯特林数。</p>
-<h3 id="第一类斯特林数"><a href="#第一类斯特林数" class="headerlink" title="第一类斯特林数"></a>第一类斯特林数</h3><p>给n个元素，求出k个环排列的方法数</p>
+<h3 id="第一类斯特林数"><a class="header-anchor" href="#第一类斯特林数">¶</a>第一类斯特林数</h3>
+<p>给n个元素，求出k个环排列的方法数</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++ ) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= k; j ++ ) &#123;</span><br><span class="line">        dp[i][j] = (dp[i - <span class="number">1</span>][j - <span class="number">1</span>] + (ll) (i - <span class="number">1</span>) * (dp[i - <span class="number">1</span>][j])) % mod;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="第二类斯特林数"><a href="#第二类斯特林数" class="headerlink" title="第二类斯特林数"></a>第二类斯特林数</h3><p>将n个不同元素拆分成m个集合的方案数</p>
+<h3 id="第二类斯特林数"><a class="header-anchor" href="#第二类斯特林数">¶</a>第二类斯特林数</h3>
+<p>将n个不同元素拆分成m个集合的方案数</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">21</span>;</span><br><span class="line">ll Stirling[maxn][maxn];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	Stirling[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">	Stirling[<span class="number">1</span>][<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(ll i = <span class="number">2</span>; i &lt; maxn; i++) &#123;</span><br><span class="line">		<span class="keyword">for</span>(ll j = <span class="number">1</span>; j &lt;= i; j++) &#123;</span><br><span class="line">			Stirling[i][j] = Stirling[i - <span class="number">1</span>][j - <span class="number">1</span>] + j * Stirling[i - <span class="number">1</span>][j];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> ll = <span class="keyword">long</span> <span class="keyword">long</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">rearrangeSticks</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> dp[<span class="number">1010</span>][<span class="number">1010</span>];</span><br><span class="line">        <span class="keyword">int</span> mod = <span class="number">1e9</span> + <span class="number">7</span>;</span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++ ) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= k; j ++ ) &#123;</span><br><span class="line">                dp[i][j] = (dp[i - <span class="number">1</span>][j - <span class="number">1</span>] + (ll) (i - <span class="number">1</span>) * (dp[i - <span class="number">1</span>][j])) % mod;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[n][k];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="代码-v4"><a class="header-anchor" href="#代码-v4">¶</a>代码</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> ll = <span class="keyword">long</span> <span class="keyword">long</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">rearrangeSticks</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> dp[<span class="number">1010</span>][<span class="number">1010</span>];</span><br><span class="line">        <span class="keyword">int</span> mod = <span class="number">1e9</span> + <span class="number">7</span>;</span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++ ) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= k; j ++ ) &#123;</span><br><span class="line">                dp[i][j] = (dp[i - <span class="number">1</span>][j - <span class="number">1</span>] + (ll) (i - <span class="number">1</span>) * (dp[i - <span class="number">1</span>][j])) % mod;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[n][k];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
@@ -209,7 +278,7 @@
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#找出所有子集的异或总和再求和"><span class="toc-number">1.</span> <span class="toc-text">找出所有子集的异或总和再求和</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#思路"><span class="toc-number">1.1.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码"><span class="toc-number">1.2.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#构成交替字符串需要的最小交换次数"><span class="toc-number">2.</span> <span class="toc-text">构成交替字符串需要的最小交换次数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#思路-1"><span class="toc-number">2.1.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码-1"><span class="toc-number">2.2.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#找出和为指定值的下标对"><span class="toc-number">3.</span> <span class="toc-text">找出和为指定值的下标对</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#思路-2"><span class="toc-number">3.1.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码-2"><span class="toc-number">3.2.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#恰有-K-根木棍可以看到的排列数目"><span class="toc-number">4.</span> <span class="toc-text">恰有 K 根木棍可以看到的排列数目</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#思路-3"><span class="toc-number">4.1.</span> <span class="toc-text">思路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一类斯特林数"><span class="toc-number">4.1.1.</span> <span class="toc-text">第一类斯特林数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二类斯特林数"><span class="toc-number">4.1.2.</span> <span class="toc-text">第二类斯特林数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码-3"><span class="toc-number">4.2.</span> <span class="toc-text">代码</span></a></li></ol></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">找出所有子集的异或总和再求和</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#思路"><span class="toc-number">1.1.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码"><span class="toc-number">1.2.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">2.</span> <span class="toc-text">构成交替字符串需要的最小交换次数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#思路-v2"><span class="toc-number">2.1.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码-v2"><span class="toc-number">2.2.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">3.</span> <span class="toc-text">找出和为指定值的下标对</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#思路-v3"><span class="toc-number">3.1.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码-v3"><span class="toc-number">3.2.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">4.</span> <span class="toc-text">恰有 K 根木棍可以看到的排列数目</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#思路-v4"><span class="toc-number">4.1.</span> <span class="toc-text">思路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一类斯特林数"><span class="toc-number">4.1.1.</span> <span class="toc-text">第一类斯特林数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二类斯特林数"><span class="toc-number">4.1.2.</span> <span class="toc-text">第二类斯特林数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码-v4"><span class="toc-number">4.2.</span> <span class="toc-text">代码</span></a></li></ol></li></ol>	
         </div>
     
 </div>

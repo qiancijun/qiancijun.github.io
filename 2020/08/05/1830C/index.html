@@ -11,9 +11,16 @@
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
     <meta name="description" content="
-brute forcedpgreedyimplementationsortings*1400
+brute force
+dp
+greedy
+implementation
+sortings
+*1400
 
-题目描述C. Create The Teamstime limit per test2 second,"> 
+题目描述
+C. Create The Teams
+time limit per test2,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -67,23 +74,55 @@ brute forcedpgreedyimplementationsortings*1400
         </div>
         <div class="content markdown">
             <blockquote>
-<p>brute force<br>dp<br>greedy<br>implementation<br>sortings<br>*1400</p>
+<p>brute force<br>
+dp<br>
+greedy<br>
+implementation<br>
+sortings<br>
+*1400</p>
 </blockquote>
-<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>C. Create The Teams<br>time limit per test2 seconds<br>memory limit per test256 megabytes<br>inputstandard input<br>outputstandard output<br>There are n programmers that you want to split into several non-empty teams. The skill of the i-th programmer is ai. You want to assemble the maximum number of teams from them. There is a restriction for each team: the number of programmers in the team multiplied by the minimum skill among all programmers in the team must be at least x.</p>
+<h1>题目描述</h1>
+<p>C. Create The Teams<br>
+time limit per test2 seconds<br>
+memory limit per test256 megabytes<br>
+inputstandard input<br>
+outputstandard output<br>
+There are n programmers that you want to split into several non-empty teams. The skill of the i-th programmer is ai. You want to assemble the maximum number of teams from them. There is a restriction for each team: the number of programmers in the team multiplied by the minimum skill among all programmers in the team must be at least x.</p>
 <p>Each programmer should belong to at most one team. Some programmers may be left without a team.</p>
 <p>Calculate the maximum number of teams that you can assemble.</p>
-<p>Input<br>The first line contains the integer t $\textit{1≤t≤1000}$ — the number of test cases.</p>
+<p>Input<br>
+The first line contains the integer t $\textit{1≤t≤1000}$ — the number of test cases.</p>
 <p>The first line of each test case contains two integers n and x $\textit{1≤n≤105;1≤x≤109}$ — the number of programmers and the restriction of team skill respectively.</p>
 <p>The second line of each test case contains n integers a1,a2,…,an $\textit{1≤ai≤109}$, where ai is the skill of the i-th programmer.</p>
 <p>The sum of n over all inputs does not exceed 105.</p>
-<p>Output<br>For each test case print one integer — the maximum number of teams that you can assemble.</p>
+<p>Output<br>
+For each test case print one integer — the maximum number of teams that you can assemble.</p>
 <p>Example</p>
 <blockquote>
-<p>input<br>3<br>5 10<br>7 11 2 9 5<br>4 8<br>2 4 2 3<br>4 11<br>1 3 3 7</p>
-<p>output<br>2<br>1<br>0</p>
-<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>好好读读题，有以下几句关键句<br>$\textit{the number of programmers in the team multiplied by the minimum skill among all programmers in the team must be at least x}$<br>每组的程序员乘上改组值最小的，必须大于等于x的值<br>$\textit{Each programmer should belong to at most one team. Some programmers may be left without a team.}$<br>每个程序员只能在一组，可以有程序员没有组<br>用贪心的思想，每次找最大的，把最大的几个分一组，用双指针记录下标位置，方便计算个数</p>
+<p>input<br>
+3<br>
+5 10<br>
+7 11 2 9 5<br>
+4 8<br>
+2 4 2 3<br>
+4 11<br>
+1 3 3 7</p>
 </blockquote>
-<h1 id="代码（CPP）"><a href="#代码（CPP）" class="headerlink" title="代码（CPP）"></a>代码（CPP）</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> ll = <span class="keyword">long</span> <span class="keyword">long</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, x;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; x;</span><br><span class="line">    <span class="comment">// 填充数组</span></span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">nums</span><span class="params">(n, <span class="number">0</span>)</span></span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 从大到小排序</span></span><br><span class="line">    sort(nums.rbegin(), nums.rend());</span><br><span class="line">    <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// j为当前数组下标索引</span></span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (j &lt; n) &#123;</span><br><span class="line">        <span class="comment">// j - i + 1为该组程序员的个数，因为从大到小排序，j指向的肯定是更小的</span></span><br><span class="line">        <span class="keyword">if</span> ((j - i + <span class="number">1</span>) * nums[j] &gt;= x) &#123;</span><br><span class="line">            ans++;</span><br><span class="line">            i = j + <span class="number">1</span>;</span><br><span class="line">        &#125; </span><br><span class="line">        j++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    <span class="keyword">while</span> (n--) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; solve() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>output<br>
+2<br>
+1<br>
+0</p>
+</blockquote>
+<h1>思路</h1>
+<p>好好读读题，有以下几句关键句<br>
+$\textit{the number of programmers in the team multiplied by the minimum skill among all programmers in the team must be at least x}$<br>
+每组的程序员乘上改组值最小的，必须大于等于x的值<br>
+$\textit{Each programmer should belong to at most one team. Some programmers may be left without a team.}$<br>
+每个程序员只能在一组，可以有程序员没有组<br>
+用贪心的思想，每次找最大的，把最大的几个分一组，用双指针记录下标位置，方便计算个数</p>
+<h1>代码（CPP）</h1>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> ll = <span class="keyword">long</span> <span class="keyword">long</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, x;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; x;</span><br><span class="line">    <span class="comment">// 填充数组</span></span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">nums</span><span class="params">(n, <span class="number">0</span>)</span></span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 从大到小排序</span></span><br><span class="line">    sort(nums.rbegin(), nums.rend());</span><br><span class="line">    <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// j为当前数组下标索引</span></span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (j &lt; n) &#123;</span><br><span class="line">        <span class="comment">// j - i + 1为该组程序员的个数，因为从大到小排序，j指向的肯定是更小的</span></span><br><span class="line">        <span class="keyword">if</span> ((j - i + <span class="number">1</span>) * nums[j] &gt;= x) &#123;</span><br><span class="line">            ans++;</span><br><span class="line">            i = j + <span class="number">1</span>;</span><br><span class="line">        &#125; </span><br><span class="line">        j++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    <span class="keyword">while</span> (n--) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; solve() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
@@ -123,7 +162,7 @@ brute forcedpgreedyimplementationsortings*1400
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#题目描述"><span class="toc-number">1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#思路"><span class="toc-number">2.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#代码（CPP）"><span class="toc-number">3.</span> <span class="toc-text">代码（CPP）</span></a></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">2.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">3.</span> <span class="toc-text">代码（CPP）</span></a></li></ol>	
         </div>
     
 </div>

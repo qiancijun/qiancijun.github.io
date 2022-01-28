@@ -11,9 +11,13 @@
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="qiancijun,"> 
     <meta name="description" content="前言
-个人在学习MySQL时所记录的笔记，欢迎指出错误或者提供不足。文章支持md语句，如果没有显示出来请刷新一下。参考文献：《MySQL必知必会》MySQL基础2MySQL基础3
 
-MySQL数据库,"> 
+个人在学习MySQL时所记录的笔记，欢迎指出错误或者提供不足。文章支持md语句，如果没有显示出来请刷新一下。
+参考文献：《MySQL必知必会》
+MySQL基础2
+MySQL基础3
+
+MySQ,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -64,442 +68,645 @@ MySQL数据库,">
 
         </div>
         <div class="content markdown">
-            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
-<p>个人在学习MySQL时所记录的笔记，欢迎指出错误或者提供不足。文章支持md语句，如果没有显示出来请刷新一下。<br>参考文献：《MySQL必知必会》<br><a href="https://xlich.top/2020/04/28/MySQL%E5%9F%BA%E7%A1%802/" target="_blank" rel="noopener">MySQL基础2</a><br><a href="https://xlich.top/2020/05/09/MySQL%E5%9F%BA%E7%A1%803/" target="_blank" rel="noopener">MySQL基础3</a></p>
+            <h1>前言</h1>
+<blockquote>
+<p>个人在学习MySQL时所记录的笔记，欢迎指出错误或者提供不足。文章支持md语句，如果没有显示出来请刷新一下。<br>
+参考文献：《MySQL必知必会》<br>
+<a href="https://xlich.top/2020/04/28/MySQL%E5%9F%BA%E7%A1%802/" target="_blank" rel="noopener">MySQL基础2</a><br>
+<a href="https://xlich.top/2020/05/09/MySQL%E5%9F%BA%E7%A1%803/" target="_blank" rel="noopener">MySQL基础3</a></p>
 </blockquote>
-<h1 id="MySQL数据库基础"><a href="#MySQL数据库基础" class="headerlink" title="MySQL数据库基础"></a>MySQL数据库基础</h1><h2 id="DB与DBMS"><a href="#DB与DBMS" class="headerlink" title="DB与DBMS"></a>DB与DBMS</h2><blockquote>
-<p>数据库(Database)：保存有组织的数据的容器<br><br>数据库软件(Database Management System)：数据库管理系统</p>
+<h1>MySQL数据库基础</h1>
+<h2 id="DB与DBMS"><a class="header-anchor" href="#DB与DBMS">¶</a>DB与DBMS</h2>
+<blockquote>
+<p>数据库(Database)：保存有组织的数据的容器<br>
+<br>数据库软件(Database Management System)：数据库管理系统</p>
 </blockquote>
-<h2 id="数据库结构"><a href="#数据库结构" class="headerlink" title="数据库结构"></a>数据库结构</h2><h3 id="表"><a href="#表" class="headerlink" title="表"></a>表</h3><blockquote>
+<h2 id="数据库结构"><a class="header-anchor" href="#数据库结构">¶</a>数据库结构</h2>
+<h3 id="表"><a class="header-anchor" href="#表">¶</a>表</h3>
+<blockquote>
 <p>表是一种$\color{red}{结构化}$的文件，可用来存储某种特定类型的数据。数据库中的每个表都有一个名字，用来标识自己。此名字是$\color{red}{唯一}$的。</p>
 </blockquote>
-<h3 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h3><blockquote>
+<h3 id="模式"><a class="header-anchor" href="#模式">¶</a>模式</h3>
+<blockquote>
 <p>关于数据库和表的布局及特性的信息</p>
 </blockquote>
-<h3 id="列"><a href="#列" class="headerlink" title="列"></a>列</h3><blockquote>
+<h3 id="列"><a class="header-anchor" href="#列">¶</a>列</h3>
+<blockquote>
 <p>表中的一个字段，所有表都是由一个或多个列组成的。</p>
 </blockquote>
-<h3 id="行"><a href="#行" class="headerlink" title="行"></a>行</h3><blockquote>
+<h3 id="行"><a class="header-anchor" href="#行">¶</a>行</h3>
+<blockquote>
 <p>表中的数据是按行存储的，所保存的每个记录存储在自己的行内。</p>
 </blockquote>
-<h3 id="主键"><a href="#主键" class="headerlink" title="主键"></a>主键</h3><blockquote>
+<h3 id="主键"><a class="header-anchor" href="#主键">¶</a>主键</h3>
+<blockquote>
 <p>一列(或一组列)，其值能唯一区分表中每个行。</p>
 </blockquote>
-<h1 id="Mysql命令"><a href="#Mysql命令" class="headerlink" title="Mysql命令"></a>Mysql命令</h1><h2 id="命令格式"><a href="#命令格式" class="headerlink" title="命令格式"></a>命令格式</h2><p>1.命令输入在mysql&gt;之后；<br>2.命令用;或\g结束，仅按Enter不执行命令；<br>3.输入help获得帮助<br>4.输入quit或exit退出命令行程序</p>
-<h2 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h2><h3 id="连接本地数据库"><a href="#连接本地数据库" class="headerlink" title="连接本地数据库"></a>连接本地数据库</h3><blockquote>
-<p>mysql -u root -p<br>-h 主机名， 表示要连接的数据库的主机或者IP<br>-u 用户名，表示连接数据库的用户名<br>-P 端口，表示要连接数据库的端口，默认是3306，可以不写。<br>-p 表示要连接数据库的密码</p>
+<h1>Mysql命令</h1>
+<h2 id="命令格式"><a class="header-anchor" href="#命令格式">¶</a>命令格式</h2>
+<p>1.命令输入在mysql&gt;之后；<br>
+2.命令用;或\g结束，仅按Enter不执行命令；<br>
+3.输入help获得帮助<br>
+4.输入quit或exit退出命令行程序</p>
+<h2 id="连接"><a class="header-anchor" href="#连接">¶</a>连接</h2>
+<h3 id="连接本地数据库"><a class="header-anchor" href="#连接本地数据库">¶</a>连接本地数据库</h3>
+<blockquote>
+<p>mysql -u root -p<br>
+-h 主机名， 表示要连接的数据库的主机或者IP<br>
+-u 用户名，表示连接数据库的用户名<br>
+-P 端口，表示要连接数据库的端口，默认是3306，可以不写。<br>
+-p 表示要连接数据库的密码</p>
 </blockquote>
-<h3 id="连接远程数据库"><a href="#连接远程数据库" class="headerlink" title="连接远程数据库"></a>连接远程数据库</h3><blockquote>
-<p>mysql -h ip地址 -u 用户名 -p<br>例如 mysql -h  10.10.25.159  -u   root   -p</p>
+<h3 id="连接远程数据库"><a class="header-anchor" href="#连接远程数据库">¶</a>连接远程数据库</h3>
+<blockquote>
+<p>mysql -h ip地址 -u 用户名 -p<br>
+例如 mysql -h  10.10.25.159  -u   root   -p</p>
 </blockquote>
-<h3 id="退出数据库"><a href="#退出数据库" class="headerlink" title="退出数据库"></a>退出数据库</h3><blockquote>
+<h3 id="退出数据库"><a class="header-anchor" href="#退出数据库">¶</a>退出数据库</h3>
+<blockquote>
 <p>quit; 或 exit;</p>
 </blockquote>
-<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><blockquote>
-<h1 id="注释文字"><a href="#注释文字" class="headerlink" title="注释文字"></a>注释文字</h1></blockquote>
-<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><h3 id="数据库和表"><a href="#数据库和表" class="headerlink" title="数据库和表"></a>数据库和表</h3><blockquote>
-<p>数据库、表、列、用户等信息被存储在数据库和表中。但是内部表一般不直接访问。可用show命令来显示这些信息。<br>mysql&gt; SHOW DATABASES;<br>作用：查看当前所有的数据库<br>分析：返回可用数据库的一个列表。包含在这个列表中的可能是Mysql内部使用的数据库。</p>
+<h3 id="注释"><a class="header-anchor" href="#注释">¶</a>注释</h3>
+<blockquote>
+<p>#注释文字</p>
+</blockquote>
+<h2 id="常用命令"><a class="header-anchor" href="#常用命令">¶</a>常用命令</h2>
+<h3 id="数据库和表"><a class="header-anchor" href="#数据库和表">¶</a>数据库和表</h3>
+<blockquote>
+<p>数据库、表、列、用户等信息被存储在数据库和表中。但是内部表一般不直接访问。可用show命令来显示这些信息。<br>
+mysql&gt; SHOW DATABASES;<br>
+作用：查看当前所有的数据库<br>
+分析：返回可用数据库的一个列表。包含在这个列表中的可能是Mysql内部使用的数据库。</p>
 </blockquote>
 <p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Mysql/SHOW_DATABASES.png" alt="检索数据库"></p>
 <blockquote>
-<p>mysql&gt; SHOW TABLES;<br>作用：查看当前库的所有表<br>分析：返回当前选择的数据库内可用表的列表</p>
+<p>mysql&gt; SHOW TABLES;<br>
+作用：查看当前库的所有表<br>
+分析：返回当前选择的数据库内可用表的列表</p>
 </blockquote>
 <p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Mysql/SHOW_TABLES.png" alt="检索表"></p>
 <blockquote>
-<p>mysql&gt; USE 库名<br>作用：打开指定的库</p>
+<p>mysql&gt; USE 库名<br>
+作用：打开指定的库</p>
 </blockquote>
-<h3 id="其它命令"><a href="#其它命令" class="headerlink" title="其它命令"></a>其它命令</h3><blockquote>
-<p>mysql&gt; creat table 表名(<br>    列名 列类型,<br>    列名 列类型,<br>    ……..<br>);<br>作用：创建表</p>
-<p>mysql&gt; desc 表名;<br>作用：查看表结构(describe的缩写)</p>
+<h3 id="其它命令"><a class="header-anchor" href="#其它命令">¶</a>其它命令</h3>
+<blockquote>
+<p>mysql&gt; creat table 表名(<br>
+列名 列类型,<br>
+列名 列类型,<br>
+…<br>
+);<br>
+作用：创建表</p>
 </blockquote>
-<h1 id="DQL语言"><a href="#DQL语言" class="headerlink" title="DQL语言"></a>DQL语言</h1><h2 id="基础查询"><a href="#基础查询" class="headerlink" title="基础查询"></a>基础查询</h2><blockquote>
-<p>语法：<br>mysql&gt; select 查询列表 from 表名<br>类似于与JAVA中的System.out.println();<br>查询列表可以是：表中的字段，常量值、表达式、函数。<br>查询结果是一个虚拟的表格</p>
+<blockquote>
+<p>mysql&gt; desc 表名;<br>
+作用：查看表结构(describe的缩写)</p>
+</blockquote>
+<h1>DQL语言</h1>
+<h2 id="基础查询"><a class="header-anchor" href="#基础查询">¶</a>基础查询</h2>
+<blockquote>
+<p>语法：<br>
+mysql&gt; select 查询列表 from 表名<br>
+类似于与JAVA中的System.out.println();<br>
+查询列表可以是：表中的字段，常量值、表达式、函数。<br>
+查询结果是一个虚拟的表格</p>
 </blockquote>
 <ol>
-<li><p>$\color{blue}{检索单个列}$</p>
+<li>$\color{blue}{检索单个列}$</li>
+</ol>
 <blockquote>
 <p>mysql&gt; SELECT prodname FROM praducts;</p>
 </blockquote>
-</li>
-<li><p>$\color{blue}{检索多个列}$</p>
+<ol start="2">
+<li>$\color{blue}{检索多个列}$</li>
+</ol>
 <blockquote>
-<p>mysql&gt; SELECT prod_id, prod_name, prod_price products;<br>中间用$\color{red}{逗号}$隔开</p>
+<p>mysql&gt; SELECT prod_id, prod_name, prod_price products;<br>
+中间用$\color{red}{逗号}$隔开</p>
 </blockquote>
-</li>
-<li><p>$\color{blue}{使用通配符}$</p>
+<ol start="3">
+<li>$\color{blue}{使用通配符}$</li>
+</ol>
 <blockquote>
-<p>mysql&gt; SELECT <em> FROM products;<br>如果给定一个通配符(</em>)，则返回表中的所有列。</p>
+<p>mysql&gt; SELECT * FROM products;<br>
+如果给定一个通配符(*)，则返回表中的所有列。</p>
 </blockquote>
+<ol start="4">
+<li>
+<p>$\color{blue}{使用通配符}$<br>
+一般，除非确实需要表中的每个列，否则最好别使用*通配符。虽然使用通配符可能会减少操作，不用明确列出所有列，但检索不需要的列通常会降低检索和应用程序的性能。</p>
 </li>
-<li><p>$\color{blue}{使用通配符}$<br>一般，除非确实需要表中的每个列，否则最好别使用*通配符。虽然使用通配符可能会减少操作，不用明确列出所有列，但检索不需要的列通常会降低检索和应用程序的性能。</p>
+<li>
+<p>如果字段名除和关键字重复，可以利用着重号“ ` ”来引用字段。</p>
 </li>
-<li><p>如果字段名除和关键字重复，可以利用着重号“ ` ”来引用字段。</p>
+<li>
+<p>$\color{blue}{查询常量值}$</p>
 </li>
-<li><p>$\color{blue}{查询常量值}$</p>
+</ol>
 <blockquote>
-<p>mysql&gt; SELECT 100;<br>mysql&gt; SELECT ‘Qianci_Jun’;</p>
+<p>mysql&gt; SELECT 100;<br>
+mysql&gt; SELECT ‘Qianci_Jun’;</p>
 </blockquote>
-</li>
-<li><p>$\color{blue}{查询表达式}$</p>
+<ol start="7">
+<li>$\color{blue}{查询表达式}$</li>
+</ol>
 <blockquote>
 <p>mysql&gt; SELECT 100*100;</p>
 </blockquote>
-</li>
-<li><p>$\color{blue}{查询函数}$</p>
+<ol start="8">
+<li>$\color{blue}{查询函数}$</li>
+</ol>
 <blockquote>
 <p>mysql&gt; SELECT version(); #调用该方法，查询它的返回值</p>
 </blockquote>
-</li>
-<li><p>$\color{blue}{字段别名}$</p>
+<ol start="9">
+<li>$\color{blue}{字段别名}$</li>
+</ol>
 <blockquote>
-<p>mysql&gt; SELECT 100 <em> 100 $\color{red}{AS}$ 一万;<br>多个字段起别名：<br>mysql&gt; SELECT 100 </em> 100 AS 一万, person_name AS 名字 FROM 表名;</p>
+<p>mysql&gt; SELECT 100 * 100 $\color{red}{AS}$ 一万;<br>
+多个字段起别名：<br>
+mysql&gt; SELECT 100 * 100 AS 一万, person_name AS 名字 FROM 表名;</p>
 </blockquote>
-<ul>
-<li>注：<ul>
-<li>便于理解</li>
-<li>如果要查询的字段有重名的情况，使用别名可以区分开来</li>
-<li>其中AS可以省略不写</li>
-<li>如果别名中有特殊符号（例如：# 空格），别名用双引号包括起来</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>$\color{blue}{去重}$</p>
+<pre><code>* 注：
+    * 便于理解
+    * 如果要查询的字段有重名的情况，使用别名可以区分开来
+    * 其中AS可以省略不写
+    * 如果别名中有特殊符号（例如：# 空格），别名用双引号包括起来
+</code></pre>
+<ol start="10">
+<li>$\color{blue}{去重}$</li>
+</ol>
 <blockquote>
-<p>关键字：distinct<br>mysql&gt; SELECT DISTINCT 字段 FROM 表名;</p>
+<p>关键字：distinct<br>
+mysql&gt; SELECT DISTINCT 字段 FROM 表名;</p>
 </blockquote>
-</li>
-<li><p>$\color{blue}{+号的用法}$</p>
+<ol start="11">
+<li>$\color{blue}{+号的用法}$</li>
+</ol>
 <blockquote>
 <p>仅起算术运算的作用，如果有一个字段为字符型，则会自动转换成整数型。</p>
 </blockquote>
-</li>
-<li><p>$\color{blue}{concat(str1, str2…)函数}$</p>
-<blockquote>
-<p>比如：查询员工的姓和名并且连接成一个字段，显示为姓名<br>mysql&gt; SELECT CONCAT(last_name, first_name) AS 姓名 FROM employees;</p>
-</blockquote>
-</li>
-<li><p>$\color{blue}{ifnull(exp1, exp2)函数}$</p>
-<blockquote>
-<p>作用：判断是否为空，第一个参数代表可能为null的表达式，第二个参数代表，如果第一个参数为null为真那么返回exp2对应的值。<br>并且可以在concat函数中调用ifnull。</p>
-</blockquote>
-</li>
+<ol start="12">
+<li>$\color{blue}{concat(str1, str2…)函数}$</li>
 </ol>
+<blockquote>
+<p>比如：查询员工的姓和名并且连接成一个字段，显示为姓名<br>
+mysql&gt; SELECT CONCAT(last_name, first_name) AS 姓名 FROM employees;</p>
+</blockquote>
+<ol start="13">
+<li>$\color{blue}{ifnull(exp1, exp2)函数}$</li>
+</ol>
+<blockquote>
+<p>作用：判断是否为空，第一个参数代表可能为null的表达式，第二个参数代表，如果第一个参数为null为真那么返回exp2对应的值。<br>
+并且可以在concat函数中调用ifnull。</p>
+</blockquote>
 <p><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Mysql/select.png" alt=""></p>
-<h2 id="限制结果"><a href="#限制结果" class="headerlink" title="限制结果"></a>限制结果</h2><p>SELECT语句返回所有匹配的行，它们可能是指定表中的每个行。为了返回第一行或前几行，可以使用LIMIT子句。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        prod_name</span><br><span class="line">FROM</span><br><span class="line">        products</span><br><span class="line">LIMIT</span><br><span class="line">        5;</span><br></pre></td></tr></table></figure><br>分析：此语句使用SELECT语句检索单个列。LIMIT 5指示MySQL返回不多于5行。</p>
+<h2 id="限制结果"><a class="header-anchor" href="#限制结果">¶</a>限制结果</h2>
+<p>SELECT语句返回所有匹配的行，它们可能是指定表中的每个行。为了返回第一行或前几行，可以使用LIMIT子句。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        prod_name</span><br><span class="line">FROM</span><br><span class="line">        products</span><br><span class="line">LIMIT</span><br><span class="line">        5;</span><br></pre></td></tr></table></figure>
+<p>分析：此语句使用SELECT语句检索单个列。LIMIT 5指示MySQL返回不多于5行。</p>
 <ul>
-<li>$\color{red}{注:}$<ul>
+<li>$\color{red}{注:}$
+<ul>
 <li>行0：检索出来的第一行为行0而不是行1.因此，LIMIT 1，1将检索出第二行而不是第一行。</li>
 <li>在行数不够时：LIMIT中指定要检索的行数为检索的最大行数。如果没有足够的行，MySQL将只返回它能返回的那么多行。</li>
 </ul>
 </li>
 </ul>
-<h2 id="条件查询"><a href="#条件查询" class="headerlink" title="条件查询"></a>条件查询</h2><blockquote>
-<p>语法：SELECT 查询列表 FROM 表名 $\color{red}{where}$ 筛选条件;<br>解释：当where后的筛选条件成立为True，则表名可以筛选出来。若不成立为False，则该说明该数据不需要。</p>
+<h2 id="条件查询"><a class="header-anchor" href="#条件查询">¶</a>条件查询</h2>
+<blockquote>
+<p>语法：SELECT 查询列表 FROM 表名 $\color{red}{where}$ 筛选条件;<br>
+解释：当where后的筛选条件成立为True，则表名可以筛选出来。若不成立为False，则该说明该数据不需要。</p>
 </blockquote>
 <ol>
-<li><p>$\color{blue}{过滤方式}$</p>
+<li>
+<p>$\color{blue}{过滤方式}$</p>
 <ul>
-<li>按条件表达式筛选<ul>
+<li>按条件表达式筛选
+<ul>
 <li>条件运算符： &gt; &lt; =(等于) !=(不等于) &lt;&gt;(不等于) BETWEEN(在指定的两个值之间)</li>
 </ul>
 </li>
-<li>按逻辑表达式筛选<ul>
+<li>按逻辑表达式筛选
+<ul>
 <li>逻辑运算符：&amp;&amp;(与)[and] ||(或)[or] !(非)[not]</li>
 </ul>
 </li>
-<li>模糊查询<ul>
-<li>like、between and、in、is null </li>
+<li>模糊查询
+<ul>
+<li>like、between and、in、is null</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p>$\color{blue}{按条件表达式筛选}$</p>
+<li>
+<p>$\color{blue}{按条件表达式筛选}$</p>
+</li>
+</ol>
 <blockquote>
 <p>比如：想查询年龄大于10的person信息；</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT </span><br><span class="line">        *</span><br><span class="line">FROM</span><br><span class="line">        people</span><br><span class="line">WHERE</span><br><span class="line">        age &gt; 10;</span><br></pre></td></tr></table></figure>
-<p>比如：想查询部门编号不等于90的员工名和部门编号</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        name,</span><br><span class="line">        department_id</span><br><span class="line">FROM</span><br><span class="line">        employees</span><br><span class="line">WHERE</span><br><span class="line">        department_id &lt;&gt; 90; #或 !&#x3D; 90</span><br></pre></td></tr></table></figure>
 </blockquote>
-</li>
-<li><p>$\color{blue}{按逻辑表达式筛选}$</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT </span><br><span class="line">        *</span><br><span class="line">FROM</span><br><span class="line">        people</span><br><span class="line">WHERE</span><br><span class="line">        age &gt; 10;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>比如：想查询部门编号不等于90的员工名和部门编号</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        name,</span><br><span class="line">        department_id</span><br><span class="line">FROM</span><br><span class="line">        employees</span><br><span class="line">WHERE</span><br><span class="line">        department_id &lt;&gt; 90; #或 !&#x3D; 90</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>$\color{blue}{按逻辑表达式筛选}$</li>
+</ol>
 <blockquote>
 <p>比如：想去查询年龄在10到20之间的人的姓名；</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        name</span><br><span class="line">FROM</span><br><span class="line">        people</span><br><span class="line">WHERE</span><br><span class="line">        age &gt;&#x3D; 10</span><br><span class="line">AND</span><br><span class="line">        age &lt;&#x3D; 20;</span><br></pre></td></tr></table></figure>
 </blockquote>
-</li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        name</span><br><span class="line">FROM</span><br><span class="line">        people</span><br><span class="line">WHERE</span><br><span class="line">        age &gt;&#x3D; 10</span><br><span class="line">AND</span><br><span class="line">        age &lt;&#x3D; 20;</span><br></pre></td></tr></table></figure>
+<h2 id="用通配符进行过滤"><a class="header-anchor" href="#用通配符进行过滤">¶</a>用通配符进行过滤</h2>
+<ol>
+<li>$\color{blue}{通配符}$</li>
 </ol>
-<h2 id="用通配符进行过滤"><a href="#用通配符进行过滤" class="headerlink" title="用通配符进行过滤"></a>用通配符进行过滤</h2><ol>
-<li>$\color{blue}{通配符}$<blockquote>
+<blockquote>
 <p>用来匹配值的一部分的特殊字符。</p>
 </blockquote>
-</li>
-<li>$\color{blue}{搜索模式}$<blockquote>
+<ol start="2">
+<li>$\color{blue}{搜索模式}$</li>
+</ol>
+<blockquote>
 <p>由字面值、通配符或两者组合成的搜索条件。</p>
 </blockquote>
-</li>
-</ol>
 <p><strong>注：</strong></p>
 <blockquote>
 <p>为在搜索子句中使用通配符，必须使用LIKE操作符。LIKE指示Mysql，后跟的搜索模式利用通配符匹配而不是直接相等匹配进行比较。</p>
 </blockquote>
-<h3 id="百分号（-）通配符"><a href="#百分号（-）通配符" class="headerlink" title="百分号（%）通配符"></a>百分号（%）通配符</h3><blockquote>
-<p>最常使用的通配符是百分号（%）。在搜索串中，%表示任何字符出现任意次数。比如想找出所有以词John起头的人。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        name</span><br><span class="line">FROM</span><br><span class="line">        person</span><br><span class="line">WHERE</span><br><span class="line">        name LIKE &#39;John%&#39;;</span><br></pre></td></tr></table></figure><br>通配符可在搜索模式中任意位置使用，并且可以使用多个通配符<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT </span><br><span class="line">        prod_id, prod_name</span><br><span class="line">FROM</span><br><span class="line">        products</span><br><span class="line">WHERE</span><br><span class="line">        prod_name LIKE &#39;%anvil%&#39;;</span><br></pre></td></tr></table></figure><br>搜索模式’%anvil’表示匹配任何位置包含文本anvil的值，不论它之前或之后出现什么字符；<br>通配符也可以出现在搜索模式的中间，比如：找出所有$\color{red}{以s起头e结尾}$的产品。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        prod_name</span><br><span class="line">FROM</span><br><span class="line">        products</span><br><span class="line">WHERE</span><br><span class="line">        prod_name LIKE &#39;s%e&#39;;</span><br></pre></td></tr></table></figure><br><strong>注：</strong><br>尾空格可能会干扰通配符匹配！！！</p>
+<h3 id="百分号（-）通配符"><a class="header-anchor" href="#百分号（-）通配符">¶</a>百分号（%）通配符</h3>
+<blockquote>
+<p>最常使用的通配符是百分号（%）。在搜索串中，%表示任何字符出现任意次数。比如想找出所有以词John起头的人。</p>
 </blockquote>
-<h2 id="排序查询"><a href="#排序查询" class="headerlink" title="排序查询"></a>排序查询</h2><blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        name</span><br><span class="line">FROM</span><br><span class="line">        person</span><br><span class="line">WHERE</span><br><span class="line">        name LIKE &#39;John%&#39;;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>通配符可在搜索模式中任意位置使用，并且可以使用多个通配符</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT </span><br><span class="line">        prod_id, prod_name</span><br><span class="line">FROM</span><br><span class="line">        products</span><br><span class="line">WHERE</span><br><span class="line">        prod_name LIKE &#39;%anvil%&#39;;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>搜索模式’%anvil’表示匹配任何位置包含文本anvil的值，不论它之前或之后出现什么字符；<br>
+通配符也可以出现在搜索模式的中间，比如：找出所有$\color{red}{以s起头e结尾}$的产品。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        prod_name</span><br><span class="line">FROM</span><br><span class="line">        products</span><br><span class="line">WHERE</span><br><span class="line">        prod_name LIKE &#39;s%e&#39;;</span><br></pre></td></tr></table></figure>
+<p><strong>注：</strong></p>
+<blockquote>
+<p>尾空格可能会干扰通配符匹配！！！</p>
+</blockquote>
+<h2 id="排序查询"><a class="header-anchor" href="#排序查询">¶</a>排序查询</h2>
+<blockquote>
 <p>语法：SELECT 查询列表 FROM 表 WHERE 条件 ORDER BY 排序列表 asc|desc;</p>
-<p>比如：查询员工信息，要求工资从高到低排序；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        *</span><br><span class="line">FROM</span><br><span class="line">        employees</span><br><span class="line">ORDER BY</span><br><span class="line">        salary DESC;#desc降序 esd升序(可省略)</span><br></pre></td></tr></table></figure></p>
 </blockquote>
+<blockquote>
+<p>比如：查询员工信息，要求工资从高到低排序；</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        *</span><br><span class="line">FROM</span><br><span class="line">        employees</span><br><span class="line">ORDER BY</span><br><span class="line">        salary DESC;#desc降序 esd升序(可省略)</span><br></pre></td></tr></table></figure>
 <ol>
-<li><p>$\color{blue}{排序中加入筛选}$</p>
+<li>$\color{blue}{排序中加入筛选}$</li>
+</ol>
 <blockquote>
 <p>比如：想要查询部门编号大于等于90的员工信息，按入职时间先后排序；</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        *</span><br><span class="line">FROM</span><br><span class="line">        employees</span><br><span class="line">WHERE</span><br><span class="line">        department_id &gt;&#x3D; 90</span><br><span class="line">ORDER BY</span><br><span class="line">        hiredate ASC;</span><br></pre></td></tr></table></figure>
 </blockquote>
-</li>
-<li><p>$\color{blue}{按多个列排序}$</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        *</span><br><span class="line">FROM</span><br><span class="line">        employees</span><br><span class="line">WHERE</span><br><span class="line">        department_id &gt;&#x3D; 90</span><br><span class="line">ORDER BY</span><br><span class="line">        hiredate ASC;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>$\color{blue}{按多个列排序}$</li>
+</ol>
 <blockquote>
 <p>比如：想去检索产品id，产品价格和产品名字，并且按产品价格和产品名字排序；</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        prod_id, prod_price, prod_name</span><br><span class="line">FROM</span><br><span class="line">        products</span><br><span class="line">ORDER BY</span><br><span class="line">        prod_price, prod_name;</span><br></pre></td></tr></table></figure>
 </blockquote>
-</li>
-</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        prod_id, prod_price, prod_name</span><br><span class="line">FROM</span><br><span class="line">        products</span><br><span class="line">ORDER BY</span><br><span class="line">        prod_price, prod_name;</span><br></pre></td></tr></table></figure>
 <p>$\color{purple}{注：}$</p>
 <blockquote>
 <p>在给出ORDER BY子句时，应该保证它位于FROM子句之后。如果使用LIMIT，它必须位于ORDER BY之后，使用子句的次序不对将产生错误信息。一般ORDER BY子句都放在$\color{purple}{最后}$除了$\color{purple}{limit子句}$。</p>
 </blockquote>
-<h2 id="创建计算字段"><a href="#创建计算字段" class="headerlink" title="创建计算字段"></a>创建计算字段</h2><ol>
-<li>$\color{blue}{拼接字段}$<blockquote>
+<h2 id="创建计算字段"><a class="header-anchor" href="#创建计算字段">¶</a>创建计算字段</h2>
+<ol>
+<li>$\color{blue}{拼接字段}$</li>
+</ol>
+<blockquote>
 <p>拼接：将值连结到一起构成单个值。</p>
 </blockquote>
-</li>
-</ol>
-<h3 id="Concat函数"><a href="#Concat函数" class="headerlink" title="Concat函数"></a>Concat函数</h3><blockquote>
-<p>作用：拼接串，把多个串连接起来形成一个较长的串。<br>比如：想要查询人民和国家，并且按 人名（国家）形式输出；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        Concat(name, &#39;(&#39;, country, &#39;)&#39;)</span><br><span class="line">FROM</span><br><span class="line">        people</span><br><span class="line">ORDER BY </span><br><span class="line">        name;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Concat函数"><a class="header-anchor" href="#Concat函数">¶</a>Concat函数</h3>
+<blockquote>
+<p>作用：拼接串，把多个串连接起来形成一个较长的串。<br>
+比如：想要查询人民和国家，并且按 人名（国家）形式输出；</p>
 </blockquote>
-<h1 id="常见函数"><a href="#常见函数" class="headerlink" title="常见函数"></a>常见函数</h1><blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        Concat(name, &#39;(&#39;, country, &#39;)&#39;)</span><br><span class="line">FROM</span><br><span class="line">        people</span><br><span class="line">ORDER BY </span><br><span class="line">        name;</span><br></pre></td></tr></table></figure>
+<h1>常见函数</h1>
+<blockquote>
 <p>调用函数方法：SELECT 函数名(实参列表) [FROM 表];</p>
+</blockquote>
+<blockquote>
 <p>Concat函数在之前已经记录过，这里不再重复记录</p>
-<h2 id="文本处理函数"><a href="#文本处理函数" class="headerlink" title="文本处理函数"></a>文本处理函数</h2></blockquote>
-<h3 id="length"><a href="#length" class="headerlink" title="length"></a>length</h3><blockquote>
-<p>作用：获取参数值的字节个数；<br>mysql&gt; SELECT LEGHTH(‘temp’);<br>mysql&gt; SELECT LENGTH(‘你好’); #utf8下中文占三个字节</p>
 </blockquote>
-<h3 id="upper"><a href="#upper" class="headerlink" title="upper"></a>upper</h3><blockquote>
-<p>作用：大小写转换，upper, lower<br>mysql&gt; SELECT UPPER(‘hello’);<br>mysql&gt; SELECT LOWER(‘HELLO’);</p>
-<p>比如：把姓变大写，名小写，然后拼接<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        CONCAT(UPPER(last_name), LOWER(first_name)) AS 姓名</span><br><span class="line">FROM </span><br><span class="line">        employees;</span><br></pre></td></tr></table></figure></p>
+<h2 id="文本处理函数"><a class="header-anchor" href="#文本处理函数">¶</a>文本处理函数</h2>
+<h3 id="length"><a class="header-anchor" href="#length">¶</a>length</h3>
+<blockquote>
+<p>作用：获取参数值的字节个数；<br>
+mysql&gt; SELECT LEGHTH(‘temp’);<br>
+mysql&gt; SELECT LENGTH(‘你好’); #utf8下中文占三个字节</p>
 </blockquote>
-<h3 id="substr"><a href="#substr" class="headerlink" title="substr"></a>substr</h3><blockquote>
+<h3 id="upper"><a class="header-anchor" href="#upper">¶</a>upper</h3>
+<blockquote>
+<p>作用：大小写转换，upper, lower<br>
+mysql&gt; SELECT UPPER(‘hello’);<br>
+mysql&gt; SELECT LOWER(‘HELLO’);</p>
+</blockquote>
+<blockquote>
+<p>比如：把姓变大写，名小写，然后拼接</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        CONCAT(UPPER(last_name), LOWER(first_name)) AS 姓名</span><br><span class="line">FROM </span><br><span class="line">        employees;</span><br></pre></td></tr></table></figure>
+<h3 id="substr"><a class="header-anchor" href="#substr">¶</a>substr</h3>
+<blockquote>
 <p>作用：获取子串(substring)</p>
 </blockquote>
 <ol>
-<li><p>$\color{blue}{substr(string, pos)}$</p>
+<li>$\color{blue}{substr(string, pos)}$</li>
+</ol>
 <blockquote>
 <p>截取从下标索引为pos开始到字符串维的子串。$\color{red}{Mysql中的字符串下标索引从1开始}$</p>
 </blockquote>
-</li>
-<li><p>$\color{blue}{substr(string, pos, len)}$</p>
+<ol start="2">
+<li>$\color{blue}{substr(string, pos, len)}$</li>
+</ol>
 <blockquote>
 <p>截取从下标索引为pos开始的len个字符。（len代表字符长度，不是字节个数）</p>
 </blockquote>
-</li>
-</ol>
-<h3 id="instr"><a href="#instr" class="headerlink" title="instr"></a>instr</h3><blockquote>
-<p>instr(str, substr)：返回substr在str里的起始索引，如果找不到返回0。<br>mysql&gt; SELECT INSTR(‘hello’, ‘e’);</p>
+<h3 id="instr"><a class="header-anchor" href="#instr">¶</a>instr</h3>
+<blockquote>
+<p>instr(str, substr)：返回substr在str里的起始索引，如果找不到返回0。<br>
+mysql&gt; SELECT INSTR(‘hello’, ‘e’);</p>
 </blockquote>
-<h3 id="trim"><a href="#trim" class="headerlink" title="trim"></a>trim</h3><blockquote>
-<p>trim(str)：去除前后空格。<br>mysql&gt; SELECT TRIM(‘   hello  ‘);</p>
-<p>trim(str1 FROM str2)：去除str2前后的str1.<br>mysql&gt; SELECT TRIM(‘l’ FROM ‘hello’);</p>
+<h3 id="trim"><a class="header-anchor" href="#trim">¶</a>trim</h3>
+<blockquote>
+<p>trim(str)：去除前后空格。<br>
+mysql&gt; SELECT TRIM(’   hello  ');</p>
 </blockquote>
-<h3 id="lpad"><a href="#lpad" class="headerlink" title="lpad"></a>lpad</h3><blockquote>
-<p>lpad(str, len, padstr)：在str的左边填充padstr直到总字符长度为len为止。如果len小于str原本的长度，则str缩短至len。同样的有rpad。<br>mysql&gt; SELECT LPAD(‘Hi’, 10, ‘*’);</p>
+<blockquote>
+<p>trim(str1 FROM str2)：去除str2前后的str1.<br>
+mysql&gt; SELECT TRIM(‘l’ FROM ‘hello’);</p>
 </blockquote>
-<h3 id="replace"><a href="#replace" class="headerlink" title="replace"></a>replace</h3><blockquote>
-<p>replace(str, from_str, to_str)：把str中的from_str换成to_str。<br>mysql&gt; SELECT REPLACE(‘HELLO’, ‘LLO’, ‘llo’);</p>
+<h3 id="lpad"><a class="header-anchor" href="#lpad">¶</a>lpad</h3>
+<blockquote>
+<p>lpad(str, len, padstr)：在str的左边填充padstr直到总字符长度为len为止。如果len小于str原本的长度，则str缩短至len。同样的有rpad。<br>
+mysql&gt; SELECT LPAD(‘Hi’, 10, ‘*’);</p>
 </blockquote>
-<h2 id="日期和时间处理函数"><a href="#日期和时间处理函数" class="headerlink" title="日期和时间处理函数"></a>日期和时间处理函数</h2><blockquote>
+<h3 id="replace"><a class="header-anchor" href="#replace">¶</a>replace</h3>
+<blockquote>
+<p>replace(str, from_str, to_str)：把str中的from_str换成to_str。<br>
+mysql&gt; SELECT REPLACE(‘HELLO’, ‘LLO’, ‘llo’);</p>
+</blockquote>
+<h2 id="日期和时间处理函数"><a class="header-anchor" href="#日期和时间处理函数">¶</a>日期和时间处理函数</h2>
+<blockquote>
 <p>日期和时间采用相应的数据类型和特殊的格式存储，以便能快速和有效的排序或过滤，别且节省物理空间。</p>
 </blockquote>
-<h3 id="now"><a href="#now" class="headerlink" title="now"></a>now</h3><ol>
-<li>$\color{blue}{now()}$<blockquote>
-<p>作用：返回当前系统日期+时间。<br>mysql&gt; SELECT NOW();</p>
-</blockquote>
-</li>
+<h3 id="now"><a class="header-anchor" href="#now">¶</a>now</h3>
+<ol>
+<li>$\color{blue}{now()}$</li>
 </ol>
-<h3 id="curdate"><a href="#curdate" class="headerlink" title="curdate"></a>curdate</h3><ol>
-<li>$\color{blue}{curdate()}$<blockquote>
-<p>作用：返回当前系统日期（不包含时间）。<br>mysql&gt; SELECT CURDATE();</p>
-</blockquote>
-</li>
-</ol>
-<h3 id="curtime"><a href="#curtime" class="headerlink" title="curtime"></a>curtime</h3><ol>
-<li>$\color{blue}{curtime()}$<blockquote>
-<p>作用：返回当前系统时间（不包含日期）。<br>mysql&gt; SELECT CURTIME();</p>
-</blockquote>
-</li>
-</ol>
-<h3 id="year"><a href="#year" class="headerlink" title="year"></a>year</h3><ol>
-<li>$\color{blue}{year(Date)}$<blockquote>
-<p>作用：获取指定日期的年份。<br>mysql&gt; SELECT YEAR(NOW());<br>相同的还有Month, Day, Hour, Minute, Second, Time </p>
-</blockquote>
-</li>
-</ol>
-<h3 id="str-to-date"><a href="#str-to-date" class="headerlink" title="str_to_date"></a>str_to_date</h3><ol>
-<li>$\color{blue}{str_to_date()}$<blockquote>
-<p>作用：将日期格式的字符转换成指定格式的日期<br>mysql&gt; SELECT STR_TO_DATE(‘1-1-2000’, ‘%m-%d-%y);</p>
-</blockquote>
-</li>
-</ol>
-<h3 id="date-format"><a href="#date-format" class="headerlink" title="date_format"></a>date_format</h3><ol>
-<li>$\color{blue}{date_format()}$<blockquote>
-<p>作用：将日期转换成字符<br>mysql&gt; SELECT DATE_FORMAT(‘2000/1/1, ‘%Y年%m月%d日’);</p>
-</blockquote>
-</li>
-</ol>
-<h3 id="时间戳操作"><a href="#时间戳操作" class="headerlink" title="时间戳操作"></a>时间戳操作</h3><ol>
-<li><p>秒级别的时间戳 unix_timestamp(Date)</p>
 <blockquote>
-<p>作用：从1970-01-01 00：00：00到date按秒算。<br>mysql&gt; SELECT UNIX_TIMESTAMP(NOW());</p>
+<p>作用：返回当前系统日期+时间。<br>
+mysql&gt; SELECT NOW();</p>
 </blockquote>
-</li>
-<li><p>当前时间 current_timestamp()</p>
-<blockquote>
-<p>作用：显示当前时间<br>mysql&gt; SELECT CURRENT_TIMESTAMP();</p>
-</blockquote>
-</li>
-<li><p>FROM_UNIXTIME格式化时间戳函数 FROM_UNIXTIME()</p>
-<blockquote>
-<p>作用：将MySQL中以INT(11)存储的时间以”YYYY-MM-DD”格式来显示。<br>语法：FROM_UNIXTIME(unix_timestamp,format);</p>
-</blockquote>
-</li>
+<h3 id="curdate"><a class="header-anchor" href="#curdate">¶</a>curdate</h3>
+<ol>
+<li>$\color{blue}{curdate()}$</li>
 </ol>
-<p>附：format格式化字符<br><img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Mysql/time_format.png" alt=""></p>
+<blockquote>
+<p>作用：返回当前系统日期（不包含时间）。<br>
+mysql&gt; SELECT CURDATE();</p>
+</blockquote>
+<h3 id="curtime"><a class="header-anchor" href="#curtime">¶</a>curtime</h3>
+<ol>
+<li>$\color{blue}{curtime()}$</li>
+</ol>
+<blockquote>
+<p>作用：返回当前系统时间（不包含日期）。<br>
+mysql&gt; SELECT CURTIME();</p>
+</blockquote>
+<h3 id="year"><a class="header-anchor" href="#year">¶</a>year</h3>
+<ol>
+<li>$\color{blue}{year(Date)}$</li>
+</ol>
+<blockquote>
+<p>作用：获取指定日期的年份。<br>
+mysql&gt; SELECT YEAR(NOW());<br>
+相同的还有Month, Day, Hour, Minute, Second, Time</p>
+</blockquote>
+<h3 id="str-to-date"><a class="header-anchor" href="#str-to-date">¶</a>str_to_date</h3>
+<ol>
+<li>$\color{blue}{str_to_date()}$</li>
+</ol>
+<blockquote>
+<p>作用：将日期格式的字符转换成指定格式的日期<br>
+mysql&gt; SELECT STR_TO_DATE(‘1-1-2000’, '%m-%d-%y);</p>
+</blockquote>
+<h3 id="date-format"><a class="header-anchor" href="#date-format">¶</a>date_format</h3>
+<ol>
+<li>$\color{blue}{date_format()}$</li>
+</ol>
+<blockquote>
+<p>作用：将日期转换成字符<br>
+mysql&gt; SELECT DATE_FORMAT('2000/1/1, ‘%Y年%m月%d日’);</p>
+</blockquote>
+<h3 id="时间戳操作"><a class="header-anchor" href="#时间戳操作">¶</a>时间戳操作</h3>
+<ol>
+<li>秒级别的时间戳 unix_timestamp(Date)</li>
+</ol>
+<blockquote>
+<p>作用：从1970-01-01 00：00：00到date按秒算。<br>
+mysql&gt; SELECT UNIX_TIMESTAMP(NOW());</p>
+</blockquote>
+<ol start="2">
+<li>当前时间 current_timestamp()</li>
+</ol>
+<blockquote>
+<p>作用：显示当前时间<br>
+mysql&gt; SELECT CURRENT_TIMESTAMP();</p>
+</blockquote>
+<ol start="3">
+<li>FROM_UNIXTIME格式化时间戳函数 FROM_UNIXTIME()</li>
+</ol>
+<blockquote>
+<p>作用：将MySQL中以INT(11)存储的时间以&quot;YYYY-MM-DD&quot;格式来显示。<br>
+语法：FROM_UNIXTIME(unix_timestamp,format);</p>
+</blockquote>
+<p>附：format格式化字符<br>
+<img src="https://qiancijun.coding.net/p/Image/d/Image/git/raw/master/Mysql/time_format.png" alt=""></p>
 <p>$\color{red}{注意事项}$</p>
 <ol>
 <li>应该总是使用4位数字的年份。</li>
 <li>如果要的是日期，请使用Date()</li>
 <li>MySQL 4.1.1中增加了许多日期函数，如果想要知道哪些函数可用，请自行查询。</li>
 </ol>
-<h2 id="数值处理函数"><a href="#数值处理函数" class="headerlink" title="数值处理函数"></a>数值处理函数</h2><blockquote>
+<h2 id="数值处理函数"><a class="header-anchor" href="#数值处理函数">¶</a>数值处理函数</h2>
+<blockquote>
 <p>数值处理函数仅处理数值数据。这些函数主要运用于代数、三角或几何运算。</p>
 </blockquote>
-<h3 id="round"><a href="#round" class="headerlink" title="round"></a>round</h3><ol>
-<li><p>$\color{blue}{round(X)}$</p>
+<h3 id="round"><a class="header-anchor" href="#round">¶</a>round</h3>
+<ol>
+<li>$\color{blue}{round(X)}$</li>
+</ol>
 <blockquote>
-<p>作用：四舍五入。<br>mysql&gt; SELECT ROUND(1.4);</p>
+<p>作用：四舍五入。<br>
+mysql&gt; SELECT ROUND(1.4);</p>
 </blockquote>
-</li>
-<li><p>$\color{blue}{round(X, D)}$</p>
+<ol start="2">
+<li>$\color{blue}{round(X, D)}$</li>
+</ol>
 <blockquote>
-<p>作用：指定精度舍弃位数。<br>mysql&gt; SELECT ROUND(1.567, 2); #1.57</p>
+<p>作用：指定精度舍弃位数。<br>
+mysql&gt; SELECT ROUND(1.567, 2); #1.57</p>
 </blockquote>
-</li>
+<h3 id="ceil"><a class="header-anchor" href="#ceil">¶</a>ceil</h3>
+<ol>
+<li>$\color{blue}{ceil(X)}$</li>
 </ol>
-<h3 id="ceil"><a href="#ceil" class="headerlink" title="ceil"></a>ceil</h3><ol>
-<li>$\color{blue}{ceil(X)}$<blockquote>
-<p>作用：向上取整。返回大于等于该参数的最小整数。<br>mysql&gt; SELECT CEIL(1.5); #2 </p>
-</blockquote>
-</li>
-</ol>
-<h3 id="floor"><a href="#floor" class="headerlink" title="floor"></a>floor</h3><ol>
-<li>$\color{blue}{floor(X)}$<blockquote>
-<p>作用：向下取整。返回小于等于该参数的最大整数。<br>mysql&gt; SELECT FLOOR(1.5); #2</p>
-</blockquote>
-</li>
-</ol>
-<h3 id="truncate"><a href="#truncate" class="headerlink" title="truncate"></a>truncate</h3><ol>
-<li>$\color{blue}{truncate(X, D)}$<blockquote>
-<p>作用：截断。小数点后保留D位。<br>mysql&gt; SELECT TRUNCATE(1.65, 1); #1.6</p>
-</blockquote>
-</li>
-</ol>
-<h3 id="mod"><a href="#mod" class="headerlink" title="mod"></a>mod</h3><ol>
-<li>$\color{blue}{mod(X, D)}$<blockquote>
-<p>作用：取余。<br>mysql&gt; SELECT MOD(10, 3); #1</p>
-</blockquote>
-</li>
-</ol>
-<h3 id="其余"><a href="#其余" class="headerlink" title="其余"></a>其余</h3><blockquote>
-<p>下面再列举一些常见的数学函数：<br>Abs():返回一个数的绝对值。<br>Cos():返回一个角度的余弦。<br>Exp():返回一个数的指数。<br>Pi():返回圆周率。<br>Rand():返回一个随机数。<br>Sin():返回一个角度的平方根。<br>Tan():返回一个角度的正切。</p>
-</blockquote>
-<h2 id="流程控制函数"><a href="#流程控制函数" class="headerlink" title="流程控制函数"></a>流程控制函数</h2><ol>
-<li><p>$\color{blue}{if}$</p>
 <blockquote>
-<p>if(exp1, exp2, exp3);<br>作用：如果表达式1的值为true，则返回表达式2，否则返回表达式3.类似三目运算符。</p>
+<p>作用：向上取整。返回大于等于该参数的最小整数。<br>
+mysql&gt; SELECT CEIL(1.5); #2</p>
 </blockquote>
-</li>
-<li><p>$\color{blue}{第一类case}$</p>
+<h3 id="floor"><a class="header-anchor" href="#floor">¶</a>floor</h3>
+<ol>
+<li>$\color{blue}{floor(X)}$</li>
+</ol>
+<blockquote>
+<p>作用：向下取整。返回小于等于该参数的最大整数。<br>
+mysql&gt; SELECT FLOOR(1.5); #2</p>
+</blockquote>
+<h3 id="truncate"><a class="header-anchor" href="#truncate">¶</a>truncate</h3>
+<ol>
+<li>$\color{blue}{truncate(X, D)}$</li>
+</ol>
+<blockquote>
+<p>作用：截断。小数点后保留D位。<br>
+mysql&gt; SELECT TRUNCATE(1.65, 1); #1.6</p>
+</blockquote>
+<h3 id="mod"><a class="header-anchor" href="#mod">¶</a>mod</h3>
+<ol>
+<li>$\color{blue}{mod(X, D)}$</li>
+</ol>
+<blockquote>
+<p>作用：取余。<br>
+mysql&gt; SELECT MOD(10, 3); #1</p>
+</blockquote>
+<h3 id="其余"><a class="header-anchor" href="#其余">¶</a>其余</h3>
+<blockquote>
+<p>下面再列举一些常见的数学函数：<br>
+Abs():返回一个数的绝对值。<br>
+Cos():返回一个角度的余弦。<br>
+Exp():返回一个数的指数。<br>
+Pi():返回圆周率。<br>
+Rand():返回一个随机数。<br>
+Sin():返回一个角度的平方根。<br>
+Tan():返回一个角度的正切。</p>
+</blockquote>
+<h2 id="流程控制函数"><a class="header-anchor" href="#流程控制函数">¶</a>流程控制函数</h2>
+<ol>
+<li>$\color{blue}{if}$</li>
+</ol>
+<blockquote>
+<p>if(exp1, exp2, exp3);<br>
+作用：如果表达式1的值为true，则返回表达式2，否则返回表达式3.类似三目运算符。</p>
+</blockquote>
+<ol start="2">
+<li>$\color{blue}{第一类case}$</li>
+</ol>
 <blockquote>
 <p>语法：</p>
+</blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">case 字段或变量或表达式 </span><br><span class="line">when 常量1 then 输出 </span><br><span class="line">else 语句 </span><br><span class="line">end;</span><br><span class="line">类似switch case语句。</span><br></pre></td></tr></table></figure>
 <p>比如：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">        salary, department_id,</span><br><span class="line">CASE</span><br><span class="line">        department_id</span><br><span class="line">WHEN 30 THEN salary * 1.1</span><br><span class="line">WHEN 40 THEN salary * 1.2</span><br><span class="line">WHEN 50 THEN salary * 1.3</span><br><span class="line">ELSE salary</span><br><span class="line">END</span><br></pre></td></tr></table></figure>
-</blockquote>
-</li>
-<li><p>$\color{blue}{第二类case}$</p>
+<ol start="3">
+<li>$\color{blue}{第二类case}$</li>
+</ol>
 <blockquote>
 <p>语法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">case</span><br><span class="line">when 条件1 then 输出1</span><br><span class="line">when 条件2 then 输出2</span><br><span class="line">else 输出3</span><br><span class="line">end</span><br><span class="line">类似多重if</span><br></pre></td></tr></table></figure>
 </blockquote>
-</li>
-</ol>
-<h1 id="分组函数"><a href="#分组函数" class="headerlink" title="分组函数"></a>分组函数</h1><blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">case</span><br><span class="line">when 条件1 then 输出1</span><br><span class="line">when 条件2 then 输出2</span><br><span class="line">else 输出3</span><br><span class="line">end</span><br><span class="line">类似多重if</span><br></pre></td></tr></table></figure>
+<h1>分组函数</h1>
+<blockquote>
 <p>简介:用作统计使用，又称聚合函数、统计函数或组函数。</p>
 </blockquote>
-<h2 id="聚集函数"><a href="#聚集函数" class="headerlink" title="聚集函数"></a>聚集函数</h2><blockquote>
+<h2 id="聚集函数"><a class="header-anchor" href="#聚集函数">¶</a>聚集函数</h2>
+<blockquote>
 <p>运行在行组上，计算和返回单个值的函数。</p>
 </blockquote>
 <ol>
-<li>$\color{blue}{AVG}$<blockquote>
-<p>返回某列的平均值。<br>$\color{red}{注}$：AVG()只能用来确定特定数值列的平均值，而且列名必须作为函数参数给出，为了获得多个列的平均值，必须使用多个AVG()函数。<br>$\color{red}{NULL值}$：AVG()函数忽略列值为NULL的行</p>
-</blockquote>
-</li>
-<li>$\color{blue}{COUNT}$<blockquote>
-<p>返回某列的行数。<br>$\color{red}{NULL值}$：如果指定列名，则指定列的值为空的行被COUNT()函数忽略，但如果COUNT()函数中用的是*号，则不忽略。</p>
-</blockquote>
-</li>
-<li><p>$\color{blue}{MAX}$</p>
+<li>$\color{blue}{AVG}$</li>
+</ol>
 <blockquote>
-<p>返回某列的最大值。<br>$\color{red}{对非数值数据使用MAX()}$：虽然MAX()一般用来找出最大的数值或日期值，但MySQL允许将它用来返回任意列中的最大值，包括返回文本列中的最大值。在用于文本数据时，如果数据按相应的列排序，则MAX()返回最后一行。</p>
+<p>返回某列的平均值。<br>
+$\color{red}{注}$：AVG()只能用来确定特定数值列的平均值，而且列名必须作为函数参数给出，为了获得多个列的平均值，必须使用多个AVG()函数。<br>
+$\color{red}{NULL值}$：AVG()函数忽略列值为NULL的行</p>
 </blockquote>
-</li>
-<li><p>$\color{blue}{MIN}$</p>
+<ol start="2">
+<li>$\color{blue}{COUNT}$</li>
+</ol>
+<blockquote>
+<p>返回某列的行数。<br>
+$\color{red}{NULL值}$：如果指定列名，则指定列的值为空的行被COUNT()函数忽略，但如果COUNT()函数中用的是*号，则不忽略。</p>
+</blockquote>
+<ol start="3">
+<li>$\color{blue}{MAX}$</li>
+</ol>
+<blockquote>
+<p>返回某列的最大值。<br>
+$\color{red}{对非数值数据使用MAX()}$：虽然MAX()一般用来找出最大的数值或日期值，但MySQL允许将它用来返回任意列中的最大值，包括返回文本列中的最大值。在用于文本数据时，如果数据按相应的列排序，则MAX()返回最后一行。</p>
+</blockquote>
+<ol start="4">
+<li>$\color{blue}{MIN}$</li>
+</ol>
 <blockquote>
 <p>返回某列的最小值。</p>
 </blockquote>
-</li>
-<li><p>$\color{blue}{SUM}$</p>
+<ol start="5">
+<li>$\color{blue}{SUM}$</li>
+</ol>
 <blockquote>
 <p>返回某列值之和。</p>
 </blockquote>
-</li>
-</ol>
-<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><blockquote>
-<p>比如：想要去查询员工工资的总和：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT SUM(salary) FROM employees;</span><br><span class="line">#其余类似不做举例</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<h2 id="聚集不同值"><a href="#聚集不同值" class="headerlink" title="聚集不同值"></a>聚集不同值</h2><p>上述5个聚集函数都可以如下进行使用：</p>
+<h3 id="使用"><a class="header-anchor" href="#使用">¶</a>使用</h3>
 <blockquote>
-<p>对所有的行执行计算，指定ALL参数或不给参数（因为ALL是默认行为）。<br>只包含不同的值，指定DISTINCT参数。</p>
+<p>比如：想要去查询员工工资的总和：</p>
 </blockquote>
-<h3 id="DISTINCT"><a href="#DISTINCT" class="headerlink" title="DISTINCT"></a>DISTINCT</h3><blockquote>
-<p>利用DISTINCT可以做到去重效果。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT SUM(DISTINCT salary) FROM employees;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT SUM(salary) FROM employees;</span><br><span class="line">#其余类似不做举例</span><br></pre></td></tr></table></figure>
+<h2 id="聚集不同值"><a class="header-anchor" href="#聚集不同值">¶</a>聚集不同值</h2>
+<p>上述5个聚集函数都可以如下进行使用：</p>
+<blockquote>
+<p>对所有的行执行计算，指定ALL参数或不给参数（因为ALL是默认行为）。<br>
+只包含不同的值，指定DISTINCT参数。</p>
 </blockquote>
+<h3 id="DISTINCT"><a class="header-anchor" href="#DISTINCT">¶</a>DISTINCT</h3>
+<blockquote>
+<p>利用DISTINCT可以做到去重效果。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT SUM(DISTINCT salary) FROM employees;</span><br></pre></td></tr></table></figure>
 <p>$\color{red}{注：}$</p>
 <blockquote>
 <p>如果指定列名，则DISTINCT只能用于COUNT()、不能用于COUNT(*)，因此不能使用COUNT(DISTINCT)。DISTINCT必须使用列名，不能用于计算或者表达式。</p>
 </blockquote>
-<h2 id="COUNT函数"><a href="#COUNT函数" class="headerlink" title="COUNT函数"></a>COUNT函数</h2><ol>
-<li><p>$\color{blue}{count(x)}$</p>
-<blockquote>
-<p>作用：返回某列的行数。<br>count(*)统计所有字段。<br>count(1)统计1的个数，加一列全是1的列。（并不是只能是1）</p>
-</blockquote>
-</li>
-<li><p>$\color{blue}{效率}$</p>
-<blockquote>
-<p>MYISAM存储引擎下，count(*)的效率最高。<br>原因：在引擎内部有一个计数器，直接返回个数。<br>INNODB存储引擎下，count(*)和count(1)效率近似快，但是比count(x)快。<br>原因：count(x)需要做判断，进行筛选。</p>
-</blockquote>
-</li>
+<h2 id="COUNT函数"><a class="header-anchor" href="#COUNT函数">¶</a>COUNT函数</h2>
+<ol>
+<li>$\color{blue}{count(x)}$</li>
 </ol>
-<h1 id="MySQL-Workbench常用快捷键"><a href="#MySQL-Workbench常用快捷键" class="headerlink" title="MySQL Workbench常用快捷键"></a>MySQL Workbench常用快捷键</h1><ol>
+<blockquote>
+<p>作用：返回某列的行数。<br>
+count(*)统计所有字段。<br>
+count(1)统计1的个数，加一列全是1的列。（并不是只能是1）</p>
+</blockquote>
+<ol start="2">
+<li>$\color{blue}{效率}$</li>
+</ol>
+<blockquote>
+<p>MYISAM存储引擎下，count(*)的效率最高。<br>
+原因：在引擎内部有一个计数器，直接返回个数。<br>
+INNODB存储引擎下，count(*)和count(1)效率近似快，但是比count(x)快。<br>
+原因：count(x)需要做判断，进行筛选。</p>
+</blockquote>
+<h1>MySQL Workbench常用快捷键</h1>
+<ol>
 <li>执行整篇sql脚本：ctrl + shift + enter</li>
 <li>执行当前行： ctrl + enter</li>
 <li>注释/取消注释： ctrl + /</li>
@@ -545,7 +752,7 @@ MySQL数据库,">
     </div>
     
         <div class='side'>
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MySQL数据库基础"><span class="toc-number">2.</span> <span class="toc-text">MySQL数据库基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DB与DBMS"><span class="toc-number">2.1.</span> <span class="toc-text">DB与DBMS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库结构"><span class="toc-number">2.2.</span> <span class="toc-text">数据库结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#表"><span class="toc-number">2.2.1.</span> <span class="toc-text">表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模式"><span class="toc-number">2.2.2.</span> <span class="toc-text">模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列"><span class="toc-number">2.2.3.</span> <span class="toc-text">列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#行"><span class="toc-number">2.2.4.</span> <span class="toc-text">行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主键"><span class="toc-number">2.2.5.</span> <span class="toc-text">主键</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Mysql命令"><span class="toc-number">3.</span> <span class="toc-text">Mysql命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#命令格式"><span class="toc-number">3.1.</span> <span class="toc-text">命令格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#连接"><span class="toc-number">3.2.</span> <span class="toc-text">连接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#连接本地数据库"><span class="toc-number">3.2.1.</span> <span class="toc-text">连接本地数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#连接远程数据库"><span class="toc-number">3.2.2.</span> <span class="toc-text">连接远程数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#退出数据库"><span class="toc-number">3.2.3.</span> <span class="toc-text">退出数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注释"><span class="toc-number">3.2.4.</span> <span class="toc-text">注释</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#注释文字"><span class="toc-number">4.</span> <span class="toc-text">注释文字</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#常用命令"><span class="toc-number">4.1.</span> <span class="toc-text">常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库和表"><span class="toc-number">4.1.1.</span> <span class="toc-text">数据库和表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其它命令"><span class="toc-number">4.1.2.</span> <span class="toc-text">其它命令</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DQL语言"><span class="toc-number">5.</span> <span class="toc-text">DQL语言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基础查询"><span class="toc-number">5.1.</span> <span class="toc-text">基础查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#限制结果"><span class="toc-number">5.2.</span> <span class="toc-text">限制结果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#条件查询"><span class="toc-number">5.3.</span> <span class="toc-text">条件查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用通配符进行过滤"><span class="toc-number">5.4.</span> <span class="toc-text">用通配符进行过滤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#百分号（-）通配符"><span class="toc-number">5.4.1.</span> <span class="toc-text">百分号（%）通配符</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#排序查询"><span class="toc-number">5.5.</span> <span class="toc-text">排序查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建计算字段"><span class="toc-number">5.6.</span> <span class="toc-text">创建计算字段</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Concat函数"><span class="toc-number">5.6.1.</span> <span class="toc-text">Concat函数</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#常见函数"><span class="toc-number">6.</span> <span class="toc-text">常见函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#文本处理函数"><span class="toc-number">6.1.</span> <span class="toc-text">文本处理函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#length"><span class="toc-number">6.1.1.</span> <span class="toc-text">length</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#upper"><span class="toc-number">6.1.2.</span> <span class="toc-text">upper</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#substr"><span class="toc-number">6.1.3.</span> <span class="toc-text">substr</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#instr"><span class="toc-number">6.1.4.</span> <span class="toc-text">instr</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#trim"><span class="toc-number">6.1.5.</span> <span class="toc-text">trim</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lpad"><span class="toc-number">6.1.6.</span> <span class="toc-text">lpad</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#replace"><span class="toc-number">6.1.7.</span> <span class="toc-text">replace</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#日期和时间处理函数"><span class="toc-number">6.2.</span> <span class="toc-text">日期和时间处理函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#now"><span class="toc-number">6.2.1.</span> <span class="toc-text">now</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#curdate"><span class="toc-number">6.2.2.</span> <span class="toc-text">curdate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#curtime"><span class="toc-number">6.2.3.</span> <span class="toc-text">curtime</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#year"><span class="toc-number">6.2.4.</span> <span class="toc-text">year</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#str-to-date"><span class="toc-number">6.2.5.</span> <span class="toc-text">str_to_date</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#date-format"><span class="toc-number">6.2.6.</span> <span class="toc-text">date_format</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#时间戳操作"><span class="toc-number">6.2.7.</span> <span class="toc-text">时间戳操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数值处理函数"><span class="toc-number">6.3.</span> <span class="toc-text">数值处理函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#round"><span class="toc-number">6.3.1.</span> <span class="toc-text">round</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ceil"><span class="toc-number">6.3.2.</span> <span class="toc-text">ceil</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#floor"><span class="toc-number">6.3.3.</span> <span class="toc-text">floor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#truncate"><span class="toc-number">6.3.4.</span> <span class="toc-text">truncate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mod"><span class="toc-number">6.3.5.</span> <span class="toc-text">mod</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其余"><span class="toc-number">6.3.6.</span> <span class="toc-text">其余</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#流程控制函数"><span class="toc-number">6.4.</span> <span class="toc-text">流程控制函数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分组函数"><span class="toc-number">7.</span> <span class="toc-text">分组函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#聚集函数"><span class="toc-number">7.1.</span> <span class="toc-text">聚集函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用"><span class="toc-number">7.1.1.</span> <span class="toc-text">使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#聚集不同值"><span class="toc-number">7.2.</span> <span class="toc-text">聚集不同值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DISTINCT"><span class="toc-number">7.2.1.</span> <span class="toc-text">DISTINCT</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#COUNT函数"><span class="toc-number">7.3.</span> <span class="toc-text">COUNT函数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MySQL-Workbench常用快捷键"><span class="toc-number">8.</span> <span class="toc-text">MySQL Workbench常用快捷键</span></a></li></ol>	
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">2.</span> <span class="toc-text">MySQL数据库基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DB与DBMS"><span class="toc-number">2.1.</span> <span class="toc-text">DB与DBMS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库结构"><span class="toc-number">2.2.</span> <span class="toc-text">数据库结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#表"><span class="toc-number">2.2.1.</span> <span class="toc-text">表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模式"><span class="toc-number">2.2.2.</span> <span class="toc-text">模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列"><span class="toc-number">2.2.3.</span> <span class="toc-text">列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#行"><span class="toc-number">2.2.4.</span> <span class="toc-text">行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主键"><span class="toc-number">2.2.5.</span> <span class="toc-text">主键</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">3.</span> <span class="toc-text">Mysql命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#命令格式"><span class="toc-number">3.1.</span> <span class="toc-text">命令格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#连接"><span class="toc-number">3.2.</span> <span class="toc-text">连接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#连接本地数据库"><span class="toc-number">3.2.1.</span> <span class="toc-text">连接本地数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#连接远程数据库"><span class="toc-number">3.2.2.</span> <span class="toc-text">连接远程数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#退出数据库"><span class="toc-number">3.2.3.</span> <span class="toc-text">退出数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注释"><span class="toc-number">3.2.4.</span> <span class="toc-text">注释</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用命令"><span class="toc-number">3.3.</span> <span class="toc-text">常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库和表"><span class="toc-number">3.3.1.</span> <span class="toc-text">数据库和表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其它命令"><span class="toc-number">3.3.2.</span> <span class="toc-text">其它命令</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">4.</span> <span class="toc-text">DQL语言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基础查询"><span class="toc-number">4.1.</span> <span class="toc-text">基础查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#限制结果"><span class="toc-number">4.2.</span> <span class="toc-text">限制结果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#条件查询"><span class="toc-number">4.3.</span> <span class="toc-text">条件查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用通配符进行过滤"><span class="toc-number">4.4.</span> <span class="toc-text">用通配符进行过滤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#百分号（-）通配符"><span class="toc-number">4.4.1.</span> <span class="toc-text">百分号（%）通配符</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#排序查询"><span class="toc-number">4.5.</span> <span class="toc-text">排序查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建计算字段"><span class="toc-number">4.6.</span> <span class="toc-text">创建计算字段</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Concat函数"><span class="toc-number">4.6.1.</span> <span class="toc-text">Concat函数</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">5.</span> <span class="toc-text">常见函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#文本处理函数"><span class="toc-number">5.1.</span> <span class="toc-text">文本处理函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#length"><span class="toc-number">5.1.1.</span> <span class="toc-text">length</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#upper"><span class="toc-number">5.1.2.</span> <span class="toc-text">upper</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#substr"><span class="toc-number">5.1.3.</span> <span class="toc-text">substr</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#instr"><span class="toc-number">5.1.4.</span> <span class="toc-text">instr</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#trim"><span class="toc-number">5.1.5.</span> <span class="toc-text">trim</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lpad"><span class="toc-number">5.1.6.</span> <span class="toc-text">lpad</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#replace"><span class="toc-number">5.1.7.</span> <span class="toc-text">replace</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#日期和时间处理函数"><span class="toc-number">5.2.</span> <span class="toc-text">日期和时间处理函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#now"><span class="toc-number">5.2.1.</span> <span class="toc-text">now</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#curdate"><span class="toc-number">5.2.2.</span> <span class="toc-text">curdate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#curtime"><span class="toc-number">5.2.3.</span> <span class="toc-text">curtime</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#year"><span class="toc-number">5.2.4.</span> <span class="toc-text">year</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#str-to-date"><span class="toc-number">5.2.5.</span> <span class="toc-text">str_to_date</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#date-format"><span class="toc-number">5.2.6.</span> <span class="toc-text">date_format</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#时间戳操作"><span class="toc-number">5.2.7.</span> <span class="toc-text">时间戳操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数值处理函数"><span class="toc-number">5.3.</span> <span class="toc-text">数值处理函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#round"><span class="toc-number">5.3.1.</span> <span class="toc-text">round</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ceil"><span class="toc-number">5.3.2.</span> <span class="toc-text">ceil</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#floor"><span class="toc-number">5.3.3.</span> <span class="toc-text">floor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#truncate"><span class="toc-number">5.3.4.</span> <span class="toc-text">truncate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mod"><span class="toc-number">5.3.5.</span> <span class="toc-text">mod</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其余"><span class="toc-number">5.3.6.</span> <span class="toc-text">其余</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#流程控制函数"><span class="toc-number">5.4.</span> <span class="toc-text">流程控制函数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">6.</span> <span class="toc-text">分组函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#聚集函数"><span class="toc-number">6.1.</span> <span class="toc-text">聚集函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用"><span class="toc-number">6.1.1.</span> <span class="toc-text">使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#聚集不同值"><span class="toc-number">6.2.</span> <span class="toc-text">聚集不同值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DISTINCT"><span class="toc-number">6.2.1.</span> <span class="toc-text">DISTINCT</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#COUNT函数"><span class="toc-number">6.3.</span> <span class="toc-text">COUNT函数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">7.</span> <span class="toc-text">MySQL Workbench常用快捷键</span></a></li></ol>	
         </div>
     
 </div>
