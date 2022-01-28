@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+<html lang="zh_CH" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LRU算法 - 神奇口袋</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="qiancijun,"> 
+    <meta name="description" content="LRU是Least Recently Used的缩写，即最近最少使用，是一种常用的页面置换算法。其思想也常用于缓存淘汰机制中。
+示例
+假设拥有一个容量大小为5的缓存空间，其作用用来缓存时下最新的五条,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">神奇口袋</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://qiancijun.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">LRU算法</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+   
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">LRU算法</h1>
+        <div class="stuff">
+            <span>一月 28, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <p>LRU是Least Recently Used的缩写，即最近最少使用，是一种常用的页面置换算法。其思想也常用于缓存淘汰机制中。</p>
+<h1>示例</h1>
+<p>假设拥有一个容量大小为5的缓存空间，其作用用来缓存时下最新的五条数据。假设当前缓存中的数据为<code>1 2 3 4 5</code>，当有用户访问了数据<code>3</code>时，整个缓存中<code>3</code>变成了最新数据。当有用户访问了不存在的数据时，需要淘汰掉旧数据。</p>
+<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/Algorithm/LRU.jpg?versionId=CAEQIhiBgMDuqI389BciIDdhYTIzNTA0OTg4NTRiNjY4ZjgzNWFhZGE5NWVmZjRi" alt=""></p>
+<h1>数据结构</h1>
+<p>假设在算法运行的流程中，不会有用户访问不存在的数据，我们需要对缓存中的元素频繁的进行移动操作。如果选用数组存储这些数据，那么移动元素将会成为一个很繁重的操作，移动的时间复杂度为$O(n)$，查询的复杂度为$O(1)$</p>
+<p>那么为了优化数组移动的高复杂度，将底层的存储结构转变为链表。使用链表的情况下，查询速度会降低至$O(n)$。结合空间换时间的思想，使用哈希表做一个地址映射表，将查询复杂度提升至$O(1)$。同时为了操作链表方便（增删节点），构建一个双向链表。</p>
+<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/Algorithm/LRUDS.jpg?versionId=CAEQIhiBgMCft6389BciIDZlMzVkMjljZGZhMTQwZmFhNjRiZDEzMmMxYzY1OGI1" alt=""></p>
+<h1>代码（Golang）</h1>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> lru</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> LRUCache <span class="keyword">struct</span> &#123;</span><br><span class="line">	head *Node</span><br><span class="line">	tail *Node</span><br><span class="line">	<span class="built_in">cap</span> <span class="keyword">int</span></span><br><span class="line">	size <span class="keyword">int</span></span><br><span class="line">	cache <span class="keyword">map</span>[<span class="keyword">int</span>]*Node</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Node <span class="keyword">struct</span> &#123;</span><br><span class="line">	pre *Node</span><br><span class="line">	next *Node</span><br><span class="line">	key <span class="keyword">int</span></span><br><span class="line">	value <span class="keyword">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewNode</span><span class="params">(k, v <span class="keyword">int</span>)</span> *<span class="title">Node</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> &amp;Node&#123;</span><br><span class="line">		key: k,</span><br><span class="line">		value: v,</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewLRUCache</span><span class="params">(c <span class="keyword">int</span>)</span> *<span class="title">LRUCache</span></span> &#123;</span><br><span class="line">	lruCache := <span class="built_in">new</span>(LRUCache)</span><br><span class="line">	lruCache.<span class="built_in">cap</span> = c</span><br><span class="line">	lruCache.size = <span class="number">0</span></span><br><span class="line">	lruCache.cache = <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]*Node)</span><br><span class="line">	lruCache.initLinkedList()</span><br><span class="line">	<span class="keyword">return</span> lruCache</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(lc *LRUCache)</span> <span class="title">initLinkedList</span><span class="params">()</span></span> &#123;</span><br><span class="line">	lc.head = <span class="built_in">new</span>(Node)</span><br><span class="line">	lc.tail = <span class="built_in">new</span>(Node)</span><br><span class="line">	lc.head.next = lc.tail</span><br><span class="line">	lc.tail.pre = lc.head</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(lc *LRUCache)</span> <span class="title">put</span><span class="params">(k, v <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	node, ok := lc.cache[k]</span><br><span class="line">	<span class="comment">// 节点存在</span></span><br><span class="line">	<span class="keyword">if</span> ok &#123;</span><br><span class="line">		node.value = v</span><br><span class="line">		lc.moveToHead(node)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 节点不存在</span></span><br><span class="line">	<span class="comment">// 1. 容量已满，删除尾节点</span></span><br><span class="line">	<span class="keyword">if</span> lc.<span class="built_in">cap</span> == lc.size &#123;</span><br><span class="line">		lastNode := lc.tail.pre</span><br><span class="line">		lc.deleteNode(lastNode)</span><br><span class="line">		<span class="built_in">delete</span>(lc.cache, k)</span><br><span class="line">		lc.size --</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 在头部加入节点</span></span><br><span class="line">	newNode := &amp;Node&#123;</span><br><span class="line">		key:   k,</span><br><span class="line">		value: v,</span><br><span class="line">	&#125;</span><br><span class="line">	lc.addNode(newNode)</span><br><span class="line">	lc.size ++</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(lc *LRUCache)</span> <span class="title">get</span><span class="params">(k <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	node, ok := lc.cache[k]</span><br><span class="line">	<span class="keyword">if</span> !ok &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">	&#125;</span><br><span class="line">	lc.moveToHead(node)</span><br><span class="line">	<span class="keyword">return</span> node.value</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(lc *LRUCache)</span> <span class="title">moveToHead</span><span class="params">(node *Node)</span></span> &#123;</span><br><span class="line">	lc.deleteNode(node)</span><br><span class="line">	lc.addNode(node)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(lc *LRUCache)</span> <span class="title">deleteNode</span><span class="params">(node *Node)</span></span> &#123;</span><br><span class="line">	pre, next := node.pre, node.next</span><br><span class="line">	pre.next = next</span><br><span class="line">	next.pre = pre</span><br><span class="line">	<span class="built_in">delete</span>(lc.cache, node.key)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(lc *LRUCache)</span> <span class="title">addNode</span><span class="params">(node *Node)</span></span> &#123;</span><br><span class="line">	firstNode := lc.head.next</span><br><span class="line">	node.next = firstNode</span><br><span class="line">	node.pre = lc.head</span><br><span class="line">	firstNode.pre = node</span><br><span class="line">	lc.head.next = node</span><br><span class="line">	lc.cache[node.key] = node</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='https://link.hhtjim.com/163/155827.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='https://link.hhtjim.com/163/1491163.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='https://link.hhtjim.com/163/1992707.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='true'
+        data-ci='Iv1.06e5c405a7731b45'
+        data-cs='2fcfe85902a7d5812fa4b299b56a6f194c98e08a'
+        data-r='qiancijun.github.io'
+        data-o='qiancijun'
+        data-a='qiancijun'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">示例</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">2.</span> <span class="toc-text">数据结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">3.</span> <span class="toc-text">代码（Golang）</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":250,"height":400},"mobile":{"show":false},"log":false});</script></body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-163098031-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+<script type="text/javascript" src="/js/love.js"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</html>

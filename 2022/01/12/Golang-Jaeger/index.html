@@ -1,0 +1,291 @@
+
+<!DOCTYPE html>
+<html lang="zh_CH" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Golang-Jaeger - 神奇口袋</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="qiancijun,"> 
+    <meta name="description" content="微服务
+OpenTracing
+opentracing是一套分布式追踪协议，与平台，语言无关，统一接口，方便开发接入不同的分布式追踪系统。
+¶数据模型
+一个完整的opentracing调用链包含 T,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">神奇口袋</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://qiancijun.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Golang-Jaeger</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+   
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Golang-Jaeger</h1>
+        <div class="stuff">
+            <span>一月 12, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h1>微服务</h1>
+<h1>OpenTracing</h1>
+<p>opentracing是一套分布式追踪协议，与平台，语言无关，统一接口，方便开发接入不同的分布式追踪系统。</p>
+<h2 id="数据模型"><a class="header-anchor" href="#数据模型">¶</a>数据模型</h2>
+<p>一个完整的opentracing调用链包含 Trace + span + 无限极分类</p>
+<ul>
+<li>Trace：追踪对象，一个Trace代表了一个服务或者流程在系统中的执行过程，如：<a href="http://test.com" target="_blank" rel="noopener">test.com</a>，redis，mysql等执行过程。一个Trace由多个span组成</li>
+<li>span：记录Trace在执行过程中的信息，如：查询的sql，请求的HTTP地址，RPC调用，开始、结束、间隔时间等。</li>
+<li>无限极分类：服务与服务之间使用无限极分类的方式，通过HTTP头部或者请求地址传输到最低层，从而把整个调用链串起来。</li>
+</ul>
+<p>OpenTracing中的<strong>Traces</strong>由其<strong>Span</strong>隐式定义。<strong>Trace</strong>可被认为是由一组<strong>Span</strong>定义的有向无环图(DAG)，在<strong>Span</strong>之间的被称为<strong>References</strong>。</p>
+<p>以下是一个由8个<strong>Span</strong>构成的<strong>Trace</strong>的例子:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"> [Span A]  ←←←(the root span)</span><br><span class="line">            |</span><br><span class="line">     +------+------+</span><br><span class="line">     |             |</span><br><span class="line"> [Span B]      [Span C] ←←←(Span C之于Span A的关系是 &#96;ChildOf&#96; )</span><br><span class="line">     |             |</span><br><span class="line"> [Span D]      +---+-------+</span><br><span class="line">               |           |</span><br><span class="line">           [Span E]    [Span F] &gt;&gt;&gt; [Span G] &gt;&gt;&gt; [Span H]</span><br><span class="line">                                       ↑</span><br><span class="line">                                       ↑</span><br><span class="line">                                       ↑</span><br><span class="line">                         (Span G &#96;FollowsFrom&#96; Span F)</span><br><span class="line">                         </span><br><span class="line">                         </span><br><span class="line">一个Trace中Span间的时间关系</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">––|–––––––|–––––––|–––––––|–––––––|–––––––|–––––––|–––––––|–&gt; time</span><br><span class="line"></span><br><span class="line"> [Span A···················································]</span><br><span class="line">   [Span B··············································]</span><br><span class="line">      [Span D··········································]</span><br><span class="line">    [Span C········································]</span><br><span class="line">         [Span E·······]        [Span F··] [Span G··] [Span H··]</span><br></pre></td></tr></table></figure>
+<p>每个<strong>Span</strong>封装了如下状态:</p>
+<ul>
+<li>操作名称</li>
+<li>开始时间戳</li>
+<li>结束时间戳</li>
+<li>一组零或多个键:值结构的<strong>Span标签</strong>(Tags)。键必须是字符串。值可以是字符串，布尔或数值类型.</li>
+<li>一组零或多个<strong>Span日志</strong>(Logs)，其中每个都是一个键:值映射并与一个时间戳配对。键必须是字符串，值可以是任何类型。 并非所有的OpenTracing实现都必须支持每种值类型。</li>
+<li>一个<strong>SpanContext</strong></li>
+<li>零或多个因果相关的<strong>Span</strong>间的<strong>References</strong> (通过那些相关的<strong>Span</strong>的<strong>SpanContext</strong>)</li>
+</ul>
+<p>每个SpanContext封装了如下状态:</p>
+<ul>
+<li>任何需要跟跨进程<strong>Span</strong>关联的，依赖于OpenTracing实现的状态(例如Trace和Span的id)</li>
+<li>键:值结构的跨进程的<strong>Baggage Items</strong></li>
+</ul>
+<h1>Jaeger</h1>
+<p><a href="https://www.jaegertracing.io/docs/1.18/getting-started/" target="_blank" rel="noopener">Jaeger</a>是Uber开发的一套分布式追踪系统，已在Uber大规模使用。并在2017-9-13 加入CNCF 开源组织。使用Jaeger可以非常直观的展示整个分布式系统的调用链，由此可以很好发现和解决问题：</p>
+<p><strong>作用</strong></p>
+<ul>
+<li>分布式环境下信息传播</li>
+<li>分布式交易监控</li>
+<li>展示跨进程调用链</li>
+<li>性能优化</li>
+<li>定位问题</li>
+</ul>
+<p><strong>特点</strong></p>
+<ul>
+<li>使用udp传输数据，相对于HTTP，优点在于，不用担心Jaeger服务宕机或者网络传输有问题而影响正常的业务。缺点就是丢包，影响了整条调用链。</li>
+<li>数据通过Thrift进行序列化</li>
+<li>采集策略
+<ul>
+<li>ConstSampler，全量采集</li>
+<li>ProbabilisticSampler ，概率采集，默认万份之一</li>
+<li>RateLimitingSampler ，限速采集，每秒只能采集一定量的数据</li>
+<li>RemotelyControlledSampler ，一种动态采集策略，根据当前系统的访问量调节采集策略</li>
+</ul>
+</li>
+</ul>
+<h2 id="安装"><a class="header-anchor" href="#安装">¶</a>安装</h2>
+<h3 id="快速部署"><a class="header-anchor" href="#快速部署">¶</a>快速部署</h3>
+<p>all-in-one 是Uber官方打包好的镜像，可以直接部署使用，但是只能用于测试环境，不能用于线上，因为它把数据放入了内存。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -e COLLECTOR_ZIPKIN_HTTP_PORT=9411 -p5775:5775/udp -p6831:6831/udp -p6832:6832/udp -p5778:5778 -p16686:16686 -p14268:14268 -p9411:9411 jaegertracing/all-in-one:latest</span><br></pre></td></tr></table></figure>
+<p>docker镜像拉取成功后，访问16686端口，查看Jaeger的WebUI</p>
+<h2 id="官方示例"><a class="header-anchor" href="#官方示例">¶</a>官方示例</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker run --rm -it \</span><br><span class="line">--link jaeger \</span><br><span class="line">-p8080-8083:8080-8083 \</span><br><span class="line">-e JAEGER_AGENT_HOST=<span class="string">"jaeger"</span> \</span><br><span class="line">jaegertracing/example-hotrod:1.18 \</span><br><span class="line">all</span><br></pre></td></tr></table></figure>
+<h2 id="GolangDemo"><a class="header-anchor" href="#GolangDemo">¶</a>GolangDemo</h2>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"github.com/opentracing/opentracing-go"</span></span><br><span class="line">	<span class="string">"github.com/uber/jaeger-client-go"</span></span><br><span class="line">	jaegercfg <span class="string">"github.com/uber/jaeger-client-go/config"</span></span><br><span class="line">	<span class="string">"io"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">InitJaeger</span><span class="params">(service <span class="keyword">string</span>)</span> <span class="params">(opentracing.Tracer, io.Closer)</span></span> &#123;</span><br><span class="line">	cfg := jaegercfg.Configuration&#123;</span><br><span class="line">		Sampler: &amp;jaegercfg.SamplerConfig&#123;</span><br><span class="line">			Type: jaeger.SamplerTypeConst,</span><br><span class="line">			Param: <span class="number">1</span>,</span><br><span class="line">		&#125;,</span><br><span class="line">		Reporter: &amp;jaegercfg.ReporterConfig&#123;</span><br><span class="line">			LogSpans: <span class="literal">true</span>,</span><br><span class="line">			LocalAgentHostPort: <span class="string">"192.168.74.201:6831"</span>,</span><br><span class="line">		&#125;,</span><br><span class="line">	&#125;</span><br><span class="line">	cfg.ServiceName = service</span><br><span class="line">	tracer, closer, err := cfg.NewTracer(jaegercfg.Logger(jaeger.StdLogger))</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(fmt.Sprintf(<span class="string">"ERROR: cannot init Jaeger: %v\n"</span>, err))</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> tracer, closer</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	tracer, closer := InitJaeger(<span class="string">"hello-jaeger"</span>)</span><br><span class="line">	<span class="keyword">defer</span> closer.Close()</span><br><span class="line">	opentracing.InitGlobalTracer(tracer)</span><br><span class="line"></span><br><span class="line">	span := tracer.StartSpan(<span class="string">"operator-hello"</span>)</span><br><span class="line">	time.Sleep(time.Duration(<span class="number">2</span>) * time.Second)</span><br><span class="line">	<span class="built_in">println</span>(<span class="string">"hello-jaeger"</span>)</span><br><span class="line">	span.Finish()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一个最简单的向Jaeger发送请求</p>
+<h3 id="使用Context"><a class="header-anchor" href="#使用Context">¶</a>使用Context</h3>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestJaegerContext</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">	cfg := jaegercfg.Configuration&#123;</span><br><span class="line">		Sampler: &amp;jaegercfg.SamplerConfig&#123;</span><br><span class="line">			Type: jaeger.SamplerTypeConst,</span><br><span class="line">			Param: <span class="number">1</span>,</span><br><span class="line">		&#125;,</span><br><span class="line">		Reporter: &amp;jaegercfg.ReporterConfig&#123;</span><br><span class="line">			LogSpans: <span class="literal">true</span>,</span><br><span class="line">			LocalAgentHostPort: <span class="string">"192.168.74.201:6831"</span>,</span><br><span class="line">		&#125;,</span><br><span class="line">	&#125;</span><br><span class="line">	closer, err := cfg.InitGlobalTracer(</span><br><span class="line">		<span class="string">"serviceName"</span>,</span><br><span class="line">	)</span><br><span class="line">	<span class="keyword">defer</span> closer.Close()</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Printf(<span class="string">"Could not initialize jaeger tracer: %s"</span>, err.Error())</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> ctx = context.TODO()</span><br><span class="line">	span1, ctx := opentracing.StartSpanFromContext(ctx, <span class="string">"span_1"</span>)</span><br><span class="line">	time.Sleep(time.Second / <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">	span11, _ := opentracing.StartSpanFromContext(ctx, <span class="string">"span_1-1"</span>)</span><br><span class="line">	time.Sleep(time.Second / <span class="number">2</span>)</span><br><span class="line">	span11.Finish()</span><br><span class="line"></span><br><span class="line">	span1.Finish()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="gRPC注入Jaeger"><a class="header-anchor" href="#gRPC注入Jaeger">¶</a>gRPC注入Jaeger</h2>
+<p>Context将数据全部保留在内存中，这样来说是无法在跨应用程序中使用的。通常跨应用程序需要网络传输，使用序列化机制传递数据，gRPC是常见的一种。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> test</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	proto2 <span class="string">"JaegerDemo/proto"</span></span><br><span class="line">	<span class="string">"context"</span></span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	grpc_opentracing <span class="string">"github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"</span></span><br><span class="line">	<span class="string">"github.com/uber/jaeger-client-go"</span></span><br><span class="line">	jaegercfg <span class="string">"github.com/uber/jaeger-client-go/config"</span></span><br><span class="line">	<span class="string">"google.golang.org/grpc"</span></span><br><span class="line">	<span class="string">"net"</span></span><br><span class="line">	<span class="string">"testing"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> server <span class="keyword">struct</span> &#123;</span><br><span class="line">	proto2.UnimplementedServicesServer</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s *server)</span> <span class="title">SayHello</span><span class="params">(ctx context.Context, hello *proto2.Hello)</span> <span class="params">(*proto2.Hello, error)</span></span> &#123;</span><br><span class="line">	fmt.Println(hello.GetMsg())</span><br><span class="line">	time.Sleep(<span class="number">1</span> * time.Second)</span><br><span class="line">	<span class="keyword">return</span> &amp;proto2.Hello&#123;Msg: hello.GetMsg()&#125;, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestGRPCServer</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">	l, _ := net.Listen(<span class="string">"tcp"</span>, <span class="string">":8888"</span>)</span><br><span class="line">	s := grpc.NewServer()</span><br><span class="line">	proto2.RegisterServicesServer(s, &amp;server&#123;&#125;)</span><br><span class="line">	s.Serve(l)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestGRPClient</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">	con, _ := grpc.Dial(<span class="string">"localhost:8888"</span>, grpc.WithInsecure())</span><br><span class="line">	<span class="keyword">defer</span> con.Close()</span><br><span class="line">	client := proto2.NewServicesClient(con)</span><br><span class="line">	hello, _ := client.SayHello(context.Background(), &amp;proto2.Hello&#123;Msg: <span class="string">"hello-rpc-jaeger"</span>&#125;)</span><br><span class="line">	fmt.Println(hello.GetMsg())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestGRPCJaegerServer</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">	serviceName := <span class="string">"serviceName"</span></span><br><span class="line">	cfg := jaegercfg.Configuration&#123;</span><br><span class="line">		Sampler: &amp;jaegercfg.SamplerConfig&#123;</span><br><span class="line">			Type: jaeger.SamplerTypeConst,</span><br><span class="line">			Param: <span class="number">1</span>,</span><br><span class="line">		&#125;,</span><br><span class="line">		ServiceName: serviceName,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	report := jaegercfg.ReporterConfig&#123;</span><br><span class="line">		LogSpans: <span class="literal">true</span>,</span><br><span class="line">		LocalAgentHostPort: <span class="string">"192.168.74.201:6831"</span>,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	reporter, _ := report.NewReporter(serviceName, jaeger.NewNullMetrics(), jaeger.NullLogger)</span><br><span class="line">	tracer, _, _ := cfg.NewTracer(</span><br><span class="line">		jaegercfg.Reporter(reporter),</span><br><span class="line">	)</span><br><span class="line">	s := grpc.NewServer(grpc.UnaryInterceptor(grpc_opentracing.UnaryServerInterceptor(grpc_opentracing.WithTracer(tracer))))</span><br><span class="line"></span><br><span class="line">	l, _ := net.Listen(<span class="string">"tcp"</span>, <span class="string">":8888"</span>)</span><br><span class="line">	proto2.RegisterServicesServer(s, &amp;server&#123;&#125;)</span><br><span class="line">	s.Serve(l)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestGRPCJaegerClient</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">	serviceName := <span class="string">"serviceName"</span></span><br><span class="line">	cfg := jaegercfg.Configuration&#123;</span><br><span class="line">		Sampler: &amp;jaegercfg.SamplerConfig&#123;</span><br><span class="line">			Type: jaeger.SamplerTypeConst,</span><br><span class="line">			Param: <span class="number">1</span>,</span><br><span class="line">		&#125;,</span><br><span class="line">		ServiceName: serviceName,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	report := jaegercfg.ReporterConfig&#123;</span><br><span class="line">		LogSpans: <span class="literal">true</span>,</span><br><span class="line">		LocalAgentHostPort: <span class="string">"192.168.74.201:6831"</span>,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	reporter, _ := report.NewReporter(serviceName, jaeger.NewNullMetrics(), jaeger.NullLogger)</span><br><span class="line">	tracer, _, _ := cfg.NewTracer(</span><br><span class="line">		jaegercfg.Reporter(reporter),</span><br><span class="line">	)</span><br><span class="line"></span><br><span class="line">	conn, _ := grpc.Dial(<span class="string">"localhost:8888"</span>, grpc.WithUnaryInterceptor(grpc_opentracing.UnaryClientInterceptor(</span><br><span class="line">		grpc_opentracing.WithTracer(tracer),</span><br><span class="line">	)), grpc.WithInsecure())</span><br><span class="line">	<span class="keyword">defer</span> conn.Close()</span><br><span class="line"></span><br><span class="line">	client := proto2.NewServicesClient(conn)</span><br><span class="line">	hello, _ := client.SayHello(context.Background(), &amp;proto2.Hello&#123;Msg: <span class="string">"hello-rpc-jaeger"</span>&#125;)</span><br><span class="line">	fmt.Println(hello.GetMsg())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="监控代码段"><a class="header-anchor" href="#监控代码段">¶</a>监控代码段</h2>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> tracer</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"context"</span></span><br><span class="line">	<span class="string">"github.com/opentracing/opentracing-go"</span></span><br><span class="line">	<span class="string">"github.com/opentracing/opentracing-go/ext"</span></span><br><span class="line">	<span class="string">"github.com/opentracing/opentracing-go/log"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> SpanOption <span class="function"><span class="keyword">func</span><span class="params">(span opentracing.Span)</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">SpanWithError</span><span class="params">(err error)</span> <span class="title">SpanOption</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">func</span><span class="params">(span opentracing.Span)</span></span> &#123;</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			ext.Error.Set(span, <span class="literal">true</span>)</span><br><span class="line">			span.LogFields(log.String(<span class="string">"event"</span>, <span class="string">"error"</span>), log.String(<span class="string">"msg"</span>, err.Error()))</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// example:</span></span><br><span class="line"><span class="comment">// SpanWithLog(</span></span><br><span class="line"><span class="comment">//    "event", "soft error",</span></span><br><span class="line"><span class="comment">//    "type", "cache timeout",</span></span><br><span class="line"><span class="comment">//    "waited.millis", 1500)</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">SpanWithLog</span><span class="params">(arg ...<span class="keyword">interface</span>&#123;&#125;)</span> <span class="title">SpanOption</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">func</span><span class="params">(span opentracing.Span)</span></span> &#123;</span><br><span class="line">		span.LogKV(arg...)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Start</span><span class="params">(tracer opentracing.Tracer, spanName <span class="keyword">string</span>, ctx context.Context)</span> <span class="params">(newCtx context.Context, finish <span class="keyword">func</span>(...SpanOption)</span>)</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> ctx == <span class="literal">nil</span> &#123;</span><br><span class="line">		ctx = context.TODO()</span><br><span class="line">	&#125;</span><br><span class="line">	span, newCtx := opentracing.StartSpanFromContextWithTracer(ctx, tracer, spanName,</span><br><span class="line">		opentracing.Tag&#123;Key: <span class="keyword">string</span>(ext.Component), Value: <span class="string">"func"</span>&#125;,</span><br><span class="line">	)</span><br><span class="line"></span><br><span class="line">	finish = <span class="function"><span class="keyword">func</span><span class="params">(ops ...SpanOption)</span></span> &#123;</span><br><span class="line">		<span class="keyword">for</span> _, o := <span class="keyword">range</span> ops &#123;</span><br><span class="line">			o(span)</span><br><span class="line">		&#125;</span><br><span class="line">		span.Finish()</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestJaegerContext</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">	cfg := jaegercfg.Configuration&#123;</span><br><span class="line">		Sampler: &amp;jaegercfg.SamplerConfig&#123;</span><br><span class="line">			Type: jaeger.SamplerTypeConst,</span><br><span class="line">			Param: <span class="number">1</span>,</span><br><span class="line">		&#125;,</span><br><span class="line">		Reporter: &amp;jaegercfg.ReporterConfig&#123;</span><br><span class="line">			LogSpans: <span class="literal">true</span>,</span><br><span class="line">			LocalAgentHostPort: <span class="string">"192.168.74.201:6831"</span>,</span><br><span class="line">		&#125;,</span><br><span class="line">	&#125;</span><br><span class="line">	closer, err := cfg.InitGlobalTracer(</span><br><span class="line">		<span class="string">"serviceName"</span>,</span><br><span class="line">	)</span><br><span class="line">	<span class="keyword">defer</span> closer.Close()</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Printf(<span class="string">"Could not initialize jaeger tracer: %s"</span>, err.Error())</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> ctx = context.TODO()</span><br><span class="line">	newCtx, finish1 := tracer.Start(opentracing.GlobalTracer(), <span class="string">"testFunc1"</span>, ctx)</span><br><span class="line">	testFunc()</span><br><span class="line"></span><br><span class="line">	_, finish2 := tracer.Start(opentracing.GlobalTracer(), <span class="string">"testFunc1-1"</span>, newCtx)</span><br><span class="line">	testFunc()</span><br><span class="line"></span><br><span class="line">	finish2(tracer.SpanWithLog(<span class="string">"testFunc1-1 end"</span>))</span><br><span class="line">	finish1(tracer.SpanWithLog(<span class="string">"testFunc1 end"</span>))</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">testFunc</span><span class="params">()</span></span> &#123;</span><br><span class="line">	log.Println(<span class="string">"testFunc start"</span>)</span><br><span class="line">	time.Sleep(<span class="number">3</span> * time.Second)</span><br><span class="line">	log.Println(<span class="string">"testFunc end"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="E:%5CStudy%5CMyNotes%5CGolang%5C%E7%9B%91%E6%8E%A7api.png" alt=""></p>
+<h2 id="Gin添加链路追踪"><a class="header-anchor" href="#Gin添加链路追踪">¶</a>Gin添加链路追踪</h2>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> web</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	t <span class="string">"JaegerDemo/tracer"</span></span><br><span class="line">	<span class="string">"context"</span></span><br><span class="line">	<span class="string">"github.com/opentracing/opentracing-go"</span></span><br><span class="line">	<span class="string">"github.com/opentracing/opentracing-go/ext"</span></span><br><span class="line">	<span class="string">"github.com/uber/jaeger-client-go"</span></span><br><span class="line">	jaegercfg <span class="string">"github.com/uber/jaeger-client-go/config"</span></span><br><span class="line">	<span class="string">"github.com/gin-gonic/gin"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">InitRouter</span><span class="params">()</span></span> &#123;</span><br><span class="line">	jcfg := jaegercfg.Configuration&#123;</span><br><span class="line">		Sampler: &amp;jaegercfg.SamplerConfig&#123;</span><br><span class="line">			Type:  <span class="string">"const"</span>,</span><br><span class="line">			Param: <span class="number">1</span>,</span><br><span class="line">		&#125;,</span><br><span class="line">		ServiceName: <span class="string">"gin"</span>,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	report := jaegercfg.ReporterConfig&#123;</span><br><span class="line">		LogSpans:           <span class="literal">true</span>,</span><br><span class="line">		LocalAgentHostPort: <span class="string">"192.168.74.201:6831"</span>,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	reporter, _ := report.NewReporter(<span class="string">"gin"</span>, jaeger.NewNullMetrics(), jaeger.NullLogger)</span><br><span class="line">	tracer, closer, _ := jcfg.NewTracer(</span><br><span class="line">		jaegercfg.Reporter(reporter),</span><br><span class="line">	)</span><br><span class="line">	<span class="keyword">defer</span> closer.Close()</span><br><span class="line"></span><br><span class="line">	engine := gin.Default()</span><br><span class="line">	engine.Use(<span class="function"><span class="keyword">func</span><span class="params">(ctx *gin.Context)</span></span> &#123;</span><br><span class="line">		path := ctx.Request.URL.Path</span><br><span class="line"></span><br><span class="line">		span := tracer.StartSpan(path,</span><br><span class="line">			ext.SpanKindRPCServer)</span><br><span class="line">		ext.HTTPUrl.Set(span, path)</span><br><span class="line">		ext.HTTPMethod.Set(span, ctx.Request.Method)</span><br><span class="line">		c := opentracing.ContextWithSpan(context.Background(), span)</span><br><span class="line"></span><br><span class="line">		ctx.Set(<span class="string">"ctx"</span>, c)</span><br><span class="line"></span><br><span class="line">		ctx.Next()</span><br><span class="line"></span><br><span class="line">		ext.HTTPStatusCode.Set(span, <span class="keyword">uint16</span>(ctx.Writer.Status()))</span><br><span class="line">		span.Finish()</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	engine.GET(<span class="string">"/hello"</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">		ctx  := c.MustGet(<span class="string">"ctx"</span>).(context.Context)</span><br><span class="line">		time.Sleep(<span class="number">3</span> * time.Second)</span><br><span class="line">		res, ctx := sayHi(tracer, ctx)</span><br><span class="line">		c.JSON(<span class="number">200</span>, res)</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	engine.Run(<span class="string">":8080"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">sayHi</span><span class="params">(tracer opentracing.Tracer, ctx context.Context)</span> <span class="params">(<span class="keyword">string</span>, context.Context)</span></span> &#123;</span><br><span class="line">	newCtx, finish := t.Start(tracer, <span class="string">"sayHi"</span>, ctx)</span><br><span class="line">	time.Sleep(<span class="number">5</span> * time.Second)</span><br><span class="line">	finish(t.SpanWithLog())</span><br><span class="line">	<span class="keyword">return</span> <span class="string">"Hi"</span>, newCtx</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='https://link.hhtjim.com/163/155827.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='https://link.hhtjim.com/163/1491163.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='https://link.hhtjim.com/163/1992707.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='true'
+        data-ci='Iv1.06e5c405a7731b45'
+        data-cs='2fcfe85902a7d5812fa4b299b56a6f194c98e08a'
+        data-r='qiancijun.github.io'
+        data-o='qiancijun'
+        data-a='qiancijun'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">微服务</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">2.</span> <span class="toc-text">OpenTracing</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据模型"><span class="toc-number">2.1.</span> <span class="toc-text">数据模型</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">3.</span> <span class="toc-text">Jaeger</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">3.1.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#快速部署"><span class="toc-number">3.1.1.</span> <span class="toc-text">快速部署</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#官方示例"><span class="toc-number">3.2.</span> <span class="toc-text">官方示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GolangDemo"><span class="toc-number">3.3.</span> <span class="toc-text">GolangDemo</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用Context"><span class="toc-number">3.3.1.</span> <span class="toc-text">使用Context</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#gRPC注入Jaeger"><span class="toc-number">3.4.</span> <span class="toc-text">gRPC注入Jaeger</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#监控代码段"><span class="toc-number">3.5.</span> <span class="toc-text">监控代码段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gin添加链路追踪"><span class="toc-number">3.6.</span> <span class="toc-text">Gin添加链路追踪</span></a></li></ol></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":250,"height":400},"mobile":{"show":false},"log":false});</script></body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-163098031-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+<script type="text/javascript" src="/js/love.js"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</html>
