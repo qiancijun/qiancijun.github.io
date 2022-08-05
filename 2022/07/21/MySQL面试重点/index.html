@@ -1,0 +1,367 @@
+
+<!DOCTYPE html>
+<html lang="zh_CH" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MySQL面试重点 - 神奇口袋</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="qiancijun,"> 
+    <meta name="description" content="性能分析
+使用explain关键字可以模拟优化器执行SQL查询语句，从而知道MySQL是如何处理SQL语句的
+1EXPLAIN SQL语句
+
+id：表的读取顺序。id相同，执行顺序由上至下。id不同,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">神奇口袋</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://qiancijun.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">MySQL面试重点</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+   
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">MySQL面试重点</h1>
+        <div class="stuff">
+            <span>七月 21, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h1>性能分析</h1>
+<p>使用explain关键字可以模拟优化器执行SQL查询语句，从而知道MySQL是如何处理SQL语句的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN SQL语句</span><br></pre></td></tr></table></figure>
+<ol>
+<li><code>id</code>：表的读取顺序。id相同，执行顺序由上至下。id不同，如果是子查询，id的序号会递增，id值越大优先级越高，越先被执行。id号每个号码，表示一趟独立的查询，一个sql的查询趟越少越好}。</li>
+<li>SELECT_TYPE：查询类型</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">类型</th>
+<th style="text-align:left">解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">SIMPLE</td>
+<td style="text-align:left">简单的select查询，查询中不包含子查询或者UNION</td>
+</tr>
+<tr>
+<td style="text-align:center">PRIMARY</td>
+<td style="text-align:left">主要查询，查询中若包含任何复杂的子部分，最外层查询则被标记为Primary</td>
+</tr>
+<tr>
+<td style="text-align:center">DERIVED</td>
+<td style="text-align:left">衍生查询，在FROM列表中包含的子查询被标记为DERIVED(衍生)MySQL会递归执行这些子查询，把结果放在临时表里</td>
+</tr>
+<tr>
+<td style="text-align:center">SUBQUERY</td>
+<td style="text-align:left">在select或where列表中包含了子查询</td>
+</tr>
+<tr>
+<td style="text-align:center">DEPENDENT SUBQUERY</td>
+<td style="text-align:left">在select或where列表中包含了子查询，子查询基于外层</td>
+</tr>
+<tr>
+<td style="text-align:center">UNCACHEABLE SUBQUERY</td>
+<td style="text-align:left">查询中用上了系统变量</td>
+</tr>
+<tr>
+<td style="text-align:center">UNION</td>
+<td style="text-align:left">若第二个select出现在union之后，则会被标记为union；若union包含在from子句的子查询中，外层select将被标记为derived</td>
+</tr>
+<tr>
+<td style="text-align:center">UNION RESULT</td>
+<td style="text-align:left">从union获取结果的select</td>
+</tr>
+</tbody>
+</table>
+<ol start="3">
+<li>
+<p>table：显示这一行二点数据是关于哪张表的</p>
+</li>
+<li>
+<p>partitions：代表分区表中的命中情况，非分区表，该项为null</p>
+</li>
+<li>
+<p><code>type</code>：显示查询使用了哪种类型<br>
+从最好到最差依次是：system &gt; const &gt; eq_ref &gt; ref &gt; range &gt; index &gt; ALL</p>
+</li>
+</ol>
+<ul>
+<li>range：只检索给定范围的行，使用一个索引来选择行。key列显示使用了哪个索引。一般就是在where语句中出现了between、 &lt;、&gt;、in的查询。这种范围扫面索引扫描比全表扫描要好，因为它只需要开始于索引的某一点，而结束于另一点。不用扫描全表</li>
+<li>index：出现index是sql使用了索引但是$\color{red}{没有通过索引进行过滤}$，一般是使用了$\color{red}{覆盖索引}$或者是$\color{red}{利用索引进行了排序分组}$</li>
+<li>all：Full table scan，将遍历全表以找到匹配的行（必须解决）</li>
+</ul>
+<blockquote>
+<p>一般来说，得保证查询至少达到range级别，最好能到达ref</p>
+</blockquote>
+<ol start="6">
+<li>
+<p>possible_keys：显示可能应用在这张表中的索引，一个或多个</p>
+</li>
+<li>
+<p>key：实际使用的索引。如果为NULL，则没有使用索引。</p>
+</li>
+</ol>
+<blockquote>
+<p>查询中若使用了覆盖索引，则该索引和查询的select字段重叠</p>
+</blockquote>
+<ol start="8">
+<li>
+<p><code>key_len</code>：表示where后索引中使用的字节数，可通过该列计算查询中使用的索引的长度。key_len越长查询越快</p>
+</li>
+<li>
+<p>ref：显示索引的哪一列被使用了，如果可能的话，是一个常数。</p>
+</li>
+<li>
+<p><code>rows</code>：整个sql物理扫描的行数（模拟执行出来的结果）</p>
+</li>
+<li>
+<p>filtered：表示存储引擎返回的数据在serve层过滤后，剩下多少满足查询的记录数量的比例</p>
+</li>
+</ol>
+<blockquote>
+<p>注：是百分比，不是具体数值</p>
+</blockquote>
+<ol start="12">
+<li><code>Extra</code>：
+<ul>
+<li>==Using filesort==
+<ul>
+<li>order by没有使用索引，而是手动排序</li>
+<li>查询中排序的字段，排序字段若通过索引去访问将大大提高排序速度</li>
+</ul>
+</li>
+<li>==Using temporary==
+<ul>
+<li>group by没有使用索引，group by包含一个order by</li>
+</ul>
+</li>
+<li>Using index
+<ul>
+<li>表示相应的select操作中使用了覆盖索引，避免访问了表的数据行</li>
+</ul>
+</li>
+<li>Using where
+<ul>
+<li>表示使用了where过滤</li>
+</ul>
+</li>
+<li>==Using join buffer==
+<ul>
+<li>两表关联，关联字段没有使用索引</li>
+</ul>
+</li>
+<li>impossible where
+<ul>
+<li>出现了条件上的逻辑错误</li>
+</ul>
+</li>
+<li>select tables optimized away
+<ul>
+<li>在没有GROUP BY子句的情况下，基于索引优化MIN/MAX操作或者MyISAM存储引擎优化COUNT(*)操作，不必等到执行阶段再进行计算，查询执行计划生成的阶段即完成优化</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h1>索引</h1>
+<h2 id="为什么索引的数据结构是B-树"><a class="header-anchor" href="#为什么索引的数据结构是B-树">¶</a>为什么索引的数据结构是B+树</h2>
+<p>B+树是用来充当索引的，一般来说索引非常大，尤其是关系性数据库这种数据量大的索引能达到亿级别，所以为了减少内存的占用，索引也会被存储在磁盘上。</p>
+<p>B树的特点就是每层节点数目非常多，层数很少，目的就是为了就少磁盘IO次数，当查询数据的时候，最好的情况就是很快找到目标索引，然后读取数据，使用B+树就能很好的完成这个目的，但是B树的每个节点都有data域（指针），这无疑增大了节点大小（磁盘IO一次读出的数据量大小是固定的，单个数据变大，每次读出的就少，IO次数增多）。而B+树除了叶子节点其它节点并不存储数据，节点小，磁盘IO次数就少。这是优点之一。</p>
+<p>B+树所有的Data域在叶子节点，一般来说都会进行一个优化，就是将所有的叶子节点用指针串起来。这样遍历叶子节点就能获得全部数据。</p>
+<p>数据库索引采用B+树的主要原因是 B树在提高了磁盘IO性能的同时并没有解决元素遍历的效率低下的问题。正是为了解决这个问题，B+树应运而生。B+树只要遍历叶子节点就可以实现整棵树的遍历。而且在数据库中基于范围的查询是非常频繁的，而B树不支持这样的操作（或者说效率太低）</p>
+<h2 id="其他索引的叶子节点存储什么"><a class="header-anchor" href="#其他索引的叶子节点存储什么">¶</a>其他索引的叶子节点存储什么</h2>
+<p>在 innodb 存储引擎中，数据在进行插入的时候必须要跟某一个索引列绑定在一起，如果有主键，那么选择主键，如果没有主键，那么选择唯一键，如果没有唯一键，mysql会生成一个6字节的rowid来绑定存储。</p>
+<h1>回表</h1>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='https://link.hhtjim.com/163/155827.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='https://link.hhtjim.com/163/1491163.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='https://link.hhtjim.com/163/1992707.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='true'
+        data-ci='Iv1.06e5c405a7731b45'
+        data-cs='2fcfe85902a7d5812fa4b299b56a6f194c98e08a'
+        data-r='qiancijun.github.io'
+        data-o='qiancijun'
+        data-a='qiancijun'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">性能分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">2.</span> <span class="toc-text">索引</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么索引的数据结构是B-树"><span class="toc-number">2.1.</span> <span class="toc-text">为什么索引的数据结构是B+树</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他索引的叶子节点存储什么"><span class="toc-number">2.2.</span> <span class="toc-text">其他索引的叶子节点存储什么</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">3.</span> <span class="toc-text">回表</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":250,"height":400},"mobile":{"show":false},"log":false});</script></body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-163098031-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+<script type="text/javascript" src="/js/love.js"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</html>
