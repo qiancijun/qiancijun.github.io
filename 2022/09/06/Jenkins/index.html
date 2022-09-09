@@ -1,0 +1,361 @@
+
+<!DOCTYPE html>
+<html lang="zh_CH" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Jenkins - 神奇口袋</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="qiancijun,"> 
+    <meta name="description" content="GitLab
+官方网址
+¶安装
+Gitlab自身启动附带许多中间件，对于虚拟机性能要求比较高，需要的内存至少4G，建议分配6G及以上。内存不足4G无法启动Gitlab。
+¶SSH安装
+
+
+安装相关依,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="神奇口袋" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">神奇口袋</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://qiancijun.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Jenkins</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+   
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Jenkins</h1>
+        <div class="stuff">
+            <span>九月 06, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h1>GitLab</h1>
+<p><a href="https://about.gitlab.com/" target="_blank" rel="noopener">官方网址</a></p>
+<h2 id="安装"><a class="header-anchor" href="#安装">¶</a>安装</h2>
+<p>Gitlab自身启动附带许多中间件，对于虚拟机性能要求比较高，需要的内存至少4G，建议分配6G及以上。内存不足4G无法启动Gitlab。</p>
+<h3 id="SSH安装"><a class="header-anchor" href="#SSH安装">¶</a>SSH安装</h3>
+<ol>
+<li>
+<p>安装相关依赖</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install -y curl policycoreutils-python openssh-server perl</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> sshd</span><br><span class="line">sudo systemctl start sshd</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>配置镜像</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://packages.gitlab.cn/repository/raw/scripts/setup.sh | /bin/bash</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>安装</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo EXTERNAL_URL=<span class="string">"http://自己站点的ip地址"</span> yum install -y gitlab-jh</span><br><span class="line">sudo EXTERNAL_URL=<span class="string">"http://192.168.74.201"</span> yum install -y gitlab-jh</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>常用命令</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">gitlab-ctl start</span><br><span class="line">gitlab-ctl stop</span><br><span class="line">gitlab-ctl restart</span><br><span class="line">gitlab-ctl status</span><br><span class="line">gitlab-ctl reconfigure</span><br><span class="line">vi /etc/gitlab/gitlab.rb</span><br><span class="line">gitlab-ctl tail</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>安装完成之后<code>gitlab-ctl start</code>启动gitLab，如果机器上安装有nginx，需要停止掉原有的nginx。随后访问ip地址。第一次访问会出现502错误，这是因为启动gitLab时，系统需要一点时间进行初始化的工作。如果长时间没有响应，检查虚拟机的内存是否足够。可以通过<code>gitlab-ctl tail</code>查看实时日志</p>
+<p>首次登录的密码会在<code>/etc/gitlab/initial_root_password</code>文件里</p>
+<h2 id="使用"><a class="header-anchor" href="#使用">¶</a>使用</h2>
+<p>在主页新建一个空项目，创建一个新的SpringBoot项目，将项目托管到gitlab。编写简单的代码，将代码提交到master分支。随后在gitlab中提交合并请求，将master代码合并到main分支中。</p>
+<h1>Jenkins</h1>
+<p>Jenkins是一款开源，基于Java所搭建的持续集成持续部署CI/CD的平台</p>
+<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Jenkins/%E7%90%86%E5%BF%B5%E5%9B%BE.png" alt=""></p>
+<h2 id="安装-v2"><a class="header-anchor" href="#安装-v2">¶</a>安装</h2>
+<p>Jenkins本质就是一个Java项目，在<a href="https://www.jenkins.io/" target="_blank" rel="noopener">官网</a>下载后，使用<code>java -jar</code>命令启动即可，访问8080端口，安装推荐插件。</p>
+<p>建议不要将Jenkins和gitlab安装在同一台机器上，Jenkins和gitlab都会占用8080端口。</p>
+<h2 id="使用-v2"><a class="header-anchor" href="#使用-v2">¶</a>使用</h2>
+<p>新建一个任务，但是没有Maven构建，需要额外安装插件</p>
+<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Jenkins/Jenkins%E6%96%B0%E5%BB%BA%E4%BB%BB%E5%8A%A1.png" alt=""></p>
+<p>在系统管理-&gt;插件管理中安装相关Maven集成的插件。安装完成之后，新建任务时可以看见有一个猫头鹰的选项，就是一个Maven任务。下一步有许多的配置任务要填写。</p>
+<ol>
+<li>
+<p>源码管理：</p>
+<p>选择Git，填写仓库地址，Jenkins会自动帮我们测试这个地址是否有效，这需要Jenkins服务器安装有Git</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install git -y</span><br></pre></td></tr></table></figure>
+<p>如果项目有凭证则添加凭证</p>
+<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Jenkins/Jenkins-Git.png" alt=""></p>
+</li>
+<li>
+<p>修改分支，由于代码都合并到main分支，默认是master分支</p>
+<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Jenkins/Jenkins-%E5%88%86%E6%94%AF.png" alt=""></p>
+</li>
+<li>
+<p>配置maven，在全局配置栏里，新增Maven</p>
+<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Jenkins/Jenkins-Maven.png" alt=""></p>
+</li>
+<li>
+<p>配置完成之后可以在主面板点击运行，开始自动构建</p>
+<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Jenkins/Jenkins-%E6%9E%84%E5%BB%BA.png" alt=""></p>
+</li>
+<li>
+<p>连接测试服务器，需要安装一个插件<code>public over ssh</code>，安装完成之后，重新配置一下项目，在<code>Post Steps</code>中勾选<code>Send files or execute commands over SSH</code></p>
+<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Jenkins/Jenkins-SSH1.png" alt=""></p>
+<p>Name中默认为空，因为还没有配置测试服务器，在系统管理-系统配置中添加服务器</p>
+<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Jenkins/Jenkins-SSH2.png" alt=""></p>
+<p>然后在项目中配置测试服务器</p>
+<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Jenkins/Jenkins-SSH3.png" alt=""></p>
+</li>
+<li>
+<p>让Jenkins自动运行Java程序，一般我们会使用命令<code>java -jar</code>，但是这样会阻塞控制台，所以通常使用<code>nohup java -jar xxx.jar &amp;</code>。但是这个命令也是存在问题的，如果在真机下输入这条命令，控制台还是会阻塞， 直到用户输入一个回车才会恢复正常，Jenkins会认为这个命令没有结束。同时Jenkins不会停止上一次测试启动的Jar包。</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup java -jar /root/cheryl/jenkins*.jar &amp;&gt;mylog.log &amp;</span><br></pre></td></tr></table></figure>
+<p>但是还是没有处理停止前一个Jar包，这些前置清理工作，我们需要写一个Shell脚本来完成</p>
+</li>
+</ol>
+<h2 id="前置清理脚本"><a class="header-anchor" href="#前置清理脚本">¶</a>前置清理脚本</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> !/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除历史数据</span></span><br><span class="line">rm -rf cheryl</span><br><span class="line"><span class="meta">#</span><span class="bash"> 获取进程的pid</span></span><br><span class="line">pid=`ps -ef | grep $1 | grep -v grep | awk '&#123;printf $2&#125;'`</span><br><span class="line"><span class="meta">#</span><span class="bash"> 停止进程</span></span><br><span class="line">if [ -z $pid ];</span><br><span class="line">    then</span><br><span class="line">        echo "$1 not start"</span><br><span class="line">    else</span><br><span class="line">        kill -9 $pid</span><br><span class="line">check=`ps -ef |grep -w $pid | grep java`</span><br><span class="line">if [ -z $check ];</span><br><span class="line">    then</span><br><span class="line">        echo "$1 is stop"</span><br><span class="line">    else</span><br><span class="line">        echo "$1 stop failed"</span><br><span class="line">fi</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<p>重新配置项目，添加预处理作业。</p>
+<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Jenkins/Jenkins-SSH4.png" alt=""></p>
+<h2 id="Gitlab自动构建"><a class="header-anchor" href="#Gitlab自动构建">¶</a>Gitlab自动构建</h2>
+<p>在生产环境中我们希望提交代码后自动构建，这就需要用到Jenkins的构建触发器。</p>
+<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Jenkins/Jenkins-%E6%9E%84%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8.png" alt=""></p>
+<p>随后访问<code>JENKINS_URL/job/first/build?token=123456</code>就可以将构建任务提交到Jenkins里。但是这个前提是我们已经登录到了Jenkins，如果在其他浏览器，或者第三方HTTP平台，会提示没有权限。这时候需要安装一个插件<code>Build Authorization Token Root</code>能够支持我们匿名提交构建任务。</p>
+<p>安装完成之后，访问<code>JENKINS_URL/buildByToken/build?job=first&amp;token=123456</code></p>
+<p>我们希望的是在提交代码之后触发构建任务，所以我们要把这个地址交给Gitlab</p>
+<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Jenkins/Gitlab-webHooks.png" alt=""></p>
+<p>在第一次填入地址时，会提示本地地址不被允许，需要更改Gitlab的一些设置。在菜单-&gt;管理员-&gt;设置-&gt;网络-&gt;出站请求-&gt;勾选允许来自 web hooks 和服务对本地网络的请求。</p>
+<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Jenkins/Gitlab-webHooks2.png" alt=""></p>
+<p>这种方式在开发中不是很常用，它会提交多次构建请求，严重消耗系统资源。使用手动构建或者定时构建更多。</p>
+<p>几种构建方式：</p>
+<ol>
+<li>快照依赖构建：当依赖的快照被构建时执行本job</li>
+<li>触发远程构建：远程调用本job的restapi时执行job</li>
+<li>job依赖构建：当依赖的job被构建时执行本job</li>
+<li>定时构建</li>
+<li>向GitHub提交代码时触发</li>
+<li>定期检查代码变更Poll SCM</li>
+</ol>
+<h3 id="定时构建"><a class="header-anchor" href="#定时构建">¶</a>定时构建</h3>
+<p>Jenkins的cron表达式不是标准的cron表达式，普通的cron表达式用五个星号表示，Jenkins多了一个H表示哈希散列，目的是如果在同一个时间有多个任务构建，可以避免并发任务冲突的问题。<code>H(1-30)</code>表示从1到30中取一个随机值。</p>
+<h2 id="容器化构建"><a class="header-anchor" href="#容器化构建">¶</a>容器化构建</h2>
+<p>如果使用了容器化技术，一般会使用三种方式构建</p>
+<ol>
+<li>外挂目录</li>
+<li>jar包打包到镜像</li>
+<li>生成新镜像，推送到docker私服（Harbor）中</li>
+</ol>
+<h3 id="外挂目录"><a class="header-anchor" href="#外挂目录">¶</a>外挂目录</h3>
+<ol>
+<li>
+<p>准备支持jdk的镜像</p>
+ <figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> openjdk:<span class="number">11</span>	</span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> . /usr/src/myapp</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /usr/src/myapp</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> javac Main.java</span></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> [<span class="string">"java"</span>, <span class="string">"Main"</span>]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>将jar包打包到容器内</p>
+ <figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> openjdk:<span class="number">11</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">8080</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /root</span></span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> jarfile/jenkins*.jar /root/app.jar</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">"java"</span>, <span class="string">"-jar"</span>, <span class="string">"/root/app.jar"</span>]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>外挂方式启动</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 8080:8080 --name demo-out -v /root/jarfile/jenkins-0.0.1-SNAPSHOT.jar:/app.jar openjdk:11 java -jar app.jar</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>jenkins 自动化构建</p>
+<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Jenkins/Jenkins-Docker1.png" alt=""></p>
+<p>​	<img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Jenkins/Jenkins-Docker2.png" alt=""></p>
+</li>
+<li>
+<p>也可以使用指令重新构建一个新的镜像</p>
+</li>
+</ol>
+<h2 id="集群-并发构建"><a class="header-anchor" href="#集群-并发构建">¶</a>集群/并发构建</h2>
+<p>准备两台构建服务器，在Jenkins中添加服务器</p>
+<p><img src="https://qiancijun-images.oss-cn-beijing.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87/JavaEE/Jenkins/Jenkins-%E9%9B%86%E7%BE%A41.png" alt=""></p>
+<p>添加完成之后，主页的左下角的机器数变成了两个，此时多提交几个构建任务，会发现新添加的节点并没有分配到任务，需要配置一下项目，勾选在必要的时候并发构建。</p>
+<h1>流水线</h1>
+<p>流水线既能作为任务的本身，也能作为Jenkinsfile。使用流水线可以让任务从ui手动操作转变为代码操作，从shell命令到配置文件，更适合大型项目，可以让团队其他开发者同时参与进来，也可以构建ui不能完成的复杂构建逻辑。</p>
+<h2 id="完整语法"><a class="header-anchor" href="#完整语法">¶</a>完整语法</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pipeline: 整条流水线</span><br><span class="line">agent：指定执行器</span><br><span class="line">stages：所有阶段</span><br><span class="line">stage：某一阶段</span><br><span class="line">steps：阶段内的每一步，可执行命令</span><br></pre></td></tr></table></figure>
+<h2 id="测试脚本"><a class="header-anchor" href="#测试脚本">¶</a>测试脚本</h2>
+<p>基础框架</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">pipeline &#123;</span><br><span class="line">    agent any</span><br><span class="line"></span><br><span class="line">    stages &#123;</span><br><span class="line">        stage(&#39;拉取代码&#39;) &#123;</span><br><span class="line">            steps &#123;</span><br><span class="line">                echo &#39;Hello World111&#39;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        stage(&#39;构建项目&#39;) &#123;</span><br><span class="line">            steps &#123;</span><br><span class="line">                echo &#39;Hello World222&#39;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="打包Docker"><a class="header-anchor" href="#打包Docker">¶</a>打包Docker</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">pipeline &#123;</span><br><span class="line">    agent any</span><br><span class="line">	tools &#123;</span><br><span class="line">		maven &quot;Maven3&quot;</span><br><span class="line">	&#125;</span><br><span class="line">    stages &#123;</span><br><span class="line">        stage(&#39;拉取代码&#39;) &#123;</span><br><span class="line">            steps &#123;</span><br><span class="line">            	git branch: &#39;main&#39;, credentialsId: &#39;gitlab&#39;, url: &#39;http:&#x2F;&#x2F;192.168.74.201&#x2F;root&#x2F;java-project.git&#39;</span><br><span class="line">                echo &#39;拉取成功&#39;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        stage(&#39;构建项目&#39;) &#123;</span><br><span class="line">            steps &#123;</span><br><span class="line">            	sh &quot;&quot;&quot;</span><br><span class="line">            	mvn clean package</span><br><span class="line">            	&quot;&quot;&quot;</span><br><span class="line">                echo &#39;构建完成&#39;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        stage(&#39;清理工作&#39;) &#123;</span><br><span class="line">            steps &#123;</span><br><span class="line">            	sshPublisher(publishers: [sshPublisherDesc(configName: &#39;TestServer&#39;, transfers: [sshTransfer(cleanRemote: false, excludes: &#39;&#39;, execCommand: &#39;&#39;&#39;rm -rf *</span><br><span class="line">docker stop demo</span><br><span class="line">docker rm demo</span><br><span class="line">docker rmi demo&#39;&#39;&#39;, execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: &#39;[, ]+&#39;, remoteDirectory: &#39;&#x2F;root&#39;, remoteDirectorySDF: false, removePrefix: &#39;&#39;, sourceFiles: &#39;&#39;)], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])</span><br><span class="line">                echo &#39;清理完成&#39;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        stage(&#39;发送jar包&#39;) &#123;</span><br><span class="line">            steps &#123;</span><br><span class="line">            	sshPublisher(publishers: [sshPublisherDesc(configName: &#39;TestServer&#39;, transfers: [sshTransfer(cleanRemote: false, excludes: &#39;&#39;, execCommand: &#39;&#39;, execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: &#39;[, ]+&#39;, remoteDirectory: &#39;&#x2F;jarfile&#39;, remoteDirectorySDF: false, removePrefix: &#39;target&#39;, sourceFiles: &#39;**&#x2F;jenkins*.jar&#39;), sshTransfer(cleanRemote: false, excludes: &#39;&#39;, execCommand: &#39;&#39;&#39;docker build -t demo .</span><br><span class="line">docker run -d -p 8080:8080 --name demo demo&#39;&#39;&#39;, execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: &#39;[, ]+&#39;, remoteDirectory: &#39;&#x2F;&#39;, remoteDirectorySDF: false, removePrefix: &#39;&#39;, sourceFiles: &#39;dockerfile&#39;)], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])</span><br><span class="line">                echo &#39;发送完成&#39;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='https://link.hhtjim.com/163/155827.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='https://link.hhtjim.com/163/1491163.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='https://link.hhtjim.com/163/1992707.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='true'
+        data-ci='Iv1.06e5c405a7731b45'
+        data-cs='2fcfe85902a7d5812fa4b299b56a6f194c98e08a'
+        data-r='qiancijun.github.io'
+        data-o='qiancijun'
+        data-a='qiancijun'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class='side'>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text">GitLab</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">1.1.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SSH安装"><span class="toc-number">1.1.1.</span> <span class="toc-text">SSH安装</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-number">1.2.</span> <span class="toc-text">使用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">2.</span> <span class="toc-text">Jenkins</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装-v2"><span class="toc-number">2.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-v2"><span class="toc-number">2.2.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前置清理脚本"><span class="toc-number">2.3.</span> <span class="toc-text">前置清理脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gitlab自动构建"><span class="toc-number">2.4.</span> <span class="toc-text">Gitlab自动构建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定时构建"><span class="toc-number">2.4.1.</span> <span class="toc-text">定时构建</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#容器化构建"><span class="toc-number">2.5.</span> <span class="toc-text">容器化构建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#外挂目录"><span class="toc-number">2.5.1.</span> <span class="toc-text">外挂目录</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#集群-并发构建"><span class="toc-number">2.6.</span> <span class="toc-text">集群&#x2F;并发构建</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#"><span class="toc-number">3.</span> <span class="toc-text">流水线</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#完整语法"><span class="toc-number">3.1.</span> <span class="toc-text">完整语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试脚本"><span class="toc-number">3.2.</span> <span class="toc-text">测试脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#打包Docker"><span class="toc-number">3.3.</span> <span class="toc-text">打包Docker</span></a></li></ol></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":250,"height":400},"mobile":{"show":false},"log":false});</script></body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-163098031-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+
+<script type="text/javascript" src="/js/love.js"></script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</html>
