@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="close-btn" width="16" height="16" viewBox="0 0 16 16">
+    <circle cx="8" cy="8" r="7" fill="red" />
+    <line class="limb" x2="11.5" y2="4.5" x1="4.5" y1="11.5" stroke="#000"/>
+    <line class="limb" x1="4.5" y1="4.5" x2="11.5" y2="11.5" stroke="#000"/>
+</svg>

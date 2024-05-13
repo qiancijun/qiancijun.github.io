@@ -1,0 +1,16 @@
+.search-container {
+  color: color-text;
+  display: flex;
+  align-items: center;
+}
+.search-container input {
+  margin: 0 auto;
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  background: none;
+  border-bottom: 1px solid #808080;
+}
+.search-container input:focus {
+  border-bottom-color: color-text;
+}

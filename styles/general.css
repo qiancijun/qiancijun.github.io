@@ -1,0 +1,23 @@
+.warn {
+  color: #dfa000;
+}
+.info {
+  color: #6dbb68;
+}
+.collapsed {
+  max-height: 0 !important; /* 折叠内容 */
+}
+.is-hover {
+  visibility: hidden;
+}
+.choose-container {
+  color: color-text;
+}
+.answer {
+  color: transparent;
+  padding: 5px 15px;
+  background-color: #def;
+}
+.answer:hover {
+  color: #00f;
+}

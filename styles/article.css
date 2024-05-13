@@ -1,0 +1,57 @@
+.article {
+  color: color-text;
+}
+.article .article-header {
+  color: #e7669e;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.article .article-info {
+  width: 80%;
+  margin: 0 auto;
+}
+.article .article-info span {
+  padding-left: 10px;
+}
+.article .article-info table,
+.article .article-info th,
+.article .article-info td {
+  border: none;
+  padding: 10px;
+  user-select: none;
+}
+.article .article-info table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.article .article-info table th,
+.article .article-info table td {
+  justify-content: center;
+  align-items: center;
+/* text-align: center; */
+}
+.article .article-info table tr:hover {
+  box-shadow: 0 0 10px rgba(255,255,255,0.5); /* 鼠标悬停时显示阴影 */
+}
+.article footer {
+  margin: 0 auto;
+  width: 80%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  vertical-align: middle;
+  justify-content: center;
+  gap: 10px;
+}
+.tag-link:hover {
+  color: color-tag-title;
+}
+.category-link:hover {
+  color: color-category-title;
+}
+.archive-link:hover {
+  color: #bee3f8;
+}
+.article-category-list-link:hover {
+  color: color-category-title;
+}

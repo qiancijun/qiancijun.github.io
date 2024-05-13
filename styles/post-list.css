@@ -1,0 +1,23 @@
+.post-list-item {
+  color: color-text;
+  margin: 10px 10px 0 10px;
+}
+.post-list-item td {
+  min-width: 50px;
+  padding: 5px 10px;
+  text-align: center; /* 水平居中对齐 */
+  vertical-align: middle; /* 垂直居中对齐 */
+}
+.post-list-item a {
+  cursor: pointer;
+}
+.post-list-item .title {
+  color: color-post-title;
+}
+.post-list-item .category,
+.post-list-item .category-link {
+  color: color-category-title;
+}
+.post-list-item .tag-link {
+  color: color-tag-title;
+}

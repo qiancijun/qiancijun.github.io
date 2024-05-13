@@ -1,0 +1,16 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.pagination .page-number {
+  color: #ffe3d6;
+}
+.pagination .current {
+  color: #ff5d12;
+}
+.pagination .next,
+.pagination .prev {
+  color: #ffaf8a;
+}

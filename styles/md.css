@@ -1,0 +1,194 @@
+.article-entry {
+  display: flex;
+  flex-wrap: wrap-reverse;
+  justify-content: space-between;
+  width: 80%;
+  margin: 0 auto;
+  font-size: font-size;
+  line-height: line-height;
+  text-align: justify;
+  counter-reset: line;
+}
+.article-entry .toc-container {
+  flex-grow: 1;
+}
+.article-entry .toc-container ol,
+.article-entry .toc-container li {
+  width: 100%;
+}
+.article-entry .toc-container ol {
+  margin: 0;
+}
+.article-entry .content {
+  width: 70%;
+/* ul li ol */
+/* 代码块 */
+/* 斜体 */
+/* 粗体 */
+/* 表格 */
+/* 图片 */
+}
+.article-entry .content h1 {
+  color: h1-color;
+}
+.article-entry .content h2 {
+  color: h2-color;
+}
+.article-entry .content h3 {
+  color: h3-color;
+}
+.article-entry .content h4,
+.article-entry .content h5,
+.article-entry .content h6 {
+  color: h-color;
+}
+.article-entry .content ul {
+  stroke: #000;
+}
+.article-entry .content h1::before,
+.article-entry .content h2::before,
+.article-entry .content h3::before,
+.article-entry .content p::before,
+.article-entry .content li::before {
+  font-size: font-size;
+  font-weight: 300;
+  content: counter(line); /* 设置行号为计数器的值 */
+  counter-increment: line; /* 递增行号计数器 */
+  width: 30px; /* 设置行号宽度 */
+  text-align: right; /* 将行号右对齐 */
+  margin-right: 20px; /* 设置行号和内容之间的间距 */
+  color: #999; /* 设置行号颜色 */
+  display: inline-block; /* 将行号作为行内元素显示 */
+  user-select: none;
+}
+.article-entry .content a {
+  color: a-color;
+  text-decoration: underline;
+}
+.article-entry .content ul::marker {
+  content: "🌹"; /* 在标记内容前添加自定义字符 */
+}
+.article-entry .content li::marker {
+  content: "✨";
+}
+.article-entry .content ul {
+  list-style: none;
+  margin-left: 2.5em;
+/* padding-left: 1em; */
+}
+.article-entry .content ul ul {
+  margin-left: 0.5em;
+}
+.article-entry .content li {
+  padding-left: 1em;
+}
+.article-entry .content li::before {
+  content: none;
+  counter-increment: none;
+}
+.article-entry .content .highlight,
+.article-entry .content code {
+  background: #2d2d2d;
+  padding: 3px 3px 3px 3px;
+  color: code-color;
+}
+.article-entry .content .highlight table,
+.article-entry .content code table,
+.article-entry .content .highlight th,
+.article-entry .content code th,
+.article-entry .content .highlight td,
+.article-entry .content code td {
+  border: none;
+  padding: 0;
+  padding-left: 1em;
+  margin: 0;
+}
+.article-entry .content .highlight {
+  position: relative;
+}
+.article-entry .content em {
+  font-weight: bold;
+  font-style: normal;
+  color: em-color;
+}
+.article-entry .content strong {
+  color: strong-color;
+}
+.article-entry .content table {
+  border-collapse: collapse;
+  width: auto;
+  box-sizing: border-box;
+  margin-left: 2em;
+}
+.article-entry .content table td,
+.article-entry .content table tr,
+.article-entry .content table th {
+  padding: 0.5em;
+}
+.article-entry .content table td:hover {
+  background-color: #2d2d2d;
+}
+.article-entry .content table,
+.article-entry .content th,
+.article-entry .content td {
+  border: 2px dashed color-text;
+}
+.article-entry .content p img {
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+}
+.article-entry .content blockquote {
+  position: relative;
+  max-height: 1.2em;
+  overflow: hidden; /* 隐藏超出部分 */
+  transition: max-height 0.3s ease; /* 添加过渡效果 */
+  border-left: 5px solid #d3d3d3;
+/* margin: 0 0 1.5em 0px; */
+/* margin: 0; */
+  padding: 0em 1em;
+}
+.article-entry .content blockquote.left {
+  float: left;
+  margin-right: 1.5em;
+}
+.article-entry .content blockquote.right {
+  float: right;
+  margin-left: 1.5em;
+}
+.article-entry .content blockquote cite {
+  margin-left: 0.5em;
+}
+.article-entry .content blockquote p {
+  margin: 0;
+}
+.article-entry .content blockquote p::before {
+  content: none;
+  counter-increment: none;
+}
+.copy {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.copy:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+/* 展开状态下的样式 */
+.expanded {
+  max-height: none !important; /* 移除最大高度限制 */
+}
+/* 添加展开按钮的样式 */
+.expand-btn {
+  cursor: pointer;
+  color: #00f;
+}
+@media screen and (max-width: 1240px) {
+  .content {
+    width: 100% !important;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .toc-container {
+    display: none;
+  }
+}

@@ -1,0 +1,32 @@
+.topbar {
+  background-color: color-link-topbar;
+  height: 30px;
+  width: 100%;
+  position: relative;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  user-select: none;
+}
+.topbar .btn-container {
+  position: absolute;
+  top: 50%;
+  left: 40px;
+  transform: translate(-50%, -50%);
+}
+.topbar .btn-container a {
+  cursor: pointer;
+}
+.topbar .title {
+  margin: auto;
+  color: #aeafb0;
+  line-height: 30px;
+/* width: 200px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  align-items: center;
+}
+.topbar .title span {
+  font-size: 12px;
+}

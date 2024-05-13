@@ -1,0 +1,50 @@
+.index-container {
+  color: color-text;
+}
+.index-container .info-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.index-container .info-container .cowsay-container {
+  flex-grow: 1;
+}
+.index-container .info-container .cowsay-container a {
+  text-decoration: underline;
+}
+.index-container .info-container .banner-container {
+  display: flex;
+  flex-grow: 1;
+  line-height: 10px;
+  font-size: 20px;
+  justify-content: center;
+  align-items: center;
+}
+.index-container .choose-container {
+  color: color-text;
+}
+.index-container .choose-container .nav {
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+.index-container .choose-container .nav .list-container {
+  display: flex;
+  flex-direction: column;
+}
+.index-container .choose-container .nav .list-container .collapse-item {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+.index-container .choose-container .nav .list-container .collapse-item .hover-item {
+  color: color-hover;
+  font-weight: bold;
+}
+.index-container .choose-container .nav .list-container .list-content {
+  margin-left: 30px;
+  max-height: 100px;
+  overflow: hidden; /* 隐藏超出容器范围的内容 */
+  transition: max-height 0.2s ease; /* 添加过渡效果 */
+}
