@@ -41,6 +41,7 @@
 .article-entry .content h5,
 .article-entry .content h6 {
   color: h-color;
+  font-size: 16px;
 }
 .article-entry .content ul {
   stroke: #000;
@@ -48,8 +49,10 @@
 .article-entry .content h1::before,
 .article-entry .content h2::before,
 .article-entry .content h3::before,
-.article-entry .content p::before,
-.article-entry .content li::before {
+.article-entry .content h4::before,
+.article-entry .content h5::before,
+.article-entry .content h6::before,
+.article-entry .content p::before {
   font-size: font-size;
   font-weight: 300;
   content: counter(line); /* 设置行号为计数器的值 */
@@ -65,22 +68,20 @@
   color: a-color;
   text-decoration: underline;
 }
-.article-entry .content ul::marker {
-  content: "🌹"; /* 在标记内容前添加自定义字符 */
-}
 .article-entry .content li::marker {
   content: "✨";
 }
 .article-entry .content ul {
   list-style: none;
   margin-left: 2.5em;
-/* padding-left: 1em; */
+  padding: 0;
 }
 .article-entry .content ul ul {
   margin-left: 0.5em;
 }
 .article-entry .content li {
   padding-left: 1em;
+  position: relative;
 }
 .article-entry .content li::before {
   content: none;
