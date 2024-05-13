@@ -5,18 +5,16 @@
 }
 .about-container .right-container {
   height: 100%;
-/* width: calc(100% - 200px); */
-  display: flex;
+  min-width: 300px;
   flex-grow: 1;
   flex-direction: column;
-  align-items: center;
-/* justify-content: center; */
   gap: 20px;
 }
 .about-container .right-container .type-container {
+  margin: 0 auto;
   height: 100px;
   color: color-text;
-  text-align: left;
+  text-align: center;
   line-height: 100px;
 }
 .about-container .right-container .github-calendar {
