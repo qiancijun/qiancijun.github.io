@@ -220,7 +220,9 @@ a {
 .search-container {
   color: #d3c6aa;
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
+/* flex-direction: column; */
+/* align-items: center; */
 }
 .search-container input {
   margin: 0 auto;
