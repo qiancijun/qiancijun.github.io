@@ -71,6 +71,12 @@ const copyToClipboard = (text) => {
                     if (item != undefined) {
                         item.classList.toggle('collapsed');
                     }
+                    const btn_img = $(btn).find('img')[0];
+                    if (btn_img.src.includes('right-arrow')) {
+                        btn_img.src = '/images/down-arrow.svg';
+                    } else {
+                        btn_img.src = '/images/right-arrow.svg';
+                    }
                 });
                 btn.addEventListener('mouseover', function(e) {
                     btn.children[0].classList.remove('is-hover');
@@ -90,8 +96,8 @@ const copyToClipboard = (text) => {
         writer.textContent = "";
         const options = {
             strings: text,
-            typeSpeed: 100,
-            backSpeed: 70,
+            typeSpeed: 150,
+            backSpeed: 100,
             loop: true,
         }
         new Typed(writer, options);
