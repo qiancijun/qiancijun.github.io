@@ -392,6 +392,12 @@ body {
   justify-content: center;
   align-items: center;
 }
+.index-container .info-container .cowsay-container {
+  white-space: pre-wrap; /* 保留换行符，但允许换行 */
+}
+.index-container .info-container .banner-container {
+  overflow: hidden;
+}
 .index-container .choose-container {
   color: #d3c6aa;
 }
@@ -530,21 +536,20 @@ body {
 }
 .about-container .right-container {
   height: 100%;
-/* width: 60%; */
-  display: flex;
+  min-width: 300px;
   flex-grow: 1;
   flex-direction: column;
-  align-items: center;
-/* justify-content: center; */
   gap: 20px;
 }
 .about-container .right-container .type-container {
+  margin: 0 auto;
   height: 100px;
   color: #d3c6aa;
-  text-align: left;
+  text-align: center;
   line-height: 100px;
 }
 .about-container .right-container .github-calendar {
+  overflow: auto;
   position: relative;
   width: 100%;
   margin: 0 auto;
@@ -556,16 +561,17 @@ body {
 }
 .about-container .right-container .bilibili-container {
   color: #d3c6aa;
-  width: 80%;
-  margin: 0 auto;
+  width: 100%;
   text-align: center;
+  white-space: pre-wrap; /* 保留换行符，但允许换行 */
 }
 .about-container .left-container {
   height: 100%;
   min-width: 200px;
-  max-width: 300px;
+  width: 300px;
+/* max-width: 300px; */
   margin: 0 2em;
-/* flex: 1; */
+  flex-grow: 1;
 }
 .about-container .left-container .avatar-container {
   display: flex;

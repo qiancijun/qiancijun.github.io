@@ -19,6 +19,12 @@
   justify-content: center;
   align-items: center;
 }
+.index-container .info-container .cowsay-container {
+  white-space: pre-wrap; /* 保留换行符，但允许换行 */
+}
+.index-container .info-container .banner-container {
+  overflow: hidden;
+}
 .index-container .choose-container {
   color: color-text;
 }
