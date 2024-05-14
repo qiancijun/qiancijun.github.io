@@ -7,14 +7,14 @@ const wrap_html = (data, author) =>  {
     const data_title = data.title;
     let str = "";
     str += '<tr class="post-list-item">';
-    str += '<td><span class="article-authority"># -rw-r--r--</span></td>';
-    str += `<td><span class="link">${data_tag_number}</span></td>`
-    str += `<td><span class="author">${author}</span></
+    str += '<td class="phone-item"><span class="article-authority"># -rw-r--r--</span></td>';
+    str += `<td class="phone-item"><span class="link">${data_tag_number}</span></td>`
+    str += `<td class="phone-item"><span class="author">${author}</span></
     td>`
-    str += `<td><span class="author">${author}</span></
+    str += `<td class="phone-item"><span class="author">${author}</span></
     td>`
-    str += '<td><span class="group">root</span></td>';
-    str += `<td>${data_date}</td>`
+    str += '<td class="phone-item"><span class="group">root</span></td>';
+    str += `<td class="phone-item">${data_date}</td>`
     
     str += "<td>"
     for (let i = 0; i < data.categories.length; i++) {

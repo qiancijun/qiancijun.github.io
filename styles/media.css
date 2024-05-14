@@ -1,0 +1,10 @@
+.phone-item {
+  display: table-cell;
+}
+/* 用于手机的样式 */
+@media only screen and (max-width: 767px) {
+  .phone-item {
+    display: none !important;
+  }
+}
+/* 用于平板的样式 */

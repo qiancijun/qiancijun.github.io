@@ -21,7 +21,6 @@
 }
 .article-entry .content {
   width: 70%;
-/* ul li ol */
 /* 代码块 */
 /* 斜体 */
 /* 粗体 */
@@ -42,6 +41,8 @@
 .article-entry .content h6 {
   color: h-color;
   font-size: 16px;
+  padding: 0;
+  margin: 0;
 }
 .article-entry .content ul {
   stroke: #000;
@@ -52,7 +53,8 @@
 .article-entry .content h4::before,
 .article-entry .content h5::before,
 .article-entry .content h6::before,
-.article-entry .content p::before {
+.article-entry .content p::before,
+.article-entry .content li::before {
   font-size: font-size;
   font-weight: 300;
   content: counter(line); /* 设置行号为计数器的值 */
@@ -68,30 +70,44 @@
   color: a-color;
   text-decoration: underline;
 }
-.article-entry .content li::marker {
-  content: "✨";
-}
 .article-entry .content ul {
   list-style: none;
-  margin-left: 2.5em;
+/* margin-left: 2em; */
+}
+.article-entry .content ul li::before {
+  font-size: font-size;
+  font-weight: 300;
+  content: '🌟'; /* 设置行号为计数器的值 */
+  counter-increment: none; /* 递增行号计数器 */
+  width: 30px; /* 设置行号宽度 */
+  text-align: right; /* 将行号右对齐 */
+  margin-right: 20px; /* 设置行号和内容之间的间距 */
+  color: #999; /* 设置行号颜色 */
+  display: inline-block; /* 将行号作为行内元素显示 */
+  user-select: none;
+}
+.article-entry .content li ul,
+.article-entry .content li ol {
+  margin-left: 2em;
+}
+.article-entry .content ol {
   padding: 0;
-}
-.article-entry .content ul ul {
-  margin-left: 0.5em;
-}
-.article-entry .content li {
-  padding-left: 1em;
-  position: relative;
-}
-.article-entry .content li::before {
-  content: none;
-  counter-increment: none;
+  margin-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 .article-entry .content .highlight,
 .article-entry .content code {
+  margin: 0;
   background: #2d2d2d;
   padding: 3px 3px 3px 3px;
   color: code-color;
+}
+.article-entry .content .highlight table,
+.article-entry .content code table {
+  width: 100%;
+  overflow: auto;
+  table-layout: fixed;
 }
 .article-entry .content .highlight table,
 .article-entry .content code table,
@@ -166,6 +182,9 @@
 .article-entry .content blockquote p::before {
   content: none;
   counter-increment: none;
+}
+mjx-container {
+  overflow: auto;
 }
 .copy {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
