@@ -184,7 +184,10 @@
   counter-increment: none;
 }
 mjx-container {
-  overflow: auto;
+  display: inline-grid;
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
 }
 .copy {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
