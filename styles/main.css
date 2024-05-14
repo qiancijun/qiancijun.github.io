@@ -822,6 +822,7 @@ body {
   counter-increment: none;
 }
 .article-entry .content .multi-code .tabs {
+  overflow-x: auto;
   height: 50px;
   padding-left: 1em;
   gap: 1em;
