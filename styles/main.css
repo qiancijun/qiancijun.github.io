@@ -217,6 +217,20 @@ a {
 .answer:hover {
   color: #00f;
 }
+.tab-content {
+  display: none;
+}
+.active {
+  display: block;
+}
+.tab-active {
+  color: #ebeee7 !important;
+  border-bottom: 1px solid #fff !important;
+}
+.copy::before {
+  content: none !important;
+  counter-increment: none !important;
+}
 .search-container {
   color: #d3c6aa;
   display: flex;
@@ -644,6 +658,7 @@ body {
 /* 粗体 */
 /* 表格 */
 /* 图片 */
+/* 分页代码 */
 }
 .article-entry .content h1 {
   color: #e7669e;
@@ -671,6 +686,7 @@ body {
 .article-entry .content h4::before,
 .article-entry .content h5::before,
 .article-entry .content h6::before,
+.article-entry .content div::before,
 .article-entry .content p::before,
 .article-entry .content li::before {
   font-size: 15px;
@@ -687,6 +703,10 @@ body {
 .article-entry .content a {
   color: #0f67fc;
   text-decoration: underline;
+}
+.article-entry .content div > div::before {
+  content: none;
+  counter-increment: none;
 }
 .article-entry .content ul {
   list-style: none;
@@ -800,6 +820,32 @@ body {
 .article-entry .content blockquote p::before {
   content: none;
   counter-increment: none;
+}
+.article-entry .content .multi-code .tabs {
+  height: 50px;
+  padding-left: 1em;
+  gap: 1em;
+  background: #2d2d2d;
+  display: flex;
+}
+.article-entry .content .multi-code .tabs button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  user-select: none;
+/* padding-left: .75rem; */
+/* padding-right: .75rem; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.article-entry .content .multi-code .tab-content {
+  position: relative;
+  background-color: #2d2d2d;
+}
+.article-entry .content .multi-code .tab-content pre {
+  margin: 0;
+  padding: 1em;
 }
 mjx-container {
   display: inline-grid;

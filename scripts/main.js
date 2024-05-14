@@ -8,6 +8,27 @@ const copyToClipboard = (text) => {
         .catch(err => {
             console.error('复制失败：', err);
         });
+};
+
+const showTab = (tabIndex) => {
+    // 隐藏所有标签内容
+    const tabContents = $(`.tab-content`)
+    if (tabContents.length == 0) {
+        return;
+    }
+    for (var i = 0; i < tabContents.length; i++) {
+        tabContents[i].classList.remove('active');
+    }
+    let tabButtons = $('.tabs > button');
+    for (let i = 0; i < tabButtons.length; i++) {
+        const tb = tabButtons[i];
+        tb.classList.remove('tab-active')
+    }
+    const tabButton = $(`#tab-button-${tabIndex}`)[0];
+    tabButton.classList.add('tab-active') 
+    // 显示选定的标签内容
+    const selectedTab = $(`#tab${tabIndex}`)[0];
+    selectedTab.classList.add('active');
 }
 
 (function() {
@@ -109,7 +130,6 @@ const copyToClipboard = (text) => {
 
     // 代码复制  
     const code_blocks = $('.highlight');
-    // console.log(code_blocks);
     for (let i = 0; i < code_blocks.length; i++) {
         const block = code_blocks[i];
         $(block).attr("id", `code-${i}`)
@@ -119,6 +139,53 @@ const copyToClipboard = (text) => {
         
         $(block).prepend(copy_btn);
         let clipboard = new ClipboardJS(`#copy-btn-${i}`);
+        clipboard.on('success', function(e) {
+            Toastify({
+                text: "Copy success",
+                duration: 3000,
+                // destination: "https://github.com/apvarun/toastify-js",
+                newWindow: true,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: "right", // `left`, `center` or `right`
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                style: {
+                  background: "rgba(45, 45, 45, 0.5)",
+                  color: "color-text"
+                },
+                onClick: function(){} // Callback after click
+              }).showToast();
+            e.clearSelection();
+          });
+        
+        clipboard.on('error', function(e) {
+            Toastify({
+                text: "Copy failed",
+                duration: 3000,
+                // destination: "https://github.com/apvarun/toastify-js",
+                newWindow: true,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: "right", // `left`, `center` or `right`
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                style: {
+                  background: "rgba(45, 45, 45, 0.5)",
+                  color: "color-text"
+                },
+                onClick: function(){} // Callback after click
+              }).showToast();
+        });
+    }
+
+    // 多语言代码块的复制
+    const multi_code_blocks = $('.tab-content')
+    for (let i = 0; i < multi_code_blocks.length; i++) {
+        const code_block = multi_code_blocks[i];
+        const copy_btn = `
+            <div class="copy" id="tab-copy-btn-${i}" data-clipboard-target="#tab${i}" style="width:16px; height: 16px; position: absolute; right: 10px; top: 10px; cursor: pointer"><img src="/images/copy.svg"></div>
+        `
+        $(code_block).prepend(copy_btn); 
+        let clipboard = new ClipboardJS(`#tab-copy-btn-${i}`);
         clipboard.on('success', function(e) {
             Toastify({
                 text: "Copy success",
@@ -172,4 +239,7 @@ const copyToClipboard = (text) => {
             $(`#quote-${i}`)[0].classList.toggle('expanded'); 
         });
     }
+
+    showTab(0);
 })();
+

@@ -21,3 +21,17 @@
 .answer:hover {
   color: #00f;
 }
+.tab-content {
+  display: none;
+}
+.active {
+  display: block;
+}
+.tab-active {
+  color: #ebeee7 !important;
+  border-bottom: 1px solid #fff !important;
+}
+.copy::before {
+  content: none !important;
+  counter-increment: none !important;
+}
