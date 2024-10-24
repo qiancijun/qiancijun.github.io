@@ -157,6 +157,22 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/number-of-sub-
 <td>中等</td>
 <td>1317</td>
 </tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/k-radius-subarray-averages/description/">2090.
+半径为 k 的子数组平均值</a></td>
+<td>第 269 场周赛 Q2</td>
+<td>中等</td>
+<td>1358</td>
+</tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-recolors-to-get-k-consecutive-black-blocks/description/">2379.
+得到 K 个黑块的最少涂色次数</a></td>
+<td>第 85 场双周赛 Q1</td>
+<td>简单</td>
+<td>1360</td>
+</tr>
 </tbody>
 </table>
 <h3 id="定长子串中元音的最大数目">定长子串中元音的最大数目</h3>
@@ -284,11 +300,99 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/number-of-sub-
     }
 }</pre>
         </div></div>
+<h3 id="半径为-k-的子数组平均值">半径为 k 的子数组平均值</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(3, 0)" id="tab-button-3-0">Golang</button>
+        
+        <button onclick="showTab(3, 1)" id="tab-button-3-1">Rust</button>
+        </div>
+        <div class="tab-content tab-content-3" id="tab-3-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">getAverages</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> []<span class="hljs-type">int</span> {
+    sum := <span class="hljs-number">0</span>
+    ans := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, <span class="hljs-built_in">len</span>(nums))
+    <span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> ans {
+        ans[i] = <span class="hljs-number">-1</span>
+    }
+    <span class="hljs-keyword">for</span> i, num := <span class="hljs-keyword">range</span> nums {
+        sum += num
+        <span class="hljs-keyword">if</span> i &lt; <span class="hljs-number">2</span> * k {
+            <span class="hljs-keyword">continue</span>
+        }
+        ans[i-k] = sum / (<span class="hljs-number">2</span> * k + <span class="hljs-number">1</span>)
+        sum -= nums[i<span class="hljs-number">-2</span>*k]
+    }
+    <span class="hljs-keyword">return</span> ans
+}</pre>
+        </div>
+        <div class="tab-content tab-content-3" id="tab-3-1">
+            <pre><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> {
+    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">get_averages</span>(nums: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;, k: <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt; {
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">sum</span>: <span class="hljs-type">i64</span> = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">ans</span>: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt; = <span class="hljs-built_in">vec!</span>[-<span class="hljs-number">1</span>; nums.<span class="hljs-title function_ invoke__">len</span>()];
+        <span class="hljs-keyword">for</span> (i, &amp;a) <span class="hljs-keyword">in</span> nums.<span class="hljs-title function_ invoke__">iter</span>().<span class="hljs-title function_ invoke__">enumerate</span>() {
+            sum += a <span class="hljs-keyword">as</span> <span class="hljs-type">i64</span>;
+            <span class="hljs-keyword">if</span> i &lt; <span class="hljs-number">2</span> * (k <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>) {
+                <span class="hljs-keyword">continue</span>;
+            }
+            ans[i - k <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>] = (sum / (<span class="hljs-number">2</span> * k + <span class="hljs-number">1</span>) <span class="hljs-keyword">as</span> <span class="hljs-type">i64</span>) <span class="hljs-keyword">as</span> <span class="hljs-type">i32</span>;
+            sum -= nums[i - (<span class="hljs-number">2</span> * k <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>)] <span class="hljs-keyword">as</span> <span class="hljs-type">i64</span>;
+        }
+        ans
+    }
+}</pre>
+        </div></div>
+<h3 id="得到-k-个黑块的最少涂色次数">得到 K 个黑块的最少涂色次数</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(4, 0)" id="tab-button-4-0">Golang</button>
+        
+        <button onclick="showTab(4, 1)" id="tab-button-4-1">Rust</button>
+        </div>
+        <div class="tab-content tab-content-4" id="tab-4-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">minimumRecolors</span><span class="hljs-params">(blocks <span class="hljs-type">string</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    ans := <span class="hljs-built_in">len</span>(blocks)
+    cnt := <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> i, b := <span class="hljs-keyword">range</span> blocks {
+        <span class="hljs-keyword">if</span> b == <span class="hljs-string">&#x27;W&#x27;</span> {
+            cnt++
+        }
+        <span class="hljs-keyword">if</span> i &lt; k - <span class="hljs-number">1</span> {
+            <span class="hljs-keyword">continue</span>
+        }
+        ans = min(ans, cnt)
+        <span class="hljs-keyword">if</span> blocks[i-k+<span class="hljs-number">1</span>] == <span class="hljs-string">&#x27;W&#x27;</span> {
+            cnt--
+        }
+    }
+    <span class="hljs-keyword">return</span> ans
+}</pre>
+        </div>
+        <div class="tab-content tab-content-4" id="tab-4-1">
+            <pre><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> {
+    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">minimum_recolors</span>(blocks: <span class="hljs-type">String</span>, k: <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">i32</span> {
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">s</span> = blocks.<span class="hljs-title function_ invoke__">as_bytes</span>();
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">ans</span>: <span class="hljs-type">i32</span> = blocks.<span class="hljs-title function_ invoke__">len</span>() <span class="hljs-keyword">as</span> <span class="hljs-type">i32</span>;
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">cnt</span>: <span class="hljs-type">i32</span> = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span> (i, &amp;c) <span class="hljs-keyword">in</span> s.<span class="hljs-title function_ invoke__">iter</span>().<span class="hljs-title function_ invoke__">enumerate</span>() {
+            <span class="hljs-keyword">if</span> c == <span class="hljs-string">b&#x27;W&#x27;</span> {
+                cnt += <span class="hljs-number">1</span>;
+            }
+            <span class="hljs-keyword">if</span> (i <span class="hljs-keyword">as</span> <span class="hljs-type">i32</span>) &lt; k - <span class="hljs-number">1</span> {
+                <span class="hljs-keyword">continue</span>
+            }
+            ans = ans.<span class="hljs-title function_ invoke__">min</span>(cnt);
+            <span class="hljs-keyword">if</span> s[i - k <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span> + <span class="hljs-number">1</span>] == <span class="hljs-string">b&#x27;W&#x27;</span> {
+                cnt -= <span class="hljs-number">1</span>;
+            }
+        }
+        ans
+    }
+}</pre>
+        </div></div>
 
     </div>
     <div class="toc-container">
       <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9A%E9%95%BF%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3"><span class="toc-number">1.</span> <span class="toc-text">定长滑动窗口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A5%97%E8%B7%AF"><span class="toc-number">1.1.</span> <span class="toc-text">套路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E5%8D%95"><span class="toc-number">1.2.</span> <span class="toc-text">题单</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E9%95%BF%E5%AD%90%E4%B8%B2%E4%B8%AD%E5%85%83%E9%9F%B3%E7%9A%84%E6%9C%80%E5%A4%A7%E6%95%B0%E7%9B%AE"><span class="toc-number">1.2.1.</span> <span class="toc-text">定长子串中元音的最大数目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%90%E6%95%B0%E7%BB%84%E6%9C%80%E5%A4%A7%E5%B9%B3%E5%9D%87%E6%95%B0-i"><span class="toc-number">1.2.2.</span> <span class="toc-text">子数组最大平均数 I</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%A7%E5%B0%8F%E4%B8%BA-k-%E4%B8%94%E5%B9%B3%E5%9D%87%E5%80%BC%E5%A4%A7%E4%BA%8E%E7%AD%89%E4%BA%8E%E9%98%88%E5%80%BC%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84%E6%95%B0%E7%9B%AE"><span class="toc-number">1.2.3.</span> <span class="toc-text">大小为 K
-且平均值大于等于阈值的子数组数目</span></a></li></ol></li></ol></li></ol>
+且平均值大于等于阈值的子数组数目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8A%E5%BE%84%E4%B8%BA-k-%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84%E5%B9%B3%E5%9D%87%E5%80%BC"><span class="toc-number">1.2.4.</span> <span class="toc-text">半径为 k 的子数组平均值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%97%E5%88%B0-k-%E4%B8%AA%E9%BB%91%E5%9D%97%E7%9A%84%E6%9C%80%E5%B0%91%E6%B6%82%E8%89%B2%E6%AC%A1%E6%95%B0"><span class="toc-number">1.2.5.</span> <span class="toc-text">得到 K 个黑块的最少涂色次数</span></a></li></ol></li></ol></li></ol>
     </div>
   </div>
   <footer class="article-footer">
