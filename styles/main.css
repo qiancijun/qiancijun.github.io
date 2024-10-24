@@ -689,6 +689,8 @@ body {
 .article-entry .content div::before,
 .article-entry .content p::before,
 .article-entry .content li::before {
+/* position: absolute;
+            left: 0; */
   font-size: 15px;
   font-weight: 300;
   content: counter(line); /* 设置行号为计数器的值 */
@@ -818,6 +820,13 @@ body {
   margin: 0;
 }
 .article-entry .content blockquote p::before {
+  content: none;
+  counter-increment: none;
+}
+.article-entry .content .multi-code {
+  margin-left: 30px;
+}
+.article-entry .content .multi-code::before {
   content: none;
   counter-increment: none;
 }

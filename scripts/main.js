@@ -10,9 +10,9 @@ const copyToClipboard = (text) => {
         });
 };
 
-const showTab = (tabIndex) => {
+const showTab = (multiCodeIndex, tabIndex) => {
     // 隐藏所有标签内容
-    const tabContents = $(`.tab-content`)
+    const tabContents = $(`.tab-content-${multiCodeIndex}`)
     if (tabContents.length == 0) {
         return;
     }
@@ -24,10 +24,10 @@ const showTab = (tabIndex) => {
         const tb = tabButtons[i];
         tb.classList.remove('tab-active')
     }
-    const tabButton = $(`#tab-button-${tabIndex}`)[0];
+    const tabButton = $(`#tab-button-${multiCodeIndex}-${tabIndex}`)[0];
     tabButton.classList.add('tab-active') 
     // 显示选定的标签内容
-    const selectedTab = $(`#tab${tabIndex}`)[0];
+    const selectedTab = $(`#tab-${multiCodeIndex}-${tabIndex}`)[0];
     selectedTab.classList.add('active');
 }
 
@@ -134,7 +134,7 @@ const showTab = (tabIndex) => {
         const block = code_blocks[i];
         $(block).attr("id", `code-${i}`)
         const copy_btn = `
-        <div class="copy" id="copy-btn-${i}" data-clipboard-target="#code-${i}" style="width:16px; height: 16px; position: absolute; right: 10px; top: 10px; cursor: pointer"><img src="/images/copy.svg"></div>
+        <div class="copy" id="copy-btn-${i}" data-clipboard-target="#code-${i} pre" style="width:16px; height: 16px; position: absolute; right: 10px; top: 10px; cursor: pointer"><img src="/images/copy.svg"></div>
         `
         
         $(block).prepend(copy_btn);
@@ -178,51 +178,100 @@ const showTab = (tabIndex) => {
     }
 
     // 多语言代码块的复制
-    const multi_code_blocks = $('.tab-content')
+    // const multi_code_blocks = $('.tab-content')
+    const multi_code_blocks = $('.multi-code');
     for (let i = 0; i < multi_code_blocks.length; i++) {
-        const code_block = multi_code_blocks[i];
-        const copy_btn = `
-            <div class="copy" id="tab-copy-btn-${i}" data-clipboard-target="#tab${i}" style="width:16px; height: 16px; position: absolute; right: 10px; top: 10px; cursor: pointer"><img src="/images/copy.svg"></div>
-        `
-        $(code_block).prepend(copy_btn); 
-        let clipboard = new ClipboardJS(`#tab-copy-btn-${i}`);
-        clipboard.on('success', function(e) {
-            Toastify({
-                text: "Copy success",
-                duration: 3000,
-                // destination: "https://github.com/apvarun/toastify-js",
-                newWindow: true,
-                close: true,
-                gravity: "top", // `top` or `bottom`
-                position: "right", // `left`, `center` or `right`
-                stopOnFocus: true, // Prevents dismissing of toast on hover
-                style: {
-                  background: "rgba(45, 45, 45, 0.5)",
-                  color: "color-text"
-                },
-                onClick: function(){} // Callback after click
-              }).showToast();
-            e.clearSelection();
-          });
-        
-        clipboard.on('error', function(e) {
-            Toastify({
-                text: "Copy failed",
-                duration: 3000,
-                // destination: "https://github.com/apvarun/toastify-js",
-                newWindow: true,
-                close: true,
-                gravity: "top", // `top` or `bottom`
-                position: "right", // `left`, `center` or `right`
-                stopOnFocus: true, // Prevents dismissing of toast on hover
-                style: {
-                  background: "rgba(45, 45, 45, 0.5)",
-                  color: "color-text"
-                },
-                onClick: function(){} // Callback after click
-              }).showToast();
-        });
+        const multi_code_block = multi_code_blocks[i];
+        const tab_contents = $(multi_code_block).children('.tab-content');
+        for (let j = 0; j < tab_contents.length; j++) {
+            const tab_content = tab_contents[j];
+            const copy_btn = `
+                <div class="copy" id="tab-copy-btn-${i}-${j}" data-clipboard-target="#${tab_content.id} > pre" style="width:16px; height: 16px; position: absolute; right: 10px; top: 10px; cursor: pointer"><img src="/images/copy.svg"></div>
+            `
+            $(tab_content).prepend(copy_btn);
+            let clipboard = new ClipboardJS(`#tab-copy-btn-${i}-${j}`);
+            clipboard.on('success', function(e) {
+                Toastify({
+                    text: "Copy success",
+                    duration: 3000,
+                    // destination: "https://github.com/apvarun/toastify-js",
+                    newWindow: true,
+                    close: true,
+                    gravity: "top", // `top` or `bottom`
+                    position: "right", // `left`, `center` or `right`
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                    style: {
+                      background: "rgba(45, 45, 45, 0.5)",
+                      color: "color-text"
+                    },
+                    onClick: function(){} // Callback after click
+                  }).showToast();
+                e.clearSelection();
+              });
+            
+            clipboard.on('error', function(e) {
+                Toastify({
+                    text: "Copy failed",
+                    duration: 3000,
+                    // destination: "https://github.com/apvarun/toastify-js",
+                    newWindow: true,
+                    close: true,
+                    gravity: "top", // `top` or `bottom`
+                    position: "right", // `left`, `center` or `right`
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                    style: {
+                      background: "rgba(45, 45, 45, 0.5)",
+                      color: "color-text"
+                    },
+                    onClick: function(){} // Callback after click
+                  }).showToast();
+            });
+        }
     }
+    // for (let i = 0; i < multi_code_blocks.length; i++) {
+    //     const code_block = multi_code_blocks[i];
+    //     const copy_btn = `
+    //         <div class="copy" id="tab-copy-btn-${i}" data-clipboard-target="#tab${i}" style="width:16px; height: 16px; position: absolute; right: 10px; top: 10px; cursor: pointer"><img src="/images/copy.svg"></div>
+    //     `
+    //     $(code_block).prepend(copy_btn); 
+    //     let clipboard = new ClipboardJS(`#tab-copy-btn-${i}`);
+    //     clipboard.on('success', function(e) {
+    //         Toastify({
+    //             text: "Copy success",
+    //             duration: 3000,
+    //             // destination: "https://github.com/apvarun/toastify-js",
+    //             newWindow: true,
+    //             close: true,
+    //             gravity: "top", // `top` or `bottom`
+    //             position: "right", // `left`, `center` or `right`
+    //             stopOnFocus: true, // Prevents dismissing of toast on hover
+    //             style: {
+    //               background: "rgba(45, 45, 45, 0.5)",
+    //               color: "color-text"
+    //             },
+    //             onClick: function(){} // Callback after click
+    //           }).showToast();
+    //         e.clearSelection();
+    //       });
+        
+    //     clipboard.on('error', function(e) {
+    //         Toastify({
+    //             text: "Copy failed",
+    //             duration: 3000,
+    //             // destination: "https://github.com/apvarun/toastify-js",
+    //             newWindow: true,
+    //             close: true,
+    //             gravity: "top", // `top` or `bottom`
+    //             position: "right", // `left`, `center` or `right`
+    //             stopOnFocus: true, // Prevents dismissing of toast on hover
+    //             style: {
+    //               background: "rgba(45, 45, 45, 0.5)",
+    //               color: "color-text"
+    //             },
+    //             onClick: function(){} // Callback after click
+    //           }).showToast();
+    //     });
+    // }
 
     // 引用展开
     const quotes = $('blockquote');
@@ -240,6 +289,23 @@ const showTab = (tabIndex) => {
         });
     }
 
-    showTab(0);
+    // 默认显示第一个
+    const multiCodes = $('.multi-code')
+    for (let i = 0; i < multiCodes.length; i++) {
+        let first_content = null;
+        const tab_content = $(multiCodes[i]).children('.tab-content')
+        if (tab_content.length > 0) {
+            first_content = tab_content[0]
+        }
+        if (first_content != null) {
+            first_content.classList.add('active');
+        }
+        
+        const btn = $(multiCodes[i]).children('.tabs').children('button')[0];
+        if (btn != undefined) {
+            btn.classList.add('tab-active');
+        }
+        
+    }
 })();
 

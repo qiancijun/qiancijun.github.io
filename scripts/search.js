@@ -2,21 +2,21 @@ const wrap_html = (data, author) =>  {
     const data_url = data.url;
     const data_tags = data.tags;
     const data_categories = data.categories;
-    const data_date = moment(data.date).format('MMMM Do YYYY, h:mm:ss a');
+    const data_date = moment(data.date).format('MMMM Do YYYY');
+    const data_time = moment(data.date).format('h:mm:ss a');
     const data_tag_number = data.tag_number;
     const data_title = data.title;
     let str = "";
     str += '<tr class="post-list-item">';
-    str += '<td class="phone-item"><span class="article-authority"># -rw-r--r--</span></td>';
-    str += `<td class="phone-item"><span class="link">${data_tag_number}</span></td>`
-    str += `<td class="phone-item"><span class="author">${author}</span></
+    str += '<td style="text-align: left" class="phone-item"><span class="article-authority"># -rw-r--r--</span></td>';
+    str += `<td style="text-align: left" class="phone-item"><span class="link">${data_tag_number}</span></td>`
+    str += `<td style="text-align: left" class="phone-item"><span class="author">${author}</span></
     td>`
-    str += `<td class="phone-item"><span class="author">${author}</span></
-    td>`
-    str += '<td class="phone-item"><span class="group">root</span></td>';
-    str += `<td class="phone-item">${data_date}</td>`
+    str += '<td style="text-align: left" class="phone-item"><span class="group">root</span></td>';
+    str += `<td style="text-align: left" class="phone-item">${data_date}</td>`
+    str += `<td style="text-align: left" class="phone-item">${data_time}</td>`
     
-    str += "<td>"
+    str += '<td style="text-align: left">'
     for (let i = 0; i < data.categories.length; i++) {
         const category = data.categories[i];
         if (category != "") {
@@ -25,7 +25,7 @@ const wrap_html = (data, author) =>  {
     }
     str += "</td>"
 
-    str += "<td>"
+    str += '<td style="text-align: left">'
     for (let i = 0; i < data_tags.length; i++) {
         const tag = data_tags[i];
         if (tag != "") {
@@ -34,13 +34,13 @@ const wrap_html = (data, author) =>  {
     }
     str += "</td>"
 
-    str += `<td><a href="${data_url}" class="title">${data_title}</a></td>`
+    str += `<td style="text-align: left"><a href="${data_url}" class="title">${data_title}</a></td>`
     str += "</tr>";
     return str;
 }
 
 const init = (datas, author) => {
-    let str = '<table class="post-list">';
+    let str = '<table class="post-list" style="width: 100%;">';
     datas.forEach(data => {
         str += wrap_html(data, author)
     })

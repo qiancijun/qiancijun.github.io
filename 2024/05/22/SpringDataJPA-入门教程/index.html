@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+    
+      SpringDataJPA 入门教程
+    
+</title>
+
+<link rel="icon" href="/images/favicon.ico">
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-calendar@2.3.4/dist/github-calendar.min.css">
+
+<link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark-reasonable.min.css" rel="stylesheet">
+<link href="
+https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.css
+" rel="stylesheet">
+<link href="
+https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustomScrollbar.min.css
+" rel="stylesheet">
+<meta name="generator" content="Hexo 7.2.0"></head>
+<body>
+    <div class="main-container">
+        <div class="topbar">
+    <div class="btn-container">
+        <a href="/"><img class="btn-close" src="/images/close.svg" alt=""></a>
+        <a><img class="btn-minimize" src="/images/minimize.svg" alt=""></a>
+        <a><img class="btn-maximize" src="/images/maximize.svg" alt=""></a>
+    </div>
+    <div class="title">
+        <img src="/images/terminal.svg" alt="">
+        <span>cat Cheryl-Chun 淳老师 BLOG</span>
+    </div>
+</div>
+        <div class="nav-container">
+    <div class="posts">
+        <img src="/images/posts-list.svg" alt="">
+        <a href="/">Home</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+    <!-- <div class="tags">
+        <img src="/images/tag.svg" alt="">
+        <a href="/tag">Tag</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div> -->
+    <div>
+        <img src="/images/archive.svg" alt="">
+        <a href="/all-posts">Posts</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+    <!-- <div class="category">
+        <img src="/images/category.svg" alt="">
+        <a href="/category">Category</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div> -->
+    <div class="about">
+        <img src="/images/about.svg" alt="">
+        <a href="/about">About</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+</div>
+        <div class="main-content">
+            <article
+  id="post-SpringDataJPA-入门教程"
+  class="article article-type-post"
+>
+  
+  <h1 class="article-header">SpringDataJPA 入门教程</h1>
+  
+  <div class="article-info">
+    <!-- <span>Document Attributes:</span> -->
+
+    <table>
+      <tr>
+        <td>
+            <img src="/images/time.svg" alt="">
+            Updated Time
+        </td>
+        <td>2024-05-22</td>
+      </tr>
+      <tr>
+        <td>
+            <img src="/images/category.svg" alt="">
+            Category
+        </td>
+        <td> <ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a></li></ul> </td>
+      </tr>
+      <tr>
+        <td>
+            <img src="/images/tag.svg" alt="">
+            Tags
+        </td>
+        <td>
+	<a class="tag-link" href="/tags/Java/" rel="tag">Java</a>, <a class="tag-link" href="/tags/Spring/" rel="tag">Spring</a>
+
+</td>
+      </tr>
+    </table>
+  </div>
+  <div class="article-entry">
+    <div class="content">
+      <h1 id="springdata-jpa">SpringData JPA</h1>
+<h2 id="项目介绍">项目介绍</h2>
+<p><img
+src="https://cheryl-picgo.oss-cn-hangzhou.aliyuncs.com/%E5%AE%9E%E4%BD%93%E5%85%B3%E7%B3%BB%E5%9B%BE%202.webp" /></p>
+<h2 id="环境准备">环境准备</h2>
+<h3 id="application.yml">Application.yml</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(1, 0)" id="tab-button-1-0">MySQL</button>
+        
+        <button onclick="showTab(1, 1)" id="tab-button-1-1">PostgreSQL</button>
+        
+        <button onclick="showTab(1, 2)" id="tab-button-1-2">sqlite3</button>
+        </div>
+        <div class="tab-content tab-content-1" id="tab-1-0">
+            <pre><span class="hljs-attr">spring:</span>
+  <span class="hljs-attr">datasource:</span>
+    <span class="hljs-attr">url:</span> <span class="hljs-string">jdbc:mysql://localhost:3306/database</span>
+    <span class="hljs-attr">username:</span> <span class="hljs-string">MYSQL_USER</span>
+    <span class="hljs-attr">password:</span> <span class="hljs-string">MYSQL_PWD</span>
+    <span class="hljs-attr">driver-class-name:</span> <span class="hljs-string">com.mysql.cj.jdbc.Driver</span>
+  <span class="hljs-attr">jpa:</span>
+    <span class="hljs-attr">hibernate:</span>
+      <span class="hljs-attr">ddl-auto:</span> <span class="hljs-string">create-drop</span>
+    <span class="hljs-attr">show-sql:</span> <span class="hljs-literal">true</span>
+    <span class="hljs-attr">properties:</span>
+      <span class="hljs-attr">hibernate:</span>
+        <span class="hljs-attr">dialect:</span> <span class="hljs-string">org.hibernate.community.dialect.MySQLDialect</span>
+        <span class="hljs-attr">format_sql:</span> <span class="hljs-literal">true</span></pre>
+        </div>
+        <div class="tab-content tab-content-1" id="tab-1-1">
+            <pre><span class="hljs-attr">spring:</span>
+  <span class="hljs-attr">datasource:</span>
+    <span class="hljs-attr">url:</span> <span class="hljs-string">jdbc:postgresql://localhost:5432/postgres</span>
+    <span class="hljs-attr">username:</span> <span class="hljs-string">postgres</span>
+    <span class="hljs-attr">password:</span> <span class="hljs-string">your_password</span>
+    <span class="hljs-attr">driver-class-name:</span> <span class="hljs-string">org.postgresql.Driver</span>
+  <span class="hljs-attr">jpa:</span>
+    <span class="hljs-attr">hibernate:</span>
+      <span class="hljs-attr">ddl-auto:</span> <span class="hljs-string">create-drop</span>
+    <span class="hljs-attr">show-sql:</span> <span class="hljs-literal">true</span>
+    <span class="hljs-attr">properties:</span>
+      <span class="hljs-attr">hibernate:</span>
+        <span class="hljs-attr">dialect:</span> <span class="hljs-string">org.hibernate.community.dialect.SQLiteDialect</span>
+        <span class="hljs-attr">format_sql:</span> <span class="hljs-literal">true</span></pre>
+        </div>
+        <div class="tab-content tab-content-1" id="tab-1-2">
+            <pre><span class="hljs-attr">spring:</span>
+  <span class="hljs-attr">datasource:</span>
+    <span class="hljs-attr">url:</span> <span class="hljs-string">DB_PATH</span>
+    <span class="hljs-attr">driver-class-name:</span> <span class="hljs-string">com.p6spy.engine.spy.P6SpyDriver</span>
+  <span class="hljs-attr">jpa:</span>
+    <span class="hljs-attr">hibernate:</span>
+      <span class="hljs-attr">ddl-auto:</span> <span class="hljs-string">create-drop</span>
+    <span class="hljs-attr">show-sql:</span> <span class="hljs-literal">true</span>
+    <span class="hljs-attr">properties:</span>
+      <span class="hljs-attr">hibernate:</span>
+        <span class="hljs-attr">dialect:</span> <span class="hljs-string">org.hibernate.community.dialect.SQLiteDialect</span>
+        <span class="hljs-attr">format_sql:</span> <span class="hljs-literal">true</span></pre>
+        </div></div>
+<h3 id="pom.xml">pom.xml</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(2, 0)" id="tab-button-2-0">MySQL</button>
+        
+        <button onclick="showTab(2, 1)" id="tab-button-2-1">PostgreSQL</button>
+        
+        <button onclick="showTab(2, 2)" id="tab-button-2-2">sqlite3</button>
+        </div>
+        <div class="tab-content tab-content-2" id="tab-2-0">
+            <pre><span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-data-jpa<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.mysql<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>mysql-connector-j<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>runtime<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.projectlombok<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>lombok<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">optional</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">optional</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span></pre>
+        </div>
+        <div class="tab-content tab-content-2" id="tab-2-1">
+            <pre><span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-data-jpa<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.postgresql<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>postgresql<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>runtime<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.projectlombok<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>lombok<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">optional</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">optional</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span></pre>
+        </div>
+        <div class="tab-content tab-content-2" id="tab-2-2">
+            <pre><span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-data-jpa<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>p6spy<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>p6spy<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.9.1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.xerial<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>sqlite-jdbc<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.45.3.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.projectlombok<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>lombok<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">optional</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">optional</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span></pre>
+        </div></div>
+<h1 id="项目编写">项目编写</h1>
+<h2 id="实体类">实体类</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(3, 0)" id="tab-button-3-0">Author</button>
+        
+        <button onclick="showTab(3, 1)" id="tab-button-3-1">Book</button>
+        
+        <button onclick="showTab(3, 2)" id="tab-button-3-2">IdCard</button>
+        
+        <button onclick="showTab(3, 3)" id="tab-button-3-3">Publisher</button>
+        
+        <button onclick="showTab(3, 4)" id="tab-button-3-4">BookType</button>
+        </div>
+        <div class="tab-content tab-content-3" id="tab-3-0">
+            <pre><span class="hljs-meta">@Data</span>
+<span class="hljs-meta">@AllArgsConstructor</span>
+<span class="hljs-meta">@NoArgsConstructor</span>
+<span class="hljs-meta">@Builder</span>
+<span class="hljs-meta">@ToString</span>
+<span class="hljs-meta">@Entity(name = &quot;Author&quot;)</span> <span class="hljs-comment">// 用于将一个普通的 Java 类标识为一个 JPA 实体（entity）</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Author</span> {
+    <span class="hljs-meta">@Id</span>
+    <span class="hljs-comment">// MySQL 下的主键自增，如果是 PostgreSQL 需要配置序列生成器</span>
+    <span class="hljs-meta">@GeneratedValue(
+            strategy = GenerationType.IDENTITY
+    )</span>
+    <span class="hljs-keyword">private</span> Long id;
+    <span class="hljs-meta">@Column(
+            name = &quot;first_name&quot;,
+            nullable = false
+    )</span>
+    <span class="hljs-keyword">private</span> String firstName;
+    <span class="hljs-meta">@Column(
+            name = &quot;last_name&quot;,
+            nullable = false
+    )</span>
+    <span class="hljs-keyword">private</span> String lastName;
+    <span class="hljs-meta">@Column(
+            name = &quot;email&quot;,
+            unique = true,
+            nullable = false
+    )</span>
+    <span class="hljs-keyword">private</span> String email;
+    <span class="hljs-meta">@Column(
+            name = &quot;age&quot;,
+            nullable = false
+    )</span>
+    <span class="hljs-keyword">private</span> Integer age;
+}</pre>
+        </div>
+        <div class="tab-content tab-content-3" id="tab-3-1">
+            <pre><span class="hljs-meta">@Data</span>
+<span class="hljs-meta">@AllArgsConstructor</span>
+<span class="hljs-meta">@NoArgsConstructor</span>
+<span class="hljs-meta">@Builder</span>
+<span class="hljs-meta">@ToString</span>
+<span class="hljs-meta">@Entity(name = &quot;Book&quot;)</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Book</span> {
+    <span class="hljs-meta">@Id</span>
+    <span class="hljs-meta">@GeneratedValue(
+            strategy = GenerationType.IDENTITY
+    )</span>
+    <span class="hljs-keyword">private</span> Long id;
+<span class="hljs-comment">//    private Long authorId; // Book 与 Author 为一对多关系</span>
+    <span class="hljs-meta">@Column(
+            name = &quot;title&quot;,
+            nullable = false
+    )</span>
+    <span class="hljs-keyword">private</span> String title;
+    <span class="hljs-meta">@Column(
+            name = &quot;type&quot;
+    )</span>
+    <span class="hljs-meta">@Enumerated(EnumType.STRING)</span>
+    <span class="hljs-keyword">private</span> BookType type;
+}</pre>
+        </div>
+        <div class="tab-content tab-content-3" id="tab-3-2">
+            <pre><span class="hljs-meta">@Data</span>
+<span class="hljs-meta">@AllArgsConstructor</span>
+<span class="hljs-meta">@NoArgsConstructor</span>
+<span class="hljs-meta">@Builder</span>
+<span class="hljs-meta">@ToString</span>
+<span class="hljs-meta">@Entity(name = &quot;IdCard&quot;)</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">IdCard</span> {
+    <span class="hljs-meta">@Id</span>
+    <span class="hljs-meta">@GeneratedValue(
+            strategy = GenerationType.IDENTITY
+    )</span>
+    <span class="hljs-keyword">private</span> Long id;
+    <span class="hljs-meta">@Column(
+            name = &quot;number&quot;,
+            unique = true
+    )</span>
+    <span class="hljs-keyword">private</span> String number;
+    <span class="hljs-meta">@Column(
+            name = &quot;sex&quot;
+    )</span>
+    <span class="hljs-keyword">private</span> Integer sex;
+    <span class="hljs-meta">@Column(
+            name = &quot;address&quot;,
+            nullable = false
+    )</span>
+    <span class="hljs-keyword">private</span> String address;
+}</pre>
+        </div>
+        <div class="tab-content tab-content-3" id="tab-3-3">
+            <pre><span class="hljs-meta">@Data</span>
+<span class="hljs-meta">@AllArgsConstructor</span>
+<span class="hljs-meta">@NoArgsConstructor</span>
+<span class="hljs-meta">@Builder</span>
+<span class="hljs-meta">@ToString</span>
+<span class="hljs-meta">@Entity(name = &quot;Publisher&quot;)</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Publisher</span> {
+    <span class="hljs-meta">@Id</span>
+    <span class="hljs-meta">@GeneratedValue(
+            strategy = GenerationType.IDENTITY
+    )</span>
+    <span class="hljs-keyword">private</span> Long id;
+    <span class="hljs-meta">@Column(
+            name = &quot;address&quot;,
+            nullable = false
+    )</span>
+    <span class="hljs-keyword">private</span> String address;
+    <span class="hljs-meta">@Column(
+            name = &quot;contact&quot;,
+            unique = true
+    )</span>
+    <span class="hljs-keyword">private</span> String contact;
+}</pre>
+        </div>
+        <div class="tab-content tab-content-3" id="tab-3-4">
+            <pre><span class="hljs-meta">@Getter</span>
+<span class="hljs-meta">@RequiredArgsConstructor</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> <span class="hljs-title class_">BookType</span> {
+    FICTION(<span class="hljs-string">&quot;FIC&quot;</span>, <span class="hljs-string">&quot;Fiction&quot;</span>),
+    NON(<span class="hljs-string">&quot;NF&quot;</span>, <span class="hljs-string">&quot;Non-Fiction&quot;</span>),
+    SCIENCE(<span class="hljs-string">&quot;SCI&quot;</span>, <span class="hljs-string">&quot;Science&quot;</span>),
+    HISTORY(<span class="hljs-string">&quot;HIS&quot;</span>, <span class="hljs-string">&quot;History&quot;</span>),
+    FANTASY(<span class="hljs-string">&quot;FAN&quot;</span>, <span class="hljs-string">&quot;Fantasy&quot;</span>),
+    BIOGRAPHY(<span class="hljs-string">&quot;BIO&quot;</span>, <span class="hljs-string">&quot;Biography&quot;</span>);
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> String code;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> String description;
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> Map&lt;String, BookType&gt; BY_CODE = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();
+
+    <span class="hljs-keyword">static</span> {
+        <span class="hljs-keyword">for</span> (BookType bookType : values()) {
+            BY_CODE.put(bookType.code, bookType);
+        }
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> BookType <span class="hljs-title function_">valueOfCode</span><span class="hljs-params">(String code)</span> {
+        <span class="hljs-keyword">return</span> BY_CODE.get(code);
+    }
+
+}</pre>
+        </div></div>
+<h2 id="关联关系">关联关系</h2>
+<h3 id="onetoone">OneToOne</h3>
+<p>表示对象之间的一对一关系，可以放在字段上面。 -
+如果配置双向关联，维护关联关系的是<strong>拥有外键的一方</strong>，另一方必须配置
+<code>mappedBy</code>。 -
+如果配置单向关联，直接配置在拥有外键的一方即可。</p>
+<div class='multi-code'><div class='tabs'></div></div>
+<h2 id="测试数据">测试数据</h2>
+<p>使用 faker 来生成一些数据写入数据库： <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.github.javafaker<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>javafaker<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.0.2<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure></p>
+<p>在 MainApplication.java 中编写如下代码： <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Bean</span><br>CommandLineRunner <span class="hljs-title function_">commandLineRunner</span><span class="hljs-params">(AuthorRepository authorRepository)</span> &#123;<br>    <span class="hljs-keyword">return</span> args -&gt; &#123;<br>        genFakerData(authorRepository);<br>    &#125;;<br>&#125;<br><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">genFakerData</span><span class="hljs-params">(AuthorRepository authorRepository)</span> &#123;<br>    <span class="hljs-type">Faker</span> <span class="hljs-variable">faker</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Faker</span>();<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) &#123;<br>        <span class="hljs-type">Author</span> <span class="hljs-variable">author</span> <span class="hljs-operator">=</span> Author.builder()<br>                .id(<span class="hljs-literal">null</span>)<br>                .firstName(faker.name().firstName())<br>                .lastName(faker.name().lastName())<br>                .email(faker.internet().emailAddress())<br>                .age(faker.number().numberBetween(<span class="hljs-number">20</span>, <span class="hljs-number">80</span>))<br>                .build();<br>        authorRepository.save(author);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></p>
+<h1 id="附录">附录</h1>
+<h2 id="docker-创建容器">Docker 创建容器</h2>
+<p><strong>以命令方式</strong>：</p>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(5, 0)" id="tab-button-5-0">MySQL</button>
+        
+        <button onclick="showTab(5, 1)" id="tab-button-5-1">PostgreSQL</button>
+        </div>
+        <div class="tab-content tab-content-5" id="tab-5-0">
+            <pre>docker run --name my-mysql \
+  -e MYSQL_ROOT_PASSWORD=123456 \
+  -p 3306:3306 \
+  -d mysql:latest</pre>
+        </div>
+        <div class="tab-content tab-content-5" id="tab-5-1">
+            <pre># TODO 待补充</pre>
+        </div></div>
+
+    </div>
+    <div class="toc-container">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#springdata-jpa"><span class="toc-number">1.</span> <span class="toc-text">SpringData JPA</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.1.</span> <span class="toc-text">项目介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-number">1.2.</span> <span class="toc-text">环境准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#application.yml"><span class="toc-number">1.2.1.</span> <span class="toc-text">Application.yml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pom.xml"><span class="toc-number">1.2.2.</span> <span class="toc-text">pom.xml</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E7%BC%96%E5%86%99"><span class="toc-number">2.</span> <span class="toc-text">项目编写</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BD%93%E7%B1%BB"><span class="toc-number">2.1.</span> <span class="toc-text">实体类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB"><span class="toc-number">2.2.</span> <span class="toc-text">关联关系</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#onetoone"><span class="toc-number">2.2.1.</span> <span class="toc-text">OneToOne</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE"><span class="toc-number">2.3.</span> <span class="toc-text">测试数据</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%99%84%E5%BD%95"><span class="toc-number">3.</span> <span class="toc-text">附录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#docker-%E5%88%9B%E5%BB%BA%E5%AE%B9%E5%99%A8"><span class="toc-number">3.1.</span> <span class="toc-text">Docker 创建容器</span></a></li></ol></li></ol>
+    </div>
+  </div>
+  <footer class="article-footer">
+    <div class="footer-container">
+  <a target="_blank" rel="noopener" href="https://space.bilibili.com/12352380?spm_id_from=333.1007.0.0">
+    <img src="/images/bilibili.svg" alt="" />
+  </a>
+  <a target="_blank" rel="noopener" href="https://github.com/qiancijun">
+    <img src="/images/github.svg" alt="" />
+  </a>
+  <span>Copyright </span>
+  <img src="/images/copyright.svg" alt="">
+  <span>2024 Cheryl-Chun</span>
+</div>
+
+  </footer>
+</article>
+
+
+        </div>
+        <!-- <div class="footer">
+    
+</div> -->
+    </div>
+    
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/github-calendar@2.3.4/dist/github-calendar.min.js"></script>
+=
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js"></script>
+
+
+<script src="/scripts/search.js"></script>
+
+
+<script src="/scripts/main.js"></script>
+
+
+<script type="text/javascript">      
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+        search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result', "Cheryl-Chun");
+</script>
+</body>
+<style>
+    .main-container::before {
+        background-image: url('');
+    }
+</style>
+</html>
