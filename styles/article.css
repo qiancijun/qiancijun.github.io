@@ -1,5 +1,14 @@
 .article {
+  position: relative;
   color: color-text;
+}
+.article #toc-show {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 10px;
+  top: 3px;
 }
 .article .article-header {
   color: #e7669e;

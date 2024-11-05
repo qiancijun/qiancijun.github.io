@@ -73,6 +73,9 @@ https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustom
   id="post-算法笔试-滑动窗口"
   class="article article-type-post"
 >
+  <div id="toc-show">
+    <img src="/images/toc.svg" alt="" />
+  </div>
   
   <h1 class="article-header">算法笔试——滑动窗口</h1>
   
@@ -108,6 +111,8 @@ https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustom
     <div class="content">
       <blockquote>
 <p>关于语言：一刷用 Golang，二刷用 Rust</p>
+<p>题单来源于：<a
+target="_blank" rel="noopener" href="https://leetcode.cn/circle/discuss/0viNMK/">分享丨【题单】滑动窗口与双指针（定长/不定长/至多/至少/恰好/单序列/双序列/三指针）</a></p>
 </blockquote>
 <h1 id="滑动窗口">滑动窗口</h1>
 <h2 id="套路">套路</h2>
@@ -332,8 +337,262 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximize-the-c
 <td>中等</td>
 <td>1643</td>
 </tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/max-consecutive-ones-iii/description/">1004.
+最大连续1的个数 III</a></td>
+<td>第 162 场周赛 Q3</td>
+<td>中等</td>
+<td>1656</td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-operations-to-reduce-x-to-zero/description/">1658.
+将 x 减到 0 的最小操作数</a></td>
+<td>第 215 场周赛 Q3</td>
+<td>中等</td>
+<td>1817</td>
+</tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/frequency-of-the-most-frequent-element/description/">1838.
+最高频元素的频数</a></td>
+<td>第 238 场周赛 Q2</td>
+<td>中等</td>
+<td>1876</td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/take-k-of-each-character-from-left-and-right/description/">2516.
+每种字符至少取 K 个</a></td>
+<td>第 325 场周赛 Q2</td>
+<td>中等</td>
+<td>1948</td>
+</tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-the-longest-equal-subarray/description/">2831.
+找出最长等值子数组</a></td>
+<td>第 359 场周赛 Q4</td>
+<td>中等</td>
+<td>1976</td>
+</tr>
 </tbody>
 </table>
+<p>求最短/最小：</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 30%" />
+<col style="width: 23%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>题目</th>
+<th>来源</th>
+<th>难度</th>
+<th>分数</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-size-subarray-sum/description/">209.
+长度最小的子数组</a></td>
+<td></td>
+<td>中等</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/shortest-and-lexicographically-smallest-beautiful-string/description/">2904.
+最短且字典序最小的美丽子字符串</a></td>
+<td>第 367 场周赛 Q2</td>
+<td>中等</td>
+<td>1483</td>
+</tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/replace-the-substring-for-balanced-string/description/">1234.
+替换子串得到平衡字符串</a></td>
+<td>第 159 场周赛 Q3</td>
+<td>中等</td>
+<td>1878</td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-size-subarray-in-infinite-array/description/">2875.
+无限数组的最短子数组</a></td>
+<td>第 365 场周赛 Q3</td>
+<td>中等</td>
+<td>1914</td>
+</tr>
+</tbody>
+</table>
+<p>求子数组个数，越长越合法： 滑动窗口的内层循环结束时，右端点固定在
+<span class="math inline">\(right\)</span>，左端点在 <span
+class="math inline">\(0, 1, 2, \cdots, left - 1\)</span>
+的所有子数组都是合法的，一共有 <span class="math inline">\(left\)</span>
+个，所以答案一般写 <span class="math inline">\(ans +=
+left\)</span>。</p>
+<table>
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 23%" />
+<col style="width: 30%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>题目</th>
+<th>来源</th>
+<th>难度</th>
+<th>分数</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/number-of-substrings-containing-all-three-characters/description/">1358.
+包含所有三种字符的子字符串数目</a></td>
+<td>第 20 场双周赛 Q3</td>
+<td>中等</td>
+<td>1646</td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-subarrays-where-max-element-appears-at-least-k-times/description/">2962.
+统计最大元素出现至少 K 次的子数组</a></td>
+<td>第 375 场周赛 Q3</td>
+<td>中等</td>
+<td>1701</td>
+</tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-substrings-with-k-frequency-characters-i/description/">3325.
+字符至少出现 K 次的子字符串 I</a></td>
+<td>第 420 场周赛 Q2</td>
+<td>中等</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-complete-subarrays-in-an-array/description/">2799.
+统计完全子数组的数目</a></td>
+<td>第 356 场周赛 Q2</td>
+<td>中等</td>
+<td>1398</td>
+</tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-the-number-of-good-subarrays/description/">2537.
+统计好子数组的数目</a></td>
+<td>第 328 场周赛 Q3</td>
+<td>中等</td>
+<td>1892</td>
+</tr>
+</tbody>
+</table>
+<p>求子数组个数，越短越合法： 滑动窗口的内层循环结束时，右端点固定在
+<span class="math inline">\(right\)</span>，左端点在 <span
+class="math inline">\(left, left + 1, \cdots, right\)</span>
+的所有子串都是合法的，这一共有 <span class="math inline">\(right - left
++ 1\)</span> 个。</p>
+<table>
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 23%" />
+<col style="width: 30%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>题目</th>
+<th>来源</th>
+<th>难度</th>
+<th>分数</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/subarray-product-less-than-k/description/">713.
+乘积小于 K 的子数组</a></td>
+<td></td>
+<td>中等</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-substrings-that-satisfy-k-constraint-i/description/">3258.
+统计满足 K 约束的子字符串数量 I</a></td>
+<td>第 411 场周赛 Q1</td>
+<td>简单</td>
+<td>1258</td>
+</tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-subarrays-with-score-less-than-k/description/">2302.
+统计得分小于 K 的子数组数目</a></td>
+<td>第 80 场双周赛 Q4</td>
+<td>困难</td>
+<td>1808</td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/continuous-subarrays/description/">2762.
+不间断子数组</a></td>
+<td>第 352 场周赛 Q3</td>
+<td>中等</td>
+<td>1940</td>
+</tr>
+</tbody>
+</table>
+<p>恰好型滑动窗口：例如要计算多少个元素和<strong>恰好等于 <span
+class="math inline">\(k\)</span></strong>的子数组，可以把问题变成：</p>
+<ul>
+<li>计算有多少个元素和 <span class="math inline">\(\ge k\)</span>
+的子数组</li>
+<li>计算有多少个元素和 <span class="math inline">\(&gt;
+k\)</span>，也就是 <span class="math inline">\(\ge k+ 1\)</span>
+的子数组</li>
+</ul>
+<table>
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 23%" />
+<col style="width: 30%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>题目</th>
+<th>来源</th>
+<th>难度</th>
+<th>分数</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-subarrays-with-sum/description/">930.
+和相同的二元子数组</a></td>
+<td>第 108 场周赛 Q2</td>
+<td>中等</td>
+<td>1592</td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-number-of-nice-subarrays/description/">1248.
+统计「优美子数组」</a></td>
+<td>第 161 场周赛 Q2</td>
+<td>中等</td>
+<td>1624</td>
+</tr>
+</tbody>
+</table>
+<h2 id="题解">题解</h2>
 <h3 id="定长子串中元音的最大数目">定长子串中元音的最大数目</h3>
 <div class='multi-code'><div class='tabs'>
         <button onclick="showTab(0, 0)" id="tab-button-0-0">Golang</button>
@@ -1049,14 +1308,494 @@ class="math inline">\(2\)</span>
     <span class="hljs-keyword">return</span> ans
 }</pre>
         </div></div>
+<h3 id="最大连续1的个数-iii">最大连续1的个数 III</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(22, 0)" id="tab-button-22-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-22" id="tab-22-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">longestOnes</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    ans := <span class="hljs-number">0</span>
+    left, zero_cnt := <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> right, num := <span class="hljs-keyword">range</span> nums {
+        zero_cnt += <span class="hljs-number">1</span> - num
+        <span class="hljs-keyword">for</span> zero_cnt &gt; k {
+            zero_cnt -= <span class="hljs-number">1</span> - nums[left]
+            left++
+        }
+        ans = max(ans, right - left + <span class="hljs-number">1</span>)
+    }
+    <span class="hljs-keyword">return</span> ans
+}</pre>
+        </div></div>
+<h3 id="将-x-减到-0-的最小操作数">将 x 减到 0 的最小操作数</h3>
+<p>逆向思维，把问题转换成<strong>从 <span
+class="math inline">\(nums\)</span>
+中移除一个最长的子数组，使得剩余元素的和为 <span
+class="math inline">\(x\)</span></strong>。换句话说，要从 <span
+class="math inline">\(nums\)</span> 中找最长的子数组，其元素和等于 <span
+class="math inline">\(s-x\)</span>，这里的 <span
+class="math inline">\(s\)</span> 为 <span
+class="math inline">\(nums\)</span> 所有元素之和。</p>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(23, 0)" id="tab-button-23-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-23" id="tab-23-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">minOperations</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, x <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    target := <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> _, v := <span class="hljs-keyword">range</span> nums {
+        target += v
+    }
+    target -= x
+    <span class="hljs-keyword">if</span> target &lt; <span class="hljs-number">0</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>
+    }
+    ans, sum, left := <span class="hljs-number">-1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> right, num := <span class="hljs-keyword">range</span> nums {
+        sum += num
+        <span class="hljs-keyword">for</span> sum &gt; target  {
+            sum -= nums[left]
+            left++
+        }
+        <span class="hljs-keyword">if</span> sum == target {
+            ans = max(ans, right - left + <span class="hljs-number">1</span>)
+        }
+    }
+    <span class="hljs-keyword">if</span> ans &lt; <span class="hljs-number">0</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(nums) - ans
+}</pre>
+        </div></div>
+<h3 id="最高频元素的频数">最高频元素的频数</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(24, 0)" id="tab-button-24-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-24" id="tab-24-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">maxFrequency</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    sort.Ints(nums)
+    ans := <span class="hljs-number">1</span>
+    <span class="hljs-keyword">for</span> l, r, total := <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>; r &lt; <span class="hljs-built_in">len</span>(nums); r++ {
+        total += (nums[r] - nums[r<span class="hljs-number">-1</span>]) * (r - l)
+        <span class="hljs-keyword">for</span> total &gt; k {
+            total -= nums[r] - nums[l]
+            l++
+        }
+        ans = max(ans, r - l + <span class="hljs-number">1</span>)
+    }
+    <span class="hljs-keyword">return</span> ans
+}</pre>
+        </div></div>
+<h3 id="每种字符至少取-k-个">每种字符至少取 K 个</h3>
+<p>每种字母至少取走 <span class="math inline">\(k\)</span>
+个，等价于剩下的字母至多有 <span class="math inline">\(n-k\)</span>
+个。由于只能从 <span class="math inline">\(s\)</span>
+最左侧和最右侧取走字母，所以剩下的字母是 <span
+class="math inline">\(s\)</span> 的<strong>子串</strong>。</p>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(25, 0)" id="tab-button-25-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-25" id="tab-25-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">takeCharacters</span><span class="hljs-params">(s <span class="hljs-type">string</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    bs := []<span class="hljs-type">byte</span>(s)
+    total := [<span class="hljs-number">3</span>]<span class="hljs-type">int</span>{}
+    <span class="hljs-keyword">for</span> _, v := <span class="hljs-keyword">range</span> bs {
+        total[v-<span class="hljs-string">&#x27;a&#x27;</span>]++
+    }
+    <span class="hljs-keyword">if</span> total[<span class="hljs-number">0</span>] &lt; k || total[<span class="hljs-number">1</span>] &lt; k || total[<span class="hljs-number">2</span>] &lt; k {
+        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>
+    }
+    ans, left := <span class="hljs-number">-1</span>, <span class="hljs-number">0</span>
+    cnt := [<span class="hljs-number">3</span>]<span class="hljs-type">int</span>{}
+    <span class="hljs-keyword">for</span> right, v := <span class="hljs-keyword">range</span> bs {
+        cnt[v-<span class="hljs-string">&#x27;a&#x27;</span>]++
+        <span class="hljs-keyword">for</span> total[v-<span class="hljs-string">&#x27;a&#x27;</span>] - cnt[v-<span class="hljs-string">&#x27;a&#x27;</span>] &lt; k {
+            cnt[bs[left]-<span class="hljs-string">&#x27;a&#x27;</span>]--
+            left++
+        }
+        ans = max(ans, right - left + <span class="hljs-number">1</span>)
+        
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(s) - ans
+}</pre>
+        </div></div>
+<h3 id="找出最长等值子数组">找出最长等值子数组</h3>
+<p>相同元素分组，对每种数字做滑动窗口，需要注意需要删除的个数和保留的个数。</p>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(26, 0)" id="tab-button-26-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-26" id="tab-26-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">longestEqualSubarray</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    list := <span class="hljs-built_in">make</span>([][]<span class="hljs-type">int</span>, <span class="hljs-built_in">len</span>(nums) + <span class="hljs-number">1</span>)
+    <span class="hljs-keyword">for</span> i, num := <span class="hljs-keyword">range</span> nums {
+        list[num] = <span class="hljs-built_in">append</span>(list[num], i)
+    }
+    ans := <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> _, l := <span class="hljs-keyword">range</span> list {
+        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(l) &lt; ans {
+            <span class="hljs-keyword">continue</span>
+        }
+        left := <span class="hljs-number">0</span>
+        <span class="hljs-keyword">for</span> right, pos := <span class="hljs-keyword">range</span> l {
+            <span class="hljs-keyword">for</span> pos - l[left] - (right - left) &gt; k {
+                left++
+            }
+            ans = max(ans, right - left + <span class="hljs-number">1</span>)
+        }
+    }
+    <span class="hljs-keyword">return</span> ans
+}</pre>
+        </div></div>
+<h3 id="找出最长等值子数组-1">找出最长等值子数组</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(27, 0)" id="tab-button-27-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-27" id="tab-27-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">minSubArrayLen</span><span class="hljs-params">(target <span class="hljs-type">int</span>, nums []<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    ans := <span class="hljs-built_in">len</span>(nums) + <span class="hljs-number">1</span>
+    left, s := <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> right, num := <span class="hljs-keyword">range</span> nums {
+        s += num
+        <span class="hljs-keyword">for</span> s &gt;= target {
+            ans = min(ans, right - left + <span class="hljs-number">1</span>)
+            s -= nums[left]
+            left++
+        }
+    }
+    <span class="hljs-keyword">if</span> ans &gt; <span class="hljs-built_in">len</span>(nums) {
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+    }
+    <span class="hljs-keyword">return</span> ans
+}</pre>
+        </div></div>
+<h3
+id="最短且字典序最小的美丽子字符串">最短且字典序最小的美丽子字符串</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(28, 0)" id="tab-button-28-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-28" id="tab-28-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">shortestBeautifulSubstring</span><span class="hljs-params">(s <span class="hljs-type">string</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">string</span> {
+    <span class="hljs-keyword">if</span> strings.Count(s, <span class="hljs-string">&quot;1&quot;</span>) &lt; k {
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span>
+    }
+    ans := s
+    left, cnt := <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> right, b := <span class="hljs-keyword">range</span> s {
+        cnt += <span class="hljs-type">int</span>(b &amp; <span class="hljs-number">1</span>)
+        <span class="hljs-keyword">for</span> cnt &gt; k || s[left] == <span class="hljs-string">&#x27;0&#x27;</span> {
+            cnt -= <span class="hljs-type">int</span>(s[left] &amp; <span class="hljs-number">1</span>)
+            left++
+        }
+        <span class="hljs-keyword">if</span> cnt == k {
+            t := s[left : right + <span class="hljs-number">1</span>]
+            <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(t) &lt; <span class="hljs-built_in">len</span>(ans) || <span class="hljs-built_in">len</span>(t) == <span class="hljs-built_in">len</span>(ans) &amp;&amp; t &lt; ans {
+                ans = t
+            }
+        }
+    }
+    <span class="hljs-keyword">return</span> ans
+}</pre>
+        </div></div>
+<h3 id="替换子串得到平衡字符串">替换子串得到平衡字符串</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(29, 0)" id="tab-button-29-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-29" id="tab-29-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">balancedString</span><span class="hljs-params">(s <span class="hljs-type">string</span>)</span></span> <span class="hljs-type">int</span> {
+    cnt, m := [<span class="hljs-string">&#x27;X&#x27;</span>]<span class="hljs-type">int</span>{}, <span class="hljs-built_in">len</span>(s) / <span class="hljs-number">4</span>
+    <span class="hljs-keyword">for</span> _, c := <span class="hljs-keyword">range</span> s {
+        cnt[c]++
+    }
+    <span class="hljs-keyword">if</span> cnt[<span class="hljs-string">&#x27;Q&#x27;</span>] == m &amp;&amp; cnt[<span class="hljs-string">&#x27;W&#x27;</span>] == m &amp;&amp; cnt[<span class="hljs-string">&#x27;E&#x27;</span>] == m &amp;&amp; cnt[<span class="hljs-string">&#x27;R&#x27;</span>] == m {
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+    }
+    ans, left := <span class="hljs-built_in">len</span>(s), <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> right, c := <span class="hljs-keyword">range</span> s {
+        cnt[c]--
+        <span class="hljs-keyword">for</span> cnt[<span class="hljs-string">&#x27;Q&#x27;</span>] &lt;= m &amp;&amp; cnt[<span class="hljs-string">&#x27;W&#x27;</span>] &lt;= m &amp;&amp; cnt[<span class="hljs-string">&#x27;E&#x27;</span>] &lt;= m &amp;&amp; cnt[<span class="hljs-string">&#x27;R&#x27;</span>] &lt;= m {
+            ans = min(ans, right - left + <span class="hljs-number">1</span>)
+            cnt[s[left]]++
+            left++
+        }
+    }
+    <span class="hljs-keyword">return</span> ans
+}</pre>
+        </div></div>
+<h3 id="无限数组的最短子数组">无限数组的最短子数组</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(30, 0)" id="tab-button-30-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-30" id="tab-30-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">minSizeSubarray</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, target <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    total := <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> _, x := <span class="hljs-keyword">range</span> nums {
+        total += x
+    }
+    ans := math.MaxInt
+    left, sum, n := <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(nums)
+    <span class="hljs-keyword">for</span> right := <span class="hljs-number">0</span>; right &lt; n * <span class="hljs-number">2</span>; right++ {
+        sum += nums[right%n]
+        <span class="hljs-keyword">for</span> sum &gt; target % total {
+            sum -= nums[left%n]
+            left++
+        }
+        <span class="hljs-keyword">if</span> sum == target % total {
+            ans = min(ans, right - left + <span class="hljs-number">1</span>)
+        }
+    }
+    <span class="hljs-keyword">if</span> ans == math.MaxInt {
+        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>
+    }
+    <span class="hljs-keyword">return</span> ans + target / total * n
+}</pre>
+        </div></div>
+<h3
+id="包含所有三种字符的子字符串数目">包含所有三种字符的子字符串数目</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(31, 0)" id="tab-button-31-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-31" id="tab-31-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">numberOfSubstrings</span><span class="hljs-params">(s <span class="hljs-type">string</span>)</span></span> (ans <span class="hljs-type">int</span>) {
+    left, cnt := <span class="hljs-number">0</span>, [<span class="hljs-number">3</span>]<span class="hljs-type">int</span>{}
+    bs := []<span class="hljs-type">byte</span>(s)
+    <span class="hljs-keyword">for</span> _, b := <span class="hljs-keyword">range</span> bs {
+        cnt[b-<span class="hljs-string">&#x27;a&#x27;</span>]++
+        <span class="hljs-keyword">for</span> cnt[<span class="hljs-number">0</span>] &gt; <span class="hljs-number">0</span> &amp;&amp; cnt[<span class="hljs-number">1</span>] &gt; <span class="hljs-number">0</span> &amp;&amp; cnt[<span class="hljs-number">2</span>] &gt; <span class="hljs-number">0</span> {
+            cnt[bs[left]-<span class="hljs-string">&#x27;a&#x27;</span>]--
+            left++
+        }
+        ans += left
+    }
+    <span class="hljs-keyword">return</span>
+}</pre>
+        </div></div>
+<h3 id="统计最大元素出现至少-k-次的子数组">统计最大元素出现至少 K
+次的子数组</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(32, 0)" id="tab-button-32-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-32" id="tab-32-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">countSubarrays</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int64</span> {
+    mx := <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> _, num := <span class="hljs-keyword">range</span> nums {
+        mx = max(mx, num)
+    }
+    ans, cnt, left := <span class="hljs-type">int64</span>(<span class="hljs-number">0</span>), <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> _, num := <span class="hljs-keyword">range</span> nums {
+        <span class="hljs-keyword">if</span> num == mx {
+            cnt++
+        }
+        <span class="hljs-keyword">for</span> cnt &gt;= k {
+            <span class="hljs-keyword">if</span> nums[left] == mx {
+                cnt--
+            }
+            left++
+        }
+        ans += <span class="hljs-type">int64</span>(left)
+    }
+    <span class="hljs-keyword">return</span> ans
+}</pre>
+        </div></div>
+<h3 id="字符至少出现-k-次的子字符串-i">字符至少出现 K 次的子字符串
+I</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(33, 0)" id="tab-button-33-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-33" id="tab-33-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">numberOfSubstrings</span><span class="hljs-params">(s <span class="hljs-type">string</span>, k <span class="hljs-type">int</span>)</span></span> (ans <span class="hljs-type">int</span>) {
+    bs := []<span class="hljs-type">byte</span>(s)
+    left, cnt := <span class="hljs-number">0</span>, [<span class="hljs-number">26</span>]<span class="hljs-type">int</span>{} 
+    <span class="hljs-keyword">for</span> _, b := <span class="hljs-keyword">range</span> bs {
+        cnt[b-<span class="hljs-string">&#x27;a&#x27;</span>]++
+        <span class="hljs-keyword">for</span> cnt[b-<span class="hljs-string">&#x27;a&#x27;</span>] &gt;= k {
+            cnt[bs[left]-<span class="hljs-string">&#x27;a&#x27;</span>]--
+            left++
+        }
+        ans += left
+    }
+    <span class="hljs-keyword">return</span>
+}</pre>
+        </div></div>
+<h3 id="统计完全子数组的数目">统计完全子数组的数目</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(34, 0)" id="tab-button-34-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-34" id="tab-34-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">countCompleteSubarrays</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>)</span></span> (ans <span class="hljs-type">int</span>) {
+    cnt1 := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">int</span>]<span class="hljs-type">int</span>)
+    <span class="hljs-keyword">for</span> _, num := <span class="hljs-keyword">range</span> nums {
+        cnt1[num]++
+    }
+    left, cnt2 := <span class="hljs-number">0</span>, <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">int</span>]<span class="hljs-type">int</span>)
+    <span class="hljs-keyword">for</span> _, num := <span class="hljs-keyword">range</span> nums {
+        cnt2[num]++
+        <span class="hljs-keyword">for</span> <span class="hljs-built_in">len</span>(cnt2) == <span class="hljs-built_in">len</span>(cnt1) {
+            cnt2[nums[left]]--
+            <span class="hljs-keyword">if</span> cnt2[nums[left]] == <span class="hljs-number">0</span> {
+                <span class="hljs-built_in">delete</span>(cnt2, nums[left])
+            }
+            left++
+        }
+        ans += left
+    }
+    <span class="hljs-keyword">return</span>
+}</pre>
+        </div></div>
+<h3 id="统计好子数组的数目">统计好子数组的数目</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(35, 0)" id="tab-button-35-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-35" id="tab-35-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">countGood</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> (ans <span class="hljs-type">int64</span>) {
+    left, cnt, n := <span class="hljs-number">0</span>, <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">int</span>]<span class="hljs-type">int</span>), <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> _, num := <span class="hljs-keyword">range</span> nums {
+        n += cnt[num]
+        cnt[num]++
+        <span class="hljs-keyword">for</span> n &gt;= k {
+            cnt[nums[left]]--
+            n -= cnt[nums[left]]
+            left++
+        }
+        ans += <span class="hljs-type">int64</span>(left)
+    }
+    <span class="hljs-keyword">return</span>
+}</pre>
+        </div></div>
+<h3 id="乘积小于-k-的子数组">乘积小于 K 的子数组</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(36, 0)" id="tab-button-36-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-36" id="tab-36-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">numSubarrayProductLessThanK</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    <span class="hljs-keyword">if</span> k &lt;= <span class="hljs-number">1</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+    }
+    left, mul, ans := <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> right, num := <span class="hljs-keyword">range</span> nums {
+        mul *= num
+        <span class="hljs-keyword">for</span> mul &gt;= k {
+            mul /= nums[left]
+            left++
+        }
+        ans += right - left + <span class="hljs-number">1</span>
+    }
+    <span class="hljs-keyword">return</span> ans
+}</pre>
+        </div></div>
+<h3 id="统计满足-k-约束的子字符串数量-i">统计满足 K 约束的子字符串数量
+I</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(37, 0)" id="tab-button-37-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-37" id="tab-37-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">countKConstraintSubstrings</span><span class="hljs-params">(s <span class="hljs-type">string</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    bs := []<span class="hljs-type">byte</span>(s)
+    left, cnt, ans := <span class="hljs-number">0</span>, [<span class="hljs-number">2</span>]<span class="hljs-type">int</span>{}, <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> right, b := <span class="hljs-keyword">range</span> bs {
+        cnt[b-<span class="hljs-string">&#x27;0&#x27;</span>]++
+        <span class="hljs-keyword">for</span> cnt[<span class="hljs-number">0</span>] &gt; k &amp;&amp; cnt[<span class="hljs-number">1</span>] &gt; k {
+            cnt[bs[left]-<span class="hljs-string">&#x27;0&#x27;</span>]--
+            left++
+        }
+        ans += right - left + <span class="hljs-number">1</span>
+    }
+    <span class="hljs-keyword">return</span> ans
+}</pre>
+        </div></div>
+<h3 id="统计得分小于-k-的子数组数目">统计得分小于 K 的子数组数目</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(38, 0)" id="tab-button-38-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-38" id="tab-38-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">countSubarrays</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, k <span class="hljs-type">int64</span>)</span></span> (ans <span class="hljs-type">int64</span>) {
+    left, sum := <span class="hljs-number">0</span>, <span class="hljs-type">int64</span>(<span class="hljs-number">0</span>)
+    <span class="hljs-keyword">for</span> right, num := <span class="hljs-keyword">range</span> nums {
+        sum += <span class="hljs-type">int64</span>(num)
+        <span class="hljs-keyword">for</span> sum * <span class="hljs-type">int64</span>(right - left + <span class="hljs-number">1</span>) &gt;= k {
+            sum -= <span class="hljs-type">int64</span>(nums[left])
+            left++
+        }
+        ans += <span class="hljs-type">int64</span>(right - left + <span class="hljs-number">1</span>)
+    }
+    <span class="hljs-keyword">return</span>
+}</pre>
+        </div></div>
+<h3 id="不间断子数组">不间断子数组</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(39, 0)" id="tab-button-39-0">Cpp</button>
+        </div>
+        <div class="tab-content tab-content-39" id="tab-39-0">
+            <pre><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-type">long</span> <span class="hljs-type">long</span> <span class="hljs-title">continuousSubarrays</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt; &amp;nums)</span> </span>{
+        <span class="hljs-type">long</span> <span class="hljs-type">long</span> ans = <span class="hljs-number">0</span>;
+        multiset&lt;<span class="hljs-type">int</span>&gt; s;
+        <span class="hljs-type">int</span> left = <span class="hljs-number">0</span>, n = nums.<span class="hljs-built_in">size</span>();
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> right = <span class="hljs-number">0</span>; right &lt; n; right++) {
+            s.<span class="hljs-built_in">insert</span>(nums[right]);
+            <span class="hljs-keyword">while</span> (*s.<span class="hljs-built_in">rbegin</span>() - *s.<span class="hljs-built_in">begin</span>() &gt; <span class="hljs-number">2</span>) {
+                s.<span class="hljs-built_in">erase</span>(s.<span class="hljs-built_in">find</span>(nums[left++]));
+            }
+            ans += right - left + <span class="hljs-number">1</span>;
+        }
+        <span class="hljs-keyword">return</span> ans;
+    }
+};</pre>
+        </div></div>
+<h3 id="和相同的二元子数组">和相同的二元子数组</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(40, 0)" id="tab-button-40-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-40" id="tab-40-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">numSubarraysWithSum</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, goal <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    <span class="hljs-keyword">var</span> f <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span>
+    f = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+        ans, left, sum := <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
+        <span class="hljs-keyword">for</span> right, num := <span class="hljs-keyword">range</span> nums {
+            sum += num
+            <span class="hljs-keyword">for</span> sum &gt;= k &amp;&amp; left &lt;= right {
+                sum -= nums[left]
+                left++
+            }
+            ans += left
+        }
+        <span class="hljs-keyword">return</span> ans
+    }
+    <span class="hljs-keyword">return</span> f(goal) - f(goal+<span class="hljs-number">1</span>)
+}</pre>
+        </div></div>
+<h3 id="统计优美子数组">统计「优美子数组」</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(41, 0)" id="tab-button-41-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-41" id="tab-41-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">numberOfSubarrays</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    <span class="hljs-keyword">var</span> f <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span>
+    f = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+        left, ans, cnt := <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
+        <span class="hljs-keyword">for</span> _, num := <span class="hljs-keyword">range</span> nums {
+            cnt += num &amp; <span class="hljs-number">1</span>
+            <span class="hljs-keyword">for</span> cnt &gt;= k {
+                cnt -= nums[left] &amp; <span class="hljs-number">1</span>
+                left++
+            }
+            ans += left
+        }
+        <span class="hljs-keyword">return</span> ans
+    }
+    <span class="hljs-keyword">return</span> f(k) - f(k+<span class="hljs-number">1</span>)
+}</pre>
+        </div></div>
 
     </div>
     <div class="toc-container">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3"><span class="toc-number">1.</span> <span class="toc-text">滑动窗口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A5%97%E8%B7%AF"><span class="toc-number">1.1.</span> <span class="toc-text">套路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E5%8D%95"><span class="toc-number">1.2.</span> <span class="toc-text">题单</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E9%95%BF%E5%AD%90%E4%B8%B2%E4%B8%AD%E5%85%83%E9%9F%B3%E7%9A%84%E6%9C%80%E5%A4%A7%E6%95%B0%E7%9B%AE"><span class="toc-number">1.2.1.</span> <span class="toc-text">定长子串中元音的最大数目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%90%E6%95%B0%E7%BB%84%E6%9C%80%E5%A4%A7%E5%B9%B3%E5%9D%87%E6%95%B0-i"><span class="toc-number">1.2.2.</span> <span class="toc-text">子数组最大平均数 I</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%A7%E5%B0%8F%E4%B8%BA-k-%E4%B8%94%E5%B9%B3%E5%9D%87%E5%80%BC%E5%A4%A7%E4%BA%8E%E7%AD%89%E4%BA%8E%E9%98%88%E5%80%BC%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84%E6%95%B0%E7%9B%AE"><span class="toc-number">1.2.3.</span> <span class="toc-text">大小为 K
-且平均值大于等于阈值的子数组数目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8A%E5%BE%84%E4%B8%BA-k-%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84%E5%B9%B3%E5%9D%87%E5%80%BC"><span class="toc-number">1.2.4.</span> <span class="toc-text">半径为 k 的子数组平均值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%97%E5%88%B0-k-%E4%B8%AA%E9%BB%91%E5%9D%97%E7%9A%84%E6%9C%80%E5%B0%91%E6%B6%82%E8%89%B2%E6%AC%A1%E6%95%B0"><span class="toc-number">1.2.5.</span> <span class="toc-text">得到 K 个黑块的最少涂色次数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%88%B1%E7%94%9F%E6%B0%94%E7%9A%84%E4%B9%A6%E5%BA%97%E8%80%81%E6%9D%BF"><span class="toc-number">1.2.6.</span> <span class="toc-text">爱生气的书店老板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E6%89%80%E6%9C%89%E9%95%BF%E5%BA%A6%E4%B8%BA-k-%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AD%90%E4%B8%B2"><span class="toc-number">1.2.7.</span> <span class="toc-text">检查一个字符串是否包含所有长度为
-K 的二进制子串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%A0%E4%B9%8E%E5%94%AF%E4%B8%80%E5%AD%90%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%A4%A7%E5%92%8C"><span class="toc-number">1.2.8.</span> <span class="toc-text">几乎唯一子数组的最大和</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%BF%E5%BA%A6%E4%B8%BA-k-%E5%AD%90%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9C%80%E5%A4%A7%E5%92%8C"><span class="toc-number">1.2.9.</span> <span class="toc-text">长度为 K 子数组中的最大和</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E8%8E%B7%E5%BE%97%E7%9A%84%E6%9C%80%E5%A4%A7%E7%82%B9%E6%95%B0"><span class="toc-number">1.2.10.</span> <span class="toc-text">可获得的最大点数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%90%E4%B8%B2%E7%9A%84%E6%9C%80%E5%A4%A7%E5%87%BA%E7%8E%B0%E6%AC%A1%E6%95%B0"><span class="toc-number">1.2.11.</span> <span class="toc-text">子串的最大出现次数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BB%91%E5%8A%A8%E5%AD%90%E6%95%B0%E7%BB%84%E7%9A%84%E7%BE%8E%E4%B8%BD%E5%80%BC"><span class="toc-number">1.2.12.</span> <span class="toc-text">滑动子数组的美丽值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2"><span class="toc-number">1.2.13.</span> <span class="toc-text">无重复字符的最长子串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%8F%E4%B8%AA%E5%AD%97%E7%AC%A6%E6%9C%80%E5%A4%9A%E5%87%BA%E7%8E%B0%E4%B8%A4%E6%AC%A1%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.2.14.</span> <span class="toc-text">每个字符最多出现两次的最长子字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E6%8E%89%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0%E4%BB%A5%E5%90%8E%E5%85%A8%E4%B8%BA-1-%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E6%95%B0%E7%BB%84"><span class="toc-number">1.2.15.</span> <span class="toc-text">删掉一个元素以后全为 1
-的最长子数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%BD%E5%8F%AF%E8%83%BD%E4%BD%BF%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E7%AD%89"><span class="toc-number">1.2.16.</span> <span class="toc-text">尽可能使字符串相等</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%BE%E5%88%B0%E6%9C%80%E9%95%BF%E7%9A%84%E5%8D%8A%E9%87%8D%E5%A4%8D%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.2.17.</span> <span class="toc-text">找到最长的半重复子字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B0%B4%E6%9E%9C%E6%88%90%E7%AF%AE"><span class="toc-number">1.2.18.</span> <span class="toc-text">水果成篮</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E5%AD%90%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%A4%A7%E5%BE%97%E5%88%86"><span class="toc-number">1.2.19.</span> <span class="toc-text">删除子数组的最大得分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%A4%9A-k-%E4%B8%AA%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E6%95%B0%E7%BB%84"><span class="toc-number">1.2.20.</span> <span class="toc-text">最多 K
-个重复元素的最长子数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%A4%A7%E7%BE%8E%E4%B8%BD%E5%80%BC"><span class="toc-number">1.2.21.</span> <span class="toc-text">数组的最大美丽值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%80%83%E8%AF%95%E7%9A%84%E6%9C%80%E5%A4%A7%E5%9B%B0%E6%89%B0%E5%BA%A6"><span class="toc-number">1.2.22.</span> <span class="toc-text">考试的最大困扰度</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3"><span class="toc-number">1.</span> <span class="toc-text">滑动窗口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A5%97%E8%B7%AF"><span class="toc-number">1.1.</span> <span class="toc-text">套路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E5%8D%95"><span class="toc-number">1.2.</span> <span class="toc-text">题单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E8%A7%A3"><span class="toc-number">1.3.</span> <span class="toc-text">题解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E9%95%BF%E5%AD%90%E4%B8%B2%E4%B8%AD%E5%85%83%E9%9F%B3%E7%9A%84%E6%9C%80%E5%A4%A7%E6%95%B0%E7%9B%AE"><span class="toc-number">1.3.1.</span> <span class="toc-text">定长子串中元音的最大数目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%90%E6%95%B0%E7%BB%84%E6%9C%80%E5%A4%A7%E5%B9%B3%E5%9D%87%E6%95%B0-i"><span class="toc-number">1.3.2.</span> <span class="toc-text">子数组最大平均数 I</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%A7%E5%B0%8F%E4%B8%BA-k-%E4%B8%94%E5%B9%B3%E5%9D%87%E5%80%BC%E5%A4%A7%E4%BA%8E%E7%AD%89%E4%BA%8E%E9%98%88%E5%80%BC%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84%E6%95%B0%E7%9B%AE"><span class="toc-number">1.3.3.</span> <span class="toc-text">大小为 K
+且平均值大于等于阈值的子数组数目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8A%E5%BE%84%E4%B8%BA-k-%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84%E5%B9%B3%E5%9D%87%E5%80%BC"><span class="toc-number">1.3.4.</span> <span class="toc-text">半径为 k 的子数组平均值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%97%E5%88%B0-k-%E4%B8%AA%E9%BB%91%E5%9D%97%E7%9A%84%E6%9C%80%E5%B0%91%E6%B6%82%E8%89%B2%E6%AC%A1%E6%95%B0"><span class="toc-number">1.3.5.</span> <span class="toc-text">得到 K 个黑块的最少涂色次数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%88%B1%E7%94%9F%E6%B0%94%E7%9A%84%E4%B9%A6%E5%BA%97%E8%80%81%E6%9D%BF"><span class="toc-number">1.3.6.</span> <span class="toc-text">爱生气的书店老板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E6%89%80%E6%9C%89%E9%95%BF%E5%BA%A6%E4%B8%BA-k-%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AD%90%E4%B8%B2"><span class="toc-number">1.3.7.</span> <span class="toc-text">检查一个字符串是否包含所有长度为
+K 的二进制子串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%A0%E4%B9%8E%E5%94%AF%E4%B8%80%E5%AD%90%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%A4%A7%E5%92%8C"><span class="toc-number">1.3.8.</span> <span class="toc-text">几乎唯一子数组的最大和</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%BF%E5%BA%A6%E4%B8%BA-k-%E5%AD%90%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9C%80%E5%A4%A7%E5%92%8C"><span class="toc-number">1.3.9.</span> <span class="toc-text">长度为 K 子数组中的最大和</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E8%8E%B7%E5%BE%97%E7%9A%84%E6%9C%80%E5%A4%A7%E7%82%B9%E6%95%B0"><span class="toc-number">1.3.10.</span> <span class="toc-text">可获得的最大点数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%90%E4%B8%B2%E7%9A%84%E6%9C%80%E5%A4%A7%E5%87%BA%E7%8E%B0%E6%AC%A1%E6%95%B0"><span class="toc-number">1.3.11.</span> <span class="toc-text">子串的最大出现次数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BB%91%E5%8A%A8%E5%AD%90%E6%95%B0%E7%BB%84%E7%9A%84%E7%BE%8E%E4%B8%BD%E5%80%BC"><span class="toc-number">1.3.12.</span> <span class="toc-text">滑动子数组的美丽值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2"><span class="toc-number">1.3.13.</span> <span class="toc-text">无重复字符的最长子串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%8F%E4%B8%AA%E5%AD%97%E7%AC%A6%E6%9C%80%E5%A4%9A%E5%87%BA%E7%8E%B0%E4%B8%A4%E6%AC%A1%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.3.14.</span> <span class="toc-text">每个字符最多出现两次的最长子字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E6%8E%89%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0%E4%BB%A5%E5%90%8E%E5%85%A8%E4%B8%BA-1-%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E6%95%B0%E7%BB%84"><span class="toc-number">1.3.15.</span> <span class="toc-text">删掉一个元素以后全为 1
+的最长子数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%BD%E5%8F%AF%E8%83%BD%E4%BD%BF%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E7%AD%89"><span class="toc-number">1.3.16.</span> <span class="toc-text">尽可能使字符串相等</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%BE%E5%88%B0%E6%9C%80%E9%95%BF%E7%9A%84%E5%8D%8A%E9%87%8D%E5%A4%8D%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.3.17.</span> <span class="toc-text">找到最长的半重复子字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B0%B4%E6%9E%9C%E6%88%90%E7%AF%AE"><span class="toc-number">1.3.18.</span> <span class="toc-text">水果成篮</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E5%AD%90%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%A4%A7%E5%BE%97%E5%88%86"><span class="toc-number">1.3.19.</span> <span class="toc-text">删除子数组的最大得分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%A4%9A-k-%E4%B8%AA%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E6%95%B0%E7%BB%84"><span class="toc-number">1.3.20.</span> <span class="toc-text">最多 K
+个重复元素的最长子数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%A4%A7%E7%BE%8E%E4%B8%BD%E5%80%BC"><span class="toc-number">1.3.21.</span> <span class="toc-text">数组的最大美丽值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%80%83%E8%AF%95%E7%9A%84%E6%9C%80%E5%A4%A7%E5%9B%B0%E6%89%B0%E5%BA%A6"><span class="toc-number">1.3.22.</span> <span class="toc-text">考试的最大困扰度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%A4%A7%E8%BF%9E%E7%BB%AD1%E7%9A%84%E4%B8%AA%E6%95%B0-iii"><span class="toc-number">1.3.23.</span> <span class="toc-text">最大连续1的个数 III</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%86-x-%E5%87%8F%E5%88%B0-0-%E7%9A%84%E6%9C%80%E5%B0%8F%E6%93%8D%E4%BD%9C%E6%95%B0"><span class="toc-number">1.3.24.</span> <span class="toc-text">将 x 减到 0 的最小操作数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E9%AB%98%E9%A2%91%E5%85%83%E7%B4%A0%E7%9A%84%E9%A2%91%E6%95%B0"><span class="toc-number">1.3.25.</span> <span class="toc-text">最高频元素的频数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%8F%E7%A7%8D%E5%AD%97%E7%AC%A6%E8%87%B3%E5%B0%91%E5%8F%96-k-%E4%B8%AA"><span class="toc-number">1.3.26.</span> <span class="toc-text">每种字符至少取 K 个</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%BE%E5%87%BA%E6%9C%80%E9%95%BF%E7%AD%89%E5%80%BC%E5%AD%90%E6%95%B0%E7%BB%84"><span class="toc-number">1.3.27.</span> <span class="toc-text">找出最长等值子数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%BE%E5%87%BA%E6%9C%80%E9%95%BF%E7%AD%89%E5%80%BC%E5%AD%90%E6%95%B0%E7%BB%84-1"><span class="toc-number">1.3.28.</span> <span class="toc-text">找出最长等值子数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E7%9F%AD%E4%B8%94%E5%AD%97%E5%85%B8%E5%BA%8F%E6%9C%80%E5%B0%8F%E7%9A%84%E7%BE%8E%E4%B8%BD%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.3.29.</span> <span class="toc-text">最短且字典序最小的美丽子字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%BF%E6%8D%A2%E5%AD%90%E4%B8%B2%E5%BE%97%E5%88%B0%E5%B9%B3%E8%A1%A1%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.3.30.</span> <span class="toc-text">替换子串得到平衡字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E9%99%90%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E7%9F%AD%E5%AD%90%E6%95%B0%E7%BB%84"><span class="toc-number">1.3.31.</span> <span class="toc-text">无限数组的最短子数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%85%E5%90%AB%E6%89%80%E6%9C%89%E4%B8%89%E7%A7%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%95%B0%E7%9B%AE"><span class="toc-number">1.3.32.</span> <span class="toc-text">包含所有三种字符的子字符串数目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E6%9C%80%E5%A4%A7%E5%85%83%E7%B4%A0%E5%87%BA%E7%8E%B0%E8%87%B3%E5%B0%91-k-%E6%AC%A1%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84"><span class="toc-number">1.3.33.</span> <span class="toc-text">统计最大元素出现至少 K
+次的子数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E8%87%B3%E5%B0%91%E5%87%BA%E7%8E%B0-k-%E6%AC%A1%E7%9A%84%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2-i"><span class="toc-number">1.3.34.</span> <span class="toc-text">字符至少出现 K 次的子字符串
+I</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E5%AE%8C%E5%85%A8%E5%AD%90%E6%95%B0%E7%BB%84%E7%9A%84%E6%95%B0%E7%9B%AE"><span class="toc-number">1.3.35.</span> <span class="toc-text">统计完全子数组的数目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E5%A5%BD%E5%AD%90%E6%95%B0%E7%BB%84%E7%9A%84%E6%95%B0%E7%9B%AE"><span class="toc-number">1.3.36.</span> <span class="toc-text">统计好子数组的数目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B9%98%E7%A7%AF%E5%B0%8F%E4%BA%8E-k-%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84"><span class="toc-number">1.3.37.</span> <span class="toc-text">乘积小于 K 的子数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E6%BB%A1%E8%B6%B3-k-%E7%BA%A6%E6%9D%9F%E7%9A%84%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%95%B0%E9%87%8F-i"><span class="toc-number">1.3.38.</span> <span class="toc-text">统计满足 K 约束的子字符串数量
+I</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E5%BE%97%E5%88%86%E5%B0%8F%E4%BA%8E-k-%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84%E6%95%B0%E7%9B%AE"><span class="toc-number">1.3.39.</span> <span class="toc-text">统计得分小于 K 的子数组数目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E9%97%B4%E6%96%AD%E5%AD%90%E6%95%B0%E7%BB%84"><span class="toc-number">1.3.40.</span> <span class="toc-text">不间断子数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%92%8C%E7%9B%B8%E5%90%8C%E7%9A%84%E4%BA%8C%E5%85%83%E5%AD%90%E6%95%B0%E7%BB%84"><span class="toc-number">1.3.41.</span> <span class="toc-text">和相同的二元子数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E4%BC%98%E7%BE%8E%E5%AD%90%E6%95%B0%E7%BB%84"><span class="toc-number">1.3.42.</span> <span class="toc-text">统计「优美子数组」</span></a></li></ol></li></ol></li></ol>
     </div>
   </div>
   <footer class="article-footer">

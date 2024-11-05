@@ -44,17 +44,18 @@ const showTab = (multiCodeIndex, tabIndex) => {
     console.log("js loaded successfully")
     
     // 滚动条
-    $(".main-content").mCustomScrollbar({
-        theme: "rounded-dots",
-        mouseWheel:{scrollAmount:400},
-        scrollButtons:{
-            enable:true,
-            scrollType:"continuous",
-            scrollSpeed:40,
-            scrollAmount:40,
-            style:"crosshair"
-        },
-    });
+    // $(".main-content").mCustomScrollbar({
+    //     theme: "rounded-dots",
+    //     mouseWheel:{scrollAmount:400},
+    //     scrollButtons:{
+    //         enable:true,
+    //         scrollType:"continuous",
+    //         scrollSpeed:40,
+    //         scrollAmount:40,
+    //         style:"crosshair"
+    //     },
+    //     updateOnContentResize: true
+    // });
 
     $('.btn-close').hover(function(e) {
         let btnClose = $('.btn-close')[0];
@@ -228,6 +229,14 @@ const showTab = (multiCodeIndex, tabIndex) => {
             });
         }
     }
+    
+    // 显示 toc
+    const toc_show = $('#toc-show');
+    const toc_content = $('.toc-container');
+    toc_show.click(() => {
+        toc_content.toggle();
+    })
+
     // for (let i = 0; i < multi_code_blocks.length; i++) {
     //     const code_block = multi_code_blocks[i];
     //     const copy_btn = `

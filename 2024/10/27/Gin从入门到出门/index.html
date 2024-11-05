@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+    
+      Gin从入门到出门
+    
+</title>
+
+<link rel="icon" href="/images/favicon.ico">
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-calendar@2.3.4/dist/github-calendar.min.css">
+
+<link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark-reasonable.min.css" rel="stylesheet">
+<link href="
+https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.css
+" rel="stylesheet">
+<link href="
+https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustomScrollbar.min.css
+" rel="stylesheet">
+<meta name="generator" content="Hexo 7.2.0"></head>
+<body>
+    <div class="main-container">
+        <div class="topbar">
+    <div class="btn-container">
+        <a href="/"><img class="btn-close" src="/images/close.svg" alt=""></a>
+        <a><img class="btn-minimize" src="/images/minimize.svg" alt=""></a>
+        <a><img class="btn-maximize" src="/images/maximize.svg" alt=""></a>
+    </div>
+    <div class="title">
+        <img src="/images/terminal.svg" alt="">
+        <span>cat Cheryl-Chun 淳老师 BLOG</span>
+    </div>
+</div>
+        <div class="nav-container">
+    <div class="posts">
+        <img src="/images/posts-list.svg" alt="">
+        <a href="/">Home</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+    <!-- <div class="tags">
+        <img src="/images/tag.svg" alt="">
+        <a href="/tag">Tag</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div> -->
+    <div>
+        <img src="/images/archive.svg" alt="">
+        <a href="/all-posts">Posts</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+    <!-- <div class="category">
+        <img src="/images/category.svg" alt="">
+        <a href="/category">Category</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div> -->
+    <div class="about">
+        <img src="/images/about.svg" alt="">
+        <a href="/about">About</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+</div>
+        <div class="main-content">
+            <article
+  id="post-Gin从入门到出门"
+  class="article article-type-post"
+>
+  <div id="toc-show">
+    <img src="/images/toc.svg" alt="" />
+  </div>
+  
+  <h1 class="article-header">Gin从入门到出门</h1>
+  
+  <div class="article-info">
+    <!-- <span>Document Attributes:</span> -->
+
+    <table>
+      <tr>
+        <td>
+            <img src="/images/time.svg" alt="">
+            Updated Time
+        </td>
+        <td>2024-10-27</td>
+      </tr>
+      <tr>
+        <td>
+            <img src="/images/category.svg" alt="">
+            Category
+        </td>
+        <td> <ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a></li></ul> </td>
+      </tr>
+      <tr>
+        <td>
+            <img src="/images/tag.svg" alt="">
+            Tags
+        </td>
+        <td>
+	<a class="tag-link" href="/tags/Golang/" rel="tag">Golang</a>
+
+</td>
+      </tr>
+    </table>
+  </div>
+  <div class="article-entry">
+    <div class="content">
+      <blockquote>
+<p>Go Version: 1.22.3 last updated: 2024-10-27</p>
+</blockquote>
+<h1 id="nethttp">net/http</h1>
+<p>Golang 原生的 net 库功能是非常丰富的。使用原生的 <a
+target="_blank" rel="noopener" href="https://go-zh.org/pkg/net/http/">net/http</a>
+库也能编写出一个高效的 http Server。</p>
+<ul>
+<li><code>http.Server</code>: http
+服务结构体，用来定义服务器相关的配置参数，比如：地址、超时时间等。</li>
+<li><code>http.ServeMux</code>: HTTP 服务的路由器，用于将不同的 URL
+路径映射到对应的处理函数。<code>ServeMux</code> 实现了
+<code>http.Handler</code> 接口，所以可以直接作为
+<code>http.Server</code> 的 <code>Handler</code></li>
+</ul>
+<p>声明一个没有处理器的 http 服务器</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Run</span><span class="hljs-params">()</span></span> &#123;<br>  httpServer := &amp;http.Server&#123;<br>    Addr:    <span class="hljs-string">&quot;:8080&quot;</span>,<br>    Handler: <span class="hljs-literal">nil</span>,<br>  &#125;<br>  <span class="hljs-keyword">if</span> err := httpServer.ListenAndServe(); err != <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-built_in">panic</span>(err)<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>Handler 是一个接口，其中只需要实现一个 <code>ServeHTTP</code>
+方法</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Handler <span class="hljs-keyword">interface</span> &#123;<br>  ServeHTTP(ResponseWriter, *Request)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>编写一个 HttpHandler 并将它作为 HttpServer 的处理器 <figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> MyHttpHandler <span class="hljs-keyword">struct</span> &#123;&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(handler *MyHttpHandler)</span></span> ServeHTTP(w http.ResponseWriter, r *http.Request) &#123;<br>  w.Write([]<span class="hljs-type">byte</span>(<span class="hljs-string">&quot;Hello, world!&quot;</span>))<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Run</span><span class="hljs-params">()</span></span> &#123;<br>  httpServer := &amp;http.Server&#123;<br>    Addr:    <span class="hljs-string">&quot;:8080&quot;</span>,<br>    Handler: &amp;MyHttpHandler&#123;&#125;,<br>  &#125;<br>  <span class="hljs-keyword">if</span> err := httpServer.ListenAndServe(); err != <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-built_in">panic</span>(err)<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure></p>
+<p>在 Handler 里可以处理更加复杂的逻辑，比如判断请求方法，写入 JSON
+数据</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> User <span class="hljs-keyword">struct</span> &#123;<br>  Name <span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;name&quot;`</span><br>  Age  <span class="hljs-type">int</span>    <span class="hljs-string">`json:&quot;age&quot;`</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(handler *MyHttpHandler)</span></span> ServeHTTP(w http.ResponseWriter, r *http.Request) &#123;<br>  <span class="hljs-comment">// 拒绝处理 GET 请求</span><br>  <span class="hljs-keyword">if</span> r.Method == <span class="hljs-string">&quot;GET&quot;</span> &#123;<br>    w.WriteHeader(http.StatusMethodNotAllowed)<br>    <span class="hljs-keyword">return</span><br>  &#125;<br>  user := User&#123;<br>    Name: <span class="hljs-string">&quot;John Doe&quot;</span>,<br>        Age:  <span class="hljs-number">30</span>,<br>  &#125;<br>  data, err := json.Marshal(user)<br>  <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>    w.WriteHeader(http.StatusInternalServerError)<br>    <span class="hljs-keyword">return</span><br>  &#125;<br>  w.Write(data)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>更加复杂的输入输出</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(handler *MyHttpHandler)</span></span> ServeHTTP(w http.ResponseWriter, r *http.Request) &#123;<br>  <span class="hljs-comment">// 拒绝处理 GET 请求</span><br>  <span class="hljs-keyword">if</span> r.Method == <span class="hljs-string">&quot;GET&quot;</span> &#123;<br>    w.WriteHeader(http.StatusMethodNotAllowed)<br>    <span class="hljs-keyword">return</span><br>  &#125;<br>  requestData, err  := io.ReadAll(r.Body)<br>  <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>    w.WriteHeader(http.StatusInternalServerError)<br>    <span class="hljs-keyword">return</span><br>  &#125;<br>  user := &amp;User&#123;&#125;<br>  err = json.Unmarshal(requestData, user)<br>  <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        w.WriteHeader(http.StatusBadRequest)<br>        <span class="hljs-keyword">return</span><br>  &#125;<br><br>  user.Age++<br>  data, err := json.Marshal(user)<br>  <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>    w.WriteHeader(http.StatusInternalServerError)<br>    <span class="hljs-keyword">return</span><br>  &#125;<br>  w.Write(data)<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="servemux">ServeMux</h2>
+<p>Handle 接受一个 Handle 对象，HandleFunc 只需要传递一个函数。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">RunWithMux</span><span class="hljs-params">()</span></span> &#123;<br><br>  mux := http.NewServeMux()<br><br>  mux.HandleFunc(<span class="hljs-string">&quot;/hello&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;<br>    w.Write([]<span class="hljs-type">byte</span>(<span class="hljs-string">&quot;Hello world!&quot;</span>))<br>  &#125;)<br><br>  mux.HandleFunc(<span class="hljs-string">&quot;/index&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;<br>    w.Write([]<span class="hljs-type">byte</span>(<span class="hljs-string">&quot;index&quot;</span>))<br>  &#125;)<br><br>  server := &amp;http.Server&#123;<br>    Addr: <span class="hljs-string">&quot;:8080&quot;</span>,<br>    Handler: mux,<br>  &#125;<br><br>  <span class="hljs-keyword">if</span> err := server.ListenAndServe(); err != <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-built_in">panic</span>(err)<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h1 id="gin">Gin</h1>
+<p><a target="_blank" rel="noopener" href="https://github.com/gin-gonic/gin">Gin</a> 是用 Golang
+编写的网络框架，高达 40 倍的性能。</p>
+<p>特点：</p>
+<ul>
+<li>零分配路由</li>
+<li>快速</li>
+<li>中间件支持</li>
+<li>容错</li>
+<li>JSON 校验</li>
+<li>路由分组</li>
+<li>错误管理</li>
+</ul>
+<p>go get: <figure class="highlight sh"><table><tr><td class="code"><pre><code class="hljs sh">go get github.com/gin-gonic/gin<br></code></pre></td></tr></table></figure></p>
+
+    </div>
+    <div class="toc-container">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#nethttp"><span class="toc-number">1.</span> <span class="toc-text">net&#x2F;http</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#servemux"><span class="toc-number">1.1.</span> <span class="toc-text">ServeMux</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#gin"><span class="toc-number">2.</span> <span class="toc-text">Gin</span></a></li></ol>
+    </div>
+  </div>
+  <footer class="article-footer">
+    <div class="footer-container">
+  <a target="_blank" rel="noopener" href="https://space.bilibili.com/12352380?spm_id_from=333.1007.0.0">
+    <img src="/images/bilibili.svg" alt="" />
+  </a>
+  <a target="_blank" rel="noopener" href="https://github.com/qiancijun">
+    <img src="/images/github.svg" alt="" />
+  </a>
+  <span>Copyright </span>
+  <img src="/images/copyright.svg" alt="">
+  <span>2024 Cheryl-Chun</span>
+</div>
+
+  </footer>
+</article>
+
+
+        </div>
+        <!-- <div class="footer">
+    
+</div> -->
+    </div>
+    
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/github-calendar@2.3.4/dist/github-calendar.min.js"></script>
+=
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js"></script>
+
+
+<script src="/scripts/search.js"></script>
+
+
+<script src="/scripts/main.js"></script>
+
+
+<script type="text/javascript">      
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+        search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result', "Cheryl-Chun");
+</script>
+</body>
+<style>
+    .main-container::before {
+        background-image: url('');
+    }
+</style>
+</html>
