@@ -467,7 +467,16 @@ body {
   color: #7fbbb3;
 }
 .article {
+  position: relative;
   color: #d3c6aa;
+}
+.article #toc-show {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 10px;
+  top: 3px;
 }
 .article .article-header {
   color: #e7669e;
@@ -703,7 +712,7 @@ body {
   user-select: none;
 }
 .article-entry .content a {
-  color: #0f67fc;
+  color: #9cdee5;
   text-decoration: underline;
 }
 .article-entry .content div > div::before {
@@ -797,13 +806,17 @@ body {
 }
 .article-entry .content blockquote {
   position: relative;
-  max-height: 1.2em;
+  max-height: 24px;
   overflow: hidden; /* 隐藏超出部分 */
   transition: max-height 0.3s ease; /* 添加过渡效果 */
   border-left: 5px solid #d3d3d3;
 /* margin: 0 0 1.5em 0px; */
 /* margin: 0; */
   padding: 0em 1em;
+}
+.article-entry .content blockquote div::before {
+  content: none;
+  counter-increment: none;
 }
 .article-entry .content blockquote.left {
   float: left;
@@ -817,6 +830,7 @@ body {
   margin-left: 0.5em;
 }
 .article-entry .content blockquote p {
+  color: #a1b3a7;
   margin: 0;
 }
 .article-entry .content blockquote p::before {

@@ -81,7 +81,7 @@ var searchFunc = function(path, search_id, content_id, author) {
             
             if ($("#local-search-input").length > 0) {
                 $input.addEventListener('input', function () {
-                    let str = '<table class="post-list">';
+                    let str = '<table class="post-list" style="width: 100%">';
                     let keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
                     
                     if ($ql != undefined) {

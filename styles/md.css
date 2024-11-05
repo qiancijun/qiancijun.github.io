@@ -189,6 +189,7 @@
   margin-left: 0.5em;
 }
 .article-entry .content blockquote p {
+  color: quotes-color;
   margin: 0;
 }
 .article-entry .content blockquote p::before {
