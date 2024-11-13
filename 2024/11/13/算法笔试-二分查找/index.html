@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+    
+      算法笔试-二分查找
+    
+</title>
+
+<link rel="icon" href="/images/favicon.ico">
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-calendar@2.3.4/dist/github-calendar.min.css">
+
+<link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark-reasonable.min.css" rel="stylesheet">
+<link href="
+https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.css
+" rel="stylesheet">
+<link href="
+https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustomScrollbar.min.css
+" rel="stylesheet">
+<meta name="generator" content="Hexo 7.2.0"></head>
+<body>
+    <div class="main-container">
+        <div class="topbar">
+    <div class="btn-container">
+        <a href="/"><img class="btn-close" src="/images/close.svg" alt=""></a>
+        <a><img class="btn-minimize" src="/images/minimize.svg" alt=""></a>
+        <a><img class="btn-maximize" src="/images/maximize.svg" alt=""></a>
+    </div>
+    <div class="title">
+        <img src="/images/terminal.svg" alt="">
+        <span>cat Cheryl-Chun 淳老师 BLOG</span>
+    </div>
+</div>
+        <div class="nav-container">
+    <div class="posts">
+        <img src="/images/posts-list.svg" alt="">
+        <a href="/">Home</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+    <!-- <div class="tags">
+        <img src="/images/tag.svg" alt="">
+        <a href="/tag">Tag</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div> -->
+    <div>
+        <img src="/images/archive.svg" alt="">
+        <a href="/all-posts">Posts</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+    <!-- <div class="category">
+        <img src="/images/category.svg" alt="">
+        <a href="/category">Category</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div> -->
+    <div class="about">
+        <img src="/images/about.svg" alt="">
+        <a href="/about">About</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+</div>
+        <div class="main-content">
+            <article
+  id="post-算法笔试-二分查找"
+  class="article article-type-post"
+>
+  <div id="toc-show">
+    <img src="/images/toc.svg" alt="" />
+  </div>
+  
+  <h1 class="article-header">算法笔试-二分查找</h1>
+  
+  <div class="article-info">
+    <!-- <span>Document Attributes:</span> -->
+
+    <table>
+      <tr>
+        <td>
+            <img src="/images/time.svg" alt="">
+            Updated Time
+        </td>
+        <td>2024-11-13</td>
+      </tr>
+      <tr>
+        <td>
+            <img src="/images/category.svg" alt="">
+            Category
+        </td>
+        <td> <ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li></ul> </td>
+      </tr>
+      <tr>
+        <td>
+            <img src="/images/tag.svg" alt="">
+            Tags
+        </td>
+        <td>
+</td>
+      </tr>
+    </table>
+  </div>
+  <div class="article-entry">
+    <div class="content">
+      <blockquote>
+<p>关于语言：一刷用 Golang，二刷用 Rust</p>
+<p>题单来源于：<a
+target="_blank" rel="noopener" href="https://leetcode.cn/circle/discuss/0viNMK/">分享丨【题单】滑动窗口与双指针（定长/不定长/至多/至少/恰好/单序列/双序列/三指针）</a></p>
+</blockquote>
+<h1 id="二分查找">二分查找</h1>
+<h2 id="套路">套路</h2>
+<p>可以把在有序数组上的二分分为四种类型 <span class="math inline">\(\ge,
+&gt;, &lt;, \le\)</span>，对于这四种类型都可以互相转换：</p>
+<ul>
+<li><span class="math inline">\(&gt;\)</span>: <span
+class="math inline">\(\le x + 1\)</span></li>
+<li><span class="math inline">\(&lt;\)</span>: <span
+class="math inline">\((\ge x) - 1\)</span></li>
+<li><span class="math inline">\(\le\)</span>: <span
+class="math inline">\((&gt; x) - 1\)</span></li>
+</ul>
+<h2 id="题单">题单</h2>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 30%" />
+<col style="width: 23%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>题目</th>
+<th>来源</th>
+<th>难度</th>
+<th>分数</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/description/">34.
+在排序数组中查找元素的第一个和最后一个位置</a></td>
+<td></td>
+<td>中等</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/search-insert-position/">35.
+搜索插入位置</a></td>
+<td></td>
+<td>简单</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-search/description/">704.
+二分查找</a></td>
+<td></td>
+<td>简单</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-smallest-letter-greater-than-target/description/">744.
+寻找比目标字母大的最小字母</a></td>
+<td></td>
+<td>简单</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximum-count-of-positive-integer-and-negative-integer/description/">2529.
+正整数和负整数的最大计数</a></td>
+<td>第 327 场周赛 Q1</td>
+<td>简单</td>
+<td>1196</td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-the-distance-value-between-two-arrays/description/">1385.
+两个数组间的距离值</a></td>
+<td>第 22 场双周赛 Q1</td>
+<td>简单</td>
+<td>1235</td>
+</tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/successful-pairs-of-spells-and-potions/description/">2300.
+咒语和药水的成功对数</a></td>
+<td>第 80 场双周赛 Q2</td>
+<td>中等</td>
+<td>1477</td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/longest-subsequence-with-limited-sum/description/">2389.
+和有限的最长子序列</a></td>
+<td>第 308 场周赛 Q1</td>
+<td>简单</td>
+<td>1388</td>
+</tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/compare-strings-by-frequency-of-the-smallest-character/description/">1170.
+比较字符串最小字母出现频次</a></td>
+<td>第 151 场周赛 Q2</td>
+<td>中等</td>
+<td>1432</td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/range-frequency-queries/description/">2080.
+区间内查询数字的频率</a></td>
+<td>第 268 场周赛 Q3</td>
+<td>中等</td>
+<td>1702</td>
+</tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-the-number-of-fair-pairs/description/">2563.
+统计公平数对的数目</a></td>
+<td>第 332 场周赛 Q2</td>
+<td>中等</td>
+<td>1721</td>
+</tr>
+</tbody>
+</table>
+<h2 id="题解">题解</h2>
+<h3 id="在排序数组中查找元素的第一个和最后一个位置">34.
+在排序数组中查找元素的第一个和最后一个位置</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(1, 0)" id="tab-button-1-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-1" id="tab-1-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">searchRange</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, target <span class="hljs-type">int</span>)</span></span> []<span class="hljs-type">int</span> {
+    check := <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(t <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+        l, r := <span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(nums)
+        <span class="hljs-keyword">for</span> l &lt; r {
+            m := (l + r) &gt;&gt; <span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> nums[m] &lt; t {
+                l = m + <span class="hljs-number">1</span>
+            } <span class="hljs-keyword">else</span> {
+                r = m
+            }
+        }
+        <span class="hljs-keyword">return</span> l
+    }
+    a := check(target)
+    <span class="hljs-keyword">if</span> a == <span class="hljs-built_in">len</span>(nums) || nums[a] != target {
+        <span class="hljs-keyword">return</span> []<span class="hljs-type">int</span>{<span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>}
+    }
+    b := check(target + <span class="hljs-number">1</span>) - <span class="hljs-number">1</span>
+    <span class="hljs-keyword">return</span> []<span class="hljs-type">int</span>{a, b}
+}</pre>
+        </div></div>
+<h3 id="搜索插入位置">35. 搜索插入位置</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(2, 0)" id="tab-button-2-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-2" id="tab-2-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">searchInsert</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, target <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    l, r := <span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(nums)
+    <span class="hljs-keyword">for</span> l &lt; r {
+        mid := (l + r) &gt;&gt; <span class="hljs-number">1</span>
+        <span class="hljs-keyword">if</span> nums[mid] &lt; target {
+            l = mid + <span class="hljs-number">1</span>
+        } <span class="hljs-keyword">else</span> {
+            r = mid
+        }
+    }
+    <span class="hljs-keyword">return</span> l
+}</pre>
+        </div></div>
+<h3 id="二分查找-1">704. 二分查找</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(3, 0)" id="tab-button-3-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-3" id="tab-3-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">search</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, target <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    l, r := <span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(nums)
+    <span class="hljs-keyword">for</span> l &lt; r {
+        mid := (l + r) &gt;&gt; <span class="hljs-number">1</span>
+        <span class="hljs-keyword">if</span> nums[mid] &lt; target {
+            l = mid + <span class="hljs-number">1</span>
+        } <span class="hljs-keyword">else</span> {
+            r = mid
+        }
+    } 
+    <span class="hljs-keyword">if</span> l != <span class="hljs-built_in">len</span>(nums) &amp;&amp; nums[l] == target {
+        <span class="hljs-keyword">return</span> l
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>
+}</pre>
+        </div></div>
+<h3 id="寻找比目标字母大的最小字母">744. 寻找比目标字母大的最小字母</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(4, 0)" id="tab-button-4-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-4" id="tab-4-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">nextGreatestLetter</span><span class="hljs-params">(letters []<span class="hljs-type">byte</span>, target <span class="hljs-type">byte</span>)</span></span> <span class="hljs-type">byte</span> {
+    l, r := <span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(letters)
+    <span class="hljs-keyword">for</span> l &lt; r {
+        mid := (l + r) &gt;&gt; <span class="hljs-number">1</span>
+        <span class="hljs-keyword">if</span> letters[mid] &lt; target + <span class="hljs-number">1</span> {
+            l = mid + <span class="hljs-number">1</span>
+        } <span class="hljs-keyword">else</span> {
+            r = mid
+        }
+    } 
+    <span class="hljs-keyword">return</span> letters[l%<span class="hljs-built_in">len</span>(letters)]
+}</pre>
+        </div></div>
+<h3 id="正整数和负整数的最大计数">2529. 正整数和负整数的最大计数</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(5, 0)" id="tab-button-5-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-5" id="tab-5-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">maximumCount</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    check := <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(t <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+        l, r := <span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(nums)
+        <span class="hljs-keyword">for</span> l &lt; r {
+            mid := (l + r) &gt;&gt; <span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> nums[mid] &lt; t {
+                l = mid + <span class="hljs-number">1</span>
+            } <span class="hljs-keyword">else</span> {
+                r = mid
+            }
+        }
+        <span class="hljs-keyword">return</span> l
+    }
+    pos, neg := <span class="hljs-built_in">len</span>(nums) - check(<span class="hljs-number">1</span>), check(<span class="hljs-number">0</span>)
+    <span class="hljs-keyword">return</span> max(pos, neg)
+}</pre>
+        </div></div>
+<h3 id="两个数组间的距离值">1385. 两个数组间的距离值</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(6, 0)" id="tab-button-6-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-6" id="tab-6-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">findTheDistanceValue</span><span class="hljs-params">(arr1 []<span class="hljs-type">int</span>, arr2 []<span class="hljs-type">int</span>, d <span class="hljs-type">int</span>)</span></span> (ans <span class="hljs-type">int</span>) {
+    sort.Ints(arr2)
+    f := <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(v <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+        l, r := <span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(arr2)
+        <span class="hljs-keyword">for</span> l &lt; r {
+            mid := (l + r) &gt;&gt; <span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> arr2[mid] &lt; v {
+                l = mid + <span class="hljs-number">1</span>
+            } <span class="hljs-keyword">else</span> {
+                r = mid
+            }
+        }
+        <span class="hljs-keyword">return</span> l
+    }
+    <span class="hljs-keyword">for</span> _, a := <span class="hljs-keyword">range</span> arr1 {
+        <span class="hljs-comment">// 找 &gt; d 的 &lt; d 的两个位置</span>
+        <span class="hljs-keyword">if</span> f(a + d + <span class="hljs-number">1</span>) - f(a - d) &lt;= <span class="hljs-number">0</span> {
+            ans++
+        }
+    } 
+    <span class="hljs-keyword">return</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">abs</span><span class="hljs-params">(v <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    <span class="hljs-keyword">if</span> v &lt; <span class="hljs-number">0</span> { <span class="hljs-keyword">return</span> -v }
+    <span class="hljs-keyword">return</span> v
+}</pre>
+        </div></div>
+<h3 id="咒语和药水的成功对数">2300. 咒语和药水的成功对数</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(7, 0)" id="tab-button-7-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-7" id="tab-7-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">successfulPairs</span><span class="hljs-params">(spells []<span class="hljs-type">int</span>, potions []<span class="hljs-type">int</span>, success <span class="hljs-type">int64</span>)</span></span> []<span class="hljs-type">int</span> {
+    sort.Ints(potions)
+    n, m := <span class="hljs-built_in">len</span>(spells), <span class="hljs-built_in">len</span>(potions)
+    ans := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, n)
+    <span class="hljs-keyword">for</span> k, s := <span class="hljs-keyword">range</span> spells {
+        l, r := <span class="hljs-number">0</span>, m
+        <span class="hljs-keyword">for</span> l &lt; r {
+            mid := (l + r) &gt;&gt; <span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> <span class="hljs-type">int64</span>(s) * <span class="hljs-type">int64</span>(potions[mid]) &lt; success {
+                l = mid + <span class="hljs-number">1</span>
+            } <span class="hljs-keyword">else</span> {
+                r = mid
+            }
+        }
+        ans[k] = m - l
+    }
+    <span class="hljs-keyword">return</span> ans
+}</pre>
+        </div></div>
+<h3 id="和有限的最长子序列">2389. 和有限的最长子序列</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(8, 0)" id="tab-button-8-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-8" id="tab-8-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">answerQueries</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, queries []<span class="hljs-type">int</span>)</span></span> []<span class="hljs-type">int</span> {
+    sort.Ints(nums)
+    n, m := <span class="hljs-built_in">len</span>(nums), <span class="hljs-built_in">len</span>(queries)
+    <span class="hljs-keyword">for</span> i := <span class="hljs-number">1</span>; i &lt; n; i++ {
+        nums[i] += nums[i<span class="hljs-number">-1</span>]
+    } 
+    ans := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, m)
+    <span class="hljs-keyword">for</span> k, q := <span class="hljs-keyword">range</span> queries {
+        l, r := <span class="hljs-number">0</span>, n
+        <span class="hljs-keyword">for</span> l &lt; r {
+            mid := (l + r) &gt;&gt; <span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> nums[mid] &lt; q + <span class="hljs-number">1</span> {
+                l = mid + <span class="hljs-number">1</span>
+            } <span class="hljs-keyword">else</span> {
+                r = mid
+            }
+        }
+        ans[k] = l
+    }
+    <span class="hljs-keyword">return</span> ans
+}</pre>
+        </div></div>
+<h3 id="比较字符串最小字母出现频次">1170.
+比较字符串最小字母出现频次</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(9, 0)" id="tab-button-9-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-9" id="tab-9-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">numSmallerByFrequency</span><span class="hljs-params">(queries []<span class="hljs-type">string</span>, words []<span class="hljs-type">string</span>)</span></span> []<span class="hljs-type">int</span> {
+    n, m := <span class="hljs-built_in">len</span>(queries), <span class="hljs-built_in">len</span>(words)
+    ans := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, n)
+    f := <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(s <span class="hljs-type">string</span>)</span></span> <span class="hljs-type">int</span> {
+        cnt := [<span class="hljs-number">26</span>]<span class="hljs-type">int</span>{}
+        <span class="hljs-keyword">for</span> _, v := <span class="hljs-keyword">range</span> s {
+            cnt[v-<span class="hljs-string">&#x27;a&#x27;</span>]++
+        }
+        <span class="hljs-keyword">for</span> _, v := <span class="hljs-keyword">range</span> cnt {
+            <span class="hljs-keyword">if</span> v == <span class="hljs-number">0</span> {
+                <span class="hljs-keyword">continue</span>
+            }
+            <span class="hljs-keyword">return</span> v
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+    }
+    cnt := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, m)
+    <span class="hljs-keyword">for</span> k, v := <span class="hljs-keyword">range</span> words {
+        cnt[k] = f(v)
+    }
+    sort.Ints(cnt)
+    <span class="hljs-keyword">for</span> k, v := <span class="hljs-keyword">range</span> queries {
+        l, r := <span class="hljs-number">0</span>, m
+        target := f(v)
+        <span class="hljs-keyword">for</span> l &lt; r {
+            mid := (l + r) &gt;&gt; <span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> cnt[mid] &lt; target + <span class="hljs-number">1</span> {
+                l = mid + <span class="hljs-number">1</span>
+            } <span class="hljs-keyword">else</span> {
+                r = mid
+            }
+        }
+        ans[k] = m - l
+    }
+    <span class="hljs-keyword">return</span> ans
+}</pre>
+        </div></div>
+<h3 id="区间内查询数字的频率">2080. 区间内查询数字的频率</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(10, 0)" id="tab-button-10-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-10" id="tab-10-0">
+            <pre><span class="hljs-keyword">type</span> RangeFreqQuery <span class="hljs-keyword">struct</span> {
+    index <span class="hljs-keyword">map</span>[<span class="hljs-type">int</span>][]<span class="hljs-type">int</span>
+}
+
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Constructor</span><span class="hljs-params">(arr []<span class="hljs-type">int</span>)</span></span> RangeFreqQuery {
+    index := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">int</span>][]<span class="hljs-type">int</span>)
+    <span class="hljs-keyword">for</span> i, v := <span class="hljs-keyword">range</span> arr {
+        <span class="hljs-keyword">if</span> index[v] == <span class="hljs-literal">nil</span> {
+            index[v] = <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, <span class="hljs-number">0</span>)
+        }
+        index[v] = <span class="hljs-built_in">append</span>(index[v], i)
+    }
+    <span class="hljs-keyword">return</span> RangeFreqQuery{index}
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(this *RangeFreqQuery)</span></span> find(pos, value <span class="hljs-type">int</span>) <span class="hljs-type">int</span> {
+    idx := this.index[value]
+    l, r := <span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(idx)
+    <span class="hljs-keyword">for</span> l &lt; r {
+        mid := (l + r) &gt;&gt; <span class="hljs-number">1</span>
+        <span class="hljs-keyword">if</span> idx[mid] &lt; pos + <span class="hljs-number">1</span> {
+            l = mid + <span class="hljs-number">1</span>
+        } <span class="hljs-keyword">else</span> {
+            r = mid
+        }
+    }
+    <span class="hljs-keyword">return</span> l - <span class="hljs-number">1</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(this *RangeFreqQuery)</span></span> Query(left <span class="hljs-type">int</span>, right <span class="hljs-type">int</span>, value <span class="hljs-type">int</span>) <span class="hljs-type">int</span> {
+    <span class="hljs-keyword">return</span> this.find(right, value) - this.find(left - <span class="hljs-number">1</span>, value)
+}</pre>
+        </div></div>
+<h3 id="统计公平数对的数目">2563. 统计公平数对的数目</h3>
+<p>排序不影响答案，然后枚举 <span
+class="math inline">\(nums[j]\)</span>，<span
+class="math inline">\(nums[i]\)</span> 需要满足</p>
+<p><span class="math display">\[lower - nums[j] \le nums[i] \le upper -
+nums[j]\]</span></p>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(11, 0)" id="tab-button-11-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-11" id="tab-11-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">countFairPairs</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, lower <span class="hljs-type">int</span>, upper <span class="hljs-type">int</span>)</span></span> (ans <span class="hljs-type">int64</span>) {
+    sort.Ints(nums)
+    f := <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(i, target <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int64</span> {
+        l, r := <span class="hljs-number">0</span>, i
+        <span class="hljs-keyword">for</span> l &lt; r {
+            mid := (l + r) &gt;&gt; <span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> nums[mid] &lt; target {
+                l = mid + <span class="hljs-number">1</span>
+            } <span class="hljs-keyword">else</span> {
+                r = mid
+            }
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-type">int64</span>(l)
+    }
+    <span class="hljs-keyword">for</span> i, num := <span class="hljs-keyword">range</span> nums {
+        ans += f(i, upper - num + <span class="hljs-number">1</span>) - f(i, lower - num)
+    }
+    <span class="hljs-keyword">return</span>
+}</pre>
+        </div></div>
+
+    </div>
+    <div class="toc-container">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE"><span class="toc-number">1.</span> <span class="toc-text">二分查找</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A5%97%E8%B7%AF"><span class="toc-number">1.1.</span> <span class="toc-text">套路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E5%8D%95"><span class="toc-number">1.2.</span> <span class="toc-text">题单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E8%A7%A3"><span class="toc-number">1.3.</span> <span class="toc-text">题解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E6%9F%A5%E6%89%BE%E5%85%83%E7%B4%A0%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%92%8C%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E4%BD%8D%E7%BD%AE"><span class="toc-number">1.3.1.</span> <span class="toc-text">34.
+在排序数组中查找元素的第一个和最后一个位置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%90%9C%E7%B4%A2%E6%8F%92%E5%85%A5%E4%BD%8D%E7%BD%AE"><span class="toc-number">1.3.2.</span> <span class="toc-text">35. 搜索插入位置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE-1"><span class="toc-number">1.3.3.</span> <span class="toc-text">704. 二分查找</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BB%E6%89%BE%E6%AF%94%E7%9B%AE%E6%A0%87%E5%AD%97%E6%AF%8D%E5%A4%A7%E7%9A%84%E6%9C%80%E5%B0%8F%E5%AD%97%E6%AF%8D"><span class="toc-number">1.3.4.</span> <span class="toc-text">744. 寻找比目标字母大的最小字母</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E6%95%B4%E6%95%B0%E5%92%8C%E8%B4%9F%E6%95%B4%E6%95%B0%E7%9A%84%E6%9C%80%E5%A4%A7%E8%AE%A1%E6%95%B0"><span class="toc-number">1.3.5.</span> <span class="toc-text">2529. 正整数和负整数的最大计数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84%E9%97%B4%E7%9A%84%E8%B7%9D%E7%A6%BB%E5%80%BC"><span class="toc-number">1.3.6.</span> <span class="toc-text">1385. 两个数组间的距离值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%92%92%E8%AF%AD%E5%92%8C%E8%8D%AF%E6%B0%B4%E7%9A%84%E6%88%90%E5%8A%9F%E5%AF%B9%E6%95%B0"><span class="toc-number">1.3.7.</span> <span class="toc-text">2300. 咒语和药水的成功对数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%92%8C%E6%9C%89%E9%99%90%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E5%BA%8F%E5%88%97"><span class="toc-number">1.3.8.</span> <span class="toc-text">2389. 和有限的最长子序列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%94%E8%BE%83%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9C%80%E5%B0%8F%E5%AD%97%E6%AF%8D%E5%87%BA%E7%8E%B0%E9%A2%91%E6%AC%A1"><span class="toc-number">1.3.9.</span> <span class="toc-text">1170.
+比较字符串最小字母出现频次</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%BA%E9%97%B4%E5%86%85%E6%9F%A5%E8%AF%A2%E6%95%B0%E5%AD%97%E7%9A%84%E9%A2%91%E7%8E%87"><span class="toc-number">1.3.10.</span> <span class="toc-text">2080. 区间内查询数字的频率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E5%85%AC%E5%B9%B3%E6%95%B0%E5%AF%B9%E7%9A%84%E6%95%B0%E7%9B%AE"><span class="toc-number">1.3.11.</span> <span class="toc-text">2563. 统计公平数对的数目</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </div>
+  <footer class="article-footer">
+    <div class="footer-container">
+  <a target="_blank" rel="noopener" href="https://space.bilibili.com/12352380?spm_id_from=333.1007.0.0">
+    <img src="/images/bilibili.svg" alt="" />
+  </a>
+  <a target="_blank" rel="noopener" href="https://github.com/qiancijun">
+    <img src="/images/github.svg" alt="" />
+  </a>
+  <span>Copyright </span>
+  <img src="/images/copyright.svg" alt="">
+  <span>2024 Cheryl-Chun</span>
+</div>
+
+  </footer>
+</article>
+
+
+        </div>
+        <!-- <div class="footer">
+    
+</div> -->
+    </div>
+    
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/github-calendar@2.3.4/dist/github-calendar.min.js"></script>
+=
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js"></script>
+
+
+<script src="/scripts/search.js"></script>
+
+
+<script src="/scripts/main.js"></script>
+
+
+<script type="text/javascript">      
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+        search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result', "Cheryl-Chun");
+</script>
+</body>
+<style>
+    .main-container::before {
+        background-image: url('');
+    }
+</style>
+</html>
