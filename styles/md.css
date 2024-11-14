@@ -231,7 +231,6 @@
   padding: 1em;
 }
 mjx-container {
-  display: inline-grid;
   max-width: 100%;
 }
 .copy {

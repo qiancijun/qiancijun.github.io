@@ -30,3 +30,8 @@
 .topbar .title span {
   font-size: 12px;
 }
+@media (max-width: 500px) {
+  .btn-container {
+    display: none;
+  }
+}
