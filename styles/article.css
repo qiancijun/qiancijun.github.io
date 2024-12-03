@@ -10,6 +10,11 @@
   right: 10px;
   top: 3px;
 }
+.article #toc-show img {
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+}
 .article .article-header {
   color: #e7669e;
   margin-bottom: 10px;

@@ -350,6 +350,11 @@ body {
 .topbar .title span {
   font-size: 12px;
 }
+@media (max-width: 500px) {
+  .btn-container {
+    display: none;
+  }
+}
 .footer {
   height: 80px;
   width: 100px;
@@ -362,9 +367,9 @@ body {
 }
 .nav-container {
   width: 100%;
-  height: 30px;
   background-color: #1f2326;
   display: flex;
+  flex-wrap: wrap;
   user-select: none;
 }
 .nav-container div {
@@ -443,27 +448,30 @@ body {
   overflow: hidden; /* 隐藏超出容器范围的内容 */
   transition: max-height 0.2s ease; /* 添加过渡效果 */
 }
-.post-list-item {
+.post-list {
+  width: 100%;
+}
+.post-list .post-list-item {
   color: #d3c6aa;
   margin: 10px 10px 0 10px;
 }
-.post-list-item td {
+.post-list .post-list-item td {
   min-width: 50px;
   padding: 5px 10px;
-  text-align: center; /* 水平居中对齐 */
+  text-align: left; /* 水平居中对齐 */
   vertical-align: middle; /* 垂直居中对齐 */
 }
-.post-list-item a {
+.post-list .post-list-item a {
   cursor: pointer;
 }
-.post-list-item .title {
+.post-list .post-list-item .title {
   color: #cec7f3;
 }
-.post-list-item .category,
-.post-list-item .category-link {
+.post-list .post-list-item .category,
+.post-list .post-list-item .category-link {
   color: #e67e80;
 }
-.post-list-item .tag-link {
+.post-list .post-list-item .tag-link {
   color: #7fbbb3;
 }
 .article {
@@ -477,6 +485,11 @@ body {
   position: absolute;
   right: 10px;
   top: 3px;
+}
+.article #toc-show img {
+  display: block;
+  text-align: center;
+  margin: 0 auto;
 }
 .article .article-header {
   color: #e7669e;
@@ -872,9 +885,6 @@ body {
   padding: 1em;
 }
 mjx-container {
-  display: inline-grid;
-  overflow-x: auto;
-  overflow-y: hidden;
   max-width: 100%;
 }
 .copy {
