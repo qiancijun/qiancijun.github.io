@@ -95,7 +95,7 @@ https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustom
             <img src="/images/category.svg" alt="">
             Category
         </td>
-        <td> <ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li></ul> </td>
+        <td> <ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E9%9D%A2%E8%AF%95/">面试</a></li></ul></li></ul> </td>
       </tr>
       <tr>
         <td>
@@ -345,14 +345,46 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/can-you-eat-yo
 <td>中等</td>
 <td>1859</td>
 </tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-subarrays-with-sum/description/">930.
+和相同的二元子数组</a></td>
+<td>第 108 场周赛 Q2</td>
+<td>中等</td>
+<td>1592</td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/subarray-sum-equals-k/description/">560.
+和为 K 的子数组</a></td>
+<td></td>
+<td>中等</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/number-of-sub-arrays-with-odd-sum/description/">1524.
+和为奇数的子数组数目</a></td>
+<td>第 31 场双周赛 Q2</td>
+<td>中等</td>
+<td>1611</td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/subarray-sums-divisible-by-k/description/">974.
+和可被 K 整除的子数组</a></td>
+<td>第 119 场周赛 Q3</td>
+<td>中等</td>
+<td>1676</td>
+</tr>
 </tbody>
 </table>
 <h1 id="题解">题解</h1>
 <h2 id="两数之和">1. 两数之和</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(0, 0)" id="tab-button-0-0">Golang</button>
+        <button onclick="showTab(65, 0)" id="tab-button-65-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-0" id="tab-0-0">
+        <div class="tab-content tab-content-65" id="tab-65-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">twoSum</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, target <span class="hljs-type">int</span>)</span></span> []<span class="hljs-type">int</span> {
     <span class="hljs-keyword">for</span> r, v := <span class="hljs-keyword">range</span> nums {
         <span class="hljs-keyword">for</span> l := <span class="hljs-number">0</span>; l &lt; r; l++ {
@@ -366,9 +398,9 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/can-you-eat-yo
         </div></div>
 <h2 id="好数对的数目">1512. 好数对的数目</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(1, 0)" id="tab-button-1-0">Golang</button>
+        <button onclick="showTab(66, 0)" id="tab-button-66-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-1" id="tab-1-0">
+        <div class="tab-content tab-content-66" id="tab-66-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">numIdenticalPairs</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>)</span></span> (ans <span class="hljs-type">int</span>) {
     <span class="hljs-keyword">for</span> r, v := <span class="hljs-keyword">range</span> nums {
         <span class="hljs-keyword">for</span> l := <span class="hljs-number">0</span>; l &lt; r; l++ {
@@ -382,9 +414,9 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/can-you-eat-yo
         </div></div>
 <h2 id="存在重复元素-ii">219. 存在重复元素 II</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(2, 0)" id="tab-button-2-0">Golang</button>
+        <button onclick="showTab(67, 0)" id="tab-button-67-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-2" id="tab-2-0">
+        <div class="tab-content tab-content-67" id="tab-67-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">containsNearbyDuplicate</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">bool</span> {
     vis := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">int</span>]<span class="hljs-type">int</span>)
     <span class="hljs-keyword">for</span> r, v := <span class="hljs-keyword">range</span> nums {
@@ -398,9 +430,9 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/can-you-eat-yo
         </div></div>
 <h2 id="买卖股票的最佳时机">121. 买卖股票的最佳时机</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(3, 0)" id="tab-button-3-0">Golang</button>
+        <button onclick="showTab(68, 0)" id="tab-button-68-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-3" id="tab-3-0">
+        <div class="tab-content tab-content-68" id="tab-68-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">maxProfit</span><span class="hljs-params">(prices []<span class="hljs-type">int</span>)</span></span> (ans <span class="hljs-type">int</span>) {
     mn := math.MaxInt
     <span class="hljs-keyword">for</span> _, v := <span class="hljs-keyword">range</span> prices {
@@ -412,9 +444,9 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/can-you-eat-yo
         </div></div>
 <h2 id="数组中的最大数对和">2815. 数组中的最大数对和</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(4, 0)" id="tab-button-4-0">Golang</button>
+        <button onclick="showTab(69, 0)" id="tab-button-69-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-4" id="tab-4-0">
+        <div class="tab-content tab-content-69" id="tab-69-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">maxSum</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>)</span></span> (ans <span class="hljs-type">int</span>) {
     vis := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, <span class="hljs-number">10</span>)
     ans = <span class="hljs-number">-1</span>
@@ -433,9 +465,9 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/can-you-eat-yo
         </div></div>
 <h2 id="数位和相等数对的最大和">2342. 数位和相等数对的最大和</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(5, 0)" id="tab-button-5-0">Golang</button>
+        <button onclick="showTab(70, 0)" id="tab-button-70-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-5" id="tab-5-0">
+        <div class="tab-content tab-content-70" id="tab-70-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">maximumSum</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>)</span></span> (ans <span class="hljs-type">int</span>) {
     m := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">int</span>]<span class="hljs-type">int</span>)
     ans = <span class="hljs-number">-1</span>
@@ -455,9 +487,9 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/can-you-eat-yo
         </div></div>
 <h2 id="k-和数对的最大数目">1679. K 和数对的最大数目</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(6, 0)" id="tab-button-6-0">Golang</button>
+        <button onclick="showTab(71, 0)" id="tab-button-71-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-6" id="tab-6-0">
+        <div class="tab-content tab-content-71" id="tab-71-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">maxOperations</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> (ans <span class="hljs-type">int</span>) {
     cnt := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">int</span>]<span class="hljs-type">int</span>)
     <span class="hljs-keyword">for</span> _, v := <span class="hljs-keyword">range</span> nums {
@@ -473,9 +505,9 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/can-you-eat-yo
         </div></div>
 <h2 id="必须拿起的最小连续卡牌数">2260. 必须拿起的最小连续卡牌数</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(7, 0)" id="tab-button-7-0">Golang</button>
+        <button onclick="showTab(72, 0)" id="tab-button-72-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-7" id="tab-7-0">
+        <div class="tab-content tab-content-72" id="tab-72-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">minimumCardPickup</span><span class="hljs-params">(cards []<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     ans := math.MaxInt
     m := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">int</span>]<span class="hljs-type">int</span>)
@@ -494,9 +526,9 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/can-you-eat-yo
 <h2 id="总持续时间可被-60-整除的歌曲">1010. 总持续时间可被 60
 整除的歌曲</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(8, 0)" id="tab-button-8-0">Golang</button>
+        <button onclick="showTab(73, 0)" id="tab-button-73-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-8" id="tab-8-0">
+        <div class="tab-content tab-content-73" id="tab-73-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">numPairsDivisibleBy60</span><span class="hljs-params">(time []<span class="hljs-type">int</span>)</span></span> (ans <span class="hljs-type">int</span>) {
     cnt := [<span class="hljs-number">60</span>]<span class="hljs-type">int</span>{}
     <span class="hljs-keyword">for</span> _, v := <span class="hljs-keyword">range</span> time {
@@ -508,9 +540,9 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/can-you-eat-yo
         </div></div>
 <h2 id="构成整天的下标对数目-ii">3185. 构成整天的下标对数目 II</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(9, 0)" id="tab-button-9-0">Golang</button>
+        <button onclick="showTab(74, 0)" id="tab-button-74-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-9" id="tab-9-0">
+        <div class="tab-content tab-content-74" id="tab-74-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">countCompleteDayPairs</span><span class="hljs-params">(hours []<span class="hljs-type">int</span>)</span></span> (ans <span class="hljs-type">int64</span>) {
     cnt := [<span class="hljs-number">24</span>]<span class="hljs-type">int</span>{}
     <span class="hljs-keyword">for</span> _, v := <span class="hljs-keyword">range</span> hours {
@@ -522,9 +554,9 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/can-you-eat-yo
         </div></div>
 <h2 id="美丽下标对的数目">2748. 美丽下标对的数目</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(10, 0)" id="tab-button-10-0">Golang</button>
+        <button onclick="showTab(75, 0)" id="tab-button-75-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-10" id="tab-10-0">
+        <div class="tab-content tab-content-75" id="tab-75-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">countBeautifulPairs</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     ans := <span class="hljs-number">0</span>
     <span class="hljs-keyword">for</span> i, num := <span class="hljs-keyword">range</span> nums {
@@ -548,9 +580,9 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/can-you-eat-yo
 <p>枚举 <span class="math inline">\(j\)</span>，维护 <span
 class="math inline">\(0 \sim j-1\)</span> 和 <span
 class="math inline">\(j+1 \sim n\)</span> 的最大值。 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(11, 0)" id="tab-button-11-0">Golang</button>
+        <button onclick="showTab(76, 0)" id="tab-button-76-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-11" id="tab-11-0">
+        <div class="tab-content tab-content-76" id="tab-76-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">maximumTripletValue</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>)</span></span> (ans <span class="hljs-type">int64</span>) {
     n := <span class="hljs-built_in">len</span>(nums)
     pre, suf := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, n), <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, n)
@@ -579,9 +611,9 @@ class="math inline">\(C\)</span> 和 <span
 class="math inline">\(D\)</span> 也采用痛仰的方法，查看 <span
 class="math inline">\(-C[i]-D[j]\)</span> 有多少存在哈希表中。
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(12, 0)" id="tab-button-12-0">Golang</button>
+        <button onclick="showTab(77, 0)" id="tab-button-77-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-12" id="tab-12-0">
+        <div class="tab-content tab-content-77" id="tab-77-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">fourSumCount</span><span class="hljs-params">(a []<span class="hljs-type">int</span>, b []<span class="hljs-type">int</span>, c []<span class="hljs-type">int</span>, d []<span class="hljs-type">int</span>)</span></span> (ans <span class="hljs-type">int</span>) {
     cnt := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">int</span>]<span class="hljs-type">int</span>)
     <span class="hljs-keyword">for</span> _, v := <span class="hljs-keyword">range</span> a {
@@ -599,9 +631,9 @@ class="math inline">\(-C[i]-D[j]\)</span> 有多少存在哈希表中。
         </div></div></p>
 <h2 id="最佳观光组合">1014. 最佳观光组合</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(13, 0)" id="tab-button-13-0">Golang</button>
+        <button onclick="showTab(78, 0)" id="tab-button-78-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-13" id="tab-13-0">
+        <div class="tab-content tab-content-78" id="tab-78-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">maxScoreSightseeingPair</span><span class="hljs-params">(values []<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     mx, ans := <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
     <span class="hljs-keyword">for</span> j, v := <span class="hljs-keyword">range</span> values {
@@ -614,9 +646,9 @@ class="math inline">\(-C[i]-D[j]\)</span> 有多少存在哈希表中。
 <h2 id="统计一个数组中好对子的数目">1814.
 统计一个数组中好对子的数目</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(14, 0)" id="tab-button-14-0">Golang</button>
+        <button onclick="showTab(79, 0)" id="tab-button-79-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-14" id="tab-14-0">
+        <div class="tab-content tab-content-79" id="tab-79-0">
             <pre><span class="hljs-keyword">const</span> MOD <span class="hljs-type">int</span> = <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>
 <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">countNicePairs</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>)</span></span> (ans <span class="hljs-type">int</span>) {
     <span class="hljs-comment">// nums[i] - rev(nums[i]) == nums[j] - rev(nums[j])</span>
@@ -641,9 +673,9 @@ class="math inline">\(-C[i]-D[j]\)</span> 有多少存在哈希表中。
         </div></div>
 <h2 id="找出满足插值条件的下标-ii">2905. 找出满足插值条件的下标 II</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(15, 0)" id="tab-button-15-0">Golang</button>
+        <button onclick="showTab(80, 0)" id="tab-button-80-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-15" id="tab-15-0">
+        <div class="tab-content tab-content-80" id="tab-80-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">findIndices</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, indexDifference <span class="hljs-type">int</span>, valueDifference <span class="hljs-type">int</span>)</span></span> []<span class="hljs-type">int</span> {
     maxIdx, minIdx := <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
     <span class="hljs-keyword">for</span> j := indexDifference; j &lt; <span class="hljs-built_in">len</span>(nums); j++ {
@@ -664,9 +696,9 @@ class="math inline">\(-C[i]-D[j]\)</span> 有多少存在哈希表中。
         </div></div>
 <h2 id="区域和检索-数组不可变">303. 区域和检索-数组不可变</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(16, 0)" id="tab-button-16-0">Golang</button>
+        <button onclick="showTab(81, 0)" id="tab-button-81-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-16" id="tab-16-0">
+        <div class="tab-content tab-content-81" id="tab-81-0">
             <pre><span class="hljs-keyword">type</span> NumArray []<span class="hljs-type">int</span>
 
 <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Constructor</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>)</span></span> NumArray {
@@ -685,9 +717,9 @@ class="math inline">\(-C[i]-D[j]\)</span> 有多少存在哈希表中。
         </div></div>
 <h2 id="统计范围内的元音字符串数">2259. 统计范围内的元音字符串数</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(17, 0)" id="tab-button-17-0">Golang</button>
+        <button onclick="showTab(82, 0)" id="tab-button-82-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-17" id="tab-17-0">
+        <div class="tab-content tab-content-82" id="tab-82-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">vowelStrings</span><span class="hljs-params">(words []<span class="hljs-type">string</span>, queries [][]<span class="hljs-type">int</span>)</span></span> []<span class="hljs-type">int</span> {
     cnt := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, <span class="hljs-built_in">len</span>(words) + <span class="hljs-number">1</span>)
     check := <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(c <span class="hljs-type">byte</span>)</span></span> <span class="hljs-type">bool</span> {
@@ -719,9 +751,9 @@ class="math inline">\(0\)</span>；如果子数组的元素和大于 <span
 class="math inline">\(0\)</span>，那么子数组一定包含 <span
 class="math inline">\(1\)</span>。快速计算子数组元素和可以使用前缀和。
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(18, 0)" id="tab-button-18-0">Golang</button>
+        <button onclick="showTab(83, 0)" id="tab-button-83-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-18" id="tab-18-0">
+        <div class="tab-content tab-content-83" id="tab-83-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">isArraySpecial</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, queries [][]<span class="hljs-type">int</span>)</span></span> []<span class="hljs-type">bool</span> {
     n := <span class="hljs-built_in">len</span>(nums)
     a := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, n)
@@ -744,9 +776,9 @@ class="math inline">\(1\)</span>。快速计算子数组元素和可以使用前
 <h2 id="任意子数组和的绝对值的最大值">1749.
 任意子数组和的绝对值的最大值</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(19, 0)" id="tab-button-19-0">Golang</button>
+        <button onclick="showTab(84, 0)" id="tab-button-84-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-19" id="tab-19-0">
+        <div class="tab-content tab-content-84" id="tab-84-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">maxAbsoluteSum</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     s, mn, mx := <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
     <span class="hljs-keyword">for</span> _, v := <span class="hljs-keyword">range</span> nums {
@@ -762,9 +794,9 @@ class="math inline">\(1\)</span>。快速计算子数组元素和可以使用前
         </div></div>
 <h2 id="和有限的最长子序列">2389. 和有限的最长子序列</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(20, 0)" id="tab-button-20-0">Golang</button>
+        <button onclick="showTab(85, 0)" id="tab-button-85-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-20" id="tab-20-0">
+        <div class="tab-content tab-content-85" id="tab-85-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">answerQueries</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, queries []<span class="hljs-type">int</span>)</span></span> []<span class="hljs-type">int</span> {
     sort.Ints(nums)
     n, m := <span class="hljs-built_in">len</span>(nums), <span class="hljs-built_in">len</span>(queries)
@@ -789,9 +821,9 @@ class="math inline">\(1\)</span>。快速计算子数组元素和可以使用前
         </div></div>
 <h2 id="两个字符串的切换距离">3361. 两个字符串的切换距离</h2>
 <p>由于字母表是环形的，可以把前缀延长一倍。 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(21, 0)" id="tab-button-21-0">Golang</button>
+        <button onclick="showTab(86, 0)" id="tab-button-86-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-21" id="tab-21-0">
+        <div class="tab-content tab-content-86" id="tab-86-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">shiftDistance</span><span class="hljs-params">(s <span class="hljs-type">string</span>, t <span class="hljs-type">string</span>, nextCost []<span class="hljs-type">int</span>, previousCost []<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int64</span> {
     n := <span class="hljs-built_in">len</span>(nextCost)
     next := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int64</span>, <span class="hljs-number">2</span> * <span class="hljs-number">26</span> + <span class="hljs-number">1</span>)
@@ -823,9 +855,9 @@ class="math inline">\(1\)</span>。快速计算子数组元素和可以使用前
 <h2 id="蜡烛之间的盘子">2055. 蜡烛之间的盘子</h2>
 <p>对于每一个询问，只需要找到给定区间最左侧和最右侧的两根蜡烛，这样两根蜡烛之间的所有盘子都是符合条件的。
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(22, 0)" id="tab-button-22-0">Golang</button>
+        <button onclick="showTab(87, 0)" id="tab-button-87-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-22" id="tab-22-0">
+        <div class="tab-content tab-content-87" id="tab-87-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">platesBetweenCandles</span><span class="hljs-params">(s <span class="hljs-type">string</span>, queries [][]<span class="hljs-type">int</span>)</span></span> []<span class="hljs-type">int</span> {
     n := <span class="hljs-built_in">len</span>(s)
     pre := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, n)
@@ -872,9 +904,9 @@ class="math inline">\(d\)</span> 天，因此吃的糖果数量落在区间：</
 \right]\]</span></p>
 <p>只需要判断这两个区间是否有交集即可。</p>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(23, 0)" id="tab-button-23-0">Golang</button>
+        <button onclick="showTab(88, 0)" id="tab-button-88-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-23" id="tab-23-0">
+        <div class="tab-content tab-content-88" id="tab-88-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">canEat</span><span class="hljs-params">(candiesCount []<span class="hljs-type">int</span>, queries [][]<span class="hljs-type">int</span>)</span></span> []<span class="hljs-type">bool</span> {
     ans := <span class="hljs-built_in">make</span>([]<span class="hljs-type">bool</span>, <span class="hljs-built_in">len</span>(queries))
     <span class="hljs-comment">// pre[i] 表示需要吃到第 i 种糖之前</span>
@@ -895,6 +927,81 @@ class="math inline">\(d\)</span> 天，因此吃的糖果数量落在区间：</
     <span class="hljs-keyword">return</span> ans 
 }</pre>
         </div></div>
+<h2 id="和相同的二元子数组">930. 和相同的二元子数组</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(89, 0)" id="tab-button-89-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-89" id="tab-89-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">numSubarraysWithSum</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, goal <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    ans, sum := <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
+    cnt := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">int</span>]<span class="hljs-type">int</span>)
+    cnt[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>
+    <span class="hljs-keyword">for</span> _, v := <span class="hljs-keyword">range</span> nums {
+        sum += v
+        <span class="hljs-keyword">if</span> sum &gt;= goal {
+            ans += cnt[(sum - goal)]
+        }
+        cnt[sum]++
+    }
+    <span class="hljs-keyword">return</span> ans
+}</pre>
+        </div></div>
+<h2 id="和为-k-的子数组">560. 和为 K 的子数组</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(90, 0)" id="tab-button-90-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-90" id="tab-90-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">subarraySum</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    sum, ans := <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
+    cnt := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">int</span>]<span class="hljs-type">int</span>)
+    cnt[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>
+    <span class="hljs-keyword">for</span> _, v := <span class="hljs-keyword">range</span> nums {
+        sum += v
+        ans += cnt[sum-k]
+        cnt[sum]++
+    }            
+    <span class="hljs-keyword">return</span> ans
+}</pre>
+        </div></div>
+<h2 id="和为奇数的子数组数目">1524. 和为奇数的子数组数目</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(91, 0)" id="tab-button-91-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-91" id="tab-91-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">numOfSubarrays</span><span class="hljs-params">(arr []<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    <span class="hljs-keyword">const</span> MOD =  <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>
+    sum, ans := <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
+    zero, one := <span class="hljs-number">1</span>, <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> _, v := <span class="hljs-keyword">range</span> arr {
+        sum += v
+        <span class="hljs-keyword">if</span> sum % <span class="hljs-number">2</span> == <span class="hljs-number">0</span> {
+            ans = (ans + one) % MOD
+            zero++
+        } <span class="hljs-keyword">else</span> {
+            ans = (ans + zero) % MOD
+            one++
+        }
+    }
+    <span class="hljs-keyword">return</span> ans
+}</pre>
+        </div></div>
+<h2 id="和可被-k-整除的子数组">974. 和可被 K 整除的子数组</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(92, 0)" id="tab-button-92-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-92" id="tab-92-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">subarraysDivByK</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    cnt := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">int</span>]<span class="hljs-type">int</span>) 
+    cnt[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>
+    sum, ans := <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> _, v := <span class="hljs-keyword">range</span> nums {
+        sum = ((sum + v) % k + k) % k
+        ans += (cnt[sum])
+        cnt[sum]++
+    }
+    <span class="hljs-keyword">return</span> ans
+}</pre>
+        </div></div>
 
     </div>
     <div class="toc-container">
@@ -902,7 +1009,7 @@ class="math inline">\(d\)</span> 天，因此吃的糖果数量落在区间：</
 整除的歌曲</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E6%88%90%E6%95%B4%E5%A4%A9%E7%9A%84%E4%B8%8B%E6%A0%87%E5%AF%B9%E6%95%B0%E7%9B%AE-ii"><span class="toc-number">2.10.</span> <span class="toc-text">3185. 构成整天的下标对数目 II</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BE%8E%E4%B8%BD%E4%B8%8B%E6%A0%87%E5%AF%B9%E7%9A%84%E6%95%B0%E7%9B%AE"><span class="toc-number">2.11.</span> <span class="toc-text">2748. 美丽下标对的数目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%89%E5%BA%8F%E4%B8%89%E5%85%83%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9C%80%E5%A4%A7%E5%80%BC-ii"><span class="toc-number">2.12.</span> <span class="toc-text">2874. 有序三元组中的最大值 II</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E6%95%B0%E7%9B%B8%E5%8A%A0-ii"><span class="toc-number">2.13.</span> <span class="toc-text">454. 四数相加 II</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E8%A7%82%E5%85%89%E7%BB%84%E5%90%88"><span class="toc-number">2.14.</span> <span class="toc-text">1014. 最佳观光组合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E4%B8%80%E4%B8%AA%E6%95%B0%E7%BB%84%E4%B8%AD%E5%A5%BD%E5%AF%B9%E5%AD%90%E7%9A%84%E6%95%B0%E7%9B%AE"><span class="toc-number">2.15.</span> <span class="toc-text">1814.
 统计一个数组中好对子的数目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%BE%E5%87%BA%E6%BB%A1%E8%B6%B3%E6%8F%92%E5%80%BC%E6%9D%A1%E4%BB%B6%E7%9A%84%E4%B8%8B%E6%A0%87-ii"><span class="toc-number">2.16.</span> <span class="toc-text">2905. 找出满足插值条件的下标 II</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8C%BA%E5%9F%9F%E5%92%8C%E6%A3%80%E7%B4%A2-%E6%95%B0%E7%BB%84%E4%B8%8D%E5%8F%AF%E5%8F%98"><span class="toc-number">2.17.</span> <span class="toc-text">303. 区域和检索-数组不可变</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E8%8C%83%E5%9B%B4%E5%86%85%E7%9A%84%E5%85%83%E9%9F%B3%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%95%B0"><span class="toc-number">2.18.</span> <span class="toc-text">2259. 统计范围内的元音字符串数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E6%AE%8A%E6%95%B0%E7%BB%84"><span class="toc-number">2.19.</span> <span class="toc-text">3152. 特殊数组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%BB%E6%84%8F%E5%AD%90%E6%95%B0%E7%BB%84%E5%92%8C%E7%9A%84%E7%BB%9D%E5%AF%B9%E5%80%BC%E7%9A%84%E6%9C%80%E5%A4%A7%E5%80%BC"><span class="toc-number">2.20.</span> <span class="toc-text">1749.
 任意子数组和的绝对值的最大值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%92%8C%E6%9C%89%E9%99%90%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E5%BA%8F%E5%88%97"><span class="toc-number">2.21.</span> <span class="toc-text">2389. 和有限的最长子序列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%A4%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%88%87%E6%8D%A2%E8%B7%9D%E7%A6%BB"><span class="toc-number">2.22.</span> <span class="toc-text">3361. 两个字符串的切换距离</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%9C%A1%E7%83%9B%E4%B9%8B%E9%97%B4%E7%9A%84%E7%9B%98%E5%AD%90"><span class="toc-number">2.23.</span> <span class="toc-text">2055. 蜡烛之间的盘子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%A0%E8%83%BD%E5%9C%A8%E4%BD%A0%E6%9C%80%E5%96%9C%E6%AC%A2%E7%9A%84%E9%82%A3%E5%A4%A9%E5%90%83%E5%88%B0%E4%BD%A0%E6%9C%80%E5%96%9C%E6%AC%A2%E7%9A%84%E7%B3%96%E6%9E%9C%E5%90%97"><span class="toc-number">2.24.</span> <span class="toc-text">1744.
-你能在你最喜欢的那天吃到你最喜欢的糖果吗？</span></a></li></ol></li></ol>
+你能在你最喜欢的那天吃到你最喜欢的糖果吗？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%92%8C%E7%9B%B8%E5%90%8C%E7%9A%84%E4%BA%8C%E5%85%83%E5%AD%90%E6%95%B0%E7%BB%84"><span class="toc-number">2.25.</span> <span class="toc-text">930. 和相同的二元子数组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%92%8C%E4%B8%BA-k-%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84"><span class="toc-number">2.26.</span> <span class="toc-text">560. 和为 K 的子数组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%92%8C%E4%B8%BA%E5%A5%87%E6%95%B0%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84%E6%95%B0%E7%9B%AE"><span class="toc-number">2.27.</span> <span class="toc-text">1524. 和为奇数的子数组数目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%92%8C%E5%8F%AF%E8%A2%AB-k-%E6%95%B4%E9%99%A4%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84"><span class="toc-number">2.28.</span> <span class="toc-text">974. 和可被 K 整除的子数组</span></a></li></ol></li></ol>
     </div>
   </div>
   <footer class="article-footer">
