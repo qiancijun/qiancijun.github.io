@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+    
+      算法笔试-位运算
+    
+</title>
+
+<link rel="icon" href="/images/favicon.ico">
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-calendar@2.3.4/dist/github-calendar.min.css">
+
+<link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark-reasonable.min.css" rel="stylesheet">
+<link href="
+https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.css
+" rel="stylesheet">
+<link href="
+https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustomScrollbar.min.css
+" rel="stylesheet">
+<meta name="generator" content="Hexo 7.2.0"></head>
+<body>
+    <div class="main-container">
+        <div class="topbar">
+    <div class="btn-container">
+        <a href="/"><img class="btn-close" src="/images/close.svg" alt=""></a>
+        <a><img class="btn-minimize" src="/images/minimize.svg" alt=""></a>
+        <a><img class="btn-maximize" src="/images/maximize.svg" alt=""></a>
+    </div>
+    <div class="title">
+        <img src="/images/terminal.svg" alt="">
+        <span>cat Cheryl-Chun 淳老师 BLOG</span>
+    </div>
+</div>
+        <div class="nav-container">
+    <div class="posts">
+        <img src="/images/posts-list.svg" alt="">
+        <a href="/">Home</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+    <!-- <div class="tags">
+        <img src="/images/tag.svg" alt="">
+        <a href="/tag">Tag</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div> -->
+    <div>
+        <img src="/images/archive.svg" alt="">
+        <a href="/all-posts">Posts</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+    <!-- <div class="category">
+        <img src="/images/category.svg" alt="">
+        <a href="/category">Category</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div> -->
+    <div class="about">
+        <img src="/images/about.svg" alt="">
+        <a href="/about">About</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+</div>
+        <div class="main-content">
+            <article
+  id="post-算法笔试-位运算"
+  class="article article-type-post"
+>
+  <div id="toc-show">
+    <img src="/images/toc.svg" alt="" />
+  </div>
+  
+  <h1 class="article-header">算法笔试-位运算</h1>
+  
+  <div class="article-info">
+    <!-- <span>Document Attributes:</span> -->
+
+    <table>
+      <tr>
+        <td>
+            <img src="/images/time.svg" alt="">
+            Updated Time
+        </td>
+        <td>2025-02-22</td>
+      </tr>
+      <tr>
+        <td>
+            <img src="/images/category.svg" alt="">
+            Category
+        </td>
+        <td> <ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E7%AE%97%E6%B3%95/%E9%9D%A2%E8%AF%95/">面试</a></li></ul></li></ul> </td>
+      </tr>
+      <tr>
+        <td>
+            <img src="/images/tag.svg" alt="">
+            Tags
+        </td>
+        <td>
+</td>
+      </tr>
+    </table>
+  </div>
+  <div class="article-entry">
+    <div class="content">
+      <blockquote>
+<p>关于语言：一刷用 Golang，二刷用 Rust</p>
+<p>题单来源于：<a
+target="_blank" rel="noopener" href="https://leetcode.cn/circle/discuss/dHn9Vk/">分享丨【题单】位运算（基础/性质/拆位/试填/恒等式/思维）</a></p>
+</blockquote>
+<h1 id="位运算">位运算</h1>
+<p>集合可以用二进制表示，<strong>从低到高</strong>第 <span
+class="math inline">\(i\)</span> 位为 <span
+class="math inline">\(1\)</span> 表示 <span
+class="math inline">\(i\)</span> 在集合中。例如集合 <span
+class="math inline">\(\{ 0, 2, 3 \}\)</span> 可以用二进制数 <span
+class="math inline">\(1101_{(2)}\)</span> 表示；反之 $ 1101_{(2)}$
+对应着集合 <span class="math inline">\(\{ 0, 2, 3 \}\)</span></p>
+<p>也就是说，包含非负整数的集合 <span class="math inline">\(S\)</span>
+可以压缩成一个数字。</p>
+<p><strong>集合与集合</strong>：&amp; 表示按位与，| 表示按位或，<span
+class="math inline">\(\oplus\)</span> 表示按位异或，~
+表示按位取反，对称差指仅在其中一个集合的元素。</p>
+<table>
+<thead>
+<tr class="header">
+<th>术语</th>
+<th>集合</th>
+<th>位运算</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>交集</td>
+<td><span class="math inline">\(A \cap B\)</span></td>
+<td><span class="math inline">\(a \&amp; b\)</span></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>并集</td>
+<td><span class="math inline">\(A \cup B\)</span></td>
+<td><span class="math inline">\(a            | b\)</span></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>对称差</td>
+<td><span class="math inline">\(A \bigtriangleup B\)</span></td>
+<td><span class="math inline">\(a \oplus b\)</span></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>差</td>
+<td><span class="math inline">\(A \backslash B\)</span></td>
+<td><span class="math inline">\(a \&amp; \sim b\)</span></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>集合与元素</strong>：</p>
+<table>
+<thead>
+<tr class="header">
+<th>术语</th>
+<th>集合</th>
+<th>位运算</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>属于</td>
+<td><span class="math inline">\(i \in S\)</span></td>
+<td><span class="math inline">\((s &gt;&gt; i) \&amp; 1 =
+1\)</span></td>
+</tr>
+<tr class="even">
+<td>不属于</td>
+<td><span class="math inline">\(i \notin S\)</span></td>
+<td><span class="math inline">\((s &gt;&gt; i) \&amp; 1 =
+0\)</span></td>
+</tr>
+<tr class="odd">
+<td>添加元素</td>
+<td><span class="math inline">\(S \cup \{ i\}\)</span></td>
+<td>s | (1 &lt;&lt; i)</td>
+</tr>
+<tr class="even">
+<td>删除元素</td>
+<td><span class="math inline">\(S \backslash \{i\}\)</span></td>
+<td>s &amp; ~ (1 &lt;&lt; i)</td>
+</tr>
+<tr class="odd">
+<td>删除最小元素</td>
+<td></td>
+<td>s &amp; (s-1)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>库函数</strong>： |术语|Python|Java|C++|Go|
+|---|------|----|---|---|
+|集合大小|<code>s.bit_count()</code>|<code>Integer.bitcount(s)</code>|<code>__builtin_popcount(s)</code>|<code>bits.OnesCount(s)</code>|
+|二进制长度（减一得到集合中的最大元素）|<code>s.bit_length()</code>|<code>32-Integer.numberOfLeadingZeros(s)</code>|<code>32-__builtin_clz(s)</code>|<code>bits.Len(s)</code>|
+|集合中的最小元素|<code>(s&amp;-s).bit_length()-1</code>|<code>Integer.numberOfTrailingZeros(s)</code>|<code>__builtin_ctz(s)</code>|<code>bits.TrailingZeros(s)</code>|</p>
+<p><strong>遍历集合</strong>：设元素范围从 <span
+class="math inline">\(0\)</span> 到 <span
+class="math inline">\(n-1\)</span>，挨个判断是否在集合 <span
+class="math inline">\(s\)</span> 中： <div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(36, 0)" id="tab-button-36-0">Cpp</button>
+        </div>
+        <div class="tab-content tab-content-36" id="tab-36-0">
+            <pre><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+    <span class="hljs-keyword">if</span> ((s &gt;&gt; i) &amp; <span class="hljs-number">1</span>) { <span class="hljs-comment">// i 在 s 中</span>
+        <span class="hljs-comment">// 处理 i 的逻辑</span>
+    }
+}</pre>
+        </div></div></p>
+<p><strong>枚举集合</strong>：设元素范围从 <span
+class="math inline">\(0\)</span> 到 <span
+class="math inline">\(n-1\)</span>，从空集枚举到全集： <div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(37, 0)" id="tab-button-37-0">Cpp</button>
+        </div>
+        <div class="tab-content tab-content-37" id="tab-37-0">
+            <pre><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> s = <span class="hljs-number">0</span>; s &lt; (<span class="hljs-number">1</span> &lt;&lt; n); s++) {
+	<span class="hljs-comment">// 处理 s 的逻辑</span>
+}</pre>
+        </div></div></p>
+<p>设集合为 <span
+class="math inline">\(s\)</span>，<strong>从大到小</strong>枚举 <span
+class="math inline">\(s\)</span> 的所有非空子集 <span
+class="math inline">\(sub\)</span>： <div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(38, 0)" id="tab-button-38-0">Cpp</button>
+        </div>
+        <div class="tab-content tab-content-38" id="tab-38-0">
+            <pre><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> sub = s; sub; sub = (sub - <span class="hljs-number">1</span>) &amp; s) {
+	<span class="hljs-comment">// 处理 sub 的逻辑</span>
+}</pre>
+        </div></div></p>
+<h1 id="题单">题单</h1>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 30%" />
+<col style="width: 23%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>题目</th>
+<th>来源</th>
+<th>难度</th>
+<th>分数</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/smallest-number-with-all-set-bits/description/">3370.
+仅含置位位的最小整数</a></td>
+<td>第 426 场周赛 Q1</td>
+<td>简单</td>
+<td>1199</td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/number-of-bit-changes-to-make-two-integers-equal/description/">3226.
+使两个整数相等的位更改次数</a></td>
+<td>第 407 场周赛 Q1</td>
+<td>简单</td>
+<td>1247</td>
+</tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/sort-integers-by-the-number-of-1-bits/description/">1356.
+根据数字二进制下 1 的数目排序</a></td>
+<td>第 20 场双周赛 Q1</td>
+<td>简单</td>
+<td>1258</td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/hamming-distance/description/">461.
+汉明距离</a></td>
+<td></td>
+<td>简单</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/number-complement/description/">476.
+数字的补数</a></td>
+<td></td>
+<td>简单</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-gap/">868.
+二进制间距</a></td>
+<td>第 93 场周赛 Q1</td>
+<td>简单</td>
+<td>1307</td>
+</tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/generate-binary-strings-without-adjacent-zeros/description/">3211.
+生成不含相邻零的二进制字符串</a></td>
+<td>第 405 场周赛 Q2</td>
+<td>中等</td>
+<td>1353</td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-the-k-or-of-an-array/description/">2917.
+找出数组中的 K-or 值</a></td>
+<td>第 369 场周赛 Q1</td>
+<td>简单</td>
+<td>1389</td>
+</tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-number-with-alternating-bits/">693.
+交替位二进制数</a></td>
+<td></td>
+<td>简单</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-the-prefix-common-array-of-two-arrays/description/">2657.
+找到两个数组的前缀公共数组</a></td>
+<td>第 103 场周赛 Q2</td>
+<td>中等</td>
+<td>1304</td>
+</tr>
+<tr class="odd">
+<td><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/power-of-two/">231. 2
+的幂</a></td>
+<td></td>
+<td>简单</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h1 id="题解">题解</h1>
+<h2 id="仅含置位位的最小整数">3370. 仅含置位位的最小整数</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(39, 0)" id="tab-button-39-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-39" id="tab-39-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">smallestNumber</span><span class="hljs-params">(n <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span> &lt;&lt; bits.Len(<span class="hljs-type">uint</span>(n)) - <span class="hljs-number">1</span>
+}</pre>
+        </div></div>
+<h2 id="使两个整数相等的位更改次数">3226.
+使两个整数相等的位更改次数</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(40, 0)" id="tab-button-40-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-40" id="tab-40-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">minChanges</span><span class="hljs-params">(n <span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    <span class="hljs-keyword">if</span> n &amp; k != k {
+        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>
+    } 
+    <span class="hljs-keyword">return</span> bits.OnesCount(<span class="hljs-type">uint</span>(n ^ k))
+}</pre>
+        </div></div>
+<h2 id="根据数字二进制下-1-的数目排序">1356. 根据数字二进制下 1
+的数目排序</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(41, 0)" id="tab-button-41-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-41" id="tab-41-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">sortByBits</span><span class="hljs-params">(arr []<span class="hljs-type">int</span>)</span></span> []<span class="hljs-type">int</span> {
+    sort.Slice(arr, <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(i, j <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">bool</span> {
+        a := bits.OnesCount(<span class="hljs-type">uint</span>(arr[i]))
+        b := bits.OnesCount(<span class="hljs-type">uint</span>(arr[j]))
+        <span class="hljs-keyword">if</span> a != b {
+            <span class="hljs-keyword">return</span> bits.OnesCount(<span class="hljs-type">uint</span>(arr[i])) &lt; bits.OnesCount(<span class="hljs-type">uint</span>(arr[j]))
+        }
+        <span class="hljs-keyword">return</span> arr[i] &lt; arr[j]
+    }) 
+    <span class="hljs-keyword">return</span> arr
+}</pre>
+        </div></div>
+<h2 id="汉明距离">461. 汉明距离</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(42, 0)" id="tab-button-42-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-42" id="tab-42-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">hammingDistance</span><span class="hljs-params">(x <span class="hljs-type">int</span>, y <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    <span class="hljs-keyword">return</span> bits.OnesCount(<span class="hljs-type">uint</span>(x ^ y))
+}</pre>
+        </div></div>
+<h2 id="数字的补数">476. 数字的补数</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(43, 0)" id="tab-button-43-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-43" id="tab-43-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">findComplement</span><span class="hljs-params">(num <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span> &lt;&lt; bits.Len(<span class="hljs-type">uint</span>(num)) - <span class="hljs-number">1</span> - num
+}</pre>
+        </div></div>
+<h2 id="二进制间距">868. 二进制间距</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(44, 0)" id="tab-button-44-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-44" id="tab-44-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">binaryGap</span><span class="hljs-params">(n <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    i, idx, ans := <span class="hljs-number">0</span>, <span class="hljs-number">-1</span>, <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> ; n &gt; <span class="hljs-number">0</span>; n = n &gt;&gt; <span class="hljs-number">1</span> {
+        <span class="hljs-keyword">if</span> n &amp; <span class="hljs-number">1</span> == <span class="hljs-number">1</span> {
+            <span class="hljs-keyword">if</span> idx != <span class="hljs-number">-1</span> {
+                ans = max(ans, i - idx)
+            }
+            idx = i
+        }
+        i++
+    }
+    <span class="hljs-keyword">return</span> ans
+}</pre>
+        </div></div>
+<h2 id="生成不含相邻零的二进制字符串">3211.
+生成不含相邻零的二进制字符串</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(45, 0)" id="tab-button-45-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-45" id="tab-45-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">validStrings</span><span class="hljs-params">(n <span class="hljs-type">int</span>)</span></span> []<span class="hljs-type">string</span> {
+    ans := <span class="hljs-built_in">make</span>([]<span class="hljs-type">string</span>, <span class="hljs-number">0</span>)
+    <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(pos <span class="hljs-type">int</span>, path []<span class="hljs-type">byte</span>)</span></span>
+    dfs = <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(pos <span class="hljs-type">int</span>, path []<span class="hljs-type">byte</span>)</span></span> {
+        <span class="hljs-keyword">if</span> pos &gt;= n {
+            ans = <span class="hljs-built_in">append</span>(ans, <span class="hljs-type">string</span>(path))
+            <span class="hljs-keyword">return</span>
+        }
+        path[pos] = <span class="hljs-string">&#x27;1&#x27;</span>
+        dfs(pos + <span class="hljs-number">1</span>, path)
+        
+        <span class="hljs-keyword">if</span> pos == <span class="hljs-number">0</span> || path[pos<span class="hljs-number">-1</span>] == <span class="hljs-string">&#x27;1&#x27;</span> {
+            path[pos] = <span class="hljs-string">&#x27;0&#x27;</span>
+            dfs(pos + <span class="hljs-number">1</span>, path)
+        }
+    }
+    dfs(<span class="hljs-number">0</span>, <span class="hljs-built_in">make</span>([]<span class="hljs-type">byte</span>, n))
+    <span class="hljs-keyword">return</span> ans
+}</pre>
+        </div></div>
+<h2 id="找出数组中的-k-or-值">2917. 找出数组中的 K-or 值</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(46, 0)" id="tab-button-46-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-46" id="tab-46-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">findKOr</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    cnt := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, <span class="hljs-number">31</span>)
+    <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">31</span>; i++ {
+        <span class="hljs-keyword">for</span> _, v := <span class="hljs-keyword">range</span> nums {
+            <span class="hljs-keyword">if</span> (v &gt;&gt; i) &amp; <span class="hljs-number">1</span> == <span class="hljs-number">1</span> {
+                cnt[i]++
+            }
+        }
+    }
+    ans := <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> i := <span class="hljs-number">30</span>; i &gt;= <span class="hljs-number">0</span>; i-- {
+        <span class="hljs-keyword">if</span> cnt[i] &gt;= k {
+            fmt.Println(i)
+            ans |= <span class="hljs-number">1</span>
+        }
+        <span class="hljs-keyword">if</span> i != <span class="hljs-number">0</span> {
+            ans &lt;&lt;= <span class="hljs-number">1</span>
+        }
+    }
+    <span class="hljs-keyword">return</span> ans
+}</pre>
+        </div></div>
+<h2 id="交替位二进制数">693. 交替位二进制数</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(47, 0)" id="tab-button-47-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-47" id="tab-47-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">hasAlternatingBits</span><span class="hljs-params">(n <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">bool</span> {
+    t := n &amp; <span class="hljs-number">1</span>
+    n &gt;&gt;= <span class="hljs-number">1</span>
+    <span class="hljs-keyword">for</span> ; n &gt; <span class="hljs-number">0</span>; n &gt;&gt;= <span class="hljs-number">1</span> {
+        <span class="hljs-keyword">if</span> t == n &amp; <span class="hljs-number">1</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+        }
+        t = n &amp; <span class="hljs-number">1</span>
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>
+}</pre>
+        </div></div>
+<h2 id="找到两个数组的前缀公共数组">2657.
+找到两个数组的前缀公共数组</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(48, 0)" id="tab-button-48-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-48" id="tab-48-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">findThePrefixCommonArray</span><span class="hljs-params">(A []<span class="hljs-type">int</span>, B []<span class="hljs-type">int</span>)</span></span> []<span class="hljs-type">int</span> {
+    <span class="hljs-keyword">var</span> q, p <span class="hljs-type">uint</span>
+    ans := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, <span class="hljs-built_in">len</span>(A))
+    <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">len</span>(A); i++ {
+        a, b := A[i], B[i]
+        q |= (<span class="hljs-number">1</span> &lt;&lt; a)
+        p |= (<span class="hljs-number">1</span> &lt;&lt; b)
+        ans[i] = bits.OnesCount(q &amp; p)
+    }
+    <span class="hljs-keyword">return</span> ans
+}</pre>
+        </div></div>
+<h2 id="的幂">231. 2 的幂</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(49, 0)" id="tab-button-49-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-49" id="tab-49-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">isPowerOfTwo</span><span class="hljs-params">(n <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">bool</span> {
+    <span class="hljs-keyword">return</span> bits.OnesCount(<span class="hljs-type">uint</span>(n)) == <span class="hljs-number">1</span>
+}</pre>
+        </div></div>
+
+    </div>
+    <div class="toc-container">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%8D%E8%BF%90%E7%AE%97"><span class="toc-number">1.</span> <span class="toc-text">位运算</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A2%98%E5%8D%95"><span class="toc-number">2.</span> <span class="toc-text">题单</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A2%98%E8%A7%A3"><span class="toc-number">3.</span> <span class="toc-text">题解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%85%E5%90%AB%E7%BD%AE%E4%BD%8D%E4%BD%8D%E7%9A%84%E6%9C%80%E5%B0%8F%E6%95%B4%E6%95%B0"><span class="toc-number">3.1.</span> <span class="toc-text">3370. 仅含置位位的最小整数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E4%B8%A4%E4%B8%AA%E6%95%B4%E6%95%B0%E7%9B%B8%E7%AD%89%E7%9A%84%E4%BD%8D%E6%9B%B4%E6%94%B9%E6%AC%A1%E6%95%B0"><span class="toc-number">3.2.</span> <span class="toc-text">3226.
+使两个整数相等的位更改次数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B9%E6%8D%AE%E6%95%B0%E5%AD%97%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%B8%8B-1-%E7%9A%84%E6%95%B0%E7%9B%AE%E6%8E%92%E5%BA%8F"><span class="toc-number">3.3.</span> <span class="toc-text">1356. 根据数字二进制下 1
+的数目排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B1%89%E6%98%8E%E8%B7%9D%E7%A6%BB"><span class="toc-number">3.4.</span> <span class="toc-text">461. 汉明距离</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E5%AD%97%E7%9A%84%E8%A1%A5%E6%95%B0"><span class="toc-number">3.5.</span> <span class="toc-text">476. 数字的补数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%97%B4%E8%B7%9D"><span class="toc-number">3.6.</span> <span class="toc-text">868. 二进制间距</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E4%B8%8D%E5%90%AB%E7%9B%B8%E9%82%BB%E9%9B%B6%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">3.7.</span> <span class="toc-text">3211.
+生成不含相邻零的二进制字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%BE%E5%87%BA%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84-k-or-%E5%80%BC"><span class="toc-number">3.8.</span> <span class="toc-text">2917. 找出数组中的 K-or 值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%A4%E6%9B%BF%E4%BD%8D%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%95%B0"><span class="toc-number">3.9.</span> <span class="toc-text">693. 交替位二进制数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%BE%E5%88%B0%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84%E7%9A%84%E5%89%8D%E7%BC%80%E5%85%AC%E5%85%B1%E6%95%B0%E7%BB%84"><span class="toc-number">3.10.</span> <span class="toc-text">2657.
+找到两个数组的前缀公共数组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9A%84%E5%B9%82"><span class="toc-number">3.11.</span> <span class="toc-text">231. 2 的幂</span></a></li></ol></li></ol>
+    </div>
+  </div>
+  <footer class="article-footer">
+    <div class="footer-container">
+  <a target="_blank" rel="noopener" href="https://space.bilibili.com/12352380?spm_id_from=333.1007.0.0">
+    <img src="/images/bilibili.svg" alt="" />
+  </a>
+  <a target="_blank" rel="noopener" href="https://github.com/qiancijun">
+    <img src="/images/github.svg" alt="" />
+  </a>
+  <span>Copyright </span>
+  <img src="/images/copyright.svg" alt="">
+  <span>2024 Cheryl-Chun</span>
+</div>
+
+  </footer>
+</article>
+
+
+        </div>
+        <!-- <div class="footer">
+    
+</div> -->
+    </div>
+    
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/github-calendar@2.3.4/dist/github-calendar.min.js"></script>
+=
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js"></script>
+
+
+<script src="/scripts/search.js"></script>
+
+
+<script src="/scripts/main.js"></script>
+
+
+<script type="text/javascript">      
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+        search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result', "Cheryl-Chun");
+</script>
+</body>
+<style>
+    .main-container::before {
+        background-image: url('');
+    }
+</style>
+</html>
