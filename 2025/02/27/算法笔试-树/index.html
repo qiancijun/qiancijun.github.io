@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+    
+      算法笔试-树
+    
+</title>
+
+<link rel="icon" href="/images/favicon.ico">
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-calendar@2.3.4/dist/github-calendar.min.css">
+
+<link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark-reasonable.min.css" rel="stylesheet">
+<link href="
+https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.css
+" rel="stylesheet">
+<link href="
+https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustomScrollbar.min.css
+" rel="stylesheet">
+<meta name="generator" content="Hexo 7.2.0"></head>
+<body>
+    <div class="main-container">
+        <div class="topbar">
+    <div class="btn-container">
+        <a href="/"><img class="btn-close" src="/images/close.svg" alt=""></a>
+        <a><img class="btn-minimize" src="/images/minimize.svg" alt=""></a>
+        <a><img class="btn-maximize" src="/images/maximize.svg" alt=""></a>
+    </div>
+    <div class="title">
+        <img src="/images/terminal.svg" alt="">
+        <span>cat Cheryl-Chun 淳老师 BLOG</span>
+    </div>
+</div>
+        <div class="nav-container">
+    <div class="posts">
+        <img src="/images/posts-list.svg" alt="">
+        <a href="/">Home</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+    <!-- <div class="tags">
+        <img src="/images/tag.svg" alt="">
+        <a href="/tag">Tag</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div> -->
+    <div>
+        <img src="/images/archive.svg" alt="">
+        <a href="/all-posts">Posts</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+    <!-- <div class="category">
+        <img src="/images/category.svg" alt="">
+        <a href="/category">Category</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div> -->
+    <div class="about">
+        <img src="/images/about.svg" alt="">
+        <a href="/about">About</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+</div>
+        <div class="main-content">
+            <article
+  id="post-算法笔试-树"
+  class="article article-type-post"
+>
+  <div id="toc-show">
+    <img src="/images/toc.svg" alt="" />
+  </div>
+  
+  <h1 class="article-header">算法笔试-树</h1>
+  
+  <div class="article-info">
+    <!-- <span>Document Attributes:</span> -->
+
+    <table>
+      <tr>
+        <td>
+            <img src="/images/time.svg" alt="">
+            Updated Time
+        </td>
+        <td>2025-02-27</td>
+      </tr>
+      <tr>
+        <td>
+            <img src="/images/category.svg" alt="">
+            Category
+        </td>
+        <td> <ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E9%9D%A2%E8%AF%95/%E7%AE%97%E6%B3%95/">算法</a></li></ul></li></ul> </td>
+      </tr>
+      <tr>
+        <td>
+            <img src="/images/tag.svg" alt="">
+            Tags
+        </td>
+        <td>
+</td>
+      </tr>
+    </table>
+  </div>
+  <div class="article-entry">
+    <div class="content">
+      <blockquote>
+<p>关于语言：一刷用 Golang，二刷用 Rust</p>
+<p>题单来源于 <a
+target="_blank" rel="noopener" href="https://leetcode.cn/circle/discuss/K0n2gO/">分享丨【题单】链表、二叉树与回溯（前后指针/快慢指针/DFS/BFS/直径/LCA/一般树）</a></p>
+</blockquote>
+<h1 id="题单">题单</h1>
+<p>遍历二叉树：</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 30%" />
+<col style="width: 23%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>题目</th>
+<th>来源</th>
+<th>难度</th>
+<th>分数</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-tree-preorder-traversal/description/">144.
+二叉树的前序遍历</a></td>
+<td></td>
+<td>简单</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-tree-inorder-traversal/description/">94.
+二叉树的中序遍历</a></td>
+<td></td>
+<td>简单</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-tree-postorder-traversal/description/">145.
+二叉树的后序遍历</a></td>
+<td></td>
+<td>简单</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/leaf-similar-trees/submissions/603762054/">872.
+叶子相似的树</a></td>
+<td>第 94 场周赛 Q1</td>
+<td>简单</td>
+<td>1288</td>
+</tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/sum-of-left-leaves/description/">404.
+左叶子之和</a></td>
+<td></td>
+<td>简单</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/second-minimum-node-in-a-binary-tree/description/">671.
+二叉树中第二小的节点</a></td>
+<td></td>
+<td>简单</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>自顶向下 DFS：</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 30%" />
+<col style="width: 23%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>题目</th>
+<th>来源</th>
+<th>难度</th>
+<th>分数</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximum-depth-of-binary-tree/description/">104.
+二叉树的最大深度</a></td>
+<td></td>
+<td>简单</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-depth-of-binary-tree/description/">111.
+二叉树的最小深度</a></td>
+<td></td>
+<td>简单</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/path-sum/description/">112.
+路径总和</a></td>
+<td></td>
+<td>简单</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/sum-root-to-leaf-numbers/description/">129.
+求根节点到叶节点数字之和</a></td>
+<td></td>
+<td>中等</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-tree-right-side-view/description/">199.
+二叉树的右视图</a></td>
+<td></td>
+<td>中等</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-good-nodes-in-binary-tree/description/">1448.
+统计二叉树中好节点的数目</a></td>
+<td>第 26 场双周赛 Q3</td>
+<td>中等</td>
+<td>1360</td>
+</tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/pseudo-palindromic-paths-in-a-binary-tree/description/">1457.
+二叉树中的伪回文路径</a></td>
+<td>第 190 场周赛 Q3</td>
+<td>中等</td>
+<td>1405</td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/sum-of-nodes-with-even-valued-grandparent/description/">1315.
+祖父节点值为偶数的节点和</a></td>
+<td>第 17 场双周赛 Q3</td>
+<td>中等</td>
+<td>1427</td>
+</tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/smallest-string-starting-from-leaf/description/">988.
+从叶结点开始的最小字符串</a></td>
+<td>第 122 场周赛 Q2</td>
+<td>中等</td>
+<td>1429</td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximum-difference-between-node-and-ancestor/description/">1026.
+节点与其祖先之间的最大差值</a></td>
+<td>第 132 场周赛 Q2</td>
+<td>中等</td>
+<td>1446</td>
+</tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/sum-of-root-to-leaf-binary-numbers/description/">1022.
+从根到叶的二进制数之和</a></td>
+<td>第 131 场周赛 Q2</td>
+<td>简单</td>
+<td>1462</td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/add-one-row-to-tree/description/">623.
+在二叉树中增加一行</a></td>
+<td></td>
+<td>中等</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/longest-zigzag-path-in-a-binary-tree/description/">1372.
+二叉树中的最长交错路径</a></td>
+<td>第 21 场双周赛 Q3</td>
+<td>中等</td>
+<td>1713</td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/flip-binary-tree-to-match-preorder-traversal/description/">971.
+翻转二叉树以匹配先序遍历</a></td>
+<td>第 118 场双周赛 Q3</td>
+<td>中等</td>
+<td>TODO</td>
+</tr>
+</tbody>
+</table>
+<h1 id="题解">题解</h1>
+<h2 id="二叉树的前序遍历">144. 二叉树的前序遍历</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(0, 0)" id="tab-button-0-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-0" id="tab-0-0">
+            <pre><span class="hljs-comment">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">preorderTraversal</span><span class="hljs-params">(root *TreeNode)</span></span> []<span class="hljs-type">int</span> {
+    ans := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, <span class="hljs-number">0</span>)
+    <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(*TreeNode)</span></span>
+    dfs = <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(r *TreeNode)</span></span> {
+        <span class="hljs-keyword">if</span> r == <span class="hljs-literal">nil</span> {
+            <span class="hljs-keyword">return</span>
+        }
+        ans = <span class="hljs-built_in">append</span>(ans, r.Val)
+        dfs(r.Left)
+        dfs(r.Right)
+    }
+    dfs(root)
+    <span class="hljs-keyword">return</span> ans
+}</pre>
+        </div></div>
+<h2 id="二叉树的中序遍历">94. 二叉树的中序遍历</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(1, 0)" id="tab-button-1-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-1" id="tab-1-0">
+            <pre><span class="hljs-comment">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">inorderTraversal</span><span class="hljs-params">(root *TreeNode)</span></span> (ans []<span class="hljs-type">int</span>) {
+    <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(*TreeNode)</span></span>
+    dfs = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(r *TreeNode)</span></span> {
+        <span class="hljs-keyword">if</span> r == <span class="hljs-literal">nil</span> {
+            <span class="hljs-keyword">return</span>
+        }
+        dfs(r.Left)
+        ans = <span class="hljs-built_in">append</span>(ans, r.Val)
+        dfs(r.Right)
+    }
+    dfs(root)
+    <span class="hljs-keyword">return</span> 
+}</pre>
+        </div></div>
+<h2 id="二叉树的后序遍历">145. 二叉树的后序遍历</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(2, 0)" id="tab-button-2-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-2" id="tab-2-0">
+            <pre><span class="hljs-comment">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">postorderTraversal</span><span class="hljs-params">(root *TreeNode)</span></span> (ans []<span class="hljs-type">int</span>) {
+    <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(*TreeNode)</span></span>
+    dfs = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(r *TreeNode)</span></span> {
+        <span class="hljs-keyword">if</span> r == <span class="hljs-literal">nil</span> {
+            <span class="hljs-keyword">return</span>
+        }
+        dfs(r.Left)
+        dfs(r.Right)
+        ans = <span class="hljs-built_in">append</span>(ans, r.Val)
+    }
+    dfs(root)
+    <span class="hljs-keyword">return</span>
+}</pre>
+        </div></div>
+<h2 id="叶子相似的树">872. 叶子相似的树</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(3, 0)" id="tab-button-3-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-3" id="tab-3-0">
+            <pre><span class="hljs-comment">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">leafSimilar</span><span class="hljs-params">(root1 *TreeNode, root2 *TreeNode)</span></span> <span class="hljs-type">bool</span> {
+    <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(*TreeNode, *[]<span class="hljs-type">int</span>)</span></span>
+    dfs = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(r *TreeNode, path *[]<span class="hljs-type">int</span>)</span></span> {
+        <span class="hljs-keyword">if</span> r == <span class="hljs-literal">nil</span> {
+            <span class="hljs-keyword">return</span>
+        }
+        <span class="hljs-keyword">if</span> r.Left == <span class="hljs-literal">nil</span> &amp;&amp; r.Right == <span class="hljs-literal">nil</span> {
+            *path = <span class="hljs-built_in">append</span>(*path, r.Val)
+        }
+        dfs(r.Left, path)
+        dfs(r.Right, path)
+    }
+    p1, p2 := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, <span class="hljs-number">0</span>), <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, <span class="hljs-number">0</span>)
+    dfs(root1, &amp;p1)
+    dfs(root2, &amp;p2)
+    <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(p1) != <span class="hljs-built_in">len</span>(p2) {
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+    }
+    <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">len</span>(p1); i++ {
+        <span class="hljs-keyword">if</span> p1[i] != p2[i] {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+        }
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>
+}</pre>
+        </div></div>
+<h2 id="左叶子之和">404. 左叶子之和</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(4, 0)" id="tab-button-4-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-4" id="tab-4-0">
+            <pre><span class="hljs-comment">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">sumOfLeftLeaves</span><span class="hljs-params">(root *TreeNode)</span></span> <span class="hljs-type">int</span> {
+    <span class="hljs-keyword">if</span> root == <span class="hljs-literal">nil</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+    } 
+    ans := <span class="hljs-number">0</span>
+    <span class="hljs-keyword">if</span> root.Left != <span class="hljs-literal">nil</span> &amp;&amp; root.Left.Left == <span class="hljs-literal">nil</span> &amp;&amp; root.Left.Right == <span class="hljs-literal">nil</span> {
+        ans = root.Left.Val
+    }
+    <span class="hljs-keyword">return</span> ans + sumOfLeftLeaves(root.Left) + sumOfLeftLeaves(root.Right)
+}</pre>
+        </div></div>
+<h2 id="二叉树中第二小的节点">671. 二叉树中第二小的节点</h2>
+<p>题目描述，「如果一个节点有两个子节点的话，那么该节点的值等于两个子节点中较小的一个」，因此对于二叉树中的任意节点
+<span class="math inline">\(x\)</span>，<span
+class="math inline">\(x\)</span> 的值不大于以 <span
+class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
+<p>令 <span class="math inline">\(x\)</span>
+为二叉树的根节点，可以得出结论：二叉树根节点的值即为所有节点中的最小值。
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(5, 0)" id="tab-button-5-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-5" id="tab-5-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">findSecondMinimumValue</span><span class="hljs-params">(root *TreeNode)</span></span> <span class="hljs-type">int</span> {
+    ans := <span class="hljs-number">-1</span>
+    rootVal := root.Val
+    <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(*TreeNode)</span></span>
+    dfs = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(node *TreeNode)</span></span> {
+        <span class="hljs-keyword">if</span> node == <span class="hljs-literal">nil</span> || ans != <span class="hljs-number">-1</span> &amp;&amp; node.Val &gt;= ans {
+            <span class="hljs-keyword">return</span>
+        }
+        <span class="hljs-keyword">if</span> node.Val &gt; rootVal {
+            ans = node.Val
+        }
+        dfs(node.Left)
+        dfs(node.Right)
+    }
+    dfs(root)
+    <span class="hljs-keyword">return</span> ans
+}</pre>
+        </div></div></p>
+<h2 id="二叉树的最大深度">104. 二叉树的最大深度</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(6, 0)" id="tab-button-6-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-6" id="tab-6-0">
+            <pre><span class="hljs-comment">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">maxDepth</span><span class="hljs-params">(root *TreeNode)</span></span> (ans <span class="hljs-type">int</span>) {
+    <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(*TreeNode, <span class="hljs-type">int</span>)</span></span>
+    dfs = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(r *TreeNode, depth <span class="hljs-type">int</span>)</span></span> {
+        <span class="hljs-keyword">if</span> r == <span class="hljs-literal">nil</span> {
+            <span class="hljs-keyword">return</span>
+        }
+        ans = max(ans, depth)
+        dfs(r.Left, depth + <span class="hljs-number">1</span>)
+        dfs(r.Right, depth + <span class="hljs-number">1</span>)
+    }
+    dfs(root, <span class="hljs-number">1</span>)
+    <span class="hljs-keyword">return</span> ans
+}</pre>
+        </div></div>
+<h2 id="二叉树的最小深度">111. 二叉树的最小深度</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(7, 0)" id="tab-button-7-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-7" id="tab-7-0">
+            <pre><span class="hljs-comment">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">minDepth</span><span class="hljs-params">(root *TreeNode)</span></span> <span class="hljs-type">int</span> {
+    ans := math.MaxInt
+    <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(*TreeNode, <span class="hljs-type">int</span>)</span></span> 
+    dfs = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(r *TreeNode, p <span class="hljs-type">int</span>)</span></span> {
+        <span class="hljs-keyword">if</span> r == <span class="hljs-literal">nil</span> {
+            <span class="hljs-keyword">return</span>
+        }
+        <span class="hljs-keyword">if</span> r.Left == <span class="hljs-literal">nil</span> &amp;&amp; r.Right == <span class="hljs-literal">nil</span> {
+            ans = min(ans, p)
+        }
+        dfs(r.Left, p + <span class="hljs-number">1</span>)
+        dfs(r.Right, p + <span class="hljs-number">1</span>)
+    }
+    dfs(root, <span class="hljs-number">1</span>)
+    <span class="hljs-keyword">if</span> ans == math.MaxInt {
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+    }
+    <span class="hljs-keyword">return</span> ans
+}</pre>
+        </div></div>
+<h2 id="路径总和">112. 路径总和</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(8, 0)" id="tab-button-8-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-8" id="tab-8-0">
+            <pre><span class="hljs-comment">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">hasPathSum</span><span class="hljs-params">(root *TreeNode, targetSum <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">bool</span> {
+    <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(*TreeNode, <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">bool</span>
+    dfs = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(r *TreeNode, s <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">bool</span> {
+        <span class="hljs-keyword">if</span> r == <span class="hljs-literal">nil</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+        }
+        s += r.Val
+        <span class="hljs-keyword">if</span> s == targetSum &amp;&amp; r.Left == <span class="hljs-literal">nil</span> &amp;&amp; r.Right == <span class="hljs-literal">nil</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>
+        }
+        <span class="hljs-keyword">return</span> dfs(r.Left, s) || dfs(r.Right, s)
+    }    
+    <span class="hljs-keyword">return</span> dfs(root, <span class="hljs-number">0</span>)
+}</pre>
+        </div></div>
+<h2 id="求根节点到叶节点数字之和">129. 求根节点到叶节点数字之和</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(9, 0)" id="tab-button-9-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-9" id="tab-9-0">
+            <pre><span class="hljs-comment">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">sumNumbers</span><span class="hljs-params">(root *TreeNode)</span></span> (ans <span class="hljs-type">int</span>) {
+    <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(*TreeNode, <span class="hljs-type">int</span>)</span></span>
+    dfs = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(r *TreeNode, num <span class="hljs-type">int</span>)</span></span> {
+        <span class="hljs-keyword">if</span> r == <span class="hljs-literal">nil</span> {
+            <span class="hljs-keyword">return</span>
+        }
+        num = num * <span class="hljs-number">10</span> + r.Val
+        <span class="hljs-keyword">if</span> r.Left == <span class="hljs-literal">nil</span> &amp;&amp; r.Right == <span class="hljs-literal">nil</span> {
+            ans += num
+        }
+        dfs(r.Left, num)
+        dfs(r.Right, num)
+    }
+    dfs(root, <span class="hljs-number">0</span>)
+    <span class="hljs-keyword">return</span>
+}</pre>
+        </div></div>
+<h2 id="二叉树的右视图">199. 二叉树的右视图</h2>
+<p>先递归右子树，再递归左子树，当某个深度首次到达时，对应的节点就在右视图中。</p>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(10, 0)" id="tab-button-10-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-10" id="tab-10-0">
+            <pre><span class="hljs-comment">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">rightSideView</span><span class="hljs-params">(root *TreeNode)</span></span> (ans []<span class="hljs-type">int</span>) {
+    <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(*TreeNode, <span class="hljs-type">int</span>)</span></span> 
+    dfs = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(r *TreeNode, depth <span class="hljs-type">int</span>)</span></span> {
+        <span class="hljs-keyword">if</span> r == <span class="hljs-literal">nil</span> {
+            <span class="hljs-keyword">return</span>
+        }
+        <span class="hljs-keyword">if</span> depth == <span class="hljs-built_in">len</span>(ans) {
+            ans = <span class="hljs-built_in">append</span>(ans, r.Val)
+        }
+        dfs(r.Right, depth + <span class="hljs-number">1</span>)
+        dfs(r.Left, depth + <span class="hljs-number">1</span>)
+    }
+    dfs(root, <span class="hljs-number">0</span>)
+    <span class="hljs-keyword">return</span>
+}</pre>
+        </div></div>
+<h2 id="二叉树中的伪回文路径">1457. 二叉树中的伪回文路径</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(11, 0)" id="tab-button-11-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-11" id="tab-11-0">
+            <pre><span class="hljs-comment">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">pseudoPalindromicPaths</span> <span class="hljs-params">(root *TreeNode)</span></span> (ans <span class="hljs-type">int</span>) {
+    <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(*TreeNode, <span class="hljs-type">int</span>)</span></span>
+    dfs = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(r *TreeNode, s <span class="hljs-type">int</span>)</span></span> {
+        <span class="hljs-keyword">if</span> r == <span class="hljs-literal">nil</span> {
+            <span class="hljs-keyword">return</span>
+        }
+        s ^= (<span class="hljs-number">1</span> &lt;&lt; r.Val)
+        <span class="hljs-keyword">if</span> r.Left == <span class="hljs-literal">nil</span> &amp;&amp; r.Right == <span class="hljs-literal">nil</span> &amp;&amp; bits.OnesCount(<span class="hljs-type">uint</span>(s)) &lt;= <span class="hljs-number">1</span> {
+            ans++
+        }
+        dfs(r.Left, s)
+        dfs(r.Right, s)
+    }
+    dfs(root, <span class="hljs-number">0</span>)
+    <span class="hljs-keyword">return</span>
+}</pre>
+        </div></div>
+<h2 id="祖父节点值为偶数的节点和">1315. 祖父节点值为偶数的节点和</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(12, 0)" id="tab-button-12-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-12" id="tab-12-0">
+            <pre><span class="hljs-comment">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">sumEvenGrandparent</span><span class="hljs-params">(root *TreeNode)</span></span> (ans <span class="hljs-type">int</span>) {
+    <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(*TreeNode, <span class="hljs-type">int</span>, <span class="hljs-type">int</span>)</span></span> 
+    dfs = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(r *TreeNode, f, gf <span class="hljs-type">int</span>)</span></span> {
+        <span class="hljs-keyword">if</span> r == <span class="hljs-literal">nil</span> {
+            <span class="hljs-keyword">return</span>
+        }
+        <span class="hljs-keyword">if</span> gf % <span class="hljs-number">2</span> == <span class="hljs-number">0</span> {
+            ans += r.Val
+        }
+        dfs(r.Left, r.Val, f)
+        dfs(r.Right, r.Val, f)
+    }
+    dfs(root, <span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>)
+    <span class="hljs-keyword">return</span> 
+}</pre>
+        </div></div>
+<h2 id="从叶结点开始的最小字符串">988. 从叶结点开始的最小字符串</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(13, 0)" id="tab-button-13-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-13" id="tab-13-0">
+            <pre><span class="hljs-comment">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">smallestFromLeaf</span><span class="hljs-params">(root *TreeNode)</span></span> (ans <span class="hljs-type">string</span>) {
+    <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(*TreeNode, <span class="hljs-type">string</span>)</span></span>
+    dfs = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(r *TreeNode, path <span class="hljs-type">string</span>)</span></span> {
+        <span class="hljs-keyword">if</span> r == <span class="hljs-literal">nil</span> {
+            <span class="hljs-keyword">return</span>
+        }
+        path = <span class="hljs-type">string</span>(<span class="hljs-string">&#x27;a&#x27;</span> + r.Val) + path
+        <span class="hljs-keyword">if</span> r.Left == <span class="hljs-literal">nil</span> &amp;&amp; r.Right == <span class="hljs-literal">nil</span> {
+            <span class="hljs-keyword">if</span> ans == <span class="hljs-string">&quot;&quot;</span> {
+                ans = path
+            } <span class="hljs-keyword">else</span> {
+                ans = min(ans, path)
+            }
+        }
+        dfs(r.Left, path)
+        dfs(r.Right, path)
+    }
+    dfs(root, <span class="hljs-string">&quot;&quot;</span>)
+    <span class="hljs-keyword">return</span>
+}</pre>
+        </div></div>
+<h2 id="节点与其祖先之间的最大差值">1026.
+节点与其祖先之间的最大差值</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(14, 0)" id="tab-button-14-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-14" id="tab-14-0">
+            <pre><span class="hljs-comment">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">maxAncestorDiff</span><span class="hljs-params">(root *TreeNode)</span></span> (ans <span class="hljs-type">int</span>) {
+    ans = math.MinInt
+    <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(*TreeNode, <span class="hljs-type">int</span>, <span class="hljs-type">int</span>)</span></span>
+    dfs = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(r *TreeNode, mx, mn <span class="hljs-type">int</span>)</span></span> {
+        <span class="hljs-keyword">if</span> r == <span class="hljs-literal">nil</span> {
+            <span class="hljs-keyword">return</span>
+        }
+        ans = max(ans, mx - r.Val)
+        ans = max(ans, r.Val - mn)
+        dfs(r.Left, max(mx, r.Val), min(mn, r.Val))
+        dfs(r.Right, max(mx, r.Val), min(mn, r.Val))
+    }
+    dfs(root, root.Val, root.Val)
+    <span class="hljs-keyword">return</span>
+}</pre>
+        </div></div>
+<h2 id="从根到叶的二进制数之和">1022. 从根到叶的二进制数之和</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(15, 0)" id="tab-button-15-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-15" id="tab-15-0">
+            <pre><span class="hljs-comment">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">sumRootToLeaf</span><span class="hljs-params">(root *TreeNode)</span></span> (ans <span class="hljs-type">int</span>) {
+    <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(*TreeNode, <span class="hljs-type">int</span>)</span></span>
+    dfs = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(r *TreeNode, num <span class="hljs-type">int</span>)</span></span> {
+        <span class="hljs-keyword">if</span> r == <span class="hljs-literal">nil</span> {
+            <span class="hljs-keyword">return</span>
+        }
+        num = num &lt;&lt; <span class="hljs-number">1</span> | r.Val
+        <span class="hljs-keyword">if</span> r.Left == r.Right {
+            ans += num
+        }
+        dfs(r.Left, num)
+        dfs(r.Right, num)
+    } 
+    dfs(root, <span class="hljs-number">0</span>)
+    <span class="hljs-keyword">return</span>
+}</pre>
+        </div></div>
+<h2 id="在二叉树中增加一行">623. 在二叉树中增加一行</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(16, 0)" id="tab-button-16-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-16" id="tab-16-0">
+            <pre><span class="hljs-comment">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">addOneRow</span><span class="hljs-params">(root *TreeNode, val <span class="hljs-type">int</span>, depth <span class="hljs-type">int</span>)</span></span> *TreeNode {
+    <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(*TreeNode, <span class="hljs-type">int</span>)</span></span>
+    dfs = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(r *TreeNode, p <span class="hljs-type">int</span>)</span></span> {
+        <span class="hljs-keyword">if</span> r == <span class="hljs-literal">nil</span> {
+            <span class="hljs-keyword">return</span>
+        }
+        <span class="hljs-keyword">if</span> depth - <span class="hljs-number">1</span> == p {
+            <span class="hljs-comment">// 创建两个节点</span>
+            newLeft := &amp;TreeNode{val, r.Left, <span class="hljs-literal">nil</span>}
+            newRight := &amp;TreeNode{val, <span class="hljs-literal">nil</span>, r.Right}
+            r.Left, r.Right = newLeft, newRight
+        } <span class="hljs-keyword">else</span> {
+            dfs(r.Left, p + <span class="hljs-number">1</span>)
+            dfs(r.Right, p + <span class="hljs-number">1</span>)
+        }
+    }
+    <span class="hljs-keyword">if</span> depth == <span class="hljs-number">1</span> {
+        <span class="hljs-keyword">return</span> &amp;TreeNode{val, root, <span class="hljs-literal">nil</span>}
+    }
+    dfs(root, <span class="hljs-number">1</span>)
+    <span class="hljs-keyword">return</span> root 
+}</pre>
+        </div></div>
+<h2 id="二叉树中的最长交错路径">1372. 二叉树中的最长交错路径</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(17, 0)" id="tab-button-17-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-17" id="tab-17-0">
+            <pre><span class="hljs-comment">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">longestZigZag</span><span class="hljs-params">(root *TreeNode)</span></span> (ans <span class="hljs-type">int</span>) {
+    <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(*TreeNode, <span class="hljs-type">int</span>, <span class="hljs-type">int</span>)</span></span> 
+    dfs = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(r *TreeNode, dir, cnt <span class="hljs-type">int</span>)</span></span> {
+        <span class="hljs-keyword">if</span> r == <span class="hljs-literal">nil</span> {
+            <span class="hljs-keyword">return</span>
+        }
+        ans = max(ans, cnt)
+        <span class="hljs-comment">// 延续上一次的继续走</span>
+        <span class="hljs-keyword">if</span> dir == <span class="hljs-number">0</span> {
+            dfs(r.Right, dir ^ <span class="hljs-number">1</span>, cnt + <span class="hljs-number">1</span>)
+            <span class="hljs-comment">// 以当前节点为根节点</span>
+            dfs(r.Left, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>)
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> dir == <span class="hljs-number">1</span> {
+            dfs(r.Left, dir ^ <span class="hljs-number">1</span>, cnt + <span class="hljs-number">1</span>) 
+            dfs(r.Right, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>)
+        }
+    }
+    dfs(root.Left, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>)
+    dfs(root.Right, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>)
+    <span class="hljs-keyword">return</span>
+}</pre>
+        </div></div>
+
+    </div>
+    <div class="toc-container">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A2%98%E5%8D%95"><span class="toc-number">1.</span> <span class="toc-text">题单</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A2%98%E8%A7%A3"><span class="toc-number">2.</span> <span class="toc-text">题解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="toc-number">2.1.</span> <span class="toc-text">144. 二叉树的前序遍历</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="toc-number">2.2.</span> <span class="toc-text">94. 二叉树的中序遍历</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="toc-number">2.3.</span> <span class="toc-text">145. 二叉树的后序遍历</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%B6%E5%AD%90%E7%9B%B8%E4%BC%BC%E7%9A%84%E6%A0%91"><span class="toc-number">2.4.</span> <span class="toc-text">872. 叶子相似的树</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A6%E5%8F%B6%E5%AD%90%E4%B9%8B%E5%92%8C"><span class="toc-number">2.5.</span> <span class="toc-text">404. 左叶子之和</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E7%AC%AC%E4%BA%8C%E5%B0%8F%E7%9A%84%E8%8A%82%E7%82%B9"><span class="toc-number">2.6.</span> <span class="toc-text">671. 二叉树中第二小的节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E6%B7%B1%E5%BA%A6"><span class="toc-number">2.7.</span> <span class="toc-text">104. 二叉树的最大深度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%B0%8F%E6%B7%B1%E5%BA%A6"><span class="toc-number">2.8.</span> <span class="toc-text">111. 二叉树的最小深度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E5%BE%84%E6%80%BB%E5%92%8C"><span class="toc-number">2.9.</span> <span class="toc-text">112. 路径总和</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B1%82%E6%A0%B9%E8%8A%82%E7%82%B9%E5%88%B0%E5%8F%B6%E8%8A%82%E7%82%B9%E6%95%B0%E5%AD%97%E4%B9%8B%E5%92%8C"><span class="toc-number">2.10.</span> <span class="toc-text">129. 求根节点到叶节点数字之和</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%8F%B3%E8%A7%86%E5%9B%BE"><span class="toc-number">2.11.</span> <span class="toc-text">199. 二叉树的右视图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E7%9A%84%E4%BC%AA%E5%9B%9E%E6%96%87%E8%B7%AF%E5%BE%84"><span class="toc-number">2.12.</span> <span class="toc-text">1457. 二叉树中的伪回文路径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A5%96%E7%88%B6%E8%8A%82%E7%82%B9%E5%80%BC%E4%B8%BA%E5%81%B6%E6%95%B0%E7%9A%84%E8%8A%82%E7%82%B9%E5%92%8C"><span class="toc-number">2.13.</span> <span class="toc-text">1315. 祖父节点值为偶数的节点和</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E5%8F%B6%E7%BB%93%E7%82%B9%E5%BC%80%E5%A7%8B%E7%9A%84%E6%9C%80%E5%B0%8F%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">2.14.</span> <span class="toc-text">988. 从叶结点开始的最小字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8A%82%E7%82%B9%E4%B8%8E%E5%85%B6%E7%A5%96%E5%85%88%E4%B9%8B%E9%97%B4%E7%9A%84%E6%9C%80%E5%A4%A7%E5%B7%AE%E5%80%BC"><span class="toc-number">2.15.</span> <span class="toc-text">1026.
+节点与其祖先之间的最大差值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E6%A0%B9%E5%88%B0%E5%8F%B6%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%95%B0%E4%B9%8B%E5%92%8C"><span class="toc-number">2.16.</span> <span class="toc-text">1022. 从根到叶的二进制数之和</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%A2%9E%E5%8A%A0%E4%B8%80%E8%A1%8C"><span class="toc-number">2.17.</span> <span class="toc-text">623. 在二叉树中增加一行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E7%9A%84%E6%9C%80%E9%95%BF%E4%BA%A4%E9%94%99%E8%B7%AF%E5%BE%84"><span class="toc-number">2.18.</span> <span class="toc-text">1372. 二叉树中的最长交错路径</span></a></li></ol></li></ol>
+    </div>
+  </div>
+  <footer class="article-footer">
+    <div class="footer-container">
+  <a target="_blank" rel="noopener" href="https://space.bilibili.com/12352380?spm_id_from=333.1007.0.0">
+    <img src="/images/bilibili.svg" alt="" />
+  </a>
+  <a target="_blank" rel="noopener" href="https://github.com/qiancijun">
+    <img src="/images/github.svg" alt="" />
+  </a>
+  <span>Copyright </span>
+  <img src="/images/copyright.svg" alt="">
+  <span>2024 Cheryl-Chun</span>
+</div>
+
+  </footer>
+</article>
+
+
+        </div>
+        <!-- <div class="footer">
+    
+</div> -->
+    </div>
+    
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/github-calendar@2.3.4/dist/github-calendar.min.js"></script>
+=
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js"></script>
+
+
+<script src="/scripts/search.js"></script>
+
+
+<script src="/scripts/main.js"></script>
+
+
+<script type="text/javascript">      
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+        search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result', "Cheryl-Chun");
+</script>
+</body>
+<style>
+    .main-container::before {
+        background-image: url('');
+    }
+</style>
+</html>
