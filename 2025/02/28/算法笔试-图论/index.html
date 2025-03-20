@@ -160,6 +160,40 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/all-paths-from
 </table>
 <h2 id="bfs-基础">BFS 基础</h2>
 <h2 id="拓扑排序">拓扑排序</h2>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 30%" />
+<col style="width: 23%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>题目</th>
+<th>来源</th>
+<th>难度</th>
+<th>分数</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-number-of-vertices-to-reach-all-nodes/description/">1557.
+可以到达所有点的最少点数目</a></td>
+<td>第 33 场双周赛 Q2</td>
+<td>中等</td>
+<td>1512</td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/course-schedule-ii/description/">210.
+课程表 II</a></td>
+<td></td>
+<td>中等</td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <h2 id="最短路">最短路</h2>
 <table style="width:100%;">
 <colgroup>
@@ -209,6 +243,30 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/k-th-largest-p
 <td>中等</td>
 <td>1603</td>
 </tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/course-schedule-iv/description/">1462.
+课程表 IV</a></td>
+<td>第 27 场双周赛 Q3</td>
+<td>中等</td>
+<td>1693</td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/description/">1334.
+阈值距离内邻居最少的城市</a></td>
+<td>第 173 场周赛 Q3</td>
+<td>中等</td>
+<td>1855</td>
+</tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-cost-to-convert-string-i/description/">2976.
+转换字符串的最小成本 I</a></td>
+<td>第 377 场周赛 Q3</td>
+<td>中等</td>
+<td>1882</td>
+</tr>
 </tbody>
 </table>
 <h2 id="最小生成树">最小生成树</h2>
@@ -219,11 +277,11 @@ tree）：一个连通无向图的生成子图，同时要求是树。也即在�
 Tree，MST）为边权和最小的生成树。</p>
 <p>最小生成树算法，带输入与输出：</p>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(52, 0)" id="tab-button-52-0">Prim1</button>
+        <button onclick="showTab(99, 0)" id="tab-button-99-0">Prim1</button>
         
-        <button onclick="showTab(52, 1)" id="tab-button-52-1">Kruskal</button>
+        <button onclick="showTab(99, 1)" id="tab-button-99-1">Kruskal</button>
         </div>
-        <div class="tab-content tab-content-52" id="tab-52-0">
+        <div class="tab-content tab-content-99" id="tab-99-0">
             <pre><span class="hljs-keyword">package</span> main
 
 <span class="hljs-keyword">import</span> (
@@ -304,7 +362,7 @@ Tree，MST）为边权和最小的生成树。</p>
 	}
 }</pre>
         </div>
-        <div class="tab-content tab-content-52" id="tab-52-1">
+        <div class="tab-content tab-content-99" id="tab-99-1">
             <pre><span class="hljs-comment">//go:build ignore</span>
 <span class="hljs-comment">// +build ignore</span>
 
@@ -383,15 +441,125 @@ Tree，MST）为边权和最小的生成树。</p>
 	}
 }</pre>
         </div></div>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 30%" />
+<col style="width: 23%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>题目</th>
+<th>来源</th>
+<th>难度</th>
+<th>分数</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/min-cost-to-connect-all-points/description/">1584.
+连接所有点的最小费用</a></td>
+<td>第 206 场周赛 Q3</td>
+<td>中等</td>
+<td>1858</td>
+</tr>
+</tbody>
+</table>
 <h2 id="连通分量">连通分量</h2>
 <h2 id="二分图">二分图</h2>
+<p>染色法判断是否是二分图： <div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(100, 0)" id="tab-button-100-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-100" id="tab-100-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">isBipartite</span><span class="hljs-params">(g [][]<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">bool</span> {
+	colors := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, <span class="hljs-built_in">len</span>(g))
+	<span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(<span class="hljs-type">int</span>, <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">bool</span>
+	dfs = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(u <span class="hljs-type">int</span>, c <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">bool</span> {
+		colors[u] = c
+		<span class="hljs-keyword">for</span> _, v := <span class="hljs-keyword">range</span> g[u] {
+			<span class="hljs-keyword">if</span> colors[v] == c || colors[v] == <span class="hljs-number">0</span> &amp;&amp; !dfs(v, c ^ <span class="hljs-number">1</span>) {
+				<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+			}
+		}
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>
+	}
+	<span class="hljs-keyword">for</span> i, c := <span class="hljs-keyword">range</span> colors {
+		<span class="hljs-keyword">if</span> c != <span class="hljs-number">0</span> {
+			<span class="hljs-keyword">continue</span>
+		}
+		<span class="hljs-keyword">if</span> !dfs(i, <span class="hljs-number">2</span>) {
+			<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+		}
+	}
+	<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>
+}</pre>
+        </div></div></p>
+<p>匈牙利算法求最大匹配数： <div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(101, 0)" id="tab-button-101-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-101" id="tab-101-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">hungarian</span><span class="hljs-params">(g [][]<span class="hljs-type">int</span>)</span></span> (match []<span class="hljs-type">int</span>, cnt <span class="hljs-type">int</span>) {
+	match = <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, n1 + n2 + <span class="hljs-number">1</span>)
+	<span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> match {
+		match[i] = <span class="hljs-number">-1</span>
+	}
+	<span class="hljs-keyword">var</span> used []<span class="hljs-type">bool</span>
+	<span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">bool</span>
+	dfs = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(u <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">bool</span> {
+		<span class="hljs-keyword">for</span> _, v := <span class="hljs-keyword">range</span> g[u] {
+			<span class="hljs-keyword">if</span> !used[v] {
+				used[v] = <span class="hljs-literal">true</span>
+				<span class="hljs-keyword">if</span> match[v] == <span class="hljs-number">-1</span> || dfs(match[v]) {
+					match[v] = u
+					<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>
+				}
+			}
+		}
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+	}
+	<span class="hljs-keyword">for</span> i := <span class="hljs-number">1</span>; i &lt;= n1; i++ {
+		used = <span class="hljs-built_in">make</span>([]<span class="hljs-type">bool</span>, n1 + n2 + <span class="hljs-number">1</span>)
+        <span class="hljs-keyword">if</span> dfs(i) {
+			cnt++
+		}
+	}
+	<span class="hljs-keyword">return</span>
+}</pre>
+        </div></div></p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 30%" />
+<col style="width: 23%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>题目</th>
+<th>来源</th>
+<th>难度</th>
+<th>分数</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/1093/D">1093D.
+Beautiful Graph</a></td>
+<td>Educational Codeforces Round 56 (Rated for Div. 2)</td>
+<td></td>
+<td>1700</td>
+</tr>
+</tbody>
+</table>
 <h2 id="网络流">网络流</h2>
 <h1 id="题解">题解</h1>
 <h2 id="省份数量">547. 省份数量</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(53, 0)" id="tab-button-53-0">Dijkstra</button>
+        <button onclick="showTab(102, 0)" id="tab-button-102-0">Dijkstra</button>
         </div>
-        <div class="tab-content tab-content-53" id="tab-53-0">
+        <div class="tab-content tab-content-102" id="tab-102-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">findCircleNum</span><span class="hljs-params">(isConnected [][]<span class="hljs-type">int</span>)</span></span> (ans <span class="hljs-type">int</span>) {
     n := <span class="hljs-built_in">len</span>(isConnected) 
     vis := <span class="hljs-built_in">make</span>([]<span class="hljs-type">bool</span>, n)
@@ -418,9 +586,9 @@ Tree，MST）为边权和最小的生成树。</p>
         </div></div>
 <h2 id="寻找图中是否存在路径">1971. 寻找图中是否存在路径</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(54, 0)" id="tab-button-54-0">Dijkstra</button>
+        <button onclick="showTab(103, 0)" id="tab-button-103-0">Dijkstra</button>
         </div>
-        <div class="tab-content tab-content-54" id="tab-54-0">
+        <div class="tab-content tab-content-103" id="tab-103-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">validPath</span><span class="hljs-params">(n <span class="hljs-type">int</span>, edges [][]<span class="hljs-type">int</span>, source <span class="hljs-type">int</span>, destination <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">bool</span> {
     g := <span class="hljs-built_in">make</span>([][]<span class="hljs-type">int</span>, n)
     <span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> g {
@@ -450,9 +618,9 @@ Tree，MST）为边权和最小的生成树。</p>
         </div></div>
 <h2 id="所有可能的路径">797. 所有可能的路径</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(55, 0)" id="tab-button-55-0">Dijkstra</button>
+        <button onclick="showTab(104, 0)" id="tab-button-104-0">Dijkstra</button>
         </div>
-        <div class="tab-content tab-content-55" id="tab-55-0">
+        <div class="tab-content tab-content-104" id="tab-104-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">allPathsSourceTarget</span><span class="hljs-params">(graph [][]<span class="hljs-type">int</span>)</span></span> (ans [][]<span class="hljs-type">int</span>) {
     path := []<span class="hljs-type">int</span>{<span class="hljs-number">0</span>}
     <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(<span class="hljs-type">int</span>)</span></span>
@@ -474,15 +642,15 @@ Tree，MST）为边权和最小的生成树。</p>
 <h2 id="网络延迟时间">743. 网络延迟时间</h2>
 <p>仅此题目用朴素 dijkstra，堆优化 dijkstra，spfa
 写，后续题目只选择最合适的。 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(56, 0)" id="tab-button-56-0">Dijkstra</button>
+        <button onclick="showTab(105, 0)" id="tab-button-105-0">Dijkstra</button>
         
-        <button onclick="showTab(56, 1)" id="tab-button-56-1">Dijkstra2</button>
+        <button onclick="showTab(105, 1)" id="tab-button-105-1">Dijkstra2</button>
         
-        <button onclick="showTab(56, 2)" id="tab-button-56-2">gods</button>
+        <button onclick="showTab(105, 2)" id="tab-button-105-2">gods</button>
         
-        <button onclick="showTab(56, 3)" id="tab-button-56-3">spfa</button>
+        <button onclick="showTab(105, 3)" id="tab-button-105-3">spfa</button>
         </div>
-        <div class="tab-content tab-content-56" id="tab-56-0">
+        <div class="tab-content tab-content-105" id="tab-105-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">networkDelayTime</span><span class="hljs-params">(times [][]<span class="hljs-type">int</span>, n <span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     <span class="hljs-keyword">const</span> inf = math.MaxInt / <span class="hljs-number">2</span> <span class="hljs-comment">// 防止加法溢出</span>
     g := <span class="hljs-built_in">make</span>([][]<span class="hljs-type">int</span>, n + <span class="hljs-number">1</span>) <span class="hljs-comment">// 邻接矩阵</span>
@@ -528,7 +696,7 @@ Tree，MST）为边权和最小的生成树。</p>
     <span class="hljs-keyword">return</span> ans
 }</pre>
         </div>
-        <div class="tab-content tab-content-56" id="tab-56-1">
+        <div class="tab-content tab-content-105" id="tab-105-1">
             <pre><span class="hljs-keyword">const</span> INF = <span class="hljs-number">0x3f3f3f3f</span>
 
 <span class="hljs-keyword">type</span> edge <span class="hljs-keyword">struct</span> {
@@ -585,7 +753,7 @@ Tree，MST）为边权和最小的生成树。</p>
     <span class="hljs-keyword">return</span> ans
 }</pre>
         </div>
-        <div class="tab-content tab-content-56" id="tab-56-2">
+        <div class="tab-content tab-content-105" id="tab-105-2">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">networkDelayTime</span><span class="hljs-params">(times [][]<span class="hljs-type">int</span>, n <span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     <span class="hljs-keyword">const</span> inf = math.MaxInt / <span class="hljs-number">2</span>
     g := <span class="hljs-built_in">make</span>([][]edge, n + <span class="hljs-number">1</span>)
@@ -631,7 +799,7 @@ Tree，MST）为边权和最小的生成树。</p>
     to, w <span class="hljs-type">int</span>
 }</pre>
         </div>
-        <div class="tab-content tab-content-56" id="tab-56-3">
+        <div class="tab-content tab-content-105" id="tab-105-3">
             <pre><span class="hljs-keyword">var</span> (
     he, dist [<span class="hljs-number">110</span>]<span class="hljs-type">int</span>
     e, w, ne [<span class="hljs-number">6010</span>]<span class="hljs-type">int</span>
@@ -694,9 +862,9 @@ Tree，MST）为边权和最小的生成树。</p>
         </div></div></p>
 <h2 id="访问消失节点的最少时间">3112. 访问消失节点的最少时间</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(57, 0)" id="tab-button-57-0">Golang</button>
+        <button onclick="showTab(106, 0)" id="tab-button-106-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-57" id="tab-57-0">
+        <div class="tab-content tab-content-106" id="tab-106-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">minimumTime</span><span class="hljs-params">(n <span class="hljs-type">int</span>, edges [][]<span class="hljs-type">int</span>, disappear []<span class="hljs-type">int</span>)</span></span> []<span class="hljs-type">int</span> {
     g := <span class="hljs-built_in">make</span>([][]edge, n)
     <span class="hljs-keyword">for</span> _, e := <span class="hljs-keyword">range</span> edges {
@@ -735,9 +903,9 @@ Tree，MST）为边权和最小的生成树。</p>
         </div></div>
 <h2 id="设计可以求最短路径的图类">2642. 设计可以求最短路径的图类</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(58, 0)" id="tab-button-58-0">Golang</button>
+        <button onclick="showTab(107, 0)" id="tab-button-107-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-58" id="tab-58-0">
+        <div class="tab-content tab-content-107" id="tab-107-0">
             <pre><span class="hljs-keyword">type</span> edge <span class="hljs-keyword">struct</span> {
     v, w <span class="hljs-type">int</span>
 }
@@ -796,9 +964,9 @@ Tree，MST）为边权和最小的生成树。</p>
 <h2 id="第-k-大的完美二叉子树的大小">3319. 第 K
 大的完美二叉子树的大小</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(59, 0)" id="tab-button-59-0">Golang</button>
+        <button onclick="showTab(108, 0)" id="tab-button-108-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-59" id="tab-59-0">
+        <div class="tab-content tab-content-108" id="tab-108-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -832,11 +1000,335 @@ Tree，MST）为边权和最小的生成树。</p>
     <span class="hljs-keyword">return</span> ms[<span class="hljs-built_in">len</span>(ms) - k]
 }</pre>
         </div></div>
+<h2 id="连接所有点的最小费用">1584. 连接所有点的最小费用</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(109, 0)" id="tab-button-109-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-109" id="tab-109-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">minCostConnectPoints</span><span class="hljs-params">(points [][]<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    <span class="hljs-keyword">const</span> inf <span class="hljs-type">int</span> = <span class="hljs-number">2e9</span>
+    dis := <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(a, b []<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+        <span class="hljs-keyword">return</span> abs(a[<span class="hljs-number">0</span>] - b[<span class="hljs-number">0</span>]) + abs(a[<span class="hljs-number">1</span>] - b[<span class="hljs-number">1</span>])
+    } 
+    n := <span class="hljs-built_in">len</span>(points)
+    dist := <span class="hljs-built_in">make</span>([][]<span class="hljs-type">int</span>, <span class="hljs-built_in">len</span>(points))
+    <span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> dist {
+        dist[i] = <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, n)
+        <span class="hljs-keyword">for</span> j := <span class="hljs-keyword">range</span> dist[i] {
+            dist[i][j] = dis(points[i], points[j])
+        }
+    }
+
+    minD := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, n)
+    <span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> minD {
+        minD[i] = inf
+    }
+    inMST := <span class="hljs-built_in">make</span>([]<span class="hljs-type">bool</span>, n)
+    minD[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>
+    mstSum := <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> {
+        v := <span class="hljs-number">-1</span>
+        <span class="hljs-keyword">for</span> w, in := <span class="hljs-keyword">range</span> inMST {
+            <span class="hljs-keyword">if</span> !in &amp;&amp; (v &lt; <span class="hljs-number">0</span> || minD[w] &lt; minD[v]) {
+                v = w
+            }
+        }
+        <span class="hljs-keyword">if</span> v == <span class="hljs-number">-1</span> {
+            <span class="hljs-keyword">break</span>
+        }
+        inMST[v] = <span class="hljs-literal">true</span>
+        mstSum += minD[v]
+        <span class="hljs-keyword">for</span> w, d := <span class="hljs-keyword">range</span> dist[v] {
+            minD[w] = min(minD[w], d)
+        }
+    }
+    <span class="hljs-keyword">return</span> mstSum
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">abs</span><span class="hljs-params">(x <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    <span class="hljs-keyword">if</span> x &lt; <span class="hljs-number">0</span> {
+        <span class="hljs-keyword">return</span> -x
+    }
+    <span class="hljs-keyword">return</span> x
+}</pre>
+        </div></div>
+<h2 id="可以到达所有点的最少点数目">1557.
+可以到达所有点的最少点数目</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(110, 0)" id="tab-button-110-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-110" id="tab-110-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">findSmallestSetOfVertices</span><span class="hljs-params">(n <span class="hljs-type">int</span>, edges [][]<span class="hljs-type">int</span>)</span></span> (ans []<span class="hljs-type">int</span>) {
+    in := <span class="hljs-built_in">make</span>([]<span class="hljs-type">bool</span>, n)
+	<span class="hljs-keyword">for</span> _, e := <span class="hljs-keyword">range</span> edges {
+		in[e[<span class="hljs-number">1</span>]] = <span class="hljs-literal">true</span>
+	}
+	<span class="hljs-keyword">for</span> i, b := <span class="hljs-keyword">range</span> in {
+		<span class="hljs-keyword">if</span> !b {
+			ans = <span class="hljs-built_in">append</span>(ans, i)
+		}
+	}
+	<span class="hljs-keyword">return</span> 
+}</pre>
+        </div></div>
+<h2 id="课程表-ii">210. 课程表 II</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(111, 0)" id="tab-button-111-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-111" id="tab-111-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">findOrder</span><span class="hljs-params">(numCourses <span class="hljs-type">int</span>, prerequisites [][]<span class="hljs-type">int</span>)</span></span> (ans []<span class="hljs-type">int</span>) {
+    g := <span class="hljs-built_in">make</span>([][]<span class="hljs-type">int</span>, numCourses)
+    <span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> g {
+        g[i] = <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, <span class="hljs-number">0</span>)
+    } 
+    din := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, numCourses)
+    <span class="hljs-keyword">for</span> _, p := <span class="hljs-keyword">range</span> prerequisites {
+        u, v := p[<span class="hljs-number">1</span>], p[<span class="hljs-number">0</span>]
+        g[u] = <span class="hljs-built_in">append</span>(g[u], v)
+        din[v]++
+    }
+    q := []<span class="hljs-type">int</span>{}
+    <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; numCourses; i++ {
+        <span class="hljs-keyword">if</span> din[i] == <span class="hljs-number">0</span> {
+            q = <span class="hljs-built_in">append</span>(q, i)
+        }
+    }
+    <span class="hljs-keyword">for</span> <span class="hljs-built_in">len</span>(q) &gt; <span class="hljs-number">0</span> {
+        t := q[<span class="hljs-number">0</span>]
+        q = q[<span class="hljs-number">1</span>:]
+        ans = <span class="hljs-built_in">append</span>(ans, t)
+        <span class="hljs-keyword">for</span> _, v := <span class="hljs-keyword">range</span> g[t] {
+            din[v]--
+            <span class="hljs-keyword">if</span> din[v] == <span class="hljs-number">0</span> {
+                q = <span class="hljs-built_in">append</span>(q, v)
+            }
+        }
+    }
+    <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(ans) != numCourses {
+        <span class="hljs-keyword">return</span> []<span class="hljs-type">int</span>{}
+    }
+    <span class="hljs-keyword">return</span> 
+}</pre>
+        </div></div>
+<h2 id="课程表-iv">1462. 课程表 IV</h2>
+<p>Floyd 求最短路</p>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(112, 0)" id="tab-button-112-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-112" id="tab-112-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">checkIfPrerequisite</span><span class="hljs-params">(numCourses <span class="hljs-type">int</span>, prerequisites [][]<span class="hljs-type">int</span>, queries [][]<span class="hljs-type">int</span>)</span></span> []<span class="hljs-type">bool</span> {
+    g := <span class="hljs-built_in">make</span>([][]<span class="hljs-type">bool</span>, numCourses)
+    <span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> g {
+        g[i] = <span class="hljs-built_in">make</span>([]<span class="hljs-type">bool</span>, numCourses)
+    } 
+
+    <span class="hljs-keyword">for</span> _, p := <span class="hljs-keyword">range</span> prerequisites {
+        u, v := p[<span class="hljs-number">0</span>], p[<span class="hljs-number">1</span>]
+        g[u][v] = <span class="hljs-literal">true</span>
+    }
+    <span class="hljs-keyword">for</span> k := <span class="hljs-number">0</span>; k &lt; numCourses; k++ {
+        <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; numCourses; i++ {
+            <span class="hljs-keyword">for</span> j := <span class="hljs-number">0</span>; j &lt; numCourses; j++ {
+                <span class="hljs-keyword">if</span> g[i][k] &amp;&amp; g[k][j] {
+                    g[i][j] = <span class="hljs-literal">true</span>
+                }
+            }
+        }
+    }
+    ans := <span class="hljs-built_in">make</span>([]<span class="hljs-type">bool</span>, <span class="hljs-built_in">len</span>(queries))
+    <span class="hljs-keyword">for</span> i, q := <span class="hljs-keyword">range</span> queries {
+        ans[i] = g[q[<span class="hljs-number">0</span>]][q[<span class="hljs-number">1</span>]]
+    }
+    <span class="hljs-keyword">return</span> ans
+}</pre>
+        </div></div>
+<h2 id="阈值距离内邻居最少的城市">1334. 阈值距离内邻居最少的城市</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(113, 0)" id="tab-button-113-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-113" id="tab-113-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">findTheCity</span><span class="hljs-params">(n <span class="hljs-type">int</span>, edges [][]<span class="hljs-type">int</span>, distanceThreshold <span class="hljs-type">int</span>)</span></span> (ans <span class="hljs-type">int</span>) {
+    g := <span class="hljs-built_in">make</span>([][]<span class="hljs-type">int</span>, n)
+    <span class="hljs-keyword">const</span> inf <span class="hljs-type">int</span> = <span class="hljs-number">2e9</span>
+    <span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> g {
+        g[i] = <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, n)
+        <span class="hljs-keyword">for</span> j := <span class="hljs-keyword">range</span> g[i] {
+            g[i][j] = inf
+        }
+    }
+    <span class="hljs-keyword">for</span> _, edge := <span class="hljs-keyword">range</span> edges {
+        u, v, w := edge[<span class="hljs-number">0</span>], edge[<span class="hljs-number">1</span>], edge[<span class="hljs-number">2</span>]
+        g[u][v] = w
+        g[v][u] = w
+    }
+
+    <span class="hljs-keyword">for</span> k := <span class="hljs-number">0</span>; k &lt; n; k++ {
+        <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; n; i++ {
+            <span class="hljs-keyword">for</span> j := <span class="hljs-number">0</span>; j &lt; n; j++ {
+                g[i][j] = min(g[i][j], g[i][k] + g[k][j])
+            }
+        }
+    }
+
+    mn := n
+    <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; n; i++ {
+        cnt := <span class="hljs-number">0</span>
+        <span class="hljs-keyword">for</span> j := <span class="hljs-number">0</span>; j &lt; n; j++ {
+            <span class="hljs-keyword">if</span> i != j &amp;&amp; g[i][j] &lt;= distanceThreshold {
+                cnt++
+            }
+        }
+        <span class="hljs-keyword">if</span> cnt &lt;= mn {
+            mn = cnt
+            ans = i
+        }
+    }
+    <span class="hljs-keyword">return</span>
+}</pre>
+        </div></div>
+<h2 id="转换字符串的最小成本-i">2976. 转换字符串的最小成本 I</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(114, 0)" id="tab-button-114-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-114" id="tab-114-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">minimumCost</span><span class="hljs-params">(source <span class="hljs-type">string</span>, target <span class="hljs-type">string</span>, original []<span class="hljs-type">byte</span>, changed []<span class="hljs-type">byte</span>, cost []<span class="hljs-type">int</span>)</span></span> (ans <span class="hljs-type">int64</span>) {
+    g := <span class="hljs-built_in">make</span>([][]<span class="hljs-type">int</span>, <span class="hljs-number">26</span>)
+    <span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> g {
+        g[i] = <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, <span class="hljs-number">26</span>)
+        <span class="hljs-keyword">for</span> j := <span class="hljs-keyword">range</span> g[i] {
+            <span class="hljs-keyword">if</span> i != j {
+                g[i][j] = <span class="hljs-number">1e13</span>
+            }
+        }
+    }
+    <span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> original {
+        u, v := original[i] - <span class="hljs-string">&#x27;a&#x27;</span>, changed[i] - <span class="hljs-string">&#x27;a&#x27;</span>
+        g[u][v] = min(g[u][v], cost[i])
+    }
+    <span class="hljs-keyword">for</span> k := <span class="hljs-number">0</span>; k &lt; <span class="hljs-number">26</span>; k++ {
+        <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">26</span>; i++ {
+            <span class="hljs-keyword">for</span> j := <span class="hljs-number">0</span>; j &lt; <span class="hljs-number">26</span>; j++ {
+                g[i][j] = min(g[i][j], g[i][k] + g[k][j])
+            }
+        }
+    }
+
+    <span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> source {
+        u, v := source[i] - <span class="hljs-string">&#x27;a&#x27;</span>, target[i] - <span class="hljs-string">&#x27;a&#x27;</span>
+        ans += <span class="hljs-type">int64</span>(g[u][v])
+    }
+    <span class="hljs-keyword">if</span> ans &gt;= <span class="hljs-number">1e13</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>
+    }
+    <span class="hljs-keyword">return</span>
+}</pre>
+        </div></div>
+<h2 id="d.-beautiful-graph">1093D. Beautiful Graph</h2>
+<p>给出一个无向图，每个节点可以填 <span
+class="math inline">\(1,2,3\)</span>
+三个数中的一个。询问有多少种填数方案，使两个相邻节点之和为奇数。</p>
+<p>如果图中有奇数环，一定无解。所以可以对图进行染色。记第 <span
+class="math inline">\(i\)</span> 个联通分量的黑点数量为 <span
+class="math inline">\(b_i\)</span>，白点数量为 <span
+class="math inline">\(w_i\)</span>。每一条连接的两个节点，一个是 <span
+class="math inline">\(2\)</span>，另一个是 <span
+class="math inline">\(1\)</span> 或 <span
+class="math inline">\(3\)</span>。如果黑点全部填 <span
+class="math inline">\(2\)</span>，否则白点全部填 <span
+class="math inline">\(2\)</span>。 - 若黑点填 <span
+class="math inline">\(2\)</span>，则剩下白点有 <span
+class="math inline">\(2^{w_i}\)</span> 种填法。 - 若白点填 <span
+class="math inline">\(2\)</span>，则剩下的黑点有 <span
+class="math inline">\(2^{b_i}\)</span> 种填法。</p>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(115, 0)" id="tab-button-115-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-115" id="tab-115-0">
+            <pre><span class="hljs-comment">//go:build ignore</span>
+<span class="hljs-comment">// +build ignore</span>
+
+<span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">&quot;bufio&quot;</span>
+	. <span class="hljs-string">&quot;fmt&quot;</span>
+	<span class="hljs-string">&quot;os&quot;</span>
+)
+
+<span class="hljs-keyword">var</span> (
+	in   *bufio.Reader
+	out  *bufio.Writer
+	n, m <span class="hljs-type">int</span>
+	g    [][]<span class="hljs-type">int</span>
+	pow2 [<span class="hljs-number">3e5</span> + <span class="hljs-number">10</span>]<span class="hljs-type">int64</span>
+)
+
+<span class="hljs-keyword">const</span> mod <span class="hljs-type">int64</span> = <span class="hljs-number">998244353</span>
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">init</span><span class="hljs-params">()</span></span> {
+	<span class="hljs-keyword">const</span> mx <span class="hljs-type">int</span> = <span class="hljs-number">3e5</span>
+	pow2 = [<span class="hljs-number">3e5</span> + <span class="hljs-number">10</span>]<span class="hljs-type">int64</span>{<span class="hljs-number">1</span>}
+	<span class="hljs-keyword">for</span> i := <span class="hljs-number">1</span>; i &lt;= mx; i++ {
+		pow2[i] = pow2[i<span class="hljs-number">-1</span>] &lt;&lt; <span class="hljs-number">1</span> % mod
+	}
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span></span> {
+
+	Fscan(in, &amp;n, &amp;m)
+	g = <span class="hljs-built_in">make</span>([][]<span class="hljs-type">int</span>, n)
+	<span class="hljs-keyword">var</span> u, v <span class="hljs-type">int</span>
+	<span class="hljs-keyword">for</span> ; m &gt; <span class="hljs-number">0</span>; m-- {
+		Fscan(in, &amp;u, &amp;v)
+		u, v = u<span class="hljs-number">-1</span>, v<span class="hljs-number">-1</span>
+		g[u] = <span class="hljs-built_in">append</span>(g[u], v)
+		g[v] = <span class="hljs-built_in">append</span>(g[v], u)
+	}
+
+	cnt := [<span class="hljs-number">3</span>]<span class="hljs-type">int</span>{}
+	colors := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, n)
+	<span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(<span class="hljs-type">int</span>, <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">bool</span>
+	dfs = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(u, c <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">bool</span> {
+		colors[u] = c
+		cnt[c]++
+		<span class="hljs-keyword">for</span> _, v := <span class="hljs-keyword">range</span> g[u] {
+			<span class="hljs-keyword">if</span> colors[v] == c || colors[v] == <span class="hljs-number">0</span> &amp;&amp; !dfs(v, <span class="hljs-number">3</span>^c) {
+				<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+			}
+		}
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>
+	}
+	ans := <span class="hljs-type">int64</span>(<span class="hljs-number">1</span>)
+	<span class="hljs-keyword">for</span> i, c := <span class="hljs-keyword">range</span> colors {
+		<span class="hljs-keyword">if</span> c == <span class="hljs-number">0</span> {
+			cnt = [<span class="hljs-number">3</span>]<span class="hljs-type">int</span>{}
+			<span class="hljs-keyword">if</span> !dfs(i, <span class="hljs-number">1</span>) {
+				Fprintln(out, <span class="hljs-number">0</span>)
+				<span class="hljs-keyword">return</span>
+			}
+			ans = ans * (pow2[cnt[<span class="hljs-number">1</span>]] + pow2[cnt[<span class="hljs-number">2</span>]]) % mod
+		}
+	}
+	Fprintln(out, ans)
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	in = bufio.NewReader(os.Stdin)
+	out = bufio.NewWriter(os.Stdout)
+	<span class="hljs-keyword">defer</span> out.Flush()
+
+	<span class="hljs-keyword">var</span> T <span class="hljs-type">int</span>
+	<span class="hljs-keyword">for</span> Fscan(in, &amp;T); T &gt; <span class="hljs-number">0</span>; T-- {
+		solve()
+	}
+}</pre>
+        </div></div>
 
     </div>
     <div class="toc-container">
       <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A2%98%E5%8D%95"><span class="toc-number">1.</span> <span class="toc-text">题单</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E9%81%8D%E5%8E%86-dfs"><span class="toc-number">1.1.</span> <span class="toc-text">基础遍历 DFS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bfs-%E5%9F%BA%E7%A1%80"><span class="toc-number">1.2.</span> <span class="toc-text">BFS 基础</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F"><span class="toc-number">1.3.</span> <span class="toc-text">拓扑排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E7%9F%AD%E8%B7%AF"><span class="toc-number">1.4.</span> <span class="toc-text">最短路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91"><span class="toc-number">1.5.</span> <span class="toc-text">最小生成树</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E9%80%9A%E5%88%86%E9%87%8F"><span class="toc-number">1.6.</span> <span class="toc-text">连通分量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%88%86%E5%9B%BE"><span class="toc-number">1.7.</span> <span class="toc-text">二分图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E6%B5%81"><span class="toc-number">1.8.</span> <span class="toc-text">网络流</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A2%98%E8%A7%A3"><span class="toc-number">2.</span> <span class="toc-text">题解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9C%81%E4%BB%BD%E6%95%B0%E9%87%8F"><span class="toc-number">2.1.</span> <span class="toc-text">547. 省份数量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%BB%E6%89%BE%E5%9B%BE%E4%B8%AD%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E8%B7%AF%E5%BE%84"><span class="toc-number">2.2.</span> <span class="toc-text">1971. 寻找图中是否存在路径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%80%E6%9C%89%E5%8F%AF%E8%83%BD%E7%9A%84%E8%B7%AF%E5%BE%84"><span class="toc-number">2.3.</span> <span class="toc-text">797. 所有可能的路径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%BB%B6%E8%BF%9F%E6%97%B6%E9%97%B4"><span class="toc-number">2.4.</span> <span class="toc-text">743. 网络延迟时间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E6%B6%88%E5%A4%B1%E8%8A%82%E7%82%B9%E7%9A%84%E6%9C%80%E5%B0%91%E6%97%B6%E9%97%B4"><span class="toc-number">2.5.</span> <span class="toc-text">3112. 访问消失节点的最少时间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E5%8F%AF%E4%BB%A5%E6%B1%82%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%9A%84%E5%9B%BE%E7%B1%BB"><span class="toc-number">2.6.</span> <span class="toc-text">2642. 设计可以求最短路径的图类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC-k-%E5%A4%A7%E7%9A%84%E5%AE%8C%E7%BE%8E%E4%BA%8C%E5%8F%89%E5%AD%90%E6%A0%91%E7%9A%84%E5%A4%A7%E5%B0%8F"><span class="toc-number">2.7.</span> <span class="toc-text">3319. 第 K
-大的完美二叉子树的大小</span></a></li></ol></li></ol>
+大的完美二叉子树的大小</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E6%89%80%E6%9C%89%E7%82%B9%E7%9A%84%E6%9C%80%E5%B0%8F%E8%B4%B9%E7%94%A8"><span class="toc-number">2.8.</span> <span class="toc-text">1584. 连接所有点的最小费用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E4%BB%A5%E5%88%B0%E8%BE%BE%E6%89%80%E6%9C%89%E7%82%B9%E7%9A%84%E6%9C%80%E5%B0%91%E7%82%B9%E6%95%B0%E7%9B%AE"><span class="toc-number">2.9.</span> <span class="toc-text">1557.
+可以到达所有点的最少点数目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BE%E7%A8%8B%E8%A1%A8-ii"><span class="toc-number">2.10.</span> <span class="toc-text">210. 课程表 II</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BE%E7%A8%8B%E8%A1%A8-iv"><span class="toc-number">2.11.</span> <span class="toc-text">1462. 课程表 IV</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%88%E5%80%BC%E8%B7%9D%E7%A6%BB%E5%86%85%E9%82%BB%E5%B1%85%E6%9C%80%E5%B0%91%E7%9A%84%E5%9F%8E%E5%B8%82"><span class="toc-number">2.12.</span> <span class="toc-text">1334. 阈值距离内邻居最少的城市</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AC%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%9C%80%E5%B0%8F%E6%88%90%E6%9C%AC-i"><span class="toc-number">2.13.</span> <span class="toc-text">2976. 转换字符串的最小成本 I</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#d.-beautiful-graph"><span class="toc-number">2.14.</span> <span class="toc-text">1093D. Beautiful Graph</span></a></li></ol></li></ol>
     </div>
   </div>
   <footer class="article-footer">

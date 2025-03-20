@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+    
+      算法笔试-动态规划
+    
+</title>
+
+<link rel="icon" href="/images/favicon.ico">
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-calendar@2.3.4/dist/github-calendar.min.css">
+
+<link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark-reasonable.min.css" rel="stylesheet">
+<link href="
+https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.css
+" rel="stylesheet">
+<link href="
+https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustomScrollbar.min.css
+" rel="stylesheet">
+<meta name="generator" content="Hexo 7.2.0"></head>
+<body>
+    <div class="main-container">
+        <div class="topbar">
+    <div class="btn-container">
+        <a href="/"><img class="btn-close" src="/images/close.svg" alt=""></a>
+        <a><img class="btn-minimize" src="/images/minimize.svg" alt=""></a>
+        <a><img class="btn-maximize" src="/images/maximize.svg" alt=""></a>
+    </div>
+    <div class="title">
+        <img src="/images/terminal.svg" alt="">
+        <span>cat Cheryl-Chun 淳老师 BLOG</span>
+    </div>
+</div>
+        <div class="nav-container">
+    <div class="posts">
+        <img src="/images/posts-list.svg" alt="">
+        <a href="/">Home</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+    <!-- <div class="tags">
+        <img src="/images/tag.svg" alt="">
+        <a href="/tag">Tag</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div> -->
+    <div>
+        <img src="/images/archive.svg" alt="">
+        <a href="/all-posts">Posts</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+    <!-- <div class="category">
+        <img src="/images/category.svg" alt="">
+        <a href="/category">Category</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div> -->
+    <div class="about">
+        <img src="/images/about.svg" alt="">
+        <a href="/about">About</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+</div>
+        <div class="main-content">
+            <article
+  id="post-算法笔试-动态规划"
+  class="article article-type-post"
+>
+  <div id="toc-show">
+    <img src="/images/toc.svg" alt="" />
+  </div>
+  
+  <h1 class="article-header">算法笔试-动态规划</h1>
+  
+  <div class="article-info">
+    <!-- <span>Document Attributes:</span> -->
+
+    <table>
+      <tr>
+        <td>
+            <img src="/images/time.svg" alt="">
+            Updated Time
+        </td>
+        <td>2025-03-07</td>
+      </tr>
+      <tr>
+        <td>
+            <img src="/images/category.svg" alt="">
+            Category
+        </td>
+        <td>  </td>
+      </tr>
+      <tr>
+        <td>
+            <img src="/images/tag.svg" alt="">
+            Tags
+        </td>
+        <td>
+</td>
+      </tr>
+    </table>
+  </div>
+  <div class="article-entry">
+    <div class="content">
+      <blockquote>
+<p>关于语言：一刷用 Golang，二刷用 Rust</p>
+<p>题单来源于：<a
+target="_blank" rel="noopener" href="https://leetcode.cn/discuss/post/3581838/fen-xiang-gun-ti-dan-dong-tai-gui-hua-ru-007o/">分享丨【题单】动态规划（入门/背包/状态机/划分/区间/状压/数位/树形/数据结构优化）</a></p>
+</blockquote>
+<h1 id="题单">题单</h1>
+<p>多数题目会使用记忆化搜索和递推两种方式。</p>
+<h2 id="入门-dp">入门 dp</h2>
+<p>爬楼梯模型：</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 30%" />
+<col style="width: 23%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>题目</th>
+<th>来源</th>
+<th>难度</th>
+<th>分数</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/climbing-stairs/solutions/2560716/jiao-ni-yi-bu-bu-si-kao-dong-tai-gui-hua-7zm1/">70.
+爬楼梯</a></td>
+<td></td>
+<td>简单</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/min-cost-climbing-stairs/description/">746.
+使用最小花费爬楼梯</a></td>
+<td>第 63 场周赛 Q1</td>
+<td>简单</td>
+<td>1358</td>
+</tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/combination-sum-iv/description/">377.
+组合总和 Ⅳ</a></td>
+<td></td>
+<td>中等</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-ways-to-build-good-strings/description/">2466.
+统计构造好字符串的方案数</a></td>
+<td>第 91 场双周赛 Q2</td>
+<td>中等</td>
+<td>1694</td>
+</tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-number-of-texts/description/">2266.
+统计打字方案数</a></td>
+<td>第 292 场周赛 Q3</td>
+<td>中等</td>
+<td>1857</td>
+</tr>
+</tbody>
+</table>
+<p>打家劫舍模型，偷与不偷：</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 30%" />
+<col style="width: 23%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>题目</th>
+<th>来源</th>
+<th>难度</th>
+<th>分数</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/house-robber/description/">198.
+打家劫舍</a></td>
+<td></td>
+<td>中等</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/delete-and-earn/description/">740.
+删除并获得点数</a></td>
+<td></td>
+<td>中等</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-number-of-ways-to-place-houses/description/">2320.
+统计放置房子的方式数</a></td>
+<td>第 299 场周赛 Q2</td>
+<td>中等</td>
+<td>1608</td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/house-robber-ii/description/">213.
+打家劫舍 II</a></td>
+<td></td>
+<td>中等</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>双序列 dp：一般定义 <span class="math inline">\(dp[i][j]\)</span>
+表示对子问题 <span class="math inline">\((s1[:i],s2[:j])\)</span>
+的求解结果</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 30%" />
+<col style="width: 23%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>题目</th>
+<th>来源</th>
+<th>难度</th>
+<th>分数</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/longest-common-subsequence/description/">1143.
+最长公共子序列</a></td>
+<td></td>
+<td>中等</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/shortest-common-supersequence/">1092.
+最短公共超序列</a></td>
+<td>第 141 场周赛 Q4</td>
+<td>困难</td>
+<td>1977</td>
+</tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/edit-distance/description/">72.
+编辑距离</a></td>
+<td></td>
+<td>中等</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h1 id="题解">题解</h1>
+<h2 id="爬楼梯">70. 爬楼梯</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(116, 0)" id="tab-button-116-0">Golang1</button>
+        
+        <button onclick="showTab(116, 1)" id="tab-button-116-1">Golang2</button>
+        </div>
+        <div class="tab-content tab-content-116" id="tab-116-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">climbStairs</span><span class="hljs-params">(n <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    memo := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, n + <span class="hljs-number">1</span>)
+    <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span>
+    dfs = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(x <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+        <span class="hljs-keyword">if</span> x &lt;= <span class="hljs-number">1</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>
+        }
+        p := &amp;memo[x]
+        <span class="hljs-keyword">if</span> *p == <span class="hljs-number">0</span> {
+            *p = dfs(x - <span class="hljs-number">1</span>) + dfs(x - <span class="hljs-number">2</span>)
+        }
+        <span class="hljs-keyword">return</span> *p
+    }
+    <span class="hljs-keyword">return</span> dfs(n)
+}</pre>
+        </div>
+        <div class="tab-content tab-content-116" id="tab-116-1">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">climbStairs</span><span class="hljs-params">(n <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    f := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, n + <span class="hljs-number">1</span>)
+    f[<span class="hljs-number">0</span>], f[<span class="hljs-number">1</span>] = <span class="hljs-number">1</span>, <span class="hljs-number">1</span>
+    <span class="hljs-keyword">for</span> i := <span class="hljs-number">2</span>; i &lt;= n; i++ {
+        f[i] = f[i<span class="hljs-number">-1</span>] + f[i<span class="hljs-number">-2</span>]
+    }
+    <span class="hljs-keyword">return</span> f[n]
+}</pre>
+        </div></div>
+<h2 id="使用最小花费爬楼梯">746. 使用最小花费爬楼梯</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(117, 0)" id="tab-button-117-0">Golang1</button>
+        
+        <button onclick="showTab(117, 1)" id="tab-button-117-1">Golang2</button>
+        </div>
+        <div class="tab-content tab-content-117" id="tab-117-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">minCostClimbingStairs</span><span class="hljs-params">(cost []<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    n := <span class="hljs-built_in">len</span>(cost)
+    memo := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, n) 
+    <span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> memo {
+        memo[i] = <span class="hljs-number">-1</span>
+    }
+    <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span>
+    dfs = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(x <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+        <span class="hljs-keyword">if</span> x &lt; <span class="hljs-number">0</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+        }
+        p := &amp;memo[x]
+        <span class="hljs-keyword">if</span> *p &lt; <span class="hljs-number">0</span> {
+            *p = min(dfs(x - <span class="hljs-number">1</span>), dfs(x - <span class="hljs-number">2</span>)) + cost[x]
+        }
+        <span class="hljs-keyword">return</span> *p
+    }
+    <span class="hljs-keyword">return</span> min(dfs(n - <span class="hljs-number">1</span>), dfs(n - <span class="hljs-number">2</span>))
+}</pre>
+        </div>
+        <div class="tab-content tab-content-117" id="tab-117-1">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">minCostClimbingStairs</span><span class="hljs-params">(cost []<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    n := <span class="hljs-built_in">len</span>(cost)
+    f := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, n)
+    f[<span class="hljs-number">0</span>], f[<span class="hljs-number">1</span>] = cost[<span class="hljs-number">0</span>], cost[<span class="hljs-number">1</span>]
+    <span class="hljs-keyword">for</span> i := <span class="hljs-number">2</span>; i &lt; n; i++ {
+        f[i] = min(f[i<span class="hljs-number">-1</span>], f[i<span class="hljs-number">-2</span>]) + cost[i]
+    }
+    <span class="hljs-keyword">return</span> min(f[n<span class="hljs-number">-1</span>], f[n<span class="hljs-number">-2</span>])
+}</pre>
+        </div></div>
+<h2 id="组合总和-ⅳ">377. 组合总和 Ⅳ</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(118, 0)" id="tab-button-118-0">Golang1</button>
+        
+        <button onclick="showTab(118, 1)" id="tab-button-118-1">Golang2</button>
+        </div>
+        <div class="tab-content tab-content-118" id="tab-118-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">combinationSum4</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, target <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    memo := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, target + <span class="hljs-number">1</span>) 
+    <span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> memo {
+        memo[i] = <span class="hljs-number">-1</span>
+    }
+    <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span>
+    dfs = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(i <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+        <span class="hljs-keyword">if</span> i &lt;= <span class="hljs-number">0</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>
+        }
+        p := &amp;memo[i]
+        <span class="hljs-keyword">if</span> *p &lt; <span class="hljs-number">0</span> {
+            ans := <span class="hljs-number">0</span>
+            <span class="hljs-keyword">for</span> _, x := <span class="hljs-keyword">range</span> nums {
+                <span class="hljs-keyword">if</span> x &lt;= i {
+                    ans += dfs(i - x)
+                }
+            }
+            *p = ans
+        }
+        <span class="hljs-keyword">return</span> *p
+    }
+    <span class="hljs-keyword">return</span> dfs(target)
+}</pre>
+        </div>
+        <div class="tab-content tab-content-118" id="tab-118-1">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">combinationSum4</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, target <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    f := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, target + <span class="hljs-number">1</span>)
+    f[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>
+    <span class="hljs-keyword">for</span> i := <span class="hljs-number">1</span>; i &lt;= target; i++ {
+        <span class="hljs-keyword">for</span> _, x := <span class="hljs-keyword">range</span> nums {
+            <span class="hljs-keyword">if</span> x &lt;= i {
+                f[i] += f[i-x]
+            }
+        }
+    }
+    <span class="hljs-keyword">return</span> f[target]
+}</pre>
+        </div></div>
+<h2 id="统计构造好字符串的方案数">2466. 统计构造好字符串的方案数</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(119, 0)" id="tab-button-119-0">Golang1</button>
+        
+        <button onclick="showTab(119, 1)" id="tab-button-119-1">Golang2</button>
+        </div>
+        <div class="tab-content tab-content-119" id="tab-119-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">countGoodStrings</span><span class="hljs-params">(low <span class="hljs-type">int</span>, high <span class="hljs-type">int</span>, zero <span class="hljs-type">int</span>, one <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    <span class="hljs-keyword">const</span> mod <span class="hljs-type">int</span> = <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>
+    memo := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, high + <span class="hljs-number">1</span>)
+    <span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> memo {
+        memo[i] = <span class="hljs-number">-1</span>
+    }
+    <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span>
+    dfs = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(i <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+        <span class="hljs-keyword">if</span> i &lt; <span class="hljs-number">0</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+        }
+        <span class="hljs-keyword">if</span> i == <span class="hljs-number">0</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>
+        }
+        p := &amp;memo[i]
+        <span class="hljs-keyword">if</span> *p &lt; <span class="hljs-number">0</span> {
+            *p = (dfs(i - zero) + dfs(i - one)) % mod
+        }
+        <span class="hljs-keyword">return</span> *p
+    }
+
+    ans := <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> i := low; i &lt;= high; i++ {
+        ans += dfs(i)
+    }
+    <span class="hljs-keyword">return</span> ans % mod
+}</pre>
+        </div>
+        <div class="tab-content tab-content-119" id="tab-119-1">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">countGoodStrings</span><span class="hljs-params">(low <span class="hljs-type">int</span>, high <span class="hljs-type">int</span>, zero <span class="hljs-type">int</span>, one <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    <span class="hljs-keyword">const</span> mod <span class="hljs-type">int</span> = <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>
+    f := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, high + <span class="hljs-number">11</span>)
+    f[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>
+    <span class="hljs-keyword">for</span> i := <span class="hljs-number">1</span>; i &lt;= high; i++ {
+        <span class="hljs-keyword">if</span> i &gt;= zero {
+            f[i] = (f[i] + f[i-zero]) % mod
+        }
+        <span class="hljs-keyword">if</span> i &gt;= one {
+            f[i] = (f[i] + f[i-one]) % mod
+        }
+    }
+    ans := <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> i := low; i &lt;= high; i++ {
+        ans += f[i]
+    }
+    <span class="hljs-keyword">return</span> ans % mod
+}</pre>
+        </div></div>
+<h2 id="统计打字方案数">2266. 统计打字方案数</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(120, 0)" id="tab-button-120-0">Golang1</button>
+        
+        <button onclick="showTab(120, 1)" id="tab-button-120-1">Golang2</button>
+        </div>
+        <div class="tab-content tab-content-120" id="tab-120-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">countTexts</span><span class="hljs-params">(pressedKeys <span class="hljs-type">string</span>)</span></span> <span class="hljs-type">int</span> {
+    <span class="hljs-keyword">const</span> mod <span class="hljs-type">int</span> = <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>
+    n := <span class="hljs-built_in">len</span>(pressedKeys)
+    memo := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, n + <span class="hljs-number">1</span>) 
+    <span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> memo {
+        memo[i] = <span class="hljs-number">-1</span>
+    }
+    <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span>
+    dfs = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(i <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+        <span class="hljs-keyword">if</span> i &lt; <span class="hljs-number">0</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>
+        }
+        cnt, ans := <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
+        <span class="hljs-keyword">if</span> pressedKeys[i] == <span class="hljs-string">&#x27;7&#x27;</span> || pressedKeys[i] == <span class="hljs-string">&#x27;9&#x27;</span> {
+            cnt = <span class="hljs-number">4</span>
+        } <span class="hljs-keyword">else</span> {
+            cnt = <span class="hljs-number">3</span>
+        }
+        p := &amp;memo[i]
+        <span class="hljs-keyword">if</span> *p &lt; <span class="hljs-number">0</span> {
+            <span class="hljs-keyword">for</span> j := <span class="hljs-keyword">range</span> cnt {
+                <span class="hljs-keyword">if</span> i &lt; j || pressedKeys[i-j] != pressedKeys[i] {
+                    <span class="hljs-keyword">break</span>
+                }
+                ans += dfs(i - j - <span class="hljs-number">1</span>)
+            }
+            *p = ans % mod
+        }
+        <span class="hljs-keyword">return</span> *p
+    }
+    <span class="hljs-keyword">return</span> dfs(n - <span class="hljs-number">1</span>) % mod
+}</pre>
+        </div>
+        <div class="tab-content tab-content-120" id="tab-120-1">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">countTexts</span><span class="hljs-params">(pressedKeys <span class="hljs-type">string</span>)</span></span> <span class="hljs-type">int</span> {
+    <span class="hljs-keyword">const</span> mod <span class="hljs-type">int</span> = <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>
+    n := <span class="hljs-built_in">len</span>(pressedKeys)
+    f := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, n + <span class="hljs-number">1</span>)
+    f[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>
+    <span class="hljs-keyword">for</span> i, v := <span class="hljs-keyword">range</span> pressedKeys {
+        cnt := <span class="hljs-number">0</span>
+        <span class="hljs-keyword">if</span> v == <span class="hljs-string">&#x27;7&#x27;</span> || v == <span class="hljs-string">&#x27;9&#x27;</span> {
+            cnt = <span class="hljs-number">4</span>
+        } <span class="hljs-keyword">else</span> {
+            cnt = <span class="hljs-number">3</span>
+        }
+        <span class="hljs-keyword">for</span> j := <span class="hljs-number">0</span>; j &lt; cnt; j++ {
+            <span class="hljs-keyword">if</span> i &lt; j || pressedKeys[i-j] != pressedKeys[i] {
+                <span class="hljs-keyword">break</span>
+            }
+            f[i+<span class="hljs-number">1</span>] = (f[i+<span class="hljs-number">1</span>] + f[i-j]) % mod
+        }
+    }
+    <span class="hljs-keyword">return</span> f[n] % mod
+}</pre>
+        </div></div>
+<h2 id="打家劫舍">198. 打家劫舍</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(121, 0)" id="tab-button-121-0">Golang1</button>
+        
+        <button onclick="showTab(121, 1)" id="tab-button-121-1">Golang2</button>
+        </div>
+        <div class="tab-content tab-content-121" id="tab-121-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">rob</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    n := <span class="hljs-built_in">len</span>(nums)
+    memo := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, n + <span class="hljs-number">1</span>) 
+    <span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> memo {
+        memo[i] = <span class="hljs-number">-1</span>
+    }
+    <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span>
+    dfs = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(i <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+        <span class="hljs-keyword">if</span> i &lt; <span class="hljs-number">0</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+        }
+        p := &amp;memo[i]
+        <span class="hljs-keyword">if</span> *p &lt; <span class="hljs-number">0</span> {
+            *p = max(dfs(i - <span class="hljs-number">1</span>) , dfs(i - <span class="hljs-number">2</span>) + nums[i])
+        }
+        <span class="hljs-keyword">return</span> *p
+    }
+    <span class="hljs-keyword">return</span> dfs(n - <span class="hljs-number">1</span>)
+}</pre>
+        </div>
+        <div class="tab-content tab-content-121" id="tab-121-1">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">rob</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    n := <span class="hljs-built_in">len</span>(nums)
+    <span class="hljs-keyword">if</span> n == <span class="hljs-number">1</span> {
+        <span class="hljs-keyword">return</span> nums[<span class="hljs-number">0</span>]
+    }
+    f := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, n + <span class="hljs-number">1</span>) 
+    f[<span class="hljs-number">0</span>], f[<span class="hljs-number">1</span>] = nums[<span class="hljs-number">0</span>], max(nums[<span class="hljs-number">0</span>], nums[<span class="hljs-number">1</span>])
+    <span class="hljs-keyword">for</span> i := <span class="hljs-number">2</span>; i &lt; n; i++ {
+        f[i] = max(f[i<span class="hljs-number">-1</span>], f[i<span class="hljs-number">-2</span>] + nums[i])
+    }
+    <span class="hljs-keyword">return</span> f[n<span class="hljs-number">-1</span>]
+}</pre>
+        </div></div>
+<h2 id="删除并获得点数">740. 删除并获得点数</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(122, 0)" id="tab-button-122-0">Golang1</button>
+        </div>
+        <div class="tab-content tab-content-122" id="tab-122-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">deleteAndEarn</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    cnt := [<span class="hljs-number">10010</span>]<span class="hljs-type">int</span>{}
+    <span class="hljs-keyword">for</span> _, v := <span class="hljs-keyword">range</span> nums {
+        cnt[v] += v
+    }
+    slices.Sort(nums)
+    n := nums[<span class="hljs-built_in">len</span>(nums)<span class="hljs-number">-1</span>]
+    memo := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, n + <span class="hljs-number">1</span>)
+    <span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> memo {
+        memo[i] = <span class="hljs-number">-1</span>
+    }
+    <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span>
+    dfs = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(i <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+        <span class="hljs-keyword">if</span> i &lt; <span class="hljs-number">0</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+        }
+        p := &amp;memo[i]
+        <span class="hljs-keyword">if</span> *p &lt; <span class="hljs-number">0</span> {
+            *p = max(dfs(i - <span class="hljs-number">1</span>), dfs(i - <span class="hljs-number">2</span>) + cnt[i])
+        }
+        <span class="hljs-keyword">return</span> *p
+    }
+    <span class="hljs-keyword">return</span> dfs(n)
+}</pre>
+        </div></div>
+<h2 id="统计放置房子的方式数">2320. 统计放置房子的方式数</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(123, 0)" id="tab-button-123-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-123" id="tab-123-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">countHousePlacements</span><span class="hljs-params">(n <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    <span class="hljs-keyword">const</span> mod <span class="hljs-type">int</span> = <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>
+    f := [<span class="hljs-number">10010</span>]<span class="hljs-type">int</span>{<span class="hljs-number">1</span>, <span class="hljs-number">2</span>}
+    <span class="hljs-keyword">for</span> i := <span class="hljs-number">2</span>; i &lt;= n; i++ {
+        f[i] = (f[i<span class="hljs-number">-1</span>] + f[i<span class="hljs-number">-2</span>]) % mod
+    }
+    ans := (f[n] * f[n]) % mod
+    <span class="hljs-keyword">return</span> ans
+}</pre>
+        </div></div>
+<h2 id="打家劫舍-ii">213. 打家劫舍 II</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(124, 0)" id="tab-button-124-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-124" id="tab-124-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">rob1</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, start, end <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> { <span class="hljs-comment">// [start,end) 左闭右开</span>
+    f0, f1 := <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> i := start; i &lt; end; i++ {
+        f0, f1 = f1, max(f1, f0+nums[i])
+    }
+    <span class="hljs-keyword">return</span> f1
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">rob</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
+    n := <span class="hljs-built_in">len</span>(nums)
+    <span class="hljs-keyword">return</span> max(nums[<span class="hljs-number">0</span>]+rob1(nums, <span class="hljs-number">2</span>, n<span class="hljs-number">-1</span>), rob1(nums, <span class="hljs-number">1</span>, n))
+}</pre>
+        </div></div>
+<h2 id="最长公共子序列">1143. 最长公共子序列</h2>
+<p><span class="math inline">\(f(i, j)\)</span> 表示 <span
+class="math inline">\(text_1[0:i]\)</span> 和 <span
+class="math inline">\(text_2[0:j]\)</span> 的最长公共子序列长度。</p>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(125, 0)" id="tab-button-125-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-125" id="tab-125-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">longestCommonSubsequence</span><span class="hljs-params">(text1 <span class="hljs-type">string</span>, text2 <span class="hljs-type">string</span>)</span></span> <span class="hljs-type">int</span> {
+    n, m := <span class="hljs-built_in">len</span>(text1), <span class="hljs-built_in">len</span>(text2)
+    f := <span class="hljs-built_in">make</span>([][]<span class="hljs-type">int</span>, n + <span class="hljs-number">1</span>)
+    <span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> f {
+        f[i] = <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, m + <span class="hljs-number">1</span>)
+    }
+
+    <span class="hljs-keyword">for</span> i, t1 := <span class="hljs-keyword">range</span> text1 {
+        <span class="hljs-keyword">for</span> j, t2 := <span class="hljs-keyword">range</span> text2 {
+            <span class="hljs-keyword">if</span> t1 == t2 {
+                f[i+<span class="hljs-number">1</span>][j+<span class="hljs-number">1</span>] = f[i][j] + <span class="hljs-number">1</span>
+            } <span class="hljs-keyword">else</span> {
+                f[i+<span class="hljs-number">1</span>][j+<span class="hljs-number">1</span>] = max(f[i][j+<span class="hljs-number">1</span>], f[i+<span class="hljs-number">1</span>][j])
+            }
+        }
+    }
+    <span class="hljs-keyword">return</span> f[n][m]
+}</pre>
+        </div></div>
+<h2 id="编辑距离">72. 编辑距离</h2>
+<p><span class="math inline">\(f(i, j-1)\)</span> 相当于插入操作，<span
+class="math inline">\(f(i-1, j)\)</span> 相当于删除 <span
+class="math inline">\(s\)</span> 中的字符，<span
+class="math inline">\(f(i-1,j-1)\)</span> 相当于替换操作。</p>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(126, 0)" id="tab-button-126-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-126" id="tab-126-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">minDistance</span><span class="hljs-params">(word1 <span class="hljs-type">string</span>, word2 <span class="hljs-type">string</span>)</span></span> <span class="hljs-type">int</span> {
+    n, m := <span class="hljs-built_in">len</span>(word1), <span class="hljs-built_in">len</span>(word2)
+    f := <span class="hljs-built_in">make</span>([][]<span class="hljs-type">int</span>, n + <span class="hljs-number">1</span>)
+    <span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> f {
+        f[i] = <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, m + <span class="hljs-number">1</span>)
+    }
+    <span class="hljs-comment">// 注意状态的初始化</span>
+    <span class="hljs-keyword">for</span> i := <span class="hljs-number">1</span>; i &lt;= m; i++ {
+        f[<span class="hljs-number">0</span>][i] = i
+    }
+    <span class="hljs-keyword">for</span> i, w1 := <span class="hljs-keyword">range</span> word1 {
+        f[i+<span class="hljs-number">1</span>][<span class="hljs-number">0</span>] = i + <span class="hljs-number">1</span>
+        <span class="hljs-keyword">for</span> j, w2 := <span class="hljs-keyword">range</span> word2 {
+            <span class="hljs-keyword">if</span> w1 == w2 {
+                f[i+<span class="hljs-number">1</span>][j+<span class="hljs-number">1</span>] = f[i][j]
+            } <span class="hljs-keyword">else</span> {
+                f[i+<span class="hljs-number">1</span>][j+<span class="hljs-number">1</span>] = min(min(f[i+<span class="hljs-number">1</span>][j], f[i][j+<span class="hljs-number">1</span>]), f[i][j]) + <span class="hljs-number">1</span>
+            }
+        }
+    }
+    <span class="hljs-keyword">return</span> f[n][m]
+}</pre>
+        </div></div>
+<h2 id="最短公共超序列">1092. 最短公共超序列</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(127, 0)" id="tab-button-127-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-127" id="tab-127-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">shortestCommonSupersequence</span><span class="hljs-params">(str1 <span class="hljs-type">string</span>, str2 <span class="hljs-type">string</span>)</span></span> <span class="hljs-type">string</span> {
+    n, m := <span class="hljs-built_in">len</span>(str1), <span class="hljs-built_in">len</span>(str2)
+    f := <span class="hljs-built_in">make</span>([][]<span class="hljs-type">int</span>, n + <span class="hljs-number">1</span>)
+    <span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> f {
+        f[i] = <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, m + <span class="hljs-number">1</span>)
+        f[i][<span class="hljs-number">0</span>] = i
+    }
+    <span class="hljs-keyword">for</span> j := <span class="hljs-number">1</span>; j &lt;= m; j++ {
+        f[<span class="hljs-number">0</span>][j] = j
+    }
+
+    <span class="hljs-keyword">for</span> i, s1 := <span class="hljs-keyword">range</span> str1 {
+        <span class="hljs-keyword">for</span> j, s2 := <span class="hljs-keyword">range</span> str2 {
+            f[i+<span class="hljs-number">1</span>][j+<span class="hljs-number">1</span>] = min(f[i+<span class="hljs-number">1</span>][j], f[i][j+<span class="hljs-number">1</span>]) + <span class="hljs-number">1</span>
+            <span class="hljs-keyword">if</span> s1 == s2 {
+                f[i+<span class="hljs-number">1</span>][j+<span class="hljs-number">1</span>] = f[i][j] + <span class="hljs-number">1</span>
+            }
+        }
+    }
+
+    ans := []<span class="hljs-type">byte</span>{}
+    i, j := n - <span class="hljs-number">1</span>, m - <span class="hljs-number">1</span>
+    <span class="hljs-keyword">for</span> i &gt;= <span class="hljs-number">0</span> &amp;&amp; j &gt;= <span class="hljs-number">0</span> {
+        <span class="hljs-keyword">if</span> str1[i] == str2[j] {
+            ans = <span class="hljs-built_in">append</span>(ans, str1[i])
+            i--
+            j--
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> f[i+<span class="hljs-number">1</span>][j+<span class="hljs-number">1</span>] == f[i][j+<span class="hljs-number">1</span>] + <span class="hljs-number">1</span> {
+            ans = <span class="hljs-built_in">append</span>(ans, str1[i])
+            i--
+        } <span class="hljs-keyword">else</span> {
+            ans = <span class="hljs-built_in">append</span>(ans, str2[j])
+            j--
+        }
+    }
+    slices.Reverse(ans)
+    <span class="hljs-keyword">return</span> str1[:i+<span class="hljs-number">1</span>] + str2[:j+<span class="hljs-number">1</span>] + <span class="hljs-type">string</span>(ans)
+}</pre>
+        </div></div>
+
+    </div>
+    <div class="toc-container">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A2%98%E5%8D%95"><span class="toc-number">1.</span> <span class="toc-text">题单</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A5%E9%97%A8-dp"><span class="toc-number">1.1.</span> <span class="toc-text">入门 dp</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A2%98%E8%A7%A3"><span class="toc-number">2.</span> <span class="toc-text">题解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%88%AC%E6%A5%BC%E6%A2%AF"><span class="toc-number">2.1.</span> <span class="toc-text">70. 爬楼梯</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%9C%80%E5%B0%8F%E8%8A%B1%E8%B4%B9%E7%88%AC%E6%A5%BC%E6%A2%AF"><span class="toc-number">2.2.</span> <span class="toc-text">746. 使用最小花费爬楼梯</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8C-%E2%85%B3"><span class="toc-number">2.3.</span> <span class="toc-text">377. 组合总和 Ⅳ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E6%9E%84%E9%80%A0%E5%A5%BD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%96%B9%E6%A1%88%E6%95%B0"><span class="toc-number">2.4.</span> <span class="toc-text">2466. 统计构造好字符串的方案数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E6%89%93%E5%AD%97%E6%96%B9%E6%A1%88%E6%95%B0"><span class="toc-number">2.5.</span> <span class="toc-text">2266. 统计打字方案数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D"><span class="toc-number">2.6.</span> <span class="toc-text">198. 打家劫舍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E5%B9%B6%E8%8E%B7%E5%BE%97%E7%82%B9%E6%95%B0"><span class="toc-number">2.7.</span> <span class="toc-text">740. 删除并获得点数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E6%94%BE%E7%BD%AE%E6%88%BF%E5%AD%90%E7%9A%84%E6%96%B9%E5%BC%8F%E6%95%B0"><span class="toc-number">2.8.</span> <span class="toc-text">2320. 统计放置房子的方式数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D-ii"><span class="toc-number">2.9.</span> <span class="toc-text">213. 打家劫舍 II</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97"><span class="toc-number">2.10.</span> <span class="toc-text">1143. 最长公共子序列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB"><span class="toc-number">2.11.</span> <span class="toc-text">72. 编辑距离</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E7%9F%AD%E5%85%AC%E5%85%B1%E8%B6%85%E5%BA%8F%E5%88%97"><span class="toc-number">2.12.</span> <span class="toc-text">1092. 最短公共超序列</span></a></li></ol></li></ol>
+    </div>
+  </div>
+  <footer class="article-footer">
+    <div class="footer-container">
+  <a target="_blank" rel="noopener" href="https://space.bilibili.com/12352380?spm_id_from=333.1007.0.0">
+    <img src="/images/bilibili.svg" alt="" />
+  </a>
+  <a target="_blank" rel="noopener" href="https://github.com/qiancijun">
+    <img src="/images/github.svg" alt="" />
+  </a>
+  <span>Copyright </span>
+  <img src="/images/copyright.svg" alt="">
+  <span>2024 Cheryl-Chun</span>
+</div>
+
+  </footer>
+</article>
+
+
+        </div>
+        <!-- <div class="footer">
+    
+</div> -->
+    </div>
+    
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/github-calendar@2.3.4/dist/github-calendar.min.js"></script>
+=
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js"></script>
+
+
+<script src="/scripts/search.js"></script>
+
+
+<script src="/scripts/main.js"></script>
+
+
+<script type="text/javascript">      
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+        search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result', "Cheryl-Chun");
+</script>
+</body>
+<style>
+    .main-container::before {
+        background-image: url('');
+    }
+</style>
+</html>

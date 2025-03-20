@@ -326,6 +326,14 @@ T 秒后青蛙的位置</a></td>
 <td>困难</td>
 <td>1824</td>
 </tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/cousins-in-binary-tree/description/">993.
+二叉树的堂兄弟节点</a></td>
+<td>第 124 场周赛 Q1</td>
+<td>简单</td>
+<td>1288</td>
+</tr>
 </tbody>
 </table>
 <h2 id="自底向上-dfs">自底向上 DFS</h2>
@@ -665,14 +673,38 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/average-of-lev
 <td>简单</td>
 <td></td>
 </tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximum-level-sum-of-a-binary-tree/description/">1161.
+最大层内元素和</a></td>
+<td>第 150 场周赛 Q2</td>
+<td>中等</td>
+<td>1250</td>
+</tr>
+<tr class="even">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/kth-largest-sum-in-a-binary-tree/description/">2583.
+二叉树中的第 K 大层和</a></td>
+<td>第 335 场周赛 Q2</td>
+<td>中等</td>
+<td>1374</td>
+</tr>
+<tr class="odd">
+<td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/deepest-leaves-sum/description/">1302.
+层数最深叶子节点的和</a></td>
+<td>第 16 场双周赛 Q3</td>
+<td>中等</td>
+<td>1388</td>
+</tr>
 </tbody>
 </table>
 <h1 id="题解">题解</h1>
 <h2 id="二叉树的前序遍历">144. 二叉树的前序遍历</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(0, 0)" id="tab-button-0-0">Golang</button>
+        <button onclick="showTab(43, 0)" id="tab-button-43-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-0" id="tab-0-0">
+        <div class="tab-content tab-content-43" id="tab-43-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -698,9 +730,9 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/average-of-lev
         </div></div>
 <h2 id="二叉树的中序遍历">94. 二叉树的中序遍历</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(1, 0)" id="tab-button-1-0">Golang</button>
+        <button onclick="showTab(44, 0)" id="tab-button-44-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-1" id="tab-1-0">
+        <div class="tab-content tab-content-44" id="tab-44-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -725,9 +757,9 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/average-of-lev
         </div></div>
 <h2 id="二叉树的后序遍历">145. 二叉树的后序遍历</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(2, 0)" id="tab-button-2-0">Golang</button>
+        <button onclick="showTab(45, 0)" id="tab-button-45-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-2" id="tab-2-0">
+        <div class="tab-content tab-content-45" id="tab-45-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -752,9 +784,9 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/average-of-lev
         </div></div>
 <h2 id="叶子相似的树">872. 叶子相似的树</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(3, 0)" id="tab-button-3-0">Golang</button>
+        <button onclick="showTab(46, 0)" id="tab-button-46-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-3" id="tab-3-0">
+        <div class="tab-content tab-content-46" id="tab-46-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -791,9 +823,9 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/average-of-lev
         </div></div>
 <h2 id="左叶子之和">404. 左叶子之和</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(4, 0)" id="tab-button-4-0">Golang</button>
+        <button onclick="showTab(47, 0)" id="tab-button-47-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-4" id="tab-4-0">
+        <div class="tab-content tab-content-47" id="tab-47-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -821,9 +853,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
 <p>令 <span class="math inline">\(x\)</span>
 为二叉树的根节点，可以得出结论：二叉树根节点的值即为所有节点中的最小值。
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(5, 0)" id="tab-button-5-0">Golang</button>
+        <button onclick="showTab(48, 0)" id="tab-button-48-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-5" id="tab-5-0">
+        <div class="tab-content tab-content-48" id="tab-48-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">findSecondMinimumValue</span><span class="hljs-params">(root *TreeNode)</span></span> <span class="hljs-type">int</span> {
     ans := <span class="hljs-number">-1</span>
     rootVal := root.Val
@@ -844,11 +876,11 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div></p>
 <h2 id="二叉树的最大深度">104. 二叉树的最大深度</h2>
 <p>解法一：自顶向下，解法二：自底向上 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(6, 0)" id="tab-button-6-0">Golang1</button>
+        <button onclick="showTab(49, 0)" id="tab-button-49-0">Golang1</button>
         
-        <button onclick="showTab(6, 1)" id="tab-button-6-1">Golang2</button>
+        <button onclick="showTab(49, 1)" id="tab-button-49-1">Golang2</button>
         </div>
-        <div class="tab-content tab-content-6" id="tab-6-0">
+        <div class="tab-content tab-content-49" id="tab-49-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -871,7 +903,7 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
     <span class="hljs-keyword">return</span> ans
 }</pre>
         </div>
-        <div class="tab-content tab-content-6" id="tab-6-1">
+        <div class="tab-content tab-content-49" id="tab-49-1">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">maxDepth</span><span class="hljs-params">(root *TreeNode)</span></span> <span class="hljs-type">int</span> {
     <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(*TreeNode)</span></span> <span class="hljs-type">int</span>
     dfs = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(r *TreeNode)</span></span> <span class="hljs-type">int</span> {
@@ -886,11 +918,11 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div></p>
 <h2 id="二叉树的最小深度">111. 二叉树的最小深度</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(7, 0)" id="tab-button-7-0">Golang1</button>
+        <button onclick="showTab(50, 0)" id="tab-button-50-0">Golang1</button>
         
-        <button onclick="showTab(7, 1)" id="tab-button-7-1">Golang2</button>
+        <button onclick="showTab(50, 1)" id="tab-button-50-1">Golang2</button>
         </div>
-        <div class="tab-content tab-content-7" id="tab-7-0">
+        <div class="tab-content tab-content-50" id="tab-50-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -919,7 +951,7 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
     <span class="hljs-keyword">return</span> ans
 }</pre>
         </div>
-        <div class="tab-content tab-content-7" id="tab-7-1">
+        <div class="tab-content tab-content-50" id="tab-50-1">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -947,9 +979,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="路径总和">112. 路径总和</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(8, 0)" id="tab-button-8-0">Golang</button>
+        <button onclick="showTab(51, 0)" id="tab-button-51-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-8" id="tab-8-0">
+        <div class="tab-content tab-content-51" id="tab-51-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -975,9 +1007,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="求根节点到叶节点数字之和">129. 求根节点到叶节点数字之和</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(9, 0)" id="tab-button-9-0">Golang</button>
+        <button onclick="showTab(52, 0)" id="tab-button-52-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-9" id="tab-9-0">
+        <div class="tab-content tab-content-52" id="tab-52-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1006,9 +1038,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
 <h2 id="二叉树的右视图">199. 二叉树的右视图</h2>
 <p>先递归右子树，再递归左子树，当某个深度首次到达时，对应的节点就在右视图中。</p>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(10, 0)" id="tab-button-10-0">Golang</button>
+        <button onclick="showTab(53, 0)" id="tab-button-53-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-10" id="tab-10-0">
+        <div class="tab-content tab-content-53" id="tab-53-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1035,9 +1067,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="二叉树中的伪回文路径">1457. 二叉树中的伪回文路径</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(11, 0)" id="tab-button-11-0">Golang</button>
+        <button onclick="showTab(54, 0)" id="tab-button-54-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-11" id="tab-11-0">
+        <div class="tab-content tab-content-54" id="tab-54-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1065,9 +1097,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="祖父节点值为偶数的节点和">1315. 祖父节点值为偶数的节点和</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(12, 0)" id="tab-button-12-0">Golang</button>
+        <button onclick="showTab(55, 0)" id="tab-button-55-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-12" id="tab-12-0">
+        <div class="tab-content tab-content-55" id="tab-55-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1094,9 +1126,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="从叶结点开始的最小字符串">988. 从叶结点开始的最小字符串</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(13, 0)" id="tab-button-13-0">Golang</button>
+        <button onclick="showTab(56, 0)" id="tab-button-56-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-13" id="tab-13-0">
+        <div class="tab-content tab-content-56" id="tab-56-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1129,9 +1161,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
 <h2 id="节点与其祖先之间的最大差值">1026.
 节点与其祖先之间的最大差值</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(14, 0)" id="tab-button-14-0">Golang</button>
+        <button onclick="showTab(57, 0)" id="tab-button-57-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-14" id="tab-14-0">
+        <div class="tab-content tab-content-57" id="tab-57-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1158,9 +1190,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="从根到叶的二进制数之和">1022. 从根到叶的二进制数之和</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(15, 0)" id="tab-button-15-0">Golang</button>
+        <button onclick="showTab(58, 0)" id="tab-button-58-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-15" id="tab-15-0">
+        <div class="tab-content tab-content-58" id="tab-58-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1188,9 +1220,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="在二叉树中增加一行">623. 在二叉树中增加一行</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(16, 0)" id="tab-button-16-0">Golang</button>
+        <button onclick="showTab(59, 0)" id="tab-button-59-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-16" id="tab-16-0">
+        <div class="tab-content tab-content-59" id="tab-59-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1224,9 +1256,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="二叉树中的最长交错路径">1372. 二叉树中的最长交错路径</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(17, 0)" id="tab-button-17-0">Golang</button>
+        <button onclick="showTab(60, 0)" id="tab-button-60-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-17" id="tab-17-0">
+        <div class="tab-content tab-content-60" id="tab-60-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1262,9 +1294,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
 <code>-1</code>。</p>
 <p>否则，当期望的下一个数字与即将遍历的子节点的值不同的时候，就需要翻转一下当前节点。
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(18, 0)" id="tab-button-18-0">Golang</button>
+        <button onclick="showTab(61, 0)" id="tab-button-61-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-18" id="tab-18-0">
+        <div class="tab-content tab-content-61" id="tab-61-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1300,9 +1332,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div></p>
 <h2 id="单值二叉树">965. 单值二叉树</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(19, 0)" id="tab-button-19-0">Golang</button>
+        <button onclick="showTab(62, 0)" id="tab-button-62-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-19" id="tab-19-0">
+        <div class="tab-content tab-content-62" id="tab-62-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1327,9 +1359,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="相同的树">100. 相同的树</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(20, 0)" id="tab-button-20-0">Golang</button>
+        <button onclick="showTab(63, 0)" id="tab-button-63-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-20" id="tab-20-0">
+        <div class="tab-content tab-content-63" id="tab-63-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1352,9 +1384,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="对称二叉树">101. 对称二叉树</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(21, 0)" id="tab-button-21-0">Golang</button>
+        <button onclick="showTab(64, 0)" id="tab-button-64-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-21" id="tab-21-0">
+        <div class="tab-content tab-content-64" id="tab-64-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1385,9 +1417,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
 <li>值相等孩子是否相等。由于可以翻转，所以需要判断两种情况。</li>
 </ul>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(22, 0)" id="tab-button-22-0">Golang</button>
+        <button onclick="showTab(65, 0)" id="tab-button-65-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-22" id="tab-22-0">
+        <div class="tab-content tab-content-65" id="tab-65-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1411,9 +1443,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="平衡二叉树">110. 平衡二叉树</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(23, 0)" id="tab-button-23-0">Golang</button>
+        <button onclick="showTab(66, 0)" id="tab-button-66-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-23" id="tab-23-0">
+        <div class="tab-content tab-content-66" id="tab-66-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1452,9 +1484,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="翻转二叉树">226. 翻转二叉树</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(24, 0)" id="tab-button-24-0">Golang</button>
+        <button onclick="showTab(67, 0)" id="tab-button-67-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-24" id="tab-24-0">
+        <div class="tab-content tab-content-67" id="tab-67-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1478,9 +1510,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="合并二叉树">617. 合并二叉树</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(25, 0)" id="tab-button-25-0">Golang</button>
+        <button onclick="showTab(68, 0)" id="tab-button-68-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-25" id="tab-25-0">
+        <div class="tab-content tab-content-68" id="tab-68-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1510,9 +1542,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="计算布尔二叉树的值">2331. 计算布尔二叉树的值</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(26, 0)" id="tab-button-26-0">Golang</button>
+        <button onclick="showTab(69, 0)" id="tab-button-69-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-26" id="tab-26-0">
+        <div class="tab-content tab-content-69" id="tab-69-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1542,9 +1574,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="出现次数最多的子树元素和">508. 出现次数最多的子树元素和</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(27, 0)" id="tab-button-27-0">Golang</button>
+        <button onclick="showTab(70, 0)" id="tab-button-70-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-27" id="tab-27-0">
+        <div class="tab-content tab-content-70" id="tab-70-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1580,9 +1612,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="二叉树的坡度">563. 二叉树的坡度</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(28, 0)" id="tab-button-28-0">Golang</button>
+        <button onclick="showTab(71, 0)" id="tab-button-71-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-28" id="tab-28-0">
+        <div class="tab-content tab-content-71" id="tab-71-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1614,9 +1646,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="根据二叉树创建字符串">606. 根据二叉树创建字符串</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(29, 0)" id="tab-button-29-0">Golang</button>
+        <button onclick="showTab(72, 0)" id="tab-button-72-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-29" id="tab-29-0">
+        <div class="tab-content tab-content-72" id="tab-72-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">tree2str</span><span class="hljs-params">(root *TreeNode)</span></span> <span class="hljs-type">string</span> {
     <span class="hljs-keyword">switch</span> {
     <span class="hljs-keyword">case</span> root == <span class="hljs-literal">nil</span>:
@@ -1633,9 +1665,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
 <h2 id="统计值等于子树平均值的节点数">2265.
 统计值等于子树平均值的节点数</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(30, 0)" id="tab-button-30-0">Golang</button>
+        <button onclick="showTab(73, 0)" id="tab-button-73-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-30" id="tab-30-0">
+        <div class="tab-content tab-content-73" id="tab-73-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1665,9 +1697,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="分裂二叉树的最大乘积">1339. 分裂二叉树的最大乘积</h2>
 <p>第一遍 dfs 求总和，第二遍枚举断哪条边 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(31, 0)" id="tab-button-31-0">Golang</button>
+        <button onclick="showTab(74, 0)" id="tab-button-74-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-31" id="tab-31-0">
+        <div class="tab-content tab-content-74" id="tab-74-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1696,9 +1728,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
 <h2 id="二叉树着色游戏">1145. 二叉树着色游戏</h2>
 <p>蓝色最优的点只有三个点可以选，就是红色点的三个相邻节点，所以只需要判断这三种情况即可。
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(32, 0)" id="tab-button-32-0">Golang</button>
+        <button onclick="showTab(75, 0)" id="tab-button-75-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-32" id="tab-32-0">
+        <div class="tab-content tab-content-75" id="tab-75-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1726,9 +1758,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div></p>
 <h2 id="另一棵树的子树">572. 另一棵树的子树</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(33, 0)" id="tab-button-33-0">Golang</button>
+        <button onclick="showTab(76, 0)" id="tab-button-76-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-33" id="tab-33-0">
+        <div class="tab-content tab-content-76" id="tab-76-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1761,9 +1793,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="好叶子节点对的数量">1530. 好叶子节点对的数量</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(34, 0)" id="tab-button-34-0">Golang</button>
+        <button onclick="showTab(77, 0)" id="tab-button-77-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-34" id="tab-34-0">
+        <div class="tab-content tab-content-77" id="tab-77-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1805,9 +1837,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="二叉树剪枝">814. 二叉树剪枝</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(35, 0)" id="tab-button-35-0">Golang</button>
+        <button onclick="showTab(78, 0)" id="tab-button-78-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-35" id="tab-35-0">
+        <div class="tab-content tab-content-78" id="tab-78-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1830,9 +1862,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="删除给定值的叶子节点">1325. 删除给定值的叶子节点</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(36, 0)" id="tab-button-36-0">Golang</button>
+        <button onclick="showTab(79, 0)" id="tab-button-79-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-36" id="tab-36-0">
+        <div class="tab-content tab-content-79" id="tab-79-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1855,9 +1887,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="删点成林">1110. 删点成林</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(37, 0)" id="tab-button-37-0">Golang</button>
+        <button onclick="showTab(80, 0)" id="tab-button-80-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-37" id="tab-37-0">
+        <div class="tab-content tab-content-80" id="tab-80-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1901,9 +1933,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="二叉树的直径">543. 二叉树的直径</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(38, 0)" id="tab-button-38-0">Golang</button>
+        <button onclick="showTab(81, 0)" id="tab-button-81-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-38" id="tab-38-0">
+        <div class="tab-content tab-content-81" id="tab-81-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1928,9 +1960,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="最长同值路径">687. 最长同值路径</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(39, 0)" id="tab-button-39-0">Golang</button>
+        <button onclick="showTab(82, 0)" id="tab-button-82-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-39" id="tab-39-0">
+        <div class="tab-content tab-content-82" id="tab-82-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1962,9 +1994,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
 <h2 id="二叉树中的最大路径和">124. 二叉树中的最大路径和</h2>
 <p>题目求的是<strong>链</strong>，因此不必从叶子节点出发，所以需要加上一个
 <span class="math inline">\(max\)</span> 判断。 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(40, 0)" id="tab-button-40-0">Golang</button>
+        <button onclick="showTab(83, 0)" id="tab-button-83-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-40" id="tab-40-0">
+        <div class="tab-content tab-content-83" id="tab-83-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1990,9 +2022,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div></p>
 <h2 id="感染二叉树需要的总时间">2385. 感染二叉树需要的总时间</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(41, 0)" id="tab-button-41-0">Golang</button>
+        <button onclick="showTab(84, 0)" id="tab-button-84-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-41" id="tab-41-0">
+        <div class="tab-content tab-content-84" id="tab-84-0">
             <pre><span class="hljs-comment">// 三种情况：</span>
 <span class="hljs-comment">// 1. 最长路径在 start 节点的左子树</span>
 <span class="hljs-comment">// 2. 最长路径在 start 节点的右子树</span>
@@ -2029,9 +2061,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="二叉树的最近公共祖先">236. 二叉树的最近公共祖先</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(42, 0)" id="tab-button-42-0">Golang</button>
+        <button onclick="showTab(85, 0)" id="tab-button-85-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-42" id="tab-42-0">
+        <div class="tab-content tab-content-85" id="tab-85-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">lowestCommonAncestor</span><span class="hljs-params">(root, p, q *TreeNode)</span></span> *TreeNode {
     <span class="hljs-keyword">if</span> root == <span class="hljs-literal">nil</span> || root == p || root == q {
         <span class="hljs-keyword">return</span> root
@@ -2050,9 +2082,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="二叉搜索树的最近公共祖先">235. 二叉搜索树的最近公共祖先</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(43, 0)" id="tab-button-43-0">Golang</button>
+        <button onclick="showTab(86, 0)" id="tab-button-86-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-43" id="tab-43-0">
+        <div class="tab-content tab-content-86" id="tab-86-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -2073,9 +2105,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="最深叶节点的最近公共祖先">1123. 最深叶节点的最近公共祖先</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(44, 0)" id="tab-button-44-0">Golang</button>
+        <button onclick="showTab(87, 0)" id="tab-button-87-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-44" id="tab-44-0">
+        <div class="tab-content tab-content-87" id="tab-87-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -2107,9 +2139,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="二叉树的层序遍历">102. 二叉树的层序遍历</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(45, 0)" id="tab-button-45-0">Golang</button>
+        <button onclick="showTab(88, 0)" id="tab-button-88-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-45" id="tab-45-0">
+        <div class="tab-content tab-content-88" id="tab-88-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -2144,9 +2176,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="二叉树的锯齿形层序遍历">103. 二叉树的锯齿形层序遍历</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(46, 0)" id="tab-button-46-0">Golang</button>
+        <button onclick="showTab(89, 0)" id="tab-button-89-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-46" id="tab-46-0">
+        <div class="tab-content tab-content-89" id="tab-89-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -2185,9 +2217,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="找树左下角的值">513. 找树左下角的值</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(47, 0)" id="tab-button-47-0">Golang</button>
+        <button onclick="showTab(90, 0)" id="tab-button-90-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-47" id="tab-47-0">
+        <div class="tab-content tab-content-90" id="tab-90-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -2218,9 +2250,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
         </div></div>
 <h2 id="在每个树行中找最大值">515. 在每个树行中找最大值</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(48, 0)" id="tab-button-48-0">Golang</button>
+        <button onclick="showTab(91, 0)" id="tab-button-91-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-48" id="tab-48-0">
+        <div class="tab-content tab-content-91" id="tab-91-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -2255,9 +2287,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
 <h2 id="通知所有员工所需的时间">1376. 通知所有员工所需的时间</h2>
 <p>自顶向上，自底向下都能做</p>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(49, 0)" id="tab-button-49-0">Golang</button>
+        <button onclick="showTab(92, 0)" id="tab-button-92-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-49" id="tab-49-0">
+        <div class="tab-content tab-content-92" id="tab-92-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">numOfMinutes</span><span class="hljs-params">(n <span class="hljs-type">int</span>, headID <span class="hljs-type">int</span>, manager []<span class="hljs-type">int</span>, informTime []<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     g := <span class="hljs-built_in">make</span>([][]<span class="hljs-type">int</span>, n)
     <span class="hljs-keyword">for</span> u, v := <span class="hljs-keyword">range</span> manager {
@@ -2279,9 +2311,9 @@ class="math inline">\(x\)</span> 为根的子树中所有节点的值。</p>
 <h2 id="收集树上所有苹果的最少时间">1443.
 收集树上所有苹果的最少时间</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(50, 0)" id="tab-button-50-0">Golang</button>
+        <button onclick="showTab(93, 0)" id="tab-button-93-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-50" id="tab-50-0">
+        <div class="tab-content tab-content-93" id="tab-93-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">minTime</span><span class="hljs-params">(n <span class="hljs-type">int</span>, edges [][]<span class="hljs-type">int</span>, hasApple []<span class="hljs-type">bool</span>)</span></span> <span class="hljs-type">int</span> {
     g := <span class="hljs-built_in">make</span>([][]<span class="hljs-type">int</span>, n)
     <span class="hljs-keyword">for</span> _, edge := <span class="hljs-keyword">range</span> edges {
@@ -2315,9 +2347,9 @@ class="math inline">\(\frac{1}{c}\)</span>。因此答案可以看做是由若�
 <span class="math inline">\(1\)</span>
 的分数相乘得到，那么我们可以只计算分母，最后计算倒数。如果青蛙跳到了叶子节点，那么它会停留在叶子节点上。</p>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(51, 0)" id="tab-button-51-0">Golang</button>
+        <button onclick="showTab(94, 0)" id="tab-button-94-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-51" id="tab-51-0">
+        <div class="tab-content tab-content-94" id="tab-94-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">frogPosition</span><span class="hljs-params">(n <span class="hljs-type">int</span>, edges [][]<span class="hljs-type">int</span>, t <span class="hljs-type">int</span>, target <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">float64</span> {
     g := <span class="hljs-built_in">make</span>([][]<span class="hljs-type">int</span>, n + <span class="hljs-number">1</span>) 
     g[<span class="hljs-number">1</span>] = []<span class="hljs-type">int</span>{<span class="hljs-number">0</span>}
@@ -2350,13 +2382,158 @@ class="math inline">\(\frac{1}{c}\)</span>。因此答案可以看做是由若�
     <span class="hljs-keyword">return</span> ans
 }</pre>
         </div></div>
+<h2 id="最大层内元素和">1161. 最大层内元素和</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(95, 0)" id="tab-button-95-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-95" id="tab-95-0">
+            <pre><span class="hljs-comment">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">maxLevelSum</span><span class="hljs-params">(root *TreeNode)</span></span> (ans <span class="hljs-type">int</span>) {
+    cur := []*TreeNode{root}
+    ans = <span class="hljs-number">1</span>
+    mx, level := root.Val, <span class="hljs-number">1</span>
+    <span class="hljs-keyword">for</span> <span class="hljs-built_in">len</span>(cur) &gt; <span class="hljs-number">0</span> {
+        nxt := []*TreeNode{}
+        sum := <span class="hljs-number">0</span>
+        <span class="hljs-keyword">for</span> _, node := <span class="hljs-keyword">range</span> cur {
+            sum += node.Val
+            <span class="hljs-keyword">if</span> node.Left != <span class="hljs-literal">nil</span> {
+                nxt = <span class="hljs-built_in">append</span>(nxt, node.Left)
+            }
+            <span class="hljs-keyword">if</span> node.Right != <span class="hljs-literal">nil</span> {
+                nxt = <span class="hljs-built_in">append</span>(nxt, node.Right)
+            }
+        }
+        <span class="hljs-keyword">if</span> sum &gt; mx {
+            mx = sum
+            ans = level
+        }
+        level++
+        cur = nxt
+    } 
+    <span class="hljs-keyword">return</span> 
+}</pre>
+        </div></div>
+<h2 id="二叉树的堂兄弟节点">993. 二叉树的堂兄弟节点</h2>
+<p>dfs
+记录当前节点，当前节点的父节点，当前节点的深度。如果之前找到了就做对比，没找到就记录。
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(96, 0)" id="tab-button-96-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-96" id="tab-96-0">
+            <pre><span class="hljs-comment">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">isCousins</span><span class="hljs-params">(root *TreeNode, x <span class="hljs-type">int</span>, y <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">bool</span> {
+    depth := <span class="hljs-number">0</span>
+    <span class="hljs-keyword">var</span> father *TreeNode
+    <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(*TreeNode, *TreeNode, <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">bool</span>
+    dfs = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(cur, fa *TreeNode, d <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">bool</span> {
+        <span class="hljs-keyword">if</span> cur == <span class="hljs-literal">nil</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+        }
+        <span class="hljs-keyword">if</span> cur.Val == x || cur.Val == y {
+            <span class="hljs-keyword">if</span> depth &gt; <span class="hljs-number">0</span> {
+                <span class="hljs-keyword">return</span> depth == d &amp;&amp; fa != father
+            }
+            <span class="hljs-comment">// 之前没找到</span>
+            depth, father = d, fa
+        }
+        <span class="hljs-keyword">return</span> dfs(cur.Left, cur, d + <span class="hljs-number">1</span>) || dfs(cur.Right, cur, d + <span class="hljs-number">1</span>)
+    }
+    <span class="hljs-keyword">return</span> dfs(root, <span class="hljs-literal">nil</span>, <span class="hljs-number">1</span>)
+}</pre>
+        </div></div></p>
+<h2 id="二叉树中的第-k-大层和">2583. 二叉树中的第 K 大层和</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(97, 0)" id="tab-button-97-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-97" id="tab-97-0">
+            <pre><span class="hljs-comment">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">kthLargestLevelSum</span><span class="hljs-params">(root *TreeNode, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int64</span> {
+    cur := []*TreeNode{root}
+    s := []<span class="hljs-type">int64</span>{}
+    <span class="hljs-keyword">for</span> <span class="hljs-built_in">len</span>(cur) &gt; <span class="hljs-number">0</span> {
+        nxt := []*TreeNode{}
+        sum := <span class="hljs-type">int64</span>(<span class="hljs-number">0</span>)
+        <span class="hljs-keyword">for</span> _, node := <span class="hljs-keyword">range</span> cur {
+            sum += <span class="hljs-type">int64</span>(node.Val)
+            <span class="hljs-keyword">if</span> node.Left != <span class="hljs-literal">nil</span> {
+                nxt = <span class="hljs-built_in">append</span>(nxt, node.Left)
+            }
+            <span class="hljs-keyword">if</span> node.Right != <span class="hljs-literal">nil</span> {
+                nxt = <span class="hljs-built_in">append</span>(nxt, node.Right)
+            }
+        }
+        cur = nxt
+        s = <span class="hljs-built_in">append</span>(s, sum)
+    } 
+    <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(s) &lt; k {
+        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>
+    }
+    slices.Sort(s)
+    <span class="hljs-keyword">return</span> s[<span class="hljs-built_in">len</span>(s)-k]
+}</pre>
+        </div></div>
+<h2 id="层数最深叶子节点的和">1302. 层数最深叶子节点的和</h2>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(98, 0)" id="tab-button-98-0">Golang</button>
+        </div>
+        <div class="tab-content tab-content-98" id="tab-98-0">
+            <pre><span class="hljs-comment">/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">deepestLeavesSum</span><span class="hljs-params">(root *TreeNode)</span></span> (ans <span class="hljs-type">int</span>) {
+    cur := []*TreeNode{root}
+    <span class="hljs-keyword">for</span> <span class="hljs-built_in">len</span>(cur) &gt; <span class="hljs-number">0</span> {
+        nxt := []*TreeNode{}
+        sum := <span class="hljs-number">0</span>
+        <span class="hljs-keyword">for</span> _, node := <span class="hljs-keyword">range</span> cur {
+            sum += node.Val
+            <span class="hljs-keyword">if</span> node.Left != <span class="hljs-literal">nil</span> {
+                nxt = <span class="hljs-built_in">append</span>(nxt, node.Left)
+            }
+            <span class="hljs-keyword">if</span> node.Right != <span class="hljs-literal">nil</span> {
+                nxt = <span class="hljs-built_in">append</span>(nxt, node.Right)
+            }
+        }
+        cur = nxt
+        ans = sum
+    }
+    <span class="hljs-keyword">return</span>
+}</pre>
+        </div></div>
 
     </div>
     <div class="toc-container">
       <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A2%98%E5%8D%95"><span class="toc-number">1.</span> <span class="toc-text">题单</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%81%8D%E5%8E%86%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-number">1.1.</span> <span class="toc-text">遍历二叉树</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B-dfs"><span class="toc-number">1.2.</span> <span class="toc-text">自顶向下 DFS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%BA%95%E5%90%91%E4%B8%8A-dfs"><span class="toc-number">1.3.</span> <span class="toc-text">自底向上 DFS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%91%E7%9A%84%E7%9B%B4%E5%BE%84"><span class="toc-number">1.4.</span> <span class="toc-text">树的直径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88lca"><span class="toc-number">1.5.</span> <span class="toc-text">最近公共祖先（LCA）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bfs"><span class="toc-number">1.6.</span> <span class="toc-text">BFS</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A2%98%E8%A7%A3"><span class="toc-number">2.</span> <span class="toc-text">题解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="toc-number">2.1.</span> <span class="toc-text">144. 二叉树的前序遍历</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="toc-number">2.2.</span> <span class="toc-text">94. 二叉树的中序遍历</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="toc-number">2.3.</span> <span class="toc-text">145. 二叉树的后序遍历</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%B6%E5%AD%90%E7%9B%B8%E4%BC%BC%E7%9A%84%E6%A0%91"><span class="toc-number">2.4.</span> <span class="toc-text">872. 叶子相似的树</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A6%E5%8F%B6%E5%AD%90%E4%B9%8B%E5%92%8C"><span class="toc-number">2.5.</span> <span class="toc-text">404. 左叶子之和</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E7%AC%AC%E4%BA%8C%E5%B0%8F%E7%9A%84%E8%8A%82%E7%82%B9"><span class="toc-number">2.6.</span> <span class="toc-text">671. 二叉树中第二小的节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E6%B7%B1%E5%BA%A6"><span class="toc-number">2.7.</span> <span class="toc-text">104. 二叉树的最大深度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%B0%8F%E6%B7%B1%E5%BA%A6"><span class="toc-number">2.8.</span> <span class="toc-text">111. 二叉树的最小深度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E5%BE%84%E6%80%BB%E5%92%8C"><span class="toc-number">2.9.</span> <span class="toc-text">112. 路径总和</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B1%82%E6%A0%B9%E8%8A%82%E7%82%B9%E5%88%B0%E5%8F%B6%E8%8A%82%E7%82%B9%E6%95%B0%E5%AD%97%E4%B9%8B%E5%92%8C"><span class="toc-number">2.10.</span> <span class="toc-text">129. 求根节点到叶节点数字之和</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%8F%B3%E8%A7%86%E5%9B%BE"><span class="toc-number">2.11.</span> <span class="toc-text">199. 二叉树的右视图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E7%9A%84%E4%BC%AA%E5%9B%9E%E6%96%87%E8%B7%AF%E5%BE%84"><span class="toc-number">2.12.</span> <span class="toc-text">1457. 二叉树中的伪回文路径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A5%96%E7%88%B6%E8%8A%82%E7%82%B9%E5%80%BC%E4%B8%BA%E5%81%B6%E6%95%B0%E7%9A%84%E8%8A%82%E7%82%B9%E5%92%8C"><span class="toc-number">2.13.</span> <span class="toc-text">1315. 祖父节点值为偶数的节点和</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E5%8F%B6%E7%BB%93%E7%82%B9%E5%BC%80%E5%A7%8B%E7%9A%84%E6%9C%80%E5%B0%8F%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">2.14.</span> <span class="toc-text">988. 从叶结点开始的最小字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8A%82%E7%82%B9%E4%B8%8E%E5%85%B6%E7%A5%96%E5%85%88%E4%B9%8B%E9%97%B4%E7%9A%84%E6%9C%80%E5%A4%A7%E5%B7%AE%E5%80%BC"><span class="toc-number">2.15.</span> <span class="toc-text">1026.
 节点与其祖先之间的最大差值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E6%A0%B9%E5%88%B0%E5%8F%B6%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%95%B0%E4%B9%8B%E5%92%8C"><span class="toc-number">2.16.</span> <span class="toc-text">1022. 从根到叶的二进制数之和</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%A2%9E%E5%8A%A0%E4%B8%80%E8%A1%8C"><span class="toc-number">2.17.</span> <span class="toc-text">623. 在二叉树中增加一行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E7%9A%84%E6%9C%80%E9%95%BF%E4%BA%A4%E9%94%99%E8%B7%AF%E5%BE%84"><span class="toc-number">2.18.</span> <span class="toc-text">1372. 二叉树中的最长交错路径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BF%BB%E8%BD%AC%E4%BA%8C%E5%8F%89%E6%A0%91%E4%BB%A5%E5%8C%B9%E9%85%8D%E5%85%88%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="toc-number">2.19.</span> <span class="toc-text">971. 翻转二叉树以匹配先序遍历</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E5%80%BC%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-number">2.20.</span> <span class="toc-text">965. 单值二叉树</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%90%8C%E7%9A%84%E6%A0%91"><span class="toc-number">2.21.</span> <span class="toc-text">100. 相同的树</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E7%A7%B0%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-number">2.22.</span> <span class="toc-text">101. 对称二叉树</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BF%BB%E8%BD%AC%E7%AD%89%E4%BB%B7%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-number">2.23.</span> <span class="toc-text">951. 翻转等价二叉树</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-number">2.24.</span> <span class="toc-text">110. 平衡二叉树</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BF%BB%E8%BD%AC%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-number">2.25.</span> <span class="toc-text">226. 翻转二叉树</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%88%E5%B9%B6%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-number">2.26.</span> <span class="toc-text">617. 合并二叉树</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E5%B8%83%E5%B0%94%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%80%BC"><span class="toc-number">2.27.</span> <span class="toc-text">2331. 计算布尔二叉树的值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BA%E7%8E%B0%E6%AC%A1%E6%95%B0%E6%9C%80%E5%A4%9A%E7%9A%84%E5%AD%90%E6%A0%91%E5%85%83%E7%B4%A0%E5%92%8C"><span class="toc-number">2.28.</span> <span class="toc-text">508. 出现次数最多的子树元素和</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%9D%A1%E5%BA%A6"><span class="toc-number">2.29.</span> <span class="toc-text">563. 二叉树的坡度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B9%E6%8D%AE%E4%BA%8C%E5%8F%89%E6%A0%91%E5%88%9B%E5%BB%BA%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">2.30.</span> <span class="toc-text">606. 根据二叉树创建字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E5%80%BC%E7%AD%89%E4%BA%8E%E5%AD%90%E6%A0%91%E5%B9%B3%E5%9D%87%E5%80%BC%E7%9A%84%E8%8A%82%E7%82%B9%E6%95%B0"><span class="toc-number">2.31.</span> <span class="toc-text">2265.
 统计值等于子树平均值的节点数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E8%A3%82%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E4%B9%98%E7%A7%AF"><span class="toc-number">2.32.</span> <span class="toc-text">1339. 分裂二叉树的最大乘积</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9D%80%E8%89%B2%E6%B8%B8%E6%88%8F"><span class="toc-number">2.33.</span> <span class="toc-text">1145. 二叉树着色游戏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%A6%E4%B8%80%E6%A3%B5%E6%A0%91%E7%9A%84%E5%AD%90%E6%A0%91"><span class="toc-number">2.34.</span> <span class="toc-text">572. 另一棵树的子树</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A5%BD%E5%8F%B6%E5%AD%90%E8%8A%82%E7%82%B9%E5%AF%B9%E7%9A%84%E6%95%B0%E9%87%8F"><span class="toc-number">2.35.</span> <span class="toc-text">1530. 好叶子节点对的数量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E5%89%AA%E6%9E%9D"><span class="toc-number">2.36.</span> <span class="toc-text">814. 二叉树剪枝</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E7%BB%99%E5%AE%9A%E5%80%BC%E7%9A%84%E5%8F%B6%E5%AD%90%E8%8A%82%E7%82%B9"><span class="toc-number">2.37.</span> <span class="toc-text">1325. 删除给定值的叶子节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A0%E7%82%B9%E6%88%90%E6%9E%97"><span class="toc-number">2.38.</span> <span class="toc-text">1110. 删点成林</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E7%9B%B4%E5%BE%84"><span class="toc-number">2.39.</span> <span class="toc-text">543. 二叉树的直径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E9%95%BF%E5%90%8C%E5%80%BC%E8%B7%AF%E5%BE%84"><span class="toc-number">2.40.</span> <span class="toc-text">687. 最长同值路径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E7%9A%84%E6%9C%80%E5%A4%A7%E8%B7%AF%E5%BE%84%E5%92%8C"><span class="toc-number">2.41.</span> <span class="toc-text">124. 二叉树中的最大路径和</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%84%9F%E6%9F%93%E4%BA%8C%E5%8F%89%E6%A0%91%E9%9C%80%E8%A6%81%E7%9A%84%E6%80%BB%E6%97%B6%E9%97%B4"><span class="toc-number">2.42.</span> <span class="toc-text">2385. 感染二叉树需要的总时间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88"><span class="toc-number">2.43.</span> <span class="toc-text">236. 二叉树的最近公共祖先</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88"><span class="toc-number">2.44.</span> <span class="toc-text">235. 二叉搜索树的最近公共祖先</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E6%B7%B1%E5%8F%B6%E8%8A%82%E7%82%B9%E7%9A%84%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88"><span class="toc-number">2.45.</span> <span class="toc-text">1123. 最深叶节点的最近公共祖先</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="toc-number">2.46.</span> <span class="toc-text">102. 二叉树的层序遍历</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%94%AF%E9%BD%BF%E5%BD%A2%E5%B1%82%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="toc-number">2.47.</span> <span class="toc-text">103. 二叉树的锯齿形层序遍历</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%BE%E6%A0%91%E5%B7%A6%E4%B8%8B%E8%A7%92%E7%9A%84%E5%80%BC"><span class="toc-number">2.48.</span> <span class="toc-text">513. 找树左下角的值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E6%AF%8F%E4%B8%AA%E6%A0%91%E8%A1%8C%E4%B8%AD%E6%89%BE%E6%9C%80%E5%A4%A7%E5%80%BC"><span class="toc-number">2.49.</span> <span class="toc-text">515. 在每个树行中找最大值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E7%9F%A5%E6%89%80%E6%9C%89%E5%91%98%E5%B7%A5%E6%89%80%E9%9C%80%E7%9A%84%E6%97%B6%E9%97%B4"><span class="toc-number">2.50.</span> <span class="toc-text">1376. 通知所有员工所需的时间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%B6%E9%9B%86%E6%A0%91%E4%B8%8A%E6%89%80%E6%9C%89%E8%8B%B9%E6%9E%9C%E7%9A%84%E6%9C%80%E5%B0%91%E6%97%B6%E9%97%B4"><span class="toc-number">2.51.</span> <span class="toc-text">1443.
-收集树上所有苹果的最少时间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#t-%E7%A7%92%E5%90%8E%E9%9D%92%E8%9B%99%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="toc-number">2.52.</span> <span class="toc-text">1377. T 秒后青蛙的位置</span></a></li></ol></li></ol>
+收集树上所有苹果的最少时间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#t-%E7%A7%92%E5%90%8E%E9%9D%92%E8%9B%99%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="toc-number">2.52.</span> <span class="toc-text">1377. T 秒后青蛙的位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%A4%A7%E5%B1%82%E5%86%85%E5%85%83%E7%B4%A0%E5%92%8C"><span class="toc-number">2.53.</span> <span class="toc-text">1161. 最大层内元素和</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%A0%82%E5%85%84%E5%BC%9F%E8%8A%82%E7%82%B9"><span class="toc-number">2.54.</span> <span class="toc-text">993. 二叉树的堂兄弟节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E7%9A%84%E7%AC%AC-k-%E5%A4%A7%E5%B1%82%E5%92%8C"><span class="toc-number">2.55.</span> <span class="toc-text">2583. 二叉树中的第 K 大层和</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B1%82%E6%95%B0%E6%9C%80%E6%B7%B1%E5%8F%B6%E5%AD%90%E8%8A%82%E7%82%B9%E7%9A%84%E5%92%8C"><span class="toc-number">2.56.</span> <span class="toc-text">1302. 层数最深叶子节点的和</span></a></li></ol></li></ol>
     </div>
   </div>
   <footer class="article-footer">
