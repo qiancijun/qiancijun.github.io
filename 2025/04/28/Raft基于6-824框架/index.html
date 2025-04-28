@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+    
+      Raft基于6.824框架
+    
+</title>
+
+<link rel="icon" href="/images/favicon.ico">
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-calendar@2.3.4/dist/github-calendar.min.css">
+
+<link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/styles/github-dark-dimmed.min.css" rel="stylesheet">
+<!-- <link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark-reasonable.min.css" rel="stylesheet"> -->
+<link href="
+https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.css
+" rel="stylesheet">
+<link href="
+https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustomScrollbar.min.css
+" rel="stylesheet">
+<meta name="generator" content="Hexo 7.2.0"></head>
+<body>
+    <div class="main-container">
+        <div class="topbar">
+    <div class="btn-container">
+        <a href="/"><img class="btn-close" src="/images/close.svg" alt=""></a>
+        <a><img class="btn-minimize" src="/images/minimize.svg" alt=""></a>
+        <a><img class="btn-maximize" src="/images/maximize.svg" alt=""></a>
+    </div>
+    <div class="title">
+        <img src="/images/terminal.svg" alt="">
+        <span>cat Cheryl-Chun 淳老师 BLOG</span>
+    </div>
+</div>
+        <div class="nav-container">
+    <div class="posts">
+        <img src="/images/posts-list.svg" alt="">
+        <a href="/">Home</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+    <!-- <div class="tags">
+        <img src="/images/tag.svg" alt="">
+        <a href="/tag">Tag</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div> -->
+    <div>
+        <img src="/images/archive.svg" alt="">
+        <a href="/all-posts">Posts</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+    <!-- <div class="category">
+        <img src="/images/category.svg" alt="">
+        <a href="/category">Category</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div> -->
+    <div class="about">
+        <img src="/images/about.svg" alt="">
+        <a href="/about">About</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+</div>
+        <div class="main-content">
+            <article
+  id="post-Raft基于6-824框架"
+  class="article article-type-post"
+>
+  <div id="toc-show">
+    <img src="/images/toc.svg" alt="" />
+  </div>
+  
+  <h1 class="article-header">Raft基于6.824框架</h1>
+  
+  <div class="article-info">
+    <!-- <span>Document Attributes:</span> -->
+
+    <table>
+      <tr>
+        <td>
+            <img src="/images/time.svg" alt="">
+            Updated Time
+        </td>
+        <td>2025-04-28</td>
+      </tr>
+      <tr>
+        <td>
+            <img src="/images/category.svg" alt="">
+            Category
+        </td>
+        <td> <ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">分布式系统</a></li></ul> </td>
+      </tr>
+      <tr>
+        <td>
+            <img src="/images/tag.svg" alt="">
+            Tags
+        </td>
+        <td>
+	<a class="tag-link" href="/tags/raft/" rel="tag">raft</a>
+
+</td>
+      </tr>
+    </table>
+  </div>
+  <div class="article-entry">
+    <div class="content">
+      <h1 id="raft">Raft</h1>
+<p>6.824 的框架将实现 Raft 分为了四个
+Part，分别是领导者选举、日志同步、状态持久化和日志压缩。</p>
+<h2 id="领导者选举part-a">领导者选举（Part A）</h2>
+<p>这部分主要实现 Raft 选举和心跳逻辑（不携带日志的
+AppendEntries），主要的任务：</p>
+<ul>
+<li>选出<em>「唯一」</em>的领导者，领导者选出后会持续进行心跳避免其他人发出选举；</li>
+<li>旧的领导者宕机或者网络故障无法触达时，选出新的领导者</li>
+</ul>
+<p>将 PartA 的实现分为三个部分：</p>
+<ul>
+<li>状态转换：角色定义和转换函数</li>
+<li>选举逻辑：定义选举 RPC，构造周期性选举的 Loop</li>
+<li>心跳逻辑：定义心跳 RPC，当选 Leader 后发送心跳</li>
+</ul>
+<p>先根据论文来定义需要用的基本数据结构：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// A Go object implementing a single Raft peer.</span><br><span class="hljs-keyword">type</span> Raft <span class="hljs-keyword">struct</span> &#123;<br>  mu        sync.Mutex          <span class="hljs-comment">// Lock to protect shared access to this peer&#x27;s state</span><br>  peers     []*labrpc.ClientEnd <span class="hljs-comment">// RPC end points of all peers</span><br>  persister *Persister          <span class="hljs-comment">// Object to hold this peer&#x27;s persisted state</span><br>  me        <span class="hljs-type">int</span>                 <span class="hljs-comment">// this peer&#x27;s index into peers[]</span><br>  dead      <span class="hljs-type">int32</span>               <span class="hljs-comment">// set by Kill()</span><br><br>  <span class="hljs-comment">// Your data here (PartA, PartB, PartC).</span><br>  <span class="hljs-comment">// Look at the paper&#x27;s Figure 2 for a description of what</span><br>  <span class="hljs-comment">// state a Raft server must maintain.</span><br>  role Role<br>  currentTerm <span class="hljs-type">int</span><br>  votedFor    <span class="hljs-type">int</span> <span class="hljs-comment">// 在任期内是否投过票，没有投过则为 -1</span><br><br>  electionStart   time.Time     <span class="hljs-comment">// 每次选举计算时间点</span><br>  electionTimeout time.Duration <span class="hljs-comment">// 超时随机间隔</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>在工程实践中，<code>currentTerm</code>
+一般会建议用指定位数的整形，比如 <code>int32</code>。</p>
+</blockquote>
+<p>修改函数 <code>GetState</code>，让测试框架能够正确拿到 Raft
+节点的相关状态：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// return currentTerm and whether this server</span><br><span class="hljs-comment">// believes it is the leader.</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rf *Raft)</span></span> GetState() (<span class="hljs-type">int</span>, <span class="hljs-type">bool</span>) &#123;<br>  <span class="hljs-comment">// Your code here (PartA).</span><br>  rf.mu.Lock()<br>  <span class="hljs-keyword">defer</span> rf.mu.Unlock()<br>  <span class="hljs-keyword">return</span> rf.currentTerm, rf.role == Leader<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="状态转换">状态转换</h3>
+<p>状态是针对某一个节点 Peer 来说的，先定义一下角色类型：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Role <span class="hljs-type">string</span><br><br><span class="hljs-keyword">const</span> (<br>  Follower  Role = <span class="hljs-string">&quot;Follower&quot;</span><br>  Candidate Role = <span class="hljs-string">&quot;Candidate&quot;</span><br>  Leader    Role = <span class="hljs-string">&quot;Leader&quot;</span><br>)<br></code></pre></td></tr></table></figure>
+<p><img
+src="https://cheryl-picgo.oss-cn-hangzhou.aliyuncs.com/Pasted%20image%2020250428123247.png" /></p>
+<p>为了实现这个状态机，可以定义三个转换函数：<code>becomeCandidate</code>，<code>becomeLeader</code>
+和 <code>becomeFollower</code>。</p>
+<figure class="highlight golang"><table><tr><td class="code"><pre><code class="hljs golang"><span class="hljs-comment">// 角色转换状态机</span><br><span class="hljs-comment">// become a follower in `term`, term could not be decreased</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rf *Raft)</span></span> becomeFollowerLocked(term <span class="hljs-type">int</span>) &#123;<br>    <span class="hljs-keyword">if</span> term &lt; rf.currentTerm &#123;<br>            LOG(rf.me, rf.currentTerm, DError, <span class="hljs-string">&quot;Can&#x27;t become Follower, lower term&quot;</span>)<br>            <span class="hljs-keyword">return</span><br>    &#125;<br><br>    LOG(rf.me, rf.currentTerm, DLog, <span class="hljs-string">&quot;%s -&gt; Follower, For T%d-&gt;T%d&quot;</span>, <br>        rf.role, rf.currentTerm, term)<br>        <br>    <span class="hljs-keyword">if</span> term &gt; rf.currentTerm &#123; <br>            rf.votedFor = <span class="hljs-number">-1</span><br>    &#125;<br>    rf.role = Follower<br>    rf.currentTerm = term<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rf *Raft)</span></span> becomeCandidateLocked() &#123;<br>    <span class="hljs-keyword">if</span> rf.role == Leader &#123;<br>            LOG(rf.me, rf.currentTerm, DError, <span class="hljs-string">&quot;Leader can&#x27;t become Candidate&quot;</span>)<br>            <span class="hljs-keyword">return</span><br>    &#125;<br><br>    LOG(rf.me, rf.currentTerm, DVote, <span class="hljs-string">&quot;%s -&gt; Candidate, For T%d-&gt;T%d&quot;</span>, <br>        rf.role, rf.currentTerm, rf.currentTerm+<span class="hljs-number">1</span>)<br>    rf.role = Candidate<br>    rf.currentTerm++<br>    rf.votedFor = rf.me<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rf *Raft)</span></span> becomeLeaderLocked() &#123;<br>    <span class="hljs-keyword">if</span> rf.role != Candidate &#123;<br>            LOG(rf.me, rf.currentTerm, DLeader, <br>                <span class="hljs-string">&quot;%s, Only candidate can become Leader&quot;</span>, rf.role)<br>            <span class="hljs-keyword">return</span><br>    &#125;<br><br>    LOG(rf.me, rf.currentTerm, DLeader, <span class="hljs-string">&quot;%s -&gt; Leader, For T%d&quot;</span>, <br>        rf.role, rf.currentTerm)<br>    rf.role = Leader<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>由于涉及对 Raft
+的全局状态进行修改，因此需要加锁，且希望在函数外部加锁，所以函数名都带有
+<em>Locked</em>。</p>
+<h3 id="选举-loop">选举 Loop</h3>
+<p>Candidate 要票的整体逻辑：</p>
+<ul>
+<li>选举 Loop：负责超时检查，来定时发送选举 RPC；</li>
+<li>单轮选举：变为 Candidate 后，向所有除自己的 Peer
+之外发起一次要票过程；</li>
+<li>单次 RPC：针对每个 Peer 的 RequestVote 的请求响应进行处理；</li>
+</ul>
+<p><strong>选举
+Loop</strong>：基本逻辑是在每次循环时，进行两项检查，「超时检查」和「角色检查」。</p>
+<ul>
+<li>超时检查：检查 <strong>选举 Timer</strong>
+是否已经超时，只有超时才会真正发起选举，这里要注意的是在实现上会增加一个随机值，避免同意的超时间隔时间而导致一同发起选举。</li>
+<li>角色检查：判断是否为 Leader，如果自己已经是 Leader
+不用发起选举。</li>
+</ul>
+<p>第一步要实现的是设置随机超时时间和超时检测函数：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">const</span> (<br>  electionTimeoutMin time.Duration = <span class="hljs-number">250</span> * time.Millisecond<br>  electionTimeoutMax time.Duration = <span class="hljs-number">400</span> * time.Millisecond<br>)<br><br><span class="hljs-comment">// 重制选举时钟</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rf *Raft)</span></span> resetElectionTimerLocked() &#123;<br>  rf.electionStart = time.Now()<br>  randRange := <span class="hljs-type">int64</span>(electionTimeoutMax - electionTimeoutMin)<br>  rf.electionTimeout = electionTimeoutMin + time.Duration(rand.Int63()%randRange)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rf *Raft)</span></span> isElectionTimeoutLocked() <span class="hljs-type">bool</span> &#123;<br>  <span class="hljs-keyword">return</span> time.Since(rf.electionStart) &gt; rf.electionTimeout<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>选举 Loop</strong>：当满足两个条件时，将角色装变为
+<code>Candidate</code>，然后异步的发起选举（同步会造成主循环检查延迟）：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rf *Raft)</span></span> electionTicker() &#123;<br>  <span class="hljs-keyword">for</span> !rf.killed() &#123;<br>    <span class="hljs-comment">// Your code here (PartA)</span><br>    <span class="hljs-comment">// Check if a leader election should be started.</span><br>    rf.mu.Lock()<br>    <span class="hljs-keyword">if</span> rf.role != Leader &amp;&amp; rf.isElectionTimeoutLocked() &#123;<br>      rf.becomeCandidateLocked()<br>      <span class="hljs-keyword">go</span> rf.startElection(rf.currentTerm)<br>    &#125;<br>    rf.mu.Unlock()<br><br>    <span class="hljs-comment">// pause for a random amount of time between 50 and 350</span><br>    <span class="hljs-comment">// milliseconds.</span><br>    ms := <span class="hljs-number">50</span> + (rand.Int63() % <span class="hljs-number">300</span>)<br>    time.Sleep(time.Duration(ms) * time.Millisecond)<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>所有需要用到 Raft 全局变量的地方都需要加锁，但是不要在加锁的时候发送
+RPC，这会造成长时间占用锁，同时增加发生死锁的可能性。</p>
+<p>该 Loop 的生命周期和 Raft Peer 相同，<strong>在创建 Raft
+实例时就在后台开始运行</strong>：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Make</span><span class="hljs-params">(peers []*labrpc.ClientEnd, me <span class="hljs-type">int</span>,</span></span><br><span class="hljs-params"><span class="hljs-function">  persister *Persister, applyCh <span class="hljs-keyword">chan</span> ApplyMsg)</span></span> *Raft &#123;<br>    <span class="hljs-comment">// ...</span><br>  <span class="hljs-comment">// start ticker goroutine to start elections</span><br>  <span class="hljs-keyword">go</span> rf.electionTicker()<br><br>  <span class="hljs-keyword">return</span> rf<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>单轮选举</strong>：一轮选举需要对除自己以外所有的 Peer
+都发起一轮 RPC 投票请求，由于需要访问全局变量，所以仍然需要加锁。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rf *Raft)</span></span> startElection(term <span class="hljs-type">int</span>) <span class="hljs-type">bool</span> &#123;<br>    votes := <span class="hljs-number">0</span><br>    askVoteFromPeer := <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(peer <span class="hljs-type">int</span>, args *RequestVoteArgs)</span></span> &#123;<br>            <span class="hljs-comment">// send rpc to `peer` and handle the response</span><br>    &#125;<br><br>    rf.mu.Lock()<br>    <span class="hljs-keyword">defer</span> rf.mu.Unlock()<br><br>    <span class="hljs-comment">// every time locked </span><br>    <span class="hljs-keyword">if</span> rf.contextLostLocked(Candidate, term) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>    &#125;<br><br>    <span class="hljs-keyword">for</span> peer := <span class="hljs-number">0</span>; peer &lt; <span class="hljs-built_in">len</span>(rf.peers); peer++ &#123;<br>            <span class="hljs-keyword">if</span> peer == rf.me &#123; <br>                    votes++<br>                    <span class="hljs-keyword">continue</span><br>            &#125;<br><br>            args := &amp;RequestVoteArgs&#123;<br>                    Term:        term,<br>                    CandidateId: rf.me,<br>            &#125;<br>            <span class="hljs-keyword">go</span> askVoteFromPeer(peer, args)<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br> &#125;<br></code></pre></td></tr></table></figure>
+<p><strong>上下文检查</strong>：这里的上下文指的是 <code>Term</code> 和
+<code>Role</code>，也就是说在一个任期内，只要角色没有发生变化，就可以推进状态机：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rf *Raft)</span></span> contextLostLocked(role Role, term <span class="hljs-type">int</span>) <span class="hljs-type">bool</span> &#123;<br>        <span class="hljs-keyword">return</span> !(rf.currentTerm == term &amp;&amp; rf.role == role)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>如果上下文已经被更改，那么就应该及时的退出
+goroutine，避免对状态机做出错误的改动。</p>
+<p><strong>单次 RPC</strong>：对每个 Peer 发送 RPC 请求，包括
+<strong>构造 RPC 参数</strong>、<strong>发送 RPC
+请求</strong>、<strong>等待结果并处理结果</strong> 三个部分。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go">askVoteFromPeer := <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(peer <span class="hljs-type">int</span>, args *RequestVoteArgs)</span></span> &#123;<br>    <span class="hljs-comment">// send RPC</span><br>    reply := &amp;RequestVoteReply&#123;&#125;<br>    ok := rf.sendRequestVote(peer, args, reply)<br><br>    <span class="hljs-comment">// handle the response</span><br>    rf.mu.Lock()<br>    <span class="hljs-keyword">defer</span> rf.mu.Unlock()<br>    <span class="hljs-keyword">if</span> !ok &#123;<br>        LOG(rf.me, rf.currentTerm, DDebug, <span class="hljs-string">&quot;Ask vote from %d, Lost or error&quot;</span>, peer)<br>        <span class="hljs-keyword">return</span><br>    &#125;<br><br>    <span class="hljs-comment">// align the term</span><br>    <span class="hljs-keyword">if</span> reply.Term &gt; rf.currentTerm &#123;<br>        rf.becomeFollowerLocked(reply.Term)<br>        <span class="hljs-keyword">return</span><br>    &#125;<br><br>    <span class="hljs-comment">// check the context</span><br>    <span class="hljs-keyword">if</span> rf.contextLostLocked(Candidate, term) &#123;<br>        LOG(rf.me, rf.currentTerm, DVote, <span class="hljs-string">&quot;Lost context, abort RequestVoteReply in T%d&quot;</span>, rf.currentTerm)<br>        <span class="hljs-keyword">return</span><br>    &#125;<br><br>    <span class="hljs-comment">// count votes</span><br>    <span class="hljs-keyword">if</span> reply.VoteGranted &#123;<br>        votes++<br>    &#125;<br>    <span class="hljs-keyword">if</span> votes &gt; <span class="hljs-built_in">len</span>(rf.peers)/<span class="hljs-number">2</span> &#123;<br>        rf.becomeLeaderLocked()<br>        <span class="hljs-keyword">go</span> rf.replicationTicker(term)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>在进行 RPC 的时候，要随时进行对齐任期的操作。只有 Term
+相同，才可以进行状态机的更新，否则就要优先对齐 Term：</p>
+<ul>
+<li>如果对方 Term 比自己小：无视请求，通过返回值表达自己的 Term；</li>
+<li>如果对方 Term 比自己大：跟上对方的 Term，维持 Follower；</li>
+</ul>
+<p>对齐 Term
+之后，还需要检查上下文。这里就有一个问题，什么时候需要进行上下文的检查？如果一段逻辑在一把锁的保护下不断的做，那并不需要检查上下文。但这里需要进行一些耗时的操作（如等待
+RPC），此时需要把锁临时断开。之后，重新上锁的时候，就需要考虑状态是否满足之前期望的状态。因为锁中间断开了，有些状态可能被其他线程修改了。</p>
+<p>所有 Peer 在运行时都会收到要票的 RPC，此时就会执行
+<code>RequestVote</code> 回调函数，也就是 Peer 收到 RPC
+要票请求时的处理逻辑：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rf *Raft)</span></span> RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) &#123;<br>    <span class="hljs-comment">// Your code here (PartA, PartB).</span><br>    rf.mu.Lock()<br>    <span class="hljs-keyword">defer</span> rf.mu.Unlock()<br><br>    <span class="hljs-comment">// align the term</span><br>    reply.Term = rf.currentTerm<br>    <span class="hljs-keyword">if</span> rf.currentTerm &gt; args.Term &#123;<br>            LOG(rf.me, rf.currentTerm, DVote, <span class="hljs-string">&quot;-&gt; S%d, Reject vote, higher term, T%d&gt;T%d&quot;</span>, args.CandidateId, rf.currentTerm, args.Term)<br>            reply.VoteGranted = <span class="hljs-literal">false</span><br>            <span class="hljs-keyword">return</span><br>    &#125;<br>    <span class="hljs-keyword">if</span> rf.currentTerm &lt; args.Term &#123;<br>            rf.becomeFollowerLocked(args.Term)<br>    &#125;<br><br>    <span class="hljs-comment">// check the votedFor</span><br>    <span class="hljs-keyword">if</span> rf.votedFor != <span class="hljs-number">-1</span> &amp;&amp; rf.votedFor != args.CandidateId &#123;<br>            LOG(rf.me, rf.currentTerm, DVote, <span class="hljs-string">&quot;-&gt; S%d, Reject, Already voted S%d&quot;</span>, args.CandidateId, rf.votedFor)<br>            reply.VoteGranted = <span class="hljs-literal">false</span><br>            <span class="hljs-keyword">return</span><br>    &#125;<br><br>    reply.VoteGranted = <span class="hljs-literal">true</span><br>    rf.votedFor = args.CandidateId<br>    rf.resetElectionTimerLocked()<br>    LOG(rf.me, rf.currentTerm, DVote, <span class="hljs-string">&quot;-&gt; S%d&quot;</span>, args.CandidateId)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>回调函数实现的第一点是先做对齐 Term，在对齐 Term 的过程中，Peer
+有可能重置
+votedFor。这样即使本来由于已经投过票了而不能再投票，但提高任期重置后，在新的
+Term 里，就又有一票可以投了。</p>
+<p>另外一点是，论文提到<em>只有投票给对方后，才能重置选举
+Timer</em>。也就是说，在没有投出票时，是不允许重置选举 Timer 的。</p>
+<h3 id="心跳逻辑">心跳逻辑</h3>
+<p><em>「心跳」</em>和<em>「日志复制」</em>是相同的
+RPC，他们的区别在于是否携带日志。和选举逻辑相对，也分三个层次来实现 RPC
+发送方：</p>
+<ul>
+<li>心跳 Loop：当选 Leader 需要不断的向其他 Peer 发送心跳包；</li>
+<li>单论心跳：对除自己以外所有的 Peer 发送一个心跳 RPC；</li>
+<li>单次 RPC：对某个 Peer 发送心跳包，处理 RPC 返回值；</li>
+</ul>
+<p><strong>心跳 Loop</strong>：由于不需要构造随机超时机制，因此心跳 Loop
+会比选举 Loop 简单一些：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rf *Raft)</span></span> replicationTicker(term <span class="hljs-type">int</span>) &#123;<br>  <span class="hljs-keyword">for</span> !rf.killed() &#123;<br>    ok := rf.startReplication(term)<br>    <span class="hljs-keyword">if</span> !ok &#123;<br>      <span class="hljs-keyword">return</span><br>    &#125;<br><br>    time.Sleep(replicateInterval)<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><code>startReplication</code>
+有一个返回值，用于检测是否还处于「上下文」的环境中，如果一旦发现 Raft
+已经不是这个 Term 的 Leader 了，就需要退出 Loop，不再广播心跳包。</p>
+<p><strong>单轮心跳</strong>：Leader 会给除自己外的所有其他 Peer
+发送心跳。在发送前要检测“上下文”是否还在，如果不在了，就直接返回
+false，告诉外层循环 <code>replicationTicker</code>
+可以终止循环了。因此，<code>startReplication</code>
+的返回值也可以视作是否成功的发起了一轮心跳。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rf *Raft)</span></span> startReplication(term <span class="hljs-type">int</span>) <span class="hljs-type">bool</span> &#123;<br>    replicateToPeer := <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(peer <span class="hljs-type">int</span>, args *AppendEntriesArgs)</span></span> &#123;<br>            <span class="hljs-comment">// send heartbeat RPC and handle the reply</span><br>    &#125;<br><br>    rf.mu.Lock()<br>    <span class="hljs-keyword">defer</span> rf.mu.Unlock()<br>    <span class="hljs-keyword">if</span> rf.contextLostLocked(Leader, term) &#123;<br>            LOG(rf.me, rf.currentTerm, DLeader, <span class="hljs-string">&quot;Leader[T%d] -&gt; %s[T%d]&quot;</span>, term, rf.role, rf.currentTerm)<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>    &#125;<br><br>    <span class="hljs-keyword">for</span> peer := <span class="hljs-number">0</span>; peer &lt; <span class="hljs-built_in">len</span>(rf.peers); peer++ &#123;<br>            <span class="hljs-keyword">if</span> peer == rf.me &#123;<br>                    <span class="hljs-keyword">continue</span><br>            &#125;<br><br>            args := &amp;AppendEntriesArgs&#123;<br>                    Term:     term,<br>                    LeaderId: rf.me,<br>            &#125;<br><br>            <span class="hljs-keyword">go</span> replicateToPeer(peer, args)<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>单次
+RPC</strong>：在不处理日志时，心跳的返回值比较简单，只需要对齐 Term
+即可。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go">replicateToPeer := <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(peer <span class="hljs-type">int</span>, args *AppendEntriesArgs)</span></span> &#123;<br>    reply := &amp;AppendEntriesReply&#123;&#125;<br>    ok := rf.sendAppendEntries(peer, args, reply)<br><br>    rf.mu.Lock()<br>    <span class="hljs-keyword">defer</span> rf.mu.Unlock()<br>    <span class="hljs-keyword">if</span> !ok &#123;<br>            LOG(rf.me, rf.currentTerm, DLog, <span class="hljs-string">&quot;-&gt; S%d, Lost or crashed&quot;</span>, peer)<br>            <span class="hljs-keyword">return</span><br>    &#125;<br>    <span class="hljs-comment">// align the term</span><br>    <span class="hljs-keyword">if</span> reply.Term &gt; rf.currentTerm &#123;<br>            rf.becomeFollowerLocked(reply.Term)<br>            <span class="hljs-keyword">return</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>心跳接收方在收到心跳包时，只要 Leader 的 Term
+不小于自己，就对其进行认可，变为 Follower，并重置选举时钟。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rf *Raft)</span></span> AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply) &#123;<br>    rf.mu.Lock()<br>    <span class="hljs-keyword">defer</span> rf.mu.Unlock()<br><br>    reply.Term = rf.currentTerm<br>    reply.Success = <span class="hljs-literal">false</span><br>    <span class="hljs-comment">// align the term</span><br>    <span class="hljs-keyword">if</span> args.Term &lt; rf.currentTerm &#123;<br>            LOG(rf.me, rf.currentTerm, DLog2, <span class="hljs-string">&quot;&lt;- S%d, Reject log&quot;</span>, args.LeaderId)<br>            <span class="hljs-keyword">return</span><br>    &#125;<br>    rf.becomeFollowerLocked(args.Term)<br>    <br><br>    <span class="hljs-comment">// reset the timer</span><br>    rf.resetElectionTimerLocked()<br>    reply.Success = <span class="hljs-literal">true</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="日志同步part-b">日志同步（Part B）</h2>
+<p>在 Part A 的基础上，加上对日志的复制，主要的任务有：</p>
+<ul>
+<li>在进行领导选举时，加入日志的比较</li>
+<li>领导者收到应用层发来的日志后，要通过心跳同步给所有的 Follower</li>
+<li>在收到多数 Follower 同步成功的请求后，Leader 要推进
+CommitIndex，并让所有 Peer Apply</li>
+</ul>
+<p>先对 <code>AppendEntries</code> 结构体进行完善，按照论文的 Figure 2
+来补全2 RPC 涉及到的结构体，根据 <code>ApplyMsg</code> 所需字段，定义
+<code>LogEntry</code>：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> LogEntry <span class="hljs-keyword">struct</span> &#123;<br>  Term         <span class="hljs-type">int</span>         <span class="hljs-comment">// Log 的 Term</span><br>  CommandValid <span class="hljs-type">bool</span>        <span class="hljs-comment">// Command 是否需要 Apply</span><br>  Command      <span class="hljs-keyword">interface</span>&#123;&#125; <span class="hljs-comment">// 存储到状态机里的指令</span><br>&#125;<br><br><span class="hljs-keyword">type</span> AppendEntriesArgs <span class="hljs-keyword">struct</span> &#123;<br>  Term     <span class="hljs-type">int</span><br>  LeaderId <span class="hljs-type">int</span><br><br>  <span class="hljs-comment">// 匹配点的试探</span><br>  PrevLogIndex <span class="hljs-type">int</span><br>  PrevLogTerm  <span class="hljs-type">int</span><br>  Entries      []LogEntry<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>完善 <code>Raft</code>
+中相关的字段，相对应字段的初始化这里就不再赘述。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// Leader 才会使用，每个 peer 的视图</span><br>nextIndex  []<span class="hljs-type">int</span><br>matchIndex []<span class="hljs-type">int</span><br></code></pre></td></tr></table></figure>
+<p>matchIndex 和 nextIndex 是 Leader 节点用来管理 Follower
+日志同步的两个关键字段，他们的作用分别是：</p>
+<ul>
+<li>nextIndex：预期下一次要发送给 Follower 的日志条目索引（初始值为
+Leader 的最后日志索引 +1）。</li>
+<li>matchIndex：已知 Follower 已复制的最高日志条目索引（初始值为
+0，表示未匹配）。</li>
+</ul>
+<p>一个 Peer 收到 RPC，需要做以下判断来决定是否能够增加日志：</p>
+<ul>
+<li>如果 <code>prevLog</code> 不匹配，则返回
+<code>Success = false</code>；</li>
+<li>如果 <code>prevLog</code> 匹配，则将参数中 <code>Entries</code>
+追加到本地日志，返回 <code>Success = true</code>；</li>
+</ul>
+<p>所谓的日志匹配就是<em>「相同 Index 的地方，Term 相同」</em>，index 和
+term 能唯一确定一条日志。Raft 保证一个 Term 中最多有（也可能没有）一个
+Leader，然后只有该 Leader 能确定日志顺序且同步日志。</p>
+<p>为了比较 Follower 和 Leader 的日志一致性，
+<code>PrevLogTerm</code>、<code>PrevLogIndex</code>，主要用于检测在
+Leader 的视图里，Follower 的日志是否正确。这两个字段分别代表：</p>
+<ul>
+<li>Leader 发送日志条目时，Follower
+前一个日志条目的索引（用于定位插入位置）。</li>
+<li>Leader 发送日志条目时，Follower
+前一个日志条目的任期号（用于验证一致性）。</li>
+</ul>
+<p>之前的心跳只是负责压制其他的 Peer 来发起选举，因此不用给 Leader 返回
+reply，但日志复制就需要返回 reply 了。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rf *Raft)</span></span> AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply) &#123;<br>    rf.mu.Lock()<br>    <span class="hljs-keyword">defer</span> rf.mu.Unlock()<br>    <br>    <span class="hljs-comment">// For debug</span><br>    LOG(rf.me, rf.currentTerm, DDebug, <span class="hljs-string">&quot;&lt;- S%d, Receive log, Prev=[%d]T%d, Len()=%d&quot;</span>, args.LeaderId, args.PrevLogIndex, args.PrevLogTerm, <span class="hljs-built_in">len</span>(args.Entries))<br>    <span class="hljs-comment">// replay initialized</span><br>    reply.Term = rf.currentTerm<br>    reply.Success = <span class="hljs-literal">false</span><br>    <br>    <span class="hljs-comment">// Term 对齐</span><br>    <span class="hljs-keyword">if</span> args.Term &lt; rf.currentTerm &#123;<br>            LOG(rf.me, rf.currentTerm, DLog2, <span class="hljs-string">&quot;&lt;- S%d, Reject Log, Higher term, T%d&lt;T%d&quot;</span>, args.LeaderId, args.Term, rf.currentTerm)<br>            <span class="hljs-keyword">return</span><br>    &#125;<br>    <span class="hljs-keyword">if</span> args.Term &gt;= rf.currentTerm &#123;<br>            rf.becomeFollowerLocked(args.Term)<br>    &#125;<br><br>    <span class="hljs-comment">// 没有足够的日志</span><br>    <span class="hljs-keyword">if</span> args.PrevLogIndex &gt;= <span class="hljs-built_in">len</span>(rf.log) &#123;<br>            LOG(rf.me, rf.currentTerm, DLog2, <span class="hljs-string">&quot;&lt;- S%d, Reject Log, Follower log too short, Len:%d &lt;= Prev:%d&quot;</span>, args.LeaderId, <span class="hljs-built_in">len</span>(rf.log), args.PrevLogIndex)<br>            <span class="hljs-keyword">return</span><br>    &#125;<br>    <span class="hljs-comment">// 对应位置上的日志 Term 不匹配</span><br>    <span class="hljs-keyword">if</span> rf.log[args.PrevLogIndex].Term != args.PrevLogTerm &#123;<br>            LOG(rf.me, rf.currentTerm, DLog2, <span class="hljs-string">&quot;&lt;- S%d, Reject Log, Prev log not match, [%d]: T%d != T%d&quot;</span>, args.LeaderId, args.PrevLogIndex, rf.log[args.PrevLogIndex].Term, args.PrevLogTerm)<br>            <span class="hljs-keyword">return</span><br>    &#125;<br>    <br>    <span class="hljs-comment">// append the leader logs to local</span><br>    <span class="hljs-comment">// 将 Leader 的 冲突位置之后的所有新条目 追加到 Follower 的日志中。</span><br>    conflictLogIndex := args.PrevLogIndex + <span class="hljs-number">1</span><br>    conflictEntryIdx := <span class="hljs-number">0</span><br>    <span class="hljs-keyword">for</span> ; conflictLogIndex &lt; <span class="hljs-built_in">len</span>(rf.log) &amp;&amp; conflictEntryIdx &lt; <span class="hljs-built_in">len</span>(args.Entries); conflictLogIndex++, conflictEntryIdx++ &#123;<br>        <span class="hljs-keyword">if</span> rf.log[conflictLogIndex].Term != args.Entries[conflictEntryIdx].Term &#123;<br>            <span class="hljs-keyword">break</span><br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">if</span> conflictEntryIdx &lt; <span class="hljs-built_in">len</span>(args.Entries) &#123;<br>        rf.log = <span class="hljs-built_in">append</span>(rf.log[:conflictLogIndex], args.Entries[conflictEntryIdx:]...)<br>        LOG(rf.me, rf.currentTerm, DLog2, <span class="hljs-string">&quot;Follower append logs: (%d, %d]&quot;</span>, conflictLogIndex<span class="hljs-number">-1</span>, args.PrevLogIndex+<span class="hljs-built_in">len</span>(args.Entries))<br>    &#125;<br>    reply.Success = <span class="hljs-literal">true</span><br>    <br>    <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> handle the args.LeaderCommit</span><br>    <br>    <span class="hljs-comment">// reset the election timer, promising not start election in some interval</span><br>    rf.resetElectionTimerLocked()<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>对于日志复制 RPC 的发送方来说，需要增加两部分逻辑：</p>
+<ul>
+<li>每个 RPC 发送前的参数构造；</li>
+<li>每个 RPC 返回值处理：
+<ul>
+<li>如果复制成功，看看是否能够更新 Leader 的
+<code>commitIndex</code></li>
+<li>如果复制失败，需要将匹配点回退，继续试探</li>
+</ul></li>
+</ul>
+<p>匹配点回退使用的是快速回溯算法，核心思想是<strong>快速回退到冲突任期（Term）的开始位置</strong>，从而高效解决
+Leader 和 Follower 之间的日志不一致问题。它的设计目标是 减少不必要的 RPC
+重试次数，直接跳过整个冲突任期的所有条目，而非逐条回退（线性回溯）。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rf *Raft)</span></span> startReplication(term <span class="hljs-type">int</span>) <span class="hljs-type">bool</span> &#123;<br>    replicateToPeer := <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(peer <span class="hljs-type">int</span>, args *AppendEntriesArgs)</span></span> &#123;<br>        reply := &amp;AppendEntriesReply&#123;&#125;<br>        ok := rf.sendAppendEntries(peer, args, reply)<br><br>        rf.mu.Lock()<br>        <span class="hljs-keyword">defer</span> rf.mu.Unlock()<br>        <span class="hljs-keyword">if</span> !ok &#123;<br>            LOG(rf.me, rf.currentTerm, DLog, <span class="hljs-string">&quot;-&gt; S%d, Lost or crashed&quot;</span>, peer)<br>            <span class="hljs-keyword">return</span><br>        &#125;<br><br>        <span class="hljs-comment">// Term 对齐</span><br>        <span class="hljs-keyword">if</span> reply.Term &gt; rf.currentTerm &#123;<br>            rf.becomeFollowerLocked(reply.Term)<br>            <span class="hljs-keyword">return</span><br>        &#125;<br><br>        <span class="hljs-comment">// 检测到了日志冲突，进行快速回溯，不只是一个 index 的回退</span><br>        <span class="hljs-comment">// 从 nextIndex[peer] - 1 即上一次尝试同步的 PrevLogIndex 开始回退</span><br>        <span class="hljs-keyword">if</span> !reply.Success &#123;<br>            idx := rf.nextIndex[peer] - <span class="hljs-number">1</span><br>            term := rf.log[idx].Term<br>            <span class="hljs-comment">// 找到该 term 的第一个 log</span><br>            <span class="hljs-keyword">for</span> idx &gt; <span class="hljs-number">0</span> &amp;&amp; rf.log[idx].Term == term &#123;<br>                    idx--<br>            &#125;<br>            rf.nextIndex[peer] = idx + <span class="hljs-number">1</span><br>            LOG(rf.me, rf.currentTerm, DLog, <span class="hljs-string">&quot;Log not matched in %d, Update next=%d&quot;</span>, args.PrevLogIndex, rf.nextIndex[peer])<br>            <span class="hljs-keyword">return</span><br>        &#125;<br><br>        <span class="hljs-comment">// Peer Apply 日志成功了，更新 Leader 的视图</span><br>        rf.matchIndex[peer] = args.PrevLogIndex + <span class="hljs-built_in">len</span>(args.Entries)<br>        rf.nextIndex[peer] = rf.matchIndex[peer] + <span class="hljs-number">1</span><br>        <br>        <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> need compute the new commitIndex here, </span><br>        <span class="hljs-comment">// but we leave it to the other chapter</span><br>    &#125;<br><br>    rf.mu.Lock()<br>    <span class="hljs-keyword">defer</span> rf.mu.Unlock()<br><br>    <span class="hljs-comment">// 上下文检查</span><br>    <span class="hljs-keyword">if</span> rf.contextLostLocked(Leader, term) &#123;<br>        LOG(rf.me, rf.currentTerm, DLog, <span class="hljs-string">&quot;Lost Leader[%d] to %s[T%d]&quot;</span>, term, rf.role, rf.currentTerm)<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>    &#125;<br><br>    <span class="hljs-comment">// 给所有节点发送 RPC</span><br>    <span class="hljs-keyword">for</span> peer := <span class="hljs-number">0</span>; peer &lt; <span class="hljs-built_in">len</span>(rf.peers); peer++ &#123;<br>        <span class="hljs-keyword">if</span> peer == rf.me &#123;<br>            <span class="hljs-comment">// Don&#x27;t forget to update Leader&#x27;s matchIndex</span><br>            rf.matchIndex[peer] = <span class="hljs-built_in">len</span>(rf.log) - <span class="hljs-number">1</span><br>            rf.nextIndex[peer] = <span class="hljs-built_in">len</span>(rf.log)<br>            <span class="hljs-keyword">continue</span><br>        &#125;<br><br><br>        prevIdx := rf.nextIndex[peer] - <span class="hljs-number">1</span><br>        prevTerm := rf.log[prevIdx].Term<br>        <br>        args := &amp;AppendEntriesArgs&#123;<br>            Term:         rf.currentTerm,<br>            LeaderId:     rf.me,<br>            PrevLogIndex: prevIdx,<br>            PrevLogTerm:  prevTerm,<br>            Entries:      <span class="hljs-built_in">append</span>([]LogEntry(<span class="hljs-literal">nil</span>), rf.log[prevIdx+<span class="hljs-number">1</span>:]...),<br>            LeaderCommit: rf.commitIndex,<br>        &#125;<br>        LOG(rf.me, rf.currentTerm, DDebug, <span class="hljs-string">&quot;-&gt; S%d, Send log, Prev=[%d]T%d, Len()=%d&quot;</span>, peer, args.PrevLogIndex, args.PrevLogTerm, <span class="hljs-built_in">len</span>(args.Entries))<br>        <span class="hljs-keyword">go</span> replicateToPeer(peer, args)<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这部分的最终目的，就是要更新 matchIndex。进而依据所有 Peer 的
+matchIndex 来算 commitIndex 。Leader 有了 commitIndex
+之后，再将其下发给各个 Follower，指导其各自更新本地 commitIndex 进而
+apply。</p>
+<p>除此之外，在当选 Leader 时，就需要更新对其他 Peer 的视图。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rf *Raft)</span></span> becomeLeaderLocked() &#123;<br>    <span class="hljs-keyword">if</span> rf.role != Candidate &#123;<br>            LOG(rf.me, rf.currentTerm, DError, <span class="hljs-string">&quot;Only Candidate can become Leader&quot;</span>)<br>            <span class="hljs-keyword">return</span><br>    &#125;<br><br>    LOG(rf.me, rf.currentTerm, DLeader, <span class="hljs-string">&quot;Become Leader in T%d&quot;</span>, rf.currentTerm)<br>    rf.role = Leader<br>    <span class="hljs-keyword">for</span> peer := <span class="hljs-number">0</span>; peer &lt; <span class="hljs-built_in">len</span>(rf.peers); peer++ &#123;<br>            rf.nextIndex[peer] = <span class="hljs-built_in">len</span>(rf.log)<br>            rf.matchIndex[peer] = <span class="hljs-number">0</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>在有了日志的概念后，在进行 Leader
+选举的时候，就需要进行日志比较了。在进行选举的时候，确保只有具有比大多数
+Peer 更新日志的候选人才能当选 Leader。</p>
+<p>那么因此会引申出一个问题，对于两个 Peer
+来说，谁的日志才算是最新的。论文的描述是这样的：</p>
+<ul>
+<li>Term 高的 Peer 日志越新；</li>
+<li>Term 相同，Index 大的 Peer 日志越新；</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 作为 peer 收到 Candidate RPC 比较日志谁更新</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rf *Raft)</span></span> isMoreUpDateLocked(candidateIndex, candidateTerm <span class="hljs-type">int</span>) <span class="hljs-type">bool</span> &#123;<br>  l := <span class="hljs-built_in">len</span>(rf.log)<br>  lastIndex, lastTerm := l<span class="hljs-number">-1</span>, rf.log[l<span class="hljs-number">-1</span>].Term<br><br>  LOG(rf.me, rf.currentTerm, DVote, <span class="hljs-string">&quot;Compare last log, Me: [%d]T%d, Candidate: [%d]T%d&quot;</span>, lastIndex, lastTerm, candidateIndex, candidateTerm)<br>  <span class="hljs-keyword">if</span> lastTerm != candidateTerm &#123;<br>    <span class="hljs-keyword">return</span> lastTerm &gt; candidateTerm<br>  &#125;<br>  <span class="hljs-keyword">return</span> lastIndex &gt; candidateIndex<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>在投票 RPC 中最后一条日志的 Term 和 Index 信息，用于日志比较：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> RequestVoteArgs <span class="hljs-keyword">struct</span> &#123;<br>    <span class="hljs-comment">// Your data here (PartA, PartB).</span><br>    Term         <span class="hljs-type">int</span><br>    CandidateId  <span class="hljs-type">int</span><br>    LastLogIndex <span class="hljs-type">int</span><br>    LastLogTerm  <span class="hljs-type">int</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>在构造 RPC 请求的参数时，加上这两个字段：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go">args := &amp;RequestVoteArgs&#123;<br>    Term:         rf.currentTerm,<br>    CandidateId:  rf.me,<br>    LastLogIndex: l<span class="hljs-number">-1</span>,<br>    LastLogTerm:  rf.log[l<span class="hljs-number">-1</span>].Term,<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>接收方在进行对齐 Term，如果没有投过票，通过日志比较来决定是否能给该
+Peer 投票。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// example RequestVote RPC handler.</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rf *Raft)</span></span> RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) &#123;<br>    <span class="hljs-comment">// ...</span><br>    <span class="hljs-comment">// check for votedFor</span><br>    <span class="hljs-keyword">if</span> rf.votedFor != <span class="hljs-number">-1</span> &amp;&amp; rf.votedFor != args.CandidateId &#123;<br>        LOG(rf.me, rf.currentTerm, DVote, <span class="hljs-string">&quot;-&gt; S%d, Reject Voted, Already voted to S%d&quot;</span>, args.CandidateId, rf.votedFor)<br>        <span class="hljs-keyword">return</span><br>    &#125;<br><br>    <span class="hljs-comment">// check log, only grante vote when the candidates have more up-to-date log</span><br>    <span class="hljs-keyword">if</span> rf.isMoreUpToDateLocked(args.LastLogIndex，args.LastLogTerm) &#123;<br>        LOG(rf.me, rf.currentTerm, DVote, <span class="hljs-string">&quot;-&gt; S%d, Reject Vote, S%d&#x27;s log less up-to-date&quot;</span>, args.CandidateId)<br>        <span class="hljs-keyword">return</span><br>    &#125;<br>    <span class="hljs-comment">// ...</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>下面实现关于日志 Apply 的逻辑，也就是 Leader 提交日志的部分。Apply
+只有在 <code>commitIndex</code> 增大的时候才会触发，因此可以利用一下
+golang 的语法 <code>sync.Cond</code>，使用唤醒机制，在
+<code>commitIndex</code> 增大后唤醒 <code>applyTicker</code>。</p>
+<p>根据 Figure 2 中补充两个字段：</p>
+<ul>
+<li>commitIndex：全局日志提交进度</li>
+<li>lastApplied：本地 Peer 日志提交进度</li>
+<li>applyCond：用于唤醒 applyTicker</li>
+<li>applyCh：将 Apply 工作流构造的 Msg 传递给应用层</li>
+</ul>
+<p>ApplyTicker 工作流的具体步骤：</p>
+<ul>
+<li>构造所有待 apply 的 <code>ApplyMsg</code></li>
+<li>遍历这些 msgs，进行 apply</li>
+<li>更新 <code>lastApplied</code></li>
+</ul>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rf *Raft)</span></span> applyTicker() &#123;<br>    <span class="hljs-keyword">for</span> !rf.killed() &#123;<br>        rf.mu.Lock()<br>        rf.applyCond.Wait()<br><br>        entries := <span class="hljs-built_in">make</span>([]LogEntry, <span class="hljs-number">0</span>)<br>        <span class="hljs-comment">// should start from rf.lastApplied+1 instead of rf.lastApplied</span><br>        <span class="hljs-keyword">for</span> i := rf.lastApplied + <span class="hljs-number">1</span>; i &lt;= rf.commitIndex; i++ &#123;<br>            entries = <span class="hljs-built_in">append</span>(entries, rf.log[i])<br>        &#125;<br>        rf.mu.Unlock()<br><br>        <span class="hljs-keyword">for</span> i, entry := <span class="hljs-keyword">range</span> entries &#123;<br>            rf.applyCh &lt;- ApplyMsg&#123;<br>                CommandValid: entry.CommandValid,<br>                Command:      entry.Command,<br>                CommandIndex: rf.lastApplied + <span class="hljs-number">1</span> + i,<br>            &#125;<br>        &#125;<br><br>        rf.mu.Lock()<br>        LOG(rf.me, rf.currentTerm, DApply, <span class="hljs-string">&quot;Apply log for [%d, %d]&quot;</span>, rf.lastApplied+<span class="hljs-number">1</span>, rf.lastApplied+<span class="hljs-built_in">len</span>(entries))<br>        rf.lastApplied += <span class="hljs-built_in">len</span>(entries)<br>        rf.mu.Unlock()<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>在 Leader 给其他 Peer <code>AppendEntries</code> 成功后，会更新
+<code>rf.matchIndex</code>。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go">replicateToPeer := <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(peer <span class="hljs-type">int</span>, args *AppendEntriesArgs)</span></span> &#123;<br>    <span class="hljs-comment">// ......</span><br><br>    <span class="hljs-comment">// update the commmit index if log appended successfully</span><br>    rf.matchIndex[peer] = args.PrevLogIndex + <span class="hljs-built_in">len</span>(args.Entries)<br>    rf.nextIndex[peer] = rf.matchIndex[peer] + <span class="hljs-number">1</span> <span class="hljs-comment">// important: must update</span><br>    majorityMatched := rf.getMajorityIndexLocked()<br>    <span class="hljs-keyword">if</span> majorityMatched &gt; rf.commitIndex &#123;<br>        LOG(rf.me, rf.currentTerm, DApply, <span class="hljs-string">&quot;Leader update the commit index %d-&gt;%d&quot;</span>, rf.commitIndex, majorityMatched)<br>        rf.commitIndex = majorityMatched<br>        rf.applyCond.Signal()<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>在每次更新 <code>matchIndex</code>
+后，依据此全局匹配点视图，可以算出多数 Peer 的匹配点，进而更新 Leader 的
+<code>CommitIndex</code>。这里使用排序后找中位数的方法。由于排序会改变原数组，因此要把
+<code>matchIndex</code> 复制一份再进行排序。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rf *Raft)</span></span> getMajorityIndexLocked() <span class="hljs-type">int</span> &#123;<br>    <span class="hljs-comment">// TODO(spw): may could be avoid copying</span><br>    tmpIndexes := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, <span class="hljs-built_in">len</span>(rf.matchIndex))<br>    <span class="hljs-built_in">copy</span>(tmpIndexes, rf.matchIndex)<br>    sort.Ints(tmpIndexes)<br>    majorityIdx := (<span class="hljs-built_in">len</span>(tmpIndexes) - <span class="hljs-number">1</span>) / <span class="hljs-number">2</span><br>    LOG(rf.me, rf.currentTerm, DDebug, <span class="hljs-string">&quot;Match index after sort: %v, majority[%d]=%d&quot;</span>, tmpIndexes, majorityIdx, tmpIndexes[majorityIdx])<br>    <span class="hljs-keyword">return</span> tmpIndexes[majorityIdx] <span class="hljs-comment">// min -&gt; max</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>如果 <code>commitIndex</code> 更新，则唤醒 apply 工作流，可以将 msg
+更新到本地日志了。Leader 通过下一次的 <code>AppendEntries</code> 的 RPC
+参数将 <code>commitIndex</code> 发送给每个 Follower，因此需要再
+<code>AppendEntriesArgs</code> 增加这个参数。</p>
+<p>每个 Follower 通过 AppendEntries 的回调函数收到 Leader 发来的
+LeaderCommit，来更新本地的 CommitIndex，进而驱动 Apply
+工作流开始干活。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rf *Raft)</span></span> AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply) &#123;<br>    <span class="hljs-comment">// ...</span><br>    <span class="hljs-comment">// update the commit index if needed and indicate the apply loop to apply</span><br>    <span class="hljs-keyword">if</span> args.LeaderCommit &gt; rf.commitIndex &#123;<br>        LOG(rf.me, rf.currentTerm, DApply, <span class="hljs-string">&quot;Follower update the commit index %d-&gt;%d&quot;</span>, rf.commitIndex, args.LeaderCommit)<br>        rf.commitIndex = args.LeaderCommit<br>        <span class="hljs-keyword">if</span> rf.commitIndex &gt;= <span class="hljs-built_in">len</span>(rf.log) &#123;<br>            rf.commitIndex = <span class="hljs-built_in">len</span>(rf.log) - <span class="hljs-number">1</span><br>        &#125;<br>        rf.applyCond.Signal()<br>    &#125;<br>    <span class="hljs-comment">// ...</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="状态持久化part-c">状态持久化（Part C）</h2>
+<p>目前能够做到在「不宕机」下的领导者选举。但是在某个 Peer
+异常重启后，是不能正常重新加入集群的。为此需要将 Raft
+的关键信息定时持久化，重启后加载，以保证重新加入集群。</p>
+<p>主要是两个序列化和反序列化函数：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rf *Raft)</span></span> persistString() <span class="hljs-type">string</span> &#123;<br>  <span class="hljs-keyword">return</span> fmt.Sprintf(<span class="hljs-string">&quot;T%d, VotedFor: %d, Log: [0: %d)&quot;</span>, rf.currentTerm, rf.votedFor, <span class="hljs-built_in">len</span>(rf.log))<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rf *Raft)</span></span> persistLocked() &#123;<br>  w := <span class="hljs-built_in">new</span>(bytes.Buffer)<br>  e := labgob.NewEncoder(w)<br>  e.Encode(rf.currentTerm)<br>  e.Encode(rf.votedFor)<br>  e.Encode(rf.log)<br>  raftstate := w.Bytes()<br>  <span class="hljs-comment">// leave the second parameter nil, will use it in PartD</span><br>  rf.persister.Save(raftstate, <span class="hljs-literal">nil</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rf *Raft)</span></span> readPersist(data []<span class="hljs-type">byte</span>) &#123;<br>  <span class="hljs-keyword">if</span> data == <span class="hljs-literal">nil</span> || <span class="hljs-built_in">len</span>(data) &lt; <span class="hljs-number">1</span> &#123;<br>    <span class="hljs-keyword">return</span><br>  &#125;<br><br>  <span class="hljs-keyword">var</span> currentTerm <span class="hljs-type">int</span><br>  <span class="hljs-keyword">var</span> votedFor <span class="hljs-type">int</span><br>  <span class="hljs-keyword">var</span> log []LogEntry<br><br>  r := bytes.NewBuffer(data)<br>  d := labgob.NewDecoder(r)<br>  <span class="hljs-keyword">if</span> err := d.Decode(&amp;currentTerm); err != <span class="hljs-literal">nil</span> &#123;<br>    LOG(rf.me, rf.currentTerm, DPersist, <span class="hljs-string">&quot;Read currentTerm error: %v&quot;</span>, err)<br>    <span class="hljs-keyword">return</span><br>  &#125;<br>  rf.currentTerm = currentTerm<br><br>  <span class="hljs-keyword">if</span> err := d.Decode(&amp;votedFor); err != <span class="hljs-literal">nil</span> &#123;<br>    LOG(rf.me, rf.currentTerm, DPersist, <span class="hljs-string">&quot;Read votedFor error: %v&quot;</span>, err)<br>    <span class="hljs-keyword">return</span><br>  &#125;<br>  rf.votedFor = votedFor<br><br>  <span class="hljs-keyword">if</span> err := d.Decode(&amp;log); err != <span class="hljs-literal">nil</span> &#123;<br>    LOG(rf.me, rf.currentTerm, DPersist, <span class="hljs-string">&quot;Read log error: %v&quot;</span>, err)<br>    <span class="hljs-keyword">return</span><br>  &#125;<br>  rf.log = log<br>  LOG(rf.me, rf.currentTerm, DPersist, <span class="hljs-string">&quot;Read Persist %v&quot;</span>, rf.persistString())<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>主要需要持久化的有三个字段：<code>currentTerm</code>，<code>votedFor</code>
+和 <code>log</code>，为什么只需要持久化这三个字段：</p>
+<ul>
+<li><code>currentTerm</code>：重启后一定要知道自己之前任期到了哪里，因为任期是状态机中正确行为的基础；</li>
+<li><code>votedFor</code>：如果在某个任期已经投过票了，重启之后不能投票，否则会多一票；</li>
+<li><code>log</code>：日志作为数据，理所当然要持久化；</li>
+</ul>
+<p>另外 <code>persist</code>
+函数需要访问全局状态，因此需要在临界区调用，不然会出现竞争。在所有修改全局状态的地方，修改完成之后都需要做一下持久化。</p>
+<h3 id="日志回溯优化">日志回溯优化</h3>
+<p>之前在 Leader
+发送同步日志时，采用的是回退的方式，而每次回退都需要下一个 RPC
+才能发送给 Follower，也就是说每次回退都要经过一个
+<code>replicateInterval</code>。如果回退算法不够好，某些情况下，冲突探测时间会特别长。<em>「Leader
+只基于自己的日志进行回退的情况下，一次不管是回退一个 index 还是回退一个
+term 效果都不好」</em>。因此，可以考虑让 Follower 提供一些信息，告诉
+Leader 自己的日志目前到哪里了。</p>
+<p>给 <code>AppendEntriesReply</code> 增加两个额外的字段，让 Follower
+携带一些日志冲突的信息。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> AppendEntriesReply <span class="hljs-keyword">struct</span> &#123;<br>  Term    <span class="hljs-type">int</span><br>  Success <span class="hljs-type">bool</span><br><br>  ConflictIndex <span class="hljs-type">int</span><br>  ConflictTerm  <span class="hljs-type">int</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>Follower 算法大致流程：</p>
+<ul>
+<li>如果 Follower 日志过短，那么 <code>ConflictTerm</code>
+置空，<code>ConflictIndex = len(rf.log)</code>；</li>
+<li>否则，将 <code>ConflictTerm</code> 设置为 Follower 在
+<code>Leader.PrevLogIndex</code> 处日志的
+Term；<code>ConflictIndex</code> 为 <code>ConflictTerm</code>
+的第一条日志；</li>
+</ul>
+<p>第一条做法的目的在于，如果 Follower 日志过短，可以提示 Leader
+迅速回退到 Follower 日志的末尾。第二条做法的目的在于，如果 Follower 存在
+<code>Leader.PrevLog</code>，但不匹配，则将对应的 Term
+的日志全部跳过。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// --- rf.AppendEntries in raft_replication.go</span><br><br><span class="hljs-comment">// return failure if prevLog not matched</span><br><span class="hljs-keyword">if</span> args.PrevLogIndex &gt;= <span class="hljs-built_in">len</span>(rf.log) &#123;<br>    reply.ConflictIndex = <span class="hljs-built_in">len</span>(rf.log)<br>    reply.ConflictTerm = InvalidTerm<br>    <span class="hljs-keyword">return</span><br>&#125;<br><span class="hljs-keyword">if</span> rf.log[args.PrevLogIndex].Term != args.PrevLogTerm &#123;<br>    reply.ConflictTerm = rf.log[args.PrevLogIndex].Term<br>    reply.ConflictIndex = rf.firstLogFor(reply.ConflictTerm)<br>    <span class="hljs-keyword">return</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>Leader 端使用上面两个新增字段的算法如下：</p>
+<ul>
+<li>如果 <code>ConflictTerm</code> 为空，说明 Follower 日志太短，直接将
+<code>nextIndex</code> 赋值为 ConflictIndex 迅速回退到 Follower
+日志末尾。</li>
+<li>否则，以 Leader 日志为准，跳过 <code>ConflictTerm</code>
+的所有日志；如果发现 Leader 日志中不存在 <code>ConflictTerm</code>
+的任何日志，则以 Follower 为准跳过 <code>ConflictTerm</code>，即使用
+<code>ConflictIndex</code>。</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// --- rf.startReplication.replicateToPeer in raft_replication.go</span><br><span class="hljs-keyword">if</span> !reply.Success &#123;<br>    prevNext := rf.nextIndex[peer]<br>    <span class="hljs-keyword">if</span> reply.ConflictTerm == InvalidTerm &#123;<br>        rf.nextIndex[peer] = reply.ConflictIndex<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        firstTermIndex := rf.firstLogFor(reply.ConflictTerm)<br>        <span class="hljs-keyword">if</span> firstTermIndex != InvalidIndex &#123;<br>                rf.nextIndex[peer] = firstTermIndex<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>                rf.nextIndex[peer] = reply.ConflictIndex<br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">// avoid the late reply move the nextIndex forward again</span><br>    rf.nextIndex[peer] = MinInt(prevNext, rf.nextIndex[peer])<br>    <span class="hljs-keyword">return</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>空 Term 和 空 Index 可以用一个特殊值来表示。</p>
+</blockquote>
+<p>封装一个函数用于在日志中找到指定 term 的第一条日志。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// --- in raft.go</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rf *Raft)</span></span> firstLogFor(term <span class="hljs-type">int</span>) <span class="hljs-type">int</span> &#123;<br>    <span class="hljs-keyword">for</span> i, entry := <span class="hljs-keyword">range</span> rf.log &#123;<br>        <span class="hljs-keyword">if</span> entry.Term == term &#123;<br>                <span class="hljs-keyword">return</span> i<br>        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> entry.Term &gt; term &#123;<br>                <span class="hljs-keyword">break</span><br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> InvalidIndex<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>为了避免 Reply 乱序到达，导致探测点乱序前进和回退，需要保证
+<code>nextIndex</code> 是单调递减的。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// --- rf.startReplication in raft_replication.go</span><br><span class="hljs-keyword">if</span> !reply.Success &#123;<br>    prevIndex := rf.nextIndex[peer]<br>    <span class="hljs-comment">// avoid the late reply move the nextIndex forward again</span><br>    <span class="hljs-keyword">if</span> rf.nextIndex[peer] &gt; prevIndex &#123;<br>            rf.nextIndex[peer] = prevIndex<br>    &#125;<br>    <span class="hljs-keyword">return</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+    </div>
+    <div class="toc-container">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#raft"><span class="toc-number">1.</span> <span class="toc-text">Raft</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%86%E5%AF%BC%E8%80%85%E9%80%89%E4%B8%BEpart-a"><span class="toc-number">1.1.</span> <span class="toc-text">领导者选举（Part A）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.1.1.</span> <span class="toc-text">状态转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%89%E4%B8%BE-loop"><span class="toc-number">1.1.2.</span> <span class="toc-text">选举 Loop</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BF%83%E8%B7%B3%E9%80%BB%E8%BE%91"><span class="toc-number">1.1.3.</span> <span class="toc-text">心跳逻辑</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A5%E5%BF%97%E5%90%8C%E6%AD%A5part-b"><span class="toc-number">1.2.</span> <span class="toc-text">日志同步（Part B）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8A%B6%E6%80%81%E6%8C%81%E4%B9%85%E5%8C%96part-c"><span class="toc-number">1.3.</span> <span class="toc-text">状态持久化（Part C）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A5%E5%BF%97%E5%9B%9E%E6%BA%AF%E4%BC%98%E5%8C%96"><span class="toc-number">1.3.1.</span> <span class="toc-text">日志回溯优化</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </div>
+  <footer class="article-footer">
+    <div class="footer-container">
+  <a target="_blank" rel="noopener" href="https://space.bilibili.com/12352380?spm_id_from=333.1007.0.0">
+    <img src="/images/bilibili.svg" alt="" />
+  </a>
+  <a target="_blank" rel="noopener" href="https://github.com/qiancijun">
+    <img src="/images/github.svg" alt="" />
+  </a>
+  <span>Copyright </span>
+  <img src="/images/copyright.svg" alt="">
+  <span>2024 Cheryl-Chun</span>
+</div>
+
+  </footer>
+</article>
+
+
+        </div>
+        <!-- <div class="footer">
+    
+</div> -->
+    </div>
+    
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/github-calendar@2.3.4/dist/github-calendar.min.js"></script>
+=
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js"></script>
+
+
+<script src="/scripts/search.js"></script>
+
+
+<script src="/scripts/main.js"></script>
+
+
+<script type="text/javascript">      
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+        search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result', "Cheryl-Chun");
+</script>
+</body>
+<style>
+    .main-container::before {
+        background-image: url('');
+    }
+</style>
+</html>

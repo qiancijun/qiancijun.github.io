@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+    
+      Reliable-UDP
+    
+</title>
+
+<link rel="icon" href="/images/favicon.ico">
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-calendar@2.3.4/dist/github-calendar.min.css">
+
+<link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/styles/github-dark-dimmed.min.css" rel="stylesheet">
+<!-- <link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark-reasonable.min.css" rel="stylesheet"> -->
+<link href="
+https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.css
+" rel="stylesheet">
+<link href="
+https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustomScrollbar.min.css
+" rel="stylesheet">
+<meta name="generator" content="Hexo 7.2.0"></head>
+<body>
+    <div class="main-container">
+        <div class="topbar">
+    <div class="btn-container">
+        <a href="/"><img class="btn-close" src="/images/close.svg" alt=""></a>
+        <a><img class="btn-minimize" src="/images/minimize.svg" alt=""></a>
+        <a><img class="btn-maximize" src="/images/maximize.svg" alt=""></a>
+    </div>
+    <div class="title">
+        <img src="/images/terminal.svg" alt="">
+        <span>cat Cheryl-Chun 淳老师 BLOG</span>
+    </div>
+</div>
+        <div class="nav-container">
+    <div class="posts">
+        <img src="/images/posts-list.svg" alt="">
+        <a href="/">Home</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+    <!-- <div class="tags">
+        <img src="/images/tag.svg" alt="">
+        <a href="/tag">Tag</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div> -->
+    <div>
+        <img src="/images/archive.svg" alt="">
+        <a href="/all-posts">Posts</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+    <!-- <div class="category">
+        <img src="/images/category.svg" alt="">
+        <a href="/category">Category</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div> -->
+    <div class="about">
+        <img src="/images/about.svg" alt="">
+        <a href="/about">About</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+</div>
+        <div class="main-content">
+            <article
+  id="post-Reliable-UDP"
+  class="article article-type-post"
+>
+  <div id="toc-show">
+    <img src="/images/toc.svg" alt="" />
+  </div>
+  
+  <h1 class="article-header">Reliable-UDP</h1>
+  
+  <div class="article-info">
+    <!-- <span>Document Attributes:</span> -->
+
+    <table>
+      <tr>
+        <td>
+            <img src="/images/time.svg" alt="">
+            Updated Time
+        </td>
+        <td>2025-04-24</td>
+      </tr>
+      <tr>
+        <td>
+            <img src="/images/category.svg" alt="">
+            Category
+        </td>
+        <td> <ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li></ul> </td>
+      </tr>
+      <tr>
+        <td>
+            <img src="/images/tag.svg" alt="">
+            Tags
+        </td>
+        <td>
+	<a class="tag-link" href="/tags/UDP/" rel="tag">UDP</a>, <a class="tag-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a>
+
+</td>
+      </tr>
+    </table>
+  </div>
+  <div class="article-entry">
+    <div class="content">
+      <h1 id="reliable-udp">Reliable-UDP</h1>
+<p>用 UDP 来实现一个可靠传输，这个问题变相的再考虑，「为什么不用
+TCP」，而是要在 UDP 上实现类似的可靠传输。「TCP 有什么缺陷」以至于需要在
+UDP 上“自己造一个轮子”。</p>
+<p>首先回顾一下可靠传输的 TCP 有哪些性质：</p>
+<ul>
+<li>连接建立的「三次握手」和释放的「四次挥手」</li>
+<li>拥塞控制</li>
+<li>顺序交付</li>
+<li>全双工</li>
+<li>报文头部（20字节起步）</li>
+</ul>
+<p>如果说基于 UDP 实现可靠传输的效果可以比 TCP
+做的更好，那么一定是舍弃了 TCP 需要做到的事情。</p>
+<p>UDP 优化空间通常来自以下取舍：</p>
+<ul>
+<li>放弃可靠性：允许丢包（如视频流、实时语音）</li>
+<li>放弃有序性：接受乱序到达（如部分游戏状态同步）</li>
+<li>放弃拥塞控制：自主控制速率（如 QUIC 的定制化拥塞控制）</li>
+<li>放弃连接管理：无挥手握手（如 DNS）</li>
+</ul>
+<p>在设计网络通信时，如果试图<strong>容忍丢包</strong>，这样看上去非常简单，但是在实际上业务逻辑会变得非常复杂。也就是说，如果丢了某些数据包，也不需要补发、重传，让上层逻辑自己去<em>「容错」</em>或者<em>「忽略」</em>。比如在游戏场景中，有些信息是临时的，比如角色坐标、摄像头朝向、鼠标移动位置，对于这些数据<em>「旧的不一定有用，只要有最新的就行」</em>，这时候丢掉中间几帧没有影响。为了让丢失中间状态也不会出问题，需要<strong>每一次都完整的发送全量状态</strong>。比如角色的位置不是用<em>「偏移量」</em>而是绝对位置，这样做即使丢失了前几帧，收到这一帧也知道最新的位置。</p>
+<p>而如果<strong>容忍丢包</strong>，不保证数据一定能送到，那就要在业务逻辑中写各种检查、修复、兜底，比如判断状态是否完整、是否合理、是否需要重试等机制。但很多业务并不适合只用<em>「最新状态」</em>来替代<em>「完整过程」</em>，有些状态必须顺序到达，有些中间步骤也很重要，这时候全量同步就不适用了。</p>
+<p>如果说在设计协议的时候，明确了<strong>不允许丢包</strong>，但<strong>不强制保证顺序</strong>（包可能会乱序到达）。既然可以保证所有的包都能送达，丢失的包也就会通过某种机制重新获得，那么事实上也可以同样保证次序。比如说可以通过包里的序列号来排序处理，顺序也就不是问题了。也就是说只要加了序号和重传，就已经非常接近
+TCP 的可靠有序模型了。而这样实现与 TCP
+的区别在于，允许业务能提前处理后到的包。DNS
+就是一个包无序的典型案例，通过一问一答的方式请求回应。</p>
+<p>在网络不稳定的时候，一个长期连接<strong>很可能因为某个瞬间的波动或丢包变得卡顿或无效</strong>，「短连接」可以及时中断、重新连接，从而更灵活的应对网络问题。每个短连接是一个<strong>独立的请求-响应事务</strong>，不像
+TCP
+的长连接那样受之前连接状态影响。短连接的好处在于，失败了没有关系，直接重新发送一个新请求，不用处理复杂的
+TCP 状态（如
+TIME_WAIT、FIN_WAIT）。这样做就把<strong>可靠性从传输层转移到了应用层</strong>，这样做的优势在于更灵活，但同时也需要自己去处理重试、幂等问题。</p>
+<p>相较与 TCP
+的三次握手和四次挥手，在传输小量数据时开销显得过于大，比如只是发送一个
+500B 的 JSON 消息，却要 TCP 拿 7
+个包起步，这种开销对于小消息是很<em>「浪费」</em>的。</p>
+<h1 id="golang-实现简易-udp-服务器">Golang 实现简易 UDP 服务器</h1>
+<h2 id="udp-通信">UDP 通信</h2>
+<p>用 Golang 先编写一个简单的 UDP 服务器，用于接受来自客户端的数据：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>  serverAddr, err := net.ResolveUDPAddr(<span class="hljs-string">&quot;udp&quot;</span>, <span class="hljs-string">&quot;:8080&quot;</span>)<br>  <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-built_in">panic</span>(err)<br>  &#125;<br><br>  conn, err := net.ListenUDP(<span class="hljs-string">&quot;udp&quot;</span>, serverAddr)<br>  <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-built_in">panic</span>(err)<br>  &#125;<br>  <span class="hljs-keyword">defer</span> conn.Close()<br><br>  fmt.Println(<span class="hljs-string">&quot;UDP Server listening on :8080&quot;</span>)<br><br>  buffer := <span class="hljs-built_in">make</span>([]<span class="hljs-type">byte</span>, <span class="hljs-number">1024</span>)<br>  <span class="hljs-keyword">for</span> &#123;<br>    n, clientAddr, err := conn.ReadFromUDP(buffer)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>      fmt.Println(<span class="hljs-string">&quot;read error: &quot;</span>, err)<br>      <span class="hljs-keyword">continue</span><br>    &#125;<br>    fmt.Printf(<span class="hljs-string">&quot;Received from %s: %s\n&quot;</span>, clientAddr, <span class="hljs-type">string</span>(buffer[:n]))<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>启动之后，用 <code>nc</code> 做一个测试：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">client, another shell</span> <br>echo &quot;Hello&quot; | nc -u 127.0.0.1 8080<br><span class="hljs-meta prompt_"># </span><span class="language-bash">go run main.go</span><br>UDP Server listening on :8080<br>Received from 127.0.0.1:53191: Hello<br></code></pre></td></tr></table></figure>
+<p>把它封装成一个结构体，以便后续添加功能更加方便：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> (<br>  OnData <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(data []<span class="hljs-type">byte</span>, addr *net.UDPAddr)</span></span><br>)<br><br><span class="hljs-keyword">type</span> UDPServer <span class="hljs-keyword">struct</span> &#123;<br>  Addr   <span class="hljs-type">string</span><br>  Conn   *net.UDPConn<br>  OnData OnData<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewUDPServer</span><span class="hljs-params">(addr <span class="hljs-type">string</span>, onData OnData)</span></span> *UDPServer &#123;<br>  <span class="hljs-keyword">return</span> &amp;UDPServer&#123;<br>    Addr:   addr,<br>    OnData: onData,<br>  &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *UDPServer)</span></span> Start() <span class="hljs-type">error</span> &#123;<br>  udpAddr, err := net.ResolveUDPAddr(<span class="hljs-string">&quot;udp&quot;</span>, s.Addr)<br>  <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-keyword">return</span> err<br>  &#125;<br><br>  conn, err := net.ListenUDP(<span class="hljs-string">&quot;udp&quot;</span>, udpAddr)<br>  <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-keyword">return</span> err<br>  &#125;<br>  s.Conn = conn<br>  fmt.Println(<span class="hljs-string">&quot;UDP Server started on &quot;</span>, s.Addr)<br><br>  <span class="hljs-keyword">go</span> s.run()<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *UDPServer)</span></span> run() &#123;<br>  buffer := <span class="hljs-built_in">make</span>([]<span class="hljs-type">byte</span>, <span class="hljs-number">4096</span>)<br><br>  <span class="hljs-keyword">for</span> &#123;<br>    n, addr, err := s.Conn.ReadFromUDP(buffer)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>      fmt.Println(<span class="hljs-string">&quot;read error: &quot;</span>, err)<br>      <span class="hljs-keyword">continue</span><br>    &#125;<br>    <span class="hljs-keyword">if</span> s.OnData != <span class="hljs-literal">nil</span> &#123;<br>      s.OnData(buffer[:n], addr)<br>    &#125;<br>  &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *UDPServer)</span></span> Close() &#123;<br>  s.Conn.Close()<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="包结构设计">包结构设计</h2>
+<p>目前服务器的发送仅有数据部分，包的概念在可靠传输中比较关键，在传输过程中添加一些必要的信息，比如<em>「确认号」</em>、<em>「序列号」</em>等。</p>
+<p>先设计一个简单的数据包结构，包含以下字段：</p>
+<ul>
+<li>包类型：标识包的类型，比如
+<code>PING</code>、<code>EOF</code>、<code>ACK</code> 等；</li>
+<li>序列号：用来标识数据的顺序；</li>
+<li>确认号：接收方的响应；</li>
+<li>载荷：实际传输的数据；</li>
+</ul>
+<p>初步定义一下包的结构：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> PacketType <span class="hljs-type">uint8</span><br><br><span class="hljs-keyword">const</span> (<br>  PackTypeData PacketType = <span class="hljs-literal">iota</span><br>  PacketData<br>)<br><br><span class="hljs-keyword">type</span> Packet <span class="hljs-keyword">struct</span> &#123;<br>  Type    PacketType <span class="hljs-comment">// 包类型</span><br>  Seq     <span class="hljs-type">uint32</span>     <span class="hljs-comment">// 序列号</span><br>  Ack     <span class="hljs-type">uint32</span>     <span class="hljs-comment">// 确认号</span><br>  Payload []<span class="hljs-type">byte</span>     <span class="hljs-comment">// 载荷</span><br>&#125;<br><br><span class="hljs-keyword">type</span> PacketOptions <span class="hljs-keyword">struct</span> &#123;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewPacket</span><span class="hljs-params">(typ PacketType, data []<span class="hljs-type">byte</span>, option PacketOptions)</span></span> *Packet &#123;<br>  packet := &amp;Packet&#123;<br>    Type:    typ,<br>    Payload: data,<br>  &#125;<br>  <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> 根据 typ 封装信息</span><br>  <span class="hljs-keyword">return</span> packet<br>&#125;<br><br><span class="hljs-comment">// 将 Packet 序列化为字节数组</span><br><span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> 目前使用 gob 实现序列化，后续优化实现自定义序列化方式</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(p *Packet)</span></span> Serialize() ([]<span class="hljs-type">byte</span>, <span class="hljs-type">error</span>) &#123;<br>  <span class="hljs-keyword">var</span> buf bytes.Buffer<br>  enc := gob.NewEncoder(&amp;buf)<br>  <span class="hljs-keyword">if</span> err := enc.Encode(p); err != <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>  &#125;<br>  <span class="hljs-keyword">return</span> buf.Bytes(), <span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-comment">// 从字节数组反序列化为 Packet</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">DeserializePacket</span><span class="hljs-params">(data []<span class="hljs-type">byte</span>)</span></span> (*Packet, <span class="hljs-type">error</span>) &#123;<br>  <span class="hljs-keyword">var</span> p Packet<br>  buf := bytes.NewReader(data)<br>  dec := gob.NewDecoder(buf)<br>  <span class="hljs-keyword">if</span> err := dec.Decode(&amp;p); err != <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>  &#125;<br>  <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> 做一些校验工作</span><br>  <span class="hljs-keyword">return</span> &amp;p, <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>为服务端添加收发 <code>Packet</code> 的功能逻辑：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *UDPServer)</span></span> sendPacket(conn *net.UDPConn, addr *net.UDPAddr, packet *Packet) <span class="hljs-type">error</span> &#123;<br>  data, err := packet.Serialize()<br>  <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-keyword">return</span> err<br>  &#125;<br><br>  _, err = conn.WriteToUDP(data, addr)<br>  <span class="hljs-keyword">return</span> err<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *UDPServer)</span></span> receivePacket(conn *net.UDPConn) (*Packet, *net.UDPAddr, <span class="hljs-type">error</span>) &#123;<br>  buf := <span class="hljs-built_in">make</span>([]<span class="hljs-type">byte</span>, <span class="hljs-number">1024</span>)<br>  n, addr, err := conn.ReadFromUDP(buf)<br>  <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, <span class="hljs-literal">nil</span>, err<br>  &#125;<br><br>  <span class="hljs-comment">// 反序列化为 Packet</span><br>  packet, err := DeserializePacket(buf[:n])<br>  <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, <span class="hljs-literal">nil</span>, err<br>  &#125;<br><br>  <span class="hljs-keyword">return</span> packet, addr, <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>修改一下 <code>OnData</code> 回调函数，现在服务端处理的是以 Packet
+为单位的数据，而不是字节流。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> (<br>  OnData <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(packet *Packet, addr *net.UDPAddr)</span></span><br>)<br></code></pre></td></tr></table></figure>
+<p>编写一个测试案例，不能使用 nc 来继续做测试了，因为使用了
+<code>gob</code> 做二进制的编码。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestConn</span><span class="hljs-params">(t *testing.T)</span></span> &#123;<br>  server := NewUDPServer(<span class="hljs-string">&quot;:8080&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(p *Packet, addr *net.UDPAddr)</span></span> &#123;<br>    fmt.Printf(<span class="hljs-string">&quot;packet type: %d, packet data: %s\n&quot;</span>, p.Type, <span class="hljs-type">string</span>(p.Payload))<br>  &#125;)<br><br>  err := server.Start()<br>  assert.NoError(t, err)<br><br>  time.Sleep(<span class="hljs-number">1</span> * time.Second)<br><br>  <span class="hljs-comment">// 构造一个客户端</span><br>  severAddr, err := net.ResolveUDPAddr(<span class="hljs-string">&quot;udp&quot;</span>, <span class="hljs-string">&quot;127.0.0.1:8080&quot;</span>)<br>  assert.NoError(t, err)<br>  conn, err := net.DialUDP(<span class="hljs-string">&quot;udp&quot;</span>, <span class="hljs-literal">nil</span>, severAddr)<br>  assert.NoError(t, err)<br>  assert.NotNil(t, conn)<br>  <span class="hljs-keyword">defer</span> conn.Close()<br><br>  <span class="hljs-comment">// 构建一个 Packet</span><br>  p := NewPacket(PacketData, []<span class="hljs-type">byte</span>(<span class="hljs-string">&quot;Hello&quot;</span>), DefaultOptions)<br>  data, err := p.Serialize()<br>  assert.NoError(t, err)<br>  _, err = conn.Write(data)<br>  assert.NoError(t, err)<br><br>  time.Sleep(<span class="hljs-number">1</span> * time.Second)<br><br>  <span class="hljs-comment">// 读取来自服务端的消息</span><br>  buf := <span class="hljs-built_in">make</span>([]<span class="hljs-type">byte</span>, <span class="hljs-number">1024</span>)<br>  n, addr, err := conn.ReadFromUDP(buf)<br>  assert.NoError(t, err)<br>  p, err = DeserializePacket(buf[:n])<br>  assert.NoError(t, err)<br>  fmt.Printf(<span class="hljs-string">&quot;client receive packet from %s, packet type: %d, packet data: %s\n&quot;</span>, <br>        addr, <br>        p.Type, <br>        <span class="hljs-type">string</span>(p.Payload))<br>&#125;<br><br><span class="hljs-comment">/*</span><br><span class="hljs-comment">UDP Server started on  :8080</span><br><span class="hljs-comment">packet type: 1, packet data: Hello</span><br><span class="hljs-comment">client receive packet from 127.0.0.1:8080, packet type: 2, packet data: Hello</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+<h2 id="优化-udp-server-结构">优化 UDP Server 结构</h2>
+<p>目前 UDP Server
+需要监听连接，同时需要处理读写请求。现在把这部分的逻辑分离，分为
+<code>Listener</code> 与 <code>Conn</code>。<code>Listener</code>
+负责监听管理连接，<code>Conn</code>
+代表具体某一个连接，<code>Listener</code>
+不负责具体的可靠传输的逻辑。</p>
+<p>大致实现 <code>Listener</code> 和 <code>Conn</code>，目前
+<code>Conn</code>
+还没有实现任何关于可靠传输的内容，收发的还是原始的字节流，这部分的逻辑交给专门的类来处理。<code>Conn</code>
+还没有实现具体的发送逻辑，只是抽象出了一个 <code>Write</code>
+方法调用，具体来说将数据传递给一个 channel，那么需要有 channel
+的数据接收者。</p>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(0, 0)" id="tab-button-0-0">Listener</button>
+        
+        <button onclick="showTab(0, 1)" id="tab-button-0-1">Conn</button>
+        </div>
+        <div class="tab-content tab-content-0" id="tab-0-0">
+            <pre><span class="hljs-keyword">const</span> (
+	MAX_PACKAGE = <span class="hljs-number">0x7fff</span>
+)
+
+<span class="hljs-comment">// 负责对连接的监听与管理</span>
+<span class="hljs-keyword">type</span> LtcpListener <span class="hljs-keyword">struct</span> {
+	conn *net.UDPConn
+	lock sync.RWMutex
+
+	newLtcpConnChan <span class="hljs-keyword">chan</span> *LtcpConn
+	newLtcpErr      <span class="hljs-keyword">chan</span> <span class="hljs-type">error</span>
+
+	ltcpConnMap <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]*LtcpConn
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewLtcpListener</span><span class="hljs-params">(conn *net.UDPConn)</span></span> *LtcpListener {
+	<span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> 提供 option 选项</span>
+	listen := &amp;LtcpListener{
+		conn:            conn,
+		newLtcpConnChan: <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> *LtcpConn, <span class="hljs-number">1024</span>),
+		newLtcpErr:      <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">error</span>, <span class="hljs-number">12</span>),
+		ltcpConnMap:     <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]*LtcpConn),
+	}
+	<span class="hljs-keyword">return</span> listen
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(l *LtcpListener)</span></span> Accept() (net.Conn, <span class="hljs-type">error</span>) {
+	<span class="hljs-keyword">select</span> {
+	<span class="hljs-keyword">case</span> c := &lt;-l.newLtcpConnChan:
+		<span class="hljs-keyword">return</span> c, <span class="hljs-literal">nil</span>
+	<span class="hljs-keyword">case</span> e := &lt;-l.newLtcpErr:
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, e
+	}
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(l *LtcpListener)</span></span> Close() <span class="hljs-type">error</span> {
+	<span class="hljs-comment">// 先断开所有维护的连接</span>
+	l.closeAllUdpConn()
+	l.ltcpConnMap = <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]*LtcpConn)
+	<span class="hljs-keyword">return</span> l.conn.Close()
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(l *LtcpListener)</span></span> CloseLtcp(addr <span class="hljs-type">string</span>) {
+	l.lock.Lock()
+	<span class="hljs-keyword">defer</span> l.lock.Unlock()
+	<span class="hljs-built_in">delete</span>(l.ltcpConnMap, addr)
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(l *LtcpListener)</span></span> Addr() net.Addr {
+	<span class="hljs-keyword">return</span> l.conn.LocalAddr()
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(l *LtcpListener)</span></span> closeAllUdpConn() {
+	l.lock.Lock()
+	<span class="hljs-keyword">defer</span> l.lock.Unlock()
+	<span class="hljs-keyword">for</span> name, conn := <span class="hljs-keyword">range</span> l.ltcpConnMap {
+		<span class="hljs-keyword">if</span> err := conn.Close(); err != <span class="hljs-literal">nil</span> {
+			fmt.Printf(<span class="hljs-string">&quot;close conn %s error: %s\n&quot;</span>, name, err)
+		}
+	}
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(l *LtcpListener)</span></span> Run() {
+	data := <span class="hljs-built_in">make</span>([]<span class="hljs-type">byte</span>, MAX_PACKAGE)
+	<span class="hljs-keyword">for</span> {
+		n, remoteAddr, err := l.conn.ReadFromUDP(data)
+		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+			<span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> 处理错误</span>
+			l.newLtcpErr &lt;- err
+			<span class="hljs-keyword">continue</span>
+		}
+		l.lock.RLock()
+		ltcpConn, ok := l.ltcpConnMap[remoteAddr.String()]
+		l.lock.RUnlock()
+
+		<span class="hljs-keyword">if</span> !ok {
+			ltcpConn = NewLtcpConn(l.conn, remoteAddr, l.CloseLtcp)
+            l.lock.Lock()
+			l.ltcpConnMap[remoteAddr.String()] = ltcpConn
+			l.lock.Unlock()
+			l.newLtcpConnChan &lt;- ltcpConn
+		}
+		bts := <span class="hljs-built_in">make</span>([]<span class="hljs-type">byte</span>, n)
+		<span class="hljs-built_in">copy</span>(bts, data[:n])
+		ltcpConn.in &lt;- bts
+	}
+}</pre>
+        </div>
+        <div class="tab-content tab-content-0" id="tab-0-1">
+            <pre><span class="hljs-keyword">type</span> LtcpConn <span class="hljs-keyword">struct</span> {
+	conn       *net.UDPConn
+	remoteAddr *net.UDPAddr
+	closeFn    <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(addr <span class="hljs-type">string</span>)</span></span>
+
+	recvChan <span class="hljs-keyword">chan</span> []<span class="hljs-type">byte</span>
+	recvErr  <span class="hljs-keyword">chan</span> <span class="hljs-type">error</span>
+
+	sendChan <span class="hljs-keyword">chan</span> []<span class="hljs-type">byte</span>
+	sendErr  <span class="hljs-keyword">chan</span> <span class="hljs-type">error</span>
+
+	in <span class="hljs-keyword">chan</span> []<span class="hljs-type">byte</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewUnConn</span><span class="hljs-params">(conn *net.UDPConn,
+	remoteAddr *net.UDPAddr,
+	closeFn <span class="hljs-keyword">func</span>(<span class="hljs-type">string</span>)</span></span>) *LtcpConn {
+	con := &amp;LtcpConn{
+		conn:       conn,
+		recvChan:   <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> []<span class="hljs-type">byte</span>, <span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">16</span>),
+		recvErr:    <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">error</span>, <span class="hljs-number">2</span>),
+		sendChan:   <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> []<span class="hljs-type">byte</span>, <span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">16</span>),
+		sendErr:    <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">error</span>, <span class="hljs-number">2</span>),
+		remoteAddr: remoteAddr,
+	}
+	<span class="hljs-keyword">return</span> con
+}
+
+<span class="hljs-comment">// 实现一下 net.Conn 接口</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *LtcpConn)</span></span> LocalAddr() net.Addr {
+	<span class="hljs-keyword">return</span> c.conn.LocalAddr()
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *LtcpConn)</span></span> RemoteAddr() net.Addr {
+	<span class="hljs-keyword">if</span> c.remoteAddr != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> c.remoteAddr
+	}
+	<span class="hljs-keyword">return</span> c.conn.RemoteAddr()
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *LtcpConn)</span></span> SetDeadline(t time.Time) <span class="hljs-type">error</span> {
+	<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *LtcpConn)</span></span> SetReadDeadline(t time.Time) <span class="hljs-type">error</span> {
+	<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *LtcpConn)</span></span> SetWriteDeadline(t time.Time) <span class="hljs-type">error</span> {
+	<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+}
+
+<span class="hljs-keyword">var</span> _ net.Conn = (*LtcpConn)(<span class="hljs-literal">nil</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *LtcpConn)</span></span> Close() <span class="hljs-type">error</span> {
+	<span class="hljs-keyword">if</span> c.remoteAddr != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">if</span> c.closeFn != <span class="hljs-literal">nil</span> {
+			c.closeFn(c.remoteAddr.String())
+		}
+		<span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> 发送中断链接请求</span>
+	}
+	<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *LtcpConn)</span></span> send(bts []<span class="hljs-type">byte</span>) <span class="hljs-type">error</span> {
+	<span class="hljs-keyword">select</span> {
+	<span class="hljs-keyword">case</span> c.sendChan &lt;- bts:
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+	<span class="hljs-keyword">case</span> err := &lt;-c.sendErr:
+		<span class="hljs-keyword">return</span> err
+	}
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *LtcpConn)</span></span> Write(bts []<span class="hljs-type">byte</span>) (n <span class="hljs-type">int</span>, err <span class="hljs-type">error</span>) {
+	<span class="hljs-keyword">if</span> err := c.send(bts); err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>, err
+	}
+	<span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(bts), <span class="hljs-literal">nil</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *LtcpConn)</span></span> Read(bts []<span class="hljs-type">byte</span>) (n <span class="hljs-type">int</span>, err <span class="hljs-type">error</span>) {
+	<span class="hljs-keyword">select</span> {
+	<span class="hljs-keyword">case</span> data := &lt;-c.recvChan:
+		<span class="hljs-built_in">copy</span>(bts, data)
+		<span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(data), <span class="hljs-literal">nil</span>
+	<span class="hljs-keyword">case</span> err := &lt;-c.recvErr:
+		<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>, err
+	}
+}</pre>
+        </div></div>
+<h2 id="conn-发送逻辑">Conn 发送逻辑</h2>
+<p>首先为 <code>Conn</code>
+添加一些可选的配置项，具体每一项配置的作用详见注释。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> LtcpConnOptions <span class="hljs-keyword">struct</span> &#123;<br>  <span class="hljs-comment">// 是否启动自动发送，默认为 true</span><br>  <span class="hljs-comment">// 设置为 false 需要手动调用发送，才会出发网络传输</span><br>  AutoSend <span class="hljs-type">bool</span><br>  <span class="hljs-comment">// 自动发送的时间间隔</span><br>  SendTick time.Duration<br>&#125;<br><br><span class="hljs-keyword">var</span> DefaultLtcpConnOptions = LtcpConnOptions&#123;<br>  AutoSend: <span class="hljs-literal">true</span>,<br>  SendTick: time.Millisecond * <span class="hljs-number">20</span>,<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>如果设置了 <code>AutoSend</code>
+那么用一个时间轮来出发数据的发送。大致逻辑如下所示</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *LtcpConn)</span></span> run() &#123;<br>  <span class="hljs-keyword">if</span> c.opts.AutoSend &amp;&amp; c.opts.SendTick &gt; <span class="hljs-number">0</span> &#123;<br>    <span class="hljs-comment">// 自动发送数据包</span><br>    <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>      ticker := time.NewTicker(c.opts.SendTick)<br>      <span class="hljs-keyword">defer</span> ticker.Stop()<br><br>      <span class="hljs-keyword">for</span> <span class="hljs-keyword">range</span> ticker.C &#123;<br>                <span class="hljs-comment">// 给 conn 发送一个信号，表示一个时间周期到了</span><br>                <span class="hljs-comment">// 可以发送这一批的数据了</span><br>        c.sendTick &lt;- <span class="hljs-number">1</span><br>      &#125;<br>    &#125;()<br>  &#125;<br>  <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-keyword">if</span> c.Connected() &#123;<br>      <span class="hljs-comment">// 和某个客户端建立的连接</span><br>      c.connectedRecvLoop()<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      <span class="hljs-comment">// 监听者</span><br>      c.unconnectedRecvLoop()<br>    &#125;<br>  &#125;()<br>  c.sendLoop()<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><code>sendLoop</code>
+发送数据和接受数据的循环都还没有实现，只是定义在这里。接下来先定义一下
+<code>sendLoop</code> 的大致逻辑。</p>
+
+    </div>
+    <div class="toc-container">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#reliable-udp"><span class="toc-number">1.</span> <span class="toc-text">Reliable-UDP</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#golang-%E5%AE%9E%E7%8E%B0%E7%AE%80%E6%98%93-udp-%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">2.</span> <span class="toc-text">Golang 实现简易 UDP 服务器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#udp-%E9%80%9A%E4%BF%A1"><span class="toc-number">2.1.</span> <span class="toc-text">UDP 通信</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8C%85%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">2.2.</span> <span class="toc-text">包结构设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8C%96-udp-server-%E7%BB%93%E6%9E%84"><span class="toc-number">2.3.</span> <span class="toc-text">优化 UDP Server 结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#conn-%E5%8F%91%E9%80%81%E9%80%BB%E8%BE%91"><span class="toc-number">2.4.</span> <span class="toc-text">Conn 发送逻辑</span></a></li></ol></li></ol>
+    </div>
+  </div>
+  <footer class="article-footer">
+    <div class="footer-container">
+  <a target="_blank" rel="noopener" href="https://space.bilibili.com/12352380?spm_id_from=333.1007.0.0">
+    <img src="/images/bilibili.svg" alt="" />
+  </a>
+  <a target="_blank" rel="noopener" href="https://github.com/qiancijun">
+    <img src="/images/github.svg" alt="" />
+  </a>
+  <span>Copyright </span>
+  <img src="/images/copyright.svg" alt="">
+  <span>2024 Cheryl-Chun</span>
+</div>
+
+  </footer>
+</article>
+
+
+        </div>
+        <!-- <div class="footer">
+    
+</div> -->
+    </div>
+    
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/github-calendar@2.3.4/dist/github-calendar.min.js"></script>
+=
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js"></script>
+
+
+<script src="/scripts/search.js"></script>
+
+
+<script src="/scripts/main.js"></script>
+
+
+<script type="text/javascript">      
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+        search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result', "Cheryl-Chun");
+</script>
+</body>
+<style>
+    .main-container::before {
+        background-image: url('');
+    }
+</style>
+</html>
