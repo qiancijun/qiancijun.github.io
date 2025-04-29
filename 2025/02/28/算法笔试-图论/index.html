@@ -278,11 +278,11 @@ tree）：一个连通无向图的生成子图，同时要求是树。也即在�
 Tree，MST）为边权和最小的生成树。</p>
 <p>最小生成树算法，带输入与输出：</p>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(99, 0)" id="tab-button-99-0">Prim1</button>
+        <button onclick="showTab(102, 0)" id="tab-button-102-0">Prim1</button>
         
-        <button onclick="showTab(99, 1)" id="tab-button-99-1">Kruskal</button>
+        <button onclick="showTab(102, 1)" id="tab-button-102-1">Kruskal</button>
         </div>
-        <div class="tab-content tab-content-99" id="tab-99-0">
+        <div class="tab-content tab-content-102" id="tab-102-0">
             <pre><span class="hljs-keyword">package</span> main
 
 <span class="hljs-keyword">import</span> (
@@ -363,7 +363,7 @@ Tree，MST）为边权和最小的生成树。</p>
 	}
 }</pre>
         </div>
-        <div class="tab-content tab-content-99" id="tab-99-1">
+        <div class="tab-content tab-content-102" id="tab-102-1">
             <pre><span class="hljs-comment">//go:build ignore</span>
 <span class="hljs-comment">// +build ignore</span>
 
@@ -471,9 +471,9 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/min-cost-to-co
 <h2 id="连通分量">连通分量</h2>
 <h2 id="二分图">二分图</h2>
 <p>染色法判断是否是二分图： <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(100, 0)" id="tab-button-100-0">Golang</button>
+        <button onclick="showTab(103, 0)" id="tab-button-103-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-100" id="tab-100-0">
+        <div class="tab-content tab-content-103" id="tab-103-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">isBipartite</span><span class="hljs-params">(g [][]<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">bool</span> {
 	colors := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, <span class="hljs-built_in">len</span>(g))
 	<span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(<span class="hljs-type">int</span>, <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">bool</span>
@@ -498,9 +498,9 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/min-cost-to-co
 }</pre>
         </div></div></p>
 <p>匈牙利算法求最大匹配数： <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(101, 0)" id="tab-button-101-0">Golang</button>
+        <button onclick="showTab(104, 0)" id="tab-button-104-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-101" id="tab-101-0">
+        <div class="tab-content tab-content-104" id="tab-104-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">hungarian</span><span class="hljs-params">(g [][]<span class="hljs-type">int</span>)</span></span> (match []<span class="hljs-type">int</span>, cnt <span class="hljs-type">int</span>) {
 	match = <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, n1 + n2 + <span class="hljs-number">1</span>)
 	<span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> match {
@@ -558,9 +558,9 @@ Beautiful Graph</a></td>
 <h1 id="题解">题解</h1>
 <h2 id="省份数量">547. 省份数量</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(102, 0)" id="tab-button-102-0">Dijkstra</button>
+        <button onclick="showTab(105, 0)" id="tab-button-105-0">Dijkstra</button>
         </div>
-        <div class="tab-content tab-content-102" id="tab-102-0">
+        <div class="tab-content tab-content-105" id="tab-105-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">findCircleNum</span><span class="hljs-params">(isConnected [][]<span class="hljs-type">int</span>)</span></span> (ans <span class="hljs-type">int</span>) {
     n := <span class="hljs-built_in">len</span>(isConnected) 
     vis := <span class="hljs-built_in">make</span>([]<span class="hljs-type">bool</span>, n)
@@ -587,9 +587,9 @@ Beautiful Graph</a></td>
         </div></div>
 <h2 id="寻找图中是否存在路径">1971. 寻找图中是否存在路径</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(103, 0)" id="tab-button-103-0">Dijkstra</button>
+        <button onclick="showTab(106, 0)" id="tab-button-106-0">Dijkstra</button>
         </div>
-        <div class="tab-content tab-content-103" id="tab-103-0">
+        <div class="tab-content tab-content-106" id="tab-106-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">validPath</span><span class="hljs-params">(n <span class="hljs-type">int</span>, edges [][]<span class="hljs-type">int</span>, source <span class="hljs-type">int</span>, destination <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">bool</span> {
     g := <span class="hljs-built_in">make</span>([][]<span class="hljs-type">int</span>, n)
     <span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> g {
@@ -619,9 +619,9 @@ Beautiful Graph</a></td>
         </div></div>
 <h2 id="所有可能的路径">797. 所有可能的路径</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(104, 0)" id="tab-button-104-0">Dijkstra</button>
+        <button onclick="showTab(107, 0)" id="tab-button-107-0">Dijkstra</button>
         </div>
-        <div class="tab-content tab-content-104" id="tab-104-0">
+        <div class="tab-content tab-content-107" id="tab-107-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">allPathsSourceTarget</span><span class="hljs-params">(graph [][]<span class="hljs-type">int</span>)</span></span> (ans [][]<span class="hljs-type">int</span>) {
     path := []<span class="hljs-type">int</span>{<span class="hljs-number">0</span>}
     <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(<span class="hljs-type">int</span>)</span></span>
@@ -643,15 +643,15 @@ Beautiful Graph</a></td>
 <h2 id="网络延迟时间">743. 网络延迟时间</h2>
 <p>仅此题目用朴素 dijkstra，堆优化 dijkstra，spfa
 写，后续题目只选择最合适的。 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(105, 0)" id="tab-button-105-0">Dijkstra</button>
+        <button onclick="showTab(108, 0)" id="tab-button-108-0">Dijkstra</button>
         
-        <button onclick="showTab(105, 1)" id="tab-button-105-1">Dijkstra2</button>
+        <button onclick="showTab(108, 1)" id="tab-button-108-1">Dijkstra2</button>
         
-        <button onclick="showTab(105, 2)" id="tab-button-105-2">gods</button>
+        <button onclick="showTab(108, 2)" id="tab-button-108-2">gods</button>
         
-        <button onclick="showTab(105, 3)" id="tab-button-105-3">spfa</button>
+        <button onclick="showTab(108, 3)" id="tab-button-108-3">spfa</button>
         </div>
-        <div class="tab-content tab-content-105" id="tab-105-0">
+        <div class="tab-content tab-content-108" id="tab-108-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">networkDelayTime</span><span class="hljs-params">(times [][]<span class="hljs-type">int</span>, n <span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     <span class="hljs-keyword">const</span> inf = math.MaxInt / <span class="hljs-number">2</span> <span class="hljs-comment">// 防止加法溢出</span>
     g := <span class="hljs-built_in">make</span>([][]<span class="hljs-type">int</span>, n + <span class="hljs-number">1</span>) <span class="hljs-comment">// 邻接矩阵</span>
@@ -697,7 +697,7 @@ Beautiful Graph</a></td>
     <span class="hljs-keyword">return</span> ans
 }</pre>
         </div>
-        <div class="tab-content tab-content-105" id="tab-105-1">
+        <div class="tab-content tab-content-108" id="tab-108-1">
             <pre><span class="hljs-keyword">const</span> INF = <span class="hljs-number">0x3f3f3f3f</span>
 
 <span class="hljs-keyword">type</span> edge <span class="hljs-keyword">struct</span> {
@@ -754,7 +754,7 @@ Beautiful Graph</a></td>
     <span class="hljs-keyword">return</span> ans
 }</pre>
         </div>
-        <div class="tab-content tab-content-105" id="tab-105-2">
+        <div class="tab-content tab-content-108" id="tab-108-2">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">networkDelayTime</span><span class="hljs-params">(times [][]<span class="hljs-type">int</span>, n <span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     <span class="hljs-keyword">const</span> inf = math.MaxInt / <span class="hljs-number">2</span>
     g := <span class="hljs-built_in">make</span>([][]edge, n + <span class="hljs-number">1</span>)
@@ -800,7 +800,7 @@ Beautiful Graph</a></td>
     to, w <span class="hljs-type">int</span>
 }</pre>
         </div>
-        <div class="tab-content tab-content-105" id="tab-105-3">
+        <div class="tab-content tab-content-108" id="tab-108-3">
             <pre><span class="hljs-keyword">var</span> (
     he, dist [<span class="hljs-number">110</span>]<span class="hljs-type">int</span>
     e, w, ne [<span class="hljs-number">6010</span>]<span class="hljs-type">int</span>
@@ -863,9 +863,9 @@ Beautiful Graph</a></td>
         </div></div></p>
 <h2 id="访问消失节点的最少时间">3112. 访问消失节点的最少时间</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(106, 0)" id="tab-button-106-0">Golang</button>
+        <button onclick="showTab(109, 0)" id="tab-button-109-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-106" id="tab-106-0">
+        <div class="tab-content tab-content-109" id="tab-109-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">minimumTime</span><span class="hljs-params">(n <span class="hljs-type">int</span>, edges [][]<span class="hljs-type">int</span>, disappear []<span class="hljs-type">int</span>)</span></span> []<span class="hljs-type">int</span> {
     g := <span class="hljs-built_in">make</span>([][]edge, n)
     <span class="hljs-keyword">for</span> _, e := <span class="hljs-keyword">range</span> edges {
@@ -904,9 +904,9 @@ Beautiful Graph</a></td>
         </div></div>
 <h2 id="设计可以求最短路径的图类">2642. 设计可以求最短路径的图类</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(107, 0)" id="tab-button-107-0">Golang</button>
+        <button onclick="showTab(110, 0)" id="tab-button-110-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-107" id="tab-107-0">
+        <div class="tab-content tab-content-110" id="tab-110-0">
             <pre><span class="hljs-keyword">type</span> edge <span class="hljs-keyword">struct</span> {
     v, w <span class="hljs-type">int</span>
 }
@@ -965,9 +965,9 @@ Beautiful Graph</a></td>
 <h2 id="第-k-大的完美二叉子树的大小">3319. 第 K
 大的完美二叉子树的大小</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(108, 0)" id="tab-button-108-0">Golang</button>
+        <button onclick="showTab(111, 0)" id="tab-button-111-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-108" id="tab-108-0">
+        <div class="tab-content tab-content-111" id="tab-111-0">
             <pre><span class="hljs-comment">/**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -1003,9 +1003,9 @@ Beautiful Graph</a></td>
         </div></div>
 <h2 id="连接所有点的最小费用">1584. 连接所有点的最小费用</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(109, 0)" id="tab-button-109-0">Golang</button>
+        <button onclick="showTab(112, 0)" id="tab-button-112-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-109" id="tab-109-0">
+        <div class="tab-content tab-content-112" id="tab-112-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">minCostConnectPoints</span><span class="hljs-params">(points [][]<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     <span class="hljs-keyword">const</span> inf <span class="hljs-type">int</span> = <span class="hljs-number">2e9</span>
     dis := <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(a, b []<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
@@ -1056,9 +1056,9 @@ Beautiful Graph</a></td>
 <h2 id="可以到达所有点的最少点数目">1557.
 可以到达所有点的最少点数目</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(110, 0)" id="tab-button-110-0">Golang</button>
+        <button onclick="showTab(113, 0)" id="tab-button-113-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-110" id="tab-110-0">
+        <div class="tab-content tab-content-113" id="tab-113-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">findSmallestSetOfVertices</span><span class="hljs-params">(n <span class="hljs-type">int</span>, edges [][]<span class="hljs-type">int</span>)</span></span> (ans []<span class="hljs-type">int</span>) {
     in := <span class="hljs-built_in">make</span>([]<span class="hljs-type">bool</span>, n)
 	<span class="hljs-keyword">for</span> _, e := <span class="hljs-keyword">range</span> edges {
@@ -1074,9 +1074,9 @@ Beautiful Graph</a></td>
         </div></div>
 <h2 id="课程表-ii">210. 课程表 II</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(111, 0)" id="tab-button-111-0">Golang</button>
+        <button onclick="showTab(114, 0)" id="tab-button-114-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-111" id="tab-111-0">
+        <div class="tab-content tab-content-114" id="tab-114-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">findOrder</span><span class="hljs-params">(numCourses <span class="hljs-type">int</span>, prerequisites [][]<span class="hljs-type">int</span>)</span></span> (ans []<span class="hljs-type">int</span>) {
     g := <span class="hljs-built_in">make</span>([][]<span class="hljs-type">int</span>, numCourses)
     <span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> g {
@@ -1114,9 +1114,9 @@ Beautiful Graph</a></td>
 <h2 id="课程表-iv">1462. 课程表 IV</h2>
 <p>Floyd 求最短路</p>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(112, 0)" id="tab-button-112-0">Golang</button>
+        <button onclick="showTab(115, 0)" id="tab-button-115-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-112" id="tab-112-0">
+        <div class="tab-content tab-content-115" id="tab-115-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">checkIfPrerequisite</span><span class="hljs-params">(numCourses <span class="hljs-type">int</span>, prerequisites [][]<span class="hljs-type">int</span>, queries [][]<span class="hljs-type">int</span>)</span></span> []<span class="hljs-type">bool</span> {
     g := <span class="hljs-built_in">make</span>([][]<span class="hljs-type">bool</span>, numCourses)
     <span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> g {
@@ -1145,9 +1145,9 @@ Beautiful Graph</a></td>
         </div></div>
 <h2 id="阈值距离内邻居最少的城市">1334. 阈值距离内邻居最少的城市</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(113, 0)" id="tab-button-113-0">Golang</button>
+        <button onclick="showTab(116, 0)" id="tab-button-116-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-113" id="tab-113-0">
+        <div class="tab-content tab-content-116" id="tab-116-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">findTheCity</span><span class="hljs-params">(n <span class="hljs-type">int</span>, edges [][]<span class="hljs-type">int</span>, distanceThreshold <span class="hljs-type">int</span>)</span></span> (ans <span class="hljs-type">int</span>) {
     g := <span class="hljs-built_in">make</span>([][]<span class="hljs-type">int</span>, n)
     <span class="hljs-keyword">const</span> inf <span class="hljs-type">int</span> = <span class="hljs-number">2e9</span>
@@ -1189,9 +1189,9 @@ Beautiful Graph</a></td>
         </div></div>
 <h2 id="转换字符串的最小成本-i">2976. 转换字符串的最小成本 I</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(114, 0)" id="tab-button-114-0">Golang</button>
+        <button onclick="showTab(117, 0)" id="tab-button-117-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-114" id="tab-114-0">
+        <div class="tab-content tab-content-117" id="tab-117-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">minimumCost</span><span class="hljs-params">(source <span class="hljs-type">string</span>, target <span class="hljs-type">string</span>, original []<span class="hljs-type">byte</span>, changed []<span class="hljs-type">byte</span>, cost []<span class="hljs-type">int</span>)</span></span> (ans <span class="hljs-type">int64</span>) {
     g := <span class="hljs-built_in">make</span>([][]<span class="hljs-type">int</span>, <span class="hljs-number">26</span>)
     <span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> g {
@@ -1242,9 +1242,9 @@ class="math inline">\(2^{w_i}\)</span> 种填法。 - 若白点填 <span
 class="math inline">\(2\)</span>，则剩下的黑点有 <span
 class="math inline">\(2^{b_i}\)</span> 种填法。</p>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(115, 0)" id="tab-button-115-0">Golang</button>
+        <button onclick="showTab(118, 0)" id="tab-button-118-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-115" id="tab-115-0">
+        <div class="tab-content tab-content-118" id="tab-118-0">
             <pre><span class="hljs-comment">//go:build ignore</span>
 <span class="hljs-comment">// +build ignore</span>
 

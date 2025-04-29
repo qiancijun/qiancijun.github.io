@@ -57,6 +57,10 @@
   justify-content: center;
   gap: 10px;
 }
+.article ul,
+.article li {
+  color: #f89c65;
+}
 .tag-link:hover {
   color: color-tag-title;
 }

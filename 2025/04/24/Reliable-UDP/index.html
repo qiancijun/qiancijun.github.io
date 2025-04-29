@@ -190,11 +190,11 @@ TIME_WAIT、FIN_WAIT）。这样做就把<strong>可靠性从传输层转移到�
 方法调用，具体来说将数据传递给一个 channel，那么需要有 channel
 的数据接收者。</p>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(0, 0)" id="tab-button-0-0">Listener</button>
+        <button onclick="showTab(1, 0)" id="tab-button-1-0">Listener</button>
         
-        <button onclick="showTab(0, 1)" id="tab-button-0-1">Conn</button>
+        <button onclick="showTab(1, 1)" id="tab-button-1-1">Conn</button>
         </div>
-        <div class="tab-content tab-content-0" id="tab-0-0">
+        <div class="tab-content tab-content-1" id="tab-1-0">
             <pre><span class="hljs-keyword">const</span> (
 	MAX_PACKAGE = <span class="hljs-number">0x7fff</span>
 )
@@ -283,7 +283,7 @@ TIME_WAIT、FIN_WAIT）。这样做就把<strong>可靠性从传输层转移到�
 	}
 }</pre>
         </div>
-        <div class="tab-content tab-content-0" id="tab-0-1">
+        <div class="tab-content tab-content-1" id="tab-1-1">
             <pre><span class="hljs-keyword">type</span> LtcpConn <span class="hljs-keyword">struct</span> {
 	conn       *net.UDPConn
 	remoteAddr *net.UDPAddr
