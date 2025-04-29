@@ -408,10 +408,112 @@ Term；<code>ConflictIndex</code> 为 <code>ConflictTerm</code>
 <p>为了避免 Reply 乱序到达，导致探测点乱序前进和回退，需要保证
 <code>nextIndex</code> 是单调递减的。</p>
 <figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// --- rf.startReplication in raft_replication.go</span><br><span class="hljs-keyword">if</span> !reply.Success &#123;<br>    prevIndex := rf.nextIndex[peer]<br>    <span class="hljs-comment">// avoid the late reply move the nextIndex forward again</span><br>    <span class="hljs-keyword">if</span> rf.nextIndex[peer] &gt; prevIndex &#123;<br>            rf.nextIndex[peer] = prevIndex<br>    &#125;<br>    <span class="hljs-keyword">return</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="日志压缩part-d">日志压缩（Part D）</h2>
+<p>对于一个长时间运行的 Raft
+系统，如果持续收到日志回会遇到<em>「空间不足」</em>，<em>「启动过慢」</em>等问题。日志无限的追加下去，本地硬盘空间可能存不下。重启时需要重放所有日志，如果日志过长，重放过程将会持续很久不能正常对外提供服务。</p>
+<p>最容易想到的方法就是定期对日志做<strong>快照</strong>。针对某个日志
+entry 做了快照之后，该 entry
+及之前的日志都可以被<strong>截断</strong>。为什么需要这么做呢？相比于日志，快照的存储更加紧凑。日志记录的是对状态机修改的事件，比如
+<code>update k1 = v1</code>，而快照通常记录的是
+<code>k1: v1</code>，一条数据会在日志中出现多次，但是在快照中只会保存其最后一次的状态。</p>
+<p>截断的同时也会带来新的问题，如果一个 term
+较低的节点加入了集群，Leader 需要发送过往的日志给该
+Follower，发现过往日志已经被截断了。这时候就需要引入一个新的 RPC
+<code>InstallSnapshot</code>，将 Leader 的 Snapshot 全量同步给
+Follower，再做之后的增量同步。</p>
+<blockquote>
+<p>下面只贴出关键代码，其中还有对 Part A、B、C 代码的修改，完整代码详见
+<a target="_blank" rel="noopener" href="https://github.com/qiancijun/lab-raft">Github</a> 仓库</p>
+</blockquote>
+<p>将对 Log 的结构全部都抽离出来，之前只用 <code>[]LogEntry</code>
+来表示日志，现在构造一个新的 <code>RaftLog</code> 来表示维护的日志。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> RaftLog <span class="hljs-keyword">struct</span> &#123;<br>  <span class="hljs-comment">// 记录前一个日志的界限</span><br>  <span class="hljs-comment">// 最后一条日志的 index</span><br>  snapLastIdx <span class="hljs-type">int</span><br>  <span class="hljs-comment">// 最后一条日志的 term</span><br>  snapLastTerm <span class="hljs-type">int</span><br><br>  <span class="hljs-comment">// 日志压缩的前半段，从 [1, snapLastIdx] 开始的日志</span><br>  snapshot []<span class="hljs-type">byte</span><br><br>  <span class="hljs-comment">// 日志的后半段，从 (snapLastIdx, snapLastIdx + len(tailLog) - 1] 开始的日志</span><br>  <span class="hljs-comment">// tailLog[0] 是一条 dummy 日志，存储的是 snapLastTerm</span><br>  <span class="hljs-comment">// 这里用的值类型，可能存在拷贝带来的性能问题</span><br>  tailLog []LogEntry<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><code>RaftLog</code> 主要维护三部分的信息：</p>
+<ol type="1">
+<li>截断后压缩的日志 <code>snapshot</code>;</li>
+<li>后续的剩余日志 <code>tailLog</code>;</li>
+<li>两者的分界线;</li>
+</ol>
+<p>为了避免边界判断，在 <code>tailLog</code> 中添加一个 dummy 日志，将
+<code>tailLog</code> 中下标为 0 的日志留空，但是给它的 <code>Term</code>
+赋值 <code>snapLastTerm</code>。同时添加一些下标转换的工具函数，因为
+<code>tailLog</code> 中日志的 index 不是真正日志的
+<code>Index</code>。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewLog</span><span class="hljs-params">(snapLastIdx, snapLastTerm <span class="hljs-type">int</span>, snapshot []<span class="hljs-type">byte</span>, entries []LogEntry)</span></span> *RaftLog &#123;<br>  rl := &amp;RaftLog&#123;<br>    snapLastIdx:  snapLastIdx,<br>    snapLastTerm: snapLastTerm,<br>    snapshot:     snapshot,<br>  &#125;<br><br>  <span class="hljs-comment">// make the len = 0, cap = 1 + len(entries)</span><br>  rl.tailLog = <span class="hljs-built_in">make</span>([]LogEntry, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>+<span class="hljs-built_in">len</span>(entries))<br>  rl.tailLog = <span class="hljs-built_in">append</span>(rl.tailLog, LogEntry&#123;<br>    Term: snapLastTerm,<br>  &#125;)<br>  rl.tailLog = <span class="hljs-built_in">append</span>(rl.tailLog, entries...)<br><br>  <span class="hljs-keyword">return</span> rl<br>&#125;<br><br><span class="hljs-comment">// 存储在 tailLog 的 index 不是实际日志的 index</span><br><span class="hljs-comment">// 需要做一个 index 的转换计算</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rl *RaftLog)</span></span> idx(logicIdx <span class="hljs-type">int</span>) <span class="hljs-type">int</span> &#123;<br>  <span class="hljs-comment">// 超出了 tailLog 的界限</span><br>  <span class="hljs-keyword">if</span> logicIdx &lt; rl.snapLastIdx || logicIdx &gt;= rl.size() &#123;<br>    <span class="hljs-built_in">panic</span>(fmt.Sprintf(<span class="hljs-string">&quot;%d is out of [%d, %d]&quot;</span>, logicIdx, rl.snapLastIdx, rl.size()<span class="hljs-number">-1</span>))<br>  &#125;<br>  <span class="hljs-keyword">return</span> logicIdx - rl.snapLastIdx<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rl *RaftLog)</span></span> size() <span class="hljs-type">int</span> &#123;<br>  <span class="hljs-keyword">return</span> rl.snapLastIdx + <span class="hljs-built_in">len</span>(rl.tailLog)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rl *RaftLog)</span></span> at(logicIdx <span class="hljs-type">int</span>) LogEntry &#123;<br>  <span class="hljs-keyword">return</span> rl.tailLog[rl.idx(logicIdx)]<br>&#125;<br><br><span class="hljs-comment">// 封装 append 操作</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rl *RaftLog)</span></span> <span class="hljs-built_in">append</span>(e LogEntry) &#123;<br>  rl.tailLog = <span class="hljs-built_in">append</span>(rl.tailLog, e)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rl *RaftLog)</span></span> last() (<span class="hljs-type">int</span>, <span class="hljs-type">int</span>) &#123;<br>  i := <span class="hljs-built_in">len</span>(rl.tailLog) - <span class="hljs-number">1</span><br>  <span class="hljs-keyword">return</span> rl.snapLastIdx + i, rl.tailLog[i].Term<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rl *RaftLog)</span></span> appendFrom(logicPrevIndex <span class="hljs-type">int</span>, entries []LogEntry) &#123;<br>  rl.tailLog = <span class="hljs-built_in">append</span>(rl.tailLog[:rl.idx(logicPrevIndex)+<span class="hljs-number">1</span>], entries...)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rl *RaftLog)</span></span> tail(startIdx <span class="hljs-type">int</span>) []LogEntry &#123;<br>  <span class="hljs-keyword">if</span> startIdx &gt;= rl.size() &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span><br>  &#125;<br><br>  <span class="hljs-keyword">return</span> rl.tailLog[rl.idx(startIdx):]<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>除了构造函数，宕机重启，也会通过读取各个字段，进行反序列化构造
+<code>RaftLog</code>。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 宕机重启需要做解序列化</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rl *RaftLog)</span></span> readPersist(d *labgob.LabDecoder) <span class="hljs-type">error</span> &#123;<br>  <span class="hljs-keyword">var</span> lastIdx <span class="hljs-type">int</span><br>  <span class="hljs-keyword">if</span> err := d.Decode(&amp;lastIdx); err != <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-keyword">return</span> fmt.Errorf(<span class="hljs-string">&quot;decode last include index failed&quot;</span>)<br>  &#125;<br>  rl.snapLastIdx = lastIdx<br><br>  <span class="hljs-keyword">var</span> lastTerm <span class="hljs-type">int</span><br>  <span class="hljs-keyword">if</span> err := d.Decode(&amp;lastTerm); err != <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-keyword">return</span> fmt.Errorf(<span class="hljs-string">&quot;decode last include term failed&quot;</span>)<br>  &#125;<br>  rl.snapLastTerm = lastTerm<br><br>  <span class="hljs-keyword">var</span> log []LogEntry<br>  <span class="hljs-keyword">if</span> err := d.Decode(&amp;log); err != <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-keyword">return</span> fmt.Errorf(<span class="hljs-string">&quot;decode tailLog failed&quot;</span>)<br>  &#125;<br>  rl.tailLog = log<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rl *RaftLog)</span></span> persist(e *labgob.LabEncoder) &#123;<br>  e.Encode(rl.snapLastIdx)<br>  e.Encode(rl.snapLastTerm)<br>  e.Encode(rl.tailLog)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>应用层发出请求，要求 Raft 层在 index 处做一个快照，同时 index
+之前的日志就可以释放掉了。在进行日志截断时，注意要新建一个数组，而不是使用下标切片运算，只有新建数组，才会对原数组释放引用，GC
+才能够把原来的空间回收掉。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 从 App Layer 从 Raft Layer 传递</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(rl *RaftLog)</span></span> doSnapshot(index <span class="hljs-type">int</span>, snapshot []<span class="hljs-type">byte</span>) &#123;<br>  idx := rl.idx(index)<br><br>  rl.snapLastTerm = rl.tailLog[idx].Term<br>  rl.snapLastIdx = index<br>  rl.snapshot = snapshot<br><br>  newLog := <span class="hljs-built_in">make</span>([]LogEntry, <span class="hljs-number">0</span>, rl.size()-rl.snapLastIdx)<br>  newLog = <span class="hljs-built_in">append</span>(newLog, LogEntry&#123;<br>      Term: rl.snapLastTerm,<br>  &#125;)<br>  newLog = <span class="hljs-built_in">append</span>(newLog, rl.tailLog[idx+<span class="hljs-number">1</span>:]...)<br>  rl.tailLog = newLog<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><img
+src="https://cheryl-picgo.oss-cn-hangzhou.aliyuncs.com/Pasted%20image%2020250429164246.png" /></p>
+<p>整个 <code>InstallSnapshot</code> RPC 的流程，这部分的代码详见
+<code>raft_compaction.go</code></p>
+<ol type="1">
+<li>Leader 应用层调用 <code>raft.Snapshot(index, snapshot)</code>
+函数，主要负责：
+<ol type="1">
+<li>保存 snapshot</li>
+<li>截断日志</li>
+<li>持久化</li>
+</ol></li>
+<li>Leader 在需要时使用该 snapshot 构造参数发送 RPC 给 Follower</li>
+<li>Follower 收到 RPC 后替换本地日志，并将其持久化</li>
+<li>Follower 通过 <code>ApplyMsg</code> 讲 snapshot 传递给 Follower
+应用层</li>
+</ol>
+<p>后续讨论一下注意点：</p>
+<p>Follower 收到 snapshot apply 的时候完全
+apply？那应用层如何进行去重？Snapshot 中的 kv 带 index 吗？</p>
+<ol type="1">
+<li>应用层 Apply snapshot 时，是覆盖式（全量式，因为 Snapshot 下标肯定从
+0 开始） Apply；在 Apply log 时，是增量式的 Apply。两者不同。</li>
+<li>因此在 Apply snapshot
+时，并不需要去重（因为不是增量式的），直接替换掉当前状态机即可。</li>
+</ol>
+<p>应用层调用 snapshot(index, snapshot)意味着 什么？</p>
+<ol type="1">
+<li>对应用层意味着：
+<ol type="1">
+<li>应用已经做好了一个快照，但编解码方式只有应用层自己知道，Raft
+层不感知。</li>
+<li>应用层自己也会保存该快照，之后宕机重启后会先加载该快照。此时（宕机重启后）
+Raft 层也要记得更新自己的 commitIndex 和 lastApplied。</li>
+</ol></li>
+<li>对 Raft 层意味着：
+<ol type="1">
+<li>应用层告诉 Raft 层，你可以把 index 及以前的日志给释放掉了。</li>
+<li>Raft 层要保存下 Snapshot，万一其变为 Leader 之后需要给 Follower
+发。</li>
+<li>保存分为在内存中保存和持久化到外存。</li>
+</ol></li>
+</ol>
+<p>需要对原流程修改的地方？</p>
+<ol type="1">
+<li>Leader 发送 entries 的时候，要先检查要发送的 PrevLogEntry
+还在不在，如果不在了，需要先发 snapshot。</li>
+</ol>
+<p>宕机重启后，lastApplied 怎么初始化？</p>
+<ol type="1">
+<li>如果有 snapshot 存在：则需要初始化为 snapshot 的
+lastIncludedIndex。因为应用层肯定也是从自己 snapshot 中来恢复的。
+<ol type="1">
+<li>在 Make 阶段同步的再 apply 一个 snapshot 到 appplyCh 中有可能会直接
+block 住。</li>
+<li>即使不阻塞，有时候也会遇到 snapshot decode error 报错。</li>
+</ol></li>
+<li>如果没有 snapshot 存在：那就初始化为 0 。
+<ol type="1">
+<li>如果初始化为 snapLastIndex，那前面的需要 apply 吗？</li>
+<li>不需要，因为应用层自己会从自己保存的 snapshot 中恢复。</li>
+</ol></li>
+</ol>
 
     </div>
     <div class="toc-container">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#raft"><span class="toc-number">1.</span> <span class="toc-text">Raft</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%86%E5%AF%BC%E8%80%85%E9%80%89%E4%B8%BEpart-a"><span class="toc-number">1.1.</span> <span class="toc-text">领导者选举（Part A）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.1.1.</span> <span class="toc-text">状态转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%89%E4%B8%BE-loop"><span class="toc-number">1.1.2.</span> <span class="toc-text">选举 Loop</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BF%83%E8%B7%B3%E9%80%BB%E8%BE%91"><span class="toc-number">1.1.3.</span> <span class="toc-text">心跳逻辑</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A5%E5%BF%97%E5%90%8C%E6%AD%A5part-b"><span class="toc-number">1.2.</span> <span class="toc-text">日志同步（Part B）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8A%B6%E6%80%81%E6%8C%81%E4%B9%85%E5%8C%96part-c"><span class="toc-number">1.3.</span> <span class="toc-text">状态持久化（Part C）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A5%E5%BF%97%E5%9B%9E%E6%BA%AF%E4%BC%98%E5%8C%96"><span class="toc-number">1.3.1.</span> <span class="toc-text">日志回溯优化</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#raft"><span class="toc-number">1.</span> <span class="toc-text">Raft</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%86%E5%AF%BC%E8%80%85%E9%80%89%E4%B8%BEpart-a"><span class="toc-number">1.1.</span> <span class="toc-text">领导者选举（Part A）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.1.1.</span> <span class="toc-text">状态转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%89%E4%B8%BE-loop"><span class="toc-number">1.1.2.</span> <span class="toc-text">选举 Loop</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BF%83%E8%B7%B3%E9%80%BB%E8%BE%91"><span class="toc-number">1.1.3.</span> <span class="toc-text">心跳逻辑</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A5%E5%BF%97%E5%90%8C%E6%AD%A5part-b"><span class="toc-number">1.2.</span> <span class="toc-text">日志同步（Part B）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8A%B6%E6%80%81%E6%8C%81%E4%B9%85%E5%8C%96part-c"><span class="toc-number">1.3.</span> <span class="toc-text">状态持久化（Part C）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A5%E5%BF%97%E5%9B%9E%E6%BA%AF%E4%BC%98%E5%8C%96"><span class="toc-number">1.3.1.</span> <span class="toc-text">日志回溯优化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A5%E5%BF%97%E5%8E%8B%E7%BC%A9part-d"><span class="toc-number">1.4.</span> <span class="toc-text">日志压缩（Part D）</span></a></li></ol></li></ol>
     </div>
   </div>
   <footer class="article-footer">

@@ -16,11 +16,17 @@
 .article-entry .toc-container li {
   width: 100%;
 }
-.article-entry .toc-container ol {
+.article-entry .toc-container ol ol {
   margin: 0;
+  padding-left: 40px !important;
 }
 .article-entry .content {
   width: 70%;
+/* li {
+           ul, ol {
+            margin-left: 2em;
+           } 
+        } */
 /* 代码块 */
 /* 斜体 */
 /* 粗体 */
@@ -55,8 +61,7 @@
 .article-entry .content h5::before,
 .article-entry .content h6::before,
 .article-entry .content div::before,
-.article-entry .content p::before,
-.article-entry .content li::before {
+.article-entry .content p::before {
 /* position: absolute;
             left: 0; */
   font-size: font-size;
@@ -65,7 +70,7 @@
   counter-increment: line; /* 递增行号计数器 */
   width: 30px; /* 设置行号宽度 */
   text-align: right; /* 将行号右对齐 */
-  margin-right: 20px; /* 设置行号和内容之间的间距 */
+  margin-right: 10px; /* 设置行号和内容之间的间距 */
   color: #999; /* 设置行号颜色 */
   display: inline-block; /* 将行号作为行内元素显示 */
   user-select: none;
@@ -81,6 +86,7 @@
 .article-entry .content ul {
   list-style: none;
 /* margin-left: 2em; */
+  padding-left: 40px !important;
 }
 .article-entry .content ul li::before {
   font-size: font-size;
@@ -89,27 +95,37 @@
   counter-increment: none; /* 递增行号计数器 */
   width: 30px; /* 设置行号宽度 */
   text-align: right; /* 将行号右对齐 */
-  margin-right: 20px; /* 设置行号和内容之间的间距 */
+  margin-right: 10px; /* 设置行号和内容之间的间距 */
   color: #999; /* 设置行号颜色 */
   display: inline-block; /* 将行号作为行内元素显示 */
   user-select: none;
 }
-.article-entry .content li ul,
-.article-entry .content li ol {
-  margin-left: 2em;
-}
 .article-entry .content ol {
-  padding: 0;
-  margin-left: 0;
-  margin-top: 0;
-  margin-bottom: 0;
+  list-style: none;
+  padding-left: 40px !important;
+  counter-reset: ol-counter;
+/* margin-left: 2em; */
+}
+.article-entry .content ol li::before {
+  font-size: font-size;
+  font-weight: 300;
+  content: counter(ol-counter, lower-roman) '.'; /* 设置行号为计数器的值 */
+  counter-increment: ol-counter; /* 递增行号计数器 */
+  width: 40px; /* 设置行号宽度 */
+  text-align: right; /* 将行号右对齐 */
+  margin-right: 10px; /* 设置行号和内容之间的间距 */
+  color: #999; /* 设置行号颜色 */
+  display: inline-block; /* 将行号作为行内元素显示 */
+  user-select: none;
+}
+.article-entry .content p code {
+  color: code-color;
 }
 .article-entry .content .highlight,
 .article-entry .content code {
   margin: 0;
   background: #2d2d2d;
   padding: 3px 3px 3px 3px;
-  color: code-color;
 }
 .article-entry .content .highlight table,
 .article-entry .content code table {
@@ -127,6 +143,10 @@
   padding: 0;
   padding-left: 1em;
   margin: 0;
+}
+.article-entry .content .highlight text,
+.article-entry .content code text {
+  color: code-color;
 }
 .article-entry .content .highlight {
   position: relative;
@@ -159,6 +179,8 @@
   border: 2px dashed color-text;
 }
 .article-entry .content p img {
+  max-width: 100%; /* 限制最大宽度为父容器 */
+  height: auto; /* 保持原始宽高比缩放 */
   display: block;
   text-align: center;
   margin: 0 auto;
