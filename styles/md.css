@@ -32,6 +32,7 @@
 /* 粗体 */
 /* 表格 */
 /* 图片 */
+/* citation 的样式 */
 /* 分页代码 */
 }
 .article-entry .content h1 {
@@ -217,6 +218,71 @@
 .article-entry .content blockquote p::before {
   content: none;
   counter-increment: none;
+}
+.article-entry .content .citation,
+.article-entry .content .citation *:not(ol):not(ul):not(li),
+.article-entry .content .citation ::before,
+.article-entry .content .citation *:not(ol):not(ul):not(li)::before {
+  content: none !important;
+  counter-increment: none !important;
+}
+.article-entry .content .citation {
+  margin-top: 10px;
+  margin-left: 30px;
+  width: 100%;
+  padding: 20px;
+  border-radius: 10px;
+}
+.article-entry .content .citation::before {
+  content: none;
+  counter-increment: none;
+}
+.article-entry .content .citation .title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.article-entry .content .citation .content {
+  margin-top: 10px;
+}
+.article-entry .content .citation div {
+  color: #000;
+}
+.article-entry .content .cite-note {
+  background-color: #e9effa;
+}
+.article-entry .content .cite-note .title {
+  color: #2b60d1;
+}
+.article-entry .content .cite-question {
+  background-color: #fbf1e9;
+}
+.article-entry .content .cite-question .title {
+  color: #d77224;
+}
+.article-entry .content .cite-warn {
+  background-color: #fbf1e9;
+}
+.article-entry .content .cite-warn .title {
+  color: #d77224;
+}
+.article-entry .content .cite-success {
+  background-color: #edf7ed;
+}
+.article-entry .content .cite-success .title {
+  color: #4cac4f;
+}
+.article-entry .content .cite-tip {
+  background-color: #edf7f7;
+}
+.article-entry .content .cite-tip .title {
+  color: #4eb3b3;
+}
+.article-entry .content .cite-example {
+  background-color: #efedfc;
+}
+.article-entry .content .cite-example .title {
+  color: #664be3;
 }
 .article-entry .content .multi-code {
   margin-left: 30px;
