@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+    
+      eino
+    
+</title>
+
+<link rel="icon" href="/images/favicon.ico">
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-calendar@2.3.4/dist/github-calendar.min.css">
+
+<link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/styles/github-dark-dimmed.min.css" rel="stylesheet">
+<!-- <link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark-reasonable.min.css" rel="stylesheet"> -->
+<link href="
+https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.css
+" rel="stylesheet">
+<link href="
+https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustomScrollbar.min.css
+" rel="stylesheet">
+<meta name="generator" content="Hexo 7.2.0"></head>
+<body>
+    <div class="main-container">
+        <div class="topbar">
+    <div class="btn-container">
+        <a href="/"><img class="btn-close" src="/images/close.svg" alt=""></a>
+        <a><img class="btn-minimize" src="/images/minimize.svg" alt=""></a>
+        <a><img class="btn-maximize" src="/images/maximize.svg" alt=""></a>
+    </div>
+    <div class="title">
+        <img src="/images/terminal.svg" alt="">
+        <span>cat Cheryl-Chun 淳老师 BLOG</span>
+    </div>
+</div>
+        <div class="nav-container">
+    <div class="posts">
+        <img src="/images/posts-list.svg" alt="">
+        <a href="/">Home</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+    <!-- <div class="tags">
+        <img src="/images/tag.svg" alt="">
+        <a href="/tag">Tag</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div> -->
+    <div>
+        <img src="/images/archive.svg" alt="">
+        <a href="/all-posts">Posts</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+    <!-- <div class="category">
+        <img src="/images/category.svg" alt="">
+        <a href="/category">Category</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div> -->
+    <div class="about">
+        <img src="/images/about.svg" alt="">
+        <a href="/about">About</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+</div>
+        <div class="main-content">
+            <article
+  id="post-eino"
+  class="article article-type-post"
+>
+  <div id="toc-show">
+    <img src="/images/toc.svg" alt="" />
+  </div>
+  
+  <h1 class="article-header">eino</h1>
+  
+  <div class="article-info">
+    <!-- <span>Document Attributes:</span> -->
+
+    <table>
+      <tr>
+        <td>
+            <img src="/images/time.svg" alt="">
+            Updated Time
+        </td>
+        <td>2025-08-12</td>
+      </tr>
+      <tr>
+        <td>
+            <img src="/images/category.svg" alt="">
+            Category
+        </td>
+        <td>  </td>
+      </tr>
+      <tr>
+        <td>
+            <img src="/images/tag.svg" alt="">
+            Tags
+        </td>
+        <td>
+	<a class="tag-link" href="/tags/AI/" rel="tag">AI</a>, <a class="tag-link" href="/tags/LLM/" rel="tag">LLM</a>
+
+</td>
+      </tr>
+    </table>
+  </div>
+  <div class="article-entry">
+    <div class="content">
+      <h1 id="eino">Eino</h1>
+<p><a
+target="_blank" rel="noopener" href="https://www.cloudwego.cn/zh/docs/eino/overview/eino_open_source/">Eino</a>字节跳动，基于
+Golang 的大模型应用综合开发框架</p>
+<h2 id="入门案例">入门案例</h2>
+<p>用 Eino 及 Ollama 快速搭建一个 LLM 应用。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    template := prompt.FromMessages(schema.FString,<br>        schema.SystemMessage(<span class="hljs-string">&quot;你是一个&#123;role&#125;。&quot;</span>),<br>        schema.UserMessage(<span class="hljs-string">&quot;问题: &#123;question&#125;&quot;</span>),<br>    )<br><br>    ctx := context.Background()<br>    messages, err := template.Format(ctx, <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]any&#123;<br>        <span class="hljs-string">&quot;role&quot;</span>:     <span class="hljs-string">&quot;乐于助人的助手&quot;</span>,<br>        <span class="hljs-string">&quot;question&quot;</span>: <span class="hljs-string">&quot;如何学习 golang？&quot;</span>,<br>    &#125;)<br><br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-built_in">panic</span>(err)<br>    &#125;<br><br>    chatModel, err := ollama.NewChatModel(ctx, &amp;ollama.ChatModelConfig&#123;<br>        BaseURL: <span class="hljs-string">&quot;http://localhost:11434&quot;</span>, <span class="hljs-comment">// Ollama 服务地址</span><br>        Model:   <span class="hljs-string">&quot;qwen2.5:14b&quot;</span>,                 <span class="hljs-comment">// 模型名称</span><br>    &#125;)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-built_in">panic</span>(err)<br>    &#125;<br><br>    result, err := chatModel.Generate(ctx, messages)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-built_in">panic</span>(err)<br>    &#125;<br>    fmt.Printf(<span class="hljs-string">&quot;result.Content: %v\n&quot;</span>, result.Content)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>流式传输： <figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    template := prompt.FromMessages(schema.FString,<br>        schema.SystemMessage(<span class="hljs-string">&quot;你是一个&#123;role&#125;。&quot;</span>),<br>        schema.UserMessage(<span class="hljs-string">&quot;问题: &#123;question&#125;&quot;</span>),<br>    )<br><br>    ctx := context.Background()<br>    messages, err := template.Format(ctx, <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]any&#123;<br>        <span class="hljs-string">&quot;role&quot;</span>:     <span class="hljs-string">&quot;乐于助人的助手&quot;</span>,<br>        <span class="hljs-string">&quot;question&quot;</span>: <span class="hljs-string">&quot;如何学习 golang？&quot;</span>,<br>    &#125;)<br><br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-built_in">panic</span>(err)<br>    &#125;<br><br>    chatModel, err := ollama.NewChatModel(ctx, &amp;ollama.ChatModelConfig&#123;<br>        BaseURL: <span class="hljs-string">&quot;http://localhost:11434&quot;</span>, <span class="hljs-comment">// Ollama 服务地址</span><br>        Model:   <span class="hljs-string">&quot;qwen2.5:14b&quot;</span>,                 <span class="hljs-comment">// 模型名称</span><br>    &#125;)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-built_in">panic</span>(err)<br>    &#125;<br><br>    streamResult, err := chatModel.Stream(ctx, messages)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-built_in">panic</span>(err)<br>    &#125;<br><br>    reportStream(streamResult)<br><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">reportStream</span><span class="hljs-params">(sr *schema.StreamReader[*schema.Message])</span></span> &#123;<br>    <span class="hljs-keyword">defer</span> sr.Close()<br><br>    i := <span class="hljs-number">0</span><br>    <span class="hljs-keyword">for</span> &#123;<br>        message, err := sr.Recv()<br>        <span class="hljs-keyword">if</span> err == io.EOF &#123; <span class="hljs-comment">// 流式输出结束</span><br>            <span class="hljs-keyword">return</span><br>        &#125;<br>        <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>            log.Fatalf(<span class="hljs-string">&quot;recv failed: %v&quot;</span>, err)<br>        &#125;<br>        log.Printf(<span class="hljs-string">&quot;message[%d]: %+v\n&quot;</span>, i, message)<br>        i++<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></p>
+<h1 id="核心概念">核心概念</h1>
+<h2 id="components-组件">Components 组件</h2>
+<h3 id="document-loader">Document Loader</h3>
+<p>Document Loader
+是一个用于加载文档的组件。它的主要作用是从不同来源（如网络
+URL、本地文件等）加载文档内容，并将其转换为标准的文档格式。这个组件在处理需要从各种来源获取文档内容的场景中发挥重要作用，比如:</p>
+<ul>
+<li>从网络 URL 加载网页内容</li>
+<li>读取本地 PDF、Word 等格式的文档</li>
+</ul>
+<p>示例： <figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Run</span><span class="hljs-params">()</span></span> &#123;<br>    ctx := context.Background()<br>    loader, err := file.NewFileLoader(ctx, &amp;file.FileLoaderConfig&#123;<br>        UseNameAsID: <span class="hljs-literal">true</span>,<br>    &#125;)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-built_in">panic</span>(err)<br>    &#125;<br><br>    filePath := <span class="hljs-string">&quot;Your File Path&quot;</span><br>    docs, err := loader.Load(ctx, document.Source&#123;<br>        URI: filePath,<br>    &#125;)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-built_in">panic</span>(err)<br>    &#125;<br><br>    fmt.Println(docs[<span class="hljs-number">0</span>].Content)<br>&#125;<br></code></pre></td></tr></table></figure></p>
+<p><code>file.FileLoaderConfig</code> 指定了 Loader
+的参数配置，以及用哪个 Parser 来解析文档，<code>FileLoader</code>
+核心方法 <code>Load()</code> 用于解析一个文档：</p>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(43, 0)" id="tab-button-43-0">FileLoaderConfig</button>
+        
+        <button onclick="showTab(43, 1)" id="tab-button-43-1">Parser</button>
+        
+        <button onclick="showTab(43, 2)" id="tab-button-43-2">FileLoader</button>
+        </div>
+        <div class="tab-content tab-content-43" id="tab-43-0">
+            <pre><span class="hljs-keyword">type</span> FileLoaderConfig <span class="hljs-keyword">struct</span> {
+    UseNameAsID <span class="hljs-type">bool</span>
+    Parser      parser.Parser
+}</pre>
+        </div>
+        <div class="tab-content tab-content-43" id="tab-43-1">
+            <pre><span class="hljs-comment">// Parser is a document parser, can be used to parse a document from a reader.</span>
+<span class="hljs-keyword">type</span> Parser <span class="hljs-keyword">interface</span> {
+    Parse(ctx context.Context, reader io.Reader, opts ...Option) ([]*schema.Document, <span class="hljs-type">error</span>)
+}</pre>
+        </div>
+        <div class="tab-content tab-content-43" id="tab-43-2">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(f *FileLoader)</span></span> Load(ctx context.Context, src document.Source, opts ...document.LoaderOption) (docs []*schema.Document, err <span class="hljs-type">error</span>)</pre>
+        </div></div>
+<p>自己实现一个按行解析的 <code>parser.Parser</code>：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> LineParser <span class="hljs-keyword">struct</span>&#123;&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(p *LineParser)</span></span> Parse(ctx context.Context, reader io.Reader, opts ...parser.Option) ([]*schema.Document, <span class="hljs-type">error</span>) &#123;<br>    <span class="hljs-keyword">var</span> docs []*schema.Document<br><br>    scanner := bufio.NewScanner(reader)<br>    <span class="hljs-keyword">for</span> scanner.Scan() &#123;<br>        <span class="hljs-keyword">select</span> &#123;<br>        <span class="hljs-keyword">case</span> &lt;-ctx.Done():<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, ctx.Err()<br>        <span class="hljs-keyword">default</span>:<br>        &#125;<br><br>        line := scanner.Text()<br><br>        doc := &amp;schema.Document&#123;<br>            Content: line,<br>        &#125;<br>        docs = <span class="hljs-built_in">append</span>(docs, doc)<br>    &#125;<br><br>    <span class="hljs-keyword">if</span> err := scanner.Err(); err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>    &#125;<br>    <span class="hljs-keyword">return</span> docs, <span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Run</span><span class="hljs-params">()</span></span> &#123;<br>    ctx := context.Background()<br>    loader, err := file.NewFileLoader(ctx, &amp;file.FileLoaderConfig&#123;<br>        UseNameAsID: <span class="hljs-literal">true</span>,<br>        Parser:      &amp;LineParser&#123;&#125;,<br>    &#125;)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-built_in">panic</span>(err)<br>    &#125;<br><br>    filePath := <span class="hljs-string">&quot;Your file path&quot;</span><br>    docs, err := loader.Load(ctx, document.Source&#123;<br>        URI: filePath,<br>    &#125;)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-built_in">panic</span>(err)<br>    &#125;<br><br>    fmt.Println(docs[<span class="hljs-number">0</span>].Content)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><code>Document</code> 结构体是文档的标准格式：</p>
+<ul>
+<li>ID：文档的唯一标识符，用于在系统中唯一标识一个文档</li>
+<li>Content：文档的实际内容</li>
+<li>MetaData：文档的元数据，可以存储如下信息：
+<ul>
+<li>文档的来源信息</li>
+<li>文档的向量表示（用于向量检索）</li>
+<li>文档的分数（用于排序）</li>
+<li>文档的子索引（用于分层检索）</li>
+<li>其他自定义元数据</li>
+</ul></li>
+</ul>
+<h3 id="embedding">Embedding</h3>
+<p>Embedding
+组件是一个用于将文本转换为向量表示的组件。它的主要作用是将文本内容映射到向量空间，使得语义相似的文本在向量空间中的距离较近。这个组件在以下场景中发挥重要作用：</p>
+<ul>
+<li>文本相似度计算</li>
+<li>语义搜索</li>
+<li>文本聚类分析</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;context&quot;</span><br>    <span class="hljs-string">&quot;fmt&quot;</span><br><br>    <span class="hljs-string">&quot;github.com/cloudwego/eino-ext/components/embedding/ollama&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Run</span><span class="hljs-params">()</span></span> &#123;<br>    ctx := context.Background()<br>    embedder, _ := ollama.NewEmbedder(ctx, &amp;ollama.EmbeddingConfig&#123;<br>        BaseURL: <span class="hljs-string">&quot;http://118.193.43.101:11434&quot;</span>,<br>        Model:   <span class="hljs-string">&quot;bge-m3:567m&quot;</span>,<br>        Timeout: <span class="hljs-number">0</span>,<br>    &#125;)<br>    vectorIds, _ := embedder.EmbedStrings(ctx, []<span class="hljs-type">string</span>&#123;<span class="hljs-string">&quot;hello&quot;</span>, <span class="hljs-string">&quot;how are you&quot;</span>&#125;)<br><br>    fmt.Println(vectorIds)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><code>Embedder</code> 维护了 LLM 的一个 HTTP Client：
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewEmbedder</span><span class="hljs-params">(ctx context.Context, config *EmbeddingConfig)</span></span> (*Embedder, <span class="hljs-type">error</span>) &#123;<br>    <span class="hljs-comment">// ... </span><br><br>    <span class="hljs-keyword">var</span> httpClient *http.Client<br>    <span class="hljs-keyword">if</span> config.HTTPClient != <span class="hljs-literal">nil</span> &#123;<br>        httpClient = config.HTTPClient<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        httpClient = &amp;http.Client&#123;Timeout: config.Timeout&#125;<br>    &#125;<br><br>    baseURL, err := url.Parse(config.BaseURL)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, fmt.Errorf(<span class="hljs-string">&quot;invalid base URL: %w&quot;</span>, err)<br>    &#125;<br>    cli := api.NewClient(baseURL, httpClient) <span class="hljs-comment">// ollama 官方提供的 apiCient</span><br>    <span class="hljs-keyword">return</span> &amp;Embedder&#123;<br>        cli:  cli,<br>        conf: config,<br>    &#125;, <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure></p>
+<p><code>embedder.EmbedStrings</code> 通过 ollama apiClient
+调用生成对应的 embedding 向量。</p>
+<h3 id="document-transformer">Document Transformer</h3>
+<p>Document Transformer
+是一个用于文档转换和处理的组件。它的主要作用是对输入的文档进行各种转换操作，如分割、过滤、合并等，从而得到满足特定需求的文档。这个组件可用于以下场景中：</p>
+<ul>
+<li>将长文档分割成小段落以便于处理</li>
+<li>根据特定规则过滤文档内容</li>
+<li>对文档内容进行结构化转换</li>
+<li>提取文档中的特定部分</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;context&quot;</span><br>    <span class="hljs-string">&quot;fmt&quot;</span><br><br>    <span class="hljs-string">&quot;github.com/cloudwego/eino-ext/components/document/transformer/splitter/markdown&quot;</span><br>    <span class="hljs-string">&quot;github.com/cloudwego/eino/schema&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Run</span><span class="hljs-params">()</span></span> &#123;<br>    ctx := context.Background()<br>    transformer, _ := markdown.NewHeaderSplitter(ctx, &amp;markdown.HeaderConfig&#123;<br>        Headers: <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>&#123;<br>            <span class="hljs-string">&quot;##&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,<br>        &#125;,<br>    &#125;)<br><br>    markdownDoc := &amp;schema.Document&#123;<br>        Content: <span class="hljs-string">&quot;## Title 1 \nHello World\n## Title 2\nWorld Hello&quot;</span>,<br>    &#125;<br><br>    transformedDocs, _ := transformer.Transform(ctx, []*schema.Document&#123;markdownDoc&#125;)<br><br>    <span class="hljs-keyword">for</span> idx, doc := <span class="hljs-keyword">range</span> transformedDocs &#123;<br>        fmt.Printf(<span class="hljs-string">&quot;doc segment %v: %v&quot;</span>, idx, doc.Content)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><code>Transformer</code>
+是一个接口，对输入的文档进行转换。其中，<code>src</code>
+是待处理的文档列表，返回值是处理完成的文档列表。 <figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Transformer <span class="hljs-keyword">interface</span> &#123;<br>    Transform(ctx context.Context, src []*schema.Document, opts ...TransformerOption) ([]*schema.Document, <span class="hljs-type">error</span>)<br>&#125;<br></code></pre></td></tr></table></figure></p>
+<p>具体看一下 <code>HeaderSplitter</code> 是怎么实现的
+<code>Transformer</code> 接口，来对文档进行处理的。</p>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(44, 0)" id="tab-button-44-0">HeaderSplitter</button>
+        
+        <button onclick="showTab(44, 1)" id="tab-button-44-1">splitText</button>
+        </div>
+        <div class="tab-content tab-content-44" id="tab-44-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(h *headerSplitter)</span></span> Transform(ctx context.Context, docs []*schema.Document, opts ...document.TransformerOption) ([]*schema.Document, <span class="hljs-type">error</span>) {
+    <span class="hljs-keyword">var</span> ret []*schema.Document
+    <span class="hljs-keyword">for</span> _, doc := <span class="hljs-keyword">range</span> docs {
+        result := h.splitText(ctx, doc.Content)
+        <span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> result {
+            nDoc := &amp;schema.Document{
+                ID:       h.idGenerator(ctx, doc.ID, i),
+                Content:  result[i].chunk,
+                MetaData: deepCopyAnyMap(doc.MetaData),
+            }
+            <span class="hljs-keyword">if</span> nDoc.MetaData == <span class="hljs-literal">nil</span> {
+                nDoc.MetaData = <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]any, <span class="hljs-built_in">len</span>(result[i].meta))
+            }
+            <span class="hljs-keyword">for</span> k, v := <span class="hljs-keyword">range</span> result[i].meta {
+                nDoc.MetaData[k] = v
+            }
+            ret = <span class="hljs-built_in">append</span>(ret, nDoc)
+        }
+    }
+    <span class="hljs-keyword">return</span> ret, <span class="hljs-literal">nil</span>
+}</pre>
+        </div>
+        <div class="tab-content tab-content-44" id="tab-44-1">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(h *headerSplitter)</span></span> splitText(ctx context.Context, text <span class="hljs-type">string</span>) []splitResult {
+    <span class="hljs-keyword">var</span> recordedMetaList []metaRecord
+    recordedMetaMap := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>)
+    <span class="hljs-keyword">var</span> currentLines []<span class="hljs-type">string</span>
+    <span class="hljs-keyword">var</span> bInCodeBlock <span class="hljs-type">bool</span>
+    <span class="hljs-keyword">var</span> openingFence <span class="hljs-type">string</span>
+    <span class="hljs-keyword">var</span> ret []splitResult
+    lines := strings.Split(text, <span class="hljs-string">&quot;\n&quot;</span>)
+    <span class="hljs-keyword">for</span> _, line := <span class="hljs-keyword">range</span> lines {
+        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(line) == <span class="hljs-number">0</span> {
+            <span class="hljs-keyword">continue</span>
+        }
+        line = strings.TrimSpace(line)
+        <span class="hljs-comment">// check is in code block</span>
+        <span class="hljs-comment">// check if the line starts with headers</span>
+        bNewHeader := <span class="hljs-literal">false</span>
+        <span class="hljs-keyword">for</span> header, name := <span class="hljs-keyword">range</span> h.headers {
+            <span class="hljs-keyword">if</span> strings.HasPrefix(line, header) &amp;&amp; (<span class="hljs-built_in">len</span>(line) == <span class="hljs-built_in">len</span>(header) || line[<span class="hljs-built_in">len</span>(header)] == <span class="hljs-string">&#x27; &#x27;</span>) {
+                <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(currentLines) &gt; <span class="hljs-number">0</span> {
+                    ret = <span class="hljs-built_in">append</span>(ret, splitResult{
+                        chunk: strings.Join(currentLines, <span class="hljs-string">&quot;\n&quot;</span>),
+                        meta:  deepCopyMap(recordedMetaMap),
+                    })
+                    currentLines = currentLines[:<span class="hljs-number">0</span>]
+                }
+
+                <span class="hljs-keyword">if</span> !h.trimHeaders {
+                    currentLines = <span class="hljs-built_in">append</span>(currentLines, line)
+                }
+
+                newLevel := <span class="hljs-built_in">len</span>(header)
+                <span class="hljs-keyword">for</span> i := <span class="hljs-built_in">len</span>(recordedMetaList) - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i-- {
+                    <span class="hljs-keyword">if</span> recordedMetaList[i].level &gt;= newLevel {
+                        <span class="hljs-built_in">delete</span>(recordedMetaMap, recordedMetaList[i].name)
+                        recordedMetaList = recordedMetaList[:i]
+                    } <span class="hljs-keyword">else</span> {
+                        <span class="hljs-keyword">break</span>
+                    }
+                }
+
+                data := strings.TrimSpace(line[<span class="hljs-built_in">len</span>(header):])
+                recordedMetaList = <span class="hljs-built_in">append</span>(recordedMetaList, metaRecord{
+                    name:  name,
+                    level: newLevel,
+                    data:  data,
+                })
+                recordedMetaMap[name] = data
+
+                bNewHeader = <span class="hljs-literal">true</span>
+                <span class="hljs-keyword">break</span>
+            }
+        }
+        <span class="hljs-keyword">if</span> !bNewHeader {
+            currentLines = <span class="hljs-built_in">append</span>(currentLines, line)
+        }
+    }
+    ret = <span class="hljs-built_in">append</span>(ret, splitResult{
+        chunk: strings.Join(currentLines, <span class="hljs-string">&quot;\n&quot;</span>),
+        meta:  deepCopyMap(recordedMetaMap),
+    })
+    <span class="hljs-keyword">return</span> ret
+}</pre>
+        </div></div>
+
+    </div>
+    <div class="toc-container">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#eino"><span class="toc-number">1.</span> <span class="toc-text">Eino</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B"><span class="toc-number">1.1.</span> <span class="toc-text">入门案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="toc-number">2.</span> <span class="toc-text">核心概念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#components-%E7%BB%84%E4%BB%B6"><span class="toc-number">2.1.</span> <span class="toc-text">Components 组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#document-loader"><span class="toc-number">2.1.1.</span> <span class="toc-text">Document Loader</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embedding"><span class="toc-number">2.1.2.</span> <span class="toc-text">Embedding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#document-transformer"><span class="toc-number">2.1.3.</span> <span class="toc-text">Document Transformer</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </div>
+  <footer class="article-footer">
+    <div class="footer-container">
+  <a target="_blank" rel="noopener" href="https://space.bilibili.com/12352380?spm_id_from=333.1007.0.0">
+    <img src="/images/bilibili.svg" alt="" />
+  </a>
+  <a target="_blank" rel="noopener" href="https://github.com/qiancijun">
+    <img src="/images/github.svg" alt="" />
+  </a>
+  <span>Copyright </span>
+  <img src="/images/copyright.svg" alt="">
+  <span>2024 Cheryl-Chun</span>
+</div>
+
+  </footer>
+</article>
+
+
+        </div>
+        <!-- <div class="footer">
+    
+</div> -->
+    </div>
+    
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/github-calendar@2.3.4/dist/github-calendar.min.js"></script>
+=
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js"></script>
+
+
+<script src="/scripts/search.js"></script>
+
+
+<script src="/scripts/main.js"></script>
+
+
+<script type="text/javascript">      
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+        search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result', "Cheryl-Chun");
+</script>
+</body>
+<style>
+    .main-container::before {
+        background-image: url('');
+    }
+</style>
+</html>

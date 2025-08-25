@@ -604,30 +604,35 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-of-subst
 <h2 id="题解">题解</h2>
 <h3 id="定长子串中元音的最大数目">定长子串中元音的最大数目</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(260, 0)" id="tab-button-260-0">Golang</button>
+        <button onclick="showTab(0, 0)" id="tab-button-0-0">Golang</button>
         
-        <button onclick="showTab(260, 1)" id="tab-button-260-1">Rust</button>
+        <button onclick="showTab(0, 1)" id="tab-button-0-1">Rust</button>
         </div>
-        <div class="tab-content tab-content-260" id="tab-260-0">
+        <div class="tab-content tab-content-0" id="tab-0-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">maxVowels</span><span class="hljs-params">(s <span class="hljs-type">string</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
-    ans, cnt := <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
-    <span class="hljs-keyword">for</span> i, v := <span class="hljs-keyword">range</span> s {
-        <span class="hljs-keyword">if</span> v == <span class="hljs-string">&#x27;a&#x27;</span> || v == <span class="hljs-string">&#x27;e&#x27;</span> || v == <span class="hljs-string">&#x27;i&#x27;</span> || v == <span class="hljs-string">&#x27;o&#x27;</span> || v == <span class="hljs-string">&#x27;u&#x27;</span> {
-            cnt++
-        }
-        <span class="hljs-keyword">if</span> i &lt; k - <span class="hljs-number">1</span> {
-            <span class="hljs-keyword">continue</span>
-        }
-        ans = max(ans, cnt)
-        out := s[i-k+<span class="hljs-number">1</span>]
-        <span class="hljs-keyword">if</span> out == <span class="hljs-string">&#x27;a&#x27;</span> || out == <span class="hljs-string">&#x27;e&#x27;</span> || out == <span class="hljs-string">&#x27;i&#x27;</span> || out == <span class="hljs-string">&#x27;o&#x27;</span> || out == <span class="hljs-string">&#x27;u&#x27;</span> {
-            cnt--
-        }
-    }
-    <span class="hljs-keyword">return</span> ans
+	m := <span class="hljs-keyword">map</span>[<span class="hljs-type">byte</span>]<span class="hljs-type">int</span>{
+		<span class="hljs-string">&#x27;a&#x27;</span>: <span class="hljs-number">1</span>,
+		<span class="hljs-string">&#x27;e&#x27;</span>: <span class="hljs-number">1</span>,
+		<span class="hljs-string">&#x27;i&#x27;</span>: <span class="hljs-number">1</span>,
+		<span class="hljs-string">&#x27;o&#x27;</span>: <span class="hljs-number">1</span>,
+		<span class="hljs-string">&#x27;u&#x27;</span>: <span class="hljs-number">1</span>,
+	}
+
+	ans, cnt := <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
+	<span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> s {
+		v := s[i]
+		cnt += m[v]
+		<span class="hljs-keyword">if</span> i &lt; k<span class="hljs-number">-1</span> {
+			<span class="hljs-keyword">continue</span>
+		}
+		ans = max(ans, cnt)
+		l := s[i-k+<span class="hljs-number">1</span>]
+		cnt -= m[l]
+	}
+	<span class="hljs-keyword">return</span> ans
 }</pre>
         </div>
-        <div class="tab-content tab-content-260" id="tab-260-1">
+        <div class="tab-content tab-content-0" id="tab-0-1">
             <pre><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> {
     <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">max_vowels</span>(s: <span class="hljs-type">String</span>, k: <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">i32</span> {
         <span class="hljs-keyword">let</span> <span class="hljs-variable">s</span> = s.<span class="hljs-title function_ invoke__">as_bytes</span>();
@@ -653,11 +658,11 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-of-subst
         </div></div>
 <h3 id="子数组最大平均数-i">子数组最大平均数 I</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(261, 0)" id="tab-button-261-0">Golang</button>
+        <button onclick="showTab(1, 0)" id="tab-button-1-0">Golang</button>
         
-        <button onclick="showTab(261, 1)" id="tab-button-261-1">Rust</button>
+        <button onclick="showTab(1, 1)" id="tab-button-1-1">Rust</button>
         </div>
-        <div class="tab-content tab-content-261" id="tab-261-0">
+        <div class="tab-content tab-content-1" id="tab-1-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">findMaxAverage</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">float64</span> {
     ans := math.MinInt
     sum := <span class="hljs-number">0</span>
@@ -672,7 +677,7 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-of-subst
     <span class="hljs-keyword">return</span> <span class="hljs-type">float64</span>(ans) / <span class="hljs-type">float64</span>(k)
 }</pre>
         </div>
-        <div class="tab-content tab-content-261" id="tab-261-1">
+        <div class="tab-content tab-content-1" id="tab-1-1">
             <pre><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> {
     <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">find_max_average</span>(nums: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;, k: <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">f64</span> {
         <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">sum</span>: <span class="hljs-type">i32</span> = nums.<span class="hljs-title function_ invoke__">iter</span>().<span class="hljs-title function_ invoke__">take</span>(k <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>).<span class="hljs-title function_ invoke__">sum</span>();
@@ -688,11 +693,11 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-of-subst
 <h3 id="大小为-k-且平均值大于等于阈值的子数组数目">大小为 K
 且平均值大于等于阈值的子数组数目</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(262, 0)" id="tab-button-262-0">Golang</button>
+        <button onclick="showTab(2, 0)" id="tab-button-2-0">Golang</button>
         
-        <button onclick="showTab(262, 1)" id="tab-button-262-1">Rust</button>
+        <button onclick="showTab(2, 1)" id="tab-button-2-1">Rust</button>
         </div>
-        <div class="tab-content tab-content-262" id="tab-262-0">
+        <div class="tab-content tab-content-2" id="tab-2-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">numOfSubarrays</span><span class="hljs-params">(arr []<span class="hljs-type">int</span>, k <span class="hljs-type">int</span>, threshold <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     ans, sum := <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
     <span class="hljs-keyword">for</span> i, v := <span class="hljs-keyword">range</span> arr {
@@ -708,7 +713,7 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-of-subst
     <span class="hljs-keyword">return</span> ans
 }</pre>
         </div>
-        <div class="tab-content tab-content-262" id="tab-262-1">
+        <div class="tab-content tab-content-2" id="tab-2-1">
             <pre><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> {
     <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">num_of_subarrays</span>(arr: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;, k: <span class="hljs-type">i32</span>, threshold: <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">i32</span> {
         <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">sum</span>: <span class="hljs-type">i32</span> = <span class="hljs-number">0</span>;
@@ -729,11 +734,11 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-of-subst
         </div></div>
 <h3 id="半径为-k-的子数组平均值">半径为 k 的子数组平均值</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(263, 0)" id="tab-button-263-0">Golang</button>
+        <button onclick="showTab(3, 0)" id="tab-button-3-0">Golang</button>
         
-        <button onclick="showTab(263, 1)" id="tab-button-263-1">Rust</button>
+        <button onclick="showTab(3, 1)" id="tab-button-3-1">Rust</button>
         </div>
-        <div class="tab-content tab-content-263" id="tab-263-0">
+        <div class="tab-content tab-content-3" id="tab-3-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">getAverages</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> []<span class="hljs-type">int</span> {
     sum := <span class="hljs-number">0</span>
     ans := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, <span class="hljs-built_in">len</span>(nums))
@@ -751,7 +756,7 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-of-subst
     <span class="hljs-keyword">return</span> ans
 }</pre>
         </div>
-        <div class="tab-content tab-content-263" id="tab-263-1">
+        <div class="tab-content tab-content-3" id="tab-3-1">
             <pre><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> {
     <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">get_averages</span>(nums: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;, k: <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt; {
         <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">sum</span>: <span class="hljs-type">i64</span> = <span class="hljs-number">0</span>;
@@ -770,11 +775,11 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-of-subst
         </div></div>
 <h3 id="得到-k-个黑块的最少涂色次数">得到 K 个黑块的最少涂色次数</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(264, 0)" id="tab-button-264-0">Golang</button>
+        <button onclick="showTab(4, 0)" id="tab-button-4-0">Golang</button>
         
-        <button onclick="showTab(264, 1)" id="tab-button-264-1">Rust</button>
+        <button onclick="showTab(4, 1)" id="tab-button-4-1">Rust</button>
         </div>
-        <div class="tab-content tab-content-264" id="tab-264-0">
+        <div class="tab-content tab-content-4" id="tab-4-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">minimumRecolors</span><span class="hljs-params">(blocks <span class="hljs-type">string</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     ans := <span class="hljs-built_in">len</span>(blocks)
     cnt := <span class="hljs-number">0</span>
@@ -793,7 +798,7 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-of-subst
     <span class="hljs-keyword">return</span> ans
 }</pre>
         </div>
-        <div class="tab-content tab-content-264" id="tab-264-1">
+        <div class="tab-content tab-content-4" id="tab-4-1">
             <pre><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> {
     <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">minimum_recolors</span>(blocks: <span class="hljs-type">String</span>, k: <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">i32</span> {
         <span class="hljs-keyword">let</span> <span class="hljs-variable">s</span> = blocks.<span class="hljs-title function_ invoke__">as_bytes</span>();
@@ -817,11 +822,11 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-of-subst
         </div></div>
 <h3 id="爱生气的书店老板">爱生气的书店老板</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(265, 0)" id="tab-button-265-0">Golang</button>
+        <button onclick="showTab(5, 0)" id="tab-button-5-0">Golang</button>
         
-        <button onclick="showTab(265, 1)" id="tab-button-265-1">Rust</button>
+        <button onclick="showTab(5, 1)" id="tab-button-5-1">Rust</button>
         </div>
-        <div class="tab-content tab-content-265" id="tab-265-0">
+        <div class="tab-content tab-content-5" id="tab-5-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">maxSatisfied</span><span class="hljs-params">(customers []<span class="hljs-type">int</span>, grumpy []<span class="hljs-type">int</span>, minutes <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     ans, sum := <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
     <span class="hljs-keyword">for</span> i, v := <span class="hljs-keyword">range</span> customers {
@@ -845,7 +850,7 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-of-subst
     <span class="hljs-keyword">return</span> ans
 }</pre>
         </div>
-        <div class="tab-content tab-content-265" id="tab-265-1">
+        <div class="tab-content tab-content-5" id="tab-5-1">
             <pre><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> {
     <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">max_satisfied</span>(customers: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;, grumpy: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;, minutes: <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">i32</span> {
         <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">ans</span> = <span class="hljs-number">0</span>;
@@ -876,9 +881,9 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-of-subst
 id="检查一个字符串是否包含所有长度为-k-的二进制子串">检查一个字符串是否包含所有长度为
 K 的二进制子串</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(266, 0)" id="tab-button-266-0">Golang</button>
+        <button onclick="showTab(6, 0)" id="tab-button-6-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-266" id="tab-266-0">
+        <div class="tab-content tab-content-6" id="tab-6-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">hasAllCodes</span><span class="hljs-params">(s <span class="hljs-type">string</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">bool</span> {
     vi := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">int</span>]<span class="hljs-keyword">struct</span>{})
     cur := <span class="hljs-number">0</span>
@@ -895,9 +900,9 @@ K 的二进制子串</h3>
         </div></div>
 <h3 id="几乎唯一子数组的最大和">几乎唯一子数组的最大和</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(267, 0)" id="tab-button-267-0">Golang</button>
+        <button onclick="showTab(7, 0)" id="tab-button-7-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-267" id="tab-267-0">
+        <div class="tab-content tab-content-7" id="tab-7-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">maxSum</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, m <span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int64</span> {
     ans, sum := <span class="hljs-type">int64</span>(<span class="hljs-number">0</span>), <span class="hljs-type">int64</span>(<span class="hljs-number">0</span>)
     cnt := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">int</span>]<span class="hljs-type">int</span>)
@@ -922,9 +927,9 @@ K 的二进制子串</h3>
         </div></div>
 <h3 id="长度为-k-子数组中的最大和">长度为 K 子数组中的最大和</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(268, 0)" id="tab-button-268-0">Golang</button>
+        <button onclick="showTab(8, 0)" id="tab-button-8-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-268" id="tab-268-0">
+        <div class="tab-content tab-content-8" id="tab-8-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">maximumSubarraySum</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int64</span> {
     cnt := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">int</span>]<span class="hljs-type">int</span>)
     ans, sum := <span class="hljs-type">int64</span>(<span class="hljs-number">0</span>), <span class="hljs-type">int64</span>(<span class="hljs-number">0</span>)
@@ -956,11 +961,11 @@ class="math inline">\(cardPoints\)</span> 的长度。</p>
 常数，所以为了最大化拿走的点数和，应当<strong>最小化剩下的点数和</strong>。</p>
 <p>由于只能从开头或末尾拿牌，所以最后剩下的牌必然是连续的。</p>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(269, 0)" id="tab-button-269-0">Golang</button>
+        <button onclick="showTab(9, 0)" id="tab-button-9-0">Golang</button>
         
-        <button onclick="showTab(269, 1)" id="tab-button-269-1">Rust</button>
+        <button onclick="showTab(9, 1)" id="tab-button-9-1">Rust</button>
         </div>
-        <div class="tab-content tab-content-269" id="tab-269-0">
+        <div class="tab-content tab-content-9" id="tab-9-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">maxScore</span><span class="hljs-params">(cardPoints []<span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     sum := <span class="hljs-number">0</span>
     <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; k; i++ {
@@ -974,7 +979,7 @@ class="math inline">\(cardPoints\)</span> 的长度。</p>
     <span class="hljs-keyword">return</span> ans
 }</pre>
         </div>
-        <div class="tab-content tab-content-269" id="tab-269-1">
+        <div class="tab-content tab-content-9" id="tab-9-1">
             <pre><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> {
     <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">max_score</span>(card_points: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;, k: <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">i32</span> {
         <span class="hljs-keyword">let</span> <span class="hljs-variable">n</span> = card_points.<span class="hljs-title function_ invoke__">len</span>();
@@ -991,9 +996,9 @@ class="math inline">\(cardPoints\)</span> 的长度。</p>
         </div></div>
 <h3 id="子串的最大出现次数">子串的最大出现次数</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(270, 0)" id="tab-button-270-0">Golang</button>
+        <button onclick="showTab(10, 0)" id="tab-button-10-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-270" id="tab-270-0">
+        <div class="tab-content tab-content-10" id="tab-10-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">maxFreq</span><span class="hljs-params">(s <span class="hljs-type">string</span>, maxLetters <span class="hljs-type">int</span>, minSize <span class="hljs-type">int</span>, maxSize <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     cnt := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">int</span>)
     vi := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">byte</span>]<span class="hljs-type">int</span>)
@@ -1021,9 +1026,9 @@ class="math inline">\(cardPoints\)</span> 的长度。</p>
         </div></div>
 <h3 id="滑动子数组的美丽值">滑动子数组的美丽值</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(271, 0)" id="tab-button-271-0">Golang</button>
+        <button onclick="showTab(11, 0)" id="tab-button-11-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-271" id="tab-271-0">
+        <div class="tab-content tab-content-11" id="tab-11-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">getSubarrayBeauty</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, k <span class="hljs-type">int</span>, x <span class="hljs-type">int</span>)</span></span> []<span class="hljs-type">int</span> {
     offset := <span class="hljs-number">50</span>
     cnt := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, <span class="hljs-number">110</span>)
@@ -1048,9 +1053,9 @@ class="math inline">\(cardPoints\)</span> 的长度。</p>
         </div></div>
 <h3 id="无重复字符的最长子串">无重复字符的最长子串</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(272, 0)" id="tab-button-272-0">Golang</button>
+        <button onclick="showTab(12, 0)" id="tab-button-12-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-272" id="tab-272-0">
+        <div class="tab-content tab-content-12" id="tab-12-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">lengthOfLongestSubstring</span><span class="hljs-params">(s <span class="hljs-type">string</span>)</span></span> (ans <span class="hljs-type">int</span>) {
     window := [<span class="hljs-number">128</span>]<span class="hljs-type">bool</span>{} <span class="hljs-comment">// 也可以用 map，这里为了效率用的数组</span>
     left := <span class="hljs-number">0</span>
@@ -1070,9 +1075,9 @@ class="math inline">\(cardPoints\)</span> 的长度。</p>
 <h3
 id="每个字符最多出现两次的最长子字符串">每个字符最多出现两次的最长子字符串</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(273, 0)" id="tab-button-273-0">Golang</button>
+        <button onclick="showTab(13, 0)" id="tab-button-13-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-273" id="tab-273-0">
+        <div class="tab-content tab-content-13" id="tab-13-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">maximumLengthSubstring</span><span class="hljs-params">(s <span class="hljs-type">string</span>)</span></span> <span class="hljs-type">int</span> {
     cnt := [<span class="hljs-number">26</span>]<span class="hljs-type">int</span>{}
     ans, left := <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
@@ -1091,9 +1096,9 @@ id="每个字符最多出现两次的最长子字符串">每个字符最多出�
 的最长子数组</h3>
 <p>转换为不定长滑动窗口，只允许删除一个元素，也就是说在窗口内最多包含一个
 <span class="math inline">\(0\)</span>。 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(274, 0)" id="tab-button-274-0">Golang</button>
+        <button onclick="showTab(14, 0)" id="tab-button-14-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-274" id="tab-274-0">
+        <div class="tab-content tab-content-14" id="tab-14-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">longestSubarray</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     ans, zero := <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
     left := <span class="hljs-number">0</span>
@@ -1110,9 +1115,9 @@ id="每个字符最多出现两次的最长子字符串">每个字符最多出�
         </div></div></p>
 <h3 id="尽可能使字符串相等">尽可能使字符串相等</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(275, 0)" id="tab-button-275-0">Golang</button>
+        <button onclick="showTab(15, 0)" id="tab-button-15-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-275" id="tab-275-0">
+        <div class="tab-content tab-content-15" id="tab-15-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">equalSubstring</span><span class="hljs-params">(s <span class="hljs-type">string</span>, t <span class="hljs-type">string</span>, maxCost <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     bs, ts := []<span class="hljs-type">byte</span>(s), []<span class="hljs-type">byte</span>(t)
     ans, cost := <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
@@ -1138,9 +1143,9 @@ id="每个字符最多出现两次的最长子字符串">每个字符最多出�
         </div></div>
 <h3 id="找到最长的半重复子字符串">找到最长的半重复子字符串</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(276, 0)" id="tab-button-276-0">Golang</button>
+        <button onclick="showTab(16, 0)" id="tab-button-16-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-276" id="tab-276-0">
+        <div class="tab-content tab-content-16" id="tab-16-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">longestSemiRepetitiveSubstring</span><span class="hljs-params">(s <span class="hljs-type">string</span>)</span></span> <span class="hljs-type">int</span> {
     <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(s) == <span class="hljs-number">1</span> {
         <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>
@@ -1167,9 +1172,9 @@ id="每个字符最多出现两次的最长子字符串">每个字符最多出�
         </div></div>
 <h3 id="水果成篮">水果成篮</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(277, 0)" id="tab-button-277-0">Golang</button>
+        <button onclick="showTab(17, 0)" id="tab-button-17-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-277" id="tab-277-0">
+        <div class="tab-content tab-content-17" id="tab-17-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">totalFruit</span><span class="hljs-params">(fruits []<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     ans := <span class="hljs-number">0</span> 
     cnt := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">int</span>]<span class="hljs-type">int</span>)
@@ -1190,9 +1195,9 @@ id="每个字符最多出现两次的最长子字符串">每个字符最多出�
         </div></div>
 <h3 id="删除子数组的最大得分">删除子数组的最大得分</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(278, 0)" id="tab-button-278-0">Golang</button>
+        <button onclick="showTab(18, 0)" id="tab-button-18-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-278" id="tab-278-0">
+        <div class="tab-content tab-content-18" id="tab-18-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">maximumUniqueSubarray</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     cnt := [<span class="hljs-number">10010</span>]<span class="hljs-type">int</span>{}
     ans, sum, left := <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
@@ -1212,9 +1217,9 @@ id="每个字符最多出现两次的最长子字符串">每个字符最多出�
 <h3 id="最多-k-个重复元素的最长子数组">最多 K
 个重复元素的最长子数组</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(279, 0)" id="tab-button-279-0">Golang</button>
+        <button onclick="showTab(19, 0)" id="tab-button-19-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-279" id="tab-279-0">
+        <div class="tab-content tab-content-19" id="tab-19-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">maxSubarrayLength</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     cnt := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">int</span>]<span class="hljs-type">int</span>)
     ans, left := <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
@@ -1232,9 +1237,9 @@ id="每个字符最多出现两次的最长子字符串">每个字符最多出�
 <h3 id="数组的最大美丽值">数组的最大美丽值</h3>
 <p>由于选的是子序列，且操作后子序列的元素都相等，所以元素顺序对答案没有影响，可以先对数组排序。</p>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(280, 0)" id="tab-button-280-0">Golang</button>
+        <button onclick="showTab(20, 0)" id="tab-button-20-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-280" id="tab-280-0">
+        <div class="tab-content tab-content-20" id="tab-20-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">maximumBeauty</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     slices.Sort(nums)
     ans, left := <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
@@ -1262,11 +1267,11 @@ class="math inline">\(F\)</span> 的 ASCII 值除以 <span
 class="math inline">\(2\)</span>
 后的奇偶性不同，也就是它们二进制的次低位不同，可以改为统计二进制次低位。</p>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(281, 0)" id="tab-button-281-0">GolangA</button>
+        <button onclick="showTab(21, 0)" id="tab-button-21-0">GolangA</button>
         
-        <button onclick="showTab(281, 1)" id="tab-button-281-1">GolangB</button>
+        <button onclick="showTab(21, 1)" id="tab-button-21-1">GolangB</button>
         </div>
-        <div class="tab-content tab-content-281" id="tab-281-0">
+        <div class="tab-content tab-content-21" id="tab-21-0">
             <pre><span class="hljs-comment">// 两次遍历</span>
 <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">maxConsecutiveAnswers</span><span class="hljs-params">(answerKey <span class="hljs-type">string</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     ans := <span class="hljs-number">0</span>
@@ -1300,7 +1305,7 @@ class="math inline">\(2\)</span>
     <span class="hljs-keyword">return</span> ans
 }</pre>
         </div>
-        <div class="tab-content tab-content-281" id="tab-281-1">
+        <div class="tab-content tab-content-21" id="tab-21-1">
             <pre><span class="hljs-comment">// 一次遍历</span>
 <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">maxConsecutiveAnswers</span><span class="hljs-params">(answerKey <span class="hljs-type">string</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     ans := <span class="hljs-number">0</span>
@@ -1319,9 +1324,9 @@ class="math inline">\(2\)</span>
         </div></div>
 <h3 id="最大连续1的个数-iii">最大连续1的个数 III</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(282, 0)" id="tab-button-282-0">Golang</button>
+        <button onclick="showTab(22, 0)" id="tab-button-22-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-282" id="tab-282-0">
+        <div class="tab-content tab-content-22" id="tab-22-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">longestOnes</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     ans := <span class="hljs-number">0</span>
     left, zero_cnt := <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
@@ -1346,9 +1351,9 @@ class="math inline">\(s-x\)</span>，这里的 <span
 class="math inline">\(s\)</span> 为 <span
 class="math inline">\(nums\)</span> 所有元素之和。</p>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(283, 0)" id="tab-button-283-0">Golang</button>
+        <button onclick="showTab(23, 0)" id="tab-button-23-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-283" id="tab-283-0">
+        <div class="tab-content tab-content-23" id="tab-23-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">minOperations</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, x <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     target := <span class="hljs-number">0</span>
     <span class="hljs-keyword">for</span> _, v := <span class="hljs-keyword">range</span> nums {
@@ -1377,9 +1382,9 @@ class="math inline">\(nums\)</span> 所有元素之和。</p>
         </div></div>
 <h3 id="最高频元素的频数">最高频元素的频数</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(284, 0)" id="tab-button-284-0">Golang</button>
+        <button onclick="showTab(24, 0)" id="tab-button-24-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-284" id="tab-284-0">
+        <div class="tab-content tab-content-24" id="tab-24-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">maxFrequency</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     sort.Ints(nums)
     ans := <span class="hljs-number">1</span>
@@ -1401,9 +1406,9 @@ class="math inline">\(nums\)</span> 所有元素之和。</p>
 最左侧和最右侧取走字母，所以剩下的字母是 <span
 class="math inline">\(s\)</span> 的<strong>子串</strong>。</p>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(285, 0)" id="tab-button-285-0">Golang</button>
+        <button onclick="showTab(25, 0)" id="tab-button-25-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-285" id="tab-285-0">
+        <div class="tab-content tab-content-25" id="tab-25-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">takeCharacters</span><span class="hljs-params">(s <span class="hljs-type">string</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     bs := []<span class="hljs-type">byte</span>(s)
     total := [<span class="hljs-number">3</span>]<span class="hljs-type">int</span>{}
@@ -1430,9 +1435,9 @@ class="math inline">\(s\)</span> 的<strong>子串</strong>。</p>
 <h3 id="找出最长等值子数组">找出最长等值子数组</h3>
 <p>相同元素分组，对每种数字做滑动窗口，需要注意需要删除的个数和保留的个数。</p>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(286, 0)" id="tab-button-286-0">Golang</button>
+        <button onclick="showTab(26, 0)" id="tab-button-26-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-286" id="tab-286-0">
+        <div class="tab-content tab-content-26" id="tab-26-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">longestEqualSubarray</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     list := <span class="hljs-built_in">make</span>([][]<span class="hljs-type">int</span>, <span class="hljs-built_in">len</span>(nums) + <span class="hljs-number">1</span>)
     <span class="hljs-keyword">for</span> i, num := <span class="hljs-keyword">range</span> nums {
@@ -1456,9 +1461,9 @@ class="math inline">\(s\)</span> 的<strong>子串</strong>。</p>
         </div></div>
 <h3 id="找出最长等值子数组-1">找出最长等值子数组</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(287, 0)" id="tab-button-287-0">Golang</button>
+        <button onclick="showTab(27, 0)" id="tab-button-27-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-287" id="tab-287-0">
+        <div class="tab-content tab-content-27" id="tab-27-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">minSubArrayLen</span><span class="hljs-params">(target <span class="hljs-type">int</span>, nums []<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     ans := <span class="hljs-built_in">len</span>(nums) + <span class="hljs-number">1</span>
     left, s := <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
@@ -1479,9 +1484,9 @@ class="math inline">\(s\)</span> 的<strong>子串</strong>。</p>
 <h3
 id="最短且字典序最小的美丽子字符串">最短且字典序最小的美丽子字符串</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(288, 0)" id="tab-button-288-0">Golang</button>
+        <button onclick="showTab(28, 0)" id="tab-button-28-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-288" id="tab-288-0">
+        <div class="tab-content tab-content-28" id="tab-28-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">shortestBeautifulSubstring</span><span class="hljs-params">(s <span class="hljs-type">string</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">string</span> {
     <span class="hljs-keyword">if</span> strings.Count(s, <span class="hljs-string">&quot;1&quot;</span>) &lt; k {
         <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span>
@@ -1506,9 +1511,9 @@ id="最短且字典序最小的美丽子字符串">最短且字典序最小的�
         </div></div>
 <h3 id="替换子串得到平衡字符串">替换子串得到平衡字符串</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(289, 0)" id="tab-button-289-0">Golang</button>
+        <button onclick="showTab(29, 0)" id="tab-button-29-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-289" id="tab-289-0">
+        <div class="tab-content tab-content-29" id="tab-29-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">balancedString</span><span class="hljs-params">(s <span class="hljs-type">string</span>)</span></span> <span class="hljs-type">int</span> {
     cnt, m := [<span class="hljs-string">&#x27;X&#x27;</span>]<span class="hljs-type">int</span>{}, <span class="hljs-built_in">len</span>(s) / <span class="hljs-number">4</span>
     <span class="hljs-keyword">for</span> _, c := <span class="hljs-keyword">range</span> s {
@@ -1531,9 +1536,9 @@ id="最短且字典序最小的美丽子字符串">最短且字典序最小的�
         </div></div>
 <h3 id="无限数组的最短子数组">无限数组的最短子数组</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(290, 0)" id="tab-button-290-0">Golang</button>
+        <button onclick="showTab(30, 0)" id="tab-button-30-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-290" id="tab-290-0">
+        <div class="tab-content tab-content-30" id="tab-30-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">minSizeSubarray</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, target <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     total := <span class="hljs-number">0</span>
     <span class="hljs-keyword">for</span> _, x := <span class="hljs-keyword">range</span> nums {
@@ -1560,9 +1565,9 @@ id="最短且字典序最小的美丽子字符串">最短且字典序最小的�
 <h3
 id="包含所有三种字符的子字符串数目">包含所有三种字符的子字符串数目</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(291, 0)" id="tab-button-291-0">Golang</button>
+        <button onclick="showTab(31, 0)" id="tab-button-31-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-291" id="tab-291-0">
+        <div class="tab-content tab-content-31" id="tab-31-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">numberOfSubstrings</span><span class="hljs-params">(s <span class="hljs-type">string</span>)</span></span> (ans <span class="hljs-type">int</span>) {
     left, cnt := <span class="hljs-number">0</span>, [<span class="hljs-number">3</span>]<span class="hljs-type">int</span>{}
     bs := []<span class="hljs-type">byte</span>(s)
@@ -1580,9 +1585,9 @@ id="包含所有三种字符的子字符串数目">包含所有三种字符的�
 <h3 id="统计最大元素出现至少-k-次的子数组">统计最大元素出现至少 K
 次的子数组</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(292, 0)" id="tab-button-292-0">Golang</button>
+        <button onclick="showTab(32, 0)" id="tab-button-32-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-292" id="tab-292-0">
+        <div class="tab-content tab-content-32" id="tab-32-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">countSubarrays</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int64</span> {
     mx := <span class="hljs-number">0</span>
     <span class="hljs-keyword">for</span> _, num := <span class="hljs-keyword">range</span> nums {
@@ -1607,9 +1612,9 @@ id="包含所有三种字符的子字符串数目">包含所有三种字符的�
 <h3 id="字符至少出现-k-次的子字符串-i">字符至少出现 K 次的子字符串
 I</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(293, 0)" id="tab-button-293-0">Golang</button>
+        <button onclick="showTab(33, 0)" id="tab-button-33-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-293" id="tab-293-0">
+        <div class="tab-content tab-content-33" id="tab-33-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">numberOfSubstrings</span><span class="hljs-params">(s <span class="hljs-type">string</span>, k <span class="hljs-type">int</span>)</span></span> (ans <span class="hljs-type">int</span>) {
     bs := []<span class="hljs-type">byte</span>(s)
     left, cnt := <span class="hljs-number">0</span>, [<span class="hljs-number">26</span>]<span class="hljs-type">int</span>{} 
@@ -1626,9 +1631,9 @@ I</h3>
         </div></div>
 <h3 id="统计完全子数组的数目">统计完全子数组的数目</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(294, 0)" id="tab-button-294-0">Golang</button>
+        <button onclick="showTab(34, 0)" id="tab-button-34-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-294" id="tab-294-0">
+        <div class="tab-content tab-content-34" id="tab-34-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">countCompleteSubarrays</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>)</span></span> (ans <span class="hljs-type">int</span>) {
     cnt1 := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">int</span>]<span class="hljs-type">int</span>)
     <span class="hljs-keyword">for</span> _, num := <span class="hljs-keyword">range</span> nums {
@@ -1651,9 +1656,9 @@ I</h3>
         </div></div>
 <h3 id="统计好子数组的数目">统计好子数组的数目</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(295, 0)" id="tab-button-295-0">Golang</button>
+        <button onclick="showTab(35, 0)" id="tab-button-35-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-295" id="tab-295-0">
+        <div class="tab-content tab-content-35" id="tab-35-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">countGood</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> (ans <span class="hljs-type">int64</span>) {
     left, cnt, n := <span class="hljs-number">0</span>, <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">int</span>]<span class="hljs-type">int</span>), <span class="hljs-number">0</span>
     <span class="hljs-keyword">for</span> _, num := <span class="hljs-keyword">range</span> nums {
@@ -1671,9 +1676,9 @@ I</h3>
         </div></div>
 <h3 id="乘积小于-k-的子数组">乘积小于 K 的子数组</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(296, 0)" id="tab-button-296-0">Golang</button>
+        <button onclick="showTab(36, 0)" id="tab-button-36-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-296" id="tab-296-0">
+        <div class="tab-content tab-content-36" id="tab-36-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">numSubarrayProductLessThanK</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     <span class="hljs-keyword">if</span> k &lt;= <span class="hljs-number">1</span> {
         <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
@@ -1693,9 +1698,9 @@ I</h3>
 <h3 id="统计满足-k-约束的子字符串数量-i">统计满足 K 约束的子字符串数量
 I</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(297, 0)" id="tab-button-297-0">Golang</button>
+        <button onclick="showTab(37, 0)" id="tab-button-37-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-297" id="tab-297-0">
+        <div class="tab-content tab-content-37" id="tab-37-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">countKConstraintSubstrings</span><span class="hljs-params">(s <span class="hljs-type">string</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     bs := []<span class="hljs-type">byte</span>(s)
     left, cnt, ans := <span class="hljs-number">0</span>, [<span class="hljs-number">2</span>]<span class="hljs-type">int</span>{}, <span class="hljs-number">0</span>
@@ -1712,9 +1717,9 @@ I</h3>
         </div></div>
 <h3 id="统计得分小于-k-的子数组数目">统计得分小于 K 的子数组数目</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(298, 0)" id="tab-button-298-0">Golang</button>
+        <button onclick="showTab(38, 0)" id="tab-button-38-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-298" id="tab-298-0">
+        <div class="tab-content tab-content-38" id="tab-38-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">countSubarrays</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, k <span class="hljs-type">int64</span>)</span></span> (ans <span class="hljs-type">int64</span>) {
     left, sum := <span class="hljs-number">0</span>, <span class="hljs-type">int64</span>(<span class="hljs-number">0</span>)
     <span class="hljs-keyword">for</span> right, num := <span class="hljs-keyword">range</span> nums {
@@ -1730,9 +1735,9 @@ I</h3>
         </div></div>
 <h3 id="不间断子数组">不间断子数组</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(299, 0)" id="tab-button-299-0">Cpp</button>
+        <button onclick="showTab(39, 0)" id="tab-button-39-0">Cpp</button>
         </div>
-        <div class="tab-content tab-content-299" id="tab-299-0">
+        <div class="tab-content tab-content-39" id="tab-39-0">
             <pre><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> {
 <span class="hljs-keyword">public</span>:
     <span class="hljs-function"><span class="hljs-type">long</span> <span class="hljs-type">long</span> <span class="hljs-title">continuousSubarrays</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt; &amp;nums)</span> </span>{
@@ -1752,9 +1757,9 @@ I</h3>
         </div></div>
 <h3 id="和相同的二元子数组">和相同的二元子数组</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(300, 0)" id="tab-button-300-0">Golang</button>
+        <button onclick="showTab(40, 0)" id="tab-button-40-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-300" id="tab-300-0">
+        <div class="tab-content tab-content-40" id="tab-40-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">numSubarraysWithSum</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, goal <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     <span class="hljs-keyword">var</span> f <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span>
     f = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
@@ -1774,9 +1779,9 @@ I</h3>
         </div></div>
 <h3 id="统计优美子数组">统计「优美子数组」</h3>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(301, 0)" id="tab-button-301-0">Golang</button>
+        <button onclick="showTab(41, 0)" id="tab-button-41-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-301" id="tab-301-0">
+        <div class="tab-content tab-content-41" id="tab-41-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">numberOfSubarrays</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     <span class="hljs-keyword">var</span> f <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span>
     f = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
@@ -1796,9 +1801,9 @@ I</h3>
         </div></div>
 <h2 id="元音辅音字符串计数-i">3305. 元音辅音字符串计数 I</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(302, 0)" id="tab-button-302-0">Golang</button>
+        <button onclick="showTab(42, 0)" id="tab-button-42-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-302" id="tab-302-0">
+        <div class="tab-content tab-content-42" id="tab-42-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">f</span><span class="hljs-params">(word <span class="hljs-type">string</span>, k <span class="hljs-type">int</span>)</span></span> (ans <span class="hljs-type">int</span>) {
     cnt1 := <span class="hljs-keyword">map</span>[<span class="hljs-type">rune</span>]<span class="hljs-type">int</span>{}
     cnt2 := <span class="hljs-number">0</span>

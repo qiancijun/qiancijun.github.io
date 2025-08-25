@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+    
+      CppWebServer
+    
+</title>
+
+<link rel="icon" href="/images/favicon.ico">
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-calendar@2.3.4/dist/github-calendar.min.css">
+
+<link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/styles/github-dark-dimmed.min.css" rel="stylesheet">
+<!-- <link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark-reasonable.min.css" rel="stylesheet"> -->
+<link href="
+https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.css
+" rel="stylesheet">
+<link href="
+https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustomScrollbar.min.css
+" rel="stylesheet">
+<meta name="generator" content="Hexo 7.2.0"></head>
+<body>
+    <div class="main-container">
+        <div class="topbar">
+    <div class="btn-container">
+        <a href="/"><img class="btn-close" src="/images/close.svg" alt=""></a>
+        <a><img class="btn-minimize" src="/images/minimize.svg" alt=""></a>
+        <a><img class="btn-maximize" src="/images/maximize.svg" alt=""></a>
+    </div>
+    <div class="title">
+        <img src="/images/terminal.svg" alt="">
+        <span>cat Cheryl-Chun 淳老师 BLOG</span>
+    </div>
+</div>
+        <div class="nav-container">
+    <div class="posts">
+        <img src="/images/posts-list.svg" alt="">
+        <a href="/">Home</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+    <!-- <div class="tags">
+        <img src="/images/tag.svg" alt="">
+        <a href="/tag">Tag</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div> -->
+    <div>
+        <img src="/images/archive.svg" alt="">
+        <a href="/all-posts">Posts</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+    <!-- <div class="category">
+        <img src="/images/category.svg" alt="">
+        <a href="/category">Category</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div> -->
+    <div class="about">
+        <img src="/images/about.svg" alt="">
+        <a href="/about">About</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+</div>
+        <div class="main-content">
+            <article
+  id="post-CppWebServer"
+  class="article article-type-post"
+>
+  <div id="toc-show">
+    <img src="/images/toc.svg" alt="" />
+  </div>
+  
+  <h1 class="article-header">CppWebServer</h1>
+  
+  <div class="article-info">
+    <!-- <span>Document Attributes:</span> -->
+
+    <table>
+      <tr>
+        <td>
+            <img src="/images/time.svg" alt="">
+            Updated Time
+        </td>
+        <td>2025-08-22</td>
+      </tr>
+      <tr>
+        <td>
+            <img src="/images/category.svg" alt="">
+            Category
+        </td>
+        <td> <ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/cpp/">cpp</a></li></ul> </td>
+      </tr>
+      <tr>
+        <td>
+            <img src="/images/tag.svg" alt="">
+            Tags
+        </td>
+        <td>
+	<a class="tag-link" href="/tags/cpp/" rel="tag">cpp</a>
+
+</td>
+      </tr>
+    </table>
+  </div>
+  <div class="article-entry">
+    <div class="content">
+      <blockquote>
+<p>参考仓库 <a
+target="_blank" rel="noopener" href="https://github.com/yuesong-feng/30dayMakeCppServer">30dayMakeCppServer</a></p>
+</blockquote>
+<h1 id="socket">Socket</h1>
+<p>对于服务器而言，需要建立一个套接字，对外提供一个网络通信接口。对于
+Linux 来说，套接字只是一个文件描述符，也就是一个 <code>int</code>
+类型的值。对应的系统调用为：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/socket.h&gt;</span></span><br><span class="hljs-type">int</span> sockfd = <span class="hljs-built_in">socket</span>(AF_INET, SOCK_STREAM, <span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure>
+<ul>
+<li>第一个参数：IP 地址类型，<code>AF_INET</code> 表示使用
+IPv4，<code>AF_INET</code> 表示使用 IPv6；</li>
+<li>第二个参数：数据传输方式，<code>SOCK_STREAM</code>
+表示流格式，多用于 TCP。<code>SOCK_DGRAM</code> 表示数据报格式，多用于
+UDP；</li>
+<li>第三个参数：协议，0 表示根据前面两个参数自动推断，分别可以设置为
+<code>IPPROTO_TCP</code> 和 <code>IPPROTO_UDP</code>；</li>
+</ul>
+<p>对于客户端而言，需要将一个套接字绑定到一个指定的 ip
+和端口上，对应的结构体为 <code>sockaddr_in</code>：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;arpa/inet.h&gt;</span></span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">sockaddr_in</span> serv_addr;<br><span class="hljs-built_in">bzero</span>(&amp;serv_addr, <span class="hljs-built_in">sizeof</span>(sockaddr_in));<br></code></pre></td></tr></table></figure>
+<p>设置地址簇、IP 地址和端口： <figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">serv_addr.sin_family = AF_INET;<br>serv_addr.sin_addr.s_addr = <span class="hljs-built_in">inet_addr</span>(<span class="hljs-string">&quot;127.0.0.1&quot;</span>);<br>serv_addr.sin_port = <span class="hljs-built_in">htons</span>(<span class="hljs-number">8888</span>);<br></code></pre></td></tr></table></figure></p>
+<p>将 socket 地址与文件描述符绑定：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-built_in">bind</span>(sockfd, (sockaddr*)&amp;serv_addr, <span class="hljs-built_in">sizeof</span>(serv_addr));<br></code></pre></td></tr></table></figure>
+<div class="citation cite-question">
+            <div class="title">
+                <img src="/images/question.svg"></img>
+                Question 为什么要转化为通用socket地址sockaddr
+            </div>
+            <div class="content latex-container"><p>TODO</p>
+</div>
+        </div>
+<p>最后需要使用 <code>listen</code> 函数监听这个 socket
+窗口，第二个参数是 listen 的最大监听队列长度，系统建议的最大值是
+<code>SOMAXCONN</code> 被定义为 128。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-built_in">listen</span>(sockfd, SOMAXCONN);<br></code></pre></td></tr></table></figure>
+<p>要接受一个客户端的链接，需要使用 <code>accept</code>
+函数，对于每一个客户端，在接收连接时也需要保存客户端的 socket
+地址信息：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">sockaddr_in</span> client_addr;<br><span class="hljs-type">socklen_t</span> client_addr_len = <span class="hljs-built_in">sizeof</span>(client_addr);<br><span class="hljs-built_in">bzero</span>(&amp;client_addr, <span class="hljs-built_in">sizeof</span>(client_addr));<br><span class="hljs-type">int</span> client_sockfd = <span class="hljs-built_in">accept</span>(sockfd, (sockaddr*)&amp;client_addr, &amp;client_addr_len);<br><span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;new client fd %d! IP: %s Port: %d\n&quot;</span>, client_sockfd, <span class="hljs-built_in">inet_ntoa</span>(client_addr.sin_addr), <span class="hljs-built_in">ntohs</span>(client_addr.sin_port));<br></code></pre></td></tr></table></figure>
+<p>客户端的逻辑比较类似，把 accept 换成 connect
+即可，下面是完整的代码：</p>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(0, 0)" id="tab-button-0-0">server</button>
+        
+        <button onclick="showTab(0, 1)" id="tab-button-0-1">client</button>
+        </div>
+        <div class="tab-content tab-content-0" id="tab-0-0">
+            <pre><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;arpa/inet.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstring&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/socket.h&gt;</span></span>
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">sockaddr_in</span> serv_addr;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-type">int</span> sockfd = <span class="hljs-built_in">socket</span>(AF_INET, SOCK_STREAM, <span class="hljs-number">0</span>);
+    <span class="hljs-built_in">bzero</span>(&amp;serv_addr, <span class="hljs-built_in">sizeof</span>(serv_addr));
+
+    serv_addr.sin_family = AF_INET;
+    serv_addr.sin_addr.s_addr = <span class="hljs-built_in">inet_addr</span>(<span class="hljs-string">&quot;127.0.0.1&quot;</span>);
+    serv_addr.sin_port = <span class="hljs-built_in">htons</span>(<span class="hljs-number">8888</span>);
+
+    <span class="hljs-built_in">bind</span>(sockfd, (sockaddr*)&amp;serv_addr, <span class="hljs-built_in">sizeof</span>(serv_addr));
+
+    <span class="hljs-built_in">listen</span>(sockfd, SOMAXCONN);
+
+    <span class="hljs-keyword">struct</span> <span class="hljs-title class_">sockaddr_in</span> client_addr;
+    <span class="hljs-type">socklen_t</span> client_addr_len = <span class="hljs-built_in">sizeof</span>(client_addr);
+    <span class="hljs-built_in">bzero</span>(&amp;client_addr, <span class="hljs-built_in">sizeof</span>(client_addr));
+    <span class="hljs-type">int</span> client_sockfd = <span class="hljs-built_in">accept</span>(sockfd, (sockaddr*)&amp;client_addr, &amp;client_addr_len);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;new client fd %d! IP: %s Port: %d\n&quot;</span>, client_sockfd, <span class="hljs-built_in">inet_ntoa</span>(client_addr.sin_addr), <span class="hljs-built_in">ntohs</span>(client_addr.sin_port));
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</pre>
+        </div>
+        <div class="tab-content tab-content-0" id="tab-0-1">
+            <pre><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;arpa/inet.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstring&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/socket.h&gt;</span></span>
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">sockaddr_in</span> serv_addr;
+
+<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-type">int</span> sockfd = <span class="hljs-built_in">socket</span>(AF_INET, SOCK_STREAM, <span class="hljs-number">0</span>);
+
+    <span class="hljs-keyword">struct</span> <span class="hljs-title class_">sockaddr_in</span> serv_addr;
+    <span class="hljs-built_in">bzero</span>(&amp;serv_addr, <span class="hljs-built_in">sizeof</span>(serv_addr));
+
+    serv_addr.sin_family = AF_INET;
+    serv_addr.sin_addr.s_addr = <span class="hljs-built_in">inet_addr</span>(<span class="hljs-string">&quot;127.0.0.1&quot;</span>);
+    serv_addr.sin_port = <span class="hljs-built_in">htons</span>(<span class="hljs-number">8888</span>);
+
+    <span class="hljs-built_in">connect</span>(sockfd, (sockaddr*)&amp;serv_addr, <span class="hljs-built_in">sizeof</span>(serv_addr));
+}</pre>
+        </div></div>
+<h2 id="错误处理">错误处理</h2>
+<p>在 《Effective C++》条款 8 种提到，别让异常逃离析构函数。对于 Linux
+系统调用，常见的错误提示方式是使用返回值和设置 errno
+来说明错误类型。通常来说，当一个系统调用返回 -1，说明有 error
+发生。为了方便处理错误，可以封装一个错误处理函数：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">errif</span><span class="hljs-params">(<span class="hljs-type">bool</span> condition, <span class="hljs-type">const</span> <span class="hljs-type">char</span>* errmsg)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (condition) &#123;<br>        <span class="hljs-built_in">perror</span>(errmsg);<br>        <span class="hljs-built_in">exit</span>(EXIT_FAILURE);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="read-write">read &amp; write</h2>
+<p>当建立一个 socket 时，就可以使用 <code>&lt;unistd.h&gt;</code>
+头文件中的 <code>read</code> 和 <code>write</code>
+来进行网络接口的数据读写操作了。</p>
+<p>服务端： <figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>    <span class="hljs-type">char</span> buf[<span class="hljs-number">1024</span>];<br>    <span class="hljs-built_in">bzero</span>(&amp;buf, <span class="hljs-built_in">sizeof</span>(buf));<br>    <span class="hljs-type">ssize_t</span> read_bytes = <span class="hljs-built_in">read</span>(client_sockfd, buf, <span class="hljs-keyword">sizeof</span> buf);<br>    <span class="hljs-keyword">if</span> (read_bytes &gt; <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;message from client fd %d: %s\n&quot;</span>, client_sockfd, buf);<br>        <span class="hljs-built_in">write</span>(client_sockfd, buf, <span class="hljs-keyword">sizeof</span> buf);<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (read_bytes == <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;client fd %d disconnected\n&quot;</span>, client_sockfd);<br>        <span class="hljs-built_in">close</span>(client_sockfd);<br>        <span class="hljs-keyword">break</span>;<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (read_bytes == <span class="hljs-number">-1</span>) &#123;<br>        <span class="hljs-built_in">close</span>(client_sockfd);<br>        <span class="hljs-built_in">errif</span>(<span class="hljs-literal">true</span>, <span class="hljs-string">&quot;socket read error&quot;</span>);<br>    &#125;<br>&#125;<br><span class="hljs-built_in">close</span>(sockfd);<br></code></pre></td></tr></table></figure></p>
+<p>客户端类似，相同的实现方式： <figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>    <span class="hljs-type">char</span> buf[<span class="hljs-number">1024</span>];<br>    <span class="hljs-built_in">bzero</span>(&amp;buf, <span class="hljs-keyword">sizeof</span> buf);<br>    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%s&quot;</span>, buf);<br>    <span class="hljs-type">ssize_t</span> write_bytes = <span class="hljs-built_in">write</span>(sockfd, buf, <span class="hljs-keyword">sizeof</span> buf);<br>    <span class="hljs-keyword">if</span> (write_bytes == <span class="hljs-number">-1</span>) &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;socket already disconnected, can&#x27;t write any more&quot;</span>);<br>        <span class="hljs-keyword">break</span>;<br>    &#125;<br><br>    <span class="hljs-built_in">bzero</span>(&amp;buf, <span class="hljs-keyword">sizeof</span> buf);<br>    <span class="hljs-type">ssize_t</span> read_bytes = <span class="hljs-built_in">read</span>(sockfd, buf, <span class="hljs-keyword">sizeof</span> buf);<br>    <span class="hljs-keyword">if</span> (read_bytes &gt; <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;message from server: %s\n&quot;</span>, buf);<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (read_bytes == <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;server socket disconnected\n&quot;</span>);<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (read_bytes == <span class="hljs-number">-1</span>) &#123;<br>        <span class="hljs-built_in">close</span>(sockfd);<br>        <span class="hljs-built_in">errif</span>(<span class="hljs-literal">true</span>, <span class="hljs-string">&quot;socket read error&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></p>
+<p>目前为止实现了一个最简单的 echo
+服务器，并且拥有最基本的错误处理。但是服务器只能处理一个客户端。</p>
+<h1 id="epoll">epoll</h1>
+<p>IO 多路复用的基本思想是事件驱动，服务器同时保持多个客户端 IO
+连接，当这个 IO 上有可读或可写事件发生时，表示这个 IO
+对应的客户端在请求服务器的某项服务，此时服务器响应该服务。在 Linux
+系统中，IO 多路复用使用 epoll 来实现。</p>
+<div class="citation cite-tip">
+            <div class="title">
+                <img src="/images/tip.svg"></img>
+                Tip epoll
+            </div>
+            <div class="content latex-container"><p>TODO</p>
+</div>
+        </div>
+<p>epoll 主要由三个系统调用组成，创建一个 epoll
+文件描述符并返回，失败返回 -1：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> epfd = <span class="hljs-built_in">epoll_create</span>(<span class="hljs-number">1024</span>); <span class="hljs-comment">// 参数表示监听事件的大小，如超过内核会自动调整，目前这个参数以及被舍弃</span><br><span class="hljs-type">int</span> epfd = <span class="hljs-built_in">epoll_create1</span>(<span class="hljs-number">0</span>); <span class="hljs-comment">// 参数是一个 flag 一般设为 0</span><br></code></pre></td></tr></table></figure>
+<p>epoll 监听的事件描述符会放在一棵红黑树上，将要监听的 IO
+放入红黑树中，就可以监听 IO 事件：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-built_in">epoll_ctl</span>(epfd, EPOLL_CTL_ADD, sockfd, &amp;ev); <span class="hljs-comment">// 添加事件到 epoll</span><br><span class="hljs-built_in">epoll_ctl</span>(epfd, EPOLL_CTL_MOD, sockfd, &amp;ev); <span class="hljs-comment">// 修改 epoll 上的事件</span><br><span class="hljs-built_in">epoll_ctl</span>(epfd, EPOLL_CTL_DEL, sockfd, <span class="hljs-literal">NULL</span>); <span class="hljs-comment">// 删除事件</span><br></code></pre></td></tr></table></figure>
+<p>其中 sockfd 表示要添加的 IO 文件描述符，ev 是一个 epoll_event
+结构体，其中的 events 表示事件，data 是一个用户数据：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">union</span> <span class="hljs-title class_">epoll_data</span> &#123;<br>  <span class="hljs-type">void</span> *ptr;<br>  <span class="hljs-type">int</span> fd;<br>  <span class="hljs-type">uint32_t</span> u32;<br>  <span class="hljs-type">uint64_t</span> u64;<br>&#125; <span class="hljs-type">epoll_data_t</span>;<br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">epoll_event</span> &#123;<br>  <span class="hljs-type">uint32_t</span> events;  <span class="hljs-comment">/* Epoll events */</span><br>  <span class="hljs-type">epoll_data_t</span> data;  <span class="hljs-comment">/* User data variable */</span><br>&#125; __EPOLL_PACKED;<br></code></pre></td></tr></table></figure>
+<p>epoll 默认采用 LT 触发模式，即水平触发，只要 fd
+上有事件，就会一直通知内核。这样可以保证所有事件都得到处理、不容易丢失，但可能发生的大量重复通知也会影响
+epoll 的性能。如使用 ET 模式，即边缘触法，fd
+从无事件到有事件的变化会通知内核一次，之后就不会再次通知内核。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> nfds = <span class="hljs-built_in">epoll_wait</span>(epfd, events, maxevents, timeout);<br></code></pre></td></tr></table></figure>
+<p>其中 events 是一个 epoll_event 结构体数组，maxevents
+是可供返回的最大事件大小，一般是 events 的大小，timeout
+表示最大等待时间，设置为 -1 表示一直等待。</p>
+<p>使用的客户端代码没有改动，服务端加入多路复用的逻辑：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;util.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;arpa/inet.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstdio&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/socket.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/epoll.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;errno.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;fcntl.h&gt;</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MAX_EVENTS 1024</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> READ_BUFFER 1024</span><br><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">sockaddr_in</span> serv_addr;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">setnonblocking</span><span class="hljs-params">(<span class="hljs-type">int</span> fd)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">fcntl</span>(fd, F_SETFL, <span class="hljs-built_in">fcntl</span>(fd, F_GETFL) | O_NONBLOCK);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> sockfd = <span class="hljs-built_in">socket</span>(AF_INET, SOCK_STREAM, <span class="hljs-number">0</span>);<br>    <span class="hljs-built_in">errif</span>(sockfd == <span class="hljs-number">-1</span>, <span class="hljs-string">&quot;socket create error&quot;</span>);<br>    <span class="hljs-built_in">bzero</span>(&amp;serv_addr, <span class="hljs-built_in">sizeof</span>(serv_addr));<br><br>    serv_addr.sin_family = AF_INET;<br>    serv_addr.sin_addr.s_addr = <span class="hljs-built_in">inet_addr</span>(<span class="hljs-string">&quot;127.0.0.1&quot;</span>);<br>    serv_addr.sin_port = <span class="hljs-built_in">htons</span>(<span class="hljs-number">8888</span>);<br><br>    <span class="hljs-built_in">errif</span>(<span class="hljs-built_in">bind</span>(sockfd, (sockaddr*)&amp;serv_addr, <span class="hljs-built_in">sizeof</span>(serv_addr)) == <span class="hljs-number">-1</span>, <span class="hljs-string">&quot;socket bind error&quot;</span>);<br><br>    <span class="hljs-built_in">errif</span>(<span class="hljs-built_in">listen</span>(sockfd, SOMAXCONN) == <span class="hljs-number">-1</span>, <span class="hljs-string">&quot;socket listen error&quot;</span>);<br><br>    <span class="hljs-type">int</span> epfd = <span class="hljs-built_in">epoll_create1</span>(<span class="hljs-number">0</span>);<br>    <span class="hljs-built_in">errif</span>(epfd == <span class="hljs-number">-1</span>, <span class="hljs-string">&quot;epoll create error&quot;</span>);<br><br>    <span class="hljs-keyword">struct</span> <span class="hljs-title class_">epoll_event</span> events[MAX_EVENTS], ev;<br>    <span class="hljs-built_in">bzero</span>(&amp;events, <span class="hljs-keyword">sizeof</span> events);<br><br>    <span class="hljs-built_in">bzero</span>(&amp;ev, <span class="hljs-keyword">sizeof</span> ev);<br><br>    ev.data.fd = sockfd;<br>    ev.events = EPOLLIN | EPOLLET;<br>    <span class="hljs-built_in">setnonblocking</span>(sockfd);<br>    <span class="hljs-built_in">epoll_ctl</span>(epfd, EPOLL_CTL_ADD, sockfd, &amp;ev);<br><br>    <span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>) &#123;<br>        <span class="hljs-type">int</span> nfds = <span class="hljs-built_in">epoll_wait</span>(epfd, events, MAX_EVENTS, <span class="hljs-number">-1</span>);<br>        <span class="hljs-built_in">errif</span>(nfds == <span class="hljs-number">-1</span>, <span class="hljs-string">&quot;epoll wait error&quot;</span>);<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; nfds; i++) &#123;<br>            <span class="hljs-keyword">if</span> (events[i].data.fd == sockfd) &#123;<br>                <span class="hljs-comment">// 新客户端连接</span><br>                <span class="hljs-keyword">struct</span> <span class="hljs-title class_">sockaddr_in</span> client_addr;<br>                <span class="hljs-built_in">bzero</span>(&amp;client_addr, <span class="hljs-keyword">sizeof</span> client_addr);<br>                <span class="hljs-type">socklen_t</span> client_addr_len = <span class="hljs-built_in">sizeof</span>(client_addr);<br><br>                <span class="hljs-type">int</span> client_sockfd = <span class="hljs-built_in">accept</span>(sockfd, (sockaddr*)&amp;client_addr, &amp;client_addr_len);<br>                <span class="hljs-built_in">errif</span>(client_sockfd == <span class="hljs-number">-1</span>, <span class="hljs-string">&quot;socket accept error&quot;</span>);<br>                <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;new client fd %d! IP: %s Port: %d\n&quot;</span>, client_sockfd, <span class="hljs-built_in">inet_ntoa</span>(client_addr.sin_addr), <span class="hljs-built_in">ntohs</span>(client_addr.sin_port));<br><br>                <span class="hljs-built_in">bzero</span>(&amp;ev, <span class="hljs-built_in">sizeof</span>(ev));<br>                ev.data.fd = client_sockfd;<br>                ev.events = EPOLLIN | EPOLLET;<br>                <span class="hljs-built_in">setnonblocking</span>(client_sockfd);<br>                <span class="hljs-built_in">epoll_ctl</span>(epfd, EPOLL_CTL_ADD, client_sockfd, &amp;ev);<br>            &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (events[i].events &amp; EPOLLIN) &#123;<br>                <span class="hljs-comment">// 可读事件</span><br>                <span class="hljs-type">char</span> buf[READ_BUFFER];<br>                <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>                    <span class="hljs-built_in">bzero</span>(&amp;buf, <span class="hljs-built_in">sizeof</span>(buf));<br>                    <span class="hljs-type">ssize_t</span> bytes_read = <span class="hljs-built_in">read</span>(events[i].data.fd, buf, <span class="hljs-keyword">sizeof</span> buf);<br>                    <span class="hljs-keyword">if</span> (bytes_read &gt; <span class="hljs-number">0</span>) &#123;<br>                        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;message from client fd %d: %s\n&quot;</span>, events[i].data.fd, buf);<br>                        <span class="hljs-built_in">write</span>(events[i].data.fd, buf, <span class="hljs-keyword">sizeof</span> buf);<br>                    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (bytes_read == <span class="hljs-number">-1</span> &amp;&amp; errno == EINTR) &#123;<br>                        <span class="hljs-comment">// 客户端正常终端</span><br>                        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;continue reading&quot;</span>);<br>                        <span class="hljs-keyword">continue</span>;<br>                    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (bytes_read == <span class="hljs-number">-1</span> &amp;&amp; ((errno == EAGAIN) || (errno == EWOULDBLOCK))) &#123;<br>                        <span class="hljs-comment">// 非阻塞 IO，表示数据全部读取完毕</span><br>                        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;finish reading once, errno: %d\n&quot;</span>, errno);<br>                        <span class="hljs-keyword">break</span>;<br>                    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (bytes_read == <span class="hljs-number">0</span>) &#123;<br>                        <span class="hljs-comment">// EOF 客户端断开连接</span><br>                        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;EOF, client fd %d disconnected\n&quot;</span>, events[i].data.fd);<br>                        <span class="hljs-built_in">close</span>(events[i].data.fd);<br>                        <span class="hljs-keyword">break</span>;<br>                    &#125;<br>                &#125;<br>            &#125; <span class="hljs-keyword">else</span> &#123;         <span class="hljs-comment">//其他事件，之后的版本实现</span><br>                <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;something else happened\n&quot;</span>);<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-built_in">close</span>(sockfd);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h1 id="cpp-面向对象">Cpp 面向对象</h1>
+<p>目前为的实现和 CPP 没有多大关系，和一个 C
+程序相同，最低级的模块化就是构建一个类。这部分的内容把 Socket、Epoll
+等全部封装成类。</p>
+<p>这里只贴一个 <a
+target="_blank" rel="noopener" href="https://github.com/qiancijun/light-cpp-web-server/tree/feature/4-class">github</a></p>
+
+    </div>
+    <div class="toc-container">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#socket"><span class="toc-number">1.</span> <span class="toc-text">Socket</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">错误处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#read-write"><span class="toc-number">1.2.</span> <span class="toc-text">read &amp; write</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#epoll"><span class="toc-number">2.</span> <span class="toc-text">epoll</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#cpp-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1"><span class="toc-number">3.</span> <span class="toc-text">Cpp 面向对象</span></a></li></ol>
+    </div>
+  </div>
+  <footer class="article-footer">
+    <div class="footer-container">
+  <a target="_blank" rel="noopener" href="https://space.bilibili.com/12352380?spm_id_from=333.1007.0.0">
+    <img src="/images/bilibili.svg" alt="" />
+  </a>
+  <a target="_blank" rel="noopener" href="https://github.com/qiancijun">
+    <img src="/images/github.svg" alt="" />
+  </a>
+  <span>Copyright </span>
+  <img src="/images/copyright.svg" alt="">
+  <span>2024 Cheryl-Chun</span>
+</div>
+
+  </footer>
+</article>
+
+
+        </div>
+        <!-- <div class="footer">
+    
+</div> -->
+    </div>
+    
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/github-calendar@2.3.4/dist/github-calendar.min.js"></script>
+=
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js"></script>
+
+
+<script src="/scripts/search.js"></script>
+
+
+<script src="/scripts/main.js"></script>
+
+
+<script type="text/javascript">      
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+        search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result', "Cheryl-Chun");
+</script>
+</body>
+<style>
+    .main-container::before {
+        background-image: url('');
+    }
+</style>
+</html>

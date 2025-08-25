@@ -5,6 +5,72 @@
     
     <entry>
       
+        <title>CppWebServer</title>
+      
+      <tag-number>1</tag-number>
+      <date>Mon Aug 25 2025 10:16:46 GMT+0800</date>
+      <link href="/2025/08/22/CppWebServer/"/>
+      <url>/2025/08/22/CppWebServer/</url>
+      
+      
+      <categories>
+          <category>cpp</category>
+      </categories>
+      
+      
+        <tags>
+            <tag>cpp</tag>
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      
+        <title>eino</title>
+      
+      <tag-number>2</tag-number>
+      <date>Thu Aug 14 2025 11:29:53 GMT+0800</date>
+      <link href="/2025/08/12/eino/"/>
+      <url>/2025/08/12/eino/</url>
+      
+      
+      
+        <tags>
+            <tag>AI</tag>
+            <tag>LLM</tag>
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      
+        <title>Kubernetes源码分析-apiserver</title>
+      
+      <tag-number>1</tag-number>
+      <date>Thu Jun 26 2025 18:05:00 GMT+0800</date>
+      <link href="/2025/06/26/Kubernetes%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-apiserver/"/>
+      <url>/2025/06/26/Kubernetes%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-apiserver/</url>
+      
+      
+      <categories>
+          <category>云计算</category>
+      </categories>
+      
+      
+        <tags>
+            <tag>k8s</tag>
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      
         <title>Raft基于6.824框架</title>
       
       <tag-number>1</tag-number>
@@ -276,7 +342,7 @@
         <title>算法笔试——滑动窗口</title>
       
       <tag-number>0</tag-number>
-      <date>Wed Mar 12 2025 10:18:10 GMT+0800</date>
+      <date>Thu Aug 14 2025 13:57:56 GMT+0800</date>
       <link href="/2024/10/24/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AF%95-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/"/>
       <url>/2024/10/24/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AF%95-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/</url>
       
