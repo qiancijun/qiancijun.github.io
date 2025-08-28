@@ -315,6 +315,87 @@ main-Reactor，核心是一个
 <p>目前实现的 Reactor 模式并不是一个完整的 Reactor
 模式，处理事件请求仍然在事件驱动的线程里。这版本的<a
 target="_blank" rel="noopener" href="https://github.com/qiancijun/light-cpp-web-server/tree/feature/6-eventloop">代码</a></p>
+<h2 id="acceptor">Acceptor</h2>
+<p>目前所有的逻辑都写在了 <code>Server</code> 类里，但是
+<code>Server</code>
+类作为一个服务器类，应该更抽象、更通用。对于每一个事件，不管提供什么样的服务，首先需要做的事都是调用
+<code>accept()</code> 函数接受这个 tcp 连接。然后将 socket
+文件描述符添加到 epoll。当这个 IO 有事件发生的时候，再对此 tcp
+连接提供相应的服务。</p>
+<p>因此可以分离接受连接这一模块，添加一个 <code>Acceptor</code>： -
+类存在于事件驱动 <code>EventLoop</code> 类中，也就是 Reactor 模式的
+main-Reactor； - 类中的 socket fd 就是服务器监听的 socket fd，每一个
+Acceptor 对应一个 socket fd； - 类通过一个独有的 <code>Channel</code>
+负责分发到 epoll，该 Channel 的事件处理函数 <code>handleEvent()</code>
+会调用 Acceptor 中的接受连接函数来新建一个 TCP 连接；</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">pragma</span> once</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;functional&gt;</span></span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">EventLoop</span>;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Socket</span>;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">InetAddress</span>;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Channel</span>;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Acceptor</span> &#123;<br> <span class="hljs-keyword">private</span>:<br>  EventLoop* loop;<br>  Socket* sock;<br>  InetAddress* addr;<br>  Channel* acceptChannel;<br><br> <span class="hljs-keyword">public</span>:<br>  <span class="hljs-built_in">Acceptor</span>(EventLoop* _loop);<br>  ~<span class="hljs-built_in">Acceptor</span>();<br>  <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">acceptConnection</span><span class="hljs-params">()</span></span>;<br>  std::function&lt;<span class="hljs-type">void</span>(Socket*)&gt; newConnectionCallback;<br>  <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">setNewConnectionCallback</span><span class="hljs-params">(std::function&lt;<span class="hljs-type">void</span>(Socket*)&gt;)</span></span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>新建连接的逻辑交给 <code>Acceptor</code> 类中。逻辑上新 socket
+建立后和之前监听的服务器 socket 没有任何关系了，TCP 连接和 Acceptor
+一样。新的 TCP 连接应该由 <code>Server</code>
+类来创建并管理生命周期，而不是
+<code>Acceptor</code>。对于所有的服务，都要使用 <code>Acceptor</code>
+来建立连接。</p>
+<p>为了实现这一设计，可以用两种方式： -
+使用传统的虚类、虚函数来设计一个接口 - C++11
+的特性：<code>std::function</code>、<code>std::bind</code>、右值引用、<code>std::move</code>
+等实现函数回调</p>
+<p>这里使用 <code>functional</code> 来实现回调函数。在
+<code>Acceptor</code> 中定义一个新建连接的回调函数：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">std::function&lt;<span class="hljs-type">void</span>(Socket*)&gt; newConnectionCallback;<br></code></pre></td></tr></table></figure>
+<p>在新建连接时，只需要调用这个回调函数： <figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Acceptor::acceptConnection</span><span class="hljs-params">()</span> </span>&#123; <span class="hljs-built_in">newConnectionCallback</span>(sock); &#125;<br></code></pre></td></tr></table></figure></p>
+<p>这个版本的<a
+target="_blank" rel="noopener" href="https://github.com/qiancijun/light-cpp-web-server/tree/feature/7-acceptor">代码</a></p>
+<h2 id="tcp-连接">tcp 连接</h2>
+<p>对于 TCP
+协议，三次握手新建连接后，这个连接会一直存在，直到四次挥手断开连接，因此，可以把
+TCP 连接抽象成一个 <code>Connection</code> 类，这个类有以下特点： -
+类存在于事件驱动 <code>EventLoop</code> 中，也就是 Reactor 模式的
+main-Reactor; - 类中的 socket fd 就是客户端的 socket fd，每一个
+Connection 对应一个 socket fd； - 每一个类的实例通过一个独有的 Channel
+负责分发到 epoll，该 Channel 的事件处理函数 <code>handleEvent()</code>
+会调用 Connection 中的事件处理函数来响应客户端请求；</p>
+<p><code>Coonection</code> 类和 <code>Acceptor</code> 类十分相似，都是由
+Server 直接管理，由一个 <code>Channel</code> 分发到
+epoll，通过回调函数处理相应事件。唯一不同的是，<code>Acceptor</code>
+类处理的逻辑被放到了 <code>Server</code> 中，而 <code>Connection</code>
+没有必要这么做。</p>
+<p>一般而言，一个高并发服务器只会有一个 <code>Acceptor</code>
+用于接受连接（也可以有多个），但可能会同时拥有成千上万个 TCP
+连接，需要把这些连接都保存起来。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">pragma</span> once</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;map&gt;</span></span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Connection</span>;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Acceptor</span>;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">EventLoop</span>;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Socket</span>;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Server</span> &#123;<br> <span class="hljs-keyword">private</span>:<br>  EventLoop* loop;<br>  Acceptor* acceptor;<br>  std::map&lt;<span class="hljs-type">int</span>, Connection*&gt; connections;<br><br> <span class="hljs-keyword">public</span>:<br>  <span class="hljs-built_in">Server</span>(EventLoop*);<br>  ~<span class="hljs-built_in">Server</span>();<br><br>  <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">handleReadEvent</span><span class="hljs-params">(<span class="hljs-type">int</span>)</span></span>;<br>  <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">newConnection</span><span class="hljs-params">(Socket* serv_sock)</span></span>;<br>  <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">deleteConnection</span><span class="hljs-params">(Socket* sock)</span></span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>接受连接后，服务器把该 TCP 连接保存在一个 <code>map</code>
+中，键为该连接客户端的 socket fd，值为指向该连接的指针。</p>
+<p>这个版本的<a
+target="_blank" rel="noopener" href="https://github.com/qiancijun/light-cpp-web-server/tree/feature/8-connection">代码</a></p>
+<h2 id="buffer">Buffer</h2>
+<p>在目前的视线中，使用的读缓冲区大小为 1024，每次从 TCP 缓冲区读取 1024
+大小的数据到缓冲区，然后发送给客户端。但是在逻辑上有很多不合理的地方，比如并不知道客户端信息的真正大小是多少，只能以
+1024 的读缓冲区去读 TCP
+缓冲区。也不能一次性读取所有客户端数据，再统一发给客户端。</p>
+<p>为每一个 <code>Connection</code>
+类分配一个读缓冲区和写缓冲区，从客户端读取来的数据都存放在读缓冲区里。</p>
+<p>这个版本的<a
+target="_blank" rel="noopener" href="https://github.com/qiancijun/light-cpp-web-server/tree/feature/9-buffer">代码</a></p>
+<h2 id="线程池">线程池</h2>
+<p>目前的架构少了一个最重要的模块「线程池」。当 socket fd
+有事件时，应该分配一个工作线程，由这个工作线程处理 fd 上面的事件。目前
+fd 上面的事件都是由主线程（EventLoop）处理的。每一个 Reactor
+只应该负责事件分发，而不应该负责事件处理。</p>
+<p>线程池有很多种实现方式，最简单的一种是每有一个新任务、就开一个新线程执行。这种方式最大的缺点就是线程数不固定。为了避免服务器负载不稳定，采用固定线程数的方法，即启动固定数量的工作线程，一般是
+CPU
+核数，然后将任务添加到任务队列，工作现场不断主动取出任务队列的任务执行。</p>
+<p>关于任务队列，需要注意两点： 1.
+在多线程环境下任务队列的读写操作都应该考虑互斥锁； 2. 任务队列为空时 CPU
+不应该不断轮询耗费 CPU 资源；</p>
+<p>线程池定义如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">ThreadPool</span> &#123;<br> <span class="hljs-keyword">private</span>:<br>  std::vector&lt;std::thread&gt; threads;<br>  std::queue&lt;std::function&lt;<span class="hljs-type">void</span>()&gt;&gt; tasks;<br>  std::mutex tasks_mtx;<br>  std::condition_variable cv;<br>  <span class="hljs-type">bool</span> stop;<br><br> <span class="hljs-keyword">public</span>:<br>  <span class="hljs-built_in">ThreadPool</span>(<span class="hljs-type">int</span> size = <span class="hljs-number">10</span>);<br>  ~<span class="hljs-built_in">ThreadPool</span>();<br><br>  <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">add</span><span class="hljs-params">(std::function&lt;<span class="hljs-type">void</span>()&gt;)</span></span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>主要是线程池的初始化构造函数： <figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">ThreadPool::<span class="hljs-built_in">ThreadPool</span>(<span class="hljs-type">int</span> size) : <span class="hljs-built_in">stop</span>(<span class="hljs-literal">false</span>) &#123;<br>  <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; size; ++i) &#123;<br>    threads.<span class="hljs-built_in">emplace_back</span>(std::<span class="hljs-built_in">thread</span>([<span class="hljs-keyword">this</span>]() &#123;<br>      <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>        std::function&lt;<span class="hljs-built_in">void</span>()&gt; task;<br>        &#123;<br>          std::unique_lock&lt;std::mutex&gt; <span class="hljs-built_in">lock</span>(tasks_mtx);<br>          cv.<span class="hljs-built_in">wait</span>(lock, [<span class="hljs-keyword">this</span>]() &#123; <span class="hljs-keyword">return</span> stop || !tasks.<span class="hljs-built_in">empty</span>(); &#125;);<br>          <span class="hljs-keyword">if</span> (stop &amp;&amp; tasks.<span class="hljs-built_in">empty</span>()) <span class="hljs-keyword">return</span>;<br>          task = tasks.<span class="hljs-built_in">front</span>();<br>          tasks.<span class="hljs-built_in">pop</span>();<br>        &#125;;<br>        <span class="hljs-built_in">task</span>();<br>      &#125;<br>    &#125;));<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure></p>
+<p>需要添加任务时，只需要将任务添加到任务队列： <figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">ThreadPool::add</span><span class="hljs-params">(std::function&lt;<span class="hljs-type">void</span>()&gt; func)</span> </span>&#123;<br>  &#123;<br>    <span class="hljs-function">std::unique_lock&lt;std::mutex&gt; <span class="hljs-title">lock</span><span class="hljs-params">(tasks_mtx)</span></span>;<br>    <span class="hljs-keyword">if</span> (stop) &#123;<br>      <span class="hljs-keyword">throw</span> std::<span class="hljs-built_in">runtime_error</span>(<br>          <span class="hljs-string">&quot;ThreadPool already stop, can&#x27;t add task any more&quot;</span>);<br>    &#125;<br>    tasks.<span class="hljs-built_in">emplace</span>(func);<br>  &#125;<br>  cv.<span class="hljs-built_in">notify_one</span>();<br>&#125;<br></code></pre></td></tr></table></figure></p>
+<p>这样实现了一个最简单的线程池，当 <code>Channel</code>
+类有事需要处理时，将这个事件处理线程池，主线程 <code>EventLoop</code>
+就可以继续进行事件循环，而不在乎某个 socket fd 上的事件处理。</p>
+<p>这个版本的<a
+target="_blank" rel="noopener" href="https://github.com/qiancijun/light-cpp-web-server/tree/feature/10-threadpool">代码</a></p>
 <h1 id="附录">附录</h1>
 <h2 id="reactor">Reactor</h2>
 <p>如果要让服务器处理多个客户端，那么最直接的方式就是为每一条连接创建线程。创建进程也是可以的，原理是一样的，进程和线程的区别在于线程比较轻量一些，线程的创建和切换成本要小一些。处理完业务逻辑后，随着连接关闭后线程也要销毁了，不停的创建和销毁也会造成资源浪费，而且如果要连接几万条连接，创建几万个线程去应对也是不现实的。</p>
@@ -340,7 +421,7 @@ src="https://cheryl-picgo.oss-cn-hangzhou.aliyuncs.com/Pasted%20image%2020250227
 
     </div>
     <div class="toc-container">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#socket"><span class="toc-number">1.</span> <span class="toc-text">Socket</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">错误处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#read-write"><span class="toc-number">1.2.</span> <span class="toc-text">read &amp; write</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#epoll"><span class="toc-number">2.</span> <span class="toc-text">epoll</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#cpp-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1"><span class="toc-number">2.1.</span> <span class="toc-text">Cpp 面向对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#channel"><span class="toc-number">2.2.</span> <span class="toc-text">channel</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E9%A9%B1%E5%8A%A8"><span class="toc-number">2.3.</span> <span class="toc-text">事件驱动</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%99%84%E5%BD%95"><span class="toc-number">3.</span> <span class="toc-text">附录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#reactor"><span class="toc-number">3.1.</span> <span class="toc-text">Reactor</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#socket"><span class="toc-number">1.</span> <span class="toc-text">Socket</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">错误处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#read-write"><span class="toc-number">1.2.</span> <span class="toc-text">read &amp; write</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#epoll"><span class="toc-number">2.</span> <span class="toc-text">epoll</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#cpp-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1"><span class="toc-number">2.1.</span> <span class="toc-text">Cpp 面向对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#channel"><span class="toc-number">2.2.</span> <span class="toc-text">channel</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E9%A9%B1%E5%8A%A8"><span class="toc-number">2.3.</span> <span class="toc-text">事件驱动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#acceptor"><span class="toc-number">2.4.</span> <span class="toc-text">Acceptor</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tcp-%E8%BF%9E%E6%8E%A5"><span class="toc-number">2.5.</span> <span class="toc-text">tcp 连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#buffer"><span class="toc-number">2.6.</span> <span class="toc-text">Buffer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0"><span class="toc-number">2.7.</span> <span class="toc-text">线程池</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%99%84%E5%BD%95"><span class="toc-number">3.</span> <span class="toc-text">附录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#reactor"><span class="toc-number">3.1.</span> <span class="toc-text">Reactor</span></a></li></ol></li></ol>
     </div>
   </div>
   <footer class="article-footer">
