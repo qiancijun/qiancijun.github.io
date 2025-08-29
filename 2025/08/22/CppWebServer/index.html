@@ -114,7 +114,7 @@ https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustom
     <div class="content">
       <blockquote>
 <p>参考仓库 <a
-target="_blank" rel="noopener" href="https://github.com/yuesong-feng/30dayMakeCppServer">30dayMakeCppServer</a></p>
+target="_blank" rel="noopener" href="https://github.com/Wlgls/30daysCppWebServer">30dayMakeCppServer</a></p>
 </blockquote>
 <h1 id="socket">Socket</h1>
 <p>对于服务器而言，需要建立一个套接字，对外提供一个网络通信接口。对于
@@ -396,6 +396,20 @@ CPU
 就可以继续进行事件循环，而不在乎某个 socket fd 上的事件处理。</p>
 <p>这个版本的<a
 target="_blank" rel="noopener" href="https://github.com/qiancijun/light-cpp-web-server/tree/feature/10-threadpool">代码</a></p>
+<p>这个线程池只是为了满足需要构建出的最简单的线程池，存在很多问题。比如，由于任务队列的添加、取出都存在拷贝操作，线程池不会有太好的性能，正确的做法是使用右值移动、完美转发等阻止拷贝。另外线程池只能接受
+<code>std::function&lt;void()&gt;</code>
+类型的参数，所以函数参数需要事先使用
+<code>std::bind()</code>，并且无法得到返回值。</p>
+<p>为了解决这些问题，需要改变的是将任务添加到任务队列的 <code>add</code>
+函数。需要使用 <code>add</code>
+函数前不需要手动绑定参数，而是直接传递，并且可以得到任务的返回值。</p>
+<p>额外修复了之前版本的一个缺点，对于
+<code>Acceptor</code>，接受连接的处理时间较短、报文数据极小，并且一般不会有特别多的新连接在同一到达，所以
+<code>Acceptor</code> 没有必要采用 epoll ET
+模式，也没有必要用线程池。由于不会成为性能瓶颈，为了简单最好使用阻塞式
+socket。</p>
+<p>这个版本的<a
+target="_blank" rel="noopener" href="https://github.com/qiancijun/light-cpp-web-server/tree/feature/11-threadpool-update">代码</a></p>
 <h1 id="附录">附录</h1>
 <h2 id="reactor">Reactor</h2>
 <p>如果要让服务器处理多个客户端，那么最直接的方式就是为每一条连接创建线程。创建进程也是可以的，原理是一样的，进程和线程的区别在于线程比较轻量一些，线程的创建和切换成本要小一些。处理完业务逻辑后，随着连接关闭后线程也要销毁了，不停的创建和销毁也会造成资源浪费，而且如果要连接几万条连接，创建几万个线程去应对也是不现实的。</p>
