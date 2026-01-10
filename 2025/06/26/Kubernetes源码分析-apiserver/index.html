@@ -112,7 +112,17 @@ https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustom
   </div>
   <div class="article-entry">
     <div class="content">
-      <h1 id="apiserver">apiserver</h1>
+      <h1 id="名词解释">名词解释</h1>
+<p><strong>API Object</strong>：Kubernetes 内部管理的基本元素，是 K8S 在
+ETCD 中信息存储单元。例如 Deployment，Pod，Service，都是 API
+Object。代码内部常用 API 来表示它们。</p>
+<p><strong>API Group</strong>：一组 API Object
+组成的一个具有共有性质的对象集合。例如 apps group，由
+Deployment，ReplicaSet，StatefulSet 等等 API Object 组成。</p>
+<p><strong>Legacy API Object</strong>：在 K8S 项目初始阶段所引入的 API
+Object 没有显式定义在 API Group 下面，例如 Pod，Event，Node
+等等。在代码中有时也称他们为 core API object。</p>
+<h1 id="apiserver">apiserver</h1>
 <div class="citation cite-tip">
             <div class="title">
                 <img src="/images/tip.svg"></img>
@@ -137,11 +147,376 @@ https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustom
 <li>Misc flags：其他参数。</li>
 <li>Global flags：全局参数。</li>
 </ul>
-<p>kube-apiserver 提供了三种 HTTP Server</p>
+<h2 id="启动流程">启动流程</h2>
+<p>api-server 是控制平面的一个组件，对应启动的代码在
+<code>cmd/kube-apiserver/apiserver.go</code> 文件里。本质上是一个 cobra
+的 cli 应用程序，解析参数，配置 server 并启动。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// Run runs the specified APIServer.  This should never exit.</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Run</span><span class="hljs-params">(ctx context.Context, opts options.CompletedOptions)</span></span> <span class="hljs-type">error</span> &#123;<br>  <span class="hljs-comment">// To help debugging, immediately log version</span><br>  klog.Infof(<span class="hljs-string">&quot;Version: %+v&quot;</span>, utilversion.Get())<br><br>  klog.InfoS(<span class="hljs-string">&quot;Golang settings&quot;</span>, <span class="hljs-string">&quot;GOGC&quot;</span>, os.Getenv(<span class="hljs-string">&quot;GOGC&quot;</span>), <span class="hljs-string">&quot;GOMAXPROCS&quot;</span>, os.Getenv(<span class="hljs-string">&quot;GOMAXPROCS&quot;</span>), <span class="hljs-string">&quot;GOTRACEBACK&quot;</span>, os.Getenv(<span class="hljs-string">&quot;GOTRACEBACK&quot;</span>))<br><br>  config, err := NewConfig(opts)<br>  <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-keyword">return</span> err<br>  &#125;<br>  completed, err := config.Complete()<br>  <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-keyword">return</span> err<br>  &#125;<br>  server, err := CreateServerChain(completed)<br>  <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-keyword">return</span> err<br>  &#125;<br><br>  prepared, err := server.PrepareRun()<br>  <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-keyword">return</span> err<br>  &#125;<br><br>  <span class="hljs-keyword">return</span> prepared.Run(ctx)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>options 是提供给用户来进行自定义配置的，基于 options 可以构建出一个
+Config 来指定 server 的各种状态。config 构造完成之后，options
+就没有用处了，用 config 来构造 server，对应方法
+<code>CreateServerChain</code>。主要由四个组件，Aggregation
+Server、Master、Extension Server、Not Found
+Handler。构建过程是从右到左，请求流程是从左到右。</p>
+<ul>
+<li>Aggregation Server：负责转发请求到 Master 或 Custom API
+Server；</li>
+<li>Master：Kube API Server，负责 Build-in 的 API Object 相关处理；</li>
+<li>Extension Server：Customer Resource 的处理由它完成。包括 CR 和
+CRD；</li>
+<li>Not Found Handler：找不到对应的 API Object 返回；</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">CreateServerChain</span><span class="hljs-params">(config CompletedConfig)</span></span> (*aggregatorapiserver.APIAggregator, <span class="hljs-type">error</span>) &#123;<br>  notFoundHandler := notfoundhandler.New(config.KubeAPIs.ControlPlane.Generic.Serializer, genericapifilters.NoMuxAndDiscoveryIncompleteKey)<br>  apiExtensionsServer, err := config.ApiExtensions.New(genericapiserver.NewEmptyDelegateWithCustomHandler(notFoundHandler))<br>  <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>  &#125;<br>  crdAPIEnabled := config.ApiExtensions.GenericConfig.MergedResourceConfig.ResourceEnabled(apiextensionsv1.SchemeGroupVersion.WithResource(<span class="hljs-string">&quot;customresourcedefinitions&quot;</span>))<br><br>  kubeAPIServer, err := config.KubeAPIs.New(apiExtensionsServer.GenericAPIServer)<br>  <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>  &#125;<br><br>  <span class="hljs-comment">// aggregator comes last in the chain</span><br>  aggregatorServer, err := controlplaneapiserver.CreateAggregatorServer(config.Aggregator, kubeAPIServer.ControlPlane.GenericAPIServer, apiExtensionsServer.Informers.Apiextensions().V1().CustomResourceDefinitions(), crdAPIEnabled, apiVersionPriorities)<br>  <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-comment">// we don&#x27;t need special handling for innerStopCh because the aggregator server doesn&#x27;t create any go routines</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err<br>  &#125;<br><br>  <span class="hljs-keyword">return</span> aggregatorServer, <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="kubeapiserver">kubeAPIServer</h2>
+<p>kubeAPIServer 也就是 master server 来接受 RESTful 请求，构造处理一些
+API Object 资源。<code>config.KubeAPIs.New</code> 就是在构建
+kubeAPIServer，构建 <code>StorageProviders</code>，Install 对应的
+APIInfo。这里就区分 internal API 和 Legacy API，对应两种不同的
+<code>StorageProviders</code>，主要的职责是和 etcd
+进行数据交互，并且处理对应的 RESTful API 请求。对每一个 Provider
+都会生成一个 <code>APIGroupInfo</code>，最后 Install 整个
+APIGroupInfo。这部分的内容和 Generic Server
+有关，这里先大致叙述一下整个流程，不做详细描述。</p>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(0, 0)" id="tab-button-0-0">kubeAPIServer</button>
+        
+        <button onclick="showTab(0, 1)" id="tab-button-0-1">StorageProviders</button>
+        
+        <button onclick="showTab(0, 2)" id="tab-button-0-2">InstallAPIs</button>
+        </div>
+        <div class="tab-content tab-content-0" id="tab-0-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c CompletedConfig)</span></span> New(delegationTarget genericapiserver.DelegationTarget) (*Instance, <span class="hljs-type">error</span>) {
+	<span class="hljs-comment">// ...</span>
+	restStorageProviders, err := c.StorageProviders(client)
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err
+	}
+
+	<span class="hljs-keyword">if</span> err := s.ControlPlane.InstallAPIs(restStorageProviders...); err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err
+	}
+
+	<span class="hljs-comment">// ...</span>
+
+	<span class="hljs-keyword">return</span> s, <span class="hljs-literal">nil</span>
+}</pre>
+        </div>
+        <div class="tab-content tab-content-0" id="tab-0-1">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c CompletedConfig)</span></span> StorageProviders(client *kubernetes.Clientset) ([]controlplaneapiserver.RESTStorageProvider, <span class="hljs-type">error</span>) {
+	legacyRESTStorageProvider, err := corerest.New(corerest.Config{
+		GenericConfig: *c.ControlPlane.NewCoreGenericConfig(),
+		Proxy: corerest.ProxyConfig{
+			Transport:           c.ControlPlane.Extra.ProxyTransport,
+			KubeletClientConfig: c.Extra.KubeletClientConfig,
+		},
+		Services: corerest.ServicesConfig{
+			ClusterIPRange:          c.Extra.ServiceIPRange,
+			SecondaryClusterIPRange: c.Extra.SecondaryServiceIPRange,
+			NodePortRange:           c.Extra.ServiceNodePortRange,
+			IPRepairInterval:        c.Extra.RepairServicesInterval,
+		},
+	})
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, err
+	}
+
+	<span class="hljs-comment">// The order here is preserved in discovery.</span>
+	<span class="hljs-comment">// If resources with identical names exist in more than one of these groups (e.g. &quot;deployments.apps&quot;&quot; and &quot;deployments.extensions&quot;),</span>
+	<span class="hljs-comment">// the order of this list determines which group an unqualified resource name (e.g. &quot;deployments&quot;) should prefer.</span>
+	<span class="hljs-comment">// This priority order is used for local discovery, but it ends up aggregated in `k8s.io/kubernetes/cmd/kube-apiserver/app/aggregator.go</span>
+	<span class="hljs-comment">// with specific priorities.</span>
+	<span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> describe the priority all the way down in the RESTStorageProviders and plumb it back through the various discovery</span>
+	<span class="hljs-comment">// handlers that we have.</span>
+	<span class="hljs-keyword">return</span> []controlplaneapiserver.RESTStorageProvider{
+		legacyRESTStorageProvider,
+		apiserverinternalrest.StorageProvider{},
+		authenticationrest.RESTStorageProvider{Authenticator: c.ControlPlane.Generic.Authentication.Authenticator, APIAudiences: c.ControlPlane.Generic.Authentication.APIAudiences},
+		authorizationrest.RESTStorageProvider{Authorizer: c.ControlPlane.Generic.Authorization.Authorizer, RuleResolver: c.ControlPlane.Generic.RuleResolver},
+		autoscalingrest.RESTStorageProvider{},
+		batchrest.RESTStorageProvider{},
+		certificatesrest.RESTStorageProvider{},
+		coordinationrest.RESTStorageProvider{},
+		discoveryrest.StorageProvider{},
+		networkingrest.RESTStorageProvider{},
+		noderest.RESTStorageProvider{},
+		policyrest.RESTStorageProvider{},
+		rbacrest.RESTStorageProvider{Authorizer: c.ControlPlane.Generic.Authorization.Authorizer},
+		schedulingrest.RESTStorageProvider{},
+		storagerest.RESTStorageProvider{},
+		svmrest.RESTStorageProvider{},
+		flowcontrolrest.RESTStorageProvider{InformerFactory: c.ControlPlane.Generic.SharedInformerFactory},
+		<span class="hljs-comment">// keep apps after extensions so legacy clients resolve the extensions versions of shared resource names.</span>
+		<span class="hljs-comment">// See https://github.com/kubernetes/kubernetes/issues/42392</span>
+		appsrest.StorageProvider{},
+		admissionregistrationrest.RESTStorageProvider{Authorizer: c.ControlPlane.Generic.Authorization.Authorizer, DiscoveryClient: client.Discovery()},
+		eventsrest.RESTStorageProvider{TTL: c.ControlPlane.EventTTL},
+		resourcerest.RESTStorageProvider{NamespaceClient: client.CoreV1().Namespaces()},
+	}, <span class="hljs-literal">nil</span>
+}</pre>
+        </div>
+        <div class="tab-content tab-content-0" id="tab-0-2">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *Server)</span></span> InstallAPIs(restStorageProviders ...RESTStorageProvider) <span class="hljs-type">error</span> {
+	nonLegacy := []*genericapiserver.APIGroupInfo{}
+
+	<span class="hljs-comment">// used later in the loop to filter the served resource by those that have expired.</span>
+	resourceExpirationEvaluatorOpts := genericapiserver.ResourceExpirationEvaluatorOptions{
+		CurrentVersion:                          s.GenericAPIServer.EffectiveVersion.EmulationVersion(),
+		Prerelease:                              s.GenericAPIServer.EffectiveVersion.BinaryVersion().PreRelease(),
+		EmulationForwardCompatible:              s.GenericAPIServer.EmulationForwardCompatible,
+		RuntimeConfigEmulationForwardCompatible: s.GenericAPIServer.RuntimeConfigEmulationForwardCompatible,
+	}
+	resourceExpirationEvaluator, err := genericapiserver.NewResourceExpirationEvaluatorFromOptions(resourceExpirationEvaluatorOpts)
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> err
+	}
+
+	<span class="hljs-keyword">for</span> _, restStorageBuilder := <span class="hljs-keyword">range</span> restStorageProviders {
+		groupName := restStorageBuilder.GroupName()
+		apiGroupInfo, err := restStorageBuilder.NewRESTStorage(s.APIResourceConfigSource, s.RESTOptionsGetter)
+		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+			<span class="hljs-keyword">return</span> fmt.Errorf(<span class="hljs-string">&quot;problem initializing API group %q: %w&quot;</span>, groupName, err)
+		}
+		<span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(apiGroupInfo.VersionedResourcesStorageMap) == <span class="hljs-number">0</span> {
+			<span class="hljs-comment">// If we have no storage for any resource configured, this API group is effectively disabled.</span>
+			<span class="hljs-comment">// This can happen when an entire API group, version, or development-stage (alpha, beta, GA) is disabled.</span>
+			klog.Infof(<span class="hljs-string">&quot;API group %q is not enabled, skipping.&quot;</span>, groupName)
+			<span class="hljs-keyword">continue</span>
+		}
+
+		<span class="hljs-comment">// Remove resources that serving kinds that are removed or not introduced yet at the current version.</span>
+		<span class="hljs-comment">// We do this here so that we don&#x27;t accidentally serve versions without resources or openapi information that for kinds we don&#x27;t serve.</span>
+		<span class="hljs-comment">// This is a spot above the construction of individual storage handlers so that no sig accidentally forgets to check.</span>
+		err = resourceExpirationEvaluator.RemoveUnavailableKinds(groupName, apiGroupInfo.Scheme, apiGroupInfo.VersionedResourcesStorageMap, s.APIResourceConfigSource)
+		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+			<span class="hljs-keyword">return</span> err
+		}
+		<span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(apiGroupInfo.VersionedResourcesStorageMap) == <span class="hljs-number">0</span> {
+			klog.V(<span class="hljs-number">1</span>).Infof(<span class="hljs-string">&quot;Removing API group %v because it is time to stop serving it because it has no versions per APILifecycle.&quot;</span>, groupName)
+			<span class="hljs-keyword">continue</span>
+		}
+
+		klog.V(<span class="hljs-number">1</span>).Infof(<span class="hljs-string">&quot;Enabling API group %q.&quot;</span>, groupName)
+
+		<span class="hljs-keyword">if</span> postHookProvider, ok := restStorageBuilder.(genericapiserver.PostStartHookProvider); ok {
+			name, hook, err := postHookProvider.PostStartHook()
+			<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+				<span class="hljs-keyword">return</span> fmt.Errorf(<span class="hljs-string">&quot;error building PostStartHook: %w&quot;</span>, err)
+			}
+			s.GenericAPIServer.AddPostStartHookOrDie(name, hook)
+		}
+
+		<span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(groupName) == <span class="hljs-number">0</span> {
+			<span class="hljs-comment">// the legacy group for core APIs is special that it is installed into /api via this special install method.</span>
+			<span class="hljs-keyword">if</span> err := s.GenericAPIServer.InstallLegacyAPIGroup(genericapiserver.DefaultLegacyAPIPrefix, &amp;apiGroupInfo); err != <span class="hljs-literal">nil</span> {
+				<span class="hljs-keyword">return</span> fmt.Errorf(<span class="hljs-string">&quot;error in registering legacy API: %w&quot;</span>, err)
+			}
+		} <span class="hljs-keyword">else</span> {
+			<span class="hljs-comment">// everything else goes to /apis</span>
+			nonLegacy = <span class="hljs-built_in">append</span>(nonLegacy, &amp;apiGroupInfo)
+		}
+	}
+
+	<span class="hljs-keyword">if</span> err := s.GenericAPIServer.InstallAPIGroups(nonLegacy...); err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> fmt.Errorf(<span class="hljs-string">&quot;error in registering group versions: %w&quot;</span>, err)
+	}
+	<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+}</pre>
+        </div></div>
+<h2 id="scheme">scheme</h2>
+<p>schema 是 kubernetes 资源管理的核心数据结构。由以前文章我们了解到
+kubernetes 会将其管理的资源划分为 group/version/kind 的概念，scheme
+可以利用进行 GVK 进行一下操作：</p>
+<ul>
+<li>可以将资源在内部版本和其他版本中相互转化</li>
+<li>可以序列化和反序列化的过程中识别资源类型，创建资源对象，设置默认值等等。</li>
+</ul>
+<p>在 <code>server.go</code> 里没有看到 scheme 的构造，以及怎么把对应的
+API Object 信息填入 scheme 中。在 <code>server.go</code> 中有一句
+import：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">import</span> (<br>  <span class="hljs-comment">// ...</span><br>  <span class="hljs-string">&quot;k8s.io/kubernetes/pkg/controlplane&quot;</span><br>  <span class="hljs-comment">// ...</span><br>)<br></code></pre></td></tr></table></figure>
+<p>在 <code>pkg/controlplane/import_known_versions.go</code>
+中写了许多导包语句：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">import</span> (<br>  <span class="hljs-comment">// These imports are the API groups the API server will support.</span><br>  _ <span class="hljs-string">&quot;k8s.io/kubernetes/pkg/apis/admission/install&quot;</span><br>  _ <span class="hljs-string">&quot;k8s.io/kubernetes/pkg/apis/admissionregistration/install&quot;</span><br>  _ <span class="hljs-string">&quot;k8s.io/kubernetes/pkg/apis/apiserverinternal/install&quot;</span><br>  _ <span class="hljs-string">&quot;k8s.io/kubernetes/pkg/apis/apps/install&quot;</span><br>  _ <span class="hljs-string">&quot;k8s.io/kubernetes/pkg/apis/authentication/install&quot;</span><br>  _ <span class="hljs-string">&quot;k8s.io/kubernetes/pkg/apis/authorization/install&quot;</span><br>  _ <span class="hljs-string">&quot;k8s.io/kubernetes/pkg/apis/autoscaling/install&quot;</span><br>  _ <span class="hljs-string">&quot;k8s.io/kubernetes/pkg/apis/batch/install&quot;</span><br>  _ <span class="hljs-string">&quot;k8s.io/kubernetes/pkg/apis/certificates/install&quot;</span><br>  _ <span class="hljs-string">&quot;k8s.io/kubernetes/pkg/apis/coordination/install&quot;</span><br>  _ <span class="hljs-string">&quot;k8s.io/kubernetes/pkg/apis/core/install&quot;</span><br>  _ <span class="hljs-string">&quot;k8s.io/kubernetes/pkg/apis/discovery/install&quot;</span><br>  _ <span class="hljs-string">&quot;k8s.io/kubernetes/pkg/apis/events/install&quot;</span><br>  _ <span class="hljs-string">&quot;k8s.io/kubernetes/pkg/apis/extensions/install&quot;</span><br>  _ <span class="hljs-string">&quot;k8s.io/kubernetes/pkg/apis/flowcontrol/install&quot;</span><br>  _ <span class="hljs-string">&quot;k8s.io/kubernetes/pkg/apis/imagepolicy/install&quot;</span><br>  _ <span class="hljs-string">&quot;k8s.io/kubernetes/pkg/apis/networking/install&quot;</span><br>  _ <span class="hljs-string">&quot;k8s.io/kubernetes/pkg/apis/node/install&quot;</span><br>  _ <span class="hljs-string">&quot;k8s.io/kubernetes/pkg/apis/policy/install&quot;</span><br>  _ <span class="hljs-string">&quot;k8s.io/kubernetes/pkg/apis/rbac/install&quot;</span><br>  _ <span class="hljs-string">&quot;k8s.io/kubernetes/pkg/apis/resource/install&quot;</span><br>  _ <span class="hljs-string">&quot;k8s.io/kubernetes/pkg/apis/scheduling/install&quot;</span><br>  _ <span class="hljs-string">&quot;k8s.io/kubernetes/pkg/apis/storage/install&quot;</span><br>  _ <span class="hljs-string">&quot;k8s.io/kubernetes/pkg/apis/storagemigration/install&quot;</span><br>)<br></code></pre></td></tr></table></figure>
+<p>导入的都是对应 API Groups 的 install，比如 <code>core/install</code>
+就是 Legacy API Groups 的 install。选取 <code>apps/install</code>
+来看一下，install 的具体工作原理：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> install<br><br><span class="hljs-keyword">import</span> (<br>  <span class="hljs-string">&quot;k8s.io/apimachinery/pkg/runtime&quot;</span><br>  utilruntime <span class="hljs-string">&quot;k8s.io/apimachinery/pkg/util/runtime&quot;</span><br>  <span class="hljs-string">&quot;k8s.io/kubernetes/pkg/api/legacyscheme&quot;</span><br>  <span class="hljs-string">&quot;k8s.io/kubernetes/pkg/apis/apps&quot;</span><br>  <span class="hljs-string">&quot;k8s.io/kubernetes/pkg/apis/apps/v1&quot;</span><br>  <span class="hljs-string">&quot;k8s.io/kubernetes/pkg/apis/apps/v1beta1&quot;</span><br>  <span class="hljs-string">&quot;k8s.io/kubernetes/pkg/apis/apps/v1beta2&quot;</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">init</span><span class="hljs-params">()</span></span> &#123;<br>  Install(legacyscheme.Scheme)<br>&#125;<br><br><span class="hljs-comment">// Install registers the API group and adds types to a scheme</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Install</span><span class="hljs-params">(scheme *runtime.Scheme)</span></span> &#123;<br>  utilruntime.Must(apps.AddToScheme(scheme))<br>  utilruntime.Must(v1beta1.AddToScheme(scheme))<br>  utilruntime.Must(v1beta2.AddToScheme(scheme))<br>  utilruntime.Must(v1.AddToScheme(scheme))<br>  utilruntime.Must(scheme.SetVersionPriority(v1.SchemeGroupVersion, v1beta2.SchemeGroupVersion, v1beta1.SchemeGroupVersion))<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>显而易见，就是自动执行了 <code>Install</code>
+方法。<code>AddToScheme</code> 的作用就是把对应包下的所有 API Object
+全都加到 scheme 当中。<code>Must</code> 方法比较简单，做了一个 error
+的判断，如果发生了 error 就抛出一个 panic。</p>
+<p>到目前为止还没有解释过 Scheme 是什么。Scheme
+是一个结构体，内含处理内外部 Version 之间转换，GVK 和 Go Type
+之间转换的数据和方法。主要作用：</p>
+<ul>
+<li>GVK 和 Go Type 之间转换：Scheme 内部有两张 map，分别对应 gvk 到 type
+和 type 到 gvk；</li>
+<li>API Object 默认值：API Object 有许多属性，使用者在操作一个 Object
+时，不太可能给出所有属性值；另外在 Object 从一个 Version 转换到另一个
+Version 时也可能需要为不存在对应关系的字段赋值；</li>
+<li>内外部 Version 之间转换：所有外部 Version 都会被转化为内部
+Version，转换函数是记录在 scheme 内部；</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// staging/src/k8s.io/apimachinery/pkg/runtime/scheme.go</span><br><span class="hljs-keyword">type</span> Scheme <span class="hljs-keyword">struct</span> &#123;<br>  gvkToType <span class="hljs-keyword">map</span>[schema.GroupVersionKind]reflect.Type<br>  typeToGVK <span class="hljs-keyword">map</span>[reflect.Type][]schema.GroupVersionKind<br>  unversionedTypes <span class="hljs-keyword">map</span>[reflect.Type]schema.GroupVersionKind<br>  unversionedKinds <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]reflect.Type<br>  fieldLabelConversionFuncs <span class="hljs-keyword">map</span>[schema.GroupVersionKind]FieldLabelConversionFunc<br>  defaulterFuncs <span class="hljs-keyword">map</span>[reflect.Type]<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(<span class="hljs-keyword">interface</span>&#123;&#125;)</span></span><br>  validationFuncs <span class="hljs-keyword">map</span>[reflect.Type]<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(ctx context.Context, op operation.Operation, object, oldObject <span class="hljs-keyword">interface</span>&#123;&#125;)</span></span> field.ErrorList<br>  converter *conversion.Converter<br>  versionPriority <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>][]<span class="hljs-type">string</span><br>  observedVersions []schema.GroupVersion<br>  schemeName <span class="hljs-type">string</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>来看一下 Internal Version 是怎么注册的。之前说到
+<code>install.go</code> 文件用于执行每一个包下面的
+<code>AddToScheme</code> 方法，该方法被定义在每个包下面的
+<code>register.go</code> 文件下。以 apps 包为例：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> (<br>  <span class="hljs-comment">// SchemeBuilder stores functions to add things to a scheme.</span><br>  SchemeBuilder = runtime.NewSchemeBuilder(addKnownTypes)<br>  <span class="hljs-comment">// AddToScheme applies all stored functions t oa scheme.</span><br>  AddToScheme = SchemeBuilder.AddToScheme<br>)<br><br><span class="hljs-comment">// GroupName is the group name use in this package</span><br><span class="hljs-keyword">const</span> GroupName = <span class="hljs-string">&quot;apps&quot;</span><br><br><span class="hljs-comment">// SchemeGroupVersion is group version used to register these objects</span><br><span class="hljs-keyword">var</span> SchemeGroupVersion = schema.GroupVersion&#123;Group: GroupName, Version: runtime.APIVersionInternal&#125;<br><br><span class="hljs-comment">// Kind takes an unqualified kind and returns a Group qualified GroupKind</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Kind</span><span class="hljs-params">(kind <span class="hljs-type">string</span>)</span></span> schema.GroupKind &#123;<br>  <span class="hljs-keyword">return</span> SchemeGroupVersion.WithKind(kind).GroupKind()<br>&#125;<br><br><span class="hljs-comment">// Resource takes an unqualified resource and returns a Group qualified GroupResource</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Resource</span><span class="hljs-params">(resource <span class="hljs-type">string</span>)</span></span> schema.GroupResource &#123;<br>  <span class="hljs-keyword">return</span> SchemeGroupVersion.WithResource(resource).GroupResource()<br>&#125;<br><br><span class="hljs-comment">// Adds the list of known types to the given scheme.</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">addKnownTypes</span><span class="hljs-params">(scheme *runtime.Scheme)</span></span> <span class="hljs-type">error</span> &#123;<br>  <span class="hljs-comment">// TODO this will get cleaned up with the scheme types are fixed</span><br>  scheme.AddKnownTypes(SchemeGroupVersion,<br>    &amp;DaemonSet&#123;&#125;,<br>    &amp;DaemonSetList&#123;&#125;,<br>    &amp;Deployment&#123;&#125;,<br>    &amp;DeploymentList&#123;&#125;,<br>    &amp;DeploymentRollback&#123;&#125;,<br>    &amp;autoscaling.Scale&#123;&#125;,<br>    &amp;StatefulSet&#123;&#125;,<br>    &amp;StatefulSetList&#123;&#125;,<br>    &amp;ControllerRevision&#123;&#125;,<br>    &amp;ControllerRevisionList&#123;&#125;,<br>    &amp;ReplicaSet&#123;&#125;,<br>    &amp;ReplicaSetList&#123;&#125;,<br>  )<br>  <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>Scheme 的构造遵循了设计模式中的 Builder
+设计模式，<code>register</code> 本身的逻辑并不复杂。来看一下 external
+version 有什么不同。以 v1 包为例：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// staging/src/k8s.io/api/apps/v1/register.go</span><br><span class="hljs-keyword">const</span> GroupName = <span class="hljs-string">&quot;apps&quot;</span><br><br><span class="hljs-comment">// SchemeGroupVersion is group version used to register these objects</span><br><span class="hljs-keyword">var</span> SchemeGroupVersion = schema.GroupVersion&#123;Group: GroupName, Version: <span class="hljs-string">&quot;v1&quot;</span>&#125;<br><br><span class="hljs-comment">// Resource takes an unqualified resource and returns a Group qualified GroupResource</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Resource</span><span class="hljs-params">(resource <span class="hljs-type">string</span>)</span></span> schema.GroupResource &#123;<br>  <span class="hljs-keyword">return</span> SchemeGroupVersion.WithResource(resource).GroupResource()<br>&#125;<br><br><span class="hljs-keyword">var</span> (<br>  <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> move SchemeBuilder with zz_generated.deepcopy.go to k8s.io/api.</span><br>  <span class="hljs-comment">// localSchemeBuilder and AddToScheme will stay in k8s.io/kubernetes.</span><br>  SchemeBuilder      = runtime.NewSchemeBuilder(addKnownTypes)<br>  localSchemeBuilder = &amp;SchemeBuilder<br>  AddToScheme        = localSchemeBuilder.AddToScheme<br>)<br><br><span class="hljs-comment">// Adds the list of known types to the given scheme.</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">addKnownTypes</span><span class="hljs-params">(scheme *runtime.Scheme)</span></span> <span class="hljs-type">error</span> &#123;<br>  scheme.AddKnownTypes(SchemeGroupVersion,<br>    &amp;Deployment&#123;&#125;,<br>    &amp;DeploymentList&#123;&#125;,<br>    &amp;StatefulSet&#123;&#125;,<br>    &amp;StatefulSetList&#123;&#125;,<br>    &amp;DaemonSet&#123;&#125;,<br>    &amp;DaemonSetList&#123;&#125;,<br>    &amp;ReplicaSet&#123;&#125;,<br>    &amp;ReplicaSetList&#123;&#125;,<br>    &amp;ControllerRevision&#123;&#125;,<br>    &amp;ControllerRevisionList&#123;&#125;,<br>  )<br>  metav1.AddToGroupVersion(scheme, SchemeGroupVersion)<br>  <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这里注册的都是 API Object 的 Types，而我们说 Scheme 维护了内外部
+version 的转变函数，这部分在 <code>pkg/apis/app/v1/register.go</code>
+注册。也就是说 external version
+由两部分注册，一部分是转变函数，另一部分是 Types。</p>
+<p>整体逻辑看上去和 internal version
+没有太大区别，注意下在这个文件夹下有一个自动生成的文件
+<code>zz_generated.deepcopy.go</code>。每一个 external version
+都需要进行转换，转为成为 internal version 才可以被 k8s
+进行处理。那么不同版本的代码会有很多，每一个版本都需要做数据转换的逻辑。具体如何做代码的生成，在附录做具体的解读。</p>
+<h2 id="generic-server">Generic Server</h2>
+<p>Generic Server 在 api-server 中最基础的一个功能，就是提供暴露 http
+服务所需的基础设施。对外提供 restful 服务来操作 API Object。每个内部
+Server 都是构建在 Generic Server 之上，把自己的内容填入 Generic
+Server。每个 Generic Server 最重要的输出是 Director，本质上是一个 mux 和
+go container 的组合，所有的 http request 都是被这些 director
+处理的。</p>
+<p><img
+src="https://cheryl-picgo.oss-cn-hangzhou.aliyuncs.com/generic_server.png" /></p>
+<p>之前聊过所有的 Server 的新建都是从 Config 的 <code>New</code>
+方法出发，在这个方法里就对 GenericServer 做了初始化。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go">s := &amp;GenericAPIServer&#123;<br>  discoveryAddresses:             c.DiscoveryAddresses,<br>  LoopbackClientConfig:           c.LoopbackClientConfig,<br>  legacyAPIGroupPrefixes:         c.LegacyAPIGroupPrefixes,<br>  admissionControl:               c.AdmissionControl,<br>  Serializer:                     c.Serializer,<br>  AuditBackend:                   c.AuditBackend,<br>  Authorizer:                     c.Authorization.Authorizer,<br>  delegationTarget:               delegationTarget,<br>  EquivalentResourceRegistry:     c.EquivalentResourceRegistry,<br>  NonLongRunningRequestWaitGroup: c.NonLongRunningRequestWaitGroup,<br>  WatchRequestWaitGroup:          c.WatchRequestWaitGroup,<br>  Handler:                        apiServerHandler,<br>  UnprotectedDebugSocket:         debugSocket,<br><br>  listedPathProvider: apiServerHandler,<br><br>  minRequestTimeout:                   time.Duration(c.MinRequestTimeout) * time.Second,<br>  ShutdownTimeout:                     c.RequestTimeout,<br>  ShutdownDelayDuration:               c.ShutdownDelayDuration,<br>  ShutdownWatchTerminationGracePeriod: c.ShutdownWatchTerminationGracePeriod,<br>  SecureServingInfo:                   c.SecureServing,<br>  ExternalAddress:                     c.ExternalAddress,<br><br>  openAPIConfig:           c.OpenAPIConfig,<br>  openAPIV3Config:         c.OpenAPIV3Config,<br>  skipOpenAPIInstallation: c.SkipOpenAPIInstallation,<br><br>  postStartHooks:         <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]postStartHookEntry&#123;&#125;,<br>  preShutdownHooks:       <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]preShutdownHookEntry&#123;&#125;,<br>  disabledPostStartHooks: c.DisabledPostStartHooks,<br><br>  healthzRegistry:  healthCheckRegistry&#123;path: <span class="hljs-string">&quot;/healthz&quot;</span>, checks: c.HealthzChecks&#125;,<br>  livezRegistry:    healthCheckRegistry&#123;path: <span class="hljs-string">&quot;/livez&quot;</span>, checks: c.LivezChecks, clock: clock.RealClock&#123;&#125;&#125;,<br>  readyzRegistry:   healthCheckRegistry&#123;path: <span class="hljs-string">&quot;/readyz&quot;</span>, checks: c.ReadyzChecks&#125;,<br>  livezGracePeriod: c.LivezGracePeriod,<br><br>  DiscoveryGroupManager: discovery.NewRootAPIsHandler(c.DiscoveryAddresses, c.Serializer),<br><br>  maxRequestBodyBytes: c.MaxRequestBodyBytes,<br><br>  lifecycleSignals:       c.lifecycleSignals,<br>  ShutdownSendRetryAfter: c.ShutdownSendRetryAfter,<br><br>  APIServerID:           c.APIServerID,<br>  StorageReadinessHook:  NewStorageReadinessHook(c.StorageInitializationTimeout),<br>  StorageVersionManager: c.StorageVersionManager,<br><br>  EffectiveVersion:                        c.EffectiveVersion,<br>  EmulationForwardCompatible:              c.EmulationForwardCompatible,<br>  RuntimeConfigEmulationForwardCompatible: c.RuntimeConfigEmulationForwardCompatible,<br>  FeatureGate:                             c.FeatureGate,<br><br>  muxAndDiscoveryCompleteSignals: <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]&lt;-<span class="hljs-keyword">chan</span> <span class="hljs-keyword">struct</span>&#123;&#125;&#123;&#125;,<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>大部分都是从 Config 上做的 copy，有几个字段特别关注一下，一个是
+<code>apiServerHandler</code>，这是提供 RESTful 接口重要的成员。另一个是
+<code>postStartHooks</code> 和
+<code>preShutdownHooks</code>。GenericServer 提供 Http 服务的方式和
+go-rest 相同，构造 Mux、Container 来组装 director。用 director
+构造处理链，最后处理链实现 Http 的接口。</p>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(1, 0)" id="tab-button-1-0">NewAPIServerHandler</button>
+        
+        <button onclick="showTab(1, 1)" id="tab-button-1-1">ServeHttp</button>
+        </div>
+        <div class="tab-content tab-content-1" id="tab-1-0">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewAPIServerHandler</span><span class="hljs-params">(name <span class="hljs-type">string</span>, s runtime.NegotiatedSerializer, handlerChainBuilder HandlerChainBuilderFn, notFoundHandler http.Handler)</span></span> *APIServerHandler {
+	nonGoRestfulMux := mux.NewPathRecorderMux(name)
+	<span class="hljs-keyword">if</span> notFoundHandler != <span class="hljs-literal">nil</span> {
+		nonGoRestfulMux.NotFoundHandler(notFoundHandler)
+	}
+
+	gorestfulContainer := restful.NewContainer()
+	gorestfulContainer.Router(restful.CurlyRouter{}) <span class="hljs-comment">// e.g. for proxy/{kind}/{name}/{*}</span>
+	gorestfulContainer.RecoverHandler(<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(panicReason <span class="hljs-keyword">interface</span>{}, httpWriter http.ResponseWriter)</span></span> {
+		logStackOnRecover(s, panicReason, httpWriter)
+	})
+	gorestfulContainer.ServiceErrorHandler(<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(serviceErr restful.ServiceError, request *restful.Request, response *restful.Response)</span></span> {
+		serviceErrorHandler(s, serviceErr, request, response)
+	})
+
+	director := director{
+		name:               name,
+		goRestfulContainer: gorestfulContainer,
+		nonGoRestfulMux:    nonGoRestfulMux,
+	}
+
+	<span class="hljs-keyword">return</span> &amp;APIServerHandler{
+		FullHandlerChain:   handlerChainBuilder(director),
+		GoRestfulContainer: gorestfulContainer,
+		NonGoRestfulMux:    nonGoRestfulMux,
+		Director:           director,
+	}
+}</pre>
+        </div>
+        <div class="tab-content tab-content-1" id="tab-1-1">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(a *APIServerHandler)</span></span> ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	a.FullHandlerChain.ServeHTTP(w, r)
+}</pre>
+        </div></div>
+<p>在图中我们看到 APIServer
+是一条处理链，来看一下这条链路是怎么构建的。我们知道 apiServerHandler
+是通过这一行来实例化的。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go">apiServerHandler := NewAPIServerHandler(name, c.Serializer, handlerChainBuilder, delegationTarget.UnprotectedHandler())<br></code></pre></td></tr></table></figure>
+<p>其中 <code>delegationTarget</code> 就是 genericServer，就是
+<code>notFoundHandler</code>，当前 director
+无法处理了都会交给它，因此在装配的时候有这几行代码。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">if</span> notFoundHandler != <span class="hljs-literal">nil</span> &#123;<br>  nonGoRestfulMux.NotFoundHandler(notFoundHandler)<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="openapi">OpenAPI</h3>
+<div class="citation cite-tip">
+            <div class="title">
+                <img src="/images/tip.svg"></img>
+                Tip OpenAPI
+            </div>
+            <div class="content latex-container"><p>OpenAPI 规范（OAS）是一种通用的、和编程语言无关的 API
+描述规范，使人类和计算机都可以发现和理解服务的功能，而无需访问源代码、文档或针对接口进行嗅探。正确定义后，使用者可以使用最少的实现逻辑来理解远程服务并与之交互。</p>
+</div>
+        </div>
+<p>OpenAPI 是由 Swagger 发展而来的一个规范，一种形式化描述 Restful
+Service 的语言，便于消费者理解和使用一个 Service。通过 OpenAPI
+规范，可以描述一个服务：</p>
+<ul>
+<li>提供哪些 RESTful 服务；</li>
+<li>各服务接收的输入以及输出对象格式；</li>
+<li>支持的操作，如 post，get 等；</li>
+</ul>
+<p><code>swagger.json</code> 文件定义了 kubernetes 对外提供的 restful
+service，客户端可以按照规定来向 api server 发 http
+请求。该文件定义了绝大多数当前版本内建的 API Object，并且每个外部版本
+API Object 的组合拥有 swagger 中的一套定义。</p>
+<p>在 <code>hack/update-openapi-spec.sh</code> 中定义了
+<code>swagger.json</code> 如何生成。具体的 json 文件在
+<code>api/openapi-spec/swagger.json</code>。对于一个 API
+Object，会生成一些 Defination 给 API Service
+提供对外的服务，那这一步是如何自动生成的。</p>
+<p>在每一个 API Group 下都有一个 <code>doc.go</code>，例如
+<code>staging/src/k8s.io/api/apps/v1/doc.go</code>。会有一行注解来标志需不需要为该
+group 下的 API Object 生成 openapi 相关的内容。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// +k8s:openapi-gen=true</span><br><br><span class="hljs-keyword">package</span> v1<br></code></pre></td></tr></table></figure>
+<p>在 <code>types.go</code> 里会为每个 API Object 定义属性：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Deployment <span class="hljs-keyword">struct</span> &#123;<br>  metav1.TypeMeta <span class="hljs-string">`json:&quot;,inline&quot;`</span><br>  <span class="hljs-comment">// Standard object&#x27;s metadata.</span><br>  <span class="hljs-comment">// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata</span><br>  <span class="hljs-comment">// +optional</span><br>  metav1.ObjectMeta <span class="hljs-string">`json:&quot;metadata,omitempty&quot; protobuf:&quot;bytes,1,opt,name=metadata&quot;`</span><br><br>  <span class="hljs-comment">// Specification of the desired behavior of the Deployment.</span><br>  <span class="hljs-comment">// +optional</span><br>  Spec DeploymentSpec <span class="hljs-string">`json:&quot;spec,omitempty&quot; protobuf:&quot;bytes,2,opt,name=spec&quot;`</span><br><br>  <span class="hljs-comment">// Most recently observed status of the Deployment.</span><br>  <span class="hljs-comment">// +optional</span><br>  Status DeploymentStatus <span class="hljs-string">`json:&quot;status,omitempty&quot; protobuf:&quot;bytes,3,opt,name=status&quot;`</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>在 <code>pkg/generated/openapi/zz_generated.openai.go</code> 里生成
+openapi definition。在这个文件中可以找到所有内建的 API Object 的 OpenAPI
+definition，并且每个外部版本和 API Object 的组合会有一个
+Definition。这里的 key 和 <code>swagger.json</code> 中的 definition id
+有一对一映射关系。</p>
+<h3 id="api-object-装载">API Object 装载</h3>
+<p>当有了 API Object 的定义，generic server 需要提供各种 API Object 的
+RESTful 接口。例如我们在执行 <code>kubectl apply -f nginx.yaml</code>
+时，需要识别这是要部署一个 deployment。</p>
+<p><img
+src="https://cheryl-picgo.oss-cn-hangzhou.aliyuncs.com/api_resources_install.png" /></p>
+<p>最后 <code>Install</code> 的调用对象是
+<code>APIInstaller</code>，里面包含了许多信息，例如
+<code>Storage</code>、<code>Creater</code>、<code>Convertor</code>。</p>
+<p><code>registerResourceHandlers</code> 方法很长，约 900
+多行，这里大致叙述一下这个函数所作的工作：</p>
+<ol type="1">
+<li>获取被注册 object 的 group 与 version，确定是不是 subresource；</li>
+<li>确定其区不区分 namespace；</li>
+<li>根据传入的 storage
+对象实现的接口，确定支持的各种操作（verbs）；</li>
+<li>创建 ListOptions，CreateOptions，PatchOptions，UpdateOptions
+以及其他各种 Options；</li>
+<li>生成 apiResource 并返回；</li>
+<li>制作 actions lists，每个 resource 的每个 verb 一条记录；</li>
+<li>决定放入 etcd 时使用的 version；以及从 etcd 取出时可以转化为的
+version；</li>
+<li>生成 ResourceInfo 并返回；</li>
+<li>根据 Serializer 得出支持的 MediaTypes。从而设置 webservice 的
+response 中属性；</li>
+<li>把以上各个环节得到的信息，放入 reqScope 中；</li>
+<li>视情况去计算 reqScope 的 FieldManager 属性；</li>
+<li>逐个处理 Actions list 中的 action，基于 reqScope 等信息，为他们生成
+route 并注册到 webservice 中；</li>
+<li>更新 apiResource 并返回；</li>
+</ol>
+<p>详细的代码这里不再记录。</p>
+<h2 id="master-server">Master Server</h2>
 
     </div>
     <div class="toc-container">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#apiserver"><span class="toc-number">1.</span> <span class="toc-text">apiserver</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A"><span class="toc-number">1.</span> <span class="toc-text">名词解释</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#apiserver"><span class="toc-number">2.</span> <span class="toc-text">apiserver</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B"><span class="toc-number">2.1.</span> <span class="toc-text">启动流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#kubeapiserver"><span class="toc-number">2.2.</span> <span class="toc-text">kubeAPIServer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#scheme"><span class="toc-number">2.3.</span> <span class="toc-text">scheme</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#generic-server"><span class="toc-number">2.4.</span> <span class="toc-text">Generic Server</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#openapi"><span class="toc-number">2.4.1.</span> <span class="toc-text">OpenAPI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#api-object-%E8%A3%85%E8%BD%BD"><span class="toc-number">2.4.2.</span> <span class="toc-text">API Object 装载</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#master-server"><span class="toc-number">2.5.</span> <span class="toc-text">Master Server</span></a></li></ol></li></ol>
     </div>
   </div>
   <footer class="article-footer">

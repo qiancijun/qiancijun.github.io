@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+    
+      kube-proxy解析
+    
+</title>
+
+<link rel="icon" href="/images/favicon.ico">
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-calendar@2.3.4/dist/github-calendar.min.css">
+
+<link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/styles/github-dark-dimmed.min.css" rel="stylesheet">
+<!-- <link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark-reasonable.min.css" rel="stylesheet"> -->
+<link href="
+https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.css
+" rel="stylesheet">
+<link href="
+https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustomScrollbar.min.css
+" rel="stylesheet">
+<meta name="generator" content="Hexo 7.2.0"></head>
+<body>
+    <div class="main-container">
+        <div class="topbar">
+    <div class="btn-container">
+        <a href="/"><img class="btn-close" src="/images/close.svg" alt=""></a>
+        <a><img class="btn-minimize" src="/images/minimize.svg" alt=""></a>
+        <a><img class="btn-maximize" src="/images/maximize.svg" alt=""></a>
+    </div>
+    <div class="title">
+        <img src="/images/terminal.svg" alt="">
+        <span>cat Cheryl-Chun 淳老师 BLOG</span>
+    </div>
+</div>
+        <div class="nav-container">
+    <div class="posts">
+        <img src="/images/posts-list.svg" alt="">
+        <a href="/">Home</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+    <!-- <div class="tags">
+        <img src="/images/tag.svg" alt="">
+        <a href="/tag">Tag</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div> -->
+    <div>
+        <img src="/images/archive.svg" alt="">
+        <a href="/all-posts">Posts</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+    <!-- <div class="category">
+        <img src="/images/category.svg" alt="">
+        <a href="/category">Category</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div> -->
+    <div class="about">
+        <img src="/images/about.svg" alt="">
+        <a href="/about">About</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+</div>
+        <div class="main-content">
+            <article
+  id="post-kube-proxy解析"
+  class="article article-type-post"
+>
+  <div id="toc-show">
+    <img src="/images/toc.svg" alt="" />
+  </div>
+  
+  <h1 class="article-header">kube-proxy解析</h1>
+  
+  <div class="article-info">
+    <!-- <span>Document Attributes:</span> -->
+
+    <table>
+      <tr>
+        <td>
+            <img src="/images/time.svg" alt="">
+            Updated Time
+        </td>
+        <td>2025-12-15</td>
+      </tr>
+      <tr>
+        <td>
+            <img src="/images/category.svg" alt="">
+            Category
+        </td>
+        <td> <ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E4%BA%91%E8%AE%A1%E7%AE%97/">云计算</a></li></ul> </td>
+      </tr>
+      <tr>
+        <td>
+            <img src="/images/tag.svg" alt="">
+            Tags
+        </td>
+        <td>
+	<a class="tag-link" href="/tags/k8s/" rel="tag">k8s</a>
+
+</td>
+      </tr>
+    </table>
+  </div>
+  <div class="article-entry">
+    <div class="content">
+      <h1 id="iptables">iptables</h1>
+<h2 id="环境准备">环境准备</h2>
+<ul>
+<li>宿主机操作系统：Linux ubuntu 22.04.5</li>
+<li>启动三个 Docker 容器来模拟物理主机</li>
+</ul>
+<p>Docker 启动的应用程序为一个 Golang Http Server：</p>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(2, 0)" id="tab-button-2-0">server</button>
+        
+        <button onclick="showTab(2, 1)" id="tab-button-2-1">Dockerfile</button>
+        </div>
+        <div class="tab-content tab-content-2" id="tab-2-0">
+            <pre><span class="hljs-keyword">var</span> (
+	port *<span class="hljs-type">int</span> = flag.Int(<span class="hljs-string">&quot;port&quot;</span>, <span class="hljs-number">8080</span>, <span class="hljs-string">&quot;&quot;</span>)
+)
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	flag.Parse()
+
+	mux := http.NewServeMux()
+	mux.HandleFunc(<span class="hljs-string">&quot;/hello&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> {
+		w.Write([]<span class="hljs-type">byte</span>(fmt.Sprintf(<span class="hljs-string">&quot;hello wolrd, i&#x27;m %d&quot;</span>, *port)))
+	})
+
+	mux.HandleFunc(<span class="hljs-string">&quot;/index&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> {
+		w.Write([]<span class="hljs-type">byte</span>(<span class="hljs-string">&quot;&lt;h1&gt;Hello World&lt;/h1&gt;&quot;</span>))
+	})
+
+	l, _ := net.Listen(<span class="hljs-string">&quot;tcp&quot;</span>, fmt.Sprintf(<span class="hljs-string">&quot;:%d&quot;</span>, *port))
+	http.Serve(l, mux)
+}</pre>
+        </div>
+        <div class="tab-content tab-content-2" id="tab-2-1">
+            <pre><span class="hljs-comment"># 使用官方 Go 镜像作为构建阶段</span>
+<span class="hljs-keyword">FROM</span> golang:<span class="hljs-number">1.24</span>-alpine AS builder
+
+<span class="hljs-comment"># 设置工作目录</span>
+<span class="hljs-keyword">WORKDIR</span><span class="language-bash"> /app</span>
+
+<span class="hljs-comment"># 复制源代码</span>
+<span class="hljs-keyword">COPY</span><span class="language-bash"> . .</span>
+
+<span class="hljs-comment"># 构建应用程序</span>
+<span class="hljs-keyword">RUN</span><span class="language-bash"> go build -o main .</span>
+
+<span class="hljs-comment"># 使用轻量级 Alpine 镜像作为运行阶段</span>
+<span class="hljs-keyword">FROM</span> alpine:latest
+
+<span class="hljs-comment"># 创建非 root 用户运行应用</span>
+<span class="hljs-keyword">RUN</span><span class="language-bash"> addgroup -S appgroup &amp;&amp; adduser -S appuser -G appgroup</span>
+
+<span class="hljs-comment"># 设置工作目录</span>
+<span class="hljs-keyword">WORKDIR</span><span class="language-bash"> /app</span>
+
+<span class="hljs-comment"># 从构建阶段复制可执行文件</span>
+<span class="hljs-keyword">COPY</span><span class="language-bash"> --from=builder /app/main .</span>
+
+<span class="hljs-comment"># 设置非 root 用户</span>
+<span class="hljs-keyword">USER</span> appuser
+
+<span class="hljs-comment"># 暴露端口（与代码中的默认端口 8080 对应）</span>
+<span class="hljs-keyword">EXPOSE</span> <span class="hljs-number">8080</span>
+
+<span class="hljs-comment"># 运行应用程序</span>
+<span class="hljs-keyword">CMD</span><span class="language-bash"> [<span class="hljs-string">&quot;./main&quot;</span>]</span></pre>
+        </div></div>
+<p>启动命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">docker run -d -p 8001:8080 --name simpleserver1 simpleserver<br>docker run -d -p 8002:8080 --name simpleserver2 simpleserver<br>docker run -d -p 8003:8080 --name simpleserver3 simpleserver<br></code></pre></td></tr></table></figure>
+<p>测试连通性：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">curl localhost:8001/index<br>&lt;h1&gt;Hello World&lt;/h1&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="netfilter">netfilter</h2>
+<p>iptables 是运行在用户空间的软件，实际上真正工作是内核当中的 netfilter
+模块。netfilter 专门管理网络数据包的处理和转发。</p>
+<p><img
+src="https://cheryl-picgo.oss-cn-hangzhou.aliyuncs.com/0_5zAvmOh4Lo-1y0g4.webp" /></p>
+<p>netfilter
+中有三个重要的概念：表（table）、链（chain）和规则（rule）。表指的是不同类型的数据包处理流程，如
+filter 表表示进行数据包过滤，而 nat
+表针对连接进行地址转换操作。每个表中又可以存在多个<strong>链</strong>，系统按照预订的规则将数据包通过某个内置链，例如将从本机发出的数据通过
+<code>OUTPUT</code>
+链。在链中可以存在若干<strong>规则</strong>，这些规则会被逐一进行匹配，如果匹配，可以执行相应的动作，如修改数据包，或者跳转。从图中可以看出
+netfilter 有四种表：raw、nat、filter、mangle。</p>
+<p>filter
+表是默认的表，如果不指明表则使用此表。其通常用于过滤数据包。其中的内置链包括：</p>
+<ul>
+<li>INPUT，输入链。发往本机的数据包通过此链。</li>
+<li>OUTPUT，输出链。从本机发出的数据包通过此链。</li>
+<li>FORWARD，转发链。本机转发的数据包通过此链。</li>
+</ul>
+<p>nat 表用于地址转换操作。其中的内置链包括：</p>
+<ul>
+<li>PREROUTING，路由前链，在处理路由规则前通过此链，通常用于目的地址转换（DNAT）。</li>
+<li>POSTROUTING，路由后链，完成路由规则后通过此链，通常用于源地址转换（SNAT）。</li>
+<li>OUTPUT，输出链，类似 PREROUTING，但是处理本机发出的数据包。</li>
+</ul>
+<p>当网络协议栈收到了一个网络包，首先经过 PreRouting 链的 nat
+表，在这里会做 DNAT(Destination NAT)。之后会判断目的 ip
+地址是不是本机，这里的本机指的是本机的任意 IP 地址，不仅仅是
+localhost。如果是的话送入 Input 链，做 Local Precessing。</p>
+<p>如果不是本机，也就是说数据包只是经过了该设备，最终还是要交给某一个
+interface 来传递出去。那么就需要经过 Forward 和 PostRouting 链。在
+PostRouting 的 nat 表可能会做 SNAT(Source
+NAT)，变更数据包的源地址。其中有两种改写方式，SNAT 将包的 source address
+修改为固定的 IP address，MASQUERADE 将包的 source address
+修改为发送出去网络设备的 IP address。</p>
+<p>如果一个包是本机产生的（Locally-generated Packet），会先进行 routing
+decision，决定走哪条路由，再交给 Output 链。在经过 Output 链，进入
+PostRouting 之前，还会进行一次 re-route 的检查，因为 Output 的 nat
+表可能会做 DNAT，所以需要重新再计算一次路由。</p>
+<h2 id="命令">命令</h2>
+<p>安装： <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">apt install iptables<br></code></pre></td></tr></table></figure></p>
+<p>查看本机 iptables 配置： <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># -v 是完整显示</span><br>iptables -L -v<br></code></pre></td></tr></table></figure></p>
+<h2 id="docker-网络模型分析">Docker 网络模型分析</h2>
+<p>通过 <code>ifconfig</code> 指令可以看到 docker 默认创建了一张虚拟网卡
+<code>docker0</code>，是 Docker 默认的 bridge 网络接口。可以把 bridge
+当作是一个二层的交换机，负责数据包的传递。而接在交换机上的是网线，联通的两个网络设备，这里用的是
+veth 来连接。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">docker0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500<br>        inet 172.17.0.1  netmask 255.255.0.0  broadcast 172.17.255.255<br>        inet6 fe80::a8ee:bff:fe3b:754b  prefixlen 64  scopeid 0x20&lt;link&gt;<br>        ether aa:ee:0b:3b:75:4b  txqueuelen 0  (Ethernet)<br>        RX packets 13  bytes 364 (364.0 B)<br>        RX errors 0  dropped 0  overruns 0  frame 0<br>        TX packets 5  bytes 550 (550.0 B)<br>        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0<br></code></pre></td></tr></table></figure>
+<p><img
+src="https://cheryl-picgo.oss-cn-hangzhou.aliyuncs.com/docker0.png" /></p>
+<p>在环境准备中，我们启动了三个容器，那么对应的网桥上一个连接三个
+veth，可以通过 <code>brctl</code> 工具来查看：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">&gt; brctl show<br>bridge name  bridge <span class="hljs-built_in">id</span>		STP enabled	interfaces<br>docker0    8000.aaee0b3b754b	no		veth09b65e0<br>                          veth36c276d<br>                          vethfb4a123<br></code></pre></td></tr></table></figure>
+<p>通过容器的 Pid 来查看容器所对应的 ip 地址： <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ docker inspect 701f | grep Pid<br>$ nsenter -t 227400 -n ip addr<br>1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000<br>    <span class="hljs-built_in">link</span>/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00<br>    inet 127.0.0.1/8 scope host lo<br>       valid_lft forever preferred_lft forever<br>    inet6 ::1/128 scope host <br>       valid_lft forever preferred_lft forever<br>2: eth0@if10: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP group default <br>    <span class="hljs-built_in">link</span>/ether f6:76:82:03:3c:11 brd ff:ff:ff:ff:ff:ff link-netnsid 0<br>    inet 172.17.0.4/16 brd 172.17.255.255 scope global eth0<br>       valid_lft forever preferred_lft forever<br></code></pre></td></tr></table></figure></p>
+<p>可以看到当前的容器的 ip 是 <code>172.17.0.4</code>，而绑定的 veth 是
+if10，对应的是第 10 个索引的 veth，下一步是查看一下对应的 if10 是哪一个
+veth pair： <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ ip <span class="hljs-built_in">link</span> show<br>1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000<br>    <span class="hljs-built_in">link</span>/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00<br>2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc fq_codel state UP mode DEFAULT group default qlen 1000<br>    <span class="hljs-built_in">link</span>/ether 00:16:3e:41:3b:72 brd ff:ff:ff:ff:ff:ff<br>    altname enp0s5<br>    altname ens5<br>3: docker0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP mode DEFAULT group default <br>    <span class="hljs-built_in">link</span>/ether aa:ee:0b:3b:75:4b brd ff:ff:ff:ff:ff:ff<br>8: vethfb4a123@if2: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue master docker0 state UP mode DEFAULT group default <br>    <span class="hljs-built_in">link</span>/ether d6:83:3c:c4:92:ea brd ff:ff:ff:ff:ff:ff link-netnsid 0<br>9: veth36c276d@if2: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue master docker0 state UP mode DEFAULT group default <br>    <span class="hljs-built_in">link</span>/ether ae:4e:3c:6b:41:55 brd ff:ff:ff:ff:ff:ff link-netnsid 1<br>10: veth09b65e0@if2: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue master docker0 state UP mode DEFAULT group default <br>    <span class="hljs-built_in">link</span>/ether 72:a3:1a:06:1e:87 brd ff:ff:ff:ff:ff:ff link-netnsid 2<br></code></pre></td></tr></table></figure></p>
+<p>那么再启动了三个容器之后，docker 对 iptables
+的规则也做了相应的添加和修改。用指令去查看 netfilter 中 nat
+表的内容：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ iptables -t nat -L<br>Chain PREROUTING (policy ACCEPT)<br>target     prot opt <span class="hljs-built_in">source</span>               destination         <br>DOCKER     all  --  anywhere             anywhere             ADDRTYPE match dst-type LOCAL<br><br>Chain INPUT (policy ACCEPT)<br>target     prot opt <span class="hljs-built_in">source</span>               destination         <br><br>Chain OUTPUT (policy ACCEPT)<br>target     prot opt <span class="hljs-built_in">source</span>               destination         <br>DOCKER     all  --  anywhere            !localhost/8          ADDRTYPE match dst-type LOCAL<br><br>Chain POSTROUTING (policy ACCEPT)<br>target     prot opt <span class="hljs-built_in">source</span>               destination         <br>MASQUERADE  all  --  172.17.0.0/16        anywhere            <br><br>Chain DOCKER (2 references)<br>target     prot opt <span class="hljs-built_in">source</span>               destination         <br>DNAT       tcp  --  anywhere             anywhere             tcp dpt:8003 to:172.17.0.2:8080<br>DNAT       tcp  --  anywhere             anywhere             tcp dpt:8002 to:172.17.0.3:8080<br>DNAT       tcp  --  anywhere             anywhere             tcp dpt:8001 to:172.17.0.4:8080<br></code></pre></td></tr></table></figure>
+<p>一个网络包发送到该主机上，首先要经过 PreRouting 链，根据 nat
+表中的内容，决定是不是要做 DNAT。那么此时会去 <code>DOCKER</code>
+链去匹配，可以看到这里有三条匹配规则。</p>
+<ul>
+<li>如果是 tcp 协议，且目的端口是 8003 则转发到
+<code>172.17.0.2:8080</code></li>
+<li>如果是 tcp 协议，且目的端口是 8002 则转发到
+<code>172.17.0.3:8080</code></li>
+<li>如果是 tcp 协议，且目的端口是 8001 则转发到
+<code>172.17.0.4:8080</code></li>
+</ul>
+<p>接下来通过网络抓包的方式，来查看 iptables 在当中起了哪些作用。在
+veth09b65e0 上进行 tcpdump 抓包：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ tcpdump -i veth09b65e0 -nn<br></code></pre></td></tr></table></figure>
+<p>接下来在宿主机上发送一个 http 请求： <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ curl 外网IP:8003/index<br></code></pre></td></tr></table></figure></p>
+<p>观察抓包结果： <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">tcpdump: verbose output suppressed, use -v[v]... <span class="hljs-keyword">for</span> full protocol decode<br>listening on veth09b65e0, link-type EN10MB (Ethernet), snapshot length 262144 bytes<br>13:20:07.776304 ARP, Request who-has 172.17.0.4 tell 172.17.0.1, length 28<br>13:20:07.776340 ARP, Reply 172.17.0.4 is-at f6:76:82:03:3c:11, length 28<br>13:20:07.776360 IP 172.17.0.1.45712 &gt; 172.17.0.4.8080: Flags [S], <span class="hljs-built_in">seq</span> 1479224415, win 64240, options [mss 1460,sackOK,TS val 3719423896 ecr 0,nop,wscale 7], length 0<br>13:20:07.776405 IP 172.17.0.4.8080 &gt; 172.17.0.1.45712: Flags [S.], <span class="hljs-built_in">seq</span> 948774028, ack 1479224416, win 65160, options [mss 1460,sackOK,TS val 2052977918 ecr 3719423896,nop,wscale 7], length 0<br>13:20:07.776432 IP 172.17.0.1.45712 &gt; 172.17.0.4.8080: Flags [.], ack 1, win 502, options [nop,nop,TS val 3719423896 ecr 2052977918], length 0<br>13:20:07.777661 IP 172.17.0.1.45712 &gt; 172.17.0.4.8080: Flags [P.], <span class="hljs-built_in">seq</span> 1:84, ack 1, win 502, options [nop,nop,TS val 3719423897 ecr 2052977918], length 83: HTTP: GET /index HTTP/1.1<br>13:20:07.777710 IP 172.17.0.4.8080 &gt; 172.17.0.1.45712: Flags [.], ack 84, win 509, options [nop,nop,TS val 2052977919 ecr 3719423897], length 0<br>13:20:07.778127 IP 172.17.0.4.8080 &gt; 172.17.0.1.45712: Flags [P.], <span class="hljs-built_in">seq</span> 1:137, ack 84, win 509, options [nop,nop,TS val 2052977919 ecr 3719423897], length 136: HTTP: HTTP/1.1 200 OK<br>13:20:07.778177 IP 172.17.0.1.45712 &gt; 172.17.0.4.8080: Flags [.], ack 137, win 501, options [nop,nop,TS val 3719423897 ecr 2052977919], length 0<br>13:20:07.778741 IP 172.17.0.1.45712 &gt; 172.17.0.4.8080: Flags [F.], <span class="hljs-built_in">seq</span> 84, ack 137, win 501, options [nop,nop,TS val 3719423898 ecr 2052977919], length 0<br>13:20:07.778867 IP 172.17.0.4.8080 &gt; 172.17.0.1.45712: Flags [F.], <span class="hljs-built_in">seq</span> 137, ack 85, win 509, options [nop,nop,TS val 2052977920 ecr 3719423898], length 0<br>13:20:07.778897 IP 172.17.0.1.45712 &gt; 172.17.0.4.8080: Flags [.], ack 138, win 501, options [nop,nop,TS val 3719423898 ecr 2052977920], length 0<br></code></pre></td></tr></table></figure></p>
+<p>从中可以看出，首先收到了一个 ARP 的请求，询问谁是
+<code>172.17.0.4</code>，arp
+是一个<strong>二层</strong>的协议，说明这是网桥在向局域网发起的询问。那么本机就是
+arp 所要寻找的网络设备，回复一个 arp 响应给网桥（172.17.0.1 就是
+docker0）。后续三行是一个 TCP 的三次握手的过程。后续的过程则是 HTTP
+的数据发送。这里还不能看出 netfilter 是怎么做过滤转发的。</p>
+<p>开启 iptables 的 debug 日志，具体的脚本在附录中，查看 netfilter
+是怎么工作的。然后使用 <code>dmesg</code> 来查看 kernel 的日志。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">[166764.062426] BEFORE-DNAT-8001: IN=eth0 OUT= MAC=00:16:3e:41:3b:72:ee:ff:ff:ff:ff:ff:08:00 SRC=222.204.223.223 DST=172.18.72.188 LEN=64 TOS=0x14 PREC=0x00 TTL=47 ID=0 DF PROTO=TCP SPT=50524 DPT=8001 WINDOW=65535 RES=0x00 SYN URGP=0<br>[166764.062464] AFTER-DNAT-POST-8080: IN=eth0 OUT=docker0 MAC=00:16:3e:41:3b:72:ee:ff:ff:ff:ff:ff:08:00 SRC=222.204.223.223 DST=172.17.0.4 LEN=64 TOS=0x14 PREC=0x00 TTL=46 ID=0 DF PROTO=TCP SPT=50524 DPT=8080 WINDOW=65535 RES=0x00 SYN URGP=0<br></code></pre></td></tr></table></figure>
+<p>我们从外部访问接口，可以看到经过 NAT 之后 <code>IN</code></p>
+<h1 id="ipvs">IPVS</h1>
+<p>平时更多听说的可能是叫 LVS，Linux Virtual Server，LVS
+是一个项目，是使用 Linux
+提供负载均衡的一种方案，而真正提供负载均衡功能的是 Linux
+下的各种组件，其中 IPVS 就是 LVS 提供四层负载的一个工具。IPVS 与
+Netfilter 一样，都是工作在内核态，且 IPVS 是基于 Netfilter
+框架实现的，其可以在数据包到达四层协议栈时对数据包进行处理。</p>
+<p><img
+src="https://cheryl-picgo.oss-cn-hangzhou.aliyuncs.com/ipvs.png" /></p>
+<p>ipvs 不会做 DNAT，director 收到一个包后没有做
+DNAT，而是直接将目标地址是虚 IP
+的包直接发了出去。那么如何保证这个这个目标地址是虚 IP
+的包能够被后面的真实 server 所接收。director 是通过修改包的 MAC
+地址实现的。为了知道某一个 server 的 MAC
+地址，那么就需要在局域网内广播发送 arp 请求。<strong>因此 director
+和真实 server 必须在同一个局域网内</strong>。另一个问题是，真实 Server
+收到一个目的 IP 是一个虚 IP 的包，想要处理这个包，那么自身也要有这个虚
+IP。但是如果一旦设置了这个虚 IP，router 在广播找这个虚 IP 时，对应的
+server 不能够回答，否则 director
+的负载均衡机制就失效了。因此我们可以在真实 server
+的本地回环网卡绑定一个虚 IP，或者是新建一个 dummy
+网卡。回复包的时候直接把 client 的 IP 作为目的 IP，这样通过 router
+进行路由，不用 director 做转交。</p>
+<p>还是用三个容器来模拟环境： <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ docker ps<br>CONTAINER ID   IMAGE          COMMAND    CREATED      STATUS      PORTS                                         NAMES<br>701fdfc1bf83   simpleserver   <span class="hljs-string">&quot;./main&quot;</span>   7 days ago   Up 5 days   0.0.0.0:8003-&gt;8080/tcp, [::]:8003-&gt;8080/tcp   simpleserver3<br>f8b056645289   simpleserver   <span class="hljs-string">&quot;./main&quot;</span>   7 days ago   Up 5 days   0.0.0.0:8002-&gt;8080/tcp, [::]:8002-&gt;8080/tcp   simpleserver2<br>af5f7c352bf5   simpleserver   <span class="hljs-string">&quot;./main&quot;</span>   7 days ago   Up 5 days   0.0.0.0:8001-&gt;8080/tcp, [::]:8001-&gt;8080/tcp   simpleserver1<br></code></pre></td></tr></table></figure></p>
+<p>先查一下所有容器的 ip 地址： <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ docker inspect -f <span class="hljs-string">&#x27;&#123;&#123;.Name&#125;&#125; - &#123;&#123;range .NetworkSettings.Networks&#125;&#125;&#123;&#123;.IPAddress&#125;&#125;&#123;&#123;end&#125;&#125;&#x27;</span> $(docker ps -aq)<br>/simpleserver3 - 172.17.0.2<br>/simpleserver2 - 172.17.0.3<br>/simpleserver1 - 172.17.0.4<br></code></pre></td></tr></table></figure></p>
+<p>创建一个虚 IP，并且添加一个 server 进去看看效果： <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">ipvsadm -A -t 20.20.0.1:8080 -s rr<br></code></pre></td></tr></table></figure> -
+<code>-A</code>：Add（添加），表示添加一个新的虚拟服务器。 -
+<code>-t</code>：指定 TCP 协议的服务 -
+<code>20.20.0.1:8080</code>：虚拟服务器的监听地址和端口 -
+<code>-s</code>：指定调度算法（scheduler）。<code>rr</code>：Round
+Robin（轮询）调度算法</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">ipvsadm -a -t 20.20.0.1:8080 -r 172.17.0.4:8080 -g<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>-r 172.17.0.4:8080</code>：指定真实服务器（Real Server）</li>
+<li><code>-g</code>：指定模式为 DR</li>
+</ul>
+<p>此时如果我们用虚 IP
+去访问服务是访问不通的。重新加入一台机器，并对网卡进行抓包，观察一下出现了什么问题：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">ipvsadm -a -t 20.20.0.1:8080 -r 172.17.0.3:8080 -g<br>docker inspect simpleserver2 | grep Pid<br>nsenter -t Pid -n tcpdump -i eth0<br></code></pre></td></tr></table></figure>
+<p>抓包结果如下： <figure class="highlight text"><table><tr><td class="code"><pre><code class="hljs text">23:30:51.993930 ARP, Request who-has iZuf6798j07zw8kchcz3mvZ tell _gateway, length 28<br>23:30:51.993944 ARP, Reply iZuf6798j07zw8kchcz3mvZ is-at 86:9e:b9:b7:87:ec (oui Unknown), length 28<br>23:30:51.993959 IP 172.18.72.188.45474 &gt; 20.20.0.1.http-alt: Flags [S], seq 1016242174, win 64240, options [mss 1460,sackOK,TS val 2763844370 ecr 0,nop,wscale 7], length 0<br>23:30:51.993973 IP iZuf6798j07zw8kchcz3mvZ &gt; 172.18.72.188: ICMP redirect 20.20.0.1 to host _gateway, length 68<br>23:30:51.993974 IP 172.18.72.188.45474 &gt; 20.20.0.1.http-alt: Flags [S], seq 1016242174, win 64240, options [mss 1460,sackOK,TS val 2763844370 ecr 0,nop,wscale 7], length 0<br>23:30:53.011882 IP 172.18.72.188.45474 &gt; 20.20.0.1.http-alt: Flags [S], seq 1016242174, win 64240, options [mss 1460,sackOK,TS val 2763845388 ecr 0,nop,wscale 7], length 0<br>23:30:53.011918 IP iZuf6798j07zw8kchcz3mvZ &gt; 172.18.72.188: ICMP redirect 20.20.0.1 to host _gateway, length 68<br></code></pre></td></tr></table></figure></p>
+<p>会看到目的 IP 地址还是一个虚 IP 地址，这是因为 DR 模式下没有做
+DNAT，所以容器没有办法处理这个包，因为容器无法识别这个虚
+IP。我们可以手动把这个虚 IP 加到 lo 网卡上（所有节点）：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">nsenter -t 1947 -n ip addr add 20.20.0.1 dev lo<br></code></pre></td></tr></table></figure>
+<p>此时在做对应的访问就能成功了： <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ curl 20.20.0.1:8080/index<br>&lt;h1&gt;Hello World&lt;/h1&gt;root<br></code></pre></td></tr></table></figure></p>
+<p>DR 模式比较严苛，要求 director 和 realserver
+要处于同一个局域网之下。除此之外 ipvs 还有其他两种转发模式：</p>
+<ul>
+<li>NAT模式（Network Address Translation）</li>
+<li>IP隧道（IP tunneling）</li>
+</ul>
+<p>从性能上来看 DR &gt; NAT &gt; IP隧道。</p>
+<p>IPVS 常用的调度算法为：</p>
+<ul>
+<li>轮询（Round
+Robin）：IPVS认为集群内每台RS都是相同的，会轮流进行调度分发。从数据统计上看，RR模式是调度最均衡的。</li>
+<li>加权轮询（Weighted Round
+Robin）：IPVS会根据RS上配置的权重，将消息按权重比分发到不同的RS上。可以给性能更好的RS节点配置更高的权重，提升集群整体的性能。</li>
+<li>最小连接数（Least
+Connections）：IPVS会根据集群内每台RS的连接数统计情况，将消息调度到连接数最少的RS节点上。在长连接业务场景下，LC算法对于系统整体负载均衡的情况较好；但是在短连接业务场景下，由于连接会迅速释放，可能会导致消息每次都调度到同一个RS节点，造成严重的负载不均衡。</li>
+<li>加权最小连接数（Weighted Least
+Connections）：最小连接数算法的加权版~</li>
+<li>地址哈希（Address
+Hash）：LB上会保存一张哈希表，通过哈希映射将客户端和RS节点关联起来。</li>
+</ul>
+<h1 id="service">Service</h1>
+<p><img
+src="https://cheryl-picgo.oss-cn-hangzhou.aliyuncs.com/service.png" /></p>
+<p>假设在一个客户端 Pod 中访问另一个 Nginx
+Pod，或者从主机去访问的时候。可以通过域名进行访问，域名通过内部的 dns
+解析，得到对应 service 的 cluster ip。也就是通过 cluster ip
+去访问。cluster ip 会从 iptables 做对应的 DNAT。会找到对应的一个 Pod
+IP。那么访问 Pod IP 就是之前提到的容器网络。因此 service
+完成了从服务网络从容器网络的转换。</p>
+<blockquote>
+<p>容器网络是如何实现的这里不做过多的讨论，具体依赖于所用的 CNI
+插件，例如 calico 或者 flannel。</p>
+</blockquote>
+<p>目前环境下有三台节点： <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">[root@k8s-node1 ~]<span class="hljs-comment"># kubectl get nodes</span><br>NAME        STATUS   ROLES                  AGE    VERSION<br>k8s-node1   Ready    control-plane,master   272d   v1.23.6<br>k8s-node2   Ready    &lt;none&gt;                 272d   v1.23.6<br>k8s-node3   Ready    &lt;none&gt;                 272d   v1.23.6<br></code></pre></td></tr></table></figure></p>
+<p>部署一下 nginx，对应的 yaml 在附录当中： <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">[root@k8s-node1 yamls]<span class="hljs-comment"># kubectl get pods -owide</span><br>NAME                                READY   STATUS    RESTARTS   AGE    IP               NODE        NOMINATED NODE   READINESS GATES<br>nginx-deployment-6f989c644f-gphwh   1/1     Running   0          2m9s   10.244.107.203   k8s-node3   &lt;none&gt;           &lt;none&gt;<br>nginx-deployment-6f989c644f-wbzmw   1/1     Running   0          2m9s   10.244.169.140   k8s-node2   &lt;none&gt;           &lt;none&gt;<br></code></pre></td></tr></table></figure></p>
+<p>再来创建一个 service： <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">[root@k8s-node1 yamls]<span class="hljs-comment"># kubectl get svc -owide</span><br>NAME         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE    SELECTOR<br>kubernetes   ClusterIP   10.96.0.1        &lt;none&gt;        443/TCP   272d   &lt;none&gt;<br>ngx-svc      ClusterIP   10.104.121.166   &lt;none&gt;        80/TCP    71s    app=nginx<br></code></pre></td></tr></table></figure></p>
+<p>查看一下 service 对应的 endpoints： <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">[root@k8s-node1 yamls]<span class="hljs-comment"># kubectl get endpoints</span><br>NAME         ENDPOINTS                             AGE<br>kubernetes   192.168.45.101:6443                   272d<br>ngx-svc      10.244.107.203:80,10.244.169.140:80   2m16s<br></code></pre></td></tr></table></figure></p>
+<p>现在我们把一个 Pod 删除，会自动重新启动一个新的 Pod，对应 Pod 的 IP
+地址会发生变化，那么 endpoints 也会发生变化，service 会更新这些信息：
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">[root@k8s-node1 yamls]<span class="hljs-comment"># kubectl get pods</span><br>NAME                                READY   STATUS    RESTARTS   AGE<br>nginx-deployment-6f989c644f-gphwh   1/1     Running   0          17m<br>nginx-deployment-6f989c644f-wbzmw   1/1     Running   0          17m<br>[root@k8s-node1 yamls]<span class="hljs-comment"># kubectl delete pod nginx-deployment-6f989c644f-gphwh</span><br>pod <span class="hljs-string">&quot;nginx-deployment-6f989c644f-gphwh&quot;</span> deleted<br>[root@k8s-node1 yamls]<span class="hljs-comment"># kubectl get pods -owide</span><br>NAME                                READY   STATUS    RESTARTS   AGE   IP               NODE        NOMINATED NODE   READINESS GATES<br>nginx-deployment-6f989c644f-wbzmw   1/1     Running   0          18m   10.244.169.140   k8s-node2   &lt;none&gt;           &lt;none&gt;<br>nginx-deployment-6f989c644f-wh5p7   1/1     Running   0          18s   10.244.107.204   k8s-node3   &lt;none&gt;           &lt;none&gt;<br>[root@k8s-node1 yamls]<span class="hljs-comment"># kubectl get endpoints</span><br>NAME         ENDPOINTS                             AGE<br>kubernetes   192.168.45.101:6443                   272d<br>ngx-svc      10.244.107.204:80,10.244.169.140:80   7m39s<br></code></pre></td></tr></table></figure></p>
+<p>查看 Kube-proxy 对 iptables 添加了什么路由规则： <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">[root@k8s-node1 yamls]<span class="hljs-comment"># iptables -t nat -L KUBE-SERVICES -n</span><br>Chain KUBE-SERVICES (2 references)<br>target     prot opt <span class="hljs-built_in">source</span>               destination         <br>KUBE-SVC-JD5MR3NA4I4DYORP  tcp  --  0.0.0.0/0            10.96.0.10           /* kube-system/kube-dns:metrics cluster IP */ tcp dpt:9153<br>KUBE-SVC-KASVC3VP5K2MBOHI  tcp  --  0.0.0.0/0            10.104.121.166       /* default/ngx-svc:http cluster IP */ tcp dpt:80<br>KUBE-SVC-NPX46M4PTMTKRN6Y  tcp  --  0.0.0.0/0            10.96.0.1            /* default/kubernetes:https cluster IP */ tcp dpt:443<br>KUBE-SVC-TCOU7JCQXEZGVUNU  udp  --  0.0.0.0/0            10.96.0.10           /* kube-system/kube-dns:dns cluster IP */ udp dpt:53<br>KUBE-SVC-ERIFXISQEP7F7OF4  tcp  --  0.0.0.0/0            10.96.0.10           /* kube-system/kube-dns:dns-tcp cluster IP */ tcp dpt:53<br>KUBE-NODEPORTS  all  --  0.0.0.0/0            0.0.0.0/0            /* kubernetes service nodeports; NOTE: this must be the last rule <span class="hljs-keyword">in</span> this chain */ ADDRTYPE match dst-type LOCAL<br></code></pre></td></tr></table></figure></p>
+<p><code>ngx-svc</code> 的 ip 地址是
+<code>10.104.121.166:80</code>，对应的会匹配到
+<code>KUBE-SVC-KASVC3VP5K2MBOHI</code> 这条链上，查看一下
+<code>KUBE-SVC-KASVC3VP5K2MBOHI</code> 这条链是什么内容：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">[root@k8s-node1 yamls]<span class="hljs-comment"># iptables -t nat -L KUBE-SVC-KASVC3VP5K2MBOHI -n</span><br>Chain KUBE-SVC-KASVC3VP5K2MBOHI (1 references)<br>target     prot opt <span class="hljs-built_in">source</span>               destination         <br>KUBE-MARK-MASQ  tcp  -- !10.244.0.0/16        10.104.121.166       /* default/ngx-svc:http cluster IP */ tcp dpt:80<br>KUBE-SEP-2PALR2AZNQKZJRSX  all  --  0.0.0.0/0            0.0.0.0/0            /* default/ngx-svc:http */ statistic mode random probability 0.50000000000<br>KUBE-SEP-PHUR7UPQEKXBMDS4  all  --  0.0.0.0/0            0.0.0.0/0            /* default/ngx-svc:http */<br></code></pre></td></tr></table></figure>
+<p><code>KUBE-MARK-MASQ</code> 当我们从主机访问 service
+的时候，会走这条路由。而下面两条就是对应 endpoints
+的负载均衡策略链路，选取其中一条查看：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">[root@k8s-node1 yamls]<span class="hljs-comment"># iptables -t nat -L KUBE-SEP-2PALR2AZNQKZJRSX -n</span><br>Chain KUBE-SEP-2PALR2AZNQKZJRSX (1 references)<br>target     prot opt <span class="hljs-built_in">source</span>               destination         <br>KUBE-MARK-MASQ  all  --  10.244.107.204       0.0.0.0/0            /* default/ngx-svc:http */<br>DNAT       tcp  --  0.0.0.0/0            0.0.0.0/0            /* default/ngx-svc:http */ tcp to:10.244.107.204:80<br></code></pre></td></tr></table></figure>
+<p>当一个 Pod 通过 service
+访问自己的时候，源地址和目标地址都是自己，这样的数据包可能会被 Linux
+丢弃，所以有了第一条的路由规则。第二条做了 DNAT，这样就从 service 的
+clusterIP 转换为 Pod IP 的过程。</p>
+<p>Service 有四种种类：</p>
+<ul>
+<li>ClusterIP</li>
+<li>NodePort：允许<strong>外部流量</strong>通过 <code>NodeIP:NodePort</code> 访问
+Service</li>
+<li>Headless</li>
+<li>LoadBalancer：在 <strong>NodePort
+基础上</strong>，自动请求云提供商（如
+AWS、GCP、Azure）分配一个<strong>外部负载均衡器</strong>。</li>
+<li>ExternalName：将 Service 映射到一个<strong>外部 DNS
+名称</strong>（如数据库、第三方 API），不代理任何流量。</li>
+</ul>
+<h1 id="dns">DNS</h1>
+<p><img
+src="https://cheryl-picgo.oss-cn-hangzhou.aliyuncs.com/dns.png" /></p>
+<p>建立一个 service 的时候，会把对应的域名添加到 k8s
+的域名服务器中。<code>coredns</code> 也是一个 Pod，k8s 中有一个默认的
+service，<code>kube-dns</code> 就是为这一组 Pod 做负载均衡的。</p>
+<h1 id="附录">附录</h1>
+<p>netfilter debug 脚本：</p>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(3, 0)" id="tab-button-3-0">iptables_debug_on</button>
+        
+        <button onclick="showTab(3, 1)" id="tab-button-3-1">iptables_debug_off</button>
+        
+        <button onclick="showTab(3, 2)" id="tab-button-3-2">ipvs_debug_on</button>
+        
+        <button onclick="showTab(3, 3)" id="tab-button-3-3">ipvs_debug_off</button>
+        </div>
+        <div class="tab-content tab-content-3" id="tab-3-0">
+            <pre><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span>
+
+iptables -t nat -I DOCKER 1 -p tcp --dport 8001 --syn -j LOG --log-prefix &quot;BEFORE-DNAT-8001: &quot; --log-level 4
+iptables -t mangle -I OUTPUT 1 -p tcp -d 172.17.0.0/16 --dport 8080 --syn -j LOG --log-prefix &quot;AFTER-DNAT-OUT-8080: &quot; --log-level 4
+iptables -t filter -I OUTPUT 1 -p tcp -d 172.17.0.0/16 --dport 8080 --syn -j LOG --log-prefix &quot;AFTER-DNAT-FILTER-OUT-8080: &quot; --log-level 4
+iptables -t nat -I POSTROUTING 1 -p tcp -d 172.17.0.0/16 --dport 8080 --syn -j LOG --log-prefix &quot;AFTER-DNAT-POST-8080: &quot; --log-level 4</pre>
+        </div>
+        <div class="tab-content tab-content-3" id="tab-3-1">
+            <pre><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span>
+
+iptables -t nat -D DOCKER -p tcp --dport 8001 --syn -j LOG --log-prefix &quot;BEFORE-DNAT-8001: &quot; --log-level 4
+iptables -t mangle -D OUTPUT -p tcp -d 172.17.0.0/16 --dport 8080 --syn -j LOG --log-prefix &quot;AFTER-DNAT-OUT-8080: &quot; --log-level 4
+iptables -t filter -D OUTPUT -p tcp -d 172.17.0.0/16 --dport 8080 --syn -j LOG --log-prefix &quot;AFTER-DNAT-FILTER-OUT-8080: &quot; --log-level 4
+iptables -t nat -D POSTROUTING -p tcp -d 172.17.0.0/16 --dport 8080 --syn -j LOG --log-prefix &quot;AFTER-DNAT-POST-8080: &quot; --log-level 4</pre>
+        </div>
+        <div class="tab-content tab-content-3" id="tab-3-2">
+            <pre><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span>
+
+iptables -t raw -I PREROUTING -p tcp --dport 8080 -j LOG --log-prefix &quot;target in raw.prerouting&gt;&quot;
+iptables -t mangle -I PREROUTING -p tcp --dport 8080 -j LOG --log-prefix &quot;target in mangle.prerouting&gt;&quot;
+iptables -t nat -I PREROUTING -p tcp --dport 8080 -j LOG --log-prefix &quot;target in nat.prerouting&gt;&quot;
+iptables -t mangle -I INPUT -p tcp --dport 8080 -j LOG --log-prefix &quot;target in mangle.input&gt;&quot;
+iptables -t filter -I INPUT -p tcp --dport 8080 -j LOG --log-prefix &quot;target in filter.input&gt;&quot;
+iptables -t raw -I OUTPUT -p tcp --dport 8080 -j LOG --log-prefix &quot;target in raw.output&gt;&quot;
+iptables -t mangle -I OUTPUT -p tcp --dport 8080 -j LOG --log-prefix &quot;target in mangle.output&gt;&quot;
+iptables -t nat -I OUTPUT -p tcp --dport 8080 -j LOG --log-prefix &quot;target in nat.output&gt;&quot;
+iptables -t filter -I OUTPUT -p tcp --dport 8080 -j LOG --log-prefix &quot;target in filter.output&gt;&quot;
+iptables -t mangle -I FORWARD -p tcp --dport 8080 -j LOG --log-prefix &quot;target in mangle.forward&gt;&quot;
+iptables -t filter -I FORWARD -p tcp --dport 8080 -j LOG --log-prefix &quot;target in filter.forward&gt;&quot;
+iptables -t mangle -I POSTROUTING -p tcp --dport 8080 -j LOG --log-prefix &quot;target in mangle.postrouting&gt;&quot;
+iptables -t nat -I POSTROUTING -p tcp --dport 8080 -j LOG --log-prefix &quot;target in nat.postrouting&gt;&quot;</pre>
+        </div>
+        <div class="tab-content tab-content-3" id="tab-3-3">
+            <pre><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/bash</span>
+
+iptables -t raw -D PREROUTING -p tcp --dport 8080 -j LOG --log-prefix &quot;target in raw.prerouting&gt;&quot;
+iptables -t mangle -D PREROUTING -p tcp --dport 8080 -j LOG --log-prefix &quot;target in mangle.prerouting&gt;&quot;
+iptables -t nat -D PREROUTING -p tcp --dport 8080 -j LOG --log-prefix &quot;target in nat.prerouting&gt;&quot;
+iptables -t mangle -D INPUT -p tcp --dport 8080 -j LOG --log-prefix &quot;target in mangle.input&gt;&quot;
+iptables -t filter -D INPUT -p tcp --dport 8080 -j LOG --log-prefix &quot;target in filter.input&gt;&quot;
+iptables -t raw -D OUTPUT -p tcp --dport 8080 -j LOG --log-prefix &quot;target in raw.output&gt;&quot;
+iptables -t mangle -D OUTPUT -p tcp --dport 8080 -j LOG --log-prefix &quot;target in mangle.output&gt;&quot;
+iptables -t nat -D OUTPUT -p tcp --dport 8080 -j LOG --log-prefix &quot;target in nat.output&gt;&quot;
+iptables -t filter -D OUTPUT -p tcp --dport 8080 -j LOG --log-prefix &quot;target in filter.output&gt;&quot;
+iptables -t mangle -D FORWARD -p tcp --dport 8080 -j LOG --log-prefix &quot;target in mangle.forward&gt;&quot;
+iptables -t filter -D FORWARD -p tcp --dport 8080 -j LOG --log-prefix &quot;target in filter.forward&gt;&quot;
+iptables -t mangle -D POSTROUTING -p tcp --dport 8080 -j LOG --log-prefix &quot;target in mangle.postrouting&gt;&quot;
+iptables -t nat -D POSTROUTING -p tcp --dport 8080 -j LOG --log-prefix &quot;target in nat.postrouting&gt;&quot;</pre>
+        </div></div>
+<p>nginx 部署文件： <figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># nginx-deployment.yaml</span><br><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">apps/v1</span><br><span class="hljs-attr">kind:</span> <span class="hljs-string">Deployment</span><br><span class="hljs-attr">metadata:</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">nginx-deployment</span><br>  <span class="hljs-attr">labels:</span><br>    <span class="hljs-attr">app:</span> <span class="hljs-string">nginx</span><br><span class="hljs-attr">spec:</span><br>  <span class="hljs-attr">replicas:</span> <span class="hljs-number">2</span>  <span class="hljs-comment"># 指定 Pod 副本数为 2</span><br>  <span class="hljs-attr">selector:</span><br>    <span class="hljs-attr">matchLabels:</span><br>      <span class="hljs-attr">app:</span> <span class="hljs-string">nginx</span><br>  <span class="hljs-attr">template:</span><br>    <span class="hljs-attr">metadata:</span><br>      <span class="hljs-attr">labels:</span><br>        <span class="hljs-attr">app:</span> <span class="hljs-string">nginx</span><br>    <span class="hljs-attr">spec:</span><br>      <span class="hljs-attr">containers:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">nginx</span><br>        <span class="hljs-attr">image:</span> <span class="hljs-string">nginx:latest</span><br>        <span class="hljs-attr">ports:</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-attr">containerPort:</span> <span class="hljs-number">80</span><br>        <span class="hljs-attr">resources:</span><br>          <span class="hljs-attr">requests:</span><br>            <span class="hljs-attr">memory:</span> <span class="hljs-string">&quot;64Mi&quot;</span><br>            <span class="hljs-attr">cpu:</span> <span class="hljs-string">&quot;100m&quot;</span><br>          <span class="hljs-attr">limits:</span><br>            <span class="hljs-attr">memory:</span> <span class="hljs-string">&quot;128Mi&quot;</span><br>            <span class="hljs-attr">cpu:</span> <span class="hljs-string">&quot;200m&quot;</span><br>        <span class="hljs-attr">livenessProbe:</span><br>          <span class="hljs-attr">httpGet:</span><br>            <span class="hljs-attr">path:</span> <span class="hljs-string">/</span><br>            <span class="hljs-attr">port:</span> <span class="hljs-number">80</span><br>          <span class="hljs-attr">initialDelaySeconds:</span> <span class="hljs-number">15</span><br>          <span class="hljs-attr">periodSeconds:</span> <span class="hljs-number">20</span><br>        <span class="hljs-attr">readinessProbe:</span><br>          <span class="hljs-attr">httpGet:</span><br>            <span class="hljs-attr">path:</span> <span class="hljs-string">/</span><br>            <span class="hljs-attr">port:</span> <span class="hljs-number">80</span><br>          <span class="hljs-attr">initialDelaySeconds:</span> <span class="hljs-number">5</span><br>          <span class="hljs-attr">periodSeconds:</span> <span class="hljs-number">10</span><br></code></pre></td></tr></table></figure></p>
+<p>nginx-service： <figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">v1</span><br><span class="hljs-attr">kind:</span> <span class="hljs-string">Service</span><br><span class="hljs-attr">metadata:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">ngx-svc</span><br><span class="hljs-attr">spec:</span><br>    <span class="hljs-attr">ports:</span><br>    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">http</span><br>      <span class="hljs-attr">port:</span> <span class="hljs-number">80</span><br>      <span class="hljs-attr">targetPort:</span> <span class="hljs-number">80</span><br>    <span class="hljs-attr">selector:</span><br>      <span class="hljs-attr">app:</span> <span class="hljs-string">nginx</span><br>    <span class="hljs-attr">type:</span> <span class="hljs-string">ClusterIP</span><br></code></pre></td></tr></table></figure></p>
+<h1 id="引用">引用</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Iptables">WikiPedia</a></li>
+</ul>
+
+    </div>
+    <div class="toc-container">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#iptables"><span class="toc-number">1.</span> <span class="toc-text">iptables</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-number">1.1.</span> <span class="toc-text">环境准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#netfilter"><span class="toc-number">1.2.</span> <span class="toc-text">netfilter</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4"><span class="toc-number">1.3.</span> <span class="toc-text">命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#docker-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B%E5%88%86%E6%9E%90"><span class="toc-number">1.4.</span> <span class="toc-text">Docker 网络模型分析</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ipvs"><span class="toc-number">2.</span> <span class="toc-text">IPVS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#service"><span class="toc-number">3.</span> <span class="toc-text">Service</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#dns"><span class="toc-number">4.</span> <span class="toc-text">DNS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%99%84%E5%BD%95"><span class="toc-number">5.</span> <span class="toc-text">附录</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%95%E7%94%A8"><span class="toc-number">6.</span> <span class="toc-text">引用</span></a></li></ol>
+    </div>
+  </div>
+  <footer class="article-footer">
+    <div class="footer-container">
+  <a target="_blank" rel="noopener" href="https://space.bilibili.com/12352380?spm_id_from=333.1007.0.0">
+    <img src="/images/bilibili.svg" alt="" />
+  </a>
+  <a target="_blank" rel="noopener" href="https://github.com/qiancijun">
+    <img src="/images/github.svg" alt="" />
+  </a>
+  <span>Copyright </span>
+  <img src="/images/copyright.svg" alt="">
+  <span>2024 Cheryl-Chun</span>
+</div>
+
+  </footer>
+</article>
+
+
+        </div>
+        <!-- <div class="footer">
+    
+</div> -->
+    </div>
+    
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/github-calendar@2.3.4/dist/github-calendar.min.js"></script>
+=
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js"></script>
+
+
+<script src="/scripts/search.js"></script>
+
+
+<script src="/scripts/main.js"></script>
+
+
+<script type="text/javascript">      
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+        search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result', "Cheryl-Chun");
+</script>
+</body>
+<style>
+    .main-container::before {
+        background-image: url('');
+    }
+</style>
+</html>

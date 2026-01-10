@@ -135,25 +135,25 @@ URL、本地文件等）加载文档内容，并将其转换为标准的文档�
 的参数配置，以及用哪个 Parser 来解析文档，<code>FileLoader</code>
 核心方法 <code>Load()</code> 用于解析一个文档：</p>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(43, 0)" id="tab-button-43-0">FileLoaderConfig</button>
+        <button onclick="showTab(0, 0)" id="tab-button-0-0">FileLoaderConfig</button>
         
-        <button onclick="showTab(43, 1)" id="tab-button-43-1">Parser</button>
+        <button onclick="showTab(0, 1)" id="tab-button-0-1">Parser</button>
         
-        <button onclick="showTab(43, 2)" id="tab-button-43-2">FileLoader</button>
+        <button onclick="showTab(0, 2)" id="tab-button-0-2">FileLoader</button>
         </div>
-        <div class="tab-content tab-content-43" id="tab-43-0">
+        <div class="tab-content tab-content-0" id="tab-0-0">
             <pre><span class="hljs-keyword">type</span> FileLoaderConfig <span class="hljs-keyword">struct</span> {
     UseNameAsID <span class="hljs-type">bool</span>
     Parser      parser.Parser
 }</pre>
         </div>
-        <div class="tab-content tab-content-43" id="tab-43-1">
+        <div class="tab-content tab-content-0" id="tab-0-1">
             <pre><span class="hljs-comment">// Parser is a document parser, can be used to parse a document from a reader.</span>
 <span class="hljs-keyword">type</span> Parser <span class="hljs-keyword">interface</span> {
     Parse(ctx context.Context, reader io.Reader, opts ...Option) ([]*schema.Document, <span class="hljs-type">error</span>)
 }</pre>
         </div>
-        <div class="tab-content tab-content-43" id="tab-43-2">
+        <div class="tab-content tab-content-0" id="tab-0-2">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(f *FileLoader)</span></span> Load(ctx context.Context, src document.Source, opts ...document.LoaderOption) (docs []*schema.Document, err <span class="hljs-type">error</span>)</pre>
         </div></div>
 <p>自己实现一个按行解析的 <code>parser.Parser</code>：</p>
@@ -200,11 +200,11 @@ URL、本地文件等）加载文档内容，并将其转换为标准的文档�
 <p>具体看一下 <code>HeaderSplitter</code> 是怎么实现的
 <code>Transformer</code> 接口，来对文档进行处理的。</p>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(44, 0)" id="tab-button-44-0">HeaderSplitter</button>
+        <button onclick="showTab(1, 0)" id="tab-button-1-0">HeaderSplitter</button>
         
-        <button onclick="showTab(44, 1)" id="tab-button-44-1">splitText</button>
+        <button onclick="showTab(1, 1)" id="tab-button-1-1">splitText</button>
         </div>
-        <div class="tab-content tab-content-44" id="tab-44-0">
+        <div class="tab-content tab-content-1" id="tab-1-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(h *headerSplitter)</span></span> Transform(ctx context.Context, docs []*schema.Document, opts ...document.TransformerOption) ([]*schema.Document, <span class="hljs-type">error</span>) {
     <span class="hljs-keyword">var</span> ret []*schema.Document
     <span class="hljs-keyword">for</span> _, doc := <span class="hljs-keyword">range</span> docs {
@@ -227,7 +227,7 @@ URL、本地文件等）加载文档内容，并将其转换为标准的文档�
     <span class="hljs-keyword">return</span> ret, <span class="hljs-literal">nil</span>
 }</pre>
         </div>
-        <div class="tab-content tab-content-44" id="tab-44-1">
+        <div class="tab-content tab-content-1" id="tab-1-1">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(h *headerSplitter)</span></span> splitText(ctx context.Context, text <span class="hljs-type">string</span>) []splitResult {
     <span class="hljs-keyword">var</span> recordedMetaList []metaRecord
     recordedMetaMap := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>)
@@ -291,10 +291,232 @@ URL、本地文件等）加载文档内容，并将其转换为标准的文档�
     <span class="hljs-keyword">return</span> ret
 }</pre>
         </div></div>
+<h3 id="chatmodel">ChatModel</h3>
+<p>ChatModel
+组件是一个用于与大模型交互的组件。主要作用是将用户的输入消息发送给语言模型，并获取模型的响应。例如自然语言对话、文本生成、工具调用、多模态交互。</p>
+<p>示例，用的是 ark 火山引擎： <figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Run</span><span class="hljs-params">()</span></span> &#123;<br>  err := godotenv.Load()<br>  <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-built_in">panic</span>(err)<br>  &#125;<br>  ctx := context.Background()<br>  model, err := ark.NewChatModel(ctx, &amp;ark.ChatModelConfig&#123;<br>    APIKey: os.Getenv(<span class="hljs-string">&quot;ARK_API_KEY&quot;</span>),<br>    Model: os.Getenv(<span class="hljs-string">&quot;MODEL&quot;</span>),<br>  &#125;)<br>  input := []*schema.Message&#123;<br>    schema.SystemMessage(<span class="hljs-string">&quot;你是一个乐于助人的助手&quot;</span>),<br>    schema.UserMessage(<span class="hljs-string">&quot;你好&quot;</span>),<br>  &#125;<br><br>  response, err := model.Generate(ctx, input)<br>  <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-built_in">panic</span>(err)<br>  &#125;<br>  <span class="hljs-built_in">print</span>(response.Content)<br>&#125;<br></code></pre></td></tr></table></figure></p>
+<h3 id="chattemplate">ChatTemplate</h3>
+<figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> ChatTemplate <span class="hljs-keyword">interface</span> &#123;<br>    Format(ctx context.Context, vs <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]any, opts ...Option) ([]*schema.Message, <span class="hljs-type">error</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>​ - <code>prompt.FromMessages()</code>：用于把多个 message 变成一个
+chat template。 - <code>schema.Message&#123;&#125;</code>：实现了 Format
+接口的结构体，因此可直接构建 schema.Message{} 作为 template -
+<code>schema.SystemMessage()</code>：此方法是构建 role 为 “system” 的
+message 快捷方法 - <code>schema.AssistantMessage()</code>：此方法是构建
+role 为 “assistant” 的 message 快捷方法 -
+<code>schema.UserMessage()</code>：此方法是构建 role 为 “user” 的
+message 快捷方法 - <code>schema.ToolMessage()</code>：此方法是构建 role
+为 “tool” 的 message 快捷方法 -
+<code>schema.MessagesPlaceholder()</code>：可用于把一个
+[]*schema.Message 插入到 message 列表中，常用于插入历史对话</p>
+<p>示例： <figure class="highlight go"><table><tr><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Run</span><span class="hljs-params">()</span></span> &#123;<br>  err := godotenv.Load()<br>  <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-built_in">panic</span>(err)<br>  &#125;<br>  ctx := context.Background()<br>  model, err := ark.NewChatModel(ctx, &amp;ark.ChatModelConfig&#123;<br>    APIKey: os.Getenv(<span class="hljs-string">&quot;ARK_API_KEY&quot;</span>),<br>    Model: os.Getenv(<span class="hljs-string">&quot;MODEL&quot;</span>),<br>  &#125;)<br>  <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-built_in">panic</span>(err)<br>  &#125;<br>  template := prompt.FromMessages(schema.FString,<br>    schema.SystemMessage(<span class="hljs-string">&quot;你是一个&#123;role&#125;&quot;</span>),<br>    &amp;schema.Message&#123;<br>      Role:    schema.User,<br>      Content: <span class="hljs-string">&quot;请帮帮我，史瓦罗先生，&#123;task&#125;&quot;</span>,<br>    &#125;,<br>  )<br>  params := <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]any&#123;<br>    <span class="hljs-string">&quot;role&quot;</span>:        <span class="hljs-string">&quot;机器人史瓦罗先生&quot;</span>,<br>    <span class="hljs-string">&quot;task&quot;</span>:        <span class="hljs-string">&quot;写一首诗&quot;</span>,<br>  &#125;<br>  messages, err := template.Format(ctx, params)<br>  <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-built_in">panic</span>(err)<br>  &#125;<br><br>  response, err := model.Generate(ctx, messages)<br>  <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>    <span class="hljs-built_in">panic</span>(err)<br>  &#125;<br>  <span class="hljs-built_in">print</span>(response.Content)<br>&#125;<br></code></pre></td></tr></table></figure></p>
+<h1 id="rag-搭建">RAG 搭建</h1>
+<h2 id="搭建-milvus">搭建 milvus</h2>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">services:</span><br>  <span class="hljs-attr">etcd:</span><br>    <span class="hljs-attr">container_name:</span> <span class="hljs-string">milvus-etcd</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">quay.io/coreos/etcd:v3.5.18</span><br>    <span class="hljs-attr">environment:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">ETCD_AUTO_COMPACTION_MODE=revision</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">ETCD_AUTO_COMPACTION_RETENTION=1000</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">ETCD_QUOTA_BACKEND_BYTES=4294967296</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">ETCD_SNAPSHOT_COUNT=50000</span><br>    <span class="hljs-attr">volumes:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">$&#123;DOCKER_VOLUME_DIRECTORY:-.&#125;/volumes/etcd:/etcd</span><br>    <span class="hljs-attr">command:</span> <span class="hljs-string">etcd</span> <span class="hljs-string">-advertise-client-urls=http://etcd:2379</span> <span class="hljs-string">-listen-client-urls</span> <span class="hljs-string">http://0.0.0.0:2379</span> <span class="hljs-string">--data-dir</span> <span class="hljs-string">/etcd</span><br>    <span class="hljs-attr">healthcheck:</span><br>      <span class="hljs-attr">test:</span> [<span class="hljs-string">&quot;CMD&quot;</span>, <span class="hljs-string">&quot;etcdctl&quot;</span>, <span class="hljs-string">&quot;endpoint&quot;</span>, <span class="hljs-string">&quot;health&quot;</span>]<br>      <span class="hljs-attr">interval:</span> <span class="hljs-string">30s</span><br>      <span class="hljs-attr">timeout:</span> <span class="hljs-string">20s</span><br>      <span class="hljs-attr">retries:</span> <span class="hljs-number">3</span><br><br>  <span class="hljs-attr">minio:</span><br>    <span class="hljs-attr">container_name:</span> <span class="hljs-string">milvus-minio</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">minio/minio:RELEASE.2023-03-20T20-16-18Z</span><br>    <span class="hljs-attr">environment:</span><br>      <span class="hljs-attr">MINIO_ACCESS_KEY:</span> <span class="hljs-string">minioadmin</span><br>      <span class="hljs-attr">MINIO_SECRET_KEY:</span> <span class="hljs-string">minioadmin</span><br>    <span class="hljs-attr">ports:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;9001:9001&quot;</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;9000:9000&quot;</span><br>    <span class="hljs-attr">volumes:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">$&#123;DOCKER_VOLUME_DIRECTORY:-.&#125;/volumes/minio:/minio_data</span><br>    <span class="hljs-attr">command:</span> <span class="hljs-string">minio</span> <span class="hljs-string">server</span> <span class="hljs-string">/minio_data</span> <span class="hljs-string">--console-address</span> <span class="hljs-string">&quot;:9001&quot;</span><br>    <span class="hljs-attr">healthcheck:</span><br>      <span class="hljs-attr">test:</span> [<span class="hljs-string">&quot;CMD&quot;</span>, <span class="hljs-string">&quot;curl&quot;</span>, <span class="hljs-string">&quot;-f&quot;</span>, <span class="hljs-string">&quot;http://localhost:9000/minio/health/live&quot;</span>]<br>      <span class="hljs-attr">interval:</span> <span class="hljs-string">30s</span><br>      <span class="hljs-attr">timeout:</span> <span class="hljs-string">20s</span><br>      <span class="hljs-attr">retries:</span> <span class="hljs-number">3</span><br><br>  <span class="hljs-attr">standalone:</span><br>    <span class="hljs-attr">container_name:</span> <span class="hljs-string">milvus-standalone</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">milvusdb/milvus:v2.5.10</span><br>    <span class="hljs-attr">command:</span> [<span class="hljs-string">&quot;milvus&quot;</span>, <span class="hljs-string">&quot;run&quot;</span>, <span class="hljs-string">&quot;standalone&quot;</span>]<br>    <span class="hljs-attr">security_opt:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">seccomp:unconfined</span><br>    <span class="hljs-attr">environment:</span><br>      <span class="hljs-attr">ETCD_ENDPOINTS:</span> <span class="hljs-string">etcd:2379</span><br>      <span class="hljs-attr">MINIO_ADDRESS:</span> <span class="hljs-string">minio:9000</span><br>    <span class="hljs-attr">volumes:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">$&#123;DOCKER_VOLUME_DIRECTORY:-.&#125;/volumes/milvus:/var/lib/milvus</span><br>    <span class="hljs-attr">healthcheck:</span><br>      <span class="hljs-attr">test:</span> [<span class="hljs-string">&quot;CMD&quot;</span>, <span class="hljs-string">&quot;curl&quot;</span>, <span class="hljs-string">&quot;-f&quot;</span>, <span class="hljs-string">&quot;http://localhost:9091/healthz&quot;</span>]<br>      <span class="hljs-attr">interval:</span> <span class="hljs-string">30s</span><br>      <span class="hljs-attr">start_period:</span> <span class="hljs-string">90s</span><br>      <span class="hljs-attr">timeout:</span> <span class="hljs-string">20s</span><br>      <span class="hljs-attr">retries:</span> <span class="hljs-number">3</span><br>    <span class="hljs-attr">ports:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;19530:19530&quot;</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;9091:9091&quot;</span><br>    <span class="hljs-attr">depends_on:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;etcd&quot;</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;minio&quot;</span><br>  <span class="hljs-comment"># Attu 服务</span><br>  <span class="hljs-attr">attu:</span><br>    <span class="hljs-attr">container_name:</span> <span class="hljs-string">milvus-attu</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">zilliz/attu:v2.5</span><br>    <span class="hljs-attr">ports:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;8000:3000&quot;</span> <span class="hljs-comment"># 把本地的 8000 端口映射到容器的 3000 端口 (Attu 默认端口)</span><br>    <span class="hljs-attr">environment:</span><br>      <span class="hljs-comment"># MILVUS_URL 指向 Docker 网络里的 Milvus standalone 服务</span><br>      <span class="hljs-attr">MILVUS_URL:</span> <span class="hljs-string">standalone:19530</span><br>    <span class="hljs-attr">depends_on:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">standalone</span> <span class="hljs-comment"># 确保 Milvus 启动后再启动 Attu</span><br><span class="hljs-attr">networks:</span><br>  <span class="hljs-attr">default:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">milvus</span><br></code></pre></td></tr></table></figure>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(2, 0)" id="tab-button-2-0">Indexer</button>
+        
+        <button onclick="showTab(2, 1)" id="tab-button-2-1">Retriever</button>
+        
+        <button onclick="showTab(2, 2)" id="tab-button-2-2">main</button>
+        </div>
+        <div class="tab-content tab-content-2" id="tab-2-0">
+            <pre><span class="hljs-keyword">var</span> MilvusClient cli.Client
+<span class="hljs-keyword">var</span> collection = <span class="hljs-string">&quot;myEino&quot;</span>
+<span class="hljs-keyword">var</span> indexer *milvus.Indexer
+
+<span class="hljs-keyword">var</span> fields = []*entity.Field{
+	{
+		Name:     <span class="hljs-string">&quot;id&quot;</span>,
+		DataType: entity.FieldTypeVarChar,
+		TypeParams: <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>{
+			<span class="hljs-string">&quot;max_length&quot;</span>: <span class="hljs-string">&quot;255&quot;</span>,
+		},
+		PrimaryKey: <span class="hljs-literal">true</span>,
+	},
+	{
+		Name:     <span class="hljs-string">&quot;vector&quot;</span>, <span class="hljs-comment">// 确保字段名匹配</span>
+		DataType: entity.FieldTypeBinaryVector,
+		TypeParams: <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>{
+			<span class="hljs-string">&quot;dim&quot;</span>: <span class="hljs-string">&quot;81920&quot;</span>,
+		},
+	},
+	{
+		Name:     <span class="hljs-string">&quot;content&quot;</span>,
+		DataType: entity.FieldTypeVarChar,
+		TypeParams: <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>{
+			<span class="hljs-string">&quot;max_length&quot;</span>: <span class="hljs-string">&quot;8192&quot;</span>,
+		},
+	},
+	{
+		Name:     <span class="hljs-string">&quot;metadata&quot;</span>,
+		DataType: entity.FieldTypeJSON,
+	},
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">InitMilvusClient</span><span class="hljs-params">()</span></span> {
+	ctx := context.Background()
+	client, err := cli.NewClient(ctx, cli.Config{
+		Address: <span class="hljs-string">&quot;localhost:19530&quot;</span>,
+	})
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		log.Fatal(<span class="hljs-string">&quot;failed to create milvus client:&quot;</span>, err)
+	}
+	MilvusClient = client
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewMilvusIndexer</span><span class="hljs-params">()</span></span> *milvus.Indexer {
+	<span class="hljs-keyword">if</span> indexer != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> indexer
+	}
+	ctx := context.Background()
+	<span class="hljs-keyword">if</span> MilvusClient == <span class="hljs-literal">nil</span> {
+		log.Fatal(<span class="hljs-string">&quot;Milvus client is not initialized&quot;</span>)
+	}
+	embedder := NewEmbedder()
+	indexer_, err := milvus.NewIndexer(ctx, &amp;milvus.IndexerConfig{
+		Client:            MilvusClient,
+		Collection:        collection,
+		Fields:            fields,
+		Embedding:         embedder,
+	})
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		log.Fatal(<span class="hljs-string">&quot;failed to create milvus indexer:&quot;</span>, err)
+	}
+	indexer = indexer_
+	<span class="hljs-keyword">return</span> indexer
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TransDoc</span><span class="hljs-params">()</span></span> []*schema.Document {
+	ctx := context.Background()
+
+	<span class="hljs-comment">// 初始化分割器</span>
+	splitter, err := markdown.NewHeaderSplitter(ctx, &amp;markdown.HeaderConfig{
+		Headers: <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>{
+			<span class="hljs-string">&quot;#&quot;</span>:   <span class="hljs-string">&quot;h1&quot;</span>,
+			<span class="hljs-string">&quot;##&quot;</span>:  <span class="hljs-string">&quot;h2&quot;</span>,
+			<span class="hljs-string">&quot;###&quot;</span>: <span class="hljs-string">&quot;h3&quot;</span>,
+		},
+		TrimHeaders: <span class="hljs-literal">false</span>,
+	})
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-built_in">panic</span>(err)
+	}
+
+	<span class="hljs-comment">// 准备要分割的文档</span>
+	content, err := os.OpenFile(<span class="hljs-string">&quot;./Raft.md&quot;</span>, os.O_CREATE|os.O_RDWR, <span class="hljs-number">0755</span>)
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-built_in">panic</span>(err)
+	}
+	<span class="hljs-keyword">defer</span> content.Close()
+	bs, err := os.ReadFile(<span class="hljs-string">&quot;./Raft.md&quot;</span>)
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-built_in">panic</span>(err)
+	}
+	docs := []*schema.Document{
+		{
+			ID:      uuid.New().String(),
+			Content: <span class="hljs-type">string</span>(bs),
+		},
+	}
+
+	<span class="hljs-comment">// 执行分割</span>
+	results, err := splitter.Transform(ctx, docs)
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-built_in">panic</span>(err)
+	}
+
+	<span class="hljs-keyword">for</span> i, doc := <span class="hljs-keyword">range</span> results {
+		doc.ID = docs[<span class="hljs-number">0</span>].ID + <span class="hljs-string">&quot;_&quot;</span> + strconv.Itoa(i)
+		<span class="hljs-built_in">println</span>(doc.ID)
+	}
+
+	<span class="hljs-keyword">return</span> results
+}</pre>
+        </div>
+        <div class="tab-content tab-content-2" id="tab-2-1">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewRetriever</span><span class="hljs-params">()</span></span> *milvus.Retriever {
+	ctx := context.Background()
+	embedder := NewEmbedder()
+	retriever, err := milvus.NewRetriever(ctx, &amp;milvus.RetrieverConfig{
+		Client:      MilvusClient,
+		Collection:  collection,
+		Partition:   <span class="hljs-literal">nil</span>,
+		VectorField: <span class="hljs-string">&quot;vector&quot;</span>,
+		OutputFields: []<span class="hljs-type">string</span>{
+			<span class="hljs-string">&quot;id&quot;</span>,
+			<span class="hljs-string">&quot;content&quot;</span>,
+			<span class="hljs-string">&quot;metadata&quot;</span>,
+		},
+		TopK:      <span class="hljs-number">1</span>,
+		Embedding: embedder,
+	})
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-built_in">panic</span>(err)
+	}
+
+	<span class="hljs-keyword">return</span> retriever
+}</pre>
+        </div>
+        <div class="tab-content tab-content-2" id="tab-2-2">
+            <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Run</span><span class="hljs-params">()</span></span> {
+	err := godotenv.Load(<span class="hljs-string">&quot;.env&quot;</span>)
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-built_in">panic</span>(err)
+	}
+	InitMilvusClient()
+	indexer := NewMilvusIndexer()
+	docs := TransDoc()
+	ids, err := indexer.Store(context.Background(), docs)
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-built_in">panic</span>(err)
+	}
+	fmt.Println(ids)
+
+	retriever := NewRetriever()
+	query := <span class="hljs-string">&quot;什么是Raft一致性算法？&quot;</span>
+	results, err := retriever.Retrieve(context.Background(), query)
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-built_in">panic</span>(err)
+	}
+	fmt.Println(results)
+}</pre>
+        </div></div>
+<h1 id="react">ReAct</h1>
+<p>ReAct
+编排是一种让大型语言模型（LLM）更智能地执行任务的策略，它的核心思想是让
+LLM 像人一样思考（Reason）和行动（Act）。</p>
+<p>ReAct 的名字来源于两个关键部分：</p>
+<ul>
+<li><strong>Reason（思考）</strong>: LLM
+会生成<strong>思维链</strong>（Chain-of-Thought），这是一种详细的推理过程，包括它对问题的理解、如何拆解问题、以及接下来打算做什么。这就像一个人在心里默念自己的思考过程。</li>
+<li><strong>Act（行动）</strong>: LLM
+会根据它的思考，调用外部工具或执行特定操作。这些“工具”可以是：
+<ul>
+<li><strong>搜索引擎</strong>：查找最新信息或特定事实。</li>
+<li><strong>计算器</strong>：执行数学运算。</li>
+<li><strong>代码解释器</strong>：运行代码来处理数据或验证逻辑。</li>
+<li><strong>API
+接口</strong>：与外部系统交互，比如查询天气、发送邮件等。</li>
+</ul></li>
+</ul>
+<p>ReAct 的工作流程可以概括为以下步骤：</p>
+<ol type="1">
+<li><strong>接收任务</strong>：用户给 LLM 一个任务或问题。</li>
+<li><strong>思考（Reason）</strong>：LLM
+首先会思考这个问题，生成一个计划或下一步的行动方针。这个思考过程是可见的，比如它会说“我需要先查找XX信息”或者“这个问题可以分解为A和B”。</li>
+<li><strong>行动（Act）</strong>：根据思考结果，LLM
+会选择一个合适的工具并执行操作。例如，如果它需要查找信息，它会调用搜索引擎并生成搜索查询。</li>
+<li><strong>观察（Observe）</strong>：LLM
+会接收到工具执行后的结果（例如，搜索结果、计算结果等）。</li>
+<li><strong>循环</strong>：LLM
+会根据观察到的结果，再次回到<strong>思考</strong>步骤。它会分析结果，决定下一步是继续使用工具、修改之前的计划，还是已经得到了最终答案并准备输出。</li>
+<li><strong>输出答案</strong>：当 LLM
+认为任务已经完成时，它会生成最终的答案。</li>
+</ol>
 
     </div>
     <div class="toc-container">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#eino"><span class="toc-number">1.</span> <span class="toc-text">Eino</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B"><span class="toc-number">1.1.</span> <span class="toc-text">入门案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="toc-number">2.</span> <span class="toc-text">核心概念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#components-%E7%BB%84%E4%BB%B6"><span class="toc-number">2.1.</span> <span class="toc-text">Components 组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#document-loader"><span class="toc-number">2.1.1.</span> <span class="toc-text">Document Loader</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embedding"><span class="toc-number">2.1.2.</span> <span class="toc-text">Embedding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#document-transformer"><span class="toc-number">2.1.3.</span> <span class="toc-text">Document Transformer</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#eino"><span class="toc-number">1.</span> <span class="toc-text">Eino</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B"><span class="toc-number">1.1.</span> <span class="toc-text">入门案例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="toc-number">2.</span> <span class="toc-text">核心概念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#components-%E7%BB%84%E4%BB%B6"><span class="toc-number">2.1.</span> <span class="toc-text">Components 组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#document-loader"><span class="toc-number">2.1.1.</span> <span class="toc-text">Document Loader</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embedding"><span class="toc-number">2.1.2.</span> <span class="toc-text">Embedding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#document-transformer"><span class="toc-number">2.1.3.</span> <span class="toc-text">Document Transformer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chatmodel"><span class="toc-number">2.1.4.</span> <span class="toc-text">ChatModel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chattemplate"><span class="toc-number">2.1.5.</span> <span class="toc-text">ChatTemplate</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#rag-%E6%90%AD%E5%BB%BA"><span class="toc-number">3.</span> <span class="toc-text">RAG 搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%90%AD%E5%BB%BA-milvus"><span class="toc-number">3.1.</span> <span class="toc-text">搭建 milvus</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#react"><span class="toc-number">4.</span> <span class="toc-text">ReAct</span></a></li></ol>
     </div>
   </div>
   <footer class="article-footer">

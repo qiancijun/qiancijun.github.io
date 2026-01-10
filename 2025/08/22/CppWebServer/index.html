@@ -155,11 +155,11 @@ UDP；</li>
 <p>客户端的逻辑比较类似，把 accept 换成 connect
 即可，下面是完整的代码：</p>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(0, 0)" id="tab-button-0-0">server</button>
+        <button onclick="showTab(3, 0)" id="tab-button-3-0">server</button>
         
-        <button onclick="showTab(0, 1)" id="tab-button-0-1">client</button>
+        <button onclick="showTab(3, 1)" id="tab-button-3-1">client</button>
         </div>
-        <div class="tab-content tab-content-0" id="tab-0-0">
+        <div class="tab-content tab-content-3" id="tab-3-0">
             <pre><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;arpa/inet.h&gt;</span></span>
 <span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstring&gt;</span></span>
 <span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
@@ -188,7 +188,7 @@ UDP；</li>
     <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 }</pre>
         </div>
-        <div class="tab-content tab-content-0" id="tab-0-1">
+        <div class="tab-content tab-content-3" id="tab-3-1">
             <pre><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;arpa/inet.h&gt;</span></span>
 <span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstring&gt;</span></span>
 <span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/socket.h&gt;</span></span>
@@ -410,6 +410,69 @@ target="_blank" rel="noopener" href="https://github.com/qiancijun/light-cpp-web-
 socket。</p>
 <p>这个版本的<a
 target="_blank" rel="noopener" href="https://github.com/qiancijun/light-cpp-web-server/tree/feature/11-threadpool-update">代码</a></p>
+<p>这里用到了大量现代 C++ 的内容，这里做一下内容的解析。</p>
+<p><a
+target="_blank" rel="noopener" href="https://github.com/qiancijun/light-cpp-web-server/blob/feature/11-threadpool-update/work11/src/ThreadPool.h#L31">ThreadPool</a>
+这里用到了模板函数，C++11 编译器不支持模板的分离编译。</p>
+<ul>
+<li><code>F&amp;&amp;</code> 与 <code>Args&amp;&amp;...</code>
+是转发引用，根据实参是左值/右值自动匹配
+<code>F&amp;/F&amp;&amp;</code>，可以借助 <code>std::forward</code>
+保留调用者传入实参的值类型（按需拷贝或移动）。</li>
+<li>尾返回类型，使用 <code>std::result_of&lt;F(Args...)&gt;::type</code>
+推导调用 <code>F(args...)</code> 后的返回类型
+<code>R</code>，从而让本函数返回
+<code>std::future&lt;R&gt;</code>。</li>
+</ul>
+<div class="citation cite-tip">
+            <div class="title">
+                <img src="/images/tip.svg"></img>
+                Tip std::result_of
+            </div>
+            <div class="content latex-container"><p>在 C++ 17 里已经弃用，在 C++ 20 里已经移除，现代写法应该使用
+<code>std::invoke_result_t&lt;F, Args...&gt;</code></p>
+</div>
+        </div>
+<p>用 <code>packaged_task</code>
+封装可调用对象。<code>std::packaged_task&lt;return_type()&gt;</code>
+它持有一个<strong>可调用</strong>对象（callable），当调用
+<code>(*task)()</code> 是，内部会执行这个
+callable，并把返回值或异常写入其关联的
+<code>std::promise</code>，这样配对的
+<code>std::future&lt;return_type&gt;</code>
+就能在调用方那里获得结果或抛出的异常。<code>std::bind</code> 把传入的
+<code>f</code> 和参数 <code>args...</code>
+绑定到一起，返回一个<strong>零参的可调用对象</strong>，调用它等价于
+<code>f(args...)</code>。<code>std::bind</code>
+对右值会优先移动存储，对需要引用语义的参数需要显式用
+<code>std::ref</code> 包装。</p>
+<p>把任务放进 <code>std::function&lt;void()&gt;</code>
+的队列里。<code>std::packaged_task</code>
+是<strong>可移动但不可拷贝</strong>的对象，直接放进
+<code>std::function</code> 不行。<code>std::function</code>
+要求其目标对象可拷贝。因此把 <code>packaged_task</code> 放入
+<code>shared_ptr</code> 然后往队列里添加一个<strong>可拷贝的小
+lambda</strong>，该 lambda 按值捕获这个
+<code>shared_ptr</code>，执行时解引用调用 <code>(*task)()</code></p>
+<h2 id="主从-reactor-模式">主从 Reactor 模式</h2>
+<p>目前大多数的高性能服务器采用的是主从 Reactor 模式，这种模式的特点为：
+1. 服务器一般只有一个 main Reactor，有很多个 sub Reactor； 2.
+服务器管理一个线程池，每一个 sub Reactor 由一个线程来负责
+<code>Connection</code> 上的事件循环，事件执行也在这个线程中完成； 3.
+main Reactor 只负责 <code>Acceptor</code>
+建立新连接，然后将这个连接分配给一个 sub Reactor；</p>
+<p>按照这种模式，修改 <code>Server</code> 的结构：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Server</span> &#123;<br> <span class="hljs-keyword">private</span>:<br>  EventLoop* mainReactor;<br>  Acceptor* acceptor;<br>  std::map&lt;<span class="hljs-type">int</span>, Connection*&gt; connections;<br>  std::vector&lt;EventLoop*&gt; subReactors;<br>  ThreadPool *thpool;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>对应的在初始化 <code>Server</code> 时，构造多个 EventLoop 作为
+sub-reactor： <figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">Server::<span class="hljs-built_in">Server</span>(EventLoop *_loop) : <span class="hljs-built_in">mainReactor</span>(_loop), <span class="hljs-built_in">acceptor</span>(<span class="hljs-literal">nullptr</span>)&#123; <br>    acceptor = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Acceptor</span>(mainReactor);   <span class="hljs-comment">//Acceptor由且只由mainReactor负责</span><br>    std::function&lt;<span class="hljs-type">void</span>(Socket*)&gt; cb = std::<span class="hljs-built_in">bind</span>(&amp;Server::newConnection, <span class="hljs-keyword">this</span>, std::placeholders::_1);<br>    acceptor-&gt;<span class="hljs-built_in">setNewConnectionCallback</span>(cb);<br><br>    <span class="hljs-type">int</span> size = std::thread::<span class="hljs-built_in">hardware_concurrency</span>();     <span class="hljs-comment">//线程数量，也是subReactor数量</span><br>    thpool = <span class="hljs-keyword">new</span> <span class="hljs-built_in">ThreadPool</span>(size);      <span class="hljs-comment">//新建线程池</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; size; ++i)&#123;<br>        subReactors.<span class="hljs-built_in">push_back</span>(<span class="hljs-keyword">new</span> <span class="hljs-built_in">EventLoop</span>());     <span class="hljs-comment">//每一个线程是一个EventLoop</span><br>    &#125;<br><br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; size; ++i)&#123;<br>        std::function&lt;<span class="hljs-type">void</span>()&gt; sub_loop = std::<span class="hljs-built_in">bind</span>(&amp;EventLoop::loop, subReactors[i]);<br>        thpool-&gt;<span class="hljs-built_in">add</span>(sub_loop);      <span class="hljs-comment">//开启所有线程的事件循环</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></p>
+<p>在有一个新连接到来时，需要将这个连接的socket描述符添加到一个subReactor中：
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> random = sock-&gt;<span class="hljs-built_in">getFd</span>() % subReactors.<span class="hljs-built_in">size</span>();    <span class="hljs-comment">//调度策略：全随机</span><br>Connection *conn = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Connection</span>(subReactors[random], sock);   <span class="hljs-comment">//分配给一个subReactor</span><br></code></pre></td></tr></table></figure></p>
+<p>这个版本的<a
+target="_blank" rel="noopener" href="https://github.com/qiancijun/light-cpp-web-server/tree/feature/12-reactor">代码</a></p>
+<h2 id="智能指针">智能指针</h2>
+<p>在之前的操作所有的内存都是由裸指针进行处理的，在类的构造阶段分配内存，析构释放内存，为了更加方便的管理内存，对于类自己拥有的资源使用了智能指针std::unique_ptr&lt;&gt;进行管理，对于不属于自己的资源，但是借用的资源，使用裸指针进行处理。避免资源的复制操作
+，尽量使用移动语义进行所有权转移，以提升程序性能。</p>
+<p>对于大部分的类，我们都不希望实现其拷贝构造函数，移动构造函数和赋值运算符，简单的操作可以在每一个类中使用=delete来保证其不被编译器自动实现。但是如果每个类都这么写，显然不够清晰且冗余，因此采用了宏来实现。</p>
 <h1 id="附录">附录</h1>
 <h2 id="reactor">Reactor</h2>
 <p>如果要让服务器处理多个客户端，那么最直接的方式就是为每一条连接创建线程。创建进程也是可以的，原理是一样的，进程和线程的区别在于线程比较轻量一些，线程的创建和切换成本要小一些。处理完业务逻辑后，随着连接关闭后线程也要销毁了，不停的创建和销毁也会造成资源浪费，而且如果要连接几万条连接，创建几万个线程去应对也是不现实的。</p>
@@ -432,10 +495,43 @@ src="https://cheryl-picgo.oss-cn-hangzhou.aliyuncs.com/Pasted%20image%2020250227
 <p>「单 Reactor - 多线程」模型：</p>
 <p><img
 src="https://cheryl-picgo.oss-cn-hangzhou.aliyuncs.com/Pasted%20image%2020250227203443.png" /></p>
+<h2 id="智能指针-1">智能指针</h2>
+<p>在传统 C++
+中，『记得』手动释放资源，总不是最佳实践。因为很有可能就忘记了去释放资源而导致泄露。
+所以通常的做法是对于一个对象而言，在构造函数的时候申请空间，而在析构函数（在离开作用域时调用）的时候释放空间，
+也就是常说的 RAII 资源获取即初始化技术。</p>
+<p>但是总有场景需要将对象在自由存储上分配的需求，在传统 C++ 里只好使用
+new 和 delete 去 『记得』对资源进行释放。而 C++11
+引入了智能指针的概念，使用了引用计数的想法，让程序员不再需要关心手动释放内存。
+这些智能指针包括
+<code>std::shared_ptr/std::unique_ptr/std::weak_ptr</code>，使用它们需要包含头文件
+<code>&lt;memory&gt;</code>。</p>
+<p><code>std::shared_ptr</code> 是一种智能指针，它能够记录多少个
+shared_ptr 共同指向一个对象，从而消除显式的调用
+delete，当引用计数变为零的时候就会将对象自动删除。使用
+<code>std::shared_ptr</code> 仍然需要使用 new
+来调用，这使得代码出现了某种程度上的不对称。</p>
+<p><code>std::make_shared</code> 就能够用来消除显式的使用 new，所以
+<code>std::make_shared</code> 会分配创建传入参数中的对象，
+并返回这个对象类型的 <code>std::shared_ptr</code> 指针。例如：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;memory&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">foo</span><span class="hljs-params">(std::shared_ptr&lt;<span class="hljs-type">int</span>&gt; i)</span> </span>&#123;<br>    (*i)++;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">auto</span> pointer = std::<span class="hljs-built_in">make_shared</span>&lt;<span class="hljs-type">int</span>&gt;(<span class="hljs-number">10</span>);<br>    <span class="hljs-built_in">foo</span>(pointer);<br>    std::cout &lt;&lt; *pointer &lt;&lt; std::endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><code>std::shared_ptr</code> 可以通过 <code>get()</code>
+方法来获取原始指针，通过 <code>reset()</code> 来减少一个引用计数，
+并通过 <code>use_count()</code> 来查看一个对象的引用计数。例如：
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;memory&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">auto</span> pointer = std::<span class="hljs-built_in">make_shared</span>&lt;<span class="hljs-type">int</span>&gt;(<span class="hljs-number">10</span>);<br>    <span class="hljs-keyword">auto</span> pointer2 = pointer; <span class="hljs-comment">// 引用计数 +1</span><br>    <span class="hljs-keyword">auto</span> pointer3 = pointer; <span class="hljs-comment">// 引用计数 +1</span><br>    <span class="hljs-type">int</span> *p = pointer.<span class="hljs-built_in">get</span>(); <span class="hljs-comment">// 不会增加引用计数</span><br>    std::cout &lt;&lt; <span class="hljs-string">&quot;pointer.use_count() = &quot;</span> &lt;&lt; pointer.<span class="hljs-built_in">use_count</span>() &lt;&lt; std::endl;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;pointer2.use_count() = &quot;</span> &lt;&lt; pointer2.<span class="hljs-built_in">use_count</span>() &lt;&lt; std::endl;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;pointer3.use_count() = &quot;</span> &lt;&lt; pointer3.<span class="hljs-built_in">use_count</span>() &lt;&lt; std::endl;<br><br>    pointer.<span class="hljs-built_in">reset</span>();<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;pointer.use_count() = &quot;</span> &lt;&lt; pointer.<span class="hljs-built_in">use_count</span>() &lt;&lt; std::endl;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;pointer2.use_count() = &quot;</span> &lt;&lt; pointer2.<span class="hljs-built_in">use_count</span>() &lt;&lt; std::endl;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;pointer3.use_count() = &quot;</span> &lt;&lt; pointer3.<span class="hljs-built_in">use_count</span>() &lt;&lt; std::endl;<br><br>    pointer2.<span class="hljs-built_in">reset</span>();<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;pointer.use_count() = &quot;</span> &lt;&lt; pointer.<span class="hljs-built_in">use_count</span>() &lt;&lt; std::endl;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;pointer2.use_count() = &quot;</span> &lt;&lt; pointer2.<span class="hljs-built_in">use_count</span>() &lt;&lt; std::endl;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;pointer3.use_count() = &quot;</span> &lt;&lt; pointer3.<span class="hljs-built_in">use_count</span>() &lt;&lt; std::endl;<br><br>    pointer3.<span class="hljs-built_in">reset</span>();<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;pointer.use_count() = &quot;</span> &lt;&lt; pointer.<span class="hljs-built_in">use_count</span>() &lt;&lt; std::endl;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;pointer2.use_count() = &quot;</span> &lt;&lt; pointer2.<span class="hljs-built_in">use_count</span>() &lt;&lt; std::endl;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;pointer3.use_count() = &quot;</span> &lt;&lt; pointer3.<span class="hljs-built_in">use_count</span>() &lt;&lt; std::endl;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure></p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><code class="hljs txt">pointer.use_count() = 3<br>pointer2.use_count() = 3<br>pointer3.use_count() = 3<br>pointer.use_count() = 0<br>pointer2.use_count() = 2<br>pointer3.use_count() = 2<br>pointer.use_count() = 0<br>pointer2.use_count() = 0<br>pointer3.use_count() = 1<br>pointer.use_count() = 0<br>pointer2.use_count() = 0<br>pointer3.use_count() = 0<br></code></pre></td></tr></table></figure>
+<p><code>std::unique_ptr</code>
+是一种独占的智能指针，它禁止其他智能指针与其共享同一个对象，从而保证代码的安全：
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;memory&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">auto</span> pointer = std::<span class="hljs-built_in">make_unique</span>&lt;<span class="hljs-type">int</span>&gt;(<span class="hljs-number">10</span>);<br>    <span class="hljs-keyword">auto</span> pointer2 = pointer; <span class="hljs-comment">// 错误</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure></p>
+<p>独占的意思是不可复制，但是可以用 <code>std::move</code>
+转移给其他的指针。</p>
+<p><code>std::shared_ptr</code>
+存在循环引用而导致无法释放对象的问题，可以使用
+<code>std::weak_ptr</code> 来解决。</p>
 
     </div>
     <div class="toc-container">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#socket"><span class="toc-number">1.</span> <span class="toc-text">Socket</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">错误处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#read-write"><span class="toc-number">1.2.</span> <span class="toc-text">read &amp; write</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#epoll"><span class="toc-number">2.</span> <span class="toc-text">epoll</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#cpp-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1"><span class="toc-number">2.1.</span> <span class="toc-text">Cpp 面向对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#channel"><span class="toc-number">2.2.</span> <span class="toc-text">channel</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E9%A9%B1%E5%8A%A8"><span class="toc-number">2.3.</span> <span class="toc-text">事件驱动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#acceptor"><span class="toc-number">2.4.</span> <span class="toc-text">Acceptor</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tcp-%E8%BF%9E%E6%8E%A5"><span class="toc-number">2.5.</span> <span class="toc-text">tcp 连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#buffer"><span class="toc-number">2.6.</span> <span class="toc-text">Buffer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0"><span class="toc-number">2.7.</span> <span class="toc-text">线程池</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%99%84%E5%BD%95"><span class="toc-number">3.</span> <span class="toc-text">附录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#reactor"><span class="toc-number">3.1.</span> <span class="toc-text">Reactor</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#socket"><span class="toc-number">1.</span> <span class="toc-text">Socket</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">错误处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#read-write"><span class="toc-number">1.2.</span> <span class="toc-text">read &amp; write</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#epoll"><span class="toc-number">2.</span> <span class="toc-text">epoll</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#cpp-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1"><span class="toc-number">2.1.</span> <span class="toc-text">Cpp 面向对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#channel"><span class="toc-number">2.2.</span> <span class="toc-text">channel</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E9%A9%B1%E5%8A%A8"><span class="toc-number">2.3.</span> <span class="toc-text">事件驱动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#acceptor"><span class="toc-number">2.4.</span> <span class="toc-text">Acceptor</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tcp-%E8%BF%9E%E6%8E%A5"><span class="toc-number">2.5.</span> <span class="toc-text">tcp 连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#buffer"><span class="toc-number">2.6.</span> <span class="toc-text">Buffer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0"><span class="toc-number">2.7.</span> <span class="toc-text">线程池</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E4%BB%8E-reactor-%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.8.</span> <span class="toc-text">主从 Reactor 模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88"><span class="toc-number">2.9.</span> <span class="toc-text">智能指针</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%99%84%E5%BD%95"><span class="toc-number">3.</span> <span class="toc-text">附录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#reactor"><span class="toc-number">3.1.</span> <span class="toc-text">Reactor</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88-1"><span class="toc-number">3.2.</span> <span class="toc-text">智能指针</span></a></li></ol></li></ol>
     </div>
   </div>
   <footer class="article-footer">
