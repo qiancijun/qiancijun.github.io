@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<title>
+    
+      Rust实现一个Git
+    
+</title>
+
+<link rel="icon" href="/images/favicon.ico">
+
+
+<link rel="stylesheet" href="/styles/main.css">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-calendar@2.3.4/dist/github-calendar.min.css">
+
+<link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/styles/github-dark-dimmed.min.css" rel="stylesheet">
+<!-- <link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark-reasonable.min.css" rel="stylesheet"> -->
+<link href="
+https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.css
+" rel="stylesheet">
+<link href="
+https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustomScrollbar.min.css
+" rel="stylesheet">
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.9.0/highlightjs-line-numbers.min.js"></script> -->
+<meta name="generator" content="Hexo 7.2.0"></head>
+<body>
+    <div class="main-container">
+        <div class="topbar">
+    <div class="btn-container">
+        <a href="/"><img class="btn-close" src="/images/close.svg" alt=""></a>
+        <a><img class="btn-minimize" src="/images/minimize.svg" alt=""></a>
+        <a><img class="btn-maximize" src="/images/maximize.svg" alt=""></a>
+    </div>
+    <div class="title">
+        <img src="/images/terminal.svg" alt="">
+        <span>cat Cheryl-Chun 淳老师 BLOG</span>
+    </div>
+</div>
+        <div class="nav-container">
+    <div class="posts">
+        <img src="/images/posts-list.svg" alt="">
+        <a href="/">Home</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+    <!-- <div class="tags">
+        <img src="/images/tag.svg" alt="">
+        <a href="/tag">Tag</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div> -->
+    <div>
+        <img src="/images/archive.svg" alt="">
+        <a href="/all-posts">Posts</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+    <!-- <div class="category">
+        <img src="/images/category.svg" alt="">
+        <a href="/category">Category</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div> -->
+    <div class="about">
+        <img src="/images/about.svg" alt="">
+        <a href="/about">About</a>
+        <img src="/images/close-tab.svg" alt="">
+    </div>
+</div>
+        <div class="main-content">
+            <article
+  id="post-Rust实现一个Git"
+  class="article article-type-post"
+>
+  <div id="toc-show">
+    <img src="/images/toc.svg" alt="" />
+  </div>
+  
+  <h1 class="article-header">Rust实现一个Git</h1>
+  
+  <div class="article-info">
+    <!-- <span>Document Attributes:</span> -->
+
+    <table>
+      <tr>
+        <td>
+            <img src="/images/time.svg" alt="">
+            Updated Time
+        </td>
+        <td>2026-04-06</td>
+      </tr>
+      <tr>
+        <td>
+            <img src="/images/category.svg" alt="">
+            Category
+        </td>
+        <td> <ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E5%8F%A4%E6%B3%95%E7%BC%96%E7%A8%8B/">古法编程</a></li></ul> </td>
+      </tr>
+      <tr>
+        <td>
+            <img src="/images/tag.svg" alt="">
+            Tags
+        </td>
+        <td>
+	<a class="tag-link" href="/tags/rust/" rel="tag">rust</a>
+
+</td>
+      </tr>
+    </table>
+  </div>
+  <div class="article-entry">
+    <div class="content">
+      <blockquote>
+<p>项目来源 <a
+target="_blank" rel="noopener" href="https://app.codecrafters.io/courses/git/overview">CodeCraft</a></p>
+</blockquote>
+<h1 id="git-数据结构">Git 数据结构</h1>
+<p>首先来了解一下 Git 内部的<a
+target="_blank" rel="noopener" href="https://git-scm.com/book/zh/v2/Git-%e5%86%85%e9%83%a8%e5%8e%9f%e7%90%86-Git-%e5%af%b9%e8%b1%a1">数据结构</a></p>
+<p>Git 的核心是一个<strong>内容寻址文件系统（Content-Addressable
+Filesystem）</strong>。简单来说，它是一个简单的键值对数据库：你可以向
+Git 仓库中插入任何类型的内容，它会返回一个唯一的键（SHA-1
+哈希值），通过这个键，你可以在任何时候取回该内容。</p>
+<p>在 Git
+内部，所有的操作都围绕着三种主要的对象展开：<strong>数据对象</strong>、<strong>树对象</strong>和<strong>提交对象</strong>。</p>
+<p><strong>数据对象</strong>：是最简单的对象类型，它只存储<strong>文件内容</strong>，而不存储文件名、权限等元数据。
+- 当执行 <code>git add</code> 时，Git
+会计算文件的哈希值，并将内容压缩后存入 <code>.git/objects</code> 目录。
+- 如果有两个文件名不同但内容完全一样的文件，Git
+在内部只会存储一份数据对象。</p>
+<p><strong>树对象</strong>：树对象类似于 Unix
+系统中的目录，它记录了文件索引和目录结构。 -
+一个树对象包含多条记录，每条记录包含：文件模式（权限）、对象类型（blob
+或 tree）、对象的 SHA-1 值以及文件名。 - 通过嵌套树对象，Git
+能够表示整个项目的目录层级。</p>
+<p><strong>提交对象</strong>：提交对象指向一个顶层树对象（代表该时刻的项目快照）。
+- 它包含作者（Author）和提交者（Committer）的信息、时间戳以及提交说明。
+- 最重要的是，它包含指向<strong>父提交对象</strong>的指针，这构成了 Git
+的版本历史链条。</p>
+<p>用一组实验来观察 git 是怎么管理这些对象的。在一个空目录中创建 git
+目录： <figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">git init test-git<br>cd test-git<br><span class="hljs-meta prompt_"># </span><span class="language-bash">查看 objects 目录，现在它是空的</span><br>find .git/objects -type f<br></code></pre></td></tr></table></figure></p>
+<h2 id="数据对象">数据对象</h2>
+<p>Git 是内容寻址的。直接把一段字符串存入 Git
+数据库。可以通过底层命令 <code>git hash-object</code>，该命令可将任意数据保存于 <code>.git/objects</code> 目录（即 <strong>对象数据库</strong>），并返回指向该数据对象的唯一的键。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;hello git&quot;</span> | git hash-object -w --stdin</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">8d0e41234f24b6da002d962a26c2495ea16a425f</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>-w</code>：告诉 Git
+不仅计算哈希，还要将对象<strong>写入</strong>数据库。</li>
+<li><code>--stdin</code>：从标准输入读取内容。</li>
+</ul>
+<p>此命令输出一个长度为 40 个字符的校验和。 这是一个 SHA-1
+哈希值，一个将待存储的数据外加一个头部信息（header）一起做 SHA-1
+校验运算而得的校验和。后文会简要讨论该头部信息。 现在可以查看 Git
+是如何存储数据的：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">find .git/objects -<span class="hljs-built_in">type</span> f</span><br>.git/objects/8d/0e41234f24b6da002d962a26c2495ea16a425f<br></code></pre></td></tr></table></figure>
+<p>一个文件对应一条内容， 以该内容加上特定头部信息一起的 SHA-1
+校验和为文件命名。 校验和的前两个字符用于命名子目录，余下的 38
+个字符则用作文件名。</p>
+<p>一旦将内容存储在了对象数据库中，那么可以通过 <code>cat-file</code> 命令从
+Git
+那里取回数据。 <code>cat-file</code> 指定 <code>-p</code> 选项可指示该命令自动判断内容的类型，并显示大致的内容：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">git cat-file -p 8d0e41234f24b6da002d962a26c2495ea16a425f</span><br>hello git<br></code></pre></td></tr></table></figure>
+<p>对一个文件进行简单的版本控制。
+创建一个新文件并将其内容存入数据库：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;version 1&#x27;</span> &gt; test.txt</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash">git hash-object -w test.txt</span><br>83baae61804e65cc73a7201a7252750c76066a30<br></code></pre></td></tr></table></figure>
+<p>向文件里写入新内容，并再次将其存入数据库：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;version 2&#x27;</span> &gt; test.txt</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash">git hash-object -w test.txt</span><br>1f7a7a472abf3dd9643fd615f6da379c4acb3e3a<br></code></pre></td></tr></table></figure>
+<p>对象数据库记录下了该文件的两个不同版本：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">find .git/objects -<span class="hljs-built_in">type</span> f</span><br>.git/objects/1f/7a7a472abf3dd9643fd615f6da379c4acb3e3a<br>.git/objects/83/baae61804e65cc73a7201a7252750c76066a30<br>.git/objects/8d/0e41234f24b6da002d962a26c2495ea16a425f<br></code></pre></td></tr></table></figure>
+<p>从对象数据库中取回它的第一个版本： <figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">git cat-file -p 83baae61804e65cc73a7201a7252750c76066a30 &gt; test.txt</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">cat</span> test.txt</span><br>version 1<br></code></pre></td></tr></table></figure></p>
+<p>记住文件的每一个版本所对应的 SHA-1
+值并不现实；另一个问题是，文件名并没有被保存，仅保存了文件的内容。上述类型的对象称之为 <strong>数据对象（blob
+object）</strong>。利用 <code>git cat-file -t</code> 命令，可以让 Git
+告诉我们其内部存储的任何对象类型，只要给定该对象的 SHA-1 值：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">git cat-file -t 83baae61804e65cc73a7201a7252750c76066a30</span><br>blob<br></code></pre></td></tr></table></figure>
+<h2 id="树对象">树对象</h2>
+<p>树对象（tree
+object），它能解决文件名保存的问题，也允许我们将多个文件组织到一起。 Git
+以一种类似于 UNIX 文件系统的方式存储内容，但作了些许简化。
+所有内容均以树对象和数据对象的形式存储，其中树对象对应了 UNIX
+中的目录项，数据对象则大致上对应了 inodes 或文件内容。
+一个树对象包含了一条或多条树对象记录（tree
+entry），每条记录含有一个指向数据对象或者子树对象的 SHA-1
+指针，以及相应的模式、类型、文件名信息。</p>
+<p>git 的树对象数据结构类似于：</p>
+<p><img
+src="https://cheryl-picgo.oss-cn-hangzhou.aliyuncs.com/Pasted%20image%2020260404142312.png" /></p>
+<p>通常，Git
+根据某一时刻暂存区所表示的状态创建并记录一个对应的树对象，如此重复便可依次记录（某个时间段内）一系列的树对象。因此，为创建一个树对象，首先需要通过暂存一些文件来创建一个暂存区。可以通过底层命令 <code>git update-index</code> 为一个单独文件创建一个暂存区。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">git update-index --add --cacheinfo 100644 \</span><br><span class="language-bash">1f7a7a472abf3dd9643fd615f6da379c4acb3e3a test.txt</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>--add</code>：将文件添加到暂存区中；</li>
+<li><code>--cacheinfo</code>：将文件添加到 git 数据库中；</li>
+</ul>
+<p>指定的文件模式为 <code>100644</code>，表明这是一个普通文件。
+其他选择包括：<code>100755</code>，表示一个可执行文件；<code>120000</code>，表示一个符号链接。
+这里的文件模式参考了常见的 UNIX 文件模式。</p>
+<p>通过 <code>git write-tree</code> 命令将暂存区内容写入一个树对象。此处无需指定 <code>-w</code> 选项——如果某个树对象此前并不存在的话，当调用此命令时，
+它会根据当前暂存区状态自动创建一个新的树对象：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">git write-tree</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash">git cat-file -p 2f39845a4a2c3ad86adebb00b1ddabd959c131c</span><br>100644 blob 1f7a7a472abf3dd9643fd615f6da379c4acb3e3a    test.txt<br><span class="hljs-meta prompt_">$ </span><span class="language-bash">git cat-file -t 2f39845a4a2c3ad86adebb00b1ddabd959c131c</span><br>tree<br></code></pre></td></tr></table></figure>
+<p>创建一个新的文件：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;new file&#x27;</span> &gt; new.txt</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash">git write-tree</span><br>0155eb4229851634a0f03eb265b69f5a2d56f341<br></code></pre></td></tr></table></figure>
+<p>查看当前的树对象：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">git cat-file -p 0155eb4229851634a0f03eb265b69f5a2d56f341<br>100644 blob fa49b077972391ad58037050f2a75f74e3671e92    new.txt<br>100644 blob 1f7a7a472abf3dd9643fd615f6da379c4acb3e3a    test.txt<br></code></pre></td></tr></table></figure>
+<p>新的树对象包含两条文件记录。可以将第一个树对象加入第二个树对象，使其成为新的树对象的一个子目录。通过调用 <code>git read-tree</code> 命令，可以把树对象读入暂存区。对该命令指定 <code>--prefix</code> 选项，将一个已有的树对象作为子树读入暂存区：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">git read-tree --prefix=bak 0155eb4229851634a0f03eb265b69f5a2d56f341</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash">git write-tree</span><br>dd325c8d87b9087ddcf69e9455743f7e2fce6c8e<br><span class="hljs-meta prompt_">$ </span><span class="language-bash">git cat-file -p dd325c8d87b9087ddcf69e9455743f7e2fce6c8e</span><br>040000 tree 0155eb4229851634a0f03eb265b69f5a2d56f341    bak<br>100644 blob fa49b077972391ad58037050f2a75f74e3671e92    new.txt<br>100644 blob 1f7a7a472abf3dd9643fd615f6da379c4acb3e3a    test.txt<br></code></pre></td></tr></table></figure>
+<h2 id="提交对象">提交对象</h2>
+<p>现在有了三个树对象，分别代表我们想要跟踪的不同项目快照。若想重用这些快照，必须记住所有三个
+SHA-1
+哈希值。并且，完全不知道是谁保存了这些快照，在什么时刻保存的，以及为什么保存这些快照。而以上这些，正是提交对象（commit
+object）能保存的基本信息。</p>
+<p>可以通过调用 <code>commit-tree</code> 命令创建一个提交对象，为此需要指定一个树对象的
+SHA-1
+值，以及该提交的父提交对象（如果有的话）。从之前创建的第一个树对象开始：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;first commit&#x27;</span> | git commit-tree 0155eb4229851634a0f03eb265b69f5a2d56f341</span><br>2c831d820204717dc1061ed0c06a2c1916247c09<br></code></pre></td></tr></table></figure>
+<p>由于创建时间和作者数据不同，会得到一个不同的散列值。现在可以通过 <code>git cat-file</code> 命令查看这个新提交对象：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">git cat-file -p 2c831d820204717dc1061ed0c06a2c1916247c09</span><br>tree 0155eb4229851634a0f03eb265b69f5a2d56f341<br>author Cheryl-Chun &lt;769303522@qq.com&gt; 1775286358 +0800<br>committer Cheryl-Chun &lt;769303522@qq.com&gt; 1775286358 +0800<br><br>first commit<br></code></pre></td></tr></table></figure>
+<p>提交对象的格式很简单：它先指定一个顶层树对象，代表当前项目快照；
+然后是可能存在的父提交（前面描述的提交对象并不存在任何父提交）；之后是作者/提交者信息（依据<code>user.name</code> 和 <code>user.email</code> 配置来设定，外加一个时间戳）；留空一行，最后是提交注释。</p>
+<p>创建另两个提交对象，它们分别引用各自的上一个提交：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;second commit&#x27;</span> | git commit-tree 0155eb -p 2c831</span><br>ad6e79e1fb4df23260060169482f3d58eee89c0e<br><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;third commit&#x27;</span>  | git commit-tree dd325 -p ad6e7</span><br>d23aa94c10cdf8c8734bf0a95971fe87f9b1906b<br></code></pre></td></tr></table></figure>
+<p>对最后一个提交的 SHA-1
+值运行 <code>git log</code> 命令，能够看见一个完整的提交历史：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">git <span class="hljs-built_in">log</span> --<span class="hljs-built_in">stat</span> d23aa</span><br>commit d23aa94c10cdf8c8734bf0a95971fe87f9b1906b<br>Author: Cheryl-Chun &lt;769303522@qq.com&gt;<br>Date:   Sat Apr 4 17:20:22 2026 +0800<br><br>    third commit<br><br> bak/new.txt  | 1 +<br> bak/test.txt | 1 +<br> 2 files changed, 2 insertions(+)<br><br>commit ad6e79e1fb4df23260060169482f3d58eee89c0e<br>Author: Cheryl-Chun &lt;769303522@qq.com&gt;<br>Date:   Sat Apr 4 17:02:48 2026 +0800<br><br>    second commit<br><br>commit 2c831d820204717dc1061ed0c06a2c1916247c09<br>Author: Cheryl-Chun &lt;769303522@qq.com&gt;<br>Date:   Sat Apr 4 15:05:58 2026 +0800<br><br>    first commit<br><br> new.txt  | 1 +<br> test.txt | 1 +<br> 2 files changed, 2 insertions(+)<br></code></pre></td></tr></table></figure>
+<p>现在来解释一下在实现 init 子命令的时候创建的文件夹： -
+<code>/objects</code>：存储所有的内容，无论是文件内容、目录结构还是提交信息，全都压缩后存储在这里；
+- <code>refs/</code> - <code>heads/</code>：存放本地分支，比如
+<code>refs/heads/master</code>，文件里存一个 40
+位的哈希值，指向该分支最新的那个提交对象。 -
+<code>tags/</code>：存放标签。 -
+<code>remotes/</code>：存放远程分支的指针。 -
+<code>HEAD</code>：当前位置，记录正在哪一个引用上。</p>
+<h1 id="git-init-命令">git init 命令</h1>
+<p>这一 CodeCraft 的第一个练习，比较简单，使用 clap 库来实现：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">cargo add clap --features derive<br></code></pre></td></tr></table></figure>
+<p>最终的形式：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><code class="hljs rust"><span class="hljs-meta">#[allow(unused_imports)]</span><br><span class="hljs-keyword">use</span> std::env;<br><span class="hljs-meta">#[allow(unused_imports)]</span><br><span class="hljs-keyword">use</span> std::fs;<br><br><span class="hljs-keyword">use</span> clap::Parser;<br><span class="hljs-keyword">use</span> clap::Subcommand;<br><br><span class="hljs-meta">#[derive(Parser, Debug)]</span><br><span class="hljs-meta">#[command(version, about, long_about = None)]</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Args</span> &#123;<br>    <span class="hljs-meta">#[command(subcommand)]</span><br>    command: Command,<br>&#125;<br><br><span class="hljs-meta">#[derive(Debug, Subcommand)]</span><br><span class="hljs-keyword">enum</span> <span class="hljs-title class_">Command</span> &#123;<br>    Init,<br>&#125;<br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">args</span> = Args::<span class="hljs-title function_ invoke__">parse</span>();<br>    <span class="hljs-comment">// You can use print statements as follows for debugging, they&#x27;ll be visible when running tests.</span><br>    <span class="hljs-built_in">eprintln!</span>(<span class="hljs-string">&quot;Logs from your program will appear here!&quot;</span>);<br><br>    <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> Uncomment the code below to pass the first stage</span><br>    <span class="hljs-keyword">match</span> args.command &#123;<br>        Command::Init =&gt; &#123;<br>            fs::<span class="hljs-title function_ invoke__">create_dir</span>(<span class="hljs-string">&quot;.git&quot;</span>).<span class="hljs-title function_ invoke__">unwrap</span>();<br>            fs::<span class="hljs-title function_ invoke__">create_dir</span>(<span class="hljs-string">&quot;.git/objects&quot;</span>).<span class="hljs-title function_ invoke__">unwrap</span>();<br>            fs::<span class="hljs-title function_ invoke__">create_dir</span>(<span class="hljs-string">&quot;.git/refs&quot;</span>).<span class="hljs-title function_ invoke__">unwrap</span>();<br>            fs::<span class="hljs-title function_ invoke__">write</span>(<span class="hljs-string">&quot;.git/HEAD&quot;</span>, <span class="hljs-string">&quot;ref: refs/heads/main\n&quot;</span>).<span class="hljs-title function_ invoke__">unwrap</span>();<br>            <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Initialized git directory&quot;</span>)<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h1 id="cat-file">cat-file</h1>
+<p>在上一节的内容中一直使用到 <code>cat-file</code>
+子命令，这个命令用于查看 git
+数据对象的内容。在之前的使用当中，<code>cat-file</code> 子命令用到了
+<code>-p</code> 参数，以及一个对象哈希值。</p>
+<p>每个 Git Blob 都会作为独立文件存储在 .git/objects
+目录中。该文件包含一个头部以及 Blob 对象的内容，内容使用 Zlib
+进行了压缩。</p>
+<p>Blob 对象文件的格式如下（Zlib 解压后）：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><code class="hljs text">blob &lt;size&gt;\0&lt;content&gt;<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>&lt;size&gt;</code> 内容的大小（以字节为单位）</li>
+<li><code>\0</code> 空字节</li>
+<li><code>&lt;content&gt;</code> 文本内容</li>
+</ul>
+<p>例如一个 hello world 的 blob object：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><code class="hljs text">blob 11\0hello world<br></code></pre></td></tr></table></figure>
+<p>这一节的具体代码 
+    <a href="javascript:void(0);" 
+       class="code-annotation-link" 
+       data-snippet-title="main.rs"
+       data-article-title="Rust实现一个Git"
+       onclick="openVimView(this, 'code_6dl6p87p8')"
+       style="color: #51afef; text-decoration: underline;">
+       cat-file 实现
+    </a>
+    
+    <script type="text/plain" id="code_6dl6p87p8">// 引入必要的标准库和第三方库
+#[allow(unused_imports)]
+use std::{env, ffi::CStr, fs, io::{BufRead, BufReader, Read, Write}};
+use anyhow::{Context, Ok};
+use clap::{Parser, Subcommand};
+use flate2::read::ZlibDecoder;
+
+/* 使用 clap 库定义命令行参数结构体
+  支持 --version 和 --help 自动生成
+*/
+#[derive(Parser, Debug)]
+#[command(version, about, long_about = None)]
+struct Args {
+    #[command(subcommand)]
+    command: Command,
+}
+
+/* 定义支持的子命令枚举
+  目前支持 init 和 cat-file
+*/
+#[derive(Debug, Subcommand)]
+enum Command {
+    // 初始化 git 仓库
+    Init,
+    // 读取对象文件内容
+    CatFile {
+        #[clap(short = 'p')]
+        pretty_print: bool, // 是否开启美化输出
+        object_hash: String, // 对象的 SHA-1 哈希值
+    },
+}
+
+// 定义 Git 对象类型
+enum Kind {
+    Blob,
+}
+
+fn main() -> anyhow::Result<()> {
+    let args = Args::parse();
+    eprintln!("程序启动，准备执行命令...");
+
+    match args.command {
+        // 执行 git init 逻辑
+        Command::Init => {
+            fs::create_dir(".git").unwrap();
+            fs::create_dir(".git/objects").unwrap();
+            fs::create_dir(".git/refs").unwrap();
+            fs::write(".git/HEAD", "ref: refs/heads/main\n").unwrap();
+            println!("Initialized git directory")
+        }
+
+        /* 执行 git cat-file -p <hash> 逻辑
+          1. 根据哈希前两位和剩余位拼接文件路径
+          2. 解压并解析 Header (类型 + 长度)
+          3. 读取真正的内容并输出到标准输出
+        */
+        Command::CatFile { pretty_print, object_hash } => {
+            anyhow::ensure!(pretty_print, "目前仅支持使用 -p 参数进行美化输出");
+
+            // Git 存储对象时，哈希的前两位作为文件夹名，后 38 位作为文件名
+            let f = fs::File::open(format!(
+                ".git/objects/{}/{}",
+                &object_hash[..2],
+                &object_hash[2..]
+            )).context("无法在 .git/objects 中找到该对象文件")?;
+        
+            // 使用 Zlib 解压内容
+            let z = ZlibDecoder::new(f);
+            let mut z = BufReader::new(z);
+            let mut buf = Vec::new();
+
+            // 读取 Header 部分（以 \0 字节结尾）
+            // Header 格式为: "type size\0"
+            z.read_until(0, &mut buf).context("读取对象 Header 失败")?;
+
+            let header = CStr::from_bytes_with_nul(&buf).expect("解析 Header 失败");
+            let header = header.to_str().context("Header 不是有效的 UTF-8 编码")?;
+            
+            // 拆分类型和长度
+            let Some((kind, size)) = header.split_once(' ') else {
+                anyhow::bail!("Header 格式非法，未找到空格分隔符: '{header}'")
+            };
+
+            let kind = match kind {
+                "blob" => Kind::Blob,
+                _ => anyhow::bail!("未知的对象类型: '{kind}'"),
+            };
+
+            let size = size.parse::<usize>().context("解析对象长度失败")?;
+
+            // 准备读取正式数据
+            buf.clear();
+            buf.resize(size, 0);
+            z.read_exact(&mut buf[..]).context("读取对象主体内容失败")?;
+
+            // 校验是否读取完毕，不应有剩余字节
+            let n = z.read(&mut [0]).context("验证文件结尾时发生错误")?;
+            anyhow::ensure!(n == 0, "读取完毕后发现有多余的 {} 字节数据", n);
+
+            let stdout = std::io::stdout();
+            let mut stdout = stdout.lock();
+
+            // 将读取到的二进制流输出到终端
+            match kind {
+                Kind::Blob => {
+                    stdout.write_all(&buf).context("无法将内容写入标准输出")?;
+                }
+            }
+        }
+    }
+    Ok(())
+}</script>
+
+    <script>
+    if (!window.openVimView) {
+        window.openVimView = function(el, targetId) {
+            const rawCode = document.getElementById(targetId).innerHTML;
+            const sTitle = el.getAttribute('data-snippet-title');
+            const aTitle = el.getAttribute('data-article-title');
+            const newWin = window.open("", "_blank");
+            if (!newWin) return alert("弹窗被拦截");
+
+            const paragraphs = rawCode.split(/\n\s*\n/);
+            let globalLineNum = 1;
+            let htmlRows = "";
+
+            paragraphs.forEach(para => {
+                const commentRegex = /(\/\/[^\n]*|\/\*[\s\S]*?\*\/)/g;
+                const comments = para.match(commentRegex) || [];
+                let cleanCode = para.replace(commentRegex, "");
+                cleanCode = cleanCode.replace(/^[\r\n]+|[\r\n\s]+$/g, "");
+                const cleanComments = comments.map(c => c.replace(/^\/\/|^\/\*|\*\/$/g, '').trim()).join("<br>");
+
+                if (!cleanCode && !cleanComments) return;
+
+                const lines = cleanCode.split('\n');
+                let codeLinesHtml = "";
+                lines.forEach((line) => {
+                    const escapedLine = line.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                    codeLinesHtml += `
+                        <div class="code-line-row">
+                            <div class="line-number">${globalLineNum++}</div>
+                            <div class="code-content">${escapedLine || ' '}</div>
+                        </div>`;
+                });
+
+                htmlRows += `
+                    <div class="vim-section">
+                        <div class="vim-left">${codeLinesHtml}</div>
+                        <div class="vim-right"><div class="comment-text">${cleanComments}</div></div>
+                    </div>`;
+            });
+
+            newWin.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Vim - ${sTitle}</title>
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"><\/script>
+                    <style>
+                        :root { 
+                            --lh: 24px; 
+                            --bg-code: #282c34; 
+                            --bg-body: #333; 
+                            --border: #181a1f; 
+                            /* 行号颜色修改在这里 */
+                            --ln-color: #858db7; 
+                            --ln-bg: #23272e;
+                        }
+                        * { box-sizing: border-box; }
+                        body { margin: 0; background: var(--bg-body); color: #abb2bf; font-family: 'Fira Code', 'Consolas', monospace; font-size: 14px; line-height: var(--lh); display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+                        .header { background: #21252b; padding: 10px 20px 0; border-bottom: 2px solid var(--border); flex: 0 0 auto; display: flex; gap: 2px; }
+                        .tab { background: #3d4450; padding: 6px 15px; border-radius: 4px 4px 0 0; font-size: 12px; color: #abb2bf; border: 1px solid var(--border); border-bottom: none; }
+                        .tab.active { background: var(--bg-body); color: #dcdcdc; border-bottom: 1px solid var(--bg-body); z-index: 2; margin-bottom: -2px; }
+                        .tab-article { background: transparent; border: none; color: #5c6370; }
+                        .container { flex: 1; overflow-y: auto; overflow-x: hidden; }
+                        .vim-section { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid #3e445122; min-height: var(--lh); }
+                        .vim-section:hover { background: #3c3c3c; }
+                        .vim-left { background: var(--bg-code); border-right: 1px solid var(--border); padding: 10px 0; }
+                        .code-line-row { display: grid; grid-template-columns: 55px 1fr; width: 100%; }
+                        
+                        /* 行号样式优化 */
+                        .line-number { 
+                            color: var(--ln-color); 
+                            text-align: center; 
+                            user-select: none; 
+                            background: var(--ln-bg); 
+                            border-right: 1px solid #3e4451; 
+                            font-size: 12px; 
+                            height: var(--lh); 
+                            font-weight: 500; /* 加粗一点点 */
+                        }
+                        
+                        .code-content { padding-left: 15px; white-space: pre; overflow-x: auto; height: var(--lh); }
+                        .vim-right { padding: 10px 20px; color: #7ca668; font-style: italic; word-break: break-all; }
+                        .status-bar { background: #21252b; color: #6b727c; font-size: 11px; padding: 2px 15px; flex: 0 0 auto; display: flex; justify-content: space-between; border-top: 1px solid var(--border); }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <div class="tab tab-article">📂 ${aTitle}</div>
+                        <div class="tab active">📄 ${sTitle}</div>
+                    </div>
+                    <div class="container" id="main">${htmlRows}</div>
+                    <div class="status-bar"><span>-- NORMAL --</span><span id="pos">TOP</span></div>
+                    <script>
+                        document.querySelectorAll('.code-content').forEach(el => hljs.highlightElement(el));
+                        const main = document.getElementById('main');
+                        main.onscroll = () => {
+                            const p = Math.round((main.scrollTop / (main.scrollHeight - main.clientHeight)) * 100);
+                            document.getElementById('pos').innerText = isNaN(p) ? 'TOP' : p + "%";
+                        };
+                    <\/script>
+                </body>
+                </html>
+            `);
+            newWin.document.close();
+        };
+    }
+    </script>
+    </p>
+
+    </div>
+    <div class="toc-container">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#git-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">Git 数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.1.</span> <span class="toc-text">数据对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%91%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.2.</span> <span class="toc-text">树对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%90%E4%BA%A4%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.3.</span> <span class="toc-text">提交对象</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#git-init-%E5%91%BD%E4%BB%A4"><span class="toc-number">2.</span> <span class="toc-text">git init 命令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#cat-file"><span class="toc-number">3.</span> <span class="toc-text">cat-file</span></a></li></ol>
+    </div>
+  </div>
+  <footer class="article-footer">
+    <div class="footer-container">
+  <a target="_blank" rel="noopener" href="https://space.bilibili.com/12352380?spm_id_from=333.1007.0.0">
+    <img src="/images/bilibili.svg" alt="" />
+  </a>
+  <a target="_blank" rel="noopener" href="https://github.com/qiancijun">
+    <img src="/images/github.svg" alt="" />
+  </a>
+  <span>Copyright </span>
+  <img src="/images/copyright.svg" alt="">
+  <span>2024 Cheryl-Chun</span>
+</div>
+
+  </footer>
+</article>
+
+
+        </div>
+        <!-- <div class="footer">
+    
+</div> -->
+    </div>
+    
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/github-calendar@2.3.4/dist/github-calendar.min.js"></script>
+=
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js"></script>
+
+
+<script src="/scripts/search.js"></script>
+
+
+<script src="/scripts/main.js"></script>
+
+
+<script type="text/javascript">      
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+        search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result', "Cheryl-Chun");
+</script>
+</body>
+<style>
+    .main-container::before {
+        background-image: url('');
+    }
+</style>
+</html>

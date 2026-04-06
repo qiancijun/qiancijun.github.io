@@ -28,6 +28,7 @@ https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.css
 <link href="
 https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustomScrollbar.min.css
 " rel="stylesheet">
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.9.0/highlightjs-line-numbers.min.js"></script> -->
 <meta name="generator" content="Hexo 7.2.0"></head>
 <body>
     <div class="main-container">
@@ -213,39 +214,39 @@ H^{(l)}W^{(l)})\)</span></p>
 f_{\theta^*} (\mathcal{G}_i) \} \right)\end{align}\]</span></p>
 <p>站内特殊内容</p>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(0, 0)" id="tab-button-0-0">python</button>
+        <button onclick="showTab(1, 0)" id="tab-button-1-0">python</button>
         
-        <button onclick="showTab(0, 1)" id="tab-button-0-1">cpp</button>
+        <button onclick="showTab(1, 1)" id="tab-button-1-1">cpp</button>
         
-        <button onclick="showTab(0, 2)" id="tab-button-0-2">golang</button>
+        <button onclick="showTab(1, 2)" id="tab-button-1-2">golang</button>
         
-        <button onclick="showTab(0, 3)" id="tab-button-0-3">java</button>
+        <button onclick="showTab(1, 3)" id="tab-button-1-3">java</button>
         
-        <button onclick="showTab(0, 4)" id="tab-button-0-4">rust</button>
+        <button onclick="showTab(1, 4)" id="tab-button-1-4">rust</button>
         </div>
-        <div class="tab-content tab-content-0" id="tab-0-0">
+        <div class="tab-content tab-content-1" id="tab-1-0">
             <pre>println(<span class="hljs-string">&quot;Hello World&quot;</span>)</pre>
         </div>
-        <div class="tab-content tab-content-0" id="tab-0-1">
+        <div class="tab-content tab-content-1" id="tab-1-1">
             <pre><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
 <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
 <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
   cout &lt;&lt; <span class="hljs-string">&quot;Hello world&quot;</span>&lt;&lt; endl;
 }</pre>
         </div>
-        <div class="tab-content tab-content-0" id="tab-0-2">
+        <div class="tab-content tab-content-1" id="tab-1-2">
             <pre><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmts&quot;</span>
 
 <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
   fmts.Println(<span class="hljs-string">&quot;Hello World&quot;</span>)
 }</pre>
         </div>
-        <div class="tab-content tab-content-0" id="tab-0-3">
+        <div class="tab-content tab-content-1" id="tab-1-3">
             <pre><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> {
   system.out.println(<span class="hljs-string">&quot;Hello World&quot;</span>);
 }</pre>
         </div>
-        <div class="tab-content tab-content-0" id="tab-0-4">
+        <div class="tab-content tab-content-1" id="tab-1-4">
             <pre><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() {
   <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Hello World&quot;</span>);
 }</pre>
@@ -304,6 +305,132 @@ f_{\theta^*} (\mathcal{G}_i) \} \right)\end{align}\]</span></p>
             <div class="content latex-container"><p>citation success 标题</p>
 </div>
         </div>
+<p>具体代码查看 
+    <a href="javascript:void(0);" 
+       class="code-annotation-link" 
+       data-snippet-title="test.js"
+       data-article-title="Md 样式测试"
+       onclick="openVimView(this, 'code_3sih4udxj')"
+       style="color: #51afef; text-decoration: underline;">
+       测试
+    </a>
+    
+    <script type="text/plain" id="code_3sih4udxj">function outer() {
+    // 这里有缩进
+    if (true) {
+        console.log("Deep Indent");
+    }
+}</script>
+
+    <script>
+    if (!window.openVimView) {
+        window.openVimView = function(el, targetId) {
+            const rawCode = document.getElementById(targetId).innerHTML;
+            const sTitle = el.getAttribute('data-snippet-title');
+            const aTitle = el.getAttribute('data-article-title');
+            const newWin = window.open("", "_blank");
+            if (!newWin) return alert("弹窗被拦截");
+
+            const paragraphs = rawCode.split(/\n\s*\n/);
+            let globalLineNum = 1;
+            let htmlRows = "";
+
+            paragraphs.forEach(para => {
+                const commentRegex = /(\/\/[^\n]*|\/\*[\s\S]*?\*\/)/g;
+                const comments = para.match(commentRegex) || [];
+                let cleanCode = para.replace(commentRegex, "");
+                cleanCode = cleanCode.replace(/^[\r\n]+|[\r\n\s]+$/g, "");
+                const cleanComments = comments.map(c => c.replace(/^\/\/|^\/\*|\*\/$/g, '').trim()).join("<br>");
+
+                if (!cleanCode && !cleanComments) return;
+
+                const lines = cleanCode.split('\n');
+                let codeLinesHtml = "";
+                lines.forEach((line) => {
+                    const escapedLine = line.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                    codeLinesHtml += `
+                        <div class="code-line-row">
+                            <div class="line-number">${globalLineNum++}</div>
+                            <div class="code-content">${escapedLine || ' '}</div>
+                        </div>`;
+                });
+
+                htmlRows += `
+                    <div class="vim-section">
+                        <div class="vim-left">${codeLinesHtml}</div>
+                        <div class="vim-right"><div class="comment-text">${cleanComments}</div></div>
+                    </div>`;
+            });
+
+            newWin.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Vim - ${sTitle}</title>
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"><\/script>
+                    <style>
+                        :root { 
+                            --lh: 24px; 
+                            --bg-code: #282c34; 
+                            --bg-body: #333; 
+                            --border: #181a1f; 
+                            /* 行号颜色修改在这里 */
+                            --ln-color: #858db7; 
+                            --ln-bg: #23272e;
+                        }
+                        * { box-sizing: border-box; }
+                        body { margin: 0; background: var(--bg-body); color: #abb2bf; font-family: 'Fira Code', 'Consolas', monospace; font-size: 14px; line-height: var(--lh); display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+                        .header { background: #21252b; padding: 10px 20px 0; border-bottom: 2px solid var(--border); flex: 0 0 auto; display: flex; gap: 2px; }
+                        .tab { background: #3d4450; padding: 6px 15px; border-radius: 4px 4px 0 0; font-size: 12px; color: #abb2bf; border: 1px solid var(--border); border-bottom: none; }
+                        .tab.active { background: var(--bg-body); color: #dcdcdc; border-bottom: 1px solid var(--bg-body); z-index: 2; margin-bottom: -2px; }
+                        .tab-article { background: transparent; border: none; color: #5c6370; }
+                        .container { flex: 1; overflow-y: auto; overflow-x: hidden; }
+                        .vim-section { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid #3e445122; min-height: var(--lh); }
+                        .vim-section:hover { background: #3c3c3c; }
+                        .vim-left { background: var(--bg-code); border-right: 1px solid var(--border); padding: 10px 0; }
+                        .code-line-row { display: grid; grid-template-columns: 55px 1fr; width: 100%; }
+                        
+                        /* 行号样式优化 */
+                        .line-number { 
+                            color: var(--ln-color); 
+                            text-align: center; 
+                            user-select: none; 
+                            background: var(--ln-bg); 
+                            border-right: 1px solid #3e4451; 
+                            font-size: 12px; 
+                            height: var(--lh); 
+                            font-weight: 500; /* 加粗一点点 */
+                        }
+                        
+                        .code-content { padding-left: 15px; white-space: pre; overflow-x: auto; height: var(--lh); }
+                        .vim-right { padding: 10px 20px; color: #7ca668; font-style: italic; word-break: break-all; }
+                        .status-bar { background: #21252b; color: #6b727c; font-size: 11px; padding: 2px 15px; flex: 0 0 auto; display: flex; justify-content: space-between; border-top: 1px solid var(--border); }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <div class="tab tab-article">📂 ${aTitle}</div>
+                        <div class="tab active">📄 ${sTitle}</div>
+                    </div>
+                    <div class="container" id="main">${htmlRows}</div>
+                    <div class="status-bar"><span>-- NORMAL --</span><span id="pos">TOP</span></div>
+                    <script>
+                        document.querySelectorAll('.code-content').forEach(el => hljs.highlightElement(el));
+                        const main = document.getElementById('main');
+                        main.onscroll = () => {
+                            const p = Math.round((main.scrollTop / (main.scrollHeight - main.clientHeight)) * 100);
+                            document.getElementById('pos').innerText = isNaN(p) ? 'TOP' : p + "%";
+                        };
+                    <\/script>
+                </body>
+                </html>
+            `);
+            newWin.document.close();
+        };
+    }
+    </script>
+    </p>
 
     </div>
     <div class="toc-container">

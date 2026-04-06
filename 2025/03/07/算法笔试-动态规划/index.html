@@ -28,6 +28,7 @@ https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.css
 <link href="
 https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustomScrollbar.min.css
 " rel="stylesheet">
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.9.0/highlightjs-line-numbers.min.js"></script> -->
 <meta name="generator" content="Hexo 7.2.0"></head>
 <body>
     <div class="main-container">
@@ -153,13 +154,21 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/min-cost-climb
 </tr>
 <tr class="odd">
 <td><a
+target="_blank" rel="noopener" href="https://leetcode.cn/problems/climbing-stairs-ii/description/">3693.
+爬楼梯 II</a></td>
+<td>第 166 场双周赛 Q2</td>
+<td>中等</td>
+<td>1560</td>
+</tr>
+<tr class="even">
+<td><a
 target="_blank" rel="noopener" href="https://leetcode.cn/problems/combination-sum-iv/description/">377.
 组合总和 Ⅳ</a></td>
 <td></td>
 <td>中等</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><a
 target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-ways-to-build-good-strings/description/">2466.
 统计构造好字符串的方案数</a></td>
@@ -167,7 +176,7 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-ways-to-
 <td>中等</td>
 <td>1694</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><a
 target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-number-of-texts/description/">2266.
 统计打字方案数</a></td>
@@ -308,11 +317,13 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-ascii-
 <h1 id="题解">题解</h1>
 <h2 id="爬楼梯">70. 爬楼梯</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(51, 0)" id="tab-button-51-0">Golang1</button>
+        <button onclick="showTab(46, 0)" id="tab-button-46-0">Golang1</button>
         
-        <button onclick="showTab(51, 1)" id="tab-button-51-1">Golang2</button>
+        <button onclick="showTab(46, 1)" id="tab-button-46-1">Golang2</button>
+        
+        <button onclick="showTab(46, 2)" id="tab-button-46-2">Rust</button>
         </div>
-        <div class="tab-content tab-content-51" id="tab-51-0">
+        <div class="tab-content tab-content-46" id="tab-46-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">climbStairs</span><span class="hljs-params">(n <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     memo := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, n + <span class="hljs-number">1</span>)
     <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span>
@@ -329,7 +340,7 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-ascii-
     <span class="hljs-keyword">return</span> dfs(n)
 }</pre>
         </div>
-        <div class="tab-content tab-content-51" id="tab-51-1">
+        <div class="tab-content tab-content-46" id="tab-46-1">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">climbStairs</span><span class="hljs-params">(n <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     f := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, n + <span class="hljs-number">1</span>)
     f[<span class="hljs-number">0</span>], f[<span class="hljs-number">1</span>] = <span class="hljs-number">1</span>, <span class="hljs-number">1</span>
@@ -338,14 +349,31 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-ascii-
     }
     <span class="hljs-keyword">return</span> f[n]
 }</pre>
+        </div>
+        <div class="tab-content tab-content-46" id="tab-46-2">
+            <pre><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> {
+    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">climb_stairs</span>(n: <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">i32</span> {
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">n</span> = n <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>;
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">f</span> = <span class="hljs-built_in">vec!</span>[<span class="hljs-number">0</span>; n + <span class="hljs-number">1</span>];
+        f[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;
+        f[<span class="hljs-number">1</span>] = <span class="hljs-number">1</span>;
+
+        <span class="hljs-keyword">for</span> <span class="hljs-variable">i</span> <span class="hljs-keyword">in</span> <span class="hljs-number">2</span>..=n {
+            f[i] = f[i-<span class="hljs-number">1</span>] + f[i-<span class="hljs-number">2</span>];
+        } 
+        f[n]
+    }
+}</pre>
         </div></div>
 <h2 id="使用最小花费爬楼梯">746. 使用最小花费爬楼梯</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(52, 0)" id="tab-button-52-0">Golang1</button>
+        <button onclick="showTab(47, 0)" id="tab-button-47-0">Golang1</button>
         
-        <button onclick="showTab(52, 1)" id="tab-button-52-1">Golang2</button>
+        <button onclick="showTab(47, 1)" id="tab-button-47-1">Golang2</button>
+        
+        <button onclick="showTab(47, 2)" id="tab-button-47-2">Rust</button>
         </div>
-        <div class="tab-content tab-content-52" id="tab-52-0">
+        <div class="tab-content tab-content-47" id="tab-47-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">minCostClimbingStairs</span><span class="hljs-params">(cost []<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     n := <span class="hljs-built_in">len</span>(cost)
     memo := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, n) 
@@ -366,7 +394,7 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-ascii-
     <span class="hljs-keyword">return</span> min(dfs(n - <span class="hljs-number">1</span>), dfs(n - <span class="hljs-number">2</span>))
 }</pre>
         </div>
-        <div class="tab-content tab-content-52" id="tab-52-1">
+        <div class="tab-content tab-content-47" id="tab-47-1">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">minCostClimbingStairs</span><span class="hljs-params">(cost []<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     n := <span class="hljs-built_in">len</span>(cost)
     f := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, n)
@@ -376,14 +404,87 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-ascii-
     }
     <span class="hljs-keyword">return</span> min(f[n<span class="hljs-number">-1</span>], f[n<span class="hljs-number">-2</span>])
 }</pre>
+        </div>
+        <div class="tab-content tab-content-47" id="tab-47-2">
+            <pre><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> {
+    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">min_cost_climbing_stairs</span>(cost: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">i32</span> {
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">n</span> = cost.<span class="hljs-title function_ invoke__">len</span>();
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">f</span> = <span class="hljs-built_in">vec!</span>[<span class="hljs-number">0</span>;n+<span class="hljs-number">1</span>];
+        f[<span class="hljs-number">0</span>] = cost[<span class="hljs-number">0</span>];
+        f[<span class="hljs-number">1</span>] = cost[<span class="hljs-number">1</span>];
+
+        <span class="hljs-keyword">for</span> <span class="hljs-variable">i</span> <span class="hljs-keyword">in</span> <span class="hljs-number">2</span>..n {
+            f[i] = f[i-<span class="hljs-number">2</span>].<span class="hljs-title function_ invoke__">min</span>(f[i-<span class="hljs-number">1</span>]) + cost[i];
+        }
+
+        f[n-<span class="hljs-number">1</span>].<span class="hljs-title function_ invoke__">min</span>(f[n-<span class="hljs-number">2</span>])
+    }
+}</pre>
+        </div></div>
+<h3 id="爬楼梯-ii">3693. 爬楼梯 II</h3>
+<div class='multi-code'><div class='tabs'>
+        <button onclick="showTab(48, 0)" id="tab-button-48-0">Rust</button>
+        
+        <button onclick="showTab(48, 1)" id="tab-button-48-1">Rust2</button>
+        </div>
+        <div class="tab-content tab-content-48" id="tab-48-0">
+            <pre><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> {
+    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">climb_stairs</span>(n: <span class="hljs-type">i32</span>, costs: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">i32</span> {
+        <span class="hljs-keyword">fn</span> <span class="hljs-title function_">dfs</span>(i: <span class="hljs-type">usize</span>, costs: &amp;<span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;, memo: &amp;<span class="hljs-keyword">mut</span> <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">i32</span> {
+            <span class="hljs-keyword">if</span> i == <span class="hljs-number">0</span> {
+                <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+            }
+            <span class="hljs-keyword">if</span> memo[i] != <span class="hljs-number">0</span> {
+                <span class="hljs-keyword">return</span> memo[i];
+            }
+
+            <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">res</span> = <span class="hljs-type">i32</span>::MAX;
+            <span class="hljs-keyword">for</span> <span class="hljs-variable">j</span> <span class="hljs-keyword">in</span> i.<span class="hljs-title function_ invoke__">saturating_sub</span>(<span class="hljs-number">3</span>)..i {
+                res = res.<span class="hljs-title function_ invoke__">min</span>(<span class="hljs-title function_ invoke__">dfs</span>(j, costs, memo) + (i-j) <span class="hljs-keyword">as</span> <span class="hljs-type">i32</span> * (i-j) <span class="hljs-keyword">as</span> <span class="hljs-type">i32</span>);
+            }
+            res = res + costs[i-<span class="hljs-number">1</span>];
+            memo[i] = res;
+            res
+        }
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">n</span> = n <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>;
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">memo</span> = <span class="hljs-built_in">vec!</span>[<span class="hljs-number">0</span>;n+<span class="hljs-number">1</span>];
+        <span class="hljs-title function_ invoke__">dfs</span>(n, &amp;costs, &amp;<span class="hljs-keyword">mut</span> memo)
+    }
+}</pre>
+        </div>
+        <div class="tab-content tab-content-48" id="tab-48-1">
+            <pre><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> {
+    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">climb_stairs</span>(n: <span class="hljs-type">i32</span>, costs: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">i32</span> {
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">n</span> = n <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>;
+        <span class="hljs-keyword">if</span> n == <span class="hljs-number">0</span> { <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>; }
+        
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">dp</span> = <span class="hljs-built_in">vec!</span>[<span class="hljs-number">0</span>; n + <span class="hljs-number">1</span>];
+        
+        <span class="hljs-keyword">for</span> <span class="hljs-variable">i</span> <span class="hljs-keyword">in</span> <span class="hljs-number">1</span>..=n {
+            <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">min_cost</span> = <span class="hljs-type">i32</span>::MAX;
+            <span class="hljs-keyword">for</span> <span class="hljs-variable">step</span> <span class="hljs-keyword">in</span> <span class="hljs-number">1</span>..=<span class="hljs-number">3</span> {
+                <span class="hljs-keyword">if</span> i &gt;= step {
+                    min_cost = min_cost.<span class="hljs-title function_ invoke__">min</span>(dp[i - step] + (step * step) <span class="hljs-keyword">as</span> <span class="hljs-type">i32</span>);
+                }
+            }
+            dp[i] = min_cost + costs[i - <span class="hljs-number">1</span>];
+        }
+        
+        dp[n]
+    }
+}</pre>
         </div></div>
 <h2 id="组合总和-ⅳ">377. 组合总和 Ⅳ</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(53, 0)" id="tab-button-53-0">Golang1</button>
+        <button onclick="showTab(49, 0)" id="tab-button-49-0">Golang1</button>
         
-        <button onclick="showTab(53, 1)" id="tab-button-53-1">Golang2</button>
+        <button onclick="showTab(49, 1)" id="tab-button-49-1">Golang2</button>
+        
+        <button onclick="showTab(49, 2)" id="tab-button-49-2">Rust1</button>
+        
+        <button onclick="showTab(49, 3)" id="tab-button-49-3">Rust2</button>
         </div>
-        <div class="tab-content tab-content-53" id="tab-53-0">
+        <div class="tab-content tab-content-49" id="tab-49-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">combinationSum4</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, target <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     memo := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, target + <span class="hljs-number">1</span>) 
     <span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> memo {
@@ -409,7 +510,7 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-ascii-
     <span class="hljs-keyword">return</span> dfs(target)
 }</pre>
         </div>
-        <div class="tab-content tab-content-53" id="tab-53-1">
+        <div class="tab-content tab-content-49" id="tab-49-1">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">combinationSum4</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, target <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     f := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, target + <span class="hljs-number">1</span>)
     f[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>
@@ -422,14 +523,62 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-ascii-
     }
     <span class="hljs-keyword">return</span> f[target]
 }</pre>
+        </div>
+        <div class="tab-content tab-content-49" id="tab-49-2">
+            <pre><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> {
+    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">combination_sum4</span>(nums: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;, target: <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">i32</span> {
+        <span class="hljs-keyword">fn</span> <span class="hljs-title function_">dfs</span>(i: <span class="hljs-type">usize</span>, memo: &amp;<span class="hljs-keyword">mut</span> <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;, nums: &amp;<span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">i32</span> {
+            <span class="hljs-keyword">if</span> i == <span class="hljs-number">0</span> {
+                <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+            }
+            <span class="hljs-keyword">if</span> memo[i] != -<span class="hljs-number">1</span> {
+                <span class="hljs-keyword">return</span> memo[i];
+            }
+
+            <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">ans</span> = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">for</span> &amp;x <span class="hljs-keyword">in</span> nums.<span class="hljs-title function_ invoke__">iter</span>() {
+                <span class="hljs-keyword">let</span> <span class="hljs-variable">x</span> = x <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>;
+                <span class="hljs-keyword">if</span> i &gt;= x {
+                    ans += <span class="hljs-title function_ invoke__">dfs</span>(i - x, memo, nums);
+                }
+            }
+            
+            memo[i] = ans;
+            ans
+        }
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">target</span> = target <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>;
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">memo</span> = <span class="hljs-built_in">vec!</span>[-<span class="hljs-number">1</span>;target+<span class="hljs-number">1</span>];
+        <span class="hljs-title function_ invoke__">dfs</span>(target, &amp;<span class="hljs-keyword">mut</span> memo, &amp;nums)
+    }
+}</pre>
+        </div>
+        <div class="tab-content tab-content-49" id="tab-49-3">
+            <pre><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> {
+    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">combination_sum4</span>(nums: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;, target: <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">i32</span> {
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">target</span> = target <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>;
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">dp</span> = <span class="hljs-built_in">vec!</span>[<span class="hljs-number">0</span>; target + <span class="hljs-number">1</span>];
+        dp[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;
+        
+        <span class="hljs-keyword">for</span> <span class="hljs-variable">i</span> <span class="hljs-keyword">in</span> <span class="hljs-number">1</span>..=target {
+            <span class="hljs-keyword">for</span> &amp;num <span class="hljs-keyword">in</span> &amp;nums {
+                <span class="hljs-keyword">let</span> <span class="hljs-variable">num</span> = num <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>;
+                <span class="hljs-keyword">if</span> i &gt;= num {
+                    dp[i] += dp[i - num];
+                }
+            }
+        }
+        
+        dp[target]
+    }
+}</pre>
         </div></div>
 <h2 id="统计构造好字符串的方案数">2466. 统计构造好字符串的方案数</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(54, 0)" id="tab-button-54-0">Golang1</button>
+        <button onclick="showTab(50, 0)" id="tab-button-50-0">Golang1</button>
         
-        <button onclick="showTab(54, 1)" id="tab-button-54-1">Golang2</button>
+        <button onclick="showTab(50, 1)" id="tab-button-50-1">Golang2</button>
         </div>
-        <div class="tab-content tab-content-54" id="tab-54-0">
+        <div class="tab-content tab-content-50" id="tab-50-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">countGoodStrings</span><span class="hljs-params">(low <span class="hljs-type">int</span>, high <span class="hljs-type">int</span>, zero <span class="hljs-type">int</span>, one <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     <span class="hljs-keyword">const</span> mod <span class="hljs-type">int</span> = <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>
     memo := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, high + <span class="hljs-number">1</span>)
@@ -458,7 +607,7 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-ascii-
     <span class="hljs-keyword">return</span> ans % mod
 }</pre>
         </div>
-        <div class="tab-content tab-content-54" id="tab-54-1">
+        <div class="tab-content tab-content-50" id="tab-50-1">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">countGoodStrings</span><span class="hljs-params">(low <span class="hljs-type">int</span>, high <span class="hljs-type">int</span>, zero <span class="hljs-type">int</span>, one <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     <span class="hljs-keyword">const</span> mod <span class="hljs-type">int</span> = <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>
     f := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, high + <span class="hljs-number">11</span>)
@@ -480,11 +629,11 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-ascii-
         </div></div>
 <h2 id="统计打字方案数">2266. 统计打字方案数</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(55, 0)" id="tab-button-55-0">Golang1</button>
+        <button onclick="showTab(51, 0)" id="tab-button-51-0">Golang1</button>
         
-        <button onclick="showTab(55, 1)" id="tab-button-55-1">Golang2</button>
+        <button onclick="showTab(51, 1)" id="tab-button-51-1">Golang2</button>
         </div>
-        <div class="tab-content tab-content-55" id="tab-55-0">
+        <div class="tab-content tab-content-51" id="tab-51-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">countTexts</span><span class="hljs-params">(pressedKeys <span class="hljs-type">string</span>)</span></span> <span class="hljs-type">int</span> {
     <span class="hljs-keyword">const</span> mod <span class="hljs-type">int</span> = <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>
     n := <span class="hljs-built_in">len</span>(pressedKeys)
@@ -518,7 +667,7 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-ascii-
     <span class="hljs-keyword">return</span> dfs(n - <span class="hljs-number">1</span>) % mod
 }</pre>
         </div>
-        <div class="tab-content tab-content-55" id="tab-55-1">
+        <div class="tab-content tab-content-51" id="tab-51-1">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">countTexts</span><span class="hljs-params">(pressedKeys <span class="hljs-type">string</span>)</span></span> <span class="hljs-type">int</span> {
     <span class="hljs-keyword">const</span> mod <span class="hljs-type">int</span> = <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>
     n := <span class="hljs-built_in">len</span>(pressedKeys)
@@ -543,11 +692,11 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-ascii-
         </div></div>
 <h2 id="打家劫舍">198. 打家劫舍</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(56, 0)" id="tab-button-56-0">Golang1</button>
+        <button onclick="showTab(52, 0)" id="tab-button-52-0">Golang1</button>
         
-        <button onclick="showTab(56, 1)" id="tab-button-56-1">Golang2</button>
+        <button onclick="showTab(52, 1)" id="tab-button-52-1">Golang2</button>
         </div>
-        <div class="tab-content tab-content-56" id="tab-56-0">
+        <div class="tab-content tab-content-52" id="tab-52-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">rob</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     n := <span class="hljs-built_in">len</span>(nums)
     memo := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, n + <span class="hljs-number">1</span>) 
@@ -568,7 +717,7 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-ascii-
     <span class="hljs-keyword">return</span> dfs(n - <span class="hljs-number">1</span>)
 }</pre>
         </div>
-        <div class="tab-content tab-content-56" id="tab-56-1">
+        <div class="tab-content tab-content-52" id="tab-52-1">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">rob</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     n := <span class="hljs-built_in">len</span>(nums)
     <span class="hljs-keyword">if</span> n == <span class="hljs-number">1</span> {
@@ -584,9 +733,9 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-ascii-
         </div></div>
 <h2 id="删除并获得点数">740. 删除并获得点数</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(57, 0)" id="tab-button-57-0">Golang1</button>
+        <button onclick="showTab(53, 0)" id="tab-button-53-0">Golang1</button>
         </div>
-        <div class="tab-content tab-content-57" id="tab-57-0">
+        <div class="tab-content tab-content-53" id="tab-53-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">deleteAndEarn</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     cnt := [<span class="hljs-number">10010</span>]<span class="hljs-type">int</span>{}
     <span class="hljs-keyword">for</span> _, v := <span class="hljs-keyword">range</span> nums {
@@ -614,9 +763,9 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-ascii-
         </div></div>
 <h2 id="统计放置房子的方式数">2320. 统计放置房子的方式数</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(58, 0)" id="tab-button-58-0">Golang</button>
+        <button onclick="showTab(54, 0)" id="tab-button-54-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-58" id="tab-58-0">
+        <div class="tab-content tab-content-54" id="tab-54-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">countHousePlacements</span><span class="hljs-params">(n <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     <span class="hljs-keyword">const</span> mod <span class="hljs-type">int</span> = <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>
     f := [<span class="hljs-number">10010</span>]<span class="hljs-type">int</span>{<span class="hljs-number">1</span>, <span class="hljs-number">2</span>}
@@ -629,9 +778,9 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-ascii-
         </div></div>
 <h2 id="打家劫舍-ii">213. 打家劫舍 II</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(59, 0)" id="tab-button-59-0">Golang</button>
+        <button onclick="showTab(55, 0)" id="tab-button-55-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-59" id="tab-59-0">
+        <div class="tab-content tab-content-55" id="tab-55-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">rob1</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, start, end <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> { <span class="hljs-comment">// [start,end) 左闭右开</span>
     f0, f1 := <span class="hljs-number">0</span>, <span class="hljs-number">0</span>
     <span class="hljs-keyword">for</span> i := start; i &lt; end; i++ {
@@ -650,9 +799,9 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-ascii-
 class="math inline">\(text_1[0:i]\)</span> 和 <span
 class="math inline">\(text_2[0:j]\)</span> 的最长公共子序列长度。</p>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(60, 0)" id="tab-button-60-0">Golang</button>
+        <button onclick="showTab(56, 0)" id="tab-button-56-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-60" id="tab-60-0">
+        <div class="tab-content tab-content-56" id="tab-56-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">longestCommonSubsequence</span><span class="hljs-params">(text1 <span class="hljs-type">string</span>, text2 <span class="hljs-type">string</span>)</span></span> <span class="hljs-type">int</span> {
     n, m := <span class="hljs-built_in">len</span>(text1), <span class="hljs-built_in">len</span>(text2)
     f := <span class="hljs-built_in">make</span>([][]<span class="hljs-type">int</span>, n + <span class="hljs-number">1</span>)
@@ -678,9 +827,9 @@ class="math inline">\(f(i-1, j)\)</span> 相当于删除 <span
 class="math inline">\(s\)</span> 中的字符，<span
 class="math inline">\(f(i-1,j-1)\)</span> 相当于替换操作。</p>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(61, 0)" id="tab-button-61-0">Golang</button>
+        <button onclick="showTab(57, 0)" id="tab-button-57-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-61" id="tab-61-0">
+        <div class="tab-content tab-content-57" id="tab-57-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">minDistance</span><span class="hljs-params">(word1 <span class="hljs-type">string</span>, word2 <span class="hljs-type">string</span>)</span></span> <span class="hljs-type">int</span> {
     n, m := <span class="hljs-built_in">len</span>(word1), <span class="hljs-built_in">len</span>(word2)
     f := <span class="hljs-built_in">make</span>([][]<span class="hljs-type">int</span>, n + <span class="hljs-number">1</span>)
@@ -706,9 +855,9 @@ class="math inline">\(f(i-1,j-1)\)</span> 相当于替换操作。</p>
         </div></div>
 <h2 id="最短公共超序列">1092. 最短公共超序列</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(62, 0)" id="tab-button-62-0">Golang</button>
+        <button onclick="showTab(58, 0)" id="tab-button-58-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-62" id="tab-62-0">
+        <div class="tab-content tab-content-58" id="tab-58-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">shortestCommonSupersequence</span><span class="hljs-params">(str1 <span class="hljs-type">string</span>, str2 <span class="hljs-type">string</span>)</span></span> <span class="hljs-type">string</span> {
     n, m := <span class="hljs-built_in">len</span>(str1), <span class="hljs-built_in">len</span>(str2)
     f := <span class="hljs-built_in">make</span>([][]<span class="hljs-type">int</span>, n + <span class="hljs-number">1</span>)
@@ -750,11 +899,11 @@ class="math inline">\(f(i-1,j-1)\)</span> 相当于替换操作。</p>
         </div></div>
 <h2 id="交错字符串">97. 交错字符串</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(63, 0)" id="tab-button-63-0">Golang1</button>
+        <button onclick="showTab(59, 0)" id="tab-button-59-0">Golang1</button>
         
-        <button onclick="showTab(63, 1)" id="tab-button-63-1">Golang2</button>
+        <button onclick="showTab(59, 1)" id="tab-button-59-1">Golang2</button>
         </div>
-        <div class="tab-content tab-content-63" id="tab-63-0">
+        <div class="tab-content tab-content-59" id="tab-59-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">isInterleave</span><span class="hljs-params">(s1 <span class="hljs-type">string</span>, s2 <span class="hljs-type">string</span>, s3 <span class="hljs-type">string</span>)</span></span> <span class="hljs-type">bool</span> {
     n, m := <span class="hljs-built_in">len</span>(s1), <span class="hljs-built_in">len</span>(s2)
     <span class="hljs-keyword">if</span> n + m != <span class="hljs-built_in">len</span>(s3) {
@@ -787,7 +936,7 @@ class="math inline">\(f(i-1,j-1)\)</span> 相当于替换操作。</p>
     <span class="hljs-keyword">return</span> dfs(n - <span class="hljs-number">1</span>, m - <span class="hljs-number">1</span>)
 }</pre>
         </div>
-        <div class="tab-content tab-content-63" id="tab-63-1">
+        <div class="tab-content tab-content-59" id="tab-59-1">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">isInterleave</span><span class="hljs-params">(s1, s2, s3 <span class="hljs-type">string</span>)</span></span> <span class="hljs-type">bool</span> {
     n, m := <span class="hljs-built_in">len</span>(s1), <span class="hljs-built_in">len</span>(s2)
     <span class="hljs-keyword">if</span> n+m != <span class="hljs-built_in">len</span>(s3) {
@@ -814,11 +963,11 @@ class="math inline">\(f(i-1,j-1)\)</span> 相当于替换操作。</p>
         </div></div>
 <h2 id="不同的子序列">115. 不同的子序列</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(64, 0)" id="tab-button-64-0">Golang1</button>
+        <button onclick="showTab(60, 0)" id="tab-button-60-0">Golang1</button>
         
-        <button onclick="showTab(64, 1)" id="tab-button-64-1">Golang2</button>
+        <button onclick="showTab(60, 1)" id="tab-button-60-1">Golang2</button>
         </div>
-        <div class="tab-content tab-content-64" id="tab-64-0">
+        <div class="tab-content tab-content-60" id="tab-60-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">numDistinct</span><span class="hljs-params">(s <span class="hljs-type">string</span>, t <span class="hljs-type">string</span>)</span></span> <span class="hljs-type">int</span> {
     <span class="hljs-keyword">const</span> mod <span class="hljs-type">int</span> = <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span> 
     n, m := <span class="hljs-built_in">len</span>(s), <span class="hljs-built_in">len</span>(t)
@@ -850,7 +999,7 @@ class="math inline">\(f(i-1,j-1)\)</span> 相当于替换操作。</p>
     <span class="hljs-keyword">return</span> dfs(n - <span class="hljs-number">1</span>, m - <span class="hljs-number">1</span>)
 }</pre>
         </div>
-        <div class="tab-content tab-content-64" id="tab-64-1">
+        <div class="tab-content tab-content-60" id="tab-60-1">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">numDistinct</span><span class="hljs-params">(s <span class="hljs-type">string</span>, t <span class="hljs-type">string</span>)</span></span> <span class="hljs-type">int</span> {
     <span class="hljs-keyword">const</span> mod <span class="hljs-type">int</span> = <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>
     n, m := <span class="hljs-built_in">len</span>(s), <span class="hljs-built_in">len</span>(t)
@@ -875,11 +1024,11 @@ class="math inline">\(f(i-1,j-1)\)</span> 相当于替换操作。</p>
         </div></div>
 <h2 id="两个字符串的删除操作">583. 两个字符串的删除操作</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(65, 0)" id="tab-button-65-0">Golang1</button>
+        <button onclick="showTab(61, 0)" id="tab-button-61-0">Golang1</button>
         
-        <button onclick="showTab(65, 1)" id="tab-button-65-1">Golang2</button>
+        <button onclick="showTab(61, 1)" id="tab-button-61-1">Golang2</button>
         </div>
-        <div class="tab-content tab-content-65" id="tab-65-0">
+        <div class="tab-content tab-content-61" id="tab-61-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">minDistance</span><span class="hljs-params">(w1 <span class="hljs-type">string</span>, w2 <span class="hljs-type">string</span>)</span></span> <span class="hljs-type">int</span> {
     <span class="hljs-comment">// if len(w2) &gt; len(w1) {</span>
     <span class="hljs-comment">//     w1, w2 = w2, w1</span>
@@ -915,7 +1064,7 @@ class="math inline">\(f(i-1,j-1)\)</span> 相当于替换操作。</p>
     <span class="hljs-keyword">return</span> dfs(n - <span class="hljs-number">1</span>, m - <span class="hljs-number">1</span>)
 }</pre>
         </div>
-        <div class="tab-content tab-content-65" id="tab-65-1">
+        <div class="tab-content tab-content-61" id="tab-61-1">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">minDistance</span><span class="hljs-params">(word1 <span class="hljs-type">string</span>, word2 <span class="hljs-type">string</span>)</span></span> <span class="hljs-type">int</span> {
     n, m := <span class="hljs-built_in">len</span>(word1), <span class="hljs-built_in">len</span>(word2) 
     f := <span class="hljs-built_in">make</span>([][]<span class="hljs-type">int</span>, n + <span class="hljs-number">1</span>)
@@ -943,9 +1092,9 @@ class="math inline">\(f(i-1,j-1)\)</span> 相当于替换操作。</p>
 <h2 id="两个字符串的最小ascii删除和">712.
 两个字符串的最小ASCII删除和</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(66, 0)" id="tab-button-66-0">Golang</button>
+        <button onclick="showTab(62, 0)" id="tab-button-62-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-66" id="tab-66-0">
+        <div class="tab-content tab-content-62" id="tab-62-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">minimumDeleteSum</span><span class="hljs-params">(s1 <span class="hljs-type">string</span>, s2 <span class="hljs-type">string</span>)</span></span> <span class="hljs-type">int</span> {
     n, m := <span class="hljs-built_in">len</span>(s1), <span class="hljs-built_in">len</span>(s2) 
     f := <span class="hljs-built_in">make</span>([][]<span class="hljs-type">int</span>, n + <span class="hljs-number">1</span>)
@@ -978,7 +1127,7 @@ class="math inline">\(f(i-1,j-1)\)</span> 相当于替换操作。</p>
 
     </div>
     <div class="toc-container">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A2%98%E5%8D%95"><span class="toc-number">1.</span> <span class="toc-text">题单</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A5%E9%97%A8-dp"><span class="toc-number">1.1.</span> <span class="toc-text">入门 dp</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A2%98%E8%A7%A3"><span class="toc-number">2.</span> <span class="toc-text">题解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%88%AC%E6%A5%BC%E6%A2%AF"><span class="toc-number">2.1.</span> <span class="toc-text">70. 爬楼梯</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%9C%80%E5%B0%8F%E8%8A%B1%E8%B4%B9%E7%88%AC%E6%A5%BC%E6%A2%AF"><span class="toc-number">2.2.</span> <span class="toc-text">746. 使用最小花费爬楼梯</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8C-%E2%85%B3"><span class="toc-number">2.3.</span> <span class="toc-text">377. 组合总和 Ⅳ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E6%9E%84%E9%80%A0%E5%A5%BD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%96%B9%E6%A1%88%E6%95%B0"><span class="toc-number">2.4.</span> <span class="toc-text">2466. 统计构造好字符串的方案数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E6%89%93%E5%AD%97%E6%96%B9%E6%A1%88%E6%95%B0"><span class="toc-number">2.5.</span> <span class="toc-text">2266. 统计打字方案数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D"><span class="toc-number">2.6.</span> <span class="toc-text">198. 打家劫舍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E5%B9%B6%E8%8E%B7%E5%BE%97%E7%82%B9%E6%95%B0"><span class="toc-number">2.7.</span> <span class="toc-text">740. 删除并获得点数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E6%94%BE%E7%BD%AE%E6%88%BF%E5%AD%90%E7%9A%84%E6%96%B9%E5%BC%8F%E6%95%B0"><span class="toc-number">2.8.</span> <span class="toc-text">2320. 统计放置房子的方式数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D-ii"><span class="toc-number">2.9.</span> <span class="toc-text">213. 打家劫舍 II</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97"><span class="toc-number">2.10.</span> <span class="toc-text">1143. 最长公共子序列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB"><span class="toc-number">2.11.</span> <span class="toc-text">72. 编辑距离</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E7%9F%AD%E5%85%AC%E5%85%B1%E8%B6%85%E5%BA%8F%E5%88%97"><span class="toc-number">2.12.</span> <span class="toc-text">1092. 最短公共超序列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%A4%E9%94%99%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">2.13.</span> <span class="toc-text">97. 交错字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AD%90%E5%BA%8F%E5%88%97"><span class="toc-number">2.14.</span> <span class="toc-text">115. 不同的子序列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%A4%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%88%A0%E9%99%A4%E6%93%8D%E4%BD%9C"><span class="toc-number">2.15.</span> <span class="toc-text">583. 两个字符串的删除操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%A4%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%9C%80%E5%B0%8Fascii%E5%88%A0%E9%99%A4%E5%92%8C"><span class="toc-number">2.16.</span> <span class="toc-text">712.
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A2%98%E5%8D%95"><span class="toc-number">1.</span> <span class="toc-text">题单</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A5%E9%97%A8-dp"><span class="toc-number">1.1.</span> <span class="toc-text">入门 dp</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A2%98%E8%A7%A3"><span class="toc-number">2.</span> <span class="toc-text">题解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%88%AC%E6%A5%BC%E6%A2%AF"><span class="toc-number">2.1.</span> <span class="toc-text">70. 爬楼梯</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%9C%80%E5%B0%8F%E8%8A%B1%E8%B4%B9%E7%88%AC%E6%A5%BC%E6%A2%AF"><span class="toc-number">2.2.</span> <span class="toc-text">746. 使用最小花费爬楼梯</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%88%AC%E6%A5%BC%E6%A2%AF-ii"><span class="toc-number">2.2.1.</span> <span class="toc-text">3693. 爬楼梯 II</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8C-%E2%85%B3"><span class="toc-number">2.3.</span> <span class="toc-text">377. 组合总和 Ⅳ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E6%9E%84%E9%80%A0%E5%A5%BD%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%96%B9%E6%A1%88%E6%95%B0"><span class="toc-number">2.4.</span> <span class="toc-text">2466. 统计构造好字符串的方案数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E6%89%93%E5%AD%97%E6%96%B9%E6%A1%88%E6%95%B0"><span class="toc-number">2.5.</span> <span class="toc-text">2266. 统计打字方案数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D"><span class="toc-number">2.6.</span> <span class="toc-text">198. 打家劫舍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E5%B9%B6%E8%8E%B7%E5%BE%97%E7%82%B9%E6%95%B0"><span class="toc-number">2.7.</span> <span class="toc-text">740. 删除并获得点数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E6%94%BE%E7%BD%AE%E6%88%BF%E5%AD%90%E7%9A%84%E6%96%B9%E5%BC%8F%E6%95%B0"><span class="toc-number">2.8.</span> <span class="toc-text">2320. 统计放置房子的方式数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D-ii"><span class="toc-number">2.9.</span> <span class="toc-text">213. 打家劫舍 II</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97"><span class="toc-number">2.10.</span> <span class="toc-text">1143. 最长公共子序列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB"><span class="toc-number">2.11.</span> <span class="toc-text">72. 编辑距离</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E7%9F%AD%E5%85%AC%E5%85%B1%E8%B6%85%E5%BA%8F%E5%88%97"><span class="toc-number">2.12.</span> <span class="toc-text">1092. 最短公共超序列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%A4%E9%94%99%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">2.13.</span> <span class="toc-text">97. 交错字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AD%90%E5%BA%8F%E5%88%97"><span class="toc-number">2.14.</span> <span class="toc-text">115. 不同的子序列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%A4%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%88%A0%E9%99%A4%E6%93%8D%E4%BD%9C"><span class="toc-number">2.15.</span> <span class="toc-text">583. 两个字符串的删除操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%A4%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%9C%80%E5%B0%8Fascii%E5%88%A0%E9%99%A4%E5%92%8C"><span class="toc-number">2.16.</span> <span class="toc-text">712.
 两个字符串的最小ASCII删除和</span></a></li></ol></li></ol>
     </div>
   </div>

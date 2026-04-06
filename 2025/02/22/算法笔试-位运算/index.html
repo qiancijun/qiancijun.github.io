@@ -28,6 +28,7 @@ https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.css
 <link href="
 https://cdn.jsdelivr.net/npm/malihu-custom-scrollbar-plugin@3.1.5/jquery.mCustomScrollbar.min.css
 " rel="stylesheet">
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.9.0/highlightjs-line-numbers.min.js"></script> -->
 <meta name="generator" content="Hexo 7.2.0"></head>
 <body>
     <div class="main-container">
@@ -212,9 +213,9 @@ class="math inline">\(\oplus\)</span> 表示按位异或，~
 class="math inline">\(0\)</span> 到 <span
 class="math inline">\(n-1\)</span>，挨个判断是否在集合 <span
 class="math inline">\(s\)</span> 中： <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(6, 0)" id="tab-button-6-0">Cpp</button>
+        <button onclick="showTab(63, 0)" id="tab-button-63-0">Cpp</button>
         </div>
-        <div class="tab-content tab-content-6" id="tab-6-0">
+        <div class="tab-content tab-content-63" id="tab-63-0">
             <pre><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
     <span class="hljs-keyword">if</span> ((s &gt;&gt; i) &amp; <span class="hljs-number">1</span>) { <span class="hljs-comment">// i 在 s 中</span>
         <span class="hljs-comment">// 处理 i 的逻辑</span>
@@ -224,9 +225,9 @@ class="math inline">\(s\)</span> 中： <div class='multi-code'><div class='tabs
 <p><strong>枚举集合</strong>：设元素范围从 <span
 class="math inline">\(0\)</span> 到 <span
 class="math inline">\(n-1\)</span>，从空集枚举到全集： <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(7, 0)" id="tab-button-7-0">Cpp</button>
+        <button onclick="showTab(64, 0)" id="tab-button-64-0">Cpp</button>
         </div>
-        <div class="tab-content tab-content-7" id="tab-7-0">
+        <div class="tab-content tab-content-64" id="tab-64-0">
             <pre><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> s = <span class="hljs-number">0</span>; s &lt; (<span class="hljs-number">1</span> &lt;&lt; n); s++) {
 	<span class="hljs-comment">// 处理 s 的逻辑</span>
 }</pre>
@@ -235,9 +236,9 @@ class="math inline">\(n-1\)</span>，从空集枚举到全集： <div class='mul
 class="math inline">\(s\)</span>，<strong>从大到小</strong>枚举 <span
 class="math inline">\(s\)</span> 的所有非空子集 <span
 class="math inline">\(sub\)</span>： <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(8, 0)" id="tab-button-8-0">Cpp</button>
+        <button onclick="showTab(65, 0)" id="tab-button-65-0">Cpp</button>
         </div>
-        <div class="tab-content tab-content-8" id="tab-8-0">
+        <div class="tab-content tab-content-65" id="tab-65-0">
             <pre><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> sub = s; sub; sub = (sub - <span class="hljs-number">1</span>) &amp; s) {
 	<span class="hljs-comment">// 处理 sub 的逻辑</span>
 }</pre>
@@ -350,9 +351,9 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-the-prefi
 <h1 id="题解">题解</h1>
 <h2 id="仅含置位位的最小整数">3370. 仅含置位位的最小整数</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(9, 0)" id="tab-button-9-0">Golang</button>
+        <button onclick="showTab(66, 0)" id="tab-button-66-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-9" id="tab-9-0">
+        <div class="tab-content tab-content-66" id="tab-66-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">smallestNumber</span><span class="hljs-params">(n <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     <span class="hljs-keyword">return</span> <span class="hljs-number">1</span> &lt;&lt; bits.Len(<span class="hljs-type">uint</span>(n)) - <span class="hljs-number">1</span>
 }</pre>
@@ -360,9 +361,9 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-the-prefi
 <h2 id="使两个整数相等的位更改次数">3226.
 使两个整数相等的位更改次数</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(10, 0)" id="tab-button-10-0">Golang</button>
+        <button onclick="showTab(67, 0)" id="tab-button-67-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-10" id="tab-10-0">
+        <div class="tab-content tab-content-67" id="tab-67-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">minChanges</span><span class="hljs-params">(n <span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     <span class="hljs-keyword">if</span> n &amp; k != k {
         <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>
@@ -373,9 +374,9 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-the-prefi
 <h2 id="根据数字二进制下-1-的数目排序">1356. 根据数字二进制下 1
 的数目排序</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(11, 0)" id="tab-button-11-0">Golang</button>
+        <button onclick="showTab(68, 0)" id="tab-button-68-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-11" id="tab-11-0">
+        <div class="tab-content tab-content-68" id="tab-68-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">sortByBits</span><span class="hljs-params">(arr []<span class="hljs-type">int</span>)</span></span> []<span class="hljs-type">int</span> {
     sort.Slice(arr, <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(i, j <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">bool</span> {
         a := bits.OnesCount(<span class="hljs-type">uint</span>(arr[i]))
@@ -390,27 +391,27 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-the-prefi
         </div></div>
 <h2 id="汉明距离">461. 汉明距离</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(12, 0)" id="tab-button-12-0">Golang</button>
+        <button onclick="showTab(69, 0)" id="tab-button-69-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-12" id="tab-12-0">
+        <div class="tab-content tab-content-69" id="tab-69-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">hammingDistance</span><span class="hljs-params">(x <span class="hljs-type">int</span>, y <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     <span class="hljs-keyword">return</span> bits.OnesCount(<span class="hljs-type">uint</span>(x ^ y))
 }</pre>
         </div></div>
 <h2 id="数字的补数">476. 数字的补数</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(13, 0)" id="tab-button-13-0">Golang</button>
+        <button onclick="showTab(70, 0)" id="tab-button-70-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-13" id="tab-13-0">
+        <div class="tab-content tab-content-70" id="tab-70-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">findComplement</span><span class="hljs-params">(num <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     <span class="hljs-keyword">return</span> <span class="hljs-number">1</span> &lt;&lt; bits.Len(<span class="hljs-type">uint</span>(num)) - <span class="hljs-number">1</span> - num
 }</pre>
         </div></div>
 <h2 id="二进制间距">868. 二进制间距</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(14, 0)" id="tab-button-14-0">Golang</button>
+        <button onclick="showTab(71, 0)" id="tab-button-71-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-14" id="tab-14-0">
+        <div class="tab-content tab-content-71" id="tab-71-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">binaryGap</span><span class="hljs-params">(n <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     i, idx, ans := <span class="hljs-number">0</span>, <span class="hljs-number">-1</span>, <span class="hljs-number">0</span>
     <span class="hljs-keyword">for</span> ; n &gt; <span class="hljs-number">0</span>; n = n &gt;&gt; <span class="hljs-number">1</span> {
@@ -428,9 +429,9 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-the-prefi
 <h2 id="生成不含相邻零的二进制字符串">3211.
 生成不含相邻零的二进制字符串</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(15, 0)" id="tab-button-15-0">Golang</button>
+        <button onclick="showTab(72, 0)" id="tab-button-72-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-15" id="tab-15-0">
+        <div class="tab-content tab-content-72" id="tab-72-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">validStrings</span><span class="hljs-params">(n <span class="hljs-type">int</span>)</span></span> []<span class="hljs-type">string</span> {
     ans := <span class="hljs-built_in">make</span>([]<span class="hljs-type">string</span>, <span class="hljs-number">0</span>)
     <span class="hljs-keyword">var</span> dfs <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(pos <span class="hljs-type">int</span>, path []<span class="hljs-type">byte</span>)</span></span>
@@ -453,9 +454,9 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-the-prefi
         </div></div>
 <h2 id="找出数组中的-k-or-值">2917. 找出数组中的 K-or 值</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(16, 0)" id="tab-button-16-0">Golang</button>
+        <button onclick="showTab(73, 0)" id="tab-button-73-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-16" id="tab-16-0">
+        <div class="tab-content tab-content-73" id="tab-73-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">findKOr</span><span class="hljs-params">(nums []<span class="hljs-type">int</span>, k <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> {
     cnt := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, <span class="hljs-number">31</span>)
     <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">31</span>; i++ {
@@ -480,9 +481,9 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-the-prefi
         </div></div>
 <h2 id="交替位二进制数">693. 交替位二进制数</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(17, 0)" id="tab-button-17-0">Golang</button>
+        <button onclick="showTab(74, 0)" id="tab-button-74-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-17" id="tab-17-0">
+        <div class="tab-content tab-content-74" id="tab-74-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">hasAlternatingBits</span><span class="hljs-params">(n <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">bool</span> {
     t := n &amp; <span class="hljs-number">1</span>
     n &gt;&gt;= <span class="hljs-number">1</span>
@@ -498,9 +499,9 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-the-prefi
 <h2 id="找到两个数组的前缀公共数组">2657.
 找到两个数组的前缀公共数组</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(18, 0)" id="tab-button-18-0">Golang</button>
+        <button onclick="showTab(75, 0)" id="tab-button-75-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-18" id="tab-18-0">
+        <div class="tab-content tab-content-75" id="tab-75-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">findThePrefixCommonArray</span><span class="hljs-params">(A []<span class="hljs-type">int</span>, B []<span class="hljs-type">int</span>)</span></span> []<span class="hljs-type">int</span> {
     <span class="hljs-keyword">var</span> q, p <span class="hljs-type">uint</span>
     ans := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, <span class="hljs-built_in">len</span>(A))
@@ -515,9 +516,9 @@ target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-the-prefi
         </div></div>
 <h2 id="的幂">231. 2 的幂</h2>
 <div class='multi-code'><div class='tabs'>
-        <button onclick="showTab(19, 0)" id="tab-button-19-0">Golang</button>
+        <button onclick="showTab(76, 0)" id="tab-button-76-0">Golang</button>
         </div>
-        <div class="tab-content tab-content-19" id="tab-19-0">
+        <div class="tab-content tab-content-76" id="tab-76-0">
             <pre><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">isPowerOfTwo</span><span class="hljs-params">(n <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">bool</span> {
     <span class="hljs-keyword">return</span> bits.OnesCount(<span class="hljs-type">uint</span>(n)) == <span class="hljs-number">1</span>
 }</pre>
